@@ -1,0 +1,123 @@
+import { lazy, Suspense, useState, useEffect } from "react";
+import Login from "./components/Login.jsx";
+import Sidebar from "./components/Sidebar.jsx";
+import Topbar from "./components/Topbar.jsx";
+import CommandBar from "./components/CommandBar.jsx";
+import { ToastProvider } from "./components/Toast.jsx";
+import { getSummary } from "./api/index.js";
+
+const Dashboard = lazy(() => import("./components/Dashboard.jsx"));
+const TablesTab = lazy(() => import("./components/tabs/TablesTab.jsx"));
+const MembersTab = lazy(() => import("./components/tabs/MembersTab.jsx"));
+const ReportsTab = lazy(() => import("./components/tabs/ReportsTab.jsx"));
+const SettingsTab = lazy(() => import("./components/tabs/SettingsTab.jsx"));
+const FoodTab = lazy(() => import("./components/tabs/FoodTab.jsx"));
+const TournamentTab = lazy(() => import("./components/tabs/TournamentTab.jsx"));
+
+export default function App() {
+  const [loggedIn, setLoggedIn] = useState(!!localStorage.getItem("token"));
+  const [page, setPage] = useState("dashboard");
+  const [newSessionRequest, setNewSessionRequest] = useState(0);
+  const [metrics, setMetrics] = useState({
+    sale: 0,
+    cust: 0,
+    food: 0,
+    active_tables: 0,
+    sessions: 0,
+    avg_time: 0,
+    top_table: "-",
+  });
+
+  useEffect(() => {
+    if (!loggedIn) return;
+    fetchMetrics();
+    const iv = setInterval(fetchMetrics, 10000);
+    return () => clearInterval(iv);
+  }, [loggedIn]);
+
+  async function fetchMetrics() {
+    try {
+      const res = await getSummary();
+      setMetrics(res.data);
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  function handleLogout() {
+    if (confirm("Are you sure you want to logout?")) {
+      localStorage.removeItem("token");
+      setLoggedIn(false);
+    }
+  }
+
+  function openNewSession() {
+    setPage("tables");
+    setNewSessionRequest((request) => request + 1);
+  }
+
+  if (!loggedIn) return <Login onLogin={() => setLoggedIn(true)} />;
+
+  const PAGE_TITLES = {
+    dashboard: "Dashboard",
+    tables: "Tables",
+    members: "Members",
+    reports: "Reports",
+    food: "Food Orders",
+    tournaments: "Tournament Mode",
+    settings: "Settings",
+  };
+
+  return (
+    <ToastProvider>
+      <div className="shell">
+        <Sidebar
+          page={page}
+          setPage={setPage}
+          onLogout={handleLogout}
+          activeTables={metrics.active_tables}
+        />
+        <div className="main-content">
+          <Topbar
+            title={PAGE_TITLES[page]}
+            onNewSession={openNewSession}
+          />
+          <CommandBar
+            page={page}
+            setPage={setPage}
+            onNewSession={openNewSession}
+          />
+          <Suspense
+            fallback={
+              <div className="page">
+                <div className="loading-state">
+                  <div className="loading-state-icon">
+                    <i className="ti ti-loader-2" aria-hidden="true" />
+                  </div>
+                  <div className="loading-state-title">Loading view...</div>
+                </div>
+              </div>
+            }
+          >
+            <div className="page">
+              {page === "dashboard" && (
+                <Dashboard metrics={metrics} onNavigate={setPage} />
+              )}
+              {page === "tables" && (
+                <TablesTab
+                  onSessionEnd={fetchMetrics}
+                  newSessionRequest={newSessionRequest}
+                />
+              )}
+              {page === "members" && <MembersTab />}
+              {page === "reports" && <ReportsTab />}
+              {page === "food" && <FoodTab />}
+              {page === "tournaments" && <TournamentTab />}
+              {page === "settings" && <SettingsTab />}
+            </div>
+          </Suspense>
+        </div>
+      </div>
+    </ToastProvider>
+  );
+}

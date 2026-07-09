@@ -1,0 +1,109 @@
+from fastapi import APIRouter, HTTPException, Depends
+from pydantic import BaseModel
+from sqlalchemy.orm import Session
+from database import get_db
+from datetime import datetime
+from typing import List
+import models, json, time
+from collections import Counter, defaultdict
+
+router = APIRouter()
+
+class FoodOrderItem(BaseModel):
+    item: str
+    qty:  int
+    mrp:  int | None = None
+
+class FoodOnlyOrderBody(BaseModel):
+    customer_name: str
+    items:         List[FoodOrderItem]
+
+@router.post("/order")
+def place_food_order(body: FoodOnlyOrderBody, db: Session = Depends(get_db)):
+    if not body.items:
+        raise HTTPException(status_code=400, detail="No items in order")
+
+    total    = 0
+    order    = []
+    for fi in body.items:
+        if fi.qty <= 0:
+            raise HTTPException(status_code=400, detail="Item quantity must be greater than 0")
+        menu_item = db.query(models.MenuItem).filter(models.MenuItem.name == fi.item).first()
+        if not menu_item:
+            raise HTTPException(status_code=404, detail=f"{fi.item} not found")
+        if not menu_item.available:
+            raise HTTPException(status_code=400, detail=f"{fi.item} is currently unavailable")
+        item_name = fi.item
+        if "cigarette" in fi.item.lower():
+            if not fi.mrp or fi.mrp <= 0:
+                raise HTTPException(status_code=400, detail="Enter cigarette MRP")
+            unit_price = fi.mrp + 3
+            item_name = f"{fi.item} (MRP ₹{fi.mrp} + ₹3)"
+        else:
+            unit_price = menu_item.price
+        price = unit_price * fi.qty
+        total += price
+        order.append({"item": item_name, "qty": fi.qty, "price": price})
+
+    db.add(models.FoodOnlyOrder(
+        date          = datetime.now().strftime("%d/%m/%Y, %H:%M:%S"),
+        ts            = time.time() * 1000,
+        customer_name = body.customer_name,
+        items         = json.dumps(order),
+        total         = total,
+    ))
+    db.commit()
+    return {"ok": True, "total": total, "items": order}
+
+@router.get("/orders")
+def get_food_orders(db: Session = Depends(get_db)):
+    orders = db.query(models.FoodOnlyOrder).order_by(models.FoodOnlyOrder.ts.desc()).all()
+    return [
+        {
+            "date":          o.date,
+            "customer_name": o.customer_name,
+            "items":         json.loads(o.items),
+            "total":         o.total,
+        }
+        for o in orders
+    ]
+
+@router.get("/stats")
+def get_food_stats(db: Session = Depends(get_db)):
+    # Count item sales from both session transactions and food-only orders
+    counter = Counter()
+    revenue_counter = defaultdict(int)
+
+    # From session transactions
+    txns = db.query(models.Transaction).all()
+    for t in txns:
+        try:
+            items = json.loads(t.food_json or "[]")
+            for item in items:
+                counter[item["item"]] += item["qty"]
+                revenue_counter[item["item"]] += item.get("price", 0)
+        except: pass
+
+    # From food-only orders
+    orders = db.query(models.FoodOnlyOrder).all()
+    for o in orders:
+        try:
+            items = json.loads(o.items or "[]")
+            for item in items:
+                counter[item["item"]] += item["qty"]
+                revenue_counter[item["item"]] += item.get("price", 0)
+        except: pass
+
+    # Get menu prices
+    menu_items = db.query(models.MenuItem).all()
+    price_map  = {m.name: m.price for m in menu_items}
+
+    result = [
+        {
+            "name":     name,
+            "qty":      qty,
+            "revenue":  revenue_counter[name] or qty * price_map.get(name, 0),
+        }
+        for name, qty in counter.most_common()
+    ]
+    return result
