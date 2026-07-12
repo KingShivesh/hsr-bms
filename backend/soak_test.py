@@ -54,7 +54,7 @@ FOODS = [
     ("Plain Maggie", 1, None),
     ("Cigarettes MRP + 3", 1, 20),
 ]
-PAYMENTS = ["Cash", "UPI", "Card"]
+PAYMENTS = ["Cash", "UPI"]
 
 
 class SoakFailure(Exception):
@@ -156,7 +156,7 @@ def run_single_session(table):
         params={"payment_method": random.choice(PAYMENTS)},
     ).json()
     if result["tot"] <= 0 or result["dur"] <= 0:
-        raise SoakFailure(f"Invalid single checkout totals: {result}")
+        raise SoakFailure(f"Invalid single close totals: {result}")
     metrics["sessions_closed"] += 1
 
 
@@ -180,7 +180,7 @@ def run_sharing_session(table):
         params={"payment_method": random.choice(PAYMENTS)},
     ).json()
     if result["billing_mode"] != "sharing" or result["share_count"] < 2:
-        raise SoakFailure(f"Invalid sharing checkout: {result}")
+        raise SoakFailure(f"Invalid sharing close: {result}")
     metrics["sessions_closed"] += 1
 
 
@@ -207,7 +207,7 @@ def run_lp_session(table):
         params={"payment_method": random.choice(PAYMENTS), "payer_name": payer},
     ).json()
     if result["billing_mode"] != "lp" or result["payer_name"] != payer:
-        raise SoakFailure(f"Invalid LP checkout: {result}")
+        raise SoakFailure(f"Invalid LP close: {result}")
     metrics["sessions_closed"] += 1
 
 

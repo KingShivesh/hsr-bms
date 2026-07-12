@@ -126,7 +126,7 @@ def pause_session(table_id: str, db: Session = Depends(get_db)):
 @router.post("/stop/{table_id}")
 def stop_session(
     table_id:       str,
-    payment_method: str = "Cash",   # Cash / UPI / Card
+    payment_method: str = "Cash",   # Cash / UPI
     payer_name:     str = "",
     db: Session = Depends(get_db)
 ):
@@ -151,7 +151,7 @@ def stop_session(
             status_code=400,
             detail=(
                 "Session duration looks invalid. Please reset this table or "
-                "contact the owner before checkout."
+                "contact the owner before closing."
             ),
         )
     checkout = calc_checkout(
@@ -164,7 +164,7 @@ def stop_session(
     play            = checkout["play"]
     food            = checkout["food"]
     total           = checkout["total"]
-    if payment_method not in {"Cash", "UPI", "Card"}:
+    if payment_method not in {"Cash", "UPI"}:
         payment_method = "Cash"
 
     food_items = json.loads(sess.food_items or "[]")

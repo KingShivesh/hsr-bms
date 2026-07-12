@@ -44,7 +44,7 @@ class Transaction(Base):
     payer_name     = Column(String,  default="")
     gst_amt        = Column(Integer, default=0)
     peak_surcharge = Column(Integer, default=0)
-    payment_method = Column(String,  default="Cash")   # Cash / UPI / Card
+    payment_method = Column(String,  default="Cash")   # Cash / UPI
 
 class ActiveSession(Base):
     __tablename__ = "active_sessions"

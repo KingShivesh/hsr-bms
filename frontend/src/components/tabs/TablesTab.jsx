@@ -27,7 +27,7 @@ import {
 } from "../../api/index.js";
 import { searchMembers, addMember } from "../../api/index.js";
 import { useToast } from "../toastContext.js";
-import { APP_NAME, HSR_TABLES, getTableLabel, getTableRate } from "../../config/hsrTables.js";
+import { HSR_TABLES, getTableLabel, getTableRate } from "../../config/hsrTables.js";
 
 const TABLES = HSR_TABLES;
 
@@ -62,7 +62,7 @@ function isFullName(name) {
 
 const BILLING_MODES = [
   { id: "single", label: "Single", hint: "One payer" },
-  { id: "sharing", label: "Sharing", hint: "Split bill" },
+  { id: "sharing", label: "Sharing", hint: "Split payment" },
   { id: "lp", label: "LP", hint: "Loser pays" },
 ];
 
@@ -1015,7 +1015,7 @@ function TableCard({
             <div
               style={{ fontSize: "13px", color: "#888", marginBottom: "20px" }}
             >
-              LP session: select the loser/payer for the full bill of ₹{total}
+              LP session: select the loser/payer before closing the table.
             </div>
             <div
               style={{ display: "flex", flexDirection: "column", gap: "8px" }}
@@ -1320,7 +1320,7 @@ function TableCard({
                   letterSpacing: "1px",
                 }}
               >
-                BILL{gstPercent > 0 ? " (incl. GST est.)" : ""}
+                RUNNING TOTAL{gstPercent > 0 ? " (incl. GST est.)" : ""}
               </div>
               <div
                 style={{
@@ -1370,7 +1370,7 @@ function TableCard({
                   boxShadow: "0 2px 8px rgba(0,0,0,0.4)",
                 }}
               >
-                {activeBillingMode === "lp" ? "SELECT PAYER" : "CHECKOUT"}
+                {activeBillingMode === "lp" ? "SELECT PAYER" : "CLOSE"}
               </button>
             ) : (
               <button
@@ -1496,7 +1496,7 @@ function TableCard({
               {activeBillingMode === "sharing" && shareCount > 1 && (
                 <strong>₹{shareAmount} each</strong>
               )}
-              {activeBillingMode === "lp" && <strong>payer selected at checkout</strong>}
+              {activeBillingMode === "lp" && <strong>payer selected on close</strong>}
             </div>
           )}
 
@@ -1542,7 +1542,7 @@ function TableCard({
           {/* Payment method */}
           {occupied && (
             <div className="table-payment-grid">
-              {["Cash", "UPI", "Card"].map((m) => (
+              {["Cash", "UPI"].map((m) => (
                 <button
                   key={m}
                   onClick={() => setPaymentMethod(m)}
@@ -1727,7 +1727,6 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
   const [menu, setMenu] = useState({});
   const [rates, setRates] = useState({ wr: 320, pr: 170, sr: 270 });
   const [maintenance, setMaintenance] = useState({});
-  const [receipt, setReceipt] = useState(null);
   const [peakRate, setPeakRate] = useState({
     multiplier: 1,
     label: "Standard",
@@ -2108,7 +2107,6 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
       const payerName = sess.billingMode === "lp" ? loserName : "";
       const res = await stopSession(id, paymentMethod, payerName);
       const rec = { ...res.data };
-      setReceipt(rec);
       setSessions((prev) => {
         const n = { ...prev };
         delete n[id];
@@ -2121,7 +2119,7 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
       });
       onSessionEnd();
       fetchQueue();
-      showToast(`Checkout complete — ₹${rec.tot}`, "success");
+      showToast(`Table closed (${rec.payment_method || paymentMethod})`, "success");
 
       const customerName = rec.payer_name || rec.nm || name;
       try {
@@ -2150,7 +2148,7 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
     try {
       await performCheckout();
     } catch (e) {
-      showToast(e.response?.data?.detail || "Failed to checkout", "error");
+      showToast(e.response?.data?.detail || "Failed to close table", "error");
     }
   }
 
@@ -2245,42 +2243,6 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
     localStorage.setItem("tablesViewMode", mode);
   }
 
-  function buildReceiptText(receiptData) {
-    const lines = [
-      `${APP_NAME} Receipt`,
-      `Date: ${receiptData.date}`,
-      `Table: ${receiptData.tbl}`,
-      `Customer: ${receiptData.nm}`,
-      `Billing: ${billingModeLabel(receiptData.billing_mode)}`,
-      `Duration: ${receiptData.dur} min`,
-      `Play: ₹${receiptData.ply}`,
-      `Food: ₹${receiptData.famt} (${receiptData.food})`,
-    ];
-    if (receiptData.players?.length) {
-      lines.push(`Players: ${receiptData.players.join(", ")}`);
-    }
-    if (receiptData.billing_mode === "sharing" && receiptData.share_count > 1) {
-      lines.push(`Share: ₹${receiptData.split_per_head} each x ${receiptData.share_count}`);
-    }
-    if (receiptData.billing_mode === "lp" && receiptData.payer_name) {
-      lines.push(`Paid by: ${receiptData.payer_name}`);
-    }
-    if (receiptData.gst_amt > 0) {
-      lines.push(`GST (${receiptData.gst_percent}%): ₹${receiptData.gst_amt}`);
-    }
-    lines.push(`Payment: ${receiptData.payment_method || "Cash"}`);
-    lines.push(`Total: ₹${receiptData.tot}`);
-    if (receiptData.notes) lines.push(`Notes: ${receiptData.notes}`);
-    lines.push("Thank you for visiting!");
-    return lines.join("\n");
-  }
-
-  function shareReceiptOnWhatsApp() {
-    if (!receipt) return;
-    const text = encodeURIComponent(buildReceiptText(receipt));
-    window.open(`https://wa.me/?text=${text}`, "_blank", "noopener,noreferrer");
-  }
-
   return (
     <>
       <QuickSessionModal
@@ -2292,109 +2254,6 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
         rates={rates}
         onStart={handleQuickStart}
       />
-
-      {receipt && (
-        <div className="receipt">
-          <div className="receipt-header">
-            <div className="receipt-title">BILLIARDS BMS</div>
-            <div className="receipt-sub">Official Receipt</div>
-          </div>
-          <hr className="receipt-divider" />
-          <div className="receipt-row">
-            <span>Date</span>
-            <span>{receipt.date}</span>
-          </div>
-          <div className="receipt-row">
-            <span>Table</span>
-            <span>{receipt.tbl}</span>
-          </div>
-          <div className="receipt-row">
-            <span>Customer</span>
-            <span>{receipt.nm}</span>
-          </div>
-          <div className="receipt-row">
-            <span>Billing</span>
-            <span>{billingModeLabel(receipt.billing_mode)}</span>
-          </div>
-          {receipt.players?.length > 0 && (
-            <div className="receipt-row">
-              <span>Players</span>
-              <span>{receipt.players.join(", ")}</span>
-            </div>
-          )}
-          {receipt.billing_mode === "lp" && receipt.payer_name && (
-            <div className="receipt-row">
-              <span>Paid by</span>
-              <span>{receipt.payer_name}</span>
-            </div>
-          )}
-          <div className="receipt-row">
-            <span>Duration</span>
-            <span>{receipt.dur} min</span>
-          </div>
-          {receipt.notes && (
-            <div className="receipt-row">
-              <span>Notes</span>
-              <span>{receipt.notes}</span>
-            </div>
-          )}
-          <hr className="receipt-divider" />
-          <div className="receipt-row">
-            <span>Play charge</span>
-            <span>₹{receipt.ply}</span>
-          </div>
-          <div className="receipt-row">
-            <span>Food</span>
-            <span>{receipt.food}</span>
-          </div>
-          <div className="receipt-row">
-            <span>Food amount</span>
-            <span>₹{receipt.famt}</span>
-          </div>
-          {receipt.billing_mode === "sharing" && receipt.share_count > 1 && (
-            <div className="receipt-row">
-              <span>Share</span>
-              <span>₹{receipt.split_per_head} each × {receipt.share_count}</span>
-            </div>
-          )}
-          {receipt.peak_surcharge > 0 && (
-            <div className="receipt-row">
-              <span>Peak surcharge ({receipt.peak_label})</span>
-              <span>₹{receipt.peak_surcharge}</span>
-            </div>
-          )}
-          {receipt.gst_amt > 0 && (
-            <div className="receipt-row">
-              <span>GST ({receipt.gst_percent}%)</span>
-              <span>₹{receipt.gst_amt}</span>
-            </div>
-          )}
-          <div className="receipt-row">
-            <span>Payment</span>
-            <span>{receipt.payment_method || "Cash"}</span>
-          </div>
-          <hr className="receipt-divider" />
-          <div className="receipt-total">
-            <span>TOTAL</span>
-            <span>₹{receipt.tot}</span>
-          </div>
-          <div className="receipt-footer">Thank you for visiting!</div>
-          <div className="receipt-actions">
-            <button type="button" onClick={() => window.print()}>
-              <i className="ti ti-printer" aria-hidden="true" />
-              Print
-            </button>
-            <button type="button" onClick={shareReceiptOnWhatsApp}>
-              <i className="ti ti-brand-whatsapp" aria-hidden="true" />
-              WhatsApp
-            </button>
-            <button type="button" onClick={() => setReceipt(null)}>
-              <i className="ti ti-x" aria-hidden="true" />
-              Close
-            </button>
-          </div>
-        </div>
-      )}
 
       <div className="tables-view-toolbar">
         <div>
