@@ -416,8 +416,7 @@ export default function Dashboard({ metrics, onNavigate }) {
     : null;
 
   function openClosingReport() {
-    localStorage.setItem("reportsDefaultTab", "closing");
-    onNavigate("reports");
+    onNavigate("closing");
   }
 
   function showFlash(msg) {

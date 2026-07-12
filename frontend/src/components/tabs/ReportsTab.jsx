@@ -17,6 +17,12 @@ const PERIODS = [
   { id: "week", label: "This Week" },
   { id: "all", label: "All Time" },
 ];
+const REPORT_TABS = [
+  { id: "history", label: "Transaction History" },
+  { id: "tables", label: "Table Utilization" },
+  { id: "customers", label: "Top Customers" },
+];
+const DEFAULT_REPORT_TAB = "history";
 
 function TabBtn({ active, onClick, children }) {
   return (
@@ -897,7 +903,12 @@ function AdvancedAnalyticsView() {
 // ── Main Reports Tab ──
 export default function ReportsTab() {
   const [activeTab, setActiveTab] = useState(
-    () => localStorage.getItem("reportsDefaultTab") || "history",
+    () => {
+      const savedTab = localStorage.getItem("reportsDefaultTab");
+      return REPORT_TABS.some((tab) => tab.id === savedTab)
+        ? savedTab
+        : DEFAULT_REPORT_TAB;
+    },
   );
   const [period, setPeriod] = useState("today");
   const [summary, setSummary] = useState({
@@ -946,16 +957,6 @@ export default function ReportsTab() {
     }
   }
 
-  const TABS = [
-    { id: "history", label: "Transaction History" },
-    { id: "customers", label: "Top Customers" },
-    { id: "tables", label: "Table Utilization" },
-    { id: "closing", label: "Closing Report" },
-    { id: "insights", label: "AI Insights" },
-    { id: "advanced", label: "Advanced Analytics" },
-    { id: "audit", label: "Audit Log" },
-  ];
-
   return (
     <div>
       {/* Summary cards — always visible */}
@@ -987,7 +988,7 @@ export default function ReportsTab() {
 
       {/* Sub-tab navigation */}
       <div className="segmented-control page-tabs">
-        {TABS.map((t) => (
+        {REPORT_TABS.map((t) => (
           <TabBtn
             key={t.id}
             active={activeTab === t.id}
