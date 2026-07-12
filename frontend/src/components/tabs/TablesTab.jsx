@@ -887,7 +887,7 @@ function TableCard({
   }, [session?.notes]);
 
   const isPool = table.type === "POOL";
-  const isCigarette = foodSel.toLowerCase().includes("cigarette");
+  const isCigarette = /cigarette|cigg/i.test(foodSel);
   const occupied = !!session;
   const paused = session?.paused || false;
   const rate = getTableRate(table, rates);
@@ -1636,7 +1636,7 @@ function TableCard({
                   value={foodMrp}
                   onChange={(e) => setFoodMrp(e.target.value)}
                   className="table-mini-input"
-                  placeholder="MRP"
+                  placeholder="Cigarette price"
                 />
               )}
               <div style={{ display: "flex", gap: "6px" }}>
@@ -1661,7 +1661,7 @@ function TableCard({
                   }}
                   className="table-mini-primary food"
                 >
-                  {isCigarette ? "Add MRP + ₹3" : "Add"}
+                  {isCigarette ? "Add cigarette" : "Add"}
                 </button>
               </div>
               {(session?.foodItems || []).map((f, i) => (
@@ -2174,9 +2174,9 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
     try {
       const res = await addFood(id, item, qty, mrp);
       const getPrice = (v) => (typeof v === "object" ? v.price : v);
-      const isCigarette = item.toLowerCase().includes("cigarette");
-      const unitPrice = isCigarette ? (mrp || 0) + 3 : getPrice(menu[item]);
-      const displayItem = isCigarette ? `${item} (MRP ₹${mrp} + ₹3)` : item;
+      const isCigarette = /cigarette|cigg/i.test(item);
+      const unitPrice = isCigarette ? (mrp || 0) : getPrice(menu[item]);
+      const displayItem = isCigarette ? `${item} (₹${mrp})` : item;
       setSessions((prev) => ({
         ...prev,
         [id]: {

@@ -17,7 +17,7 @@ import {
 } from "../../api/index.js";
 import OperationsTab from "./OperationsTab.jsx";
 
-const CATEGORIES = ["Drinks", "Snacks", "Meals"];
+const CATEGORIES = ["Drinks", "Snacks", "Meals", "Cigarettes"];
 
 function SettingsCard({ title, description, children }) {
   return (

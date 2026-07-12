@@ -18,6 +18,9 @@ class FoodOnlyOrderBody(BaseModel):
     customer_name: str
     items:         List[FoodOrderItem]
 
+def is_cigarette_item(name: str) -> bool:
+    return "cigarette" in (name or "").lower() or "cigg" in (name or "").lower()
+
 @router.post("/order")
 def place_food_order(body: FoodOnlyOrderBody, db: Session = Depends(get_db)):
     if not body.items:
@@ -34,11 +37,11 @@ def place_food_order(body: FoodOnlyOrderBody, db: Session = Depends(get_db)):
         if not menu_item.available:
             raise HTTPException(status_code=400, detail=f"{fi.item} is currently unavailable")
         item_name = fi.item
-        if "cigarette" in fi.item.lower():
+        if is_cigarette_item(fi.item):
             if not fi.mrp or fi.mrp <= 0:
-                raise HTTPException(status_code=400, detail="Enter cigarette MRP")
-            unit_price = fi.mrp + 3
-            item_name = f"{fi.item} (MRP ₹{fi.mrp} + ₹3)"
+                raise HTTPException(status_code=400, detail="Enter cigarette price")
+            unit_price = fi.mrp
+            item_name = f"{fi.item} (₹{fi.mrp})"
         else:
             unit_price = menu_item.price
         price = unit_price * fi.qty

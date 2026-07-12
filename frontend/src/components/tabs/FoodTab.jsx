@@ -69,16 +69,16 @@ export default function FoodTab() {
     return typeof v === "object" ? v.available !== false : true;
   }
   function isCigarette(name) {
-    return name.toLowerCase().includes("cigarette");
+    return /cigarette|cigg/i.test(name);
   }
   function getCartUnitPrice(item) {
-    if (isCigarette(item.item)) return (item.mrp || 0) + 3;
+    if (isCigarette(item.item)) return item.mrp || 0;
     return getItemPrice(menu[item.item]);
   }
 
   function addToCart(name) {
     const mrp = isCigarette(name)
-      ? parseInt(prompt("Enter cigarette MRP:") || "0", 10)
+      ? parseInt(prompt("Enter cigarette price:") || "0", 10)
       : null;
     if (isCigarette(name) && (!mrp || mrp <= 0)) return;
     setCart((prev) => {
@@ -196,7 +196,7 @@ export default function FoodTab() {
                       {name}
                     </div>
                     <div className="food-menu-price">
-                      {isCigarette(name) ? "MRP + ₹3" : `₹${getItemPrice(v)}`}
+                      {isCigarette(name) ? "Manual price" : `₹${getItemPrice(v)}`}
                     </div>
                     <div className="food-menu-category">
                       {getItemCat(v)}
@@ -253,7 +253,7 @@ export default function FoodTab() {
                         <div>
                           <div className="cart-line-name">
                             {isCigarette(i.item) && i.mrp
-                              ? `${i.item} (MRP ₹${i.mrp} + ₹3)`
+                              ? `${i.item} (₹${i.mrp})`
                               : i.item}
                           </div>
                           <div className="cart-line-meta">

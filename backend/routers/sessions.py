@@ -38,6 +38,9 @@ class UpdateNotes(BaseModel):
 class MaintenanceBody(BaseModel):
     reason: str = "Under maintenance"
 
+def is_cigarette_item(name: str) -> bool:
+    return "cigarette" in (name or "").lower() or "cigg" in (name or "").lower()
+
 def normalize_billing_mode(mode: str | None, split: bool) -> str:
     mode = (mode or "").strip().lower()
     if mode in {"single", "sharing", "lp"}:
@@ -287,11 +290,11 @@ def add_food(table_id: str, body: FoodItem, db: Session = Depends(get_db)):
     if not menu_item.available:
         raise HTTPException(status_code=400, detail=f"{body.item} is currently unavailable")
     item_name = body.item
-    if "cigarette" in body.item.lower():
+    if is_cigarette_item(body.item):
         if not body.mrp or body.mrp <= 0:
-            raise HTTPException(status_code=400, detail="Enter cigarette MRP")
-        unit_price = body.mrp + 3
-        item_name = f"{body.item} (MRP ₹{body.mrp} + ₹3)"
+            raise HTTPException(status_code=400, detail="Enter cigarette price")
+        unit_price = body.mrp
+        item_name = f"{body.item} (₹{body.mrp})"
     else:
         unit_price = menu_item.price
     price           = unit_price * body.qty

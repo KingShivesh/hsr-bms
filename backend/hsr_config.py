@@ -70,7 +70,7 @@ MENU_ITEMS = [
     ("Cool Drinks 200ml", 20, "Cold Beverages"),
     ("Golli Soda", 40, "Cold Beverages"),
     ("Scoop Ice Cream", 50, "Cold Beverages"),
-    ("Cigarettes MRP + 3", 3, "Cigarettes"),
+    ("Cigarettes", 0, "Cigarettes"),
 ]
 
 

@@ -52,7 +52,7 @@ FOODS = [
     ("Coffee", 2, None),
     ("Tea", 3, None),
     ("Plain Maggie", 1, None),
-    ("Cigarettes MRP + 3", 1, 20),
+    ("Cigarettes", 1, 20),
 ]
 PAYMENTS = ["Cash", "UPI"]
 
@@ -216,12 +216,12 @@ def run_food_only_order():
         "customer_name": random.choice(SINGLE_NAMES),
         "items": [
             {"item": "Coffee", "qty": 2},
-            {"item": "Cigarettes MRP + 3", "qty": 1, "mrp": 20},
+            {"item": "Cigarettes", "qty": 1, "mrp": 20},
         ],
     }
     result = request("POST", "/food/order", json=payload).json()
-    if result["total"] != 73:
-        raise SoakFailure(f"Cigarette MRP+3 calculation changed: {result}")
+    if result["total"] != 70:
+        raise SoakFailure(f"Cigarette manual price calculation changed: {result}")
     metrics["food_orders"] += 1
 
 
@@ -277,7 +277,7 @@ def run_expected_validation_checks():
         expected=400,
         json={
             "customer_name": "Test Customer",
-            "items": [{"item": "Cigarettes MRP + 3", "qty": 1}],
+            "items": [{"item": "Cigarettes", "qty": 1}],
         },
     )
     metrics["expected_errors"] += 1
