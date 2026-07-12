@@ -1514,7 +1514,7 @@ function TableCard({
           <CustomerInput
             value={name}
             onChange={onNameChange}
-            placeholder={billingMode === "single" ? "Customer name" : "Player 1"}
+            placeholder={billingMode === "single" ? "Customer full name" : "Player 1 full name"}
           />
           {!occupied && billingMode !== "single" && (
             billingMode === "lp" ? (

@@ -327,6 +327,7 @@ export default function SettingsTab() {
           </div>
         </div>
         <button className="btn btn-primary-sm" onClick={handleSaveRates}>
+          <i className="ti ti-device-floppy" aria-hidden="true" />
           Save rates
         </button>
       </SettingsCard>
@@ -353,6 +354,7 @@ export default function SettingsTab() {
             style={{ marginBottom: "1px" }}
             onClick={handleSaveMinSession}
           >
+            <i className="ti ti-device-floppy" aria-hidden="true" />
             Save
           </button>
         </div>
@@ -385,6 +387,7 @@ export default function SettingsTab() {
             style={{ marginBottom: "1px" }}
             onClick={handleSaveBookingGrace}
           >
+            <i className="ti ti-device-floppy" aria-hidden="true" />
             Save
           </button>
         </div>
@@ -477,28 +480,22 @@ export default function SettingsTab() {
                 style={{ whiteSpace: "nowrap" }}
                 onClick={() => handleUpdateItem(k)}
               >
+                <i className="ti ti-device-floppy" aria-hidden="true" />
                 Save
               </button>
               <button
                 onClick={() => handleToggleAvail(k, avail)}
-                style={{
-                  fontSize: "11px",
-                  padding: "6px 10px",
-                  borderRadius: "6px",
-                  cursor: "pointer",
-                  whiteSpace: "nowrap",
-                  background: avail ? "#f0fdf4" : "#fff1f2",
-                  color: avail ? "#16a34a" : "#e11d48",
-                  border: avail ? "1px solid #bbf7d0" : "1px solid #fecdd3",
-                  fontWeight: 500,
-                }}
+                className={`btn ${avail ? "btn-success-sm" : "btn-danger-sm"}`}
+                style={{ whiteSpace: "nowrap" }}
               >
+                <i className={avail ? "ti ti-check" : "ti ti-x"} aria-hidden="true" />
                 {avail ? "In stock" : "Out"}
               </button>
               <button
                 className="btn btn-danger-sm"
                 onClick={() => handleDeleteItem(k)}
               >
+                <i className="ti ti-trash" aria-hidden="true" />
                 Del
               </button>
             </div>
@@ -546,6 +543,7 @@ export default function SettingsTab() {
             onClick={handleAddItem}
             data-testid="add-menu-item-button"
           >
+            <i className="ti ti-plus" aria-hidden="true" />
             Add
           </button>
         </div>
@@ -590,6 +588,7 @@ export default function SettingsTab() {
           onClick={handleChangeAuth}
           data-testid="change-auth-button"
         >
+          <i className="ti ti-key" aria-hidden="true" />
           Update credentials
         </button>
       </SettingsCard>
@@ -605,6 +604,7 @@ export default function SettingsTab() {
             onClick={handleResetDaily}
             data-testid="reset-daily-button"
           >
+            <i className="ti ti-refresh" aria-hidden="true" />
             Reset daily stats
           </button>
           <button
@@ -612,6 +612,7 @@ export default function SettingsTab() {
             onClick={handleClearAll}
             data-testid="clear-all-button"
           >
+            <i className="ti ti-alert-triangle" aria-hidden="true" />
             Clear all data
           </button>
         </div>
