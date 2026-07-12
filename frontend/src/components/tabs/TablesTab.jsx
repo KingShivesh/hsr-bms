@@ -2275,26 +2275,36 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
 
       <div className="tables-view-toolbar">
         <div>
-          <div className="tables-view-title">Table floor</div>
+          <div className="tables-view-title">Table POS</div>
           <div className="tables-view-sub">
-            {compact ? "Compact scanning mode" : "Detailed session controls"}
+            {Object.keys(sessions).length} running · {TABLES.length - Object.keys(sessions).length} free · {compact ? "Compact scanning mode" : "Detailed session controls"}
           </div>
         </div>
-        <div className="segmented-control" aria-label="Table card density">
-          {[
-            ["detailed", "Detailed", "ti-layout-grid"],
-            ["compact", "Compact", "ti-layout-list"],
-          ].map(([mode, label, icon]) => (
-            <button
-              key={mode}
-              type="button"
-              className={viewMode === mode ? "active" : ""}
-              onClick={() => changeViewMode(mode)}
-            >
-              <i className={`ti ${icon}`} aria-hidden="true" />
-              <span>{label}</span>
-            </button>
-          ))}
+        <div className="tables-toolbar-actions">
+          <button
+            className="btn btn-success-sm"
+            type="button"
+            onClick={() => setQuickSessionOpen(true)}
+          >
+            <i className="ti ti-plus" aria-hidden="true" />
+            New session
+          </button>
+          <div className="segmented-control" aria-label="Table card density">
+            {[
+              ["detailed", "Detailed", "ti-layout-grid"],
+              ["compact", "Compact", "ti-layout-list"],
+            ].map(([mode, label, icon]) => (
+              <button
+                key={mode}
+                type="button"
+                className={viewMode === mode ? "active" : ""}
+                onClick={() => changeViewMode(mode)}
+              >
+                <i className={`ti ${icon}`} aria-hidden="true" />
+                <span>{label}</span>
+              </button>
+            ))}
+          </div>
         </div>
       </div>
 

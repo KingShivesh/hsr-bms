@@ -1,4 +1,4 @@
-import { Fragment, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import {
   BarChart,
   Bar,
@@ -12,23 +12,15 @@ import {
 } from "recharts";
 import {
   getActive,
-  getMembers,
   getAnalytics,
   getClosingReport,
   getClosingInsights,
-  closeChallenge,
-  createChallenge,
-  getChallenges,
-  matchChallenge,
 } from "../api/index.js";
 import { HSR_TABLES, TOTAL_TABLES, getTableLabel } from "../config/hsrTables.js";
 
 const TABLES = HSR_TABLES;
 
-const DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
-const HOURS = Array.from({ length: 24 }, (_, i) => i);
 const PIE_COLORS = ["#16a34a", "#e11d48", "#d97706"];
-const GAME_TYPES = ["8 Ball", "9 Ball", "10 Ball", "Snooker", "Straight Pool"];
 
 function fmt(secs) {
   if (!secs || secs <= 0) return "--:--";
@@ -51,172 +43,6 @@ function SectionTitle({ children }) {
       }}
     >
       {children}
-    </div>
-  );
-}
-
-function isFullName(name) {
-  return name.trim().split(/\s+/).filter(Boolean).length >= 2;
-}
-
-function ChallengeModePanel({ showFlash }) {
-  const [challenges, setChallenges] = useState([]);
-  const [challengeName, setChallengeName] = useState("");
-  const [challengeGame, setChallengeGame] = useState("8 Ball");
-  const [challengeTime, setChallengeTime] = useState("");
-  const [challengeNote, setChallengeNote] = useState("");
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    fetchChallenges();
-  }, []);
-
-  async function fetchChallenges() {
-    try {
-      const res = await getChallenges();
-      setChallenges(res.data);
-    } catch (e) {
-      console.error(e);
-    } finally {
-      setLoading(false);
-    }
-  }
-
-  async function handleCreateChallenge(e) {
-    e.preventDefault();
-    if (!isFullName(challengeName)) {
-      alert("Please enter the player's full name.");
-      return;
-    }
-    try {
-      await createChallenge({
-        player_name: challengeName,
-        game_type: challengeGame,
-        preferred_time: challengeTime,
-        note: challengeNote,
-      });
-      setChallengeName("");
-      setChallengeGame("8 Ball");
-      setChallengeTime("");
-      setChallengeNote("");
-      showFlash("Challenge posted");
-      fetchChallenges();
-    } catch (e) {
-      alert(e.response?.data?.detail || "Failed to create challenge");
-    }
-  }
-
-  async function handleMatchChallenge(challenge) {
-    const opponent = prompt(`Opponent for ${challenge.player_name}:`);
-    if (!opponent) return;
-    if (!isFullName(opponent)) {
-      alert("Please enter the opponent's full name.");
-      return;
-    }
-    try {
-      await matchChallenge(challenge.id, opponent);
-      showFlash("Challenge matched");
-      fetchChallenges();
-    } catch (e) {
-      alert(e.response?.data?.detail || "Failed to match challenge");
-    }
-  }
-
-  async function handleCloseChallenge(challengeId) {
-    try {
-      await closeChallenge(challengeId);
-      showFlash("Challenge closed");
-      fetchChallenges();
-    } catch {
-      alert("Failed to close challenge");
-    }
-  }
-
-  return (
-    <div className="panel dashboard-challenge-panel">
-      <div className="dashboard-challenge-head">
-        <SectionTitle>Challenge mode</SectionTitle>
-        <span>{challenges.length} open</span>
-      </div>
-      <form className="challenge-form dashboard-challenge-form" onSubmit={handleCreateChallenge}>
-        <input
-          className="input-field"
-          placeholder="Player full name"
-          value={challengeName}
-          onChange={(e) => setChallengeName(e.target.value)}
-        />
-        <select
-          className="input-field"
-          value={challengeGame}
-          onChange={(e) => setChallengeGame(e.target.value)}
-        >
-          {GAME_TYPES.map((g) => (
-            <option key={g}>{g}</option>
-          ))}
-        </select>
-        <input
-          className="input-field"
-          placeholder="Preferred time"
-          value={challengeTime}
-          onChange={(e) => setChallengeTime(e.target.value)}
-        />
-        <input
-          className="input-field"
-          placeholder="Note / stake optional"
-          value={challengeNote}
-          onChange={(e) => setChallengeNote(e.target.value)}
-        />
-        <button className="btn btn-primary-sm" type="submit">
-          Post Challenge
-        </button>
-      </form>
-
-      {loading ? (
-        <div className="empty-state compact">
-          <div className="empty-state-title">Loading challenges...</div>
-        </div>
-      ) : challenges.length === 0 ? (
-        <div className="empty-state compact">
-          <div className="empty-state-icon">
-            <i className="ti ti-swords" aria-hidden="true" />
-          </div>
-          <div className="empty-state-title">No open challenges</div>
-          <div className="empty-state-detail">
-            Post one from the dashboard when a player wants an opponent.
-          </div>
-        </div>
-      ) : (
-        <div className="challenge-list dashboard-challenge-list">
-          {challenges.slice(0, 5).map((challenge) => (
-            <div className="challenge-row" key={challenge.id}>
-              <div>
-                <strong>{challenge.player_name}</strong>
-                <span>
-                  {challenge.game_type}
-                  {challenge.preferred_time ? ` · ${challenge.preferred_time}` : ""}
-                </span>
-                {challenge.note && <small>{challenge.note}</small>}
-              </div>
-              <div className="challenge-actions">
-                <button
-                  className="member-action-btn is-upgrade"
-                  type="button"
-                  onClick={() => handleMatchChallenge(challenge)}
-                >
-                  Match
-                </button>
-                <button
-                  className="member-action-btn is-delete"
-                  type="button"
-                  onClick={() => handleCloseChallenge(challenge.id)}
-                >
-                  Close
-                </button>
-              </div>
-            </div>
-          ))}
-        </div>
-      )}
     </div>
   );
 }
@@ -294,13 +120,43 @@ function TableOccupancyPanel({ sessions, elapsed, onNavigate }) {
   );
 }
 
+function RunningTablesBar({ sessions, elapsed, onNavigate }) {
+  const running = TABLES
+    .filter((table) => sessions[table.id])
+    .map((table) => ({
+      table,
+      session: sessions[table.id],
+      elapsed: elapsed[table.id] || 0,
+    }));
+
+  return (
+    <button className="running-strip" type="button" onClick={() => onNavigate("tables")}>
+      <div className="running-strip-head">
+        <span>{running.length} running</span>
+        <strong>{running.length ? "Open floor" : "All tables idle"}</strong>
+      </div>
+      <div className="running-strip-list">
+        {running.length === 0 ? (
+          <span className="running-chip idle">No active sessions</span>
+        ) : (
+          running.map(({ table, session, elapsed: secs }) => (
+            <span className="running-chip" key={table.id}>
+              T{table.num} <strong>{fmt(secs)}</strong>
+              <em>{session.customer_name?.split(" ")[0] || "Player"}</em>
+            </span>
+          ))
+        )}
+      </div>
+      <i className="ti ti-chevron-right" aria-hidden="true" />
+    </button>
+  );
+}
+
 export default function Dashboard({ metrics, onNavigate }) {
   const [sessions, setSessions] = useState({});
-  const [members, setMembers] = useState([]);
   const [elapsed, setElapsed] = useState({});
   const [analytics, setAnalytics] = useState(null);
   const [digest, setDigest] = useState(null);
-  const [flash, setFlash] = useState("");
   const [, setLoading] = useState(true);
 
   useEffect(() => {
@@ -317,15 +173,6 @@ export default function Dashboard({ metrics, onNavigate }) {
         });
         setSessions(s);
         setElapsed(e);
-      } catch (err) {
-        console.error(err);
-      }
-    }
-
-    async function fetchMembers() {
-      try {
-        const res = await getMembers();
-        setMembers(res.data.slice(0, 5));
       } catch (err) {
         console.error(err);
       }
@@ -358,7 +205,6 @@ export default function Dashboard({ metrics, onNavigate }) {
     async function fetchAll() {
       await Promise.all([
         fetchActive(),
-        fetchMembers(),
         fetchAnalytics(),
         fetchDigest(),
       ]);
@@ -383,18 +229,6 @@ export default function Dashboard({ metrics, onNavigate }) {
     return () => clearInterval(iv);
   }, [sessions]);
 
-  // Build peak hours grid
-  function getPeakCount(day, hour) {
-    if (!analytics) return 0;
-    const entry = analytics.peak.find((p) => p.key === `${day}-${hour}`);
-    return entry ? entry.count : 0;
-  }
-
-  function getPeakMax() {
-    if (!analytics || analytics.peak.length === 0) return 1;
-    return Math.max(...analytics.peak.map((p) => p.count), 1);
-  }
-
   // Pie chart data
   const pieData = analytics
     ? [
@@ -404,40 +238,27 @@ export default function Dashboard({ metrics, onNavigate }) {
       ].filter((d) => d.value > 0)
     : [];
 
-  // MoM change
-  const momChange = analytics
-    ? analytics.mom.last_month > 0
-      ? Math.round(
-          ((analytics.mom.this_month - analytics.mom.last_month) /
-            analytics.mom.last_month) *
-            100,
-        )
-      : null
-    : null;
-
   function openClosingReport() {
     onNavigate("closing");
   }
 
-  function showFlash(msg) {
-    setFlash(msg);
-    setTimeout(() => setFlash(""), 2500);
-  }
+  const ownerReport = digest?.report;
+  const cashTotal = ownerReport?.cash_total || 0;
+  const upiTotal = ownerReport?.upi_total || 0;
+  const ownerTotal = ownerReport
+    ? (ownerReport.total_revenue || 0) + (ownerReport.food_only_revenue || 0)
+    : metrics.sale;
 
   return (
-    <div>
-      {flash && (
-        <div className="dashboard-flash">
-          {flash}
-        </div>
-      )}
+    <div className="dashboard-home">
+      <RunningTablesBar sessions={sessions} elapsed={elapsed} onNavigate={onNavigate} />
 
       {/* Metrics */}
       <div className="metrics-grid">
         <div className="metric-card green">
-          <div className="metric-label">Today's Revenue</div>
+          <div className="metric-label">Today Sales</div>
           <div className="metric-value">
-            ₹{metrics.sale.toLocaleString("en-IN")}
+            ₹{ownerTotal.toLocaleString("en-IN")}
           </div>
           <div className="metric-sub">{metrics.sessions} sessions today</div>
         </div>
@@ -451,9 +272,14 @@ export default function Dashboard({ metrics, onNavigate }) {
           </div>
         </div>
         <div className="metric-card">
-          <div className="metric-label">Total Customers</div>
-          <div className="metric-value">{metrics.cust}</div>
-          <div className="metric-sub">Avg {metrics.avg_time}m per session</div>
+          <div className="metric-label">Cash</div>
+          <div className="metric-value">₹{cashTotal.toLocaleString("en-IN")}</div>
+          <div className="metric-sub">From closed tables</div>
+        </div>
+        <div className="metric-card">
+          <div className="metric-label">UPI</div>
+          <div className="metric-value">₹{upiTotal.toLocaleString("en-IN")}</div>
+          <div className="metric-sub">From closed tables</div>
         </div>
         <div className="metric-card amber">
           <div className="metric-label">Food Sales</div>
@@ -523,16 +349,7 @@ export default function Dashboard({ metrics, onNavigate }) {
         )}
       </div>
 
-      {/* Row 1: Weekly chart + MoM */}
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "2fr 1fr",
-          gap: "16px",
-          marginBottom: "16px",
-        }}
-      >
-        {/* Weekly revenue bar chart */}
+      <div className="dashboard-sales-grid">
         <div className="panel">
           <SectionTitle>Revenue — last 7 days</SectionTitle>
           {analytics ? (
@@ -584,171 +401,6 @@ export default function Dashboard({ metrics, onNavigate }) {
           )}
         </div>
 
-        {/* Month over month */}
-        <div className="panel">
-          <SectionTitle>Month over month</SectionTitle>
-          {analytics ? (
-            <div>
-              <div style={{ marginBottom: "16px" }}>
-                <div
-                  style={{
-                    fontSize: "11px",
-                    color: "#bbb",
-                    marginBottom: "6px",
-                  }}
-                >
-                  {analytics.mom.this_label}
-                </div>
-                <div
-                  style={{
-                    fontSize: "28px",
-                    fontWeight: 700,
-                    color: "#16a34a",
-                  }}
-                >
-                  ₹{analytics.mom.this_month.toLocaleString("en-IN")}
-                </div>
-                {momChange !== null && (
-                  <div
-                    style={{
-                      fontSize: "12px",
-                      marginTop: "4px",
-                      color: momChange >= 0 ? "#16a34a" : "#e11d48",
-                      fontWeight: 500,
-                    }}
-                  >
-                    {momChange >= 0 ? "▲" : "▼"} {Math.abs(momChange)}% vs last
-                    month
-                  </div>
-                )}
-              </div>
-              <div
-                style={{ paddingTop: "14px", borderTop: "1px solid #f0f0f0" }}
-              >
-                <div
-                  style={{
-                    fontSize: "11px",
-                    color: "#bbb",
-                    marginBottom: "6px",
-                  }}
-                >
-                  {analytics.mom.last_label}
-                </div>
-                <div
-                  style={{ fontSize: "22px", fontWeight: 600, color: "#111" }}
-                >
-                  ₹{analytics.mom.last_month.toLocaleString("en-IN")}
-                </div>
-              </div>
-            </div>
-          ) : (
-            <div style={{ color: "#bbb", fontSize: "13px" }}>Loading...</div>
-          )}
-        </div>
-      </div>
-
-      {/* Row 2: Heatmap + Donut */}
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "2fr 1fr",
-          gap: "16px",
-          marginBottom: "16px",
-        }}
-      >
-        {/* Peak hours heatmap */}
-        <div className="panel">
-          <SectionTitle>Peak hours</SectionTitle>
-          <div style={{ overflowX: "auto" }}>
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "40px repeat(24, 1fr)",
-                gap: "2px",
-                minWidth: "600px",
-              }}
-            >
-              {/* Header row — hours */}
-              <div />
-              {HOURS.map((h) => (
-                <div
-                  key={h}
-                  style={{
-                    fontSize: "9px",
-                    color: "#bbb",
-                    textAlign: "center",
-                    paddingBottom: "4px",
-                  }}
-                >
-                  {h}
-                </div>
-              ))}
-              {/* Day rows */}
-              {DAYS.map((day, di) => (
-                <Fragment key={day}>
-                  <div
-                    style={{
-                      fontSize: "10px",
-                      color: "#bbb",
-                      display: "flex",
-                      alignItems: "center",
-                      paddingRight: "6px",
-                    }}
-                  >
-                    {day}
-                  </div>
-                  {HOURS.map((h) => {
-                    const count = getPeakCount(di, h);
-                    const max = getPeakMax();
-                    const intensity =
-                      count === 0 ? 0 : Math.max(0.08, count / max);
-                    return (
-                      <div
-                        key={`${di}-${h}`}
-                        title={`${day} ${h}:00 — ${count} sessions`}
-                        style={{
-                          height: "20px",
-                          borderRadius: "3px",
-                          background:
-                            count === 0
-                              ? "#f5f5f5"
-                              : `rgba(22, 163, 74, ${intensity})`,
-                          border: "1px solid #f0f0f0",
-                        }}
-                      />
-                    );
-                  })}
-                </Fragment>
-              ))}
-            </div>
-          </div>
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: "8px",
-              marginTop: "10px",
-              fontSize: "11px",
-              color: "#bbb",
-            }}
-          >
-            <span>Less</span>
-            {[0.08, 0.25, 0.5, 0.75, 1].map((op) => (
-              <div
-                key={op}
-                style={{
-                  width: "14px",
-                  height: "14px",
-                  borderRadius: "3px",
-                  background: `rgba(22,163,74,${op})`,
-                }}
-              />
-            ))}
-            <span>More</span>
-          </div>
-        </div>
-
-        {/* Revenue breakdown donut */}
         <div className="panel">
           <SectionTitle>Revenue breakdown</SectionTitle>
           {pieData.length > 0 ? (
@@ -828,61 +480,6 @@ export default function Dashboard({ metrics, onNavigate }) {
               No data yet
             </div>
           )}
-        </div>
-      </div>
-
-      {/* Row 3: Table heatmap + Top members */}
-      <div className="dashboard-grid">
-        <ChallengeModePanel showFlash={showFlash} />
-
-        {/* Top members */}
-        <div className="panel">
-          <SectionTitle>Top members</SectionTitle>
-          {members.length === 0 ? (
-            <div
-              style={{
-                color: "#bbb",
-                fontSize: "13px",
-                textAlign: "center",
-                padding: "20px 0",
-              }}
-            >
-              No members yet
-            </div>
-          ) : (
-            members.map((m, i) => (
-              <div key={i} className="member-row">
-                <div>
-                  <div className="member-name">{m.nm}</div>
-                  <div className="member-id">{m.id}</div>
-                </div>
-                <div style={{ textAlign: "right" }}>
-                  <div className="member-spent">
-                    ₹{m.spt.toLocaleString("en-IN")}
-                  </div>
-                  <div style={{ marginTop: "3px" }}>
-                    <span
-                      className={`member-badge ${m.typ === "Premium" ? "badge-premium" : "badge-regular"}`}
-                    >
-                      {m.typ.toUpperCase()}
-                    </span>
-                  </div>
-                </div>
-              </div>
-            ))
-          )}
-          <div
-            style={{
-              marginTop: "12px",
-              fontSize: "12px",
-              color: "#2563eb",
-              cursor: "pointer",
-              textAlign: "right",
-            }}
-            onClick={() => onNavigate("members")}
-          >
-            View all members →
-          </div>
         </div>
       </div>
     </div>

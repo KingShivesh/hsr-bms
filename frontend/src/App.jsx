@@ -8,16 +8,14 @@ import { getSummary } from "./api/index.js";
 
 const Dashboard = lazy(() => import("./components/Dashboard.jsx"));
 const TablesTab = lazy(() => import("./components/tabs/TablesTab.jsx"));
-const MembersTab = lazy(() => import("./components/tabs/MembersTab.jsx"));
 const ReportsTab = lazy(() => import("./components/tabs/ReportsTab.jsx"));
 const ClosingTab = lazy(() => import("./components/tabs/ClosingTab.jsx"));
 const SettingsTab = lazy(() => import("./components/tabs/SettingsTab.jsx"));
 const FoodTab = lazy(() => import("./components/tabs/FoodTab.jsx"));
-const TournamentTab = lazy(() => import("./components/tabs/TournamentTab.jsx"));
 
 export default function App() {
   const [loggedIn, setLoggedIn] = useState(!!localStorage.getItem("token"));
-  const [page, setPage] = useState("dashboard");
+  const [page, setPage] = useState("tables");
   const [newSessionRequest, setNewSessionRequest] = useState(0);
   const [metrics, setMetrics] = useState({
     sale: 0,
@@ -62,11 +60,9 @@ export default function App() {
   const PAGE_TITLES = {
     dashboard: "Dashboard",
     tables: "Tables",
-    members: "Members",
     reports: "Reports",
     closing: "Daily Closing",
     food: "Food Orders",
-    tournaments: "Tournament Mode",
     settings: "Settings",
   };
 
@@ -111,11 +107,9 @@ export default function App() {
                   newSessionRequest={newSessionRequest}
                 />
               )}
-              {page === "members" && <MembersTab />}
               {page === "reports" && <ReportsTab />}
               {page === "closing" && <ClosingTab />}
               {page === "food" && <FoodTab />}
-              {page === "tournaments" && <TournamentTab />}
               {page === "settings" && <SettingsTab />}
             </div>
           </Suspense>

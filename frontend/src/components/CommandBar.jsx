@@ -24,7 +24,7 @@ export default function CommandBar({ page, setPage, onNewSession }) {
       {
         id: "dashboard",
         label: "Dashboard",
-        hint: "Owner digest",
+        hint: "Owner glance",
         icon: "ti-layout-dashboard",
         action: () => setPage("dashboard"),
       },
@@ -36,13 +36,6 @@ export default function CommandBar({ page, setPage, onNewSession }) {
         action: () => setPage("tables"),
       },
       {
-        id: "members",
-        label: "Members",
-        hint: "Customer profiles",
-        icon: "ti-users",
-        action: () => setPage("members"),
-      },
-      {
         id: "food",
         label: "Food orders",
         hint: "Menu and cart",
@@ -52,7 +45,7 @@ export default function CommandBar({ page, setPage, onNewSession }) {
       {
         id: "reports",
         label: "Reports",
-        hint: "Closing and audit",
+        hint: "Bills and table performance",
         icon: "ti-chart-bar",
         action: () => setPage("reports"),
       },
@@ -62,13 +55,6 @@ export default function CommandBar({ page, setPage, onNewSession }) {
         hint: "Cash, UPI and open tables",
         icon: "ti-clipboard-check",
         action: () => setPage("closing"),
-      },
-      {
-        id: "tournaments",
-        label: "Tournaments",
-        hint: "Matches and brackets",
-        icon: "ti-trophy",
-        action: () => setPage("tournaments"),
       },
       {
         id: "settings",

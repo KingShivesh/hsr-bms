@@ -18,9 +18,9 @@ const PERIODS = [
   { id: "all", label: "All Time" },
 ];
 const REPORT_TABS = [
-  { id: "history", label: "Transaction History" },
-  { id: "tables", label: "Table Utilization" },
-  { id: "customers", label: "Top Customers" },
+  { id: "history", label: "Bills" },
+  { id: "tables", label: "Table Performance" },
+  { id: "customers", label: "Regular Customers" },
 ];
 const DEFAULT_REPORT_TAB = "history";
 
@@ -73,7 +73,7 @@ function LoadingState({ title = "Loading report..." }) {
   );
 }
 
-// ── Transaction History ──
+// ── Bills ──
 function HistoryView({ history, period, onPeriodChange, onExport }) {
   const [search, setSearch] = useState("");
   const labelBillingMode = (mode) => {
@@ -112,7 +112,7 @@ function HistoryView({ history, period, onPeriodChange, onExport }) {
         }}
       >
         <div style={{ fontSize: "13px", fontWeight: 600, color: "var(--venue-text, var(--text))" }}>
-          Transaction History
+          Bills
         </div>
         <div style={{ display: "flex", gap: "6px", flexWrap: "wrap" }}>
           {PERIODS.map((p) => (
@@ -216,7 +216,7 @@ function HistoryView({ history, period, onPeriodChange, onExport }) {
   );
 }
 
-// ── Top Customers ──
+// ── Regular Customers ──
 function TopCustomersView() {
   const [data, setData] = useState(null);
   const [period, setPeriod] = useState("month");
@@ -244,7 +244,7 @@ function TopCustomersView() {
         }}
       >
         <div style={{ fontSize: "14px", fontWeight: 600, color: "var(--venue-text, var(--text))" }}>
-          Top Customers{" "}
+          Regular Customers{" "}
           {data && (
             <span style={{ fontSize: "12px", color: "#bbb", fontWeight: 400 }}>
               — {data.label}
@@ -341,7 +341,7 @@ function TopCustomersView() {
   );
 }
 
-// ── Table Utilization ──
+// ── Table Performance ──
 function UtilizationView() {
   const [data, setData] = useState([]);
 
@@ -363,7 +363,7 @@ function UtilizationView() {
           marginBottom: "16px",
         }}
       >
-        Table Utilization
+        Table Performance
       </div>
 
       {/* Summary cards */}

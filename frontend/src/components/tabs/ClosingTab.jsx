@@ -118,9 +118,9 @@ export default function ClosingTab() {
       </div>
 
       <div className="closing-metric-grid">
+        <ClosingMetric label="Total sales" value={money(totalSales)} icon="ti-report-money" tone="total" />
         <ClosingMetric label="Cash" value={money(data.cash_total)} icon="ti-cash" tone="cash" />
         <ClosingMetric label="UPI" value={money(data.upi_total)} icon="ti-qrcode" tone="upi" />
-        <ClosingMetric label="Total sales" value={money(totalSales)} icon="ti-report-money" />
         <ClosingMetric label="Table sales" value={money(data.total_revenue)} icon="ti-billiard" />
         <ClosingMetric label="Food sales" value={money(totalFoodSales)} icon="ti-tools-kitchen-2" />
         <ClosingMetric label="Sessions" value={data.total_sessions} icon="ti-receipt" />
@@ -140,11 +140,11 @@ export default function ClosingTab() {
           />
           <ChecklistRow
             ok={!hasFoodOnly}
-            label="Food-only payment review"
+            label="Counter food sales"
             detail={
               hasFoodOnly
-                ? `${money(foodOnlyTotal)} food-only sales are not split by Cash/UPI yet. Verify manually.`
-                : "No separate food-only sales today."
+                ? `${money(foodOnlyTotal)} counter food sales need manual Cash/UPI checking.`
+                : "No counter-only food sales today."
             }
           />
           <ChecklistRow
