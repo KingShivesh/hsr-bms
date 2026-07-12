@@ -642,13 +642,23 @@ function QuickSessionModal({
           </div>
           {billingMode !== "single" && (
             <div>
-              <label className="form-label">Other players</label>
-              <input
-                className="table-mini-input"
-                value={otherPlayers}
-                onChange={(e) => setOtherPlayers(e.target.value)}
-                placeholder="Example: Aman Verma, Riya Singh"
-              />
+              <label className="form-label">
+                {billingMode === "lp" ? "Player 2 full name" : "Other players"}
+              </label>
+              {billingMode === "lp" ? (
+                <CustomerInput
+                  value={otherPlayers}
+                  onChange={setOtherPlayers}
+                  placeholder="Second player's full name"
+                />
+              ) : (
+                <input
+                  className="table-mini-input"
+                  value={otherPlayers}
+                  onChange={(e) => setOtherPlayers(e.target.value)}
+                  placeholder="Example: Aman Verma, Riya Singh"
+                />
+              )}
             </div>
           )}
         </div>
@@ -1507,12 +1517,20 @@ function TableCard({
             placeholder={billingMode === "single" ? "Customer name" : "Player 1"}
           />
           {!occupied && billingMode !== "single" && (
-            <input
-              className="table-mini-input"
-              value={otherPlayers}
-              onChange={(e) => setOtherPlayers(e.target.value)}
-              placeholder="Other players, comma separated"
-            />
+            billingMode === "lp" ? (
+              <CustomerInput
+                value={otherPlayers}
+                onChange={setOtherPlayers}
+                placeholder="Player 2 full name"
+              />
+            ) : (
+              <input
+                className="table-mini-input"
+                value={otherPlayers}
+                onChange={(e) => setOtherPlayers(e.target.value)}
+                placeholder="Other players, comma separated"
+              />
+            )
           )}
 
           {/* Pause / Reset */}
