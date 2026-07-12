@@ -8,6 +8,7 @@ export default function Sidebar({ page, setPage, onLogout, activeTables }) {
     { id: "food", icon: "ti-tools-kitchen-2", label: "Food Orders" },
     { id: "tournaments", icon: "ti-trophy", label: "Tournaments" },
     { id: "reports", icon: "ti-chart-bar", label: "Reports" },
+    { id: "closing", icon: "ti-clipboard-check", label: "Closing" },
   ];
 
   return (

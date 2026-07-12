@@ -57,6 +57,13 @@ export default function CommandBar({ page, setPage, onNewSession }) {
         action: () => setPage("reports"),
       },
       {
+        id: "closing",
+        label: "Daily closing",
+        hint: "Cash, UPI and open tables",
+        icon: "ti-clipboard-check",
+        action: () => setPage("closing"),
+      },
+      {
         id: "tournaments",
         label: "Tournaments",
         hint: "Matches and brackets",

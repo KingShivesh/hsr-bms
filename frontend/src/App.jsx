@@ -10,6 +10,7 @@ const Dashboard = lazy(() => import("./components/Dashboard.jsx"));
 const TablesTab = lazy(() => import("./components/tabs/TablesTab.jsx"));
 const MembersTab = lazy(() => import("./components/tabs/MembersTab.jsx"));
 const ReportsTab = lazy(() => import("./components/tabs/ReportsTab.jsx"));
+const ClosingTab = lazy(() => import("./components/tabs/ClosingTab.jsx"));
 const SettingsTab = lazy(() => import("./components/tabs/SettingsTab.jsx"));
 const FoodTab = lazy(() => import("./components/tabs/FoodTab.jsx"));
 const TournamentTab = lazy(() => import("./components/tabs/TournamentTab.jsx"));
@@ -63,6 +64,7 @@ export default function App() {
     tables: "Tables",
     members: "Members",
     reports: "Reports",
+    closing: "Daily Closing",
     food: "Food Orders",
     tournaments: "Tournament Mode",
     settings: "Settings",
@@ -111,6 +113,7 @@ export default function App() {
               )}
               {page === "members" && <MembersTab />}
               {page === "reports" && <ReportsTab />}
+              {page === "closing" && <ClosingTab />}
               {page === "food" && <FoodTab />}
               {page === "tournaments" && <TournamentTab />}
               {page === "settings" && <SettingsTab />}

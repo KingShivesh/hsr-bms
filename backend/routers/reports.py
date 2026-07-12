@@ -43,6 +43,13 @@ def filter_transactions(transactions, period: str):
         return [t for t in transactions if (lambda d: d and d >= week_ago)(parse_date(t))]
     return transactions  # all time
 
+def parse_food_items(raw_items: str | None):
+    try:
+        parsed = json.loads(raw_items or "[]")
+    except json.JSONDecodeError:
+        return []
+    return parsed if isinstance(parsed, list) else []
+
 # ── Summary ──
 @router.get("/summary")
 def get_summary(db: Session = Depends(get_db)):
@@ -190,6 +197,33 @@ def closing_report(db: Session = Depends(get_db)):
     food_revenue   = sum(t.food_charge for t in txns)
     total_sessions = len(txns)
     avg_duration   = round(sum(t.duration for t in txns) / total_sessions) if total_sessions else 0
+    payment_breakdown = {"Cash": 0, "UPI": 0}
+    for t in txns:
+        method = t.payment_method if t.payment_method in payment_breakdown else "Cash"
+        payment_breakdown[method] += t.total
+
+    food_only_orders = [
+        o for o in db.query(models.FoodOnlyOrder).all()
+        if o.date and o.date.startswith(today)
+    ]
+    food_only_revenue = sum(o.total for o in food_only_orders)
+    active_sessions = db.query(models.ActiveSession).filter(
+        models.ActiveSession.customer_name != ""
+    ).all()
+    active_table_ids = {s.table_id.lower() for s in active_sessions}
+    open_tables = [
+        {
+            "table_id": s.table_id.upper(),
+            "customer_name": s.customer_name,
+            "food_total": s.food_total or 0,
+        }
+        for s in active_sessions
+    ]
+    idle_tables = [
+        table_id.upper()
+        for table_id in TABLE_RATES
+        if table_id.lower() not in active_table_ids
+    ]
 
     # Table breakdown
     table_breakdown = defaultdict(lambda: {"sessions": 0, "revenue": 0})
@@ -221,14 +255,31 @@ def closing_report(db: Session = Depends(get_db)):
         "total_revenue":  total_revenue,
         "play_revenue":   play_revenue,
         "food_revenue":   food_revenue,
+        "food_only_revenue": food_only_revenue,
+        "cash_total": payment_breakdown["Cash"],
+        "upi_total": payment_breakdown["UPI"],
+        "payment_breakdown": payment_breakdown,
         "total_sessions": total_sessions,
         "avg_duration":   avg_duration,
+        "active_tables": len(open_tables),
+        "open_tables": open_tables,
+        "idle_tables": idle_tables,
+        "can_close_day": len(open_tables) == 0,
         "peak_hour":      f"{peak_hour}:00 – {peak_hour+1}:00" if peak_hour is not None else "—",
         "table_breakdown": dict(table_breakdown),
         "food_breakdown":  dict(food_counter),
+        "food_only_orders": [
+            {
+                "customer_name": o.customer_name,
+                "total": o.total,
+                "items": parse_food_items(o.items),
+            }
+            for o in food_only_orders
+        ],
         "transactions":   [
             { "tbl": t.table_id, "nm": t.customer_name, "dur": t.duration,
-              "ply": t.play_charge, "famt": t.food_charge, "tot": t.total }
+              "ply": t.play_charge, "famt": t.food_charge, "tot": t.total,
+              "payment_method": t.payment_method or "Cash" }
             for t in txns
         ]
     }
