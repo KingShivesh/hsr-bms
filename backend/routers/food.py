@@ -17,6 +17,7 @@ class FoodOrderItem(BaseModel):
 class FoodOnlyOrderBody(BaseModel):
     customer_name: str
     items:         List[FoodOrderItem]
+    payment_method: str = "Cash"
 
 def is_cigarette_item(name: str) -> bool:
     return "cigarette" in (name or "").lower() or "cigg" in (name or "").lower()
@@ -25,6 +26,7 @@ def is_cigarette_item(name: str) -> bool:
 def place_food_order(body: FoodOnlyOrderBody, db: Session = Depends(get_db)):
     if not body.items:
         raise HTTPException(status_code=400, detail="No items in order")
+    payment_method = body.payment_method if body.payment_method in {"Cash", "UPI"} else "Cash"
 
     total    = 0
     order    = []
@@ -54,9 +56,10 @@ def place_food_order(body: FoodOnlyOrderBody, db: Session = Depends(get_db)):
         customer_name = body.customer_name,
         items         = json.dumps(order),
         total         = total,
+        payment_method = payment_method,
     ))
     db.commit()
-    return {"ok": True, "total": total, "items": order}
+    return {"ok": True, "total": total, "items": order, "payment_method": payment_method}
 
 @router.get("/orders")
 def get_food_orders(db: Session = Depends(get_db)):
@@ -67,6 +70,7 @@ def get_food_orders(db: Session = Depends(get_db)):
             "customer_name": o.customer_name,
             "items":         json.loads(o.items),
             "total":         o.total,
+            "payment_method": o.payment_method or "Cash",
         }
         for o in orders
     ]

@@ -35,6 +35,7 @@ export default function FoodTab() {
   const [orders, setOrders] = useState([]);
   const [cart, setCart] = useState([]);
   const [customerName, setCustomerName] = useState("");
+  const [paymentMethod, setPaymentMethod] = useState("Cash");
   const [activeTab, setActiveTab] = useState("order");
   const [activeCat, setActiveCat] = useState("All");
   const [placing, setPlacing] = useState(false);
@@ -114,11 +115,12 @@ export default function FoodTab() {
     }
     setPlacing(true);
     try {
-      const res = await placeFoodOrder(customerName.trim(), cart);
+      const res = await placeFoodOrder(customerName.trim(), cart, paymentMethod);
       setLastOrder({
         customer: customerName,
         items: res.data.items,
         total: res.data.total,
+        paymentMethod: res.data.payment_method,
       });
       setCart([]);
       setCustomerName("");
@@ -235,6 +237,20 @@ export default function FoodTab() {
                 onChange={(e) => setCustomerName(e.target.value)}
               />
 
+              <div className="food-payment-toggle" aria-label="Payment method">
+                {["Cash", "UPI"].map((method) => (
+                  <button
+                    key={method}
+                    type="button"
+                    className={paymentMethod === method ? "active" : ""}
+                    onClick={() => setPaymentMethod(method)}
+                  >
+                    <i className={`ti ${method === "Cash" ? "ti-cash" : "ti-qrcode"}`} aria-hidden="true" />
+                    {method}
+                  </button>
+                ))}
+              </div>
+
               {cart.length === 0 ? (
                 <EmptyState
                   icon="ti-shopping-cart-plus"
@@ -322,7 +338,7 @@ export default function FoodTab() {
                     </div>
                   ))}
                   <div className="success-callout-total">
-                    Total: ₹{lastOrder.total}
+                    Total: ₹{lastOrder.total} · {lastOrder.paymentMethod || "Cash"}
                   </div>
                 </div>
               )}
@@ -446,6 +462,7 @@ export default function FoodTab() {
                     <th>Date</th>
                     <th>Customer</th>
                     <th>Items</th>
+                    <th>Payment</th>
                     <th>Total</th>
                   </tr>
                 </thead>
@@ -458,6 +475,9 @@ export default function FoodTab() {
                       <td style={{ fontWeight: 500 }}>{o.customer_name}</td>
                       <td style={{ fontSize: "12px", color: "#888" }}>
                         {o.items.map((x) => `${x.item} x${x.qty}`).join(", ")}
+                      </td>
+                      <td style={{ fontWeight: 700, color: o.payment_method === "UPI" ? "#2563eb" : "#16a34a" }}>
+                        {o.payment_method || "Cash"}
                       </td>
                       <td style={{ fontWeight: 600, color: "#16a34a" }}>
                         ₹{o.total}

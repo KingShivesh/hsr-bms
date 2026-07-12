@@ -207,6 +207,15 @@ def closing_report(db: Session = Depends(get_db)):
         if o.date and o.date.startswith(today)
     ]
     food_only_revenue = sum(o.total for o in food_only_orders)
+    food_only_payment_breakdown = {"Cash": 0, "UPI": 0}
+    for o in food_only_orders:
+        method = o.payment_method if o.payment_method in food_only_payment_breakdown else "Cash"
+        food_only_payment_breakdown[method] += o.total or 0
+        payment_breakdown[method] += o.total or 0
+    corrections_today = db.query(models.AuditLog).filter(
+        models.AuditLog.date.like(f"{today}%"),
+        models.AuditLog.action.in_(["session_reset", "daily_reset", "clear_all"]),
+    ).order_by(models.AuditLog.ts.desc()).all()
     active_sessions = db.query(models.ActiveSession).filter(
         models.ActiveSession.customer_name != ""
     ).all()
@@ -256,6 +265,7 @@ def closing_report(db: Session = Depends(get_db)):
         "play_revenue":   play_revenue,
         "food_revenue":   food_revenue,
         "food_only_revenue": food_only_revenue,
+        "food_only_payment_breakdown": food_only_payment_breakdown,
         "cash_total": payment_breakdown["Cash"],
         "upi_total": payment_breakdown["UPI"],
         "payment_breakdown": payment_breakdown,
@@ -273,8 +283,19 @@ def closing_report(db: Session = Depends(get_db)):
                 "customer_name": o.customer_name,
                 "total": o.total,
                 "items": parse_food_items(o.items),
+                "payment_method": o.payment_method or "Cash",
             }
             for o in food_only_orders
+        ],
+        "corrections_today": [
+            {
+                "date": row.date,
+                "action": row.action,
+                "severity": row.severity,
+                "detail": row.detail,
+                "amount": row.amount or 0,
+            }
+            for row in corrections_today
         ],
         "transactions":   [
             { "tbl": t.table_id, "nm": t.customer_name, "dur": t.duration,

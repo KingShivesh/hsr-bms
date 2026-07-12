@@ -121,8 +121,8 @@ export const saveBookingGrace = (booking_grace_minutes) =>
   api.post("/settings/booking-grace", { booking_grace_minutes });
 
 // Food Orders
-export const placeFoodOrder = (customer_name, items) =>
-  api.post("/food/order", { customer_name, items });
+export const placeFoodOrder = (customer_name, items, payment_method = "Cash") =>
+  api.post("/food/order", { customer_name, items, payment_method });
 export const getFoodOrders = () => api.get("/food/orders");
 export const getFoodStats = () => api.get("/food/stats");
 

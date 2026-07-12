@@ -91,6 +91,9 @@ export default function ClosingTab() {
   const totalSales = (data.total_revenue || 0) + foodOnlyTotal;
   const totalFoodSales = (data.food_revenue || 0) + foodOnlyTotal;
   const hasFoodOnly = foodOnlyTotal > 0;
+  const counterCash = data.food_only_payment_breakdown?.Cash || 0;
+  const counterUpi = data.food_only_payment_breakdown?.UPI || 0;
+  const corrections = data.corrections_today || [];
 
   return (
     <div className="closing-page">
@@ -139,12 +142,21 @@ export default function ClosingTab() {
             }
           />
           <ChecklistRow
-            ok={!hasFoodOnly}
+            ok
             label="Counter food sales"
             detail={
               hasFoodOnly
-                ? `${money(foodOnlyTotal)} counter food sales need manual Cash/UPI checking.`
+                ? `${money(foodOnlyTotal)} recorded: Cash ${money(counterCash)}, UPI ${money(counterUpi)}.`
                 : "No counter-only food sales today."
+            }
+          />
+          <ChecklistRow
+            ok={corrections.length === 0}
+            label="Corrections reviewed"
+            detail={
+              corrections.length
+                ? `${corrections.length} reset/clear action(s) need owner review.`
+                : "No reset or clear actions today."
             }
           />
           <ChecklistRow
@@ -243,6 +255,37 @@ export default function ClosingTab() {
             </table>
           )}
         </div>
+      </div>
+
+      <div className="history-section">
+        <div className="section-heading">Corrections Today</div>
+        {corrections.length === 0 ? (
+          <div className="closing-empty-line">
+            <i className="ti ti-circle-check" aria-hidden="true" />
+            No resets, daily clears, or full data clears today.
+          </div>
+        ) : (
+          <table className="data-table">
+            <thead>
+              <tr>
+                <th>Time</th>
+                <th>Action</th>
+                <th>Detail</th>
+                <th>Amount</th>
+              </tr>
+            </thead>
+            <tbody>
+              {corrections.map((row, index) => (
+                <tr key={`${row.action}-${row.date}-${index}`}>
+                  <td style={{ color: "#64748b", fontSize: "12px" }}>{row.date}</td>
+                  <td style={{ color: "#e11d48", fontWeight: 800 }}>{row.action.replaceAll("_", " ")}</td>
+                  <td>{row.detail}</td>
+                  <td style={{ fontWeight: 800 }}>{row.amount || "-"}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
       </div>
 
       <div className="history-section">

@@ -79,6 +79,7 @@ class FoodOnlyOrder(Base):
     customer_name = Column(String)
     items         = Column(Text)
     total         = Column(Integer)
+    payment_method = Column(String, default="Cash")
 
 class TableMaintenance(Base):
     __tablename__ = "table_maintenance"

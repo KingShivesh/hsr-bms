@@ -29,6 +29,9 @@ RUNTIME_COLUMNS = {
         "players_json": "TEXT DEFAULT '[]'",
         "payer_name": "VARCHAR DEFAULT ''",
     },
+    "food_only_orders": {
+        "payment_method": "VARCHAR DEFAULT 'Cash'",
+    },
 }
 
 

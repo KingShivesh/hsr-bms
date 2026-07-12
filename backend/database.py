@@ -41,6 +41,9 @@ def ensure_runtime_columns():
             "players_json": "TEXT DEFAULT '[]'",
             "payer_name": "VARCHAR DEFAULT ''",
         },
+        "food_only_orders": {
+            "payment_method": "VARCHAR DEFAULT 'Cash'",
+        },
     }
     inspector = inspect(engine)
     existing_tables = set(inspector.get_table_names())

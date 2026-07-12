@@ -1808,6 +1808,34 @@ body.dark .table-session-card {
   color: #147043;
 }
 
+.food-payment-toggle {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  margin: 10px 0 12px;
+}
+
+.food-payment-toggle button {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  border: 1px solid var(--venue-line, var(--border));
+  border-radius: 8px;
+  background: var(--venue-card, var(--surface));
+  color: var(--venue-muted, var(--muted));
+  font-size: 12px;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.food-payment-toggle button.active {
+  border-color: #bfe9d0;
+  background: #e9f7ef;
+  color: #147043;
+}
+
 .cart-line {
   display: flex;
   justify-content: space-between;
