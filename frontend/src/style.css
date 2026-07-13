@@ -3091,8 +3091,7 @@ body.dark .table-frame-running {
   margin-top: 10px;
 }
 
-.checkout-split-parts span,
-.checkout-frame-list span {
+.checkout-split-parts span {
   border-radius: 999px;
   background: var(--surface-soft);
   border: 1px solid var(--venue-line-soft, var(--border));
@@ -3100,9 +3099,45 @@ body.dark .table-frame-running {
 }
 
 .checkout-frame-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 9px;
+}
+
+.checkout-frame-card {
   display: flex;
-  flex-wrap: wrap;
-  gap: 7px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  border: 1px solid var(--venue-line-soft, var(--border));
+  border-radius: 10px;
+  background: var(--venue-card, var(--surface));
+  padding: 10px 12px;
+}
+
+.checkout-frame-card strong,
+.checkout-frame-card span,
+.checkout-frame-card time {
+  display: block;
+}
+
+.checkout-frame-card strong {
+  color: var(--venue-text, var(--text));
+  font-size: 13px;
+  font-weight: 950;
+}
+
+.checkout-frame-card span,
+.checkout-frame-card time {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 850;
+}
+
+.checkout-frame-card time {
+  flex: 0 0 auto;
+  color: #d97706;
+  text-align: right;
 }
 
 .billing-mode-control {

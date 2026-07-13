@@ -167,6 +167,17 @@ function bookingDisplayTime(booking) {
   });
 }
 
+function frameCloseTime(value) {
+  const timestamp = Number(value || 0);
+  if (!timestamp) return "Not closed";
+  const date = new Date(timestamp);
+  if (Number.isNaN(date.getTime())) return "Not closed";
+  return date.toLocaleTimeString("en-IN", {
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+}
+
 function CustomerInput({ value, onChange, placeholder }) {
   const [suggestions, setSuggestions] = useState([]);
   const [show, setShow] = useState(false);
@@ -1041,9 +1052,15 @@ function CheckoutBillScreen({ bill, onClose }) {
             <div className="checkout-bill-section-title">Frames</div>
             <div className="checkout-frame-list">
               {frames.map((frame) => (
-                <span key={frame.id || frame.frame_no}>
-                  F{frame.frame_no}: {frame.loser_name}
-                </span>
+                <div key={frame.id || frame.frame_no} className="checkout-frame-card">
+                  <div>
+                    <strong>Frame {frame.frame_no}</strong>
+                    <span>{frame.loser_name || "No loser recorded"}</span>
+                  </div>
+                  <time dateTime={frame.ended_at ? new Date(frame.ended_at).toISOString() : undefined}>
+                    Closed {frameCloseTime(frame.ended_at)}
+                  </time>
+                </div>
               ))}
             </div>
           </>
@@ -1741,7 +1758,7 @@ function TableCard({
                 <div className="table-frame-history">
                   {recentFrames.map((frame) => (
                     <span key={frame.id || frame.frame_no}>
-                      F{frame.frame_no}: {frame.loser_name}
+                      F{frame.frame_no}: {frame.loser_name} · {frameCloseTime(frame.ended_at)}
                     </span>
                   ))}
                 </div>
