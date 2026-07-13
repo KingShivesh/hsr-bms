@@ -37,6 +37,9 @@ class Reservation(BaseModel):
 class UpdateNotes(BaseModel):
     notes: str
 
+class CloseFrameBody(BaseModel):
+    loser_name: str
+
 class MaintenanceBody(BaseModel):
     reason: str = "Under maintenance"
 
@@ -153,6 +156,38 @@ def build_player_breakdown(
         }
         for player in bill_players
     ]
+
+def active_session_frames(db: Session, sess: models.ActiveSession) -> list[models.SessionFrame]:
+    return db.query(models.SessionFrame).filter(
+        models.SessionFrame.table_id == sess.table_id,
+        models.SessionFrame.session_started_at == sess.start_time,
+    ).order_by(models.SessionFrame.frame_no.asc()).all()
+
+def serialize_frame(frame: models.SessionFrame) -> dict:
+    return {
+        "id": frame.id,
+        "table_id": frame.table_id,
+        "frame_no": frame.frame_no,
+        "started_at": frame.started_at,
+        "ended_at": frame.ended_at,
+        "loser_name": frame.loser_name or "",
+        "status": frame.status or "open",
+    }
+
+def frame_loss_summary(frames: list[models.SessionFrame]) -> dict[str, list[int]]:
+    summary = {}
+    for frame in frames:
+        if frame.status == "closed" and frame.loser_name:
+            summary.setdefault(frame.loser_name, []).append(frame.frame_no)
+    return summary
+
+def frame_summary_note(frames: list[models.SessionFrame]) -> str:
+    closed = [frame for frame in frames if frame.status == "closed" and frame.loser_name]
+    if not closed:
+        return ""
+    return "Frame losses: " + "; ".join(
+        f"F{frame.frame_no} lost by {frame.loser_name}" for frame in closed
+    )
 
 @router.post("/start")
 def start_session(body: StartSession, db: Session = Depends(get_db)):
@@ -302,6 +337,12 @@ def stop_session(
         final_total=total,
         food_items=food_items,
     )
+    frames = active_session_frames(db, sess)
+    if any(frame.status == "open" for frame in frames):
+        raise HTTPException(status_code=400, detail="Close the running frame before closing the table.")
+    losses_by_player = frame_loss_summary(frames)
+    for item in player_breakdown:
+        item["lost_frames"] = losses_by_player.get(item["name"], [])
     notes = sess.notes or ""
     if billing_mode == "lp" and payer:
         winners = [player for player in players if player.lower() != payer.lower()]
@@ -321,6 +362,9 @@ def stop_session(
             for item in player_breakdown
         )
         notes = f"{notes} | {settlement_note}" if notes else settlement_note
+    frames_note = frame_summary_note(frames)
+    if frames_note:
+        notes = f"{notes} | {frames_note}" if notes else frames_note
 
     t = models.Transaction(
         date          = datetime.now().strftime("%d/%m/%Y, %H:%M:%S"),
@@ -374,6 +418,7 @@ def stop_session(
         "split_per_head": split_per_head,
         "share_count": share_count,
         "player_breakdown": player_breakdown,
+        "frames": [serialize_frame(frame) for frame in frames],
     }
 
 @router.post("/reset/{table_id}")
@@ -390,9 +435,67 @@ def reset_session(table_id: str, manager_pin: str = "", db: Session = Depends(ge
             severity="critical",
             amount=math.ceil((elapsed_ms / 1000) / 60),
         )
+        for frame in active_session_frames(db, sess):
+            db.delete(frame)
         db.delete(sess)
         db.commit()
     return {"ok": True}
+
+@router.post("/{table_id}/frames/start")
+def start_frame(table_id: str, db: Session = Depends(get_db)):
+    sess = db.query(models.ActiveSession).filter(
+        models.ActiveSession.table_id == table_id
+    ).first()
+    if not sess:
+        raise HTTPException(status_code=404, detail="No active session")
+    frames = active_session_frames(db, sess)
+    open_frame = next((frame for frame in frames if frame.status == "open"), None)
+    if open_frame:
+        return {"ok": True, "frame": serialize_frame(open_frame), "frames": [serialize_frame(frame) for frame in frames]}
+
+    frame = models.SessionFrame(
+        table_id=sess.table_id,
+        session_started_at=sess.start_time,
+        frame_no=(max((existing.frame_no for existing in frames), default=0) + 1),
+        started_at=time.time() * 1000,
+        ended_at=0,
+        loser_name="",
+        status="open",
+    )
+    db.add(frame)
+    db.commit()
+    db.refresh(frame)
+    frames = active_session_frames(db, sess)
+    return {"ok": True, "frame": serialize_frame(frame), "frames": [serialize_frame(item) for item in frames]}
+
+@router.post("/{table_id}/frames/close")
+def close_frame(table_id: str, body: CloseFrameBody, db: Session = Depends(get_db)):
+    sess = db.query(models.ActiveSession).filter(
+        models.ActiveSession.table_id == table_id
+    ).first()
+    if not sess:
+        raise HTTPException(status_code=404, detail="No active session")
+    loser_name = " ".join((body.loser_name or "").strip().split())
+    if not loser_name:
+        raise HTTPException(status_code=400, detail="Select who lost this frame.")
+    players = json.loads(getattr(sess, "players_json", "[]") or "[]")
+    if not players:
+        players = clean_players(sess.customer_name, [], sess.split_name or "")
+    player_lookup = {player.lower(): player for player in players}
+    if loser_name.lower() not in player_lookup:
+        raise HTTPException(status_code=400, detail="Frame loser must be one of the session players.")
+    loser_name = player_lookup[loser_name.lower()]
+
+    frames = active_session_frames(db, sess)
+    open_frame = next((frame for frame in frames if frame.status == "open"), None)
+    if not open_frame:
+        raise HTTPException(status_code=400, detail="Start a frame before closing it.")
+    open_frame.status = "closed"
+    open_frame.ended_at = time.time() * 1000
+    open_frame.loser_name = loser_name
+    db.commit()
+    frames = active_session_frames(db, sess)
+    return {"ok": True, "frame": serialize_frame(open_frame), "frames": [serialize_frame(frame) for frame in frames]}
 
 @router.post("/{table_id}/food")
 def add_food(table_id: str, body: FoodItem, db: Session = Depends(get_db)):
@@ -479,8 +582,13 @@ def get_active(db: Session = Depends(get_db)):
     sessions = db.query(models.ActiveSession).all()
     controls = get_controls(db)
     now_ms = time.time() * 1000
-    return [
-        {
+    result = []
+    for s in sessions:
+        if not s.customer_name:
+            continue
+        frames = active_session_frames(db, s)
+        serialized_frames = [serialize_frame(frame) for frame in frames]
+        result.append({
             "table_id":      s.table_id,
             "customer_name": s.customer_name,
             "rate":          s.rate,
@@ -495,15 +603,16 @@ def get_active(db: Session = Depends(get_db)):
             "split_name":    s.split_name or "",
             "billing_mode":  normalize_billing_mode(getattr(s, "billing_mode", "single"), s.split),
             "players":       json.loads(getattr(s, "players_json", "[]") or "[]") or clean_players(s.customer_name, [], s.split_name or ""),
+            "frames":        serialized_frames,
+            "current_frame": next((frame for frame in serialized_frames if frame["status"] == "open"), None),
             "leakage_alert":  (
                 controls.alert_unbilled_minutes > 0
                 and not s.paused
                 and s.start_time
                 and ((now_ms - s.start_time) / 1000 / 60) >= controls.alert_unbilled_minutes
             ),
-        }
-        for s in sessions if s.customer_name
-    ]
+        })
+    return result
 
 @router.get("/history/{table_id}")
 def table_history(table_id: str, db: Session = Depends(get_db)):

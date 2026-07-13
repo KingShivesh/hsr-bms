@@ -63,6 +63,17 @@ class ActiveSession(Base):
     billing_mode  = Column(String,  default="single")  # single / sharing / lp
     players_json  = Column(Text,    default="[]")
 
+class SessionFrame(Base):
+    __tablename__ = "session_frames"
+    id                 = Column(Integer, primary_key=True, index=True)
+    table_id           = Column(String, index=True)
+    session_started_at = Column(Float, index=True)
+    frame_no           = Column(Integer, default=1)
+    started_at         = Column(Float)
+    ended_at           = Column(Float, default=0)
+    loser_name         = Column(String, default="")
+    status             = Column(String, default="open")  # open / closed
+
 class MenuItem(Base):
     __tablename__ = "menu_items"
     id        = Column(Integer, primary_key=True, index=True)

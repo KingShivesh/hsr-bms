@@ -66,6 +66,10 @@ export const resetSession = (table_id, manager_pin = "") =>
   );
 export const addFood = (table_id, item, qty, mrp = null, player_name = "") =>
   api.post(`/sessions/${table_id}/food`, { item, qty, mrp, player_name });
+export const startFrame = (table_id) =>
+  api.post(`/sessions/${table_id}/frames/start`);
+export const closeFrame = (table_id, loser_name) =>
+  api.post(`/sessions/${table_id}/frames/close`, { loser_name });
 export const addReserve = (table_id, name, time) =>
   api.post(`/sessions/${table_id}/reserve`, { name, time });
 export const cancelReserve = (table_id) =>

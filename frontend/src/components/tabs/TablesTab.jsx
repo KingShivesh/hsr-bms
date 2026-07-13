@@ -22,6 +22,8 @@ import {
   getBookings,
   createBooking,
   cancelBooking,
+  startFrame,
+  closeFrame,
 } from "../../api/index.js";
 import { searchMembers, addMember } from "../../api/index.js";
 import { useToast } from "../toastContext.js";
@@ -876,6 +878,8 @@ function TableCard({
   maintenance,
   onMaintenance,
   onClearMaintenance,
+  onStartFrame,
+  onCloseFrame,
   peakRate,
   gstPercent,
   compact = false,
@@ -927,6 +931,14 @@ function TableCard({
   const activePlayers = session?.players?.length
     ? session.players
     : [session?.player1, session?.player2].filter(Boolean);
+  const frames = session?.frames || [];
+  const openFrame = frames.find((frame) => frame.status === "open");
+  const closedFrames = frames.filter((frame) => frame.status === "closed");
+  const recentFrames = closedFrames.slice(-3);
+  const frameLossCounts = closedFrames.reduce((acc, frame) => {
+    if (frame.loser_name) acc[frame.loser_name] = (acc[frame.loser_name] || 0) + 1;
+    return acc;
+  }, {});
   const shareCount = activeBillingMode === "sharing" ? Math.max(1, activePlayers.length) : 1;
   const shareAmount = shareCount > 1 ? Math.ceil(total / shareCount) : total;
 
@@ -1538,6 +1550,59 @@ function TableCard({
             </div>
           )}
 
+          {occupied && (
+            <div className="table-frame-panel">
+              <div className="table-frame-head">
+                <span>Frames</span>
+                <strong>{closedFrames.length} closed</strong>
+              </div>
+              {openFrame ? (
+                <>
+                  <div className="table-frame-running">
+                    Frame {openFrame.frame_no} running · {fmtClock(openFrame.started_at)}
+                  </div>
+                  <div className="table-frame-losers">
+                    {activePlayers.map((player) => (
+                      <button
+                        key={player}
+                        type="button"
+                        onClick={() => onCloseFrame(table.id, player)}
+                      >
+                        {player} lost
+                      </button>
+                    ))}
+                  </div>
+                </>
+              ) : (
+                <button
+                  type="button"
+                  className="table-frame-start"
+                  onClick={() => onStartFrame(table.id)}
+                >
+                  Start frame {closedFrames.length + 1}
+                </button>
+              )}
+              {recentFrames.length > 0 && (
+                <div className="table-frame-history">
+                  {recentFrames.map((frame) => (
+                    <span key={frame.id || frame.frame_no}>
+                      F{frame.frame_no}: {frame.loser_name}
+                    </span>
+                  ))}
+                </div>
+              )}
+              {Object.keys(frameLossCounts).length > 0 && (
+                <div className="table-frame-score">
+                  {activePlayers.map((player) => (
+                    <span key={player}>
+                      {player.split(" ")[0]} {frameLossCounts[player] || 0}
+                    </span>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
+
           {/* Player inputs */}
           <CustomerInput
             value={name}
@@ -1807,6 +1872,8 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
           notes: x.notes || "",
           billingMode,
           players,
+          frames: x.frames || [],
+          currentFrame: x.current_frame || null,
           loserPays: billingMode === "lp",
           player1: players[0] || x.customer_name,
           player2: players.slice(1).join(", "),
@@ -1926,6 +1993,8 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
           notes: entry.notes || "",
           billingMode: "single",
           players,
+          frames: [],
+          currentFrame: null,
           loserPays: false,
           player1: entry.customer_name,
           player2: "",
@@ -1975,6 +2044,8 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
           notes: "",
           billingMode,
           players,
+          frames: [],
+          currentFrame: null,
           loserPays: billingMode === "lp",
           player1: players[0],
           player2: players.slice(1).join(", "),
@@ -2026,6 +2097,8 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
           notes: "",
           billingMode,
           players,
+          frames: [],
+          currentFrame: null,
           loserPays: billingMode === "lp",
           player1: players[0],
           player2: players.slice(1).join(", "),
@@ -2105,6 +2178,43 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
     }
   }
 
+  async function handleStartFrame(id) {
+    if (!sessions[id]) return;
+    try {
+      const res = await startFrame(id);
+      setSessions((prev) => ({
+        ...prev,
+        [id]: {
+          ...prev[id],
+          frames: res.data.frames || [],
+          currentFrame: res.data.frame || null,
+        },
+      }));
+      showToast(`Frame ${res.data.frame?.frame_no || ""} started`, "success");
+    } catch (e) {
+      showToast(e.response?.data?.detail || "Failed to start frame", "error");
+    }
+  }
+
+  async function handleCloseFrame(id, loserName) {
+    if (!sessions[id]) return;
+    try {
+      const res = await closeFrame(id, loserName);
+      const frames = res.data.frames || [];
+      setSessions((prev) => ({
+        ...prev,
+        [id]: {
+          ...prev[id],
+          frames,
+          currentFrame: frames.find((frame) => frame.status === "open") || null,
+        },
+      }));
+      showToast(`Frame ${res.data.frame?.frame_no || ""} closed`, "success");
+    } catch (e) {
+      showToast(e.response?.data?.detail || "Failed to close frame", "error");
+    }
+  }
+
   async function handleStop(
     id,
     loserName = "",
@@ -2156,7 +2266,10 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
             .map((item) => {
               const tableAmount = item.table ?? item.play ?? 0;
               const foodAmount = item.food ?? 0;
-              return `${item.name}: ₹${item.total ?? 0} (table ₹${tableAmount}, food ₹${foodAmount})`;
+              const losses = Array.isArray(item.lost_frames) && item.lost_frames.length
+                ? `, lost F${item.lost_frames.join(", F")}`
+                : "";
+              return `${item.name}: ₹${item.total ?? 0} (table ₹${tableAmount}, food ₹${foodAmount}${losses})`;
             })
             .join("\n")}`
         : "";
@@ -2316,6 +2429,8 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
             maintenance={maintenance[table.id] || null}
             onMaintenance={handleSetMaintenance}
             onClearMaintenance={handleClearMaintenance}
+            onStartFrame={handleStartFrame}
+            onCloseFrame={handleCloseFrame}
             peakRate={peakRate}
             gstPercent={gstPercent}
             showToast={showToast}
