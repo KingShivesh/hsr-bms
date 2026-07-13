@@ -43,6 +43,13 @@ export default function CommandBar({ page, setPage, onNewSession }) {
         action: () => setPage("food"),
       },
       {
+        id: "tournaments",
+        label: "Tournaments",
+        hint: "Matches and winners",
+        icon: "ti-trophy",
+        action: () => setPage("tournaments"),
+      },
+      {
         id: "reports",
         label: "Reports",
         hint: "Bills and table performance",

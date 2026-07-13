@@ -23,6 +23,24 @@ const REPORT_TABS = [
   { id: "customers", label: "Regular Customers" },
 ];
 const DEFAULT_REPORT_TAB = "history";
+const BILL_DATE_FORMATTER = new Intl.DateTimeFormat("en-IN", {
+  timeZone: "Asia/Kolkata",
+  day: "2-digit",
+  month: "2-digit",
+  year: "numeric",
+  hour: "2-digit",
+  minute: "2-digit",
+  second: "2-digit",
+  hourCycle: "h23",
+});
+
+function formatBillDate(row) {
+  const ts = Number(row?.ts);
+  if (Number.isFinite(ts) && ts > 0) {
+    return BILL_DATE_FORMATTER.format(new Date(ts));
+  }
+  return row?.date || "-";
+}
 
 function TabBtn({ active, onClick, children }) {
   return (
@@ -181,7 +199,7 @@ function HistoryView({ history, period, onPeriodChange, onExport }) {
             ) : (
               filtered.map((r, i) => (
                 <tr key={i}>
-                  <td style={{ color: "#bbb", fontSize: "12px" }}>{r.date}</td>
+                  <td style={{ color: "#bbb", fontSize: "12px" }}>{formatBillDate(r)}</td>
                   <td>
                     <span
                       style={{

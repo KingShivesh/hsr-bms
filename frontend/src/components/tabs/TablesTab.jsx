@@ -101,6 +101,10 @@ function billingModeLabel(mode) {
   return "Single";
 }
 
+function defaultBillingModeForTable(table) {
+  return table?.type === "POOL" ? "single" : "lp";
+}
+
 function CustomerInput({ value, onChange, placeholder }) {
   const [suggestions, setSuggestions] = useState([]);
   const [show, setShow] = useState(false);
@@ -514,7 +518,7 @@ function QuickSessionModal({
   const [tableId, setTableId] = useState("");
   const [player1, setPlayer1] = useState("");
   const [otherPlayers, setOtherPlayers] = useState("");
-  const [billingMode, setBillingMode] = useState("lp");
+  const [billingMode, setBillingMode] = useState("single");
   const initializedOpen = useRef(false);
   const availableTables = tables.filter(
     (table) => !sessions[table.id] && !maintenance[table.id],
@@ -533,7 +537,7 @@ function QuickSessionModal({
     setTableId(firstAvailable?.id || "");
     setPlayer1("");
     setOtherPlayers("");
-    setBillingMode("lp");
+    setBillingMode(defaultBillingModeForTable(firstAvailable));
     initializedOpen.current = true;
   }, [open, availableTables]);
 
@@ -595,7 +599,11 @@ function QuickSessionModal({
                 type="button"
                 className={`quick-table-choice ${table.id === selectedTable?.id ? "active" : ""}`}
                 disabled={disabled}
-                onClick={() => setTableId(table.id)}
+                onClick={() => {
+                  setTableId(table.id);
+                  setOtherPlayers("");
+                  setBillingMode(defaultBillingModeForTable(table));
+                }}
               >
                 <strong>T{table.num}</strong>
                 <span>{blocked ? "Maintenance" : occupied ? "Busy" : getTableLabel(table)}</span>
@@ -857,7 +865,7 @@ function TableCard({
   gstPercent,
   compact = false,
 }) {
-  const [billingMode, setBillingMode] = useState("lp");
+  const [billingMode, setBillingMode] = useState(() => defaultBillingModeForTable(table));
   const [otherPlayers, setOtherPlayers] = useState("");
   const [paymentMethod, setPaymentMethod] = useState("Cash");
   const [showPayerModal, setShowPayerModal] = useState(false);
@@ -879,6 +887,13 @@ function TableCard({
   const paused = session?.paused || false;
   const rate = getTableRate(table, rates);
   const T = THEME[table.type];
+
+  useEffect(() => {
+    if (!occupied) {
+      setBillingMode(defaultBillingModeForTable(table));
+      setOtherPlayers("");
+    }
+  }, [occupied, table]);
 
   const mins = session ? Math.ceil(session.elapsed / 60) : 0;
   const basePlay = session ? Math.round((mins / 60) * session.rate) : 0;
@@ -2160,14 +2175,6 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
           </div>
         </div>
         <div className="tables-toolbar-actions">
-          <button
-            className="btn btn-success-sm"
-            type="button"
-            onClick={() => setQuickSessionOpen(true)}
-          >
-            <i className="ti ti-plus" aria-hidden="true" />
-            New session
-          </button>
           <div className="segmented-control" aria-label="Table card density">
             {[
               ["detailed", "Detailed", "ti-layout-grid"],
