@@ -54,6 +54,14 @@ function fmt(secs) {
   return h > 0 ? `${h}:${m}:${s}` : `${m}:${s}`;
 }
 
+function fmtClock(ms) {
+  if (!ms) return "--:--";
+  return new Date(ms).toLocaleTimeString("en-IN", {
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+}
+
 function isFullName(name) {
   return name.trim().split(/\s+/).filter(Boolean).length >= 2;
 }
@@ -63,6 +71,17 @@ const BILLING_MODES = [
   { id: "sharing", label: "Sharing", hint: "Split payment" },
   { id: "lp", label: "LP", hint: "Loser pays" },
 ];
+const PAYMENT_METHODS = ["Cash", "UPI", "Card"];
+const DISCOUNT_OPTIONS = [
+  { id: "none", label: "No discount" },
+  { id: "percent_5", label: "5%" },
+  { id: "percent_10", label: "10%" },
+  { id: "rupee", label: "₹ off" },
+];
+
+function defaultBillingModeForTable(table) {
+  return table?.type === "POOL" ? "single" : "lp";
+}
 
 function splitPlayerNames(value) {
   return (value || "")
@@ -99,10 +118,6 @@ function billingModeLabel(mode) {
   if (mode === "sharing") return "Sharing";
   if (mode === "lp") return "LP";
   return "Single";
-}
-
-function defaultBillingModeForTable(table) {
-  return table?.type === "POOL" ? "single" : "lp";
 }
 
 function CustomerInput({ value, onChange, placeholder }) {
@@ -868,6 +883,8 @@ function TableCard({
   const [billingMode, setBillingMode] = useState(() => defaultBillingModeForTable(table));
   const [otherPlayers, setOtherPlayers] = useState("");
   const [paymentMethod, setPaymentMethod] = useState("Cash");
+  const [discountType, setDiscountType] = useState("none");
+  const [discountValue, setDiscountValue] = useState("");
   const [showPayerModal, setShowPayerModal] = useState(false);
   const [reserveOpen, setReserveOpen] = useState(false);
   const [notesOpen, setNotesOpen] = useState(false);
@@ -892,10 +909,12 @@ function TableCard({
     if (!occupied) {
       setBillingMode(defaultBillingModeForTable(table));
       setOtherPlayers("");
+      setDiscountType("none");
+      setDiscountValue("");
     }
   }, [occupied, table]);
 
-  const mins = session ? Math.ceil(session.elapsed / 60) : 0;
+  const mins = session ? Math.max(1, Math.round(session.elapsed / 60)) : 0;
   const basePlay = session ? Math.round((mins / 60) * session.rate) : 0;
   const multiplier = peakRate?.multiplier || 1;
   const play = session ? Math.round(basePlay * multiplier) : 0;
@@ -1036,7 +1055,13 @@ function TableCard({
                 <button
                   key={player}
                   onClick={() => {
-                    onStop(table.id, player, paymentMethod);
+                    onStop(
+                      table.id,
+                      player,
+                      paymentMethod,
+                      discountType,
+                      discountValue,
+                    );
                     setShowPayerModal(false);
                   }}
                   style={{
@@ -1358,8 +1383,33 @@ function TableCard({
               )}
             </div>
 
-            {/* START button on felt */}
-            {!occupied && (
+            {/* STOP / START button on felt */}
+            {occupied ? (
+              <button
+                onClick={() => {
+                  if (activeBillingMode === "lp") setShowPayerModal(true);
+                  else onStop(table.id, "", paymentMethod, discountType, discountValue);
+                }}
+                style={{
+                  position: "absolute",
+                  bottom: "8px",
+                  left: "50%",
+                  transform: "translateX(-50%)",
+                  background: "#dc2626",
+                  color: "#fff",
+                  border: "none",
+                  borderRadius: "5px",
+                  padding: "6px 28px",
+                  fontSize: "12px",
+                  fontWeight: 700,
+                  cursor: "pointer",
+                  letterSpacing: "2px",
+                  boxShadow: "0 2px 8px rgba(0,0,0,0.4)",
+                }}
+              >
+                CLOSE
+              </button>
+            ) : (
               <button
                 onClick={() => onStart(table, billingMode, otherPlayers)}
                 style={{
@@ -1480,6 +1530,7 @@ function TableCard({
           {occupied && (
             <div className="active-billing-summary">
               <span>{billingModeLabel(activeBillingMode)}</span>
+              <strong>Started {fmtClock(session.startTime)}</strong>
               {activeBillingMode === "sharing" && shareCount > 1 && (
                 <strong>₹{shareAmount} each</strong>
               )}
@@ -1491,7 +1542,7 @@ function TableCard({
           <CustomerInput
             value={name}
             onChange={onNameChange}
-            placeholder={billingMode === "single" ? "Customer full name" : "Player 1 full name"}
+            placeholder={billingMode === "single" ? "Customer name" : "Player 1"}
           />
           {!occupied && billingMode !== "single" && (
             billingMode === "lp" ? (
@@ -1510,9 +1561,13 @@ function TableCard({
             )
           )}
 
-          {/* Pause / Reset / Close */}
+          {/* Pause / Reset */}
           <div
-            className={`table-close-row ${occupied ? "" : "idle"}`}
+            style={{
+              display: "grid",
+              gridTemplateColumns: "1fr 1fr",
+              gap: "6px",
+            }}
           >
             <button
               onClick={() => onPause(table.id)}
@@ -1528,24 +1583,12 @@ function TableCard({
             >
               RESET
             </button>
-            {occupied && (
-              <button
-                onClick={() => {
-                  if (activeBillingMode === "lp") setShowPayerModal(true);
-                  else onStop(table.id, "", paymentMethod);
-                }}
-                data-testid={`close-${table.id}`}
-                className="table-control-btn close"
-              >
-                CLOSE
-              </button>
-            )}
           </div>
 
           {/* Payment method */}
           {occupied && (
             <div className="table-payment-grid">
-              {["Cash", "UPI"].map((m) => (
+              {PAYMENT_METHODS.map((m) => (
                 <button
                   key={m}
                   onClick={() => setPaymentMethod(m)}
@@ -1555,6 +1598,37 @@ function TableCard({
                   {m}
                 </button>
               ))}
+            </div>
+          )}
+
+          {occupied && (
+            <div className="table-discount-panel">
+              <div className="table-discount-options">
+                {DISCOUNT_OPTIONS.map((option) => (
+                  <button
+                    key={option.id}
+                    type="button"
+                    className={discountType === option.id ? "active" : ""}
+                    onClick={() => {
+                      setDiscountType(option.id);
+                      if (option.id !== "rupee") setDiscountValue("");
+                    }}
+                  >
+                    {option.label}
+                  </button>
+                ))}
+              </div>
+              {discountType === "rupee" && (
+                <input
+                  className="table-mini-input"
+                  type="number"
+                  min="0"
+                  max="50"
+                  value={discountValue}
+                  onChange={(e) => setDiscountValue(e.target.value)}
+                  placeholder="Max ₹50"
+                />
+              )}
             </div>
           )}
 
@@ -2031,7 +2105,13 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
     }
   }
 
-  async function handleStop(id, loserName = "", paymentMethod = "Cash") {
+  async function handleStop(
+    id,
+    loserName = "",
+    paymentMethod = "Cash",
+    discountType = "none",
+    discountValue = "",
+  ) {
     const name = (names[id] || "").trim();
     if (!name || !sessions[id]) {
       showToast("No active session", "error");
@@ -2040,7 +2120,13 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
     async function performCheckout() {
       const sess = sessions[id];
       const payerName = sess.billingMode === "lp" ? loserName : "";
-      const res = await stopSession(id, paymentMethod, payerName);
+      const res = await stopSession(
+        id,
+        paymentMethod,
+        payerName,
+        discountType,
+        parseInt(discountValue, 10) || 0,
+      );
       const rec = { ...res.data };
       setSessions((prev) => {
         const n = { ...prev };
@@ -2058,12 +2144,16 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
 
       const customerName = rec.payer_name || rec.nm || name;
       const totalAmount = rec.tot ?? rec.total ?? 0;
+      const discountLine =
+        rec.discount_amount > 0
+          ? `\nDiscount: ₹${rec.discount_amount} (from ₹${rec.raw_total})`
+          : "";
       const payerLine =
         rec.billing_mode === "sharing" && rec.split_per_head && rec.share_count > 1
           ? `Each player should pay ₹${rec.split_per_head} (${rec.share_count} players).`
           : `${customerName} should pay ₹${totalAmount}.`;
       alert(
-        `Table ${id.toUpperCase()} closed.\n${payerLine}\nPayment: ${rec.payment_method || paymentMethod}`,
+        `Table ${id.toUpperCase()} closed.\n${payerLine}${discountLine}\nPayment: ${rec.payment_method || paymentMethod}`,
       );
       try {
         const memberRes = await searchMembers(customerName);
@@ -2169,28 +2259,26 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
 
       <div className="tables-view-toolbar">
         <div>
-          <div className="tables-view-title">Table POS</div>
+          <div className="tables-view-title">Table floor</div>
           <div className="tables-view-sub">
-            {Object.keys(sessions).length} running · {TABLES.length - Object.keys(sessions).length} free · {compact ? "Compact scanning mode" : "Detailed session controls"}
+            {compact ? "Compact scanning mode" : "Detailed session controls"}
           </div>
         </div>
-        <div className="tables-toolbar-actions">
-          <div className="segmented-control" aria-label="Table card density">
-            {[
-              ["detailed", "Detailed", "ti-layout-grid"],
-              ["compact", "Compact", "ti-layout-list"],
-            ].map(([mode, label, icon]) => (
-              <button
-                key={mode}
-                type="button"
-                className={viewMode === mode ? "active" : ""}
-                onClick={() => changeViewMode(mode)}
-              >
-                <i className={`ti ${icon}`} aria-hidden="true" />
-                <span>{label}</span>
-              </button>
-            ))}
-          </div>
+        <div className="segmented-control" aria-label="Table card density">
+          {[
+            ["detailed", "Detailed", "ti-layout-grid"],
+            ["compact", "Compact", "ti-layout-list"],
+          ].map(([mode, label, icon]) => (
+            <button
+              key={mode}
+              type="button"
+              className={viewMode === mode ? "active" : ""}
+              onClick={() => changeViewMode(mode)}
+            >
+              <i className={`ti ${icon}`} aria-hidden="true" />
+              <span>{label}</span>
+            </button>
+          ))}
         </div>
       </div>
 

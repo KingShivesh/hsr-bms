@@ -54,16 +54,18 @@ export const stopSession = (
   table_id,
   payment_method = "Cash",
   payer_name = "",
+  discount_type = "none",
+  discount_value = 0,
 ) =>
   api.post(
-    `/sessions/stop/${table_id}?payment_method=${encodeURIComponent(payment_method)}&payer_name=${encodeURIComponent(payer_name)}`,
+    `/sessions/stop/${table_id}?payment_method=${encodeURIComponent(payment_method)}&payer_name=${encodeURIComponent(payer_name)}&discount_type=${encodeURIComponent(discount_type)}&discount_value=${encodeURIComponent(discount_value)}`,
   );
 export const resetSession = (table_id, manager_pin = "") =>
   api.post(
     `/sessions/reset/${table_id}?manager_pin=${encodeURIComponent(manager_pin)}`,
   );
-export const addFood = (table_id, item, qty, mrp = null) =>
-  api.post(`/sessions/${table_id}/food`, { item, qty, mrp });
+export const addFood = (table_id, item, qty, mrp = null, player_name = "") =>
+  api.post(`/sessions/${table_id}/food`, { item, qty, mrp, player_name });
 export const addReserve = (table_id, name, time) =>
   api.post(`/sessions/${table_id}/reserve`, { name, time });
 export const cancelReserve = (table_id) =>

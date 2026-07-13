@@ -42,6 +42,16 @@ function formatBillDate(row) {
   return row?.date || "-";
 }
 
+function billDateKey(row) {
+  const ts = Number(row?.ts);
+  if (Number.isFinite(ts) && ts > 0) {
+    const d = new Date(ts);
+    return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+  }
+  const match = String(row?.date || "").match(/^(\d{2})\/(\d{2})\/(\d{4})/);
+  return match ? `${match[3]}-${match[2]}-${match[1]}` : "";
+}
+
 function TabBtn({ active, onClick, children }) {
   return (
     <button
@@ -92,7 +102,7 @@ function LoadingState({ title = "Loading report..." }) {
 }
 
 // ── Bills ──
-function HistoryView({ history, period, onPeriodChange, onExport }) {
+function HistoryView({ history, period, onPeriodChange, selectedDate, onDateChange, onExport }) {
   const [search, setSearch] = useState("");
   const labelBillingMode = (mode) => {
     if (mode === "sharing") return "Sharing";
@@ -105,6 +115,9 @@ function HistoryView({ history, period, onPeriodChange, onExport }) {
       r.nm.toLowerCase().includes(search.toLowerCase()) ||
       r.tbl.toLowerCase().includes(search.toLowerCase());
     if (!matchSearch) return false;
+    if (period === "date" && selectedDate) {
+      return billDateKey(r) === selectedDate;
+    }
     const now = new Date();
     if (period === "today") {
       const d = now;
@@ -142,6 +155,15 @@ function HistoryView({ history, period, onPeriodChange, onExport }) {
               {p.label}
             </TabBtn>
           ))}
+          <input
+            className="reports-date-filter"
+            type="date"
+            value={selectedDate}
+            onChange={(e) => {
+              onDateChange(e.target.value);
+              onPeriodChange(e.target.value ? "date" : "today");
+            }}
+          />
           <button
             onClick={onExport}
             style={{
@@ -929,6 +951,7 @@ export default function ReportsTab() {
     },
   );
   const [period, setPeriod] = useState("today");
+  const [selectedDate, setSelectedDate] = useState("");
   const [summary, setSummary] = useState({
     sale: 0,
     sessions: 0,
@@ -1022,6 +1045,8 @@ export default function ReportsTab() {
           history={history}
           period={period}
           onPeriodChange={setPeriod}
+          selectedDate={selectedDate}
+          onDateChange={setSelectedDate}
           onExport={handleExport}
         />
       )}

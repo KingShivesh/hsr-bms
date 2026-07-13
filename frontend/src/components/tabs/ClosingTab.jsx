@@ -59,7 +59,7 @@ export default function ClosingTab() {
       alert("Close all running tables before closing the day.");
       return;
     }
-    if (!confirm("Mark today as closed after verifying Cash and UPI totals?")) return;
+    if (!confirm("Mark today as closed after verifying Cash, UPI, and Card totals?")) return;
     localStorage.setItem(`dayClosed:${data.date}`, "true");
     setClosedDay(true);
   }
@@ -93,6 +93,7 @@ export default function ClosingTab() {
   const hasFoodOnly = foodOnlyTotal > 0;
   const counterCash = data.food_only_payment_breakdown?.Cash || 0;
   const counterUpi = data.food_only_payment_breakdown?.UPI || 0;
+  const counterCard = data.food_only_payment_breakdown?.Card || 0;
   const corrections = data.corrections_today || [];
 
   return (
@@ -124,6 +125,7 @@ export default function ClosingTab() {
         <ClosingMetric label="Total sales" value={money(totalSales)} icon="ti-report-money" tone="total" />
         <ClosingMetric label="Cash" value={money(data.cash_total)} icon="ti-cash" tone="cash" />
         <ClosingMetric label="UPI" value={money(data.upi_total)} icon="ti-qrcode" tone="upi" />
+        <ClosingMetric label="Card" value={money(data.card_total || 0)} icon="ti-credit-card" tone="upi" />
         <ClosingMetric label="Table sales" value={money(data.total_revenue)} icon="ti-billiard" />
         <ClosingMetric label="Food sales" value={money(totalFoodSales)} icon="ti-tools-kitchen-2" />
         <ClosingMetric label="Sessions" value={data.total_sessions} icon="ti-receipt" />
@@ -146,7 +148,7 @@ export default function ClosingTab() {
             label="Counter food sales"
             detail={
               hasFoodOnly
-                ? `${money(foodOnlyTotal)} recorded: Cash ${money(counterCash)}, UPI ${money(counterUpi)}.`
+                ? `${money(foodOnlyTotal)} recorded: Cash ${money(counterCash)}, UPI ${money(counterUpi)}, Card ${money(counterCard)}.`
                 : "No counter-only food sales today."
             }
           />

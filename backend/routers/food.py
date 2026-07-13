@@ -8,6 +8,7 @@ import models, json, time
 from collections import Counter, defaultdict
 
 router = APIRouter()
+PAYMENT_METHODS = {"Cash", "UPI", "Card"}
 
 class FoodOrderItem(BaseModel):
     item: str
@@ -26,7 +27,7 @@ def is_cigarette_item(name: str) -> bool:
 def place_food_order(body: FoodOnlyOrderBody, db: Session = Depends(get_db)):
     if not body.items:
         raise HTTPException(status_code=400, detail="No items in order")
-    payment_method = body.payment_method if body.payment_method in {"Cash", "UPI"} else "Cash"
+    payment_method = body.payment_method if body.payment_method in PAYMENT_METHODS else "Cash"
 
     total    = 0
     order    = []
@@ -42,8 +43,8 @@ def place_food_order(body: FoodOnlyOrderBody, db: Session = Depends(get_db)):
         if is_cigarette_item(fi.item):
             if not fi.mrp or fi.mrp <= 0:
                 raise HTTPException(status_code=400, detail="Enter cigarette price")
-            unit_price = fi.mrp
-            item_name = f"{fi.item} (₹{fi.mrp})"
+            unit_price = fi.mrp + 3
+            item_name = f"{fi.item} (MRP ₹{fi.mrp} + ₹3)"
         else:
             unit_price = menu_item.price
         price = unit_price * fi.qty

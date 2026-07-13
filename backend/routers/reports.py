@@ -197,7 +197,7 @@ def closing_report(db: Session = Depends(get_db)):
     food_revenue   = sum(t.food_charge for t in txns)
     total_sessions = len(txns)
     avg_duration   = round(sum(t.duration for t in txns) / total_sessions) if total_sessions else 0
-    payment_breakdown = {"Cash": 0, "UPI": 0}
+    payment_breakdown = {"Cash": 0, "UPI": 0, "Card": 0}
     for t in txns:
         method = t.payment_method if t.payment_method in payment_breakdown else "Cash"
         payment_breakdown[method] += t.total
@@ -207,7 +207,7 @@ def closing_report(db: Session = Depends(get_db)):
         if o.date and o.date.startswith(today)
     ]
     food_only_revenue = sum(o.total for o in food_only_orders)
-    food_only_payment_breakdown = {"Cash": 0, "UPI": 0}
+    food_only_payment_breakdown = {"Cash": 0, "UPI": 0, "Card": 0}
     for o in food_only_orders:
         method = o.payment_method if o.payment_method in food_only_payment_breakdown else "Cash"
         food_only_payment_breakdown[method] += o.total or 0
@@ -268,6 +268,7 @@ def closing_report(db: Session = Depends(get_db)):
         "food_only_payment_breakdown": food_only_payment_breakdown,
         "cash_total": payment_breakdown["Cash"],
         "upi_total": payment_breakdown["UPI"],
+        "card_total": payment_breakdown["Card"],
         "payment_breakdown": payment_breakdown,
         "total_sessions": total_sessions,
         "avg_duration":   avg_duration,

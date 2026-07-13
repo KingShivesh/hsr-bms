@@ -245,6 +245,7 @@ export default function Dashboard({ metrics, onNavigate }) {
   const ownerReport = digest?.report;
   const cashTotal = ownerReport?.cash_total || 0;
   const upiTotal = ownerReport?.upi_total || 0;
+  const cardTotal = ownerReport?.card_total || 0;
   const ownerTotal = ownerReport
     ? (ownerReport.total_revenue || 0) + (ownerReport.food_only_revenue || 0)
     : metrics.sale;
@@ -279,6 +280,11 @@ export default function Dashboard({ metrics, onNavigate }) {
         <div className="metric-card">
           <div className="metric-label">UPI</div>
           <div className="metric-value">₹{upiTotal.toLocaleString("en-IN")}</div>
+          <div className="metric-sub">From closed tables</div>
+        </div>
+        <div className="metric-card">
+          <div className="metric-label">Card</div>
+          <div className="metric-value">₹{cardTotal.toLocaleString("en-IN")}</div>
           <div className="metric-sub">From closed tables</div>
         </div>
         <div className="metric-card amber">

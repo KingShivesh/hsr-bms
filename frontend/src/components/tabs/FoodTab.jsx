@@ -1,6 +1,12 @@
 import { useState, useEffect } from "react";
 import {
   getMenu,
+  addMenuItem,
+  updateMenuItem,
+  deleteMenuItem,
+  setItemAvailability,
+  getActive,
+  addFood,
   placeFoodOrder,
   getFoodOrders,
   getFoodStats,
@@ -33,13 +39,23 @@ export default function FoodTab() {
   const [menu, setMenu] = useState({});
   const [stats, setStats] = useState([]);
   const [orders, setOrders] = useState([]);
+  const [activeSessions, setActiveSessions] = useState([]);
   const [cart, setCart] = useState([]);
   const [customerName, setCustomerName] = useState("");
   const [paymentMethod, setPaymentMethod] = useState("Cash");
+  const [orderTarget, setOrderTarget] = useState("standalone");
+  const [selectedTable, setSelectedTable] = useState("");
+  const [selectedPlayer, setSelectedPlayer] = useState("");
   const [activeTab, setActiveTab] = useState("order");
   const [activeCat, setActiveCat] = useState("All");
   const [placing, setPlacing] = useState(false);
   const [lastOrder, setLastOrder] = useState(null);
+  const [newItem, setNewItem] = useState({
+    name: "",
+    price: "",
+    category: "Veg Snacks",
+  });
+  const [editingItem, setEditingItem] = useState(null);
 
   useEffect(() => {
     fetchAll();
@@ -47,14 +63,16 @@ export default function FoodTab() {
 
   async function fetchAll() {
     try {
-      const [mRes, sRes, oRes] = await Promise.all([
+      const [mRes, sRes, oRes, activeRes] = await Promise.all([
         getMenu(),
         getFoodStats(),
         getFoodOrders(),
+        getActive(),
       ]);
       setMenu(mRes.data);
       setStats(sRes.data);
       setOrders(oRes.data);
+      setActiveSessions(activeRes.data);
     } catch (e) {
       console.error(e);
     }
@@ -73,8 +91,57 @@ export default function FoodTab() {
     return /cigarette|cigg/i.test(name);
   }
   function getCartUnitPrice(item) {
-    if (isCigarette(item.item)) return item.mrp || 0;
+    if (isCigarette(item.item)) return (item.mrp || 0) + 3;
     return getItemPrice(menu[item.item]);
+  }
+
+  async function handleAddMenuItem(e) {
+    e.preventDefault();
+    const name = newItem.name.trim();
+    const price = parseInt(newItem.price, 10);
+    if (!name || !price || price <= 0) {
+      alert("Enter item name and valid price");
+      return;
+    }
+    try {
+      await addMenuItem(name, price, newItem.category);
+      setNewItem({ name: "", price: "", category: newItem.category });
+      await fetchAll();
+    } catch (e) {
+      alert(e.response?.data?.detail || "Failed to add item");
+    }
+  }
+
+  async function handleUpdateMenuItem() {
+    if (!editingItem) return;
+    const name = editingItem.newName.trim();
+    const price = parseInt(editingItem.price, 10);
+    if (!name || !price || price <= 0) {
+      alert("Enter item name and valid price");
+      return;
+    }
+    try {
+      await updateMenuItem(
+        editingItem.oldName,
+        name,
+        price,
+        editingItem.category,
+      );
+      setEditingItem(null);
+      await fetchAll();
+    } catch (e) {
+      alert(e.response?.data?.detail || "Failed to update item");
+    }
+  }
+
+  async function handleDeleteMenuItem(name) {
+    if (!confirm(`Delete ${name}?`)) return;
+    try {
+      await deleteMenuItem(name);
+      await fetchAll();
+    } catch (e) {
+      alert(e.response?.data?.detail || "Failed to delete item");
+    }
   }
 
   function addToCart(name) {
@@ -105,8 +172,12 @@ export default function FoodTab() {
   }
 
   async function placeOrder() {
-    if (!customerName.trim()) {
+    if (orderTarget === "standalone" && !customerName.trim()) {
       alert("Enter customer name");
+      return;
+    }
+    if (orderTarget === "table" && (!selectedTable || !selectedPlayer)) {
+      alert("Select table and player");
       return;
     }
     if (cart.length === 0) {
@@ -115,13 +186,38 @@ export default function FoodTab() {
     }
     setPlacing(true);
     try {
-      const res = await placeFoodOrder(customerName.trim(), cart, paymentMethod);
-      setLastOrder({
-        customer: customerName,
-        items: res.data.items,
-        total: res.data.total,
-        paymentMethod: res.data.payment_method,
-      });
+      if (orderTarget === "table") {
+        const placedItems = [];
+        for (const item of cart) {
+          const res = await addFood(
+            selectedTable,
+            item.item,
+            item.qty,
+            item.mrp,
+            selectedPlayer,
+          );
+          placedItems.push({
+            item: item.mrp ? `${item.item} (MRP ₹${item.mrp} + ₹3)` : item.item,
+            qty: item.qty,
+            price: getCartUnitPrice(item) * item.qty,
+            foodTotal: res.data.food_total,
+          });
+        }
+        setLastOrder({
+          customer: `${selectedPlayer} · ${selectedTable.toUpperCase()}`,
+          items: placedItems,
+          total: placedItems.reduce((sum, item) => sum + item.price, 0),
+          paymentMethod: "Added to table bill",
+        });
+      } else {
+        const res = await placeFoodOrder(customerName.trim(), cart, paymentMethod);
+        setLastOrder({
+          customer: customerName,
+          items: res.data.items,
+          total: res.data.total,
+          paymentMethod: res.data.payment_method,
+        });
+      }
       setCart([]);
       setCustomerName("");
       fetchAll();
@@ -136,6 +232,13 @@ export default function FoodTab() {
     ([, v]) =>
       getItemAvail(v) && (activeCat === "All" || getItemCat(v) === activeCat),
   );
+  const selectedSession = activeSessions.find((session) => session.table_id === selectedTable);
+  const selectedSessionPlayers =
+    selectedSession?.players?.length
+      ? selectedSession.players
+      : [selectedSession?.customer_name, selectedSession?.split_name]
+          .filter(Boolean)
+          .flatMap((name) => String(name).split(",").map((part) => part.trim()).filter(Boolean));
 
   return (
     <div>
@@ -143,6 +246,7 @@ export default function FoodTab() {
       <div className="segmented-control page-tabs">
         {[
           ["order", "New Order"],
+          ["menu", "Edit Menu"],
           ["stats", "Food Stats"],
           ["history", "Order History"],
         ].map(([id, label]) => (
@@ -218,26 +322,87 @@ export default function FoodTab() {
                 Order Summary
               </div>
 
-              <input
-                className="input-field"
-                placeholder="Customer name"
-                value={customerName}
-                onChange={(e) => setCustomerName(e.target.value)}
-              />
-
-              <div className="food-payment-toggle" aria-label="Payment method">
-                {["Cash", "UPI"].map((method) => (
+              <div className="food-payment-toggle" aria-label="Order target">
+                {[
+                  ["standalone", "Counter"],
+                  ["table", "Table"],
+                ].map(([target, label]) => (
                   <button
-                    key={method}
+                    key={target}
                     type="button"
-                    className={paymentMethod === method ? "active" : ""}
-                    onClick={() => setPaymentMethod(method)}
+                    className={orderTarget === target ? "active" : ""}
+                    onClick={() => setOrderTarget(target)}
                   >
-                    <i className={`ti ${method === "Cash" ? "ti-cash" : "ti-qrcode"}`} aria-hidden="true" />
-                    {method}
+                    <i className={`ti ${target === "table" ? "ti-billiard" : "ti-shopping-bag"}`} aria-hidden="true" />
+                    {label}
                   </button>
                 ))}
               </div>
+
+              {orderTarget === "table" ? (
+                <div className="food-table-target">
+                  <select
+                    className="input-field"
+                    value={selectedTable}
+                    onChange={(e) => {
+                      setSelectedTable(e.target.value);
+                      setSelectedPlayer("");
+                    }}
+                  >
+                    <option value="">Select table</option>
+                    {activeSessions.map((session) => (
+                      <option key={session.table_id} value={session.table_id}>
+                        {session.table_id.toUpperCase()} · {session.customer_name}
+                      </option>
+                    ))}
+                  </select>
+                  <select
+                    className="input-field"
+                    value={selectedPlayer}
+                    onChange={(e) => setSelectedPlayer(e.target.value)}
+                    disabled={!selectedTable}
+                  >
+                    <option value="">Select player</option>
+                    {selectedSessionPlayers.map((player) => (
+                      <option key={player} value={player}>
+                        {player}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              ) : (
+                <>
+                  <input
+                    className="input-field"
+                    placeholder="Customer name"
+                    value={customerName}
+                    onChange={(e) => setCustomerName(e.target.value)}
+                  />
+
+                  <div className="food-payment-toggle" aria-label="Payment method">
+                    {["Cash", "UPI", "Card"].map((method) => (
+                      <button
+                        key={method}
+                        type="button"
+                        className={paymentMethod === method ? "active" : ""}
+                        onClick={() => setPaymentMethod(method)}
+                      >
+                        <i
+                          className={`ti ${
+                            method === "Cash"
+                              ? "ti-cash"
+                              : method === "UPI"
+                                ? "ti-qrcode"
+                                : "ti-credit-card"
+                          }`}
+                          aria-hidden="true"
+                        />
+                        {method}
+                      </button>
+                    ))}
+                  </div>
+                </>
+              )}
 
               {cart.length === 0 ? (
                 <EmptyState
@@ -331,6 +496,126 @@ export default function FoodTab() {
                 </div>
               )}
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* ── Edit Menu ── */}
+      {activeTab === "menu" && (
+        <div className="history-section">
+          <div className="section-heading">Food Menu</div>
+          <form className="food-menu-edit-form" onSubmit={handleAddMenuItem}>
+            <input
+              className="input-field"
+              placeholder="Item name"
+              value={newItem.name}
+              onChange={(e) => setNewItem((prev) => ({ ...prev, name: e.target.value }))}
+            />
+            <input
+              className="input-field"
+              type="number"
+              min="1"
+              placeholder="Price"
+              value={newItem.price}
+              onChange={(e) => setNewItem((prev) => ({ ...prev, price: e.target.value }))}
+            />
+            <select
+              className="input-field"
+              value={newItem.category}
+              onChange={(e) => setNewItem((prev) => ({ ...prev, category: e.target.value }))}
+            >
+              {CATEGORIES.filter((cat) => cat !== "All").map((cat) => (
+                <option key={cat}>{cat}</option>
+              ))}
+            </select>
+            <button className="primary-action-btn" type="submit">
+              Add item
+            </button>
+          </form>
+
+          <div className="food-menu-edit-list">
+            {Object.entries(menu).map(([name, value]) => {
+              const editing = editingItem?.oldName === name;
+              return (
+                <div key={name} className="food-menu-edit-row">
+                  {editing ? (
+                    <>
+                      <input
+                        className="input-field"
+                        value={editingItem.newName}
+                        onChange={(e) =>
+                          setEditingItem((prev) => ({ ...prev, newName: e.target.value }))
+                        }
+                      />
+                      <input
+                        className="input-field"
+                        type="number"
+                        min="1"
+                        value={editingItem.price}
+                        onChange={(e) =>
+                          setEditingItem((prev) => ({ ...prev, price: e.target.value }))
+                        }
+                      />
+                      <select
+                        className="input-field"
+                        value={editingItem.category}
+                        onChange={(e) =>
+                          setEditingItem((prev) => ({ ...prev, category: e.target.value }))
+                        }
+                      >
+                        {CATEGORIES.filter((cat) => cat !== "All").map((cat) => (
+                          <option key={cat}>{cat}</option>
+                        ))}
+                      </select>
+                      <button className="btn btn-success-sm" type="button" onClick={handleUpdateMenuItem}>
+                        Save
+                      </button>
+                      <button className="btn" type="button" onClick={() => setEditingItem(null)}>
+                        Cancel
+                      </button>
+                    </>
+                  ) : (
+                    <>
+                      <div className="food-menu-edit-main">
+                        <strong>{name}</strong>
+                        <span>{getItemCat(value)} · ₹{getItemPrice(value)}</span>
+                      </div>
+                      <button
+                        className="btn"
+                        type="button"
+                        onClick={async () => {
+                          await setItemAvailability(name, !getItemAvail(value));
+                          await fetchAll();
+                        }}
+                      >
+                        {getItemAvail(value) ? "Hide" : "Show"}
+                      </button>
+                      <button
+                        className="btn"
+                        type="button"
+                        onClick={() =>
+                          setEditingItem({
+                            oldName: name,
+                            newName: name,
+                            price: getItemPrice(value),
+                            category: getItemCat(value),
+                          })
+                        }
+                      >
+                        Edit
+                      </button>
+                      <button
+                        className="btn btn-danger-sm"
+                        type="button"
+                        onClick={() => handleDeleteMenuItem(name)}
+                      >
+                        Delete
+                      </button>
+                    </>
+                  )}
+                </div>
+              );
+            })}
           </div>
         </div>
       )}

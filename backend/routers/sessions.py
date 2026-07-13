@@ -13,6 +13,7 @@ from hsr_config import rate_for_table
 
 router = APIRouter()
 MAX_SESSION_DURATION_MINUTES = 12 * 60
+PAYMENT_METHODS = {"Cash", "UPI", "Card"}
 
 class StartSession(BaseModel):
     table_id:      str
@@ -27,6 +28,7 @@ class FoodItem(BaseModel):
     item: str
     qty:  int
     mrp:  int | None = None
+    player_name: str = ""
 
 class Reservation(BaseModel):
     name: str
@@ -131,6 +133,8 @@ def stop_session(
     table_id:       str,
     payment_method: str = "Cash",   # Cash / UPI
     payer_name:     str = "",
+    discount_type:  str = "none",
+    discount_value: int = 0,
     db: Session = Depends(get_db)
 ):
     sess = db.query(models.ActiveSession).filter(
@@ -146,7 +150,7 @@ def stop_session(
     elapsed_ms = max(0, elapsed_ms)
     elapsed_m  = elapsed_ms / 1000 / 60
 
-    minutes = max(1, math.ceil((elapsed_ms / 1000) / 60))
+    minutes = max(1, int(math.floor((elapsed_ms / 1000 / 60) + 0.5)))
     if min_mins > 0 and minutes < min_mins:
         minutes = min_mins
     if minutes > MAX_SESSION_DURATION_MINUTES:
@@ -166,9 +170,20 @@ def stop_session(
 
     play            = checkout["play"]
     food            = checkout["food"]
-    total           = checkout["total"]
-    if payment_method not in {"Cash", "UPI"}:
+    raw_total       = checkout["total"]
+    if payment_method not in PAYMENT_METHODS:
         payment_method = "Cash"
+    discount_type = (discount_type or "none").strip().lower()
+    discount_amount = 0
+    if discount_type == "percent_5":
+        discount_amount = round(raw_total * 0.05)
+    elif discount_type == "percent_10":
+        discount_amount = round(raw_total * 0.10)
+    elif discount_type == "rupee":
+        discount_amount = min(max(discount_value, 0), 50, raw_total)
+    elif discount_type != "none":
+        raise HTTPException(status_code=400, detail="Invalid discount type")
+    total = max(0, raw_total - discount_amount)
 
     food_items = json.loads(sess.food_items or "[]")
     food_str   = ", ".join(f"{x['item']} x{x['qty']}" for x in food_items) or "None"
@@ -202,6 +217,9 @@ def stop_session(
     elif billing_mode == "sharing":
         share_note = f"Sharing between {share_count} players; approx ₹{split_per_head} each"
         notes = f"{notes} | {share_note}" if notes else share_note
+    if discount_amount > 0:
+        discount_note = f"Discount ₹{discount_amount} applied; original total ₹{raw_total}"
+        notes = f"{notes} | {discount_note}" if notes else discount_note
 
     t = models.Transaction(
         date          = datetime.now().strftime("%d/%m/%Y, %H:%M:%S"),
@@ -242,6 +260,9 @@ def stop_session(
         "dur":   t.duration, "ply": t.play_charge,
         "famt":  t.food_charge, "food": t.food_items,
         "tot":   t.total,  "notes": t.notes,
+        "raw_total": raw_total,
+        "discount_amount": discount_amount,
+        "discount_type": discount_type,
         "subtotal": checkout["subtotal"],
         "gst_amt": checkout["gst_amt"],
         "gst_percent": checkout["gst_percent"],
@@ -293,13 +314,17 @@ def add_food(table_id: str, body: FoodItem, db: Session = Depends(get_db)):
     if is_cigarette_item(body.item):
         if not body.mrp or body.mrp <= 0:
             raise HTTPException(status_code=400, detail="Enter cigarette price")
-        unit_price = body.mrp
-        item_name = f"{body.item} (₹{body.mrp})"
+        unit_price = body.mrp + 3
+        item_name = f"{body.item} (MRP ₹{body.mrp} + ₹3)"
     else:
         unit_price = menu_item.price
     price           = unit_price * body.qty
     items           = json.loads(sess.food_items or "[]")
-    items.append({"item": item_name, "qty": body.qty, "price": price})
+    player_name = " ".join((body.player_name or "").strip().split())
+    line = {"item": item_name, "qty": body.qty, "price": price}
+    if player_name:
+        line["player_name"] = player_name
+    items.append(line)
     sess.food_items  = json.dumps(items)
     sess.food_total += price
     db.commit()

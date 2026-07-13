@@ -1415,6 +1415,17 @@ body.dark .table-session-card {
   box-shadow: 0 8px 18px rgba(31, 122, 79, 0.16);
 }
 
+.reports-date-filter {
+  min-height: 34px;
+  border: 1px solid var(--venue-line, var(--border));
+  border-radius: 8px;
+  padding: 7px 10px;
+  background: var(--venue-card, var(--surface));
+  color: var(--venue-text, var(--text));
+  font-size: 12px;
+  font-weight: 750;
+}
+
 .report-stat-card {
   padding: 14px 16px;
   border: 1px solid var(--venue-line, var(--border));
@@ -1781,6 +1792,41 @@ body.dark .table-session-card {
   top: 80px;
 }
 
+.food-menu-edit-form,
+.food-menu-edit-row {
+  display: grid;
+  grid-template-columns: minmax(180px, 1fr) 110px 160px 120px;
+  gap: 8px;
+  align-items: start;
+}
+
+.food-menu-edit-form {
+  margin-bottom: 14px;
+}
+
+.food-menu-edit-row {
+  grid-template-columns: minmax(180px, 1fr) repeat(3, auto);
+  padding: 10px 0;
+  border-top: 1px solid var(--venue-line-soft, var(--border));
+}
+
+.food-menu-edit-main {
+  display: grid;
+  gap: 3px;
+}
+
+.food-menu-edit-main strong {
+  color: var(--venue-text, var(--text));
+  font-size: 13px;
+  font-weight: 850;
+}
+
+.food-menu-edit-main span {
+  color: var(--venue-muted, var(--muted));
+  font-size: 12px;
+  font-weight: 700;
+}
+
 .food-menu-card {
   min-height: 112px;
   padding: 14px 12px;
@@ -1835,7 +1881,7 @@ body.dark .table-session-card {
 
 .food-payment-toggle {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(84px, 1fr));
   gap: 8px;
   margin: 10px 0 12px;
 }
@@ -2513,8 +2559,36 @@ body.dark .loser-toggle.active {
 
 .table-payment-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 7px;
+}
+
+.table-discount-panel {
+  display: grid;
+  gap: 6px;
+}
+
+.table-discount-options {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 5px;
+}
+
+.table-discount-options button {
+  min-height: 34px;
+  border: 1px solid var(--table-control-border);
+  border-radius: 7px;
+  background: var(--table-control-surface);
+  color: var(--table-control-muted);
+  cursor: pointer;
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.table-discount-options button.active {
+  color: #147043;
+  border-color: #bfe9d0;
+  background: #e9f7ef;
 }
 
 .table-payment-btn {
@@ -5105,7 +5179,12 @@ body.dark .login-footer {
   }
 
   .food-payment-toggle {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(84px, 1fr));
+  }
+
+  .food-menu-edit-form,
+  .food-menu-edit-row {
+    grid-template-columns: 1fr;
   }
 
   .data-table {
