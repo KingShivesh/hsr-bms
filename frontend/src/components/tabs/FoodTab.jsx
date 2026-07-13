@@ -23,6 +23,8 @@ const CATEGORIES = [
   "Cigarettes",
 ];
 
+const tableKey = (tableId) => String(tableId || "").trim().toLowerCase();
+
 function EmptyState({ icon = "ti-info-circle", title, detail }) {
   return (
     <div className="empty-state">
@@ -72,7 +74,12 @@ export default function FoodTab() {
       setMenu(mRes.data);
       setStats(sRes.data);
       setOrders(oRes.data);
-      setActiveSessions(activeRes.data);
+      setActiveSessions(
+        activeRes.data.map((session) => ({
+          ...session,
+          table_id: tableKey(session.table_id),
+        })),
+      );
     } catch (e) {
       console.error(e);
     }
@@ -232,7 +239,7 @@ export default function FoodTab() {
     ([, v]) =>
       getItemAvail(v) && (activeCat === "All" || getItemCat(v) === activeCat),
   );
-  const selectedSession = activeSessions.find((session) => session.table_id === selectedTable);
+  const selectedSession = activeSessions.find((session) => session.table_id === tableKey(selectedTable));
   const selectedSessionPlayers =
     selectedSession?.players?.length
       ? selectedSession.players

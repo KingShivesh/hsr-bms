@@ -3,6 +3,7 @@ import time
 
 from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel
+from sqlalchemy import func
 from sqlalchemy.orm import Session
 
 import models
@@ -48,7 +49,7 @@ def _format_booking(b: models.Booking) -> dict:
 def _booking_has_started(db: Session, booking: models.Booking) -> bool:
     if booking.table_id and booking.table_id != "ANY":
         active = db.query(models.ActiveSession).filter(
-            models.ActiveSession.table_id == booking.table_id.lower(),
+            func.lower(models.ActiveSession.table_id) == booking.table_id.lower(),
             models.ActiveSession.customer_name.ilike(booking.customer_name),
         ).first()
         if active:

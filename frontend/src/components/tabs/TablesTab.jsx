@@ -30,6 +30,7 @@ import { useToast } from "../toastContext.js";
 import { HSR_TABLES, getTableLabel, getTableRate } from "../../config/hsrTables.js";
 
 const TABLES = HSR_TABLES;
+const tableKey = (tableId) => String(tableId || "").trim().toLowerCase();
 
 const THEME = {
   POOL: {
@@ -1111,7 +1112,7 @@ function TableCard({
   const openFrame = frames.find((frame) => frame.status === "open");
   const closedFrames = frames.filter((frame) => frame.status === "closed");
   const recentFrames = closedFrames.slice(-3);
-  const canTrackFrames = activePlayers.length > 1;
+  const canTrackFrames = activeBillingMode === "lp" && activePlayers.length > 1;
   const nextFrameNo = (frames.reduce((max, frame) => Math.max(max, frame.frame_no || 0), 0) || 0) + 1;
   const framePanelState = paused ? "paused" : openFrame ? "running" : "waiting";
   const frameLossCounts = closedFrames.reduce((acc, frame) => {
@@ -1962,11 +1963,12 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
       const s = {},
         n = {};
       res.data.forEach((x) => {
+        const id = tableKey(x.table_id);
         const billingMode = x.billing_mode || (x.split ? "lp" : "single");
         const players = x.players?.length
           ? x.players
           : [x.customer_name, ...(x.split_name ? splitPlayerNames(x.split_name) : [])].filter(Boolean);
-        s[x.table_id] = {
+        s[id] = {
           startTime: x.paused ? Date.now() - x.elapsed_ms : x.start_time,
           elapsed: Math.floor(
             (x.paused ? x.elapsed_ms : Date.now() - x.start_time) / 1000,
@@ -1986,7 +1988,7 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
           player2: players.slice(1).join(", "),
           leakageAlert: x.leakage_alert || false,
         };
-        n[x.table_id] = x.customer_name;
+        n[id] = x.customer_name;
       });
       setSessions(s);
       setNames(n);

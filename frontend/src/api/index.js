@@ -4,6 +4,8 @@ const api = axios.create({
   baseURL: import.meta.env.VITE_API_URL || "http://localhost:8000",
 });
 
+const tableKey = (table_id) => String(table_id || "").trim().toLowerCase();
+
 api.interceptors.request.use((cfg) => {
   const token = localStorage.getItem("token");
   if (token) cfg.headers.Authorization = `Bearer ${token}`;
@@ -39,7 +41,7 @@ export const startSession = (
   players = [],
 ) =>
   api.post("/sessions/start", {
-    table_id,
+    table_id: tableKey(table_id),
     customer_name,
     rate,
     split,
@@ -49,7 +51,7 @@ export const startSession = (
   });
 
 export const pauseSession = (table_id) =>
-  api.post(`/sessions/pause/${table_id}`);
+  api.post(`/sessions/pause/${tableKey(table_id)}`);
 export const stopSession = (
   table_id,
   payment_method = "Cash",
@@ -58,22 +60,22 @@ export const stopSession = (
   discount_value = 0,
 ) =>
   api.post(
-    `/sessions/stop/${table_id}?payment_method=${encodeURIComponent(payment_method)}&payer_name=${encodeURIComponent(payer_name)}&discount_type=${encodeURIComponent(discount_type)}&discount_value=${encodeURIComponent(discount_value)}`,
+    `/sessions/stop/${tableKey(table_id)}?payment_method=${encodeURIComponent(payment_method)}&payer_name=${encodeURIComponent(payer_name)}&discount_type=${encodeURIComponent(discount_type)}&discount_value=${encodeURIComponent(discount_value)}`,
   );
 export const resetSession = (table_id, manager_pin = "") =>
   api.post(
-    `/sessions/reset/${table_id}?manager_pin=${encodeURIComponent(manager_pin)}`,
+    `/sessions/reset/${tableKey(table_id)}?manager_pin=${encodeURIComponent(manager_pin)}`,
   );
 export const addFood = (table_id, item, qty, mrp = null, player_name = "") =>
-  api.post(`/sessions/${table_id}/food`, { item, qty, mrp, player_name });
+  api.post(`/sessions/${tableKey(table_id)}/food`, { item, qty, mrp, player_name });
 export const startFrame = (table_id) =>
-  api.post(`/sessions/${table_id}/frames/start`);
+  api.post(`/sessions/${tableKey(table_id)}/frames/start`);
 export const closeFrame = (table_id, loser_name) =>
-  api.post(`/sessions/${table_id}/frames/close`, { loser_name });
+  api.post(`/sessions/${tableKey(table_id)}/frames/close`, { loser_name });
 export const addReserve = (table_id, name, time) =>
-  api.post(`/sessions/${table_id}/reserve`, { name, time });
+  api.post(`/sessions/${tableKey(table_id)}/reserve`, { name, time });
 export const cancelReserve = (table_id) =>
-  api.delete(`/sessions/${table_id}/reserve`);
+  api.delete(`/sessions/${tableKey(table_id)}/reserve`);
 export const getActive = () => api.get("/sessions/active");
 
 // Members
@@ -134,14 +136,14 @@ export const getFoodStats = () => api.get("/food/stats");
 
 // Maintenance & Notes
 export const updateNotes = (table_id, notes) =>
-  api.post(`/sessions/${table_id}/notes`, { notes });
+  api.post(`/sessions/${tableKey(table_id)}/notes`, { notes });
 export const getTableHistory = (table_id) =>
-  api.get(`/sessions/history/${table_id}`);
+  api.get(`/sessions/history/${tableKey(table_id)}`);
 export const getMaintenance = () => api.get("/sessions/maintenance");
 export const setMaintenance = (table_id, reason) =>
-  api.post(`/sessions/maintenance/${table_id}`, { reason });
+  api.post(`/sessions/maintenance/${tableKey(table_id)}`, { reason });
 export const clearMaintenance = (table_id) =>
-  api.delete(`/sessions/maintenance/${table_id}`);
+  api.delete(`/sessions/maintenance/${tableKey(table_id)}`);
 
 export const getTopCustomers = (period) =>
   api.get(`/reports/top-customers?period=${period}`);
@@ -172,7 +174,7 @@ export const getAuditLogs = (limit = 50) =>
 export const getWaitlist = () => api.get("/waitlist");
 export const addWaitlistEntry = (entry) => api.post("/waitlist", entry);
 export const seatWaitlistEntry = (entryId, table_id) =>
-  api.post(`/waitlist/${entryId}/seat`, { table_id });
+  api.post(`/waitlist/${entryId}/seat`, { table_id: tableKey(table_id) });
 export const cancelWaitlistEntry = (entryId) =>
   api.delete(`/waitlist/${entryId}`);
 

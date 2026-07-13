@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException, Depends
 from pydantic import BaseModel, Field
-from sqlalchemy import or_
+from sqlalchemy import func, or_
 from sqlalchemy.orm import Session
 from database import get_db
 from datetime import datetime
@@ -47,6 +47,25 @@ class MaintenanceBody(BaseModel):
 
 def normalize_person_name(name: str) -> str:
     return " ".join((name or "").strip().split())
+
+def normalize_table_id(table_id: str) -> str:
+    return (table_id or "").strip().lower()
+
+def active_session_for_table(db: Session, table_id: str):
+    normalized = normalize_table_id(table_id)
+    if not normalized:
+        return None
+    return db.query(models.ActiveSession).filter(
+        func.lower(models.ActiveSession.table_id) == normalized
+    ).first()
+
+def maintenance_for_table(db: Session, table_id: str):
+    normalized = normalize_table_id(table_id)
+    if not normalized:
+        return None
+    return db.query(models.TableMaintenance).filter(
+        func.lower(models.TableMaintenance.table_id) == normalized
+    ).first()
 
 def is_generic_session_player(name: str) -> bool:
     return normalize_person_name(name).lower() in GENERIC_SESSION_PLAYER_NAMES
@@ -266,6 +285,9 @@ def create_frame_for_session(
 
 @router.post("/start")
 def start_session(body: StartSession, db: Session = Depends(get_db)):
+    table_id = normalize_table_id(body.table_id)
+    if not table_id:
+        raise HTTPException(status_code=400, detail="Table is required.")
     customer_name = require_full_name(body.customer_name, "Customer name")
     billing_mode = normalize_billing_mode(body.billing_mode, body.split)
     players = clean_players(customer_name, body.players, body.split_name)
@@ -277,21 +299,17 @@ def start_session(body: StartSession, db: Session = Depends(get_db)):
         players = [customer_name]
     split_name = ", ".join(players[1:])
     settings = db.query(models.Settings).first()
-    rate = rate_for_table(body.table_id, body.rate, settings)
-    maint = db.query(models.TableMaintenance).filter(
-        models.TableMaintenance.table_id == body.table_id
-    ).first()
+    rate = rate_for_table(table_id, body.rate, settings)
+    maint = maintenance_for_table(db, table_id)
     if maint:
         raise HTTPException(status_code=400, detail=f"Table is under maintenance: {maint.reason}")
 
-    existing = db.query(models.ActiveSession).filter(
-        models.ActiveSession.table_id == body.table_id
-    ).first()
+    existing = active_session_for_table(db, table_id)
     if existing:
         raise HTTPException(status_code=400, detail="Session already running")
 
     sess = models.ActiveSession(
-        table_id      = body.table_id,
+        table_id      = table_id,
         start_time    = time.time() * 1000,
         customer_name = customer_name,
         rate          = rate,
@@ -305,11 +323,11 @@ def start_session(body: StartSession, db: Session = Depends(get_db)):
         split_name    = split_name,
         billing_mode  = billing_mode,
         players_json  = json.dumps(players),
-        session_key   = new_session_key(body.table_id),
+        session_key   = new_session_key(table_id),
     )
     db.add(sess)
     frames = []
-    if len(players) > 1:
+    if billing_mode == "lp" and len(players) > 1:
         frame = create_frame_for_session(db, sess, 1)
         frames.append(frame)
     db.commit()
@@ -319,9 +337,7 @@ def start_session(body: StartSession, db: Session = Depends(get_db)):
 
 @router.post("/pause/{table_id}")
 def pause_session(table_id: str, db: Session = Depends(get_db)):
-    sess = db.query(models.ActiveSession).filter(
-        models.ActiveSession.table_id == table_id
-    ).first()
+    sess = active_session_for_table(db, table_id)
     if not sess:
         raise HTTPException(status_code=404, detail="No active session")
     if not sess.paused:
@@ -342,9 +358,7 @@ def stop_session(
     discount_value: int = 0,
     db: Session = Depends(get_db)
 ):
-    sess = db.query(models.ActiveSession).filter(
-        models.ActiveSession.table_id == table_id
-    ).first()
+    sess = active_session_for_table(db, table_id)
     if not sess:
         raise HTTPException(status_code=404, detail="No active session")
 
@@ -397,7 +411,7 @@ def stop_session(
     if not players:
         players = clean_players(sess.customer_name, [], sess.split_name or "")
     frames = active_session_frames(db, sess)
-    if any(frame.status == "open" for frame in frames):
+    if billing_mode == "lp" and any(frame.status == "open" for frame in frames):
         raise HTTPException(status_code=400, detail="Close the running frame before closing the table.")
     billable_frames = [frame for frame in frames if frame.status == "closed"]
     losses_by_player = frame_loss_summary(billable_frames)
@@ -520,9 +534,7 @@ def stop_session(
 
 @router.post("/reset/{table_id}")
 def reset_session(table_id: str, manager_pin: str = "", db: Session = Depends(get_db)):
-    sess = db.query(models.ActiveSession).filter(
-        models.ActiveSession.table_id == table_id
-    ).first()
+    sess = active_session_for_table(db, table_id)
     if sess:
         elapsed_ms = sess.elapsed_ms if sess.paused else time.time() * 1000 - sess.start_time
         log_action(
@@ -540,9 +552,7 @@ def reset_session(table_id: str, manager_pin: str = "", db: Session = Depends(ge
 
 @router.post("/{table_id}/frames/start")
 def start_frame(table_id: str, db: Session = Depends(get_db)):
-    sess = db.query(models.ActiveSession).filter(
-        models.ActiveSession.table_id == table_id
-    ).first()
+    sess = active_session_for_table(db, table_id)
     if not sess:
         raise HTTPException(status_code=404, detail="No active session")
     if sess.paused:
@@ -564,9 +574,7 @@ def start_frame(table_id: str, db: Session = Depends(get_db)):
 
 @router.post("/{table_id}/frames/close")
 def close_frame(table_id: str, body: CloseFrameBody, db: Session = Depends(get_db)):
-    sess = db.query(models.ActiveSession).filter(
-        models.ActiveSession.table_id == table_id
-    ).first()
+    sess = active_session_for_table(db, table_id)
     if not sess:
         raise HTTPException(status_code=404, detail="No active session")
     if sess.paused:
@@ -601,9 +609,7 @@ def close_frame(table_id: str, body: CloseFrameBody, db: Session = Depends(get_d
 def add_food(table_id: str, body: FoodItem, db: Session = Depends(get_db)):
     if body.qty <= 0:
         raise HTTPException(status_code=400, detail="Item quantity must be greater than 0")
-    sess = db.query(models.ActiveSession).filter(
-        models.ActiveSession.table_id == table_id
-    ).first()
+    sess = active_session_for_table(db, table_id)
     if not sess:
         raise HTTPException(status_code=404, detail="No active session")
     menu_item = db.query(models.MenuItem).filter(
@@ -643,9 +649,7 @@ def add_food(table_id: str, body: FoodItem, db: Session = Depends(get_db)):
 
 @router.post("/{table_id}/notes")
 def update_notes(table_id: str, body: UpdateNotes, db: Session = Depends(get_db)):
-    sess = db.query(models.ActiveSession).filter(
-        models.ActiveSession.table_id == table_id
-    ).first()
+    sess = active_session_for_table(db, table_id)
     if not sess:
         raise HTTPException(status_code=404, detail="No active session")
     sess.notes = body.notes
@@ -654,9 +658,8 @@ def update_notes(table_id: str, body: UpdateNotes, db: Session = Depends(get_db)
 
 @router.post("/{table_id}/reserve")
 def reserve(table_id: str, body: Reservation, db: Session = Depends(get_db)):
-    sess = db.query(models.ActiveSession).filter(
-        models.ActiveSession.table_id == table_id
-    ).first()
+    table_id = normalize_table_id(table_id)
+    sess = active_session_for_table(db, table_id)
     if not sess:
         sess = models.ActiveSession(
             table_id=table_id, start_time=0, customer_name="",
@@ -669,9 +672,7 @@ def reserve(table_id: str, body: Reservation, db: Session = Depends(get_db)):
 
 @router.delete("/{table_id}/reserve")
 def cancel_reserve(table_id: str, db: Session = Depends(get_db)):
-    sess = db.query(models.ActiveSession).filter(
-        models.ActiveSession.table_id == table_id
-    ).first()
+    sess = active_session_for_table(db, table_id)
     if sess:
         sess.reservation = None
         db.commit()
@@ -689,7 +690,7 @@ def get_active(db: Session = Depends(get_db)):
         frames = active_session_frames(db, s)
         serialized_frames = [serialize_frame(frame) for frame in frames]
         result.append({
-            "table_id":      s.table_id,
+            "table_id":      normalize_table_id(s.table_id),
             "customer_name": s.customer_name,
             "rate":          s.rate,
             "start_time":    s.start_time,
@@ -717,7 +718,7 @@ def get_active(db: Session = Depends(get_db)):
 @router.get("/history/{table_id}")
 def table_history(table_id: str, db: Session = Depends(get_db)):
     txns = db.query(models.Transaction).filter(
-        models.Transaction.table_id == table_id.upper()
+        models.Transaction.table_id == normalize_table_id(table_id).upper()
     ).order_by(models.Transaction.ts.desc()).limit(10).all()
     return [
         {
@@ -734,9 +735,8 @@ def table_history(table_id: str, db: Session = Depends(get_db)):
 
 @router.post("/maintenance/{table_id}")
 def set_maintenance(table_id: str, body: MaintenanceBody, db: Session = Depends(get_db)):
-    existing = db.query(models.TableMaintenance).filter(
-        models.TableMaintenance.table_id == table_id
-    ).first()
+    table_id = normalize_table_id(table_id)
+    existing = maintenance_for_table(db, table_id)
     if existing:
         existing.reason = body.reason
         existing.since  = datetime.now().strftime("%d/%m/%Y, %H:%M")
@@ -751,9 +751,7 @@ def set_maintenance(table_id: str, body: MaintenanceBody, db: Session = Depends(
 
 @router.delete("/maintenance/{table_id}")
 def clear_maintenance(table_id: str, db: Session = Depends(get_db)):
-    m = db.query(models.TableMaintenance).filter(
-        models.TableMaintenance.table_id == table_id
-    ).first()
+    m = maintenance_for_table(db, table_id)
     if m:
         db.delete(m)
         db.commit()
@@ -762,4 +760,4 @@ def clear_maintenance(table_id: str, db: Session = Depends(get_db)):
 @router.get("/maintenance")
 def get_maintenance(db: Session = Depends(get_db)):
     items = db.query(models.TableMaintenance).all()
-    return {m.table_id: {"reason": m.reason, "since": m.since} for m in items}
+    return {normalize_table_id(m.table_id): {"reason": m.reason, "since": m.since} for m in items}

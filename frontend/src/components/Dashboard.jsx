@@ -19,6 +19,7 @@ import {
 import { HSR_TABLES, TOTAL_TABLES, getTableLabel } from "../config/hsrTables.js";
 
 const TABLES = HSR_TABLES;
+const tableKey = (tableId) => String(tableId || "").trim().toLowerCase();
 
 const PIE_COLORS = ["#16a34a", "#e11d48", "#d97706"];
 
@@ -166,8 +167,9 @@ export default function Dashboard({ metrics, onNavigate }) {
         const s = {},
           e = {};
         res.data.forEach((x) => {
-          s[x.table_id] = x;
-          e[x.table_id] = Math.floor(
+          const id = tableKey(x.table_id);
+          s[id] = { ...x, table_id: id };
+          e[id] = Math.floor(
             (x.paused ? x.elapsed_ms : Date.now() - x.start_time) / 1000,
           );
         });

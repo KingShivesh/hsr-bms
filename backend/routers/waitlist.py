@@ -27,12 +27,12 @@ class SeatBody(BaseModel):
 
 def _available_tables(db: Session, preferred_type: str = "ANY") -> list[dict]:
     active_ids = {
-        s.table_id
+        (s.table_id or "").lower()
         for s in db.query(models.ActiveSession).filter(
             models.ActiveSession.customer_name != ""
         ).all()
     }
-    maintenance_ids = {m.table_id for m in db.query(models.TableMaintenance).all()}
+    maintenance_ids = {(m.table_id or "").lower() for m in db.query(models.TableMaintenance).all()}
     pref = (preferred_type or "ANY").upper()
     tables = [
         t
@@ -104,7 +104,7 @@ def seat_waitlist_entry(entry_id: int, body: SeatBody, db: Session = Depends(get
     if not entry:
         raise HTTPException(status_code=404, detail="Waitlist entry not found")
     entry.status = "seated"
-    entry.seated_table = body.table_id
+    entry.seated_table = (body.table_id or "").lower()
     db.commit()
     return {"ok": True}
 

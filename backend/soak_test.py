@@ -111,7 +111,15 @@ def close_all_active():
         mode = session.get("billing_mode", "single")
         payer = ""
         if mode == "lp":
-            payer = (session.get("players") or [session["customer_name"]])[0]
+            players = session.get("players") or [session["customer_name"]]
+            payer = players[0]
+            current_frame = session.get("current_frame")
+            if current_frame:
+                request(
+                    "POST",
+                    f"/sessions/{table}/frames/close",
+                    json={"loser_name": payer},
+                )
         request(
             "POST",
             f"/sessions/stop/{table}",
@@ -201,12 +209,26 @@ def run_lp_session(table):
     request("POST", f"/sessions/pause/{table}")
     add_food_to_table(table)
     payer = random.choice(players)
+    request(
+        "POST",
+        f"/sessions/{table}/frames/close",
+        json={"loser_name": payer},
+    )
     result = request(
         "POST",
         f"/sessions/stop/{table}",
         params={"payment_method": random.choice(PAYMENTS), "payer_name": payer},
     ).json()
-    if result["billing_mode"] != "lp" or result["payer_name"] != payer:
+    payer_breakdown = next(
+        (item for item in result.get("player_breakdown", []) if item.get("name") == payer),
+        {},
+    )
+    if (
+        result["billing_mode"] != "lp"
+        or not result.get("frames")
+        or 1 not in payer_breakdown.get("lost_frames", [])
+        or payer_breakdown.get("table", 0) <= 0
+    ):
         raise SoakFailure(f"Invalid LP close: {result}")
     metrics["sessions_closed"] += 1
 
@@ -220,7 +242,7 @@ def run_food_only_order():
         ],
     }
     result = request("POST", "/food/order", json=payload).json()
-    if result["total"] != 70:
+    if result["total"] != 73:
         raise SoakFailure(f"Cigarette manual price calculation changed: {result}")
     metrics["food_orders"] += 1
 
