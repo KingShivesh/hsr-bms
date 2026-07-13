@@ -1,6 +1,8 @@
+import { useState } from "react";
 import { APP_NAME } from "../config/hsrTables.js";
 
 export default function Sidebar({ page, setPage, onLogout, activeTables }) {
+  const [mobileOpen, setMobileOpen] = useState(false);
   const items = [
     { id: "dashboard", icon: "ti-layout-dashboard", label: "Dashboard" },
     { id: "tables", icon: "ti-circle-dot", label: "Tables" },
@@ -10,8 +12,21 @@ export default function Sidebar({ page, setPage, onLogout, activeTables }) {
     { id: "closing", icon: "ti-clipboard-check", label: "Closing" },
   ];
 
+  function navigate(nextPage) {
+    setPage(nextPage);
+    setMobileOpen(false);
+  }
+
   return (
-    <div className="sidebar">
+    <div className={`sidebar ${mobileOpen ? "mobile-open" : ""}`}>
+      <button
+        type="button"
+        className="sb-mobile-toggle"
+        onClick={() => setMobileOpen((open) => !open)}
+        aria-label={mobileOpen ? "Collapse navigation" : "Expand navigation"}
+      >
+        <i className={`ti ${mobileOpen ? "ti-x" : "ti-menu-2"}`} aria-hidden="true" />
+      </button>
       <div className="sb-logo">
         <div className="sb-logo-mark">
           <i className="ti ti-circle-dot" aria-hidden="true" />
@@ -27,14 +42,15 @@ export default function Sidebar({ page, setPage, onLogout, activeTables }) {
         <div
           key={item.id}
           className={`sb-item ${page === item.id ? "active" : ""}`}
-          onClick={() => setPage(item.id)}
+          onClick={() => navigate(item.id)}
         >
           <i className={`ti ${item.icon}`} aria-hidden="true" />
-          <span style={{ flex: 1 }}>{item.label}</span>
+          <span className="sb-label">{item.label}</span>
 
           {/* Active tables badge next to Tables */}
           {item.id === "tables" && activeTables > 0 && (
             <span
+              className="sb-badge"
               style={{
                 background: "#16a34a",
                 color: "#fff",
@@ -55,16 +71,16 @@ export default function Sidebar({ page, setPage, onLogout, activeTables }) {
       <div className="sb-section">System</div>
       <div
         className={`sb-item ${page === "settings" ? "active" : ""}`}
-        onClick={() => setPage("settings")}
+        onClick={() => navigate("settings")}
       >
         <i className="ti ti-settings" aria-hidden="true" />
-        Settings
+        <span className="sb-label">Settings</span>
       </div>
 
       <div className="sb-bottom">
         <div className="sb-item" onClick={onLogout}>
           <i className="ti ti-logout" aria-hidden="true" />
-          Logout
+          <span className="sb-label">Logout</span>
         </div>
       </div>
     </div>

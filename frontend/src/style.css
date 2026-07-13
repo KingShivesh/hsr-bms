@@ -345,6 +345,14 @@ body {
   font-size: 16px;
 }
 
+.sb-label {
+  flex: 1;
+}
+
+.sb-mobile-toggle {
+  display: none;
+}
+
 .sb-bottom {
   margin-top: auto;
   padding: 12px 0;
@@ -1754,6 +1762,23 @@ body.dark .table-session-card {
   font-size: 12px;
   font-weight: 650;
   line-height: 1.45;
+}
+
+.food-order-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 340px;
+  gap: 16px;
+}
+
+.food-menu-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 10px;
+}
+
+.food-cart-panel {
+  position: sticky;
+  top: 80px;
 }
 
 .food-menu-card {
@@ -5225,66 +5250,119 @@ body.dark .login-footer {
 
 @media (max-width: 640px) {
   .sidebar {
-    top: auto;
-    right: 0;
-    bottom: 0;
-    width: 100%;
-    height: calc(64px + env(safe-area-inset-bottom));
-    flex-direction: row;
-    align-items: center;
-    gap: 2px;
-    padding: 6px 8px max(6px, env(safe-area-inset-bottom));
-    overflow-x: auto;
-    overflow-y: hidden;
-    border-right: 0;
-    border-top: 1px solid #1d2824;
-    box-shadow: 0 -10px 28px rgba(16, 21, 19, 0.16);
+    top: 0;
+    right: auto;
+    bottom: auto;
+    width: 56px;
+    height: 100dvh;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding: 8px 0 max(8px, env(safe-area-inset-bottom));
+    overflow-x: visible;
+    overflow-y: auto;
+    border-right: 1px solid #1d2824;
+    border-top: 0;
+    box-shadow: 8px 0 28px rgba(16, 21, 19, 0.12);
     scrollbar-width: none;
+    transition:
+      width 0.18s ease,
+      box-shadow 0.18s ease;
   }
 
-  .sidebar::-webkit-scrollbar {
-    display: none;
+  .sidebar.mobile-open {
+    width: min(220px, 82vw);
+    box-shadow: 18px 0 42px rgba(16, 21, 19, 0.28);
   }
 
-  .sb-logo,
-  .sb-section {
+  .sb-mobile-toggle {
+    width: 40px;
+    height: 40px;
+    display: grid;
+    place-items: center;
+    flex: 0 0 auto;
+    margin: 0 auto 8px;
+    border: 1px solid rgba(140, 240, 178, 0.18);
+    border-radius: 10px;
+    background: #1e3f30;
+    color: #8cf0b2;
+    cursor: pointer;
+    font-size: 20px;
+  }
+
+  .sb-logo {
     display: none !important;
   }
 
-  .sb-bottom {
-    display: contents;
+  .sb-section {
+    display: block !important;
+    height: 0;
+    padding: 0;
+    overflow: hidden;
+    opacity: 0;
   }
 
   .sb-item {
-    flex: 1 0 48px;
+    flex: 0 0 auto;
     justify-content: center;
-    min-width: 48px;
-    max-width: 68px;
-    height: 48px;
-    min-height: 48px;
-    margin: 0;
-    padding: 0;
+    gap: 10px;
+    min-width: 0;
+    max-width: none;
+    width: auto;
+    min-height: 44px;
+    margin: 2px 6px;
+    padding: 10px 8px;
     border-left: 0;
-    border-bottom: 3px solid transparent;
-    border-radius: 12px;
+    border-right: 0;
+    border-bottom: 0;
+    border-radius: 10px;
   }
 
   .sb-item.active {
     border-left-color: transparent;
-    border-bottom-color: #58d68d;
+    box-shadow: inset 0 0 0 1px rgba(88, 214, 141, 0.12);
   }
 
   .sb-item i {
     font-size: 20px;
   }
 
+  .sb-label,
+  .sb-badge {
+    display: none !important;
+  }
+
+  .sidebar.mobile-open .sb-item {
+    justify-content: flex-start;
+    padding: 10px 12px;
+  }
+
+  .sidebar.mobile-open .sb-label {
+    display: block !important;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .sidebar.mobile-open .sb-badge {
+    display: inline-flex !important;
+    justify-content: center;
+  }
+
+  .sb-bottom {
+    display: block;
+    margin-top: auto;
+    padding: 8px 0 0;
+  }
+
   .main-content {
-    margin-left: 0;
-    padding-bottom: calc(70px + env(safe-area-inset-bottom));
+    margin-left: 56px;
+    padding-bottom: 0;
   }
 
   .page {
-    padding: 10px 10px calc(86px + env(safe-area-inset-bottom));
+    padding: 10px;
   }
 
   .topbar {
@@ -5293,6 +5371,23 @@ body.dark .login-footer {
   }
 
   .command-fab {
-    bottom: calc(78px + env(safe-area-inset-bottom));
+    bottom: max(14px, env(safe-area-inset-bottom));
+  }
+
+  .food-order-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .food-menu-grid {
+    grid-template-columns: repeat(auto-fill, minmax(118px, 1fr));
+  }
+
+  .food-cart-panel {
+    position: static;
+  }
+
+  .food-menu-card {
+    min-height: 104px;
+    padding: 12px 10px;
   }
 }

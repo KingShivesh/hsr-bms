@@ -158,13 +158,7 @@ export default function FoodTab() {
 
       {/* ── New Order ── */}
       {activeTab === "order" && (
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "1fr 340px",
-            gap: "16px",
-          }}
-        >
+        <div className="food-order-layout">
           {/* Menu grid */}
           <div>
             <div className="segmented-control category-tabs">
@@ -179,13 +173,7 @@ export default function FoodTab() {
               ))}
             </div>
 
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(auto-fill, minmax(140px,1fr))",
-                gap: "10px",
-              }}
-            >
+            <div className="food-menu-grid">
               {filteredMenu.map(([name, v]) => {
                 const inCart = cart.find((i) => i.item === name);
                 return (
@@ -225,7 +213,7 @@ export default function FoodTab() {
 
           {/* Cart */}
           <div>
-            <div className="panel" style={{ position: "sticky", top: "80px" }}>
+            <div className="panel food-cart-panel">
               <div className="section-heading">
                 Order Summary
               </div>
