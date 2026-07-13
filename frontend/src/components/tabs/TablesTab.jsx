@@ -2148,12 +2148,26 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
         rec.discount_amount > 0
           ? `\nDiscount: ₹${rec.discount_amount} (from ₹${rec.raw_total})`
           : "";
+      const settlement = Array.isArray(rec.player_breakdown)
+        ? rec.player_breakdown.filter((item) => item && item.name)
+        : [];
+      const settlementLine = settlement.length
+        ? `\n\nPayment split:\n${settlement
+            .map((item) => {
+              const tableAmount = item.table ?? item.play ?? 0;
+              const foodAmount = item.food ?? 0;
+              return `${item.name}: ₹${item.total ?? 0} (table ₹${tableAmount}, food ₹${foodAmount})`;
+            })
+            .join("\n")}`
+        : "";
       const payerLine =
-        rec.billing_mode === "sharing" && rec.split_per_head && rec.share_count > 1
+        settlement.length > 1
+          ? "Collect payment as shown below."
+          : rec.billing_mode === "sharing" && rec.split_per_head && rec.share_count > 1
           ? `Each player should pay ₹${rec.split_per_head} (${rec.share_count} players).`
           : `${customerName} should pay ₹${totalAmount}.`;
       alert(
-        `Table ${id.toUpperCase()} closed.\n${payerLine}${discountLine}\nPayment: ${rec.payment_method || paymentMethod}`,
+        `Table ${id.toUpperCase()} closed.\n${payerLine}${settlementLine}${discountLine}\nPayment: ${rec.payment_method || paymentMethod}`,
       );
       try {
         const memberRes = await searchMembers(customerName);

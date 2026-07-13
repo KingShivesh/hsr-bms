@@ -67,6 +67,93 @@ def clean_players(primary: str, extra_players: list[str] | None, split_name: str
             seen.add(key)
     return players
 
+def distribute_amount(amount: int, count: int) -> list[int]:
+    if count <= 0:
+        return []
+    base = amount // count
+    remainder = amount % count
+    return [base + (1 if index < remainder else 0) for index in range(count)]
+
+def allocate_by_weight(weights: dict[str, int], amount: int) -> dict[str, int]:
+    names = list(weights.keys())
+    if amount <= 0 or not names:
+        return {name: 0 for name in names}
+    total_weight = sum(max(0, int(value or 0)) for value in weights.values())
+    if total_weight <= 0:
+        shares = distribute_amount(amount, len(names))
+        return {name: shares[index] for index, name in enumerate(names)}
+
+    allocations = {}
+    fractions = []
+    for name in names:
+        raw = amount * max(0, int(weights.get(name, 0) or 0)) / total_weight
+        floor_value = int(math.floor(raw))
+        allocations[name] = floor_value
+        fractions.append((raw - floor_value, name))
+
+    remainder = amount - sum(allocations.values())
+    for _, name in sorted(fractions, reverse=True)[:remainder]:
+        allocations[name] += 1
+    return allocations
+
+def player_food_totals(food_items: list[dict], players: list[str], fallback_name: str) -> dict[str, int]:
+    names = players or ([fallback_name] if fallback_name else [])
+    if not names:
+        names = ["Unassigned"]
+    lookup = {name.lower(): name for name in names}
+    fallback = fallback_name if fallback_name in names else names[0]
+    totals = {name: 0 for name in names}
+
+    for item in food_items:
+        price = int(item.get("price") or 0)
+        raw_player = " ".join((item.get("player_name") or "").strip().split())
+        player = lookup.get(raw_player.lower(), fallback) if raw_player else fallback
+        totals[player] = totals.get(player, 0) + price
+    return totals
+
+def build_player_breakdown(
+    *,
+    players: list[str],
+    billing_mode: str,
+    payer: str,
+    display_customer: str,
+    final_total: int,
+    food_items: list[dict],
+) -> list[dict]:
+    bill_players = players or ([display_customer] if display_customer else [])
+    if billing_mode == "single":
+        bill_players = [display_customer or (bill_players[0] if bill_players else "Customer")]
+
+    food_by_player = player_food_totals(food_items, bill_players, display_customer)
+    billed_food_total = sum(food_by_player.values())
+    if billed_food_total > final_total:
+        food_by_player = allocate_by_weight(food_by_player, final_total)
+        billed_food_total = final_total
+
+    table_total = max(0, final_total - billed_food_total)
+    if billing_mode == "sharing":
+        table_shares = distribute_amount(table_total, len(bill_players))
+        return [
+            {
+                "name": player,
+                "table": table_shares[index],
+                "food": food_by_player.get(player, 0),
+                "total": table_shares[index] + food_by_player.get(player, 0),
+            }
+            for index, player in enumerate(bill_players)
+        ]
+
+    payer_name = payer if payer in bill_players else (display_customer or bill_players[0])
+    return [
+        {
+            "name": player,
+            "table": table_total if player == payer_name else 0,
+            "food": food_by_player.get(player, 0),
+            "total": (table_total if player == payer_name else 0) + food_by_player.get(player, 0),
+        }
+        for player in bill_players
+    ]
+
 @router.post("/start")
 def start_session(body: StartSession, db: Session = Depends(get_db)):
     customer_name = require_full_name(body.customer_name, "Customer name")
@@ -207,6 +294,14 @@ def stop_session(
     display_customer = payer or sess.customer_name
     share_count = len(players) if billing_mode == "sharing" else 1
     split_per_head = math.ceil(total / share_count) if share_count > 1 else total
+    player_breakdown = build_player_breakdown(
+        players=players,
+        billing_mode=billing_mode,
+        payer=payer,
+        display_customer=display_customer,
+        final_total=total,
+        food_items=food_items,
+    )
     notes = sess.notes or ""
     if billing_mode == "lp" and payer:
         winners = [player for player in players if player.lower() != payer.lower()]
@@ -220,6 +315,12 @@ def stop_session(
     if discount_amount > 0:
         discount_note = f"Discount ₹{discount_amount} applied; original total ₹{raw_total}"
         notes = f"{notes} | {discount_note}" if notes else discount_note
+    if len(player_breakdown) > 1 or any(item["food"] for item in player_breakdown):
+        settlement_note = "Settlement: " + "; ".join(
+            f"{item['name']} ₹{item['total']} (table ₹{item['table']}, food ₹{item['food']})"
+            for item in player_breakdown
+        )
+        notes = f"{notes} | {settlement_note}" if notes else settlement_note
 
     t = models.Transaction(
         date          = datetime.now().strftime("%d/%m/%Y, %H:%M:%S"),
@@ -243,11 +344,9 @@ def stop_session(
         payment_method = payment_method,
     )
     db.add(t)
-    if billing_mode == "sharing" and players:
-        base_share = total // share_count
-        remainder = total % share_count
-        for index, player in enumerate(players):
-            update_member_on_checkout(player, base_share + (1 if index < remainder else 0), db)
+    if player_breakdown:
+        for item in player_breakdown:
+            update_member_on_checkout(item["name"], item["total"], db)
     else:
         update_member_on_checkout(display_customer, total, db)
 
@@ -274,6 +373,7 @@ def stop_session(
         "payer_name": payer,
         "split_per_head": split_per_head,
         "share_count": share_count,
+        "player_breakdown": player_breakdown,
     }
 
 @router.post("/reset/{table_id}")
@@ -321,6 +421,14 @@ def add_food(table_id: str, body: FoodItem, db: Session = Depends(get_db)):
     price           = unit_price * body.qty
     items           = json.loads(sess.food_items or "[]")
     player_name = " ".join((body.player_name or "").strip().split())
+    if player_name:
+        players = json.loads(getattr(sess, "players_json", "[]") or "[]")
+        if not players:
+            players = clean_players(sess.customer_name, [], sess.split_name or "")
+        player_lookup = {player.lower(): player for player in players}
+        if player_name.lower() not in player_lookup:
+            raise HTTPException(status_code=400, detail="Select a valid player for this table.")
+        player_name = player_lookup[player_name.lower()]
     line = {"item": item_name, "qty": body.qty, "price": price}
     if player_name:
         line["player_name"] = player_name
