@@ -123,6 +123,7 @@ def build_player_breakdown(
     display_customer: str,
     final_total: int,
     food_items: list[dict],
+    loss_counts: dict[str, list[int]] | None = None,
 ) -> list[dict]:
     bill_players = players or ([display_customer] if display_customer else [])
     if billing_mode == "single":
@@ -135,6 +136,22 @@ def build_player_breakdown(
         billed_food_total = final_total
 
     table_total = max(0, final_total - billed_food_total)
+    if billing_mode == "lp":
+        loss_weights = {
+            player: len((loss_counts or {}).get(player, []))
+            for player in bill_players
+        }
+        table_shares = allocate_by_weight(loss_weights, table_total)
+        return [
+            {
+                "name": player,
+                "table": table_shares.get(player, 0),
+                "food": food_by_player.get(player, 0),
+                "total": table_shares.get(player, 0) + food_by_player.get(player, 0),
+            }
+            for player in bill_players
+        ]
+
     if billing_mode == "sharing":
         table_shares = distribute_amount(table_total, len(bill_players))
         return [
@@ -364,16 +381,14 @@ def stop_session(
     players = json.loads(getattr(sess, "players_json", "[]") or "[]")
     if not players:
         players = clean_players(sess.customer_name, [], sess.split_name or "")
+    frames = active_session_frames(db, sess)
+    if any(frame.status == "open" for frame in frames):
+        raise HTTPException(status_code=400, detail="Close the running frame before closing the table.")
+    losses_by_player = frame_loss_summary(frames)
     if billing_mode == "single":
         payer = sess.customer_name
     elif billing_mode == "lp":
-        payer = " ".join((payer_name or "").strip().split())
-        if not payer:
-            raise HTTPException(status_code=400, detail="Select who pays for this LP session.")
-        player_lookup = {player.lower(): player for player in players}
-        if payer.lower() not in player_lookup:
-            raise HTTPException(status_code=400, detail="Payer must be one of the session players.")
-        payer = player_lookup[payer.lower()]
+        payer = ""
     else:
         payer = ""
 
@@ -387,19 +402,13 @@ def stop_session(
         display_customer=display_customer,
         final_total=total,
         food_items=food_items,
+        loss_counts=losses_by_player,
     )
-    frames = active_session_frames(db, sess)
-    if any(frame.status == "open" for frame in frames):
-        raise HTTPException(status_code=400, detail="Close the running frame before closing the table.")
-    losses_by_player = frame_loss_summary(frames)
     for item in player_breakdown:
         item["lost_frames"] = losses_by_player.get(item["name"], [])
     notes = sess.notes or ""
-    if billing_mode == "lp" and payer:
-        winners = [player for player in players if player.lower() != payer.lower()]
-        lp_note = f"LP paid by {payer}"
-        if winners:
-            lp_note += f"; other player(s): {', '.join(winners)}"
+    if billing_mode == "lp":
+        lp_note = "LP settled by recorded frame losses"
         notes = f"{notes} | {lp_note}" if notes else lp_note
     elif billing_mode == "sharing":
         share_note = f"Sharing between {share_count} players; approx ₹{split_per_head} each"

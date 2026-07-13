@@ -889,7 +889,6 @@ function TableCard({
   const [paymentMethod, setPaymentMethod] = useState("Cash");
   const [discountType, setDiscountType] = useState("none");
   const [discountValue, setDiscountValue] = useState("");
-  const [showPayerModal, setShowPayerModal] = useState(false);
   const [reserveOpen, setReserveOpen] = useState(false);
   const [notesOpen, setNotesOpen] = useState(false);
   const [showHistory, setShowHistory] = useState(false);
@@ -1024,92 +1023,6 @@ function TableCard({
           tableNum={table.num}
           onClose={() => setShowHistory(false)}
         />
-      )}
-
-      {/* LP payer modal */}
-      {showPayerModal && (
-        <div
-          style={{
-            position: "fixed",
-            inset: 0,
-            background: "rgba(0,0,0,0.6)",
-            zIndex: 2000,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <div
-            style={{
-              background: "#fff",
-              borderRadius: "12px",
-              padding: "28px",
-              width: "340px",
-              boxShadow: "0 8px 32px rgba(0,0,0,0.2)",
-            }}
-          >
-            <div
-              style={{
-                fontSize: "16px",
-                fontWeight: 700,
-                color: "#111",
-                marginBottom: "6px",
-              }}
-            >
-              Who pays?
-            </div>
-            <div
-              style={{ fontSize: "13px", color: "#888", marginBottom: "20px" }}
-            >
-              LP session: select the loser/payer before closing the table.
-            </div>
-            <div
-              style={{ display: "flex", flexDirection: "column", gap: "8px" }}
-            >
-              {activePlayers.map((player) => (
-                <button
-                  key={player}
-                  onClick={() => {
-                    onStop(
-                      table.id,
-                      player,
-                      paymentMethod,
-                      discountType,
-                      discountValue,
-                    );
-                    setShowPayerModal(false);
-                  }}
-                  style={{
-                    padding: "13px",
-                    background: "#fff1f2",
-                    color: "#e11d48",
-                    border: "1px solid #fecdd3",
-                    borderRadius: "8px",
-                    fontSize: "14px",
-                    fontWeight: 600,
-                    cursor: "pointer",
-                  }}
-                >
-                  {player} pays
-                </button>
-              ))}
-              <button
-                onClick={() => setShowPayerModal(false)}
-                style={{
-                  padding: "10px",
-                  background: "#f5f5f5",
-                  color: "#888",
-                  border: "1px solid #e5e5e5",
-                  borderRadius: "8px",
-                  fontSize: "13px",
-                  cursor: "pointer",
-                }}
-              >
-                Cancel
-              </button>
-            </div>
-          </div>
-        </div>
       )}
 
       <div
@@ -1406,8 +1319,7 @@ function TableCard({
                     alert("Close the running frame before closing the table.");
                     return;
                   }
-                  if (activeBillingMode === "lp") setShowPayerModal(true);
-                  else onStop(table.id, "", paymentMethod, discountType, discountValue);
+                  onStop(table.id, paymentMethod, discountType, discountValue);
                 }}
                 style={{
                   position: "absolute",
@@ -1553,7 +1465,7 @@ function TableCard({
               {activeBillingMode === "sharing" && shareCount > 1 && (
                 <strong>₹{shareAmount} each</strong>
               )}
-              {activeBillingMode === "lp" && <strong>payer selected on close</strong>}
+              {activeBillingMode === "lp" && <strong>frames decide split</strong>}
             </div>
           )}
 
@@ -2233,7 +2145,6 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
 
   async function handleStop(
     id,
-    loserName = "",
     paymentMethod = "Cash",
     discountType = "none",
     discountValue = "",
@@ -2244,12 +2155,10 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
       return;
     }
     async function performCheckout() {
-      const sess = sessions[id];
-      const payerName = sess.billingMode === "lp" ? loserName : "";
       const res = await stopSession(
         id,
         paymentMethod,
-        payerName,
+        "",
         discountType,
         parseInt(discountValue, 10) || 0,
       );
