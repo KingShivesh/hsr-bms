@@ -2464,6 +2464,28 @@ body.dark .loser-toggle.active {
   color: #778196;
 }
 
+.table-close-row {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.table-close-row.idle {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.table-control-btn.close {
+  color: #fff;
+  background: #dc2626;
+  border-color: #dc2626;
+  box-shadow: 0 8px 18px rgba(220, 38, 38, 0.18);
+}
+
+.table-control-btn.close:hover {
+  background: #b91c1c;
+  border-color: #b91c1c;
+}
+
 .table-payment-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));

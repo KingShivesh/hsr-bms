@@ -4,11 +4,9 @@ import {
   pauseSession,
   stopSession,
   resetSession,
-  addFood,
   addReserve,
   cancelReserve,
   getActive,
-  getMenu,
   getRates,
   updateNotes,
   getTableHistory,
@@ -849,10 +847,8 @@ function TableCard({
   onPause,
   onReset,
   onStop,
-  onAddFood,
   onReserve,
   onCancelReserve,
-  menu,
   rates,
   maintenance,
   onMaintenance,
@@ -865,29 +861,20 @@ function TableCard({
   const [otherPlayers, setOtherPlayers] = useState("");
   const [paymentMethod, setPaymentMethod] = useState("Cash");
   const [showPayerModal, setShowPayerModal] = useState(false);
-  const [foodOpen, setFoodOpen] = useState(false);
   const [reserveOpen, setReserveOpen] = useState(false);
   const [notesOpen, setNotesOpen] = useState(false);
   const [showHistory, setShowHistory] = useState(false);
   const [maintOpen, setMaintOpen] = useState(false);
-  const [foodSel, setFoodSel] = useState("");
-  const [foodQty, setFoodQty] = useState(1);
-  const [foodMrp, setFoodMrp] = useState("");
   const [resvName, setResvName] = useState("");
   const [resvTime, setResvTime] = useState("");
   const [notes, setNotes] = useState("");
   const [maintReason, setMaintReason] = useState("Under maintenance");
 
   useEffect(() => {
-    if (Object.keys(menu).length && !foodSel) setFoodSel(Object.keys(menu)[0]);
-  }, [menu, foodSel]);
-
-  useEffect(() => {
     if (session?.notes !== undefined) setNotes(session.notes || "");
   }, [session?.notes]);
 
   const isPool = table.type === "POOL";
-  const isCigarette = /cigarette|cigg/i.test(foodSel);
   const occupied = !!session;
   const paused = session?.paused || false;
   const rate = getTableRate(table, rates);
@@ -1356,33 +1343,8 @@ function TableCard({
               )}
             </div>
 
-            {/* STOP / START button on felt */}
-            {occupied ? (
-              <button
-                onClick={() => {
-                  if (activeBillingMode === "lp") setShowPayerModal(true);
-                  else onStop(table.id, "", paymentMethod);
-                }}
-                style={{
-                  position: "absolute",
-                  bottom: "8px",
-                  left: "50%",
-                  transform: "translateX(-50%)",
-                  background: "#dc2626",
-                  color: "#fff",
-                  border: "none",
-                  borderRadius: "5px",
-                  padding: "6px 28px",
-                  fontSize: "12px",
-                  fontWeight: 700,
-                  cursor: "pointer",
-                  letterSpacing: "2px",
-                  boxShadow: "0 2px 8px rgba(0,0,0,0.4)",
-                }}
-              >
-                {activeBillingMode === "lp" ? "SELECT PAYER" : "CLOSE"}
-              </button>
-            ) : (
+            {/* START button on felt */}
+            {!occupied && (
               <button
                 onClick={() => onStart(table, billingMode, otherPlayers)}
                 style={{
@@ -1533,13 +1495,9 @@ function TableCard({
             )
           )}
 
-          {/* Pause / Reset */}
+          {/* Pause / Reset / Close */}
           <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "1fr 1fr",
-              gap: "6px",
-            }}
+            className={`table-close-row ${occupied ? "" : "idle"}`}
           >
             <button
               onClick={() => onPause(table.id)}
@@ -1555,6 +1513,18 @@ function TableCard({
             >
               RESET
             </button>
+            {occupied && (
+              <button
+                onClick={() => {
+                  if (activeBillingMode === "lp") setShowPayerModal(true);
+                  else onStop(table.id, "", paymentMethod);
+                }}
+                data-testid={`close-${table.id}`}
+                className="table-control-btn close"
+              >
+                CLOSE
+              </button>
+            )}
           </div>
 
           {/* Payment method */}
@@ -1606,72 +1576,6 @@ function TableCard({
               >
                 Save
               </button>
-            </div>
-          )}
-
-          {/* Food */}
-          <button
-            onClick={() => setFoodOpen((p) => !p)}
-            data-testid={`add-food-${table.id}`}
-            className={`table-secondary-btn food ${foodOpen ? "active" : ""}`}
-          >
-            <i className="ti ti-tools-kitchen-2" aria-hidden="true" />
-            <span>{foodOpen ? "Close food order" : "Add food order"}</span>
-          </button>
-          {foodOpen && (
-            <div className="table-inline-panel">
-              <select
-                value={foodSel}
-                onChange={(e) => setFoodSel(e.target.value)}
-                className="table-mini-input"
-              >
-                {Object.keys(menu).map((item) => (
-                  <option key={item}>{item}</option>
-                ))}
-              </select>
-              {isCigarette && (
-                <input
-                  type="number"
-                  min="1"
-                  value={foodMrp}
-                  onChange={(e) => setFoodMrp(e.target.value)}
-                  className="table-mini-input"
-                  placeholder="Cigarette price"
-                />
-              )}
-              <div style={{ display: "flex", gap: "6px" }}>
-                <input
-                  type="number"
-                  min="1"
-                  value={foodQty}
-                  onChange={(e) => setFoodQty(e.target.value)}
-                  className="table-mini-input"
-                  style={{ flex: 1 }}
-                />
-                <button
-                  onClick={() => {
-                    onAddFood(
-                      table.id,
-                      foodSel,
-                      parseInt(foodQty) || 1,
-                      isCigarette ? parseInt(foodMrp) || 0 : null,
-                    );
-                    setFoodQty(1);
-                    setFoodMrp("");
-                  }}
-                  className="table-mini-primary food"
-                >
-                  {isCigarette ? "Add cigarette" : "Add"}
-                </button>
-              </div>
-              {(session?.foodItems || []).map((f, i) => (
-                <div key={i} className="table-food-row">
-                  <span>
-                    {f.item} x{f.qty}
-                  </span>
-                  <span className="table-food-price">₹{f.price}</span>
-                </div>
-              ))}
             </div>
           )}
 
@@ -1742,7 +1646,6 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
   const { showToast } = useToast();
   const [sessions, setSessions] = useState({});
   const [names, setNames] = useState({});
-  const [menu, setMenu] = useState({});
   const [rates, setRates] = useState({ wr: 320, pr: 170, sr: 270 });
   const [maintenance, setMaintenance] = useState({});
   const [peakRate, setPeakRate] = useState({
@@ -1760,7 +1663,7 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
 
   useEffect(() => {
     fetchActive();
-    fetchMenu();
+    fetchRates();
     fetchMaintenance();
     fetchPricing();
     fetchQueue();
@@ -1829,10 +1732,9 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
     }
   }
 
-  async function fetchMenu() {
+  async function fetchRates() {
     try {
-      const [mRes, rRes] = await Promise.all([getMenu(), getRates()]);
-      setMenu(mRes.data);
+      const rRes = await getRates();
       setRates(rRes.data);
     } catch (e) {
       console.error(e);
@@ -2140,6 +2042,14 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
       showToast(`Table closed (${rec.payment_method || paymentMethod})`, "success");
 
       const customerName = rec.payer_name || rec.nm || name;
+      const totalAmount = rec.tot ?? rec.total ?? 0;
+      const payerLine =
+        rec.billing_mode === "sharing" && rec.split_per_head && rec.share_count > 1
+          ? `Each player should pay ₹${rec.split_per_head} (${rec.share_count} players).`
+          : `${customerName} should pay ₹${totalAmount}.`;
+      alert(
+        `Table ${id.toUpperCase()} closed.\n${payerLine}\nPayment: ${rec.payment_method || paymentMethod}`,
+      );
       try {
         const memberRes = await searchMembers(customerName);
         const exact = memberRes.data.find(
@@ -2167,29 +2077,6 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
       await performCheckout();
     } catch (e) {
       showToast(e.response?.data?.detail || "Failed to close table", "error");
-    }
-  }
-
-  async function handleAddFood(id, item, qty, mrp = null) {
-    try {
-      const res = await addFood(id, item, qty, mrp);
-      const getPrice = (v) => (typeof v === "object" ? v.price : v);
-      const isCigarette = /cigarette|cigg/i.test(item);
-      const unitPrice = isCigarette ? (mrp || 0) : getPrice(menu[item]);
-      const displayItem = isCigarette ? `${item} (₹${mrp})` : item;
-      setSessions((prev) => ({
-        ...prev,
-        [id]: {
-          ...prev[id],
-          foodTotal: res.data.food_total,
-          foodItems: [
-            ...(prev[id].foodItems || []),
-            { item: displayItem, qty, price: unitPrice * qty },
-          ],
-        },
-      }));
-    } catch (e) {
-      alert(e.response?.data?.detail || "Failed to add food");
     }
   }
 
@@ -2245,14 +2132,6 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
       alert("Failed");
     }
   }
-
-  const getMenuItems = () => {
-    const result = {};
-    Object.entries(menu).forEach(([k, v]) => {
-      if (typeof v === "object" ? v.available !== false : true) result[k] = v;
-    });
-    return result;
-  };
 
   const compact = viewMode === "compact";
 
@@ -2322,10 +2201,8 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
             onPause={handlePause}
             onReset={handleReset}
             onStop={handleStop}
-            onAddFood={handleAddFood}
             onReserve={handleReserve}
             onCancelReserve={handleCancelReserve}
-            menu={getMenuItems()}
             rates={rates}
             maintenance={maintenance[table.id] || null}
             onMaintenance={handleSetMaintenance}
