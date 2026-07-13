@@ -2703,11 +2703,35 @@ body.dark .table-payment-btn.active {
 
 .table-frame-panel {
   display: grid;
-  gap: 7px;
-  padding: 9px;
+  gap: 8px;
+  padding: 10px;
   background: var(--table-control-surface);
   border: 1px solid var(--table-control-border);
   border-radius: 8px;
+}
+
+.table-frame-panel.running {
+  background: #fffbeb;
+  border-color: #fcd34d;
+}
+
+.table-frame-panel.waiting {
+  background: #f0fdf4;
+  border-color: #bbf7d0;
+}
+
+.table-frame-panel.paused {
+  border-style: dashed;
+}
+
+body.dark .table-frame-panel.running {
+  background: rgba(251, 191, 36, 0.11);
+  border-color: rgba(251, 191, 36, 0.45);
+}
+
+body.dark .table-frame-panel.waiting {
+  background: rgba(34, 197, 94, 0.1);
+  border-color: rgba(74, 222, 128, 0.38);
 }
 
 .table-frame-head,
@@ -2725,22 +2749,45 @@ body.dark .table-payment-btn.active {
   color: var(--table-control-text);
 }
 
-.table-frame-running {
-  color: var(--table-control-text);
+.table-frame-running,
+.table-frame-paused {
+  color: #92400e;
   font-size: 12px;
   font-weight: 850;
 }
 
+.table-frame-paused {
+  color: var(--table-control-muted);
+}
+
+body.dark .table-frame-running {
+  color: #fbbf24;
+}
+
 .table-frame-start,
 .table-frame-losers button {
-  min-height: 36px;
+  min-height: 40px;
   border: 1px solid #bbf7d0;
   border-radius: 7px;
-  background: #dcfce7;
-  color: #166534;
   font-size: 12px;
   font-weight: 850;
   cursor: pointer;
+  transition:
+    transform 0.15s,
+    box-shadow 0.15s,
+    background 0.15s;
+}
+
+.table-frame-start:hover,
+.table-frame-losers button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 18px rgba(15, 23, 42, 0.1);
+}
+
+.table-frame-start {
+  background: #16a34a;
+  border-color: #15803d;
+  color: #ffffff;
 }
 
 .table-frame-losers {
@@ -2750,9 +2797,9 @@ body.dark .table-payment-btn.active {
 }
 
 .table-frame-losers button {
-  background: #fff1f2;
-  border-color: #fecdd3;
-  color: #be123c;
+  background: #ffe4e6;
+  border-color: #fda4af;
+  color: #9f1239;
 }
 
 .table-frame-history {

@@ -935,6 +935,9 @@ function TableCard({
   const openFrame = frames.find((frame) => frame.status === "open");
   const closedFrames = frames.filter((frame) => frame.status === "closed");
   const recentFrames = closedFrames.slice(-3);
+  const canTrackFrames = activePlayers.length > 1;
+  const nextFrameNo = (frames.reduce((max, frame) => Math.max(max, frame.frame_no || 0), 0) || 0) + 1;
+  const framePanelState = paused ? "paused" : openFrame ? "running" : "waiting";
   const frameLossCounts = closedFrames.reduce((acc, frame) => {
     if (frame.loser_name) acc[frame.loser_name] = (acc[frame.loser_name] || 0) + 1;
     return acc;
@@ -1554,16 +1557,20 @@ function TableCard({
             </div>
           )}
 
-          {occupied && (
-            <div className="table-frame-panel">
+          {occupied && canTrackFrames && (
+            <div className={`table-frame-panel ${framePanelState}`}>
               <div className="table-frame-head">
-                <span>Frames</span>
-                <strong>{closedFrames.length} closed</strong>
+                <span>{openFrame ? `Frame ${openFrame.frame_no} live` : `Next: Frame ${nextFrameNo}`}</span>
+                <strong>{closedFrames.length} done</strong>
               </div>
-              {openFrame ? (
+              {paused ? (
+                <div className="table-frame-paused">
+                  Resume table to continue frame play.
+                </div>
+              ) : openFrame ? (
                 <>
                   <div className="table-frame-running">
-                    Frame {openFrame.frame_no} running · {fmtClock(openFrame.started_at)}
+                    Choose the loser when this frame ends.
                   </div>
                   <div className="table-frame-losers">
                     {activePlayers.map((player) => (
@@ -1585,7 +1592,7 @@ function TableCard({
                   data-testid={`start-frame-${table.id}`}
                   onClick={() => onStartFrame(table.id)}
                 >
-                  Start frame {closedFrames.length + 1}
+                  Start frame {nextFrameNo}
                 </button>
               )}
               {recentFrames.length > 0 && (
@@ -1984,7 +1991,8 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
     const rate = getTableRate(table, rates);
     const players = [entry.customer_name];
     try {
-      await startSession(table.id, entry.customer_name, rate, false, "", "single", players);
+      const res = await startSession(table.id, entry.customer_name, rate, false, "", "single", players);
+      const frames = res.data.frames || [];
       await seatWaitlistEntry(entry.id, table.id);
       setSessions((prev) => ({
         ...prev,
@@ -1999,8 +2007,8 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
           notes: entry.notes || "",
           billingMode: "single",
           players,
-          frames: [],
-          currentFrame: null,
+          frames,
+          currentFrame: frames.find((frame) => frame.status === "open") || null,
           loserPays: false,
           player1: entry.customer_name,
           player2: "",
@@ -2028,7 +2036,7 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
     }
     const rate = getTableRate(table, rates);
     try {
-      await startSession(
+      const res = await startSession(
         table.id,
         name,
         rate,
@@ -2037,6 +2045,7 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
         billingMode,
         players,
       );
+      const frames = res.data.frames || [];
       setSessions((prev) => ({
         ...prev,
         [table.id]: {
@@ -2050,8 +2059,8 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
           notes: "",
           billingMode,
           players,
-          frames: [],
-          currentFrame: null,
+          frames,
+          currentFrame: frames.find((frame) => frame.status === "open") || null,
           loserPays: billingMode === "lp",
           player1: players[0],
           player2: players.slice(1).join(", "),
@@ -2081,7 +2090,7 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
     }
     const rate = getTableRate(table, rates);
     try {
-      await startSession(
+      const res = await startSession(
         table.id,
         name,
         rate,
@@ -2090,6 +2099,7 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
         billingMode,
         players,
       );
+      const frames = res.data.frames || [];
       setSessions((prev) => ({
         ...prev,
         [table.id]: {
@@ -2103,8 +2113,8 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
           notes: "",
           billingMode,
           players,
-          frames: [],
-          currentFrame: null,
+          frames,
+          currentFrame: frames.find((frame) => frame.status === "open") || null,
           loserPays: billingMode === "lp",
           player1: players[0],
           player2: players.slice(1).join(", "),

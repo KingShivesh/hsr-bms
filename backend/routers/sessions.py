@@ -214,6 +214,24 @@ def frame_summary_note(frames: list[models.SessionFrame]) -> str:
         f"F{frame.frame_no} lost by {frame.loser_name}" for frame in closed
     )
 
+def create_frame_for_session(
+    db: Session,
+    sess: models.ActiveSession,
+    frame_no: int,
+) -> models.SessionFrame:
+    frame = models.SessionFrame(
+        table_id=sess.table_id,
+        session_key=ensure_session_key(db, sess),
+        session_started_at=sess.start_time,
+        frame_no=frame_no,
+        started_at=time.time() * 1000,
+        ended_at=0,
+        loser_name="",
+        status="open",
+    )
+    db.add(frame)
+    return frame
+
 @router.post("/start")
 def start_session(body: StartSession, db: Session = Depends(get_db)):
     customer_name = require_full_name(body.customer_name, "Customer name")
@@ -240,7 +258,7 @@ def start_session(body: StartSession, db: Session = Depends(get_db)):
     if existing:
         raise HTTPException(status_code=400, detail="Session already running")
 
-    db.add(models.ActiveSession(
+    sess = models.ActiveSession(
         table_id      = body.table_id,
         start_time    = time.time() * 1000,
         customer_name = customer_name,
@@ -256,9 +274,16 @@ def start_session(body: StartSession, db: Session = Depends(get_db)):
         billing_mode  = billing_mode,
         players_json  = json.dumps(players),
         session_key   = new_session_key(body.table_id),
-    ))
+    )
+    db.add(sess)
+    frames = []
+    if len(players) > 1:
+        frame = create_frame_for_session(db, sess, 1)
+        frames.append(frame)
     db.commit()
-    return {"ok": True}
+    for frame in frames:
+        db.refresh(frame)
+    return {"ok": True, "frames": [serialize_frame(frame) for frame in frames]}
 
 @router.post("/pause/{table_id}")
 def pause_session(table_id: str, db: Session = Depends(get_db)):
@@ -477,22 +502,18 @@ def start_frame(table_id: str, db: Session = Depends(get_db)):
     ).first()
     if not sess:
         raise HTTPException(status_code=404, detail="No active session")
+    if sess.paused:
+        raise HTTPException(status_code=400, detail="Resume the table before starting a frame.")
     frames = active_session_frames(db, sess)
     open_frame = next((frame for frame in frames if frame.status == "open"), None)
     if open_frame:
         return {"ok": True, "frame": serialize_frame(open_frame), "frames": [serialize_frame(frame) for frame in frames]}
 
-    frame = models.SessionFrame(
-        table_id=sess.table_id,
-        session_key=ensure_session_key(db, sess),
-        session_started_at=sess.start_time,
-        frame_no=(max((existing.frame_no for existing in frames), default=0) + 1),
-        started_at=time.time() * 1000,
-        ended_at=0,
-        loser_name="",
-        status="open",
+    frame = create_frame_for_session(
+        db,
+        sess,
+        max((existing.frame_no for existing in frames), default=0) + 1,
     )
-    db.add(frame)
     db.commit()
     db.refresh(frame)
     frames = active_session_frames(db, sess)
@@ -505,6 +526,8 @@ def close_frame(table_id: str, body: CloseFrameBody, db: Session = Depends(get_d
     ).first()
     if not sess:
         raise HTTPException(status_code=404, detail="No active session")
+    if sess.paused:
+        raise HTTPException(status_code=400, detail="Resume the table before closing a frame.")
     loser_name = " ".join((body.loser_name or "").strip().split())
     if not loser_name:
         raise HTTPException(status_code=400, detail="Select who lost this frame.")
