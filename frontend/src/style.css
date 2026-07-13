@@ -2382,6 +2382,35 @@ body.dark .owner-digest-insight span {
 
 .table-control-panel {
   border-top: 1px solid var(--table-control-border);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 10px 12px 12px;
+  background: var(--table-control-bg);
+}
+
+.table-control-top,
+.table-utility-cluster,
+.table-session-actions {
+  display: flex;
+  align-items: center;
+}
+
+.table-control-top {
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.table-utility-cluster {
+  gap: 8px;
+}
+
+.table-live-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--table-accent);
+  box-shadow: 0 0 7px var(--table-accent);
 }
 
 .table-rate-line {
@@ -2419,6 +2448,38 @@ body.dark .owner-digest-insight span {
 
 .table-player-field {
   position: relative;
+}
+
+.table-start-panel {
+  display: grid;
+  gap: 8px;
+  padding: 8px;
+  border: 1px solid var(--table-control-border);
+  border-radius: 9px;
+  background: var(--table-control-surface);
+}
+
+.table-start-fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 7px;
+}
+
+.table-start-fields > .table-field-stack:only-child {
+  grid-column: 1 / -1;
+}
+
+.table-field-stack {
+  min-width: 0;
+  display: grid;
+  gap: 5px;
+}
+
+.table-field-stack > span {
+  color: var(--table-control-muted);
+  font-size: 10px;
+  font-weight: 850;
+  letter-spacing: 0.02em;
 }
 
 .table-player-input {
@@ -2560,6 +2621,12 @@ body.dark .loser-toggle.active {
 .table-payment-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 7px;
+}
+
+.table-session-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   gap: 7px;
 }
 
@@ -5628,6 +5695,16 @@ body.dark .login-footer {
   .table-close-row.idle,
   .table-payment-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .table-start-fields,
+  .active-billing-summary {
+    grid-template-columns: 1fr;
+  }
+
+  .active-billing-summary {
+    align-items: flex-start;
+    flex-direction: column;
   }
 
   .billing-mode-control,

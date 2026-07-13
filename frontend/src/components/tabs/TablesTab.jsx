@@ -169,7 +169,7 @@ function CustomerInput({ value, onChange, placeholder }) {
     <div className="table-player-field">
       <i className="ti ti-user table-player-icon" aria-hidden="true" />
       <input
-        placeholder={placeholder}
+        placeholder={placeholder || undefined}
         value={value || ""}
         onChange={(e) => onChange(e.target.value)}
         onBlur={() => setTimeout(() => setShow(false), 150)}
@@ -668,7 +668,7 @@ function QuickSessionModal({
             <CustomerInput
               value={player1}
               onChange={setPlayer1}
-              placeholder="Optional"
+              placeholder=""
             />
           </div>
           <div className="billing-mode-control quick" aria-label="Billing mode">
@@ -693,14 +693,14 @@ function QuickSessionModal({
                 <CustomerInput
                   value={otherPlayers}
                   onChange={setOtherPlayers}
-                  placeholder="Optional"
+                  placeholder=""
                 />
               ) : (
                 <input
                   className="table-mini-input"
                   value={otherPlayers}
                   onChange={(e) => setOtherPlayers(e.target.value)}
-                  placeholder="Optional"
+                  aria-label="Other names"
                 />
               )}
             </div>
@@ -923,7 +923,6 @@ function FrameLoserModal({ frameNo, onChoose, onClose }) {
             className="frame-loser-input"
             value={customerName}
             onChange={(event) => setCustomerName(event.target.value)}
-            placeholder="Type name here"
             autoFocus
           />
           <button
@@ -1559,38 +1558,15 @@ function TableCard({
         </div>
 
         {/* ── CONTROLS PANEL BELOW TABLE ── */}
-        <div
-          className="table-control-panel"
-          style={{
-            padding: "10px 12px",
-            background: "var(--table-control-bg)",
-            display: "flex",
-            flexDirection: "column",
-            gap: "6px",
-          }}
-        >
+        <div className="table-control-panel">
           {/* Top row — rate, history, maintenance */}
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}
-          >
+          <div className="table-control-top">
             <span className="table-rate-line">
               ₹{rate}/hr · {getTableLabel(table)}
             </span>
-            <div style={{ display: "flex", gap: "8px" }}>
+            <div className="table-utility-cluster">
               {occupied && (
-                <div
-                  style={{
-                    width: "6px",
-                    height: "6px",
-                    borderRadius: "50%",
-                    background: T.accent,
-                    boxShadow: `0 0 6px ${T.accent}`,
-                  }}
-                />
+                <div className="table-live-dot" style={{ "--table-accent": T.accent }} />
               )}
               <button
                 onClick={() => setShowHistory(true)}
@@ -1634,20 +1610,55 @@ function TableCard({
             </div>
           )}
 
-          {/* Billing mode */}
           {!occupied && (
-            <div className="billing-mode-control" aria-label="Billing mode">
-              {BILLING_MODES.map((mode) => (
-                <button
-                  key={mode.id}
-                  type="button"
-                  className={billingMode === mode.id ? "active" : ""}
-                  onClick={() => setBillingMode(mode.id)}
-                >
-                  <strong>{mode.label}</strong>
-                  <span>{mode.hint}</span>
-                </button>
-              ))}
+            <div className="table-start-panel">
+              <div className="billing-mode-control" aria-label="Billing mode">
+                {BILLING_MODES.map((mode) => (
+                  <button
+                    key={mode.id}
+                    type="button"
+                    className={billingMode === mode.id ? "active" : ""}
+                    onClick={() => setBillingMode(mode.id)}
+                  >
+                    <strong>{mode.label}</strong>
+                    <span>{mode.hint}</span>
+                  </button>
+                ))}
+              </div>
+
+              <div className="table-start-fields">
+                <div className="table-field-stack">
+                  <span>
+                    {billingMode === "single" ? "Customer name" : "First name"}
+                  </span>
+                  <CustomerInput
+                    value={name}
+                    onChange={onNameChange}
+                    placeholder=""
+                  />
+                </div>
+                {billingMode !== "single" && (
+                  <div className="table-field-stack">
+                    <span>
+                      {billingMode === "lp" ? "Second name" : "Other names"}
+                    </span>
+                    {billingMode === "lp" ? (
+                      <CustomerInput
+                        value={otherPlayers}
+                        onChange={setOtherPlayers}
+                        placeholder=""
+                      />
+                    ) : (
+                      <input
+                        className="table-mini-input"
+                        value={otherPlayers}
+                        onChange={(e) => setOtherPlayers(e.target.value)}
+                        aria-label="Other names"
+                      />
+                    )}
+                  </div>
+                )}
+              </div>
             </div>
           )}
           {occupied && (
@@ -1716,52 +1727,24 @@ function TableCard({
             </div>
           )}
 
-          {/* Player inputs */}
-          <CustomerInput
-            value={name}
-            onChange={onNameChange}
-            placeholder="Optional customer name"
-          />
-          {!occupied && billingMode !== "single" && (
-            billingMode === "lp" ? (
-                <CustomerInput
-                  value={otherPlayers}
-                  onChange={setOtherPlayers}
-                  placeholder="Optional second name"
-                />
-              ) : (
-                <input
-                  className="table-mini-input"
-                  value={otherPlayers}
-                  onChange={(e) => setOtherPlayers(e.target.value)}
-                  placeholder="Optional extra names"
-                />
-              )
+          {occupied && (
+            <div className="table-session-actions">
+              <button
+                onClick={() => onPause(table.id)}
+                data-testid={`pause-${table.id}`}
+                className={`table-control-btn ${paused ? "resume" : "pause"}`}
+              >
+                {paused ? "RESUME" : "PAUSE"}
+              </button>
+              <button
+                onClick={() => onReset(table.id)}
+                data-testid={`reset-${table.id}`}
+                className="table-control-btn reset"
+              >
+                RESET
+              </button>
+            </div>
           )}
-
-          {/* Pause / Reset */}
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "1fr 1fr",
-              gap: "6px",
-            }}
-          >
-            <button
-              onClick={() => onPause(table.id)}
-              data-testid={`pause-${table.id}`}
-              className={`table-control-btn ${paused ? "resume" : "pause"}`}
-            >
-              {paused ? "RESUME" : "PAUSE"}
-            </button>
-            <button
-              onClick={() => onReset(table.id)}
-              data-testid={`reset-${table.id}`}
-              className="table-control-btn reset"
-            >
-              RESET
-            </button>
-          </div>
 
           {/* Payment method */}
           {occupied && (
@@ -1810,78 +1793,88 @@ function TableCard({
             </div>
           )}
 
-          {/* Notes */}
-          <button
-            onClick={() => setNotesOpen((p) => !p)}
-            className={`table-notes-btn ${notesOpen || session?.notes ? "active" : ""}`}
-          >
-            <i className="ti ti-note" aria-hidden="true" />
-            <span>{notesOpen ? "Close notes" : "Notes"}</span>
-            {session?.notes && <span className="notes-dot">Saved</span>}
-          </button>
-          {notesOpen && (
-            <div
-              className="table-notes-panel"
-            >
-              <textarea
-                placeholder="e.g. Tournament match..."
-                value={notes}
-                onChange={(e) => setNotes(e.target.value)}
-                rows={2}
-                className="table-notes-textarea"
-              />
+          {occupied && (
+            <>
               <button
-                onClick={async () => {
-                  try {
-                    await updateNotes(table.id, notes);
-                    setNotesOpen(false);
-                  } catch {
-                    alert("Failed");
-                  }
-                }}
-                className="table-notes-save"
+                onClick={() => setNotesOpen((p) => !p)}
+                className={`table-notes-btn ${notesOpen || session?.notes ? "active" : ""}`}
               >
-                Save
+                <i className="ti ti-note" aria-hidden="true" />
+                <span>{notesOpen ? "Close notes" : "Notes"}</span>
+                {session?.notes && <span className="notes-dot">Saved</span>}
               </button>
-            </div>
+              {notesOpen && (
+                <div className="table-notes-panel">
+                  <textarea
+                    placeholder="e.g. Tournament match..."
+                    value={notes}
+                    onChange={(e) => setNotes(e.target.value)}
+                    rows={2}
+                    className="table-notes-textarea"
+                  />
+                  <button
+                    onClick={async () => {
+                      try {
+                        await updateNotes(table.id, notes);
+                        setNotesOpen(false);
+                      } catch {
+                        alert("Failed");
+                      }
+                    }}
+                    className="table-notes-save"
+                  >
+                    Save
+                  </button>
+                </div>
+              )}
+            </>
           )}
 
           {/* Reserve */}
-          <button
-            onClick={() => setReserveOpen((p) => !p)}
-            data-testid={`reserve-${table.id}`}
-            className={`table-secondary-btn reserve ${reserveOpen ? "active" : ""}`}
-          >
-            <i className="ti ti-calendar-plus" aria-hidden="true" />
-            <span>{reserveOpen ? "Close reservation" : "Reserve table"}</span>
-          </button>
-          {reserveOpen && (
-            <div className="table-inline-panel">
-              <input
-                type="text"
-                placeholder="Customer name"
-                value={resvName}
-                onChange={(e) => setResvName(e.target.value)}
-                className="table-mini-input"
-              />
-              <input
-                type="time"
-                value={resvTime}
-                onChange={(e) => setResvTime(e.target.value)}
-                className="table-mini-input"
-              />
+          {!occupied && (
+            <>
               <button
-                onClick={() => {
-                  onReserve(table.id, resvName, resvTime);
-                  setResvName("");
-                  setResvTime("");
-                  setReserveOpen(false);
-                }}
-                className="table-mini-primary reserve"
+                onClick={() => setReserveOpen((p) => !p)}
+                data-testid={`reserve-${table.id}`}
+                className={`table-secondary-btn reserve ${reserveOpen ? "active" : ""}`}
               >
-                Confirm Reservation
+                <i className="ti ti-calendar-plus" aria-hidden="true" />
+                <span>{reserveOpen ? "Close reservation" : "Reserve table"}</span>
               </button>
-            </div>
+              {reserveOpen && (
+                <div className="table-inline-panel">
+                  <label className="table-field-stack">
+                    <span>Reservation name</span>
+                    <input
+                      type="text"
+                      value={resvName}
+                      onChange={(e) => setResvName(e.target.value)}
+                      className="table-mini-input"
+                    />
+                  </label>
+                  <label className="table-field-stack">
+                    <span>Time</span>
+                    <input
+                      type="time"
+                      value={resvTime}
+                      onChange={(e) => setResvTime(e.target.value)}
+                      className="table-mini-input"
+                    />
+                  </label>
+                  <button
+                    onClick={() => {
+                      onReserve(table.id, resvName, resvTime);
+                      setResvName("");
+                      setResvTime("");
+                      setReserveOpen(false);
+                    }}
+                    className="table-mini-primary reserve"
+                  >
+                    Confirm Reservation
+                  </button>
+                </div>
+              )}
+            </>
           )}
 
           {/* Reservation info */}
