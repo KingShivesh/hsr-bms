@@ -25,7 +25,7 @@ import {
   startFrame,
   closeFrame,
 } from "../../api/index.js";
-import { searchMembers, addMember } from "../../api/index.js";
+import { searchMembers } from "../../api/index.js";
 import { useToast } from "../toastContext.js";
 import { HSR_TABLES, getTableLabel, getTableRate } from "../../config/hsrTables.js";
 
@@ -92,11 +92,18 @@ function splitPlayerNames(value) {
     .filter(Boolean);
 }
 
+function defaultPlayersForMode(billingMode) {
+  if (billingMode === "single") return ["Walk In Customer"];
+  return ["Player One", "Player Two"];
+}
+
 function buildPlayers(primaryName, extraNames, billingMode) {
-  const primary = (primaryName || "").trim();
+  const defaults = defaultPlayersForMode(billingMode);
+  const primary = (primaryName || "").trim() || defaults[0];
+  const extras = splitPlayerNames(extraNames);
   const players = billingMode === "single"
     ? [primary]
-    : [primary, ...splitPlayerNames(extraNames)];
+    : [primary, ...(extras.length ? extras : defaults.slice(1))];
   const seen = new Set();
   return players.filter((name) => {
     const key = name.toLowerCase();
@@ -642,12 +649,12 @@ function QuickSessionModal({
         <div className="quick-session-fields">
           <div>
             <label className="form-label">
-              {billingMode === "single" ? "Customer full name" : "Player 1 full name"}
+              {billingMode === "single" ? "Customer name (optional)" : "Player 1 name (optional)"}
             </label>
             <CustomerInput
               value={player1}
               onChange={setPlayer1}
-              placeholder="First and last name"
+              placeholder={billingMode === "single" ? "Blank = Walk In Customer" : "Blank = Player One"}
             />
           </div>
           <div className="billing-mode-control quick" aria-label="Billing mode">
@@ -666,20 +673,20 @@ function QuickSessionModal({
           {billingMode !== "single" && (
             <div>
               <label className="form-label">
-                {billingMode === "lp" ? "Player 2 full name" : "Other players"}
+                {billingMode === "lp" ? "Player 2 name (optional)" : "Other players (optional)"}
               </label>
               {billingMode === "lp" ? (
                 <CustomerInput
                   value={otherPlayers}
                   onChange={setOtherPlayers}
-                  placeholder="Second player's full name"
+                  placeholder="Blank = Player Two"
                 />
               ) : (
                 <input
                   className="table-mini-input"
                   value={otherPlayers}
                   onChange={(e) => setOtherPlayers(e.target.value)}
-                  placeholder="Example: Aman Verma, Riya Singh"
+                  placeholder="Blank = Player Two"
                 />
               )}
             </div>
@@ -863,6 +870,128 @@ function HistoryModal({ tableId, tableNum, onClose }) {
   );
 }
 
+function FrameLoserModal({ frameNo, players, onChoose, onClose }) {
+  return (
+    <div className="frame-loser-backdrop" role="dialog" aria-modal="true">
+      <div className="frame-loser-modal">
+        <div className="frame-loser-head">
+          <div>
+            <div className="quick-session-eyebrow">End frame</div>
+            <div className="frame-loser-title">Who lost Frame {frameNo}?</div>
+          </div>
+          <button
+            type="button"
+            className="quick-session-close"
+            onClick={onClose}
+            aria-label="Close loser prompt"
+          >
+            <i className="ti ti-x" aria-hidden="true" />
+          </button>
+        </div>
+        <div className="frame-loser-options">
+          {players.map((player) => (
+            <button key={player} type="button" onClick={() => onChoose(player)}>
+              <span>{player}</span>
+              <strong>lost this frame</strong>
+            </button>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function CheckoutBillScreen({ bill, onClose }) {
+  if (!bill) return null;
+  const rec = bill.rec || {};
+  const settlement = Array.isArray(rec.player_breakdown)
+    ? rec.player_breakdown.filter((item) => item && item.name)
+    : [];
+  const total = rec.tot ?? rec.total ?? 0;
+  const frames = Array.isArray(rec.frames) ? rec.frames : [];
+
+  return (
+    <div className="checkout-bill-screen" role="dialog" aria-modal="true">
+      <div className="checkout-bill-shell">
+        <div className="checkout-bill-head">
+          <div>
+            <div className="quick-session-eyebrow">Table closed</div>
+            <div className="checkout-bill-title">
+              {bill.tableId?.toUpperCase()} · ₹{total}
+            </div>
+            <div className="checkout-bill-sub">
+              {rec.payment_method || bill.paymentMethod || "Cash"} · {rec.dur || 0} min
+            </div>
+          </div>
+          <button type="button" className="checkout-bill-close" onClick={onClose}>
+            Done
+          </button>
+        </div>
+
+        <div className="checkout-bill-summary">
+          <div>
+            <span>Table</span>
+            <strong>₹{rec.ply || 0}</strong>
+          </div>
+          <div>
+            <span>Food</span>
+            <strong>₹{rec.famt || 0}</strong>
+          </div>
+          <div>
+            <span>Total</span>
+            <strong>₹{total}</strong>
+          </div>
+          {rec.discount_amount > 0 && (
+            <div>
+              <span>Discount</span>
+              <strong>₹{rec.discount_amount}</strong>
+            </div>
+          )}
+        </div>
+
+        <div className="checkout-bill-section-title">Payment Split</div>
+        <div className="checkout-split-list">
+          {settlement.map((item) => {
+            const losses = Array.isArray(item.lost_frames) ? item.lost_frames : [];
+            return (
+              <div key={item.name} className="checkout-split-card">
+                <div className="checkout-split-main">
+                  <div>
+                    <div className="checkout-split-name">{item.name}</div>
+                    <div className="checkout-split-meta">
+                      {losses.length
+                        ? `Lost frame ${losses.join(", ")}`
+                        : "No recorded frame loss"}
+                    </div>
+                  </div>
+                  <strong>₹{item.total ?? 0}</strong>
+                </div>
+                <div className="checkout-split-parts">
+                  <span>Table ₹{item.table ?? item.play ?? 0}</span>
+                  <span>Food ₹{item.food ?? 0}</span>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        {frames.length > 0 && (
+          <>
+            <div className="checkout-bill-section-title">Frames</div>
+            <div className="checkout-frame-list">
+              {frames.map((frame) => (
+                <span key={frame.id || frame.frame_no}>
+                  F{frame.frame_no}: {frame.loser_name}
+                </span>
+              ))}
+            </div>
+          </>
+        )}
+      </div>
+    </div>
+  );
+}
+
 function TableCard({
   table,
   session,
@@ -889,6 +1018,7 @@ function TableCard({
   const [paymentMethod, setPaymentMethod] = useState("Cash");
   const [discountType, setDiscountType] = useState("none");
   const [discountValue, setDiscountValue] = useState("");
+  const [frameLoserOpen, setFrameLoserOpen] = useState(false);
   const [reserveOpen, setReserveOpen] = useState(false);
   const [notesOpen, setNotesOpen] = useState(false);
   const [showHistory, setShowHistory] = useState(false);
@@ -943,6 +1073,10 @@ function TableCard({
   }, {});
   const shareCount = activeBillingMode === "sharing" ? Math.max(1, activePlayers.length) : 1;
   const shareAmount = shareCount > 1 ? Math.ceil(total / shareCount) : total;
+
+  useEffect(() => {
+    if (!session || !openFrame || paused) setFrameLoserOpen(false);
+  }, [session, openFrame, paused]);
 
   const pocketStyle = {
     position: "absolute",
@@ -1022,6 +1156,18 @@ function TableCard({
           tableId={table.id}
           tableNum={table.num}
           onClose={() => setShowHistory(false)}
+        />
+      )}
+
+      {frameLoserOpen && openFrame && (
+        <FrameLoserModal
+          frameNo={openFrame.frame_no}
+          players={activePlayers}
+          onClose={() => setFrameLoserOpen(false)}
+          onChoose={(player) => {
+            setFrameLoserOpen(false);
+            onCloseFrame(table.id, player);
+          }}
         />
       )}
 
@@ -1482,20 +1628,16 @@ function TableCard({
               ) : openFrame ? (
                 <>
                   <div className="table-frame-running">
-                    Choose the loser when this frame ends.
+                    Tap End frame when play stops.
                   </div>
-                  <div className="table-frame-losers">
-                    {activePlayers.map((player) => (
-                      <button
-                        key={player}
-                        type="button"
-                        data-testid={`close-frame-${table.id}-${player}`}
-                        onClick={() => onCloseFrame(table.id, player)}
-                      >
-                        Close frame: {player} lost
-                      </button>
-                    ))}
-                  </div>
+                  <button
+                    type="button"
+                    className="table-frame-end"
+                    data-testid={`end-frame-${table.id}`}
+                    onClick={() => setFrameLoserOpen(true)}
+                  >
+                    End frame
+                  </button>
                 </>
               ) : (
                 <button
@@ -1532,21 +1674,21 @@ function TableCard({
           <CustomerInput
             value={name}
             onChange={onNameChange}
-            placeholder={billingMode === "single" ? "Customer name" : "Player 1"}
+            placeholder={billingMode === "single" ? "Blank = Walk In Customer" : "Blank = Player One"}
           />
           {!occupied && billingMode !== "single" && (
             billingMode === "lp" ? (
               <CustomerInput
                 value={otherPlayers}
                 onChange={setOtherPlayers}
-                placeholder="Player 2 full name"
+                placeholder="Blank = Player Two"
               />
             ) : (
               <input
                 className="table-mini-input"
                 value={otherPlayers}
                 onChange={(e) => setOtherPlayers(e.target.value)}
-                placeholder="Other players, comma separated"
+                placeholder="Blank = Player Two"
               />
             )
           )}
@@ -1739,6 +1881,7 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
   const [queue, setQueue] = useState([]);
   const [bookings, setBookings] = useState([]);
   const [quickSessionOpen, setQuickSessionOpen] = useState(false);
+  const [checkoutBill, setCheckoutBill] = useState(null);
 
   useEffect(() => {
     fetchActive();
@@ -1937,6 +2080,7 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
   async function handleStart(table, billingMode, otherPlayers) {
     const name = (names[table.id] || "").trim();
     const players = buildPlayers(name, otherPlayers, billingMode);
+    const primaryName = players[0];
     const validation = validateBillingPlayers(players, billingMode);
     if (validation) {
       alert(validation);
@@ -1950,7 +2094,7 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
     try {
       const res = await startSession(
         table.id,
-        name,
+        primaryName,
         rate,
         billingMode !== "single",
         players.slice(1).join(", "),
@@ -1978,6 +2122,7 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
           player2: players.slice(1).join(", "),
         },
       }));
+      setNames((prev) => ({ ...prev, [table.id]: primaryName }));
       fetchQueue();
     } catch (e) {
       alert(e.response?.data?.detail || "Failed to start");
@@ -1987,6 +2132,7 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
   async function handleQuickStart({ table, player1, billingMode, otherPlayers }) {
     const name = (player1 || "").trim();
     const players = buildPlayers(name, otherPlayers, billingMode);
+    const primaryName = players[0];
     const validation = validateBillingPlayers(players, billingMode);
     if (validation) {
       alert(validation);
@@ -2004,7 +2150,7 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
     try {
       const res = await startSession(
         table.id,
-        name,
+        primaryName,
         rate,
         billingMode !== "single",
         players.slice(1).join(", "),
@@ -2032,7 +2178,7 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
           player2: players.slice(1).join(", "),
         },
       }));
-      setNames((prev) => ({ ...prev, [table.id]: name }));
+      setNames((prev) => ({ ...prev, [table.id]: primaryName }));
       fetchQueue();
       onSessionEnd?.();
       showToast(`Session started on T${table.num}`, "success");
@@ -2177,57 +2323,7 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
       fetchQueue();
       showToast(`Table closed (${rec.payment_method || paymentMethod})`, "success");
 
-      const customerName = rec.payer_name || rec.nm || name;
-      const totalAmount = rec.tot ?? rec.total ?? 0;
-      const discountLine =
-        rec.discount_amount > 0
-          ? `\nDiscount: ₹${rec.discount_amount} (from ₹${rec.raw_total})`
-          : "";
-      const settlement = Array.isArray(rec.player_breakdown)
-        ? rec.player_breakdown.filter((item) => item && item.name)
-        : [];
-      const settlementLine = settlement.length
-        ? `\n\nPayment split:\n${settlement
-            .map((item) => {
-              const tableAmount = item.table ?? item.play ?? 0;
-              const foodAmount = item.food ?? 0;
-              const losses = Array.isArray(item.lost_frames) && item.lost_frames.length
-                ? `, lost F${item.lost_frames.join(", F")}`
-                : "";
-              return `${item.name}: ₹${item.total ?? 0} (table ₹${tableAmount}, food ₹${foodAmount}${losses})`;
-            })
-            .join("\n")}`
-        : "";
-      const payerLine =
-        settlement.length > 1
-          ? "Collect payment as shown below."
-          : rec.billing_mode === "sharing" && rec.split_per_head && rec.share_count > 1
-          ? `Each player should pay ₹${rec.split_per_head} (${rec.share_count} players).`
-          : `${customerName} should pay ₹${totalAmount}.`;
-      alert(
-        `Table ${id.toUpperCase()} closed.\n${payerLine}${settlementLine}${discountLine}\nPayment: ${rec.payment_method || paymentMethod}`,
-      );
-      try {
-        const memberRes = await searchMembers(customerName);
-        const exact = memberRes.data.find(
-          (m) => m.nm.toLowerCase() === customerName.toLowerCase(),
-        );
-        if (!exact) {
-          setTimeout(() => {
-            if (
-              confirm(
-                `"${customerName}" is not a member yet.\n\nAdd them as a regular member?`,
-              )
-            ) {
-              addMember(customerName)
-                .then(() => alert(`${customerName} added!`))
-                .catch(() => {});
-            }
-          }, 500);
-        }
-      } catch {
-        /* silent */
-      }
+      setCheckoutBill({ tableId: id, rec, paymentMethod });
     }
 
     try {
@@ -2299,6 +2395,11 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
 
   return (
     <>
+      <CheckoutBillScreen
+        bill={checkoutBill}
+        onClose={() => setCheckoutBill(null)}
+      />
+
       <QuickSessionModal
         open={quickSessionOpen}
         onClose={() => setQuickSessionOpen(false)}
