@@ -4897,3 +4897,328 @@ body.dark .login-footer {
     text-align: center;
   }
 }
+
+/* ── Mobile readiness overrides ── */
+@media (max-width: 820px) {
+  html,
+  body,
+  #root {
+    width: 100%;
+    overflow-x: hidden;
+  }
+
+  .shell {
+    min-width: 0;
+  }
+
+  .sidebar {
+    width: 64px;
+  }
+
+  .sb-logo {
+    justify-content: center;
+    padding: 14px 8px;
+  }
+
+  .sb-logo-name,
+  .sb-logo-sub,
+  .sb-section,
+  .sb-item span {
+    display: none !important;
+  }
+
+  .sb-logo-mark {
+    width: 34px;
+    height: 34px;
+  }
+
+  .sb-item {
+    justify-content: center;
+    min-height: 44px;
+    margin: 3px 8px;
+    padding: 10px 8px;
+    border-left: 0;
+  }
+
+  .sb-bottom {
+    padding-bottom: max(10px, env(safe-area-inset-bottom));
+  }
+
+  .main-content {
+    min-width: 0;
+    margin-left: 64px;
+  }
+
+  .topbar {
+    min-height: 56px;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 12px;
+  }
+
+  .topbar-title {
+    min-width: 0;
+    overflow: hidden;
+    font-size: 15px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .topbar-right {
+    flex-shrink: 0;
+    gap: 7px;
+  }
+
+  .topbar-date {
+    display: none;
+  }
+
+  .topbar-action-btn {
+    width: 38px;
+    height: 38px;
+    padding: 0;
+    border-radius: 9px;
+  }
+
+  .topbar-action-btn span {
+    display: none;
+  }
+
+  .topbar-icon-btn {
+    width: 38px;
+    height: 38px;
+  }
+
+  .page {
+    width: 100%;
+    max-width: none;
+    padding: 14px;
+  }
+
+  .metrics-grid,
+  .dashboard-at-glance,
+  .dashboard-sales-grid,
+  .dashboard-grid,
+  .advanced-grid,
+  .analytics-panels,
+  .tournament-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .dashboard-occupancy-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .tables-grid,
+  .tables-grid.compact {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .tables-view-toolbar,
+  .owner-digest-head,
+  .dashboard-panel-head,
+  .section-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .tables-toolbar-actions,
+  .tables-toolbar-actions .segmented-control,
+  .page-tabs,
+  .category-tabs {
+    width: 100%;
+  }
+
+  .segmented-control,
+  .page-tabs,
+  .category-tabs {
+    overflow-x: auto;
+    justify-content: flex-start;
+    scrollbar-width: thin;
+  }
+
+  .segmented-control button,
+  .ui-tab-btn {
+    flex: 1 0 auto;
+  }
+
+  .metric-card,
+  .panel,
+  .history-section,
+  .settings-panel,
+  .queue-panel,
+  .booking-panel,
+  .owner-digest {
+    padding: 14px;
+    border-radius: 8px;
+  }
+
+  .table-session-card {
+    width: 100%;
+    max-width: none;
+  }
+
+  .table-control-btn,
+  .table-payment-btn,
+  .table-secondary-btn,
+  .table-notes-btn,
+  .primary-action-btn,
+  .btn,
+  .queue-seat-btn,
+  .icon-danger-btn {
+    min-height: 42px;
+  }
+
+  .queue-form,
+  .booking-form,
+  .challenge-form,
+  .dashboard-challenge-form,
+  .quick-session-table-grid,
+  .owner-digest-grid,
+  .receipt-actions {
+    grid-template-columns: 1fr;
+  }
+
+  .food-payment-toggle {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .data-table {
+    min-width: 680px;
+  }
+
+  .history-section {
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .command-fab {
+    right: 14px;
+    bottom: max(14px, env(safe-area-inset-bottom));
+    width: 48px;
+    height: 48px;
+  }
+
+  .command-overlay {
+    align-items: flex-end;
+    padding: 12px;
+  }
+
+  .command-palette {
+    max-height: 88vh;
+    border-radius: 16px;
+  }
+
+  .command-list {
+    max-height: 58vh;
+  }
+}
+
+@media (max-width: 560px) {
+  .sidebar {
+    width: 56px;
+  }
+
+  .main-content {
+    margin-left: 56px;
+  }
+
+  .page {
+    padding: 10px;
+  }
+
+  .topbar {
+    padding: 9px 10px;
+  }
+
+  .topbar-title {
+    font-size: 14px;
+  }
+
+  .metrics-grid,
+  .owner-digest-grid {
+    gap: 10px;
+  }
+
+  .metric-value,
+  .report-stat-value {
+    font-size: 20px;
+  }
+
+  .running-strip {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 10px;
+    padding: 12px;
+  }
+
+  .running-strip-list {
+    grid-column: 1 / -1;
+    order: 3;
+  }
+
+  .dashboard-occupancy-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .hm-cell {
+    min-height: 82px;
+  }
+
+  .table-close-row {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .table-close-row.idle,
+  .table-payment-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .billing-mode-control,
+  .quick-session-table-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .table-player-field,
+  .table-mini-input,
+  .input-field,
+  .table-player-input {
+    min-height: 42px;
+  }
+
+  .queue-row,
+  .booking-row,
+  .challenge-row {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .queue-actions,
+  .booking-actions,
+  .challenge-actions {
+    justify-content: stretch;
+  }
+
+  .queue-actions button,
+  .booking-actions button,
+  .challenge-actions button {
+    flex: 1;
+  }
+
+  .quick-session-backdrop {
+    align-items: flex-end;
+    padding: 10px 10px 0;
+  }
+
+  .quick-session-modal {
+    max-height: 92vh;
+    border-radius: 16px 16px 0 0;
+    padding: 16px;
+  }
+
+  .quick-session-actions {
+    grid-template-columns: 1fr;
+  }
+
+  .login-container {
+    padding: 12px;
+  }
+}
