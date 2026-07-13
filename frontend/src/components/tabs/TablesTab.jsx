@@ -1399,6 +1399,10 @@ function TableCard({
             {occupied ? (
               <button
                 onClick={() => {
+                  if (openFrame) {
+                    alert("Close the running frame before closing the table.");
+                    return;
+                  }
                   if (activeBillingMode === "lp") setShowPayerModal(true);
                   else onStop(table.id, "", paymentMethod, discountType, discountValue);
                 }}
@@ -1419,7 +1423,7 @@ function TableCard({
                   boxShadow: "0 2px 8px rgba(0,0,0,0.4)",
                 }}
               >
-                CLOSE
+                CLOSE TABLE
               </button>
             ) : (
               <button
@@ -1566,9 +1570,10 @@ function TableCard({
                       <button
                         key={player}
                         type="button"
+                        data-testid={`close-frame-${table.id}-${player}`}
                         onClick={() => onCloseFrame(table.id, player)}
                       >
-                        {player} lost
+                        Close frame: {player} lost
                       </button>
                     ))}
                   </div>
@@ -1577,6 +1582,7 @@ function TableCard({
                 <button
                   type="button"
                   className="table-frame-start"
+                  data-testid={`start-frame-${table.id}`}
                   onClick={() => onStartFrame(table.id)}
                 >
                   Start frame {closedFrames.length + 1}
