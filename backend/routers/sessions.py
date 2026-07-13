@@ -55,9 +55,10 @@ def active_session_for_table(db: Session, table_id: str):
     normalized = normalize_table_id(table_id)
     if not normalized:
         return None
-    return db.query(models.ActiveSession).filter(
+    rows = db.query(models.ActiveSession).filter(
         func.lower(models.ActiveSession.table_id) == normalized
-    ).first()
+    ).all()
+    return next((row for row in rows if normalize_person_name(row.customer_name)), None) or (rows[0] if rows else None)
 
 def maintenance_for_table(db: Session, table_id: str):
     normalized = normalize_table_id(table_id)
@@ -305,27 +306,27 @@ def start_session(body: StartSession, db: Session = Depends(get_db)):
         raise HTTPException(status_code=400, detail=f"Table is under maintenance: {maint.reason}")
 
     existing = active_session_for_table(db, table_id)
-    if existing:
+    if existing and normalize_person_name(existing.customer_name):
         raise HTTPException(status_code=400, detail="Session already running")
 
-    sess = models.ActiveSession(
-        table_id      = table_id,
-        start_time    = time.time() * 1000,
-        customer_name = customer_name,
-        rate          = rate,
-        food_total    = 0,
-        food_items    = "[]",
-        paused        = False,
-        elapsed_ms    = 0,
-        reservation   = None,
-        notes         = "",
-        split         = billing_mode != "single",
-        split_name    = split_name,
-        billing_mode  = billing_mode,
-        players_json  = json.dumps(players),
-        session_key   = new_session_key(table_id),
-    )
-    db.add(sess)
+    sess = existing or models.ActiveSession(table_id=table_id)
+    sess.table_id      = table_id
+    sess.start_time    = time.time() * 1000
+    sess.customer_name = customer_name
+    sess.rate          = rate
+    sess.food_total    = 0
+    sess.food_items    = "[]"
+    sess.paused        = False
+    sess.elapsed_ms    = 0
+    sess.reservation   = None
+    sess.notes         = ""
+    sess.split         = billing_mode != "single"
+    sess.split_name    = split_name
+    sess.billing_mode  = billing_mode
+    sess.players_json  = json.dumps(players)
+    sess.session_key   = new_session_key(table_id)
+    if not existing:
+        db.add(sess)
     frames = []
     if billing_mode == "lp" and len(players) > 1:
         frame = create_frame_for_session(db, sess, 1)
