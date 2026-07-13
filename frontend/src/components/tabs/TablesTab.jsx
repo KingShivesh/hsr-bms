@@ -1315,6 +1315,10 @@ function TableCard({
             {occupied ? (
               <button
                 onClick={() => {
+                  if (openFrame) {
+                    alert("Close the running frame before closing the table.");
+                    return;
+                  }
                   onStop(table.id, paymentMethod, discountType, discountValue);
                 }}
                 style={{

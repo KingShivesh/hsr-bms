@@ -382,6 +382,8 @@ def stop_session(
     if not players:
         players = clean_players(sess.customer_name, [], sess.split_name or "")
     frames = active_session_frames(db, sess)
+    if any(frame.status == "open" for frame in frames):
+        raise HTTPException(status_code=400, detail="Close the running frame before closing the table.")
     billable_frames = [frame for frame in frames if frame.status == "closed"]
     losses_by_player = frame_loss_summary(billable_frames)
     if billing_mode == "single":
