@@ -15,6 +15,7 @@ from hsr_config import rate_for_table
 router = APIRouter()
 MAX_SESSION_DURATION_MINUTES = 12 * 60
 PAYMENT_METHODS = {"Cash", "UPI", "Card"}
+GENERIC_SESSION_PLAYER_NAMES = {"player one", "player two", "walk in customer"}
 
 class StartSession(BaseModel):
     table_id:      str
@@ -43,6 +44,20 @@ class CloseFrameBody(BaseModel):
 
 class MaintenanceBody(BaseModel):
     reason: str = "Under maintenance"
+
+def normalize_person_name(name: str) -> str:
+    return " ".join((name or "").strip().split())
+
+def is_generic_session_player(name: str) -> bool:
+    return normalize_person_name(name).lower() in GENERIC_SESSION_PLAYER_NAMES
+
+def merge_session_player(players: list[str], player_name: str) -> tuple[list[str], str]:
+    clean_name = normalize_person_name(player_name)
+    lookup = {normalize_person_name(player).lower(): player for player in players}
+    existing = lookup.get(clean_name.lower())
+    if existing:
+        return players, existing
+    return [*players, clean_name], clean_name
 
 def is_cigarette_item(name: str) -> bool:
     return "cigarette" in (name or "").lower() or "cigg" in (name or "").lower()
@@ -393,7 +408,11 @@ def stop_session(
     else:
         payer = ""
 
-    display_customer = payer or sess.customer_name
+    if billing_mode == "lp":
+        recorded_lp_players = [player for player in players if not is_generic_session_player(player)]
+        display_customer = recorded_lp_players[0] if recorded_lp_players else "LP Session"
+    else:
+        display_customer = payer or sess.customer_name
     share_count = len(players) if billing_mode == "sharing" else 1
     split_per_head = math.ceil(total / share_count) if share_count > 1 else total
     player_breakdown = build_player_breakdown(
@@ -407,6 +426,20 @@ def stop_session(
     )
     for item in player_breakdown:
         item["lost_frames"] = losses_by_player.get(item["name"], [])
+    if billing_mode == "lp":
+        player_breakdown = [
+            item for item in player_breakdown
+            if not (
+                is_generic_session_player(item["name"])
+                and item["total"] == 0
+                and not item["lost_frames"]
+            )
+        ]
+    transaction_players = (
+        [item["name"] for item in player_breakdown]
+        if billing_mode == "lp" and player_breakdown
+        else players
+    )
     notes = sess.notes or ""
     if billing_mode == "lp":
         lp_note = "LP settled by recorded frame losses"
@@ -441,9 +474,9 @@ def stop_session(
         total         = total,
         notes         = notes,
         split         = billing_mode != "single",
-        split_names   = ", ".join(players[1:]),
+        split_names   = ", ".join(transaction_players[1:]),
         billing_mode  = billing_mode,
-        players_json  = json.dumps(players),
+        players_json  = json.dumps(transaction_players),
         payer_name    = payer,
         gst_amt       = checkout["gst_amt"],
         peak_surcharge = checkout["peak_surcharge"],
@@ -477,7 +510,7 @@ def stop_session(
         "peak_label": checkout["peak_label"],
         "payment_method": payment_method,
         "billing_mode": billing_mode,
-        "players": players,
+        "players": transaction_players,
         "payer_name": payer,
         "split_per_head": split_per_head,
         "share_count": share_count,
@@ -538,16 +571,15 @@ def close_frame(table_id: str, body: CloseFrameBody, db: Session = Depends(get_d
         raise HTTPException(status_code=404, detail="No active session")
     if sess.paused:
         raise HTTPException(status_code=400, detail="Resume the table before closing a frame.")
-    loser_name = " ".join((body.loser_name or "").strip().split())
+    loser_name = normalize_person_name(body.loser_name)
     if not loser_name:
-        raise HTTPException(status_code=400, detail="Select who lost this frame.")
+        raise HTTPException(status_code=400, detail="Enter who lost this frame.")
     players = json.loads(getattr(sess, "players_json", "[]") or "[]")
     if not players:
         players = clean_players(sess.customer_name, [], sess.split_name or "")
-    player_lookup = {player.lower(): player for player in players}
-    if loser_name.lower() not in player_lookup:
-        raise HTTPException(status_code=400, detail="Frame loser must be one of the session players.")
-    loser_name = player_lookup[loser_name.lower()]
+    players, loser_name = merge_session_player(players, loser_name)
+    sess.players_json = json.dumps(players)
+    sess.split_name = ", ".join(players[1:])
 
     frames = active_session_frames(db, sess)
     open_frame = next((frame for frame in frames if frame.status == "open"), None)
@@ -558,7 +590,12 @@ def close_frame(table_id: str, body: CloseFrameBody, db: Session = Depends(get_d
     open_frame.loser_name = loser_name
     db.commit()
     frames = active_session_frames(db, sess)
-    return {"ok": True, "frame": serialize_frame(open_frame), "frames": [serialize_frame(frame) for frame in frames]}
+    return {
+        "ok": True,
+        "frame": serialize_frame(open_frame),
+        "frames": [serialize_frame(frame) for frame in frames],
+        "players": players,
+    }
 
 @router.post("/{table_id}/food")
 def add_food(table_id: str, body: FoodItem, db: Session = Depends(get_db)):

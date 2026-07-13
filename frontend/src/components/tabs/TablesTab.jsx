@@ -97,6 +97,20 @@ function defaultPlayersForMode(billingMode) {
   return ["Player One", "Player Two"];
 }
 
+const GENERIC_PLAYER_NAMES = new Set([
+  "player one",
+  "player two",
+  "walk in customer",
+]);
+
+function isGenericPlayerName(name) {
+  return GENERIC_PLAYER_NAMES.has((name || "").trim().toLowerCase());
+}
+
+function visiblePlayerNames(players = []) {
+  return players.filter((name) => name && !isGenericPlayerName(name));
+}
+
 function buildPlayers(primaryName, extraNames, billingMode) {
   const defaults = defaultPlayersForMode(billingMode);
   const primary = (primaryName || "").trim() || defaults[0];
@@ -649,12 +663,12 @@ function QuickSessionModal({
         <div className="quick-session-fields">
           <div>
             <label className="form-label">
-              {billingMode === "single" ? "Customer name (optional)" : "Player 1 name (optional)"}
+              {billingMode === "single" ? "Customer name (optional)" : "Customer names (optional)"}
             </label>
             <CustomerInput
               value={player1}
               onChange={setPlayer1}
-              placeholder={billingMode === "single" ? "Blank = Walk In Customer" : "Blank = Player One"}
+              placeholder="Optional"
             />
           </div>
           <div className="billing-mode-control quick" aria-label="Billing mode">
@@ -673,20 +687,20 @@ function QuickSessionModal({
           {billingMode !== "single" && (
             <div>
               <label className="form-label">
-                {billingMode === "lp" ? "Player 2 name (optional)" : "Other players (optional)"}
+                {billingMode === "lp" ? "Second name (optional)" : "Other names (optional)"}
               </label>
               {billingMode === "lp" ? (
                 <CustomerInput
                   value={otherPlayers}
                   onChange={setOtherPlayers}
-                  placeholder="Blank = Player Two"
+                  placeholder="Optional"
                 />
               ) : (
                 <input
                   className="table-mini-input"
                   value={otherPlayers}
                   onChange={(e) => setOtherPlayers(e.target.value)}
-                  placeholder="Blank = Player Two"
+                  placeholder="Optional"
                 />
               )}
             </div>
@@ -870,14 +884,26 @@ function HistoryModal({ tableId, tableNum, onClose }) {
   );
 }
 
-function FrameLoserModal({ frameNo, players, onChoose, onClose }) {
+function FrameLoserModal({ frameNo, onChoose, onClose }) {
+  const [customerName, setCustomerName] = useState("");
+
+  function handleSubmit(event) {
+    event.preventDefault();
+    const cleanName = customerName.trim();
+    if (!cleanName) return;
+    onChoose(cleanName);
+  }
+
   return (
     <div className="frame-loser-backdrop" role="dialog" aria-modal="true">
-      <div className="frame-loser-modal">
+      <form className="frame-loser-modal" onSubmit={handleSubmit}>
         <div className="frame-loser-head">
           <div>
             <div className="quick-session-eyebrow">End frame</div>
-            <div className="frame-loser-title">Who lost Frame {frameNo}?</div>
+            <div className="frame-loser-title">Frame {frameNo} loser</div>
+            <p className="frame-loser-copy">
+              Enter the customer name who lost this frame.
+            </p>
           </div>
           <button
             type="button"
@@ -888,15 +914,27 @@ function FrameLoserModal({ frameNo, players, onChoose, onClose }) {
             <i className="ti ti-x" aria-hidden="true" />
           </button>
         </div>
-        <div className="frame-loser-options">
-          {players.map((player) => (
-            <button key={player} type="button" onClick={() => onChoose(player)}>
-              <span>{player}</span>
-              <strong>lost this frame</strong>
-            </button>
-          ))}
+        <div className="frame-loser-form">
+          <label className="form-label" htmlFor={`frame-loser-${frameNo}`}>
+            Customer name
+          </label>
+          <input
+            id={`frame-loser-${frameNo}`}
+            className="frame-loser-input"
+            value={customerName}
+            onChange={(event) => setCustomerName(event.target.value)}
+            placeholder="Type name here"
+            autoFocus
+          />
+          <button
+            type="submit"
+            className="frame-loser-submit"
+            disabled={!customerName.trim()}
+          >
+            Close frame
+          </button>
         </div>
-      </div>
+      </form>
     </div>
   );
 }
@@ -1060,6 +1098,16 @@ function TableCard({
   const activePlayers = session?.players?.length
     ? session.players
     : [session?.player1, session?.player2].filter(Boolean);
+  const displayPlayers = visiblePlayerNames(activePlayers);
+  const primaryDisplayName = displayPlayers[0]
+    || (activeBillingMode === "single" ? "Walk-in customer" : "Frame session");
+  const secondaryDisplayName = displayPlayers.length > 1
+    ? displayPlayers.slice(1).join(", ")
+    : activeBillingMode === "lp"
+      ? "Enter loser name after each frame"
+      : activeBillingMode === "sharing"
+        ? "Names can be added before start"
+        : "";
   const frames = session?.frames || [];
   const openFrame = frames.find((frame) => frame.status === "open");
   const closedFrames = frames.filter((frame) => frame.status === "closed");
@@ -1071,6 +1119,7 @@ function TableCard({
     if (frame.loser_name) acc[frame.loser_name] = (acc[frame.loser_name] || 0) + 1;
     return acc;
   }, {});
+  const scorePlayers = Array.from(new Set([...displayPlayers, ...Object.keys(frameLossCounts)]));
   const shareCount = activeBillingMode === "sharing" ? Math.max(1, activePlayers.length) : 1;
   const shareAmount = shareCount > 1 ? Math.ceil(total / shareCount) : total;
 
@@ -1162,7 +1211,6 @@ function TableCard({
       {frameLoserOpen && openFrame && (
         <FrameLoserModal
           frameNo={openFrame.frame_no}
-          players={activePlayers}
           onClose={() => setFrameLoserOpen(false)}
           onChoose={(player) => {
             setFrameLoserOpen(false);
@@ -1367,9 +1415,9 @@ function TableCard({
                     color: "rgba(255,255,255,0.9)",
                   }}
                 >
-                  {session.player1}
+                  {primaryDisplayName}
                 </div>
-                {session.player2 && (
+                {secondaryDisplayName && (
                   <div
                     style={{
                       fontSize: "11px",
@@ -1377,9 +1425,7 @@ function TableCard({
                       marginTop: "2px",
                     }}
                   >
-                    {activePlayers.length > 1
-                      ? activePlayers.slice(1).join(", ")
-                      : session.player2}
+                    {secondaryDisplayName}
                   </div>
                 )}
                 <div
@@ -1660,7 +1706,7 @@ function TableCard({
               )}
               {Object.keys(frameLossCounts).length > 0 && (
                 <div className="table-frame-score">
-                  {activePlayers.map((player) => (
+                  {scorePlayers.map((player) => (
                     <span key={player}>
                       {player.split(" ")[0]} {frameLossCounts[player] || 0}
                     </span>
@@ -1674,23 +1720,23 @@ function TableCard({
           <CustomerInput
             value={name}
             onChange={onNameChange}
-            placeholder={billingMode === "single" ? "Blank = Walk In Customer" : "Blank = Player One"}
+            placeholder="Optional customer name"
           />
           {!occupied && billingMode !== "single" && (
             billingMode === "lp" ? (
-              <CustomerInput
-                value={otherPlayers}
-                onChange={setOtherPlayers}
-                placeholder="Blank = Player Two"
-              />
-            ) : (
-              <input
-                className="table-mini-input"
-                value={otherPlayers}
-                onChange={(e) => setOtherPlayers(e.target.value)}
-                placeholder="Blank = Player Two"
-              />
-            )
+                <CustomerInput
+                  value={otherPlayers}
+                  onChange={setOtherPlayers}
+                  placeholder="Optional second name"
+                />
+              ) : (
+                <input
+                  className="table-mini-input"
+                  value={otherPlayers}
+                  onChange={(e) => setOtherPlayers(e.target.value)}
+                  placeholder="Optional extra names"
+                />
+              )
           )}
 
           {/* Pause / Reset */}
@@ -2275,11 +2321,13 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
     try {
       const res = await closeFrame(id, loserName);
       const frames = res.data.frames || [];
+      const players = res.data.players || sessions[id].players || [];
       setSessions((prev) => ({
         ...prev,
         [id]: {
           ...prev[id],
           frames,
+          players,
           currentFrame: frames.find((frame) => frame.status === "open") || null,
         },
       }));

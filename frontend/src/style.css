@@ -2868,36 +2868,60 @@ body.dark .table-frame-running {
   font-weight: 900;
 }
 
-.frame-loser-options {
+.frame-loser-copy {
+  margin: 6px 0 0;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.frame-loser-form {
   display: grid;
-  gap: 10px;
+  gap: 9px;
   margin-top: 18px;
 }
 
-.frame-loser-options button {
-  min-height: 62px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  border: 1px solid #fecdd3;
-  border-radius: 10px;
-  background: #fff1f2;
-  color: #9f1239;
-  padding: 12px 14px;
-  cursor: pointer;
-  text-align: left;
-}
-
-.frame-loser-options span {
+.frame-loser-input {
+  min-height: 48px;
+  width: 100%;
+  border: 1px solid var(--venue-line, var(--border));
+  border-radius: 9px;
+  background: var(--surface);
+  color: var(--text);
+  padding: 0 13px;
   font-size: 15px;
-  font-weight: 900;
+  font-weight: 750;
+  outline: none;
 }
 
-.frame-loser-options strong {
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
+.frame-loser-input:focus {
+  border-color: #f59e0b;
+  box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.18);
+}
+
+.frame-loser-submit {
+  min-height: 48px;
+  border: 1px solid #d97706;
+  border-radius: 9px;
+  background: #f59e0b;
+  color: #111827;
+  font-size: 13px;
+  font-weight: 900;
+  cursor: pointer;
+  transition:
+    transform 0.15s,
+    box-shadow 0.15s,
+    opacity 0.15s;
+}
+
+.frame-loser-submit:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 24px rgba(217, 119, 6, 0.22);
+}
+
+.frame-loser-submit:disabled {
+  cursor: not-allowed;
+  opacity: 0.48;
 }
 
 .checkout-bill-screen {
