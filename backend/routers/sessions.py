@@ -382,9 +382,8 @@ def stop_session(
     if not players:
         players = clean_players(sess.customer_name, [], sess.split_name or "")
     frames = active_session_frames(db, sess)
-    if any(frame.status == "open" for frame in frames):
-        raise HTTPException(status_code=400, detail="Close the running frame before closing the table.")
-    losses_by_player = frame_loss_summary(frames)
+    billable_frames = [frame for frame in frames if frame.status == "closed"]
+    losses_by_player = frame_loss_summary(billable_frames)
     if billing_mode == "single":
         payer = sess.customer_name
     elif billing_mode == "lp":
@@ -422,10 +421,10 @@ def stop_session(
             for item in player_breakdown
         )
         notes = f"{notes} | {settlement_note}" if notes else settlement_note
-    frames_note = frame_summary_note(frames)
+    frames_note = frame_summary_note(billable_frames)
     if frames_note:
         notes = f"{notes} | {frames_note}" if notes else frames_note
-    serialized_frames = [serialize_frame(frame) for frame in frames]
+    serialized_frames = [serialize_frame(frame) for frame in billable_frames]
 
     t = models.Transaction(
         date          = datetime.now().strftime("%d/%m/%Y, %H:%M:%S"),
