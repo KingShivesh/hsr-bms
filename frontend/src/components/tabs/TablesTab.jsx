@@ -1270,10 +1270,10 @@ function TableCard({
         className={`table-session-card ${compact ? "compact" : ""}`}
         style={{
           background: "var(--table-card-bg)",
-          borderRadius: "12px",
+          borderRadius: "10px",
           overflow: "hidden",
-          border: `2px solid ${occupied ? T.accent : "var(--table-card-border)"}`,
-          boxShadow: occupied ? `0 0 20px ${T.accent}44` : "none",
+          border: `1px solid ${occupied ? T.accent : "var(--table-card-border)"}`,
+          boxShadow: occupied ? `0 16px 34px ${T.accent}22` : "0 1px 2px rgba(15, 23, 42, 0.04)",
           transition: "all 0.3s",
         }}
       >
@@ -1286,7 +1286,7 @@ function TableCard({
               background: occupied ? T.felt : T.feltDark,
               borderRadius: "6px",
               position: "relative",
-              height: compact ? "150px" : "200px",
+              height: compact ? "132px" : "176px",
               overflow: "hidden",
               transition: "background 0.4s",
             }}
@@ -1417,7 +1417,7 @@ function TableCard({
                 fontWeight: 800,
                 color: occupied ? "#fff" : "rgba(255,255,255,0.2)",
                 fontVariantNumeric: "tabular-nums",
-                letterSpacing: "3px",
+                letterSpacing: "0",
                 textShadow: occupied ? "0 2px 8px rgba(0,0,0,0.5)" : "none",
               }}
             >
@@ -1481,14 +1481,14 @@ function TableCard({
                     marginTop: "5px",
                     padding: "2px 7px",
                     borderRadius: "999px",
-                    background: "rgba(0,0,0,0.22)",
-                    color: "rgba(255,255,255,0.78)",
-                    fontSize: "9px",
-                    fontWeight: 800,
-                    letterSpacing: "0.7px",
-                    textTransform: "uppercase",
-                  }}
-                >
+                  background: "rgba(0,0,0,0.22)",
+                  color: "rgba(255,255,255,0.78)",
+                  fontSize: "9px",
+                  fontWeight: 800,
+                  letterSpacing: "0",
+                  textTransform: "uppercase",
+                }}
+              >
                   {billingModeLabel(activeBillingMode)}
                 </div>
               </div>
@@ -1573,11 +1573,12 @@ function TableCard({
                   fontSize: "12px",
                   fontWeight: 700,
                   cursor: "pointer",
-                  letterSpacing: "2px",
+                  letterSpacing: "0",
                   boxShadow: "0 2px 8px rgba(0,0,0,0.4)",
                 }}
               >
-                CLOSE TABLE
+                <i className="ti ti-receipt-refund" aria-hidden="true" />
+                <span>CLOSE TABLE</span>
               </button>
             ) : (
               <button
@@ -1595,11 +1596,12 @@ function TableCard({
                   fontSize: "12px",
                   fontWeight: 700,
                   cursor: "pointer",
-                  letterSpacing: "2px",
+                  letterSpacing: "0",
                   boxShadow: "0 2px 8px rgba(0,0,0,0.4)",
                 }}
               >
-                START
+                <i className="ti ti-player-play" aria-hidden="true" />
+                <span>START</span>
               </button>
             )}
           </div>
@@ -1653,7 +1655,7 @@ function TableCard({
                 }}
                 className="table-mini-primary maintenance"
               >
-                SET MAINTENANCE
+                Set maintenance
               </button>
             </div>
           )}
@@ -1737,20 +1739,22 @@ function TableCard({
                   </div>
                   <button
                     type="button"
-                    className="table-frame-end"
-                    data-testid={`end-frame-${table.id}`}
-                    onClick={() => setFrameLoserOpen(true)}
-                  >
-                    End frame
-                  </button>
-                </>
-              ) : (
+                  className="table-frame-end"
+                  data-testid={`end-frame-${table.id}`}
+                  onClick={() => setFrameLoserOpen(true)}
+                >
+                  <i className="ti ti-flag-check" aria-hidden="true" />
+                  End frame
+                </button>
+              </>
+            ) : (
                 <button
                   type="button"
                   className="table-frame-start"
                   data-testid={`start-frame-${table.id}`}
                   onClick={() => onStartFrame(table.id)}
                 >
+                  <i className="ti ti-player-play" aria-hidden="true" />
                   Start frame {nextFrameNo}
                 </button>
               )}
@@ -1782,14 +1786,16 @@ function TableCard({
                 data-testid={`pause-${table.id}`}
                 className={`table-control-btn ${paused ? "resume" : "pause"}`}
               >
-                {paused ? "RESUME" : "PAUSE"}
+                <i className={`ti ${paused ? "ti-player-play" : "ti-player-pause"}`} aria-hidden="true" />
+                <span>{paused ? "Resume" : "Pause"}</span>
               </button>
               <button
                 onClick={() => onReset(table.id)}
                 data-testid={`reset-${table.id}`}
                 className="table-control-btn reset"
               >
-                RESET
+                <i className="ti ti-refresh" aria-hidden="true" />
+                <span>Reset</span>
               </button>
             </div>
           )}
@@ -1804,7 +1810,17 @@ function TableCard({
                   className={`table-payment-btn ${paymentMethod === m ? "active" : ""}`}
                   style={{ "--table-accent": T.accent }}
                 >
-                  {m}
+                  <i
+                    className={`ti ${
+                      m === "Cash"
+                        ? "ti-cash"
+                        : m === "UPI"
+                          ? "ti-qrcode"
+                          : "ti-credit-card"
+                    }`}
+                    aria-hidden="true"
+                  />
+                  <span>{m}</span>
                 </button>
               ))}
             </div>

@@ -16,8 +16,12 @@ export default function Login({ onLogin }) {
       const res = await login(username, password);
       localStorage.setItem("token", res.data.token);
       onLogin();
-    } catch {
-      setError("Invalid username or password");
+    } catch (err) {
+      if (err.response?.status === 401) {
+        setError("Invalid username or password");
+      } else {
+        setError("Backend is not reachable. Start the backend and try again.");
+      }
       setTimeout(() => setError(""), 3000);
     } finally {
       setLoading(false);

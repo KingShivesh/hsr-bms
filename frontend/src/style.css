@@ -5936,3 +5936,714 @@ body.dark .login-footer {
     padding: 12px 10px;
   }
 }
+
+/* Design refresh: practical venue control system */
+* {
+  letter-spacing: 0 !important;
+}
+
+:root {
+  --bg: #f4f6f3;
+  --surface: #ffffff;
+  --surface-soft: #f8faf8;
+  --border: #dfe7df;
+  --border-strong: #cbd8cc;
+  --text: #17201b;
+  --muted: #66756b;
+  --muted-soft: #9ba89f;
+  --accent: #1f7a4f;
+  --accent-strong: #14623d;
+  --accent-soft: #e7f4ed;
+  --warning: #d97706;
+  --danger: #c2410c;
+  --shadow-sm: 0 1px 2px rgba(23, 32, 27, 0.06);
+  --shadow-md: 0 16px 34px rgba(23, 32, 27, 0.08);
+  --focus: 0 0 0 3px rgba(31, 122, 79, 0.16);
+}
+
+body {
+  background:
+    linear-gradient(180deg, rgba(231, 244, 237, 0.64), rgba(244, 246, 243, 0) 240px),
+    var(--bg);
+}
+
+body.dark {
+  --bg: #0f1412;
+  --surface: #141a17;
+  --surface-soft: #19211d;
+  --border: #26322d;
+  --border-strong: #35443d;
+  --text: #eef5f0;
+  --muted: #9cac9f;
+  --muted-soft: #6e7d72;
+  --accent: #8cf0b2;
+  --accent-strong: #b7ffd0;
+  --accent-soft: rgba(140, 240, 178, 0.1);
+}
+
+.shell {
+  background: transparent;
+}
+
+.sidebar {
+  width: 232px;
+  background: #14231b;
+  border-right: 0;
+  box-shadow: 10px 0 30px rgba(20, 35, 27, 0.12);
+}
+
+.main-content {
+  margin-left: 232px;
+  background: transparent;
+}
+
+.sb-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.sb-logo-mark {
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  border-radius: 8px;
+  background: rgba(140, 240, 178, 0.12);
+  color: #8cf0b2;
+}
+
+.sb-logo-name {
+  color: #ffffff;
+}
+
+.sb-logo-sub,
+.sb-section {
+  color: rgba(255, 255, 255, 0.48);
+}
+
+.sb-item {
+  min-height: 42px;
+  color: rgba(255, 255, 255, 0.66);
+  border-right: 0;
+  border-radius: 8px;
+}
+
+.sb-item:hover {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.sb-item.active {
+  color: #ffffff;
+  background: rgba(140, 240, 178, 0.14);
+  border-right-color: transparent;
+  box-shadow: inset 3px 0 0 #8cf0b2;
+}
+
+.sb-bottom {
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.topbar {
+  min-height: 64px;
+  background: rgba(250, 252, 250, 0.9);
+  border-bottom: 1px solid rgba(203, 216, 204, 0.76);
+}
+
+.topbar-title {
+  font-size: 18px;
+  font-weight: 850;
+}
+
+.topbar-icon-btn,
+.topbar-action-btn,
+.command-fab,
+.btn,
+.primary-action-btn,
+.queue-seat-btn,
+.icon-danger-btn,
+.table-control-btn,
+.table-payment-btn,
+.table-secondary-btn,
+.table-notes-btn,
+.table-frame-start,
+.table-frame-end,
+.frame-loser-submit,
+.checkout-bill-close,
+.ui-tab-btn,
+.segmented-control button {
+  min-height: 42px;
+  border-radius: 8px;
+}
+
+.topbar-action-btn,
+.primary-action-btn,
+.btn-primary-sm,
+.btn-login {
+  background: var(--accent-strong);
+  border-color: var(--accent-strong);
+  color: #ffffff;
+  box-shadow: 0 10px 20px rgba(20, 98, 61, 0.14);
+}
+
+.topbar-action-btn:hover,
+.primary-action-btn:hover,
+.btn-primary-sm:hover,
+.btn-login:hover {
+  background: #0f5132;
+  border-color: #0f5132;
+}
+
+.topbar-icon-btn,
+.command-fab {
+  background: var(--surface);
+  border-color: var(--border);
+  color: var(--text);
+}
+
+.page {
+  max-width: 1500px;
+  padding: 22px 26px;
+}
+
+.metric-card,
+.panel,
+.owner-digest,
+.queue-panel,
+.booking-panel,
+.settings-panel,
+.history-section,
+.food-panel,
+.reserve-panel,
+.table-session-card,
+.report-stat-card {
+  border-color: var(--border);
+  border-radius: 8px;
+  box-shadow: var(--shadow-sm);
+}
+
+.metric-card,
+.panel,
+.owner-digest,
+.queue-panel,
+.booking-panel,
+.settings-panel,
+.history-section {
+  background: rgba(255, 255, 255, 0.92);
+}
+
+.metrics-grid {
+  gap: 14px;
+}
+
+.metric-card {
+  min-height: 108px;
+  padding: 16px;
+}
+
+.metric-label,
+.dashboard-panel-sub,
+.metric-sub,
+.queue-sub,
+.tables-view-sub,
+.form-label,
+.hm-legend-item {
+  color: var(--muted);
+}
+
+.metric-value {
+  color: var(--text);
+  font-weight: 900;
+}
+
+.metric-card.green .metric-value,
+.metric-card.blue .metric-value,
+.metric-card.amber .metric-value {
+  color: var(--accent-strong);
+}
+
+.dashboard-home {
+  display: grid;
+  gap: 16px;
+}
+
+.running-strip {
+  border-color: var(--border);
+  background: #102018;
+  color: #ffffff;
+  box-shadow: 0 16px 34px rgba(16, 32, 24, 0.12);
+}
+
+.running-chip {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.16);
+}
+
+.running-chip.idle {
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.dashboard-at-glance,
+.dashboard-sales-grid {
+  gap: 16px;
+}
+
+.dashboard-panel-action,
+.owner-close-day-btn {
+  border-radius: 8px;
+  font-weight: 850;
+}
+
+.hm-cell {
+  min-height: 96px;
+  border-radius: 8px;
+}
+
+.hm-cell.active {
+  background: #e7f4ed;
+  border-color: #a8dcbc;
+}
+
+.hm-cell.busy {
+  background: #fff7ed;
+  border-color: #fed7aa;
+}
+
+.hm-cell.idle {
+  background: var(--surface-soft);
+}
+
+.tables-view-toolbar {
+  position: sticky;
+  top: 64px;
+  z-index: 40;
+  margin: -6px -4px 16px;
+  padding: 10px 4px;
+  background: rgba(244, 246, 243, 0.88);
+  backdrop-filter: blur(12px);
+}
+
+.tables-view-title {
+  font-size: 18px;
+  font-weight: 900;
+}
+
+.segmented-control,
+.page-tabs,
+.category-tabs {
+  border-radius: 8px;
+}
+
+.segmented-control button.active,
+.ui-tab-btn.active {
+  background: var(--accent-strong);
+  border-color: var(--accent-strong);
+  box-shadow: 0 10px 18px rgba(20, 98, 61, 0.16);
+}
+
+.tables-grid {
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 14px;
+}
+
+.tables-grid.compact {
+  grid-template-columns: repeat(auto-fill, minmax(228px, 1fr));
+}
+
+.table-session-card {
+  background: var(--surface) !important;
+}
+
+.table-session-card > div:first-of-type button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-height: 34px;
+  border-radius: 999px !important;
+  padding: 7px 18px !important;
+}
+
+.table-control-panel {
+  gap: 10px;
+  padding: 12px;
+  background: var(--surface);
+}
+
+.table-control-top {
+  min-height: 38px;
+}
+
+.table-rate-line {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.table-utility-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 8px;
+}
+
+.table-start-panel,
+.active-billing-summary,
+.table-frame-panel,
+.table-notes-panel,
+.table-inline-panel,
+.table-reservation-info {
+  border-radius: 8px;
+  background: var(--surface-soft);
+}
+
+.billing-mode-control button {
+  min-height: 48px;
+  border-radius: 8px;
+}
+
+.billing-mode-control button:hover,
+.billing-mode-control button.active {
+  background: #14231b;
+  border-color: #14231b;
+}
+
+.table-player-input,
+.table-mini-input,
+.input-field,
+.reports-date-filter,
+.frame-loser-input {
+  border-radius: 8px;
+  background: #ffffff;
+  border-color: var(--border);
+}
+
+.table-player-input:focus,
+.table-mini-input:focus,
+.input-field:focus,
+.reports-date-filter:focus,
+.frame-loser-input:focus {
+  border-color: var(--accent-strong);
+  box-shadow: var(--focus);
+}
+
+.table-session-actions {
+  grid-template-columns: 1fr 1fr;
+}
+
+.table-control-btn,
+.table-payment-btn,
+.table-frame-start,
+.table-frame-end {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  font-size: 12px;
+  text-transform: none;
+}
+
+.table-control-btn.pause {
+  background: #fff7ed;
+  border-color: #fed7aa;
+  color: #9a3412;
+}
+
+.table-control-btn.resume,
+.table-frame-start {
+  background: #dcfce7;
+  border-color: #86efac;
+  color: #166534;
+}
+
+.table-control-btn.reset {
+  background: #f8fafc;
+  color: #475569;
+}
+
+.table-payment-grid {
+  gap: 8px;
+}
+
+.table-payment-btn {
+  flex-direction: column;
+  gap: 2px;
+  font-size: 11px;
+}
+
+.table-payment-btn i {
+  font-size: 16px;
+}
+
+.table-payment-btn.active {
+  color: #14532d;
+  background: #dcfce7;
+  border-color: #86efac;
+}
+
+.table-frame-panel.running {
+  background: #fffbeb;
+  border-color: #fbbf24;
+}
+
+.table-frame-end,
+.frame-loser-submit {
+  background: #f59e0b;
+  border-color: #d97706;
+  color: #111827;
+}
+
+.table-frame-history span,
+.table-frame-score span,
+.checkout-split-parts span {
+  border-radius: 999px;
+}
+
+.table-discount-options button {
+  min-height: 36px;
+  border-radius: 8px;
+}
+
+.table-discount-options button.active {
+  color: #14532d;
+  background: #dcfce7;
+  border-color: #86efac;
+}
+
+.table-notes-btn {
+  background: #eff6ff;
+}
+
+.table-reservation-info {
+  background: #eff6ff;
+}
+
+.frame-loser-modal,
+.checkout-bill-summary div,
+.checkout-split-card,
+.checkout-frame-card,
+.quick-session-modal,
+.command-palette {
+  border-radius: 8px;
+}
+
+.checkout-bill-screen {
+  background: rgba(12, 18, 15, 0.72);
+}
+
+.checkout-bill-shell {
+  background:
+    linear-gradient(180deg, rgba(231, 244, 237, 0.7), rgba(244, 246, 243, 0) 260px),
+    var(--bg);
+}
+
+.checkout-bill-close {
+  background: var(--accent-strong);
+  border-color: var(--accent-strong);
+}
+
+.checkout-split-main strong {
+  color: var(--accent-strong);
+}
+
+.food-order-layout,
+.food-menu-grid {
+  min-width: 0;
+}
+
+body.dark .sidebar {
+  background: #0f1713;
+  border-color: #0f1713;
+}
+
+body.dark .topbar,
+body.dark .metric-card,
+body.dark .panel,
+body.dark .owner-digest,
+body.dark .queue-panel,
+body.dark .booking-panel,
+body.dark .settings-panel,
+body.dark .history-section,
+body.dark .table-session-card,
+body.dark .table-control-panel,
+body.dark .table-start-panel,
+body.dark .active-billing-summary,
+body.dark .table-frame-panel,
+body.dark .table-notes-panel,
+body.dark .table-inline-panel {
+  background: var(--surface) !important;
+  border-color: var(--border);
+}
+
+body.dark .tables-view-toolbar {
+  background: rgba(15, 20, 18, 0.9);
+}
+
+body.dark .table-player-input,
+body.dark .table-mini-input,
+body.dark .input-field,
+body.dark .reports-date-filter,
+body.dark .frame-loser-input {
+  background: var(--surface-soft);
+  border-color: var(--border);
+  color: var(--text);
+}
+
+body.dark .billing-mode-control button:hover,
+body.dark .billing-mode-control button.active,
+body.dark .segmented-control button.active,
+body.dark .ui-tab-btn.active {
+  background: #8cf0b2;
+  border-color: #8cf0b2;
+  color: #0f1412;
+}
+
+body.dark .topbar-action-btn,
+body.dark .primary-action-btn,
+body.dark .btn-primary-sm,
+body.dark .btn-login,
+body.dark .checkout-bill-close {
+  background: #8cf0b2;
+  border-color: #8cf0b2;
+  color: #0f1412;
+}
+
+body.dark .hm-cell.idle,
+body.dark .checkout-bill-summary div,
+body.dark .checkout-split-card,
+body.dark .checkout-frame-card {
+  background: var(--surface);
+  border-color: var(--border);
+}
+
+@media (max-width: 900px) {
+  .sidebar {
+    width: 64px;
+  }
+
+  .main-content {
+    margin-left: 64px;
+  }
+
+  .topbar {
+    min-height: 58px;
+  }
+
+  .tables-view-toolbar {
+    top: 58px;
+  }
+
+  .page {
+    padding: 14px;
+  }
+
+  .tables-grid,
+  .tables-grid.compact {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .table-session-card > div:first-of-type > div {
+    height: 150px !important;
+  }
+
+  .queue-form,
+  .booking-form {
+    grid-template-columns: 1fr;
+  }
+
+  .food-order-layout {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+
+  .food-cart-panel {
+    position: static;
+  }
+}
+
+@media (max-width: 640px) {
+  .sidebar {
+    width: 56px;
+    background: #14231b;
+  }
+
+  .sidebar.mobile-open {
+    width: min(228px, 84vw);
+  }
+
+  .main-content {
+    margin-left: 56px;
+  }
+
+  .topbar {
+    padding: 9px 10px;
+  }
+
+  .topbar-title {
+    font-size: 15px;
+  }
+
+  .page {
+    padding: 10px 8px 16px;
+  }
+
+  .tables-view-toolbar {
+    top: 56px;
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .tables-view-title {
+    font-size: 16px;
+  }
+
+  .table-control-panel {
+    padding: 10px;
+  }
+
+  .table-start-fields,
+  .billing-mode-control,
+  .table-payment-grid,
+  .table-discount-options {
+    grid-template-columns: 1fr;
+  }
+
+  .table-session-actions {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .table-control-btn,
+  .table-payment-btn,
+  .table-secondary-btn,
+  .table-notes-btn,
+  .primary-action-btn,
+  .btn,
+  .queue-seat-btn,
+  .icon-danger-btn {
+    min-height: 46px;
+  }
+
+  .checkout-bill-shell {
+    padding: 14px;
+  }
+
+  .checkout-bill-head,
+  .checkout-split-main {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .checkout-bill-summary,
+  .checkout-frame-list {
+    grid-template-columns: 1fr;
+  }
+
+  .checkout-bill-close {
+    width: 100%;
+  }
+
+  .command-fab {
+    right: 12px;
+    bottom: 12px;
+  }
+}
