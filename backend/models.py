@@ -62,11 +62,13 @@ class ActiveSession(Base):
     split_name    = Column(Text,    default="")
     billing_mode  = Column(String,  default="single")  # single / sharing / lp
     players_json  = Column(Text,    default="[]")
+    session_key   = Column(String,  default="")
 
 class SessionFrame(Base):
     __tablename__ = "session_frames"
     id                 = Column(Integer, primary_key=True, index=True)
     table_id           = Column(String, index=True)
+    session_key        = Column(String, default="", index=True)
     session_started_at = Column(Float, index=True)
     frame_no           = Column(Integer, default=1)
     started_at         = Column(Float)

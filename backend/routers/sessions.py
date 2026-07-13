@@ -1,10 +1,11 @@
 from fastapi import APIRouter, HTTPException, Depends
 from pydantic import BaseModel, Field
+from sqlalchemy import or_
 from sqlalchemy.orm import Session
 from database import get_db
 from datetime import datetime
 from routers.members import update_member_on_checkout
-import models, time, math, json
+import models, time, math, json, uuid
 from typing import Optional
 from audit import get_controls, log_action
 from pricing import calc_checkout, get_peak_multiplier
@@ -157,10 +158,34 @@ def build_player_breakdown(
         for player in bill_players
     ]
 
+def new_session_key(table_id: str) -> str:
+    return f"{table_id}:{uuid.uuid4().hex}"
+
+def ensure_session_key(db: Session, sess: models.ActiveSession) -> str:
+    key = getattr(sess, "session_key", "") or ""
+    if key:
+        return key
+    key = f"{sess.table_id}:{int(sess.start_time or time.time() * 1000)}"
+    sess.session_key = key
+    db.query(models.SessionFrame).filter(
+        models.SessionFrame.table_id == sess.table_id,
+        models.SessionFrame.session_key == "",
+        models.SessionFrame.session_started_at == sess.start_time,
+    ).update({"session_key": key}, synchronize_session=False)
+    db.flush()
+    return key
+
 def active_session_frames(db: Session, sess: models.ActiveSession) -> list[models.SessionFrame]:
+    key = ensure_session_key(db, sess)
     return db.query(models.SessionFrame).filter(
         models.SessionFrame.table_id == sess.table_id,
-        models.SessionFrame.session_started_at == sess.start_time,
+        or_(
+            models.SessionFrame.session_key == key,
+            (
+                (models.SessionFrame.session_key == "")
+                & (models.SessionFrame.session_started_at == sess.start_time)
+            ),
+        ),
     ).order_by(models.SessionFrame.frame_no.asc()).all()
 
 def serialize_frame(frame: models.SessionFrame) -> dict:
@@ -230,6 +255,7 @@ def start_session(body: StartSession, db: Session = Depends(get_db)):
         split_name    = split_name,
         billing_mode  = billing_mode,
         players_json  = json.dumps(players),
+        session_key   = new_session_key(body.table_id),
     ))
     db.commit()
     return {"ok": True}
@@ -365,6 +391,7 @@ def stop_session(
     frames_note = frame_summary_note(frames)
     if frames_note:
         notes = f"{notes} | {frames_note}" if notes else frames_note
+    serialized_frames = [serialize_frame(frame) for frame in frames]
 
     t = models.Transaction(
         date          = datetime.now().strftime("%d/%m/%Y, %H:%M:%S"),
@@ -394,6 +421,8 @@ def stop_session(
     else:
         update_member_on_checkout(display_customer, total, db)
 
+    for frame in frames:
+        db.delete(frame)
     db.delete(sess)
     db.commit()
 
@@ -418,7 +447,7 @@ def stop_session(
         "split_per_head": split_per_head,
         "share_count": share_count,
         "player_breakdown": player_breakdown,
-        "frames": [serialize_frame(frame) for frame in frames],
+        "frames": serialized_frames,
     }
 
 @router.post("/reset/{table_id}")
@@ -455,6 +484,7 @@ def start_frame(table_id: str, db: Session = Depends(get_db)):
 
     frame = models.SessionFrame(
         table_id=sess.table_id,
+        session_key=ensure_session_key(db, sess),
         session_started_at=sess.start_time,
         frame_no=(max((existing.frame_no for existing in frames), default=0) + 1),
         started_at=time.time() * 1000,

@@ -35,6 +35,10 @@ def ensure_runtime_columns():
         "active_sessions": {
             "billing_mode": "VARCHAR DEFAULT 'single'",
             "players_json": "TEXT DEFAULT '[]'",
+            "session_key": "VARCHAR DEFAULT ''",
+        },
+        "session_frames": {
+            "session_key": "VARCHAR DEFAULT ''",
         },
         "transactions": {
             "billing_mode": "VARCHAR DEFAULT 'single'",
