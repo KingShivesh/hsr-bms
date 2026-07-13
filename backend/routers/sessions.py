@@ -3,7 +3,7 @@ from pydantic import BaseModel, Field
 from sqlalchemy import func, or_
 from sqlalchemy.orm import Session
 from database import get_db
-from datetime import datetime
+from datetime import datetime, timedelta
 from routers.members import update_member_on_checkout
 import models, time, math, json, uuid
 from typing import Optional
@@ -67,6 +67,31 @@ def maintenance_for_table(db: Session, table_id: str):
     return db.query(models.TableMaintenance).filter(
         func.lower(models.TableMaintenance.table_id) == normalized
     ).first()
+
+def booking_datetime_from_clock(clock_value: str) -> datetime:
+    try:
+        hour, minute = [int(part) for part in (clock_value or "").split(":", 1)]
+    except ValueError:
+        raise HTTPException(status_code=400, detail="Reservation time must be HH:MM.")
+    booking_dt = datetime.now().replace(hour=hour, minute=minute, second=0, microsecond=0)
+    if booking_dt < datetime.now() - timedelta(minutes=5):
+        booking_dt = booking_dt + timedelta(days=1)
+    return booking_dt
+
+def complete_matching_booking(db: Session, table_id: str, customer_name: str) -> None:
+    table_code = normalize_table_id(table_id).upper()
+    booking = (
+        db.query(models.Booking)
+        .filter(
+            models.Booking.status == "booked",
+            models.Booking.customer_name.ilike(customer_name),
+            models.Booking.table_id.in_([table_code, "ANY"]),
+        )
+        .order_by(models.Booking.booking_time.asc())
+        .first()
+    )
+    if booking:
+        booking.status = "completed"
 
 def is_generic_session_player(name: str) -> bool:
     return normalize_person_name(name).lower() in GENERIC_SESSION_PLAYER_NAMES
@@ -327,6 +352,7 @@ def start_session(body: StartSession, db: Session = Depends(get_db)):
     sess.session_key   = new_session_key(table_id)
     if not existing:
         db.add(sess)
+    complete_matching_booking(db, table_id, customer_name)
     frames = []
     if billing_mode == "lp" and len(players) > 1:
         frame = create_frame_for_session(db, sess, 1)
@@ -660,22 +686,58 @@ def update_notes(table_id: str, body: UpdateNotes, db: Session = Depends(get_db)
 @router.post("/{table_id}/reserve")
 def reserve(table_id: str, body: Reservation, db: Session = Depends(get_db)):
     table_id = normalize_table_id(table_id)
+    name = normalize_person_name(body.name)
+    if not name:
+        raise HTTPException(status_code=400, detail="Reservation name is required.")
     sess = active_session_for_table(db, table_id)
-    if not sess:
-        sess = models.ActiveSession(
-            table_id=table_id, start_time=0, customer_name="",
-            rate=0, food_total=0, food_items="[]", paused=False, elapsed_ms=0
-        )
-        db.add(sess)
-    sess.reservation = json.dumps({"name": body.name, "time": body.time})
+    if sess and normalize_person_name(sess.customer_name):
+        raise HTTPException(status_code=400, detail="Table is already running.")
+    booking_dt = booking_datetime_from_clock(body.time)
+    duration = 60
+    booking_end = booking_dt + timedelta(minutes=duration)
+    table_code = table_id.upper()
+    existing = db.query(models.Booking).filter(models.Booking.status == "booked").all()
+    for booking in existing:
+        if (booking.table_id or "").upper() != table_code:
+            continue
+        existing_start = datetime.fromisoformat(booking.booking_time)
+        existing_end = existing_start + timedelta(minutes=booking.duration_mins)
+        if booking_dt < existing_end and booking_end > existing_start:
+            raise HTTPException(status_code=400, detail=f"Booking conflict on {table_code}")
+    booking = models.Booking(
+        customer_name=name,
+        phone="",
+        table_id=table_code,
+        table_type="POOL" if table_id == "t5" else "SNOOKER",
+        booking_time=booking_dt.isoformat(timespec="minutes"),
+        duration_mins=duration,
+        notes="Quick table reservation",
+        status="booked",
+        created_at=datetime.now().strftime("%d/%m/%Y, %H:%M"),
+        ts=time.time() * 1000,
+    )
+    db.add(booking)
+    if sess and not normalize_person_name(sess.customer_name):
+        db.delete(sess)
     db.commit()
-    return {"ok": True}
+    db.refresh(booking)
+    return {"ok": True, "booking_id": booking.id}
 
 @router.delete("/{table_id}/reserve")
 def cancel_reserve(table_id: str, db: Session = Depends(get_db)):
     sess = active_session_for_table(db, table_id)
-    if sess:
-        sess.reservation = None
+    table_code = normalize_table_id(table_id).upper()
+    booking = (
+        db.query(models.Booking)
+        .filter(models.Booking.status == "booked", models.Booking.table_id == table_code)
+        .order_by(models.Booking.booking_time.asc())
+        .first()
+    )
+    if booking:
+        booking.status = "cancelled"
+    if sess and not normalize_person_name(sess.customer_name):
+        db.delete(sess)
+    if booking or sess:
         db.commit()
     return {"ok": True}
 

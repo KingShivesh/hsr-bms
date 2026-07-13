@@ -1,11 +1,9 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 import {
   startSession,
   pauseSession,
   stopSession,
   resetSession,
-  addReserve,
-  cancelReserve,
   getActive,
   getRates,
   updateNotes,
@@ -142,6 +140,31 @@ function billingModeLabel(mode) {
   if (mode === "sharing") return "Sharing";
   if (mode === "lp") return "LP";
   return "Single";
+}
+
+function formatLocalDateTimeInput(date) {
+  const pad = (value) => String(value).padStart(2, "0");
+  return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}T${pad(date.getHours())}:${pad(date.getMinutes())}`;
+}
+
+function bookingDateTimeFromClock(clockValue) {
+  const [hours, minutes] = String(clockValue || "").split(":").map(Number);
+  const date = new Date();
+  date.setHours(Number.isFinite(hours) ? hours : 0, Number.isFinite(minutes) ? minutes : 0, 0, 0);
+  if (date < new Date(Date.now() - 5 * 60 * 1000)) {
+    date.setDate(date.getDate() + 1);
+  }
+  return formatLocalDateTimeInput(date);
+}
+
+function bookingDisplayTime(booking) {
+  if (!booking?.booking_time) return "";
+  return new Date(booking.booking_time).toLocaleString("en-IN", {
+    day: "2-digit",
+    month: "short",
+    hour: "2-digit",
+    minute: "2-digit",
+  });
 }
 
 function CustomerInput({ value, onChange, placeholder }) {
@@ -1033,6 +1056,7 @@ function CheckoutBillScreen({ bill, onClose }) {
 function TableCard({
   table,
   session,
+  booking,
   name,
   onNameChange,
   onStart,
@@ -1098,6 +1122,12 @@ function TableCard({
   const activePlayers = session?.players?.length
     ? session.players
     : [session?.player1, session?.player2].filter(Boolean);
+  const reservation = session?.reservation || (booking
+    ? {
+        name: booking.customer_name,
+        time: bookingDisplayTime(booking),
+      }
+    : null);
   const displayPlayers = visiblePlayerNames(activePlayers);
   const primaryDisplayName = displayPlayers[0]
     || (activeBillingMode === "single" ? "Walk-in customer" : "Frame session");
@@ -1832,7 +1862,7 @@ function TableCard({
           )}
 
           {/* Reserve */}
-          {!occupied && (
+          {!occupied && !booking && (
             <>
               <button
                 onClick={() => setReserveOpen((p) => !p)}
@@ -1879,14 +1909,14 @@ function TableCard({
           )}
 
           {/* Reservation info */}
-          {session?.reservation && (
+          {reservation && (
             <div className="table-reservation-info">
               <div>
                 <div className="table-reservation-name">
-                  {session.reservation.name}
+                  {reservation.name}
                 </div>
                 <div className="table-reservation-time">
-                  {session.reservation.time}
+                  {reservation.time}
                 </div>
               </div>
               <button
@@ -1922,6 +1952,23 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
   const [bookings, setBookings] = useState([]);
   const [quickSessionOpen, setQuickSessionOpen] = useState(false);
   const [checkoutBill, setCheckoutBill] = useState(null);
+
+  const nextBookingByTable = useMemo(() => {
+    const recentWindow = Date.now() - 2 * 60 * 60 * 1000;
+    return bookings
+      .filter((booking) => (
+        booking.status !== "missed"
+        && booking.table_id
+        && booking.table_id !== "ANY"
+        && new Date(booking.booking_time).getTime() >= recentWindow
+      ))
+      .sort((a, b) => new Date(a.booking_time) - new Date(b.booking_time))
+      .reduce((acc, booking) => {
+        const id = tableKey(booking.table_id);
+        if (!acc[id]) acc[id] = booking;
+        return acc;
+      }, {});
+  }, [bookings]);
 
   useEffect(() => {
     fetchActive();
@@ -2112,6 +2159,7 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
       }));
       setNames((prev) => ({ ...prev, [table.id]: entry.customer_name }));
       await fetchQueue();
+      await fetchBookings();
       showToast(`${entry.customer_name} seated at T${table.num}`, "success");
     } catch (e) {
       showToast(e.response?.data?.detail || "Failed to seat customer", "error");
@@ -2165,6 +2213,7 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
       }));
       setNames((prev) => ({ ...prev, [table.id]: primaryName }));
       fetchQueue();
+      fetchBookings();
     } catch (e) {
       alert(e.response?.data?.detail || "Failed to start");
     }
@@ -2221,6 +2270,7 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
       }));
       setNames((prev) => ({ ...prev, [table.id]: primaryName }));
       fetchQueue();
+      fetchBookings();
       onSessionEnd?.();
       showToast(`Session started on T${table.num}`, "success");
       return true;
@@ -2381,26 +2431,39 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
       alert("Enter name and time");
       return;
     }
+    const table = TABLES.find((item) => item.id === tableKey(id));
     try {
-      await addReserve(id, name, time);
-      setSessions((prev) => ({
-        ...prev,
-        [id]: { ...(prev[id] || {}), reservation: { name, time } },
-      }));
-    } catch {
-      alert("Failed to reserve");
+      await createBooking({
+        customer_name: name,
+        phone: "",
+        table_id: tableKey(id).toUpperCase(),
+        table_type: table?.type || "ANY",
+        booking_time: bookingDateTimeFromClock(time),
+        duration_mins: 60,
+        notes: "Quick table reservation",
+      });
+      await fetchBookings();
+      showToast(`${name} reserved ${tableKey(id).toUpperCase()}`, "success");
+    } catch (e) {
+      showToast(e.response?.data?.detail || "Failed to reserve", "error");
     }
   }
 
   async function handleCancelReserve(id) {
+    const booking = nextBookingByTable[tableKey(id)];
     try {
-      await cancelReserve(id);
+      if (booking?.id) {
+        await cancelBooking(booking.id);
+        await fetchBookings();
+        showToast("Reservation cancelled", "success");
+        return;
+      }
       setSessions((prev) => ({
         ...prev,
-        [id]: { ...(prev[id] || {}), reservation: null },
+        [tableKey(id)]: { ...(prev[tableKey(id)] || {}), reservation: null },
       }));
-    } catch {
-      alert("Failed to cancel");
+    } catch (e) {
+      showToast(e.response?.data?.detail || "Failed to cancel reservation", "error");
     }
   }
 
@@ -2484,6 +2547,7 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
             key={table.id}
             table={table}
             session={sessions[table.id]}
+            booking={nextBookingByTable[table.id] || null}
             name={names[table.id]}
             onNameChange={(val) =>
               setNames((prev) => ({ ...prev, [table.id]: val }))
