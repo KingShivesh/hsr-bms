@@ -6244,12 +6244,19 @@ body.dark {
 }
 
 .tables-grid {
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
   gap: 14px;
+  min-width: 0;
 }
 
 .tables-grid.compact {
-  grid-template-columns: repeat(auto-fill, minmax(228px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 236px), 1fr));
+}
+
+.main-content,
+.page,
+.table-session-card {
+  min-width: 0;
 }
 
 .table-session-card {
@@ -6452,6 +6459,17 @@ body.dark {
   min-width: 0;
 }
 
+.queue-form,
+.booking-form {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 156px), 1fr));
+  min-width: 0;
+}
+
+.queue-form .primary-action-btn,
+.booking-form .primary-action-btn {
+  min-width: 0;
+}
+
 body.dark .sidebar {
   background: #0f1713;
   border-color: #0f1713;
@@ -6645,5 +6663,393 @@ body.dark .checkout-frame-card {
   .command-fab {
     right: 12px;
     bottom: 12px;
+  }
+}
+
+/* Club Green Premium theme */
+:root {
+  --bg: #f3f6f1;
+  --surface: #ffffff;
+  --surface-soft: #f8faf6;
+  --border: #dbe6d7;
+  --border-strong: #bfd0bd;
+  --text: #152019;
+  --muted: #647365;
+  --muted-soft: #9aa89a;
+  --club-ink: #102017;
+  --club-ink-2: #173321;
+  --club-ink-3: #1f4b31;
+  --club-green: #17653e;
+  --club-green-2: #20804f;
+  --club-green-soft: #e7f4ec;
+  --club-gold: #d9a441;
+  --club-gold-soft: #fff6df;
+  --club-danger: #b42318;
+  --shadow-sm: 0 1px 2px rgba(16, 32, 23, 0.06);
+  --shadow-md: 0 18px 40px rgba(16, 32, 23, 0.1);
+  --focus: 0 0 0 3px rgba(32, 128, 79, 0.16);
+}
+
+body {
+  background:
+    radial-gradient(circle at 12% 0%, rgba(217, 164, 65, 0.08), transparent 260px),
+    linear-gradient(180deg, rgba(231, 244, 236, 0.9), rgba(243, 246, 241, 0) 300px),
+    var(--bg);
+}
+
+.sidebar {
+  background:
+    linear-gradient(180deg, rgba(217, 164, 65, 0.09), rgba(217, 164, 65, 0) 190px),
+    linear-gradient(180deg, #102017 0%, #0b1710 100%);
+  box-shadow: 14px 0 34px rgba(16, 32, 23, 0.16);
+}
+
+.sb-logo {
+  min-height: 74px;
+  padding: 18px 18px;
+}
+
+.sb-logo-mark {
+  background: rgba(217, 164, 65, 0.12);
+  border: 1px solid rgba(217, 164, 65, 0.45);
+  color: var(--club-gold);
+}
+
+.sb-logo-name {
+  color: #fffaf0;
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.sb-logo-sub {
+  color: rgba(255, 250, 240, 0.56);
+  font-weight: 750;
+}
+
+.sb-section {
+  color: rgba(255, 250, 240, 0.36);
+  font-weight: 850;
+}
+
+.sb-item {
+  color: rgba(255, 250, 240, 0.66);
+  font-weight: 750;
+}
+
+.sb-item:hover {
+  color: #fffaf0;
+  background: rgba(255, 250, 240, 0.07);
+}
+
+.sb-item.active {
+  color: #fffaf0;
+  background: linear-gradient(90deg, rgba(32, 128, 79, 0.36), rgba(32, 128, 79, 0.14));
+  box-shadow:
+    inset 3px 0 0 var(--club-gold),
+    0 10px 24px rgba(0, 0, 0, 0.12);
+}
+
+.sb-item.active i {
+  color: var(--club-gold);
+}
+
+.main-content {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.64), rgba(255, 255, 255, 0) 220px),
+    transparent;
+}
+
+.topbar {
+  background: rgba(252, 254, 251, 0.92);
+  border-bottom: 1px solid rgba(191, 208, 189, 0.78);
+}
+
+.topbar-title {
+  color: var(--club-ink);
+}
+
+.topbar-action-btn,
+.primary-action-btn,
+.btn-primary-sm,
+.btn-login,
+.checkout-bill-close {
+  background: var(--club-green);
+  border-color: var(--club-green);
+  color: #ffffff;
+  box-shadow: 0 12px 24px rgba(23, 101, 62, 0.18);
+}
+
+.topbar-action-btn:hover,
+.primary-action-btn:hover,
+.btn-primary-sm:hover,
+.btn-login:hover,
+.checkout-bill-close:hover {
+  background: #125332;
+  border-color: #125332;
+}
+
+.topbar-icon-btn,
+.command-fab {
+  background: #ffffff;
+  border-color: #d7e4d3;
+  color: var(--club-ink);
+}
+
+.metric-card,
+.panel,
+.owner-digest,
+.queue-panel,
+.booking-panel,
+.settings-panel,
+.history-section,
+.table-session-card,
+.report-stat-card,
+.food-menu-card,
+.food-cart-panel,
+.quick-session-modal,
+.command-palette {
+  border-color: rgba(191, 208, 189, 0.84);
+  box-shadow: 0 10px 28px rgba(16, 32, 23, 0.06);
+}
+
+.metric-card,
+.panel,
+.owner-digest,
+.queue-panel,
+.booking-panel,
+.settings-panel,
+.history-section {
+  background: rgba(255, 255, 255, 0.96);
+}
+
+.metric-card::before,
+.panel::before,
+.owner-digest::before {
+  border-radius: inherit;
+}
+
+.metric-card.green,
+.metric-card.blue,
+.metric-card.amber {
+  border-top: 3px solid var(--club-green-2);
+}
+
+.metric-card.amber {
+  border-top-color: var(--club-gold);
+}
+
+.metric-label,
+.tables-view-sub,
+.dashboard-panel-sub,
+.metric-sub,
+.queue-sub,
+.form-label {
+  color: #6b7a69;
+}
+
+.metric-value,
+.report-stat-value,
+.tables-view-title,
+.queue-title {
+  color: var(--club-ink);
+}
+
+.running-strip {
+  background:
+    linear-gradient(135deg, rgba(217, 164, 65, 0.13), rgba(217, 164, 65, 0) 42%),
+    linear-gradient(180deg, #143421, #0e2117);
+  border-color: rgba(217, 164, 65, 0.2);
+}
+
+.running-chip {
+  background: rgba(255, 250, 240, 0.1);
+  border-color: rgba(217, 164, 65, 0.22);
+}
+
+.tables-view-toolbar {
+  background: rgba(243, 246, 241, 0.9);
+  border-bottom: 1px solid rgba(219, 230, 215, 0.68);
+}
+
+.segmented-control,
+.page-tabs,
+.category-tabs {
+  background: rgba(255, 255, 255, 0.92);
+  border-color: #d7e4d3;
+}
+
+.segmented-control button.active,
+.ui-tab-btn.active {
+  background: var(--club-green);
+  border-color: var(--club-green);
+  color: #ffffff;
+}
+
+.dashboard-panel-action,
+.owner-close-day-btn {
+  background: var(--club-green-soft);
+  border: 1px solid #b9dfc8;
+  color: var(--club-green);
+}
+
+.hm-cell.active {
+  background: linear-gradient(180deg, #edf9f1, #e2f2e8);
+  border-color: #9fd5b4;
+}
+
+.hm-cell.busy {
+  background: linear-gradient(180deg, #fff8e8, #fff1cc);
+  border-color: #f3cf7a;
+}
+
+.hm-dot[style*="#16a34a"] {
+  background: var(--club-green-2) !important;
+}
+
+.table-session-card {
+  background: #ffffff !important;
+}
+
+.table-session-card > div:first-of-type {
+  background: #4a2d0f !important;
+}
+
+.table-session-card > div:first-of-type button {
+  background: var(--club-green-2) !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.16) !important;
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.28) !important;
+}
+
+.table-session-card > div:first-of-type button[style*="#dc2626"] {
+  background: var(--club-danger) !important;
+}
+
+.table-control-panel {
+  background: #ffffff;
+}
+
+.table-start-panel,
+.active-billing-summary,
+.table-frame-panel,
+.table-notes-panel,
+.table-inline-panel,
+.table-reservation-info {
+  background: #f8fbf7;
+  border-color: #dbe8d8;
+}
+
+.billing-mode-control button.active,
+.billing-mode-control button:hover {
+  background: var(--club-ink);
+  border-color: var(--club-ink);
+}
+
+.table-player-input {
+  background:
+    linear-gradient(90deg, rgba(32, 128, 79, 0.09), rgba(32, 128, 79, 0) 46px),
+    #ffffff;
+}
+
+.table-player-icon,
+.table-food-price,
+.active-billing-summary strong,
+.checkout-split-main strong {
+  color: var(--club-green);
+}
+
+.table-control-btn.resume,
+.table-frame-start,
+.table-payment-btn.active,
+.table-discount-options button.active {
+  background: var(--club-green-soft);
+  border-color: #a7dab9;
+  color: #125332;
+}
+
+.table-control-btn.pause,
+.table-frame-panel.running,
+.table-inline-panel.maintenance {
+  background: var(--club-gold-soft);
+  border-color: #f0cf86;
+  color: #8a5a08;
+}
+
+.table-frame-end,
+.frame-loser-submit,
+.table-mini-primary.food,
+.table-mini-primary.maintenance {
+  background: var(--club-gold);
+  border-color: #c88d23;
+  color: #1b1609;
+}
+
+.table-control-btn.close,
+.icon-danger-btn,
+.table-reservation-cancel {
+  background: #fff1ee;
+  border-color: #f5b4aa;
+  color: var(--club-danger);
+}
+
+.table-notes-btn,
+.table-secondary-btn.reserve,
+.table-reservation-info {
+  background: #eef6ff;
+  border-color: #c6dcf5;
+  color: #1d4f8f;
+}
+
+.login-container {
+  background:
+    radial-gradient(circle at 50% -10%, rgba(217, 164, 65, 0.16), transparent 280px),
+    linear-gradient(180deg, #eef6ed 0%, #f8faf6 100%);
+}
+
+.login-shell {
+  box-shadow: 0 28px 80px rgba(16, 32, 23, 0.16);
+}
+
+.login-showcase {
+  background:
+    linear-gradient(135deg, rgba(217, 164, 65, 0.13), transparent 48%),
+    linear-gradient(180deg, #173321, #0d1d14);
+}
+
+.login-brand-mark,
+.login-lock {
+  background: rgba(217, 164, 65, 0.12);
+  border-color: rgba(217, 164, 65, 0.38);
+  color: var(--club-gold);
+}
+
+.login-card-eyebrow,
+.login-kicker {
+  color: var(--club-green);
+}
+
+.login-showcase-footer div {
+  background: rgba(255, 250, 240, 0.08);
+  border-color: rgba(217, 164, 65, 0.22);
+}
+
+.checkout-bill-shell {
+  background:
+    radial-gradient(circle at 12% 0%, rgba(217, 164, 65, 0.08), transparent 260px),
+    linear-gradient(180deg, rgba(231, 244, 236, 0.9), rgba(243, 246, 241, 0) 300px),
+    var(--bg);
+}
+
+@media (max-width: 640px) {
+  .sidebar {
+    background:
+      linear-gradient(180deg, rgba(217, 164, 65, 0.09), rgba(217, 164, 65, 0) 160px),
+      #102017;
+  }
+
+  .sb-mobile-toggle {
+    background: rgba(217, 164, 65, 0.12);
+    border-color: rgba(217, 164, 65, 0.34);
+    color: var(--club-gold);
   }
 }
