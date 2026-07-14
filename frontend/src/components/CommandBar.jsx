@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 
-export default function CommandBar({ page, setPage, onNewSession }) {
+export default function CommandBar({ page, setPage, onNewSession, role = "admin" }) {
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
   const [activeIndex, setActiveIndex] = useState(0);
@@ -55,6 +55,7 @@ export default function CommandBar({ page, setPage, onNewSession }) {
         hint: "Bills and table performance",
         icon: "ti-chart-bar",
         action: () => setPage("reports"),
+        adminOnly: true,
       },
       {
         id: "closing",
@@ -74,7 +75,8 @@ export default function CommandBar({ page, setPage, onNewSession }) {
     [onNewSession, setPage],
   );
 
-  const filtered = commands.filter((cmd) => {
+  const allowedCommands = commands.filter((cmd) => role === "admin" || !cmd.adminOnly);
+  const filtered = allowedCommands.filter((cmd) => {
     const q = query.trim().toLowerCase();
     if (!q) return true;
     return `${cmd.label} ${cmd.hint}`.toLowerCase().includes(q);

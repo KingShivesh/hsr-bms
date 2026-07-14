@@ -15,7 +15,9 @@ export default function Login({ onLogin }) {
     try {
       const res = await login(username, password);
       localStorage.setItem("token", res.data.token);
-      onLogin();
+      localStorage.setItem("role", res.data.role || "admin");
+      localStorage.setItem("username", res.data.username || username);
+      onLogin(res.data.role || "admin");
     } catch (err) {
       if (err.response?.status === 401) {
         setError("Invalid username or password");
@@ -129,7 +131,7 @@ export default function Login({ onLogin }) {
           </form>
 
           <div className="login-footer">
-            Default credentials: admin / admin123
+            Admin: admin / admin123 · Staff: staff / staff123
           </div>
         </section>
       </div>

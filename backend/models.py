@@ -6,6 +6,8 @@ class Settings(Base): #This tells SQLAlchemy This class should become a database
     id           = Column(Integer, primary_key=True, index=True)
     username     = Column(String,  default="admin")
     password     = Column(String,  default="admin123")
+    staff_username = Column(String, default="staff")
+    staff_password = Column(String, default="staff123")
     wr           = Column(Integer, default=320)
     pr           = Column(Integer, default=170)
     sr           = Column(Integer, default=270)

@@ -2,6 +2,7 @@ from fastapi import APIRouter, Depends, Query
 from fastapi.responses import StreamingResponse
 from sqlalchemy.orm import Session
 from database import get_db
+from deps import require_admin
 from datetime import datetime, timedelta
 from collections import defaultdict
 import models, io, json
@@ -83,7 +84,7 @@ def get_summary(db: Session = Depends(get_db)):
 
 # ── History ──
 @router.get("/history")
-def get_history(db: Session = Depends(get_db)):
+def get_history(db: Session = Depends(get_db), _: dict = Depends(require_admin)):
     txns = sorted(report_transactions(db), key=lambda t: t.ts or 0, reverse=True)
     return [
         { "date": t.date, "ts": t.ts, "tbl": t.table_id, "nm": t.customer_name,
@@ -97,7 +98,11 @@ def get_history(db: Session = Depends(get_db)):
 
 # ── Filtered CSV export ──
 @router.get("/export")
-def export_csv(period: str = Query("all"), db: Session = Depends(get_db)):
+def export_csv(
+    period: str = Query("all"),
+    db: Session = Depends(get_db),
+    _: dict = Depends(require_admin),
+):
     all_txns     = sorted(report_transactions(db), key=lambda t: t.ts or 0, reverse=True)
     transactions = filter_transactions(all_txns, period)
 
@@ -118,7 +123,11 @@ def export_csv(period: str = Query("all"), db: Session = Depends(get_db)):
 
 # ── Top customers ──
 @router.get("/top-customers")
-def top_customers(period: str = Query("month"), db: Session = Depends(get_db)):
+def top_customers(
+    period: str = Query("month"),
+    db: Session = Depends(get_db),
+    _: dict = Depends(require_admin),
+):
     all_txns = report_transactions(db)
 
     now = datetime.now()
@@ -155,7 +164,7 @@ def top_customers(period: str = Query("month"), db: Session = Depends(get_db)):
 
 # ── Table utilization ──
 @router.get("/table-utilization")
-def table_utilization(db: Session = Depends(get_db)):
+def table_utilization(db: Session = Depends(get_db), _: dict = Depends(require_admin)):
     txns   = report_transactions(db)
     tables = REPORT_TABLES
     result = []
@@ -407,7 +416,7 @@ def closing_insights(db: Session = Depends(get_db)):
 
 # ── Analytics (dashboard charts) ──
 @router.get("/analytics")
-def get_analytics(db: Session = Depends(get_db)):
+def get_analytics(db: Session = Depends(get_db), _: dict = Depends(require_admin)):
     transactions = report_transactions(db)
 
     # Weekly revenue
@@ -461,7 +470,7 @@ def get_analytics(db: Session = Depends(get_db)):
     }
 
 @router.get("/advanced-analytics")
-def advanced_analytics(db: Session = Depends(get_db)):
+def advanced_analytics(db: Session = Depends(get_db), _: dict = Depends(require_admin)):
     txns = report_transactions(db)
 
     customer_visits = defaultdict(int)

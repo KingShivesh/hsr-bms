@@ -32,14 +32,18 @@ def upgrade_password_if_plain(db: Session, settings: models.Settings, plain: str
         db.commit()
 
 
-def create_token(username: str) -> str:
+def create_token(username: str, role: str = "admin") -> str:
     expire = datetime.utcnow() + timedelta(hours=TOKEN_HOURS)
-    return jwt.encode({"sub": username, "exp": expire}, SECRET_KEY, algorithm=ALGORITHM)
+    return jwt.encode(
+        {"sub": username, "role": role, "exp": expire},
+        SECRET_KEY,
+        algorithm=ALGORITHM,
+    )
 
 
-def get_current_user(
+def get_current_claims(
     credentials: HTTPAuthorizationCredentials | None = Depends(security),
-) -> str:
+) -> dict:
     if credentials is None:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
@@ -51,10 +55,27 @@ def get_current_user(
         username = payload.get("sub")
         if not username:
             raise HTTPException(status_code=401, detail="Invalid token")
-        return username
+        return {
+            "username": username,
+            "role": payload.get("role") or "admin",
+        }
     except JWTError:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Invalid or expired token",
             headers={"WWW-Authenticate": "Bearer"},
         )
+
+
+def get_current_user(claims: dict = Depends(get_current_claims)) -> str:
+    return claims["username"]
+
+
+def get_current_role(claims: dict = Depends(get_current_claims)) -> str:
+    return claims["role"]
+
+
+def require_admin(claims: dict = Depends(get_current_claims)) -> dict:
+    if claims["role"] != "admin":
+        raise HTTPException(status_code=403, detail="Admin access required")
+    return claims

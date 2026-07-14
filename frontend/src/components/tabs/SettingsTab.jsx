@@ -14,8 +14,8 @@ import {
   getMinSession,
   getBookingGrace,
   saveBookingGrace,
+  changeStaffAuth,
 } from "../../api/index.js";
-import OperationsTab from "./OperationsTab.jsx";
 
 const CATEGORIES = ["Drinks", "Snacks", "Meals", "Cigarettes"];
 
@@ -41,8 +41,7 @@ function SettingsCard({ title, description, children }) {
   );
 }
 
-export default function SettingsTab() {
-  const [section, setSection] = useState("general");
+export default function SettingsTab({ role = "admin" }) {
   const [wr, setWr] = useState(320);
   const [pr, setPr] = useState(170);
   const [sr, setSr] = useState(270);
@@ -57,6 +56,8 @@ export default function SettingsTab() {
   const [editCat, setEditCat] = useState({});
   const [newUser, setNewUser] = useState("");
   const [newPass, setNewPass] = useState("");
+  const [newStaffUser, setNewStaffUser] = useState("staff");
+  const [newStaffPass, setNewStaffPass] = useState("");
   const [flash, setFlash] = useState("");
   const [activeCategory, setActiveCategory] = useState("All");
 
@@ -209,6 +210,24 @@ export default function SettingsTab() {
     }
   }
 
+  async function handleChangeStaffAuth() {
+    if (!newStaffUser || !newStaffPass) {
+      alert("Enter both staff username and password");
+      return;
+    }
+    if (newStaffPass.length < 6) {
+      alert("Password must be at least 6 characters");
+      return;
+    }
+    try {
+      await changeStaffAuth(newStaffUser, newStaffPass);
+      setNewStaffPass("");
+      showFlash("Staff credentials updated");
+    } catch (e) {
+      alert(e.response?.data?.detail || "Failed to update staff credentials");
+    }
+  }
+
   async function handleResetDaily() {
     if (!confirm("Reset today's statistics?")) return;
     try {
@@ -238,36 +257,6 @@ export default function SettingsTab() {
 
   return (
     <div style={{ maxWidth: "780px" }}>
-      <div style={{ display: "flex", gap: "6px", marginBottom: "20px" }}>
-        {[
-          { id: "general", label: "General" },
-          { id: "operations", label: "Operations" },
-        ].map((tab) => (
-          <button
-            key={tab.id}
-            type="button"
-            onClick={() => setSection(tab.id)}
-            style={{
-              fontSize: "13px",
-              padding: "6px 18px",
-              borderRadius: "6px",
-              cursor: "pointer",
-              fontWeight: section === tab.id ? 600 : 400,
-              background: section === tab.id ? "#111" : "#fff",
-              color: section === tab.id ? "#fff" : "#888",
-              border:
-                section === tab.id ? "1px solid #111" : "1px solid #e5e5e5",
-            }}
-          >
-            {tab.label}
-          </button>
-        ))}
-      </div>
-
-      {section === "operations" ? (
-        <OperationsTab />
-      ) : (
-        <>
       {flash && (
         <div
           style={{
@@ -549,74 +538,118 @@ export default function SettingsTab() {
         </div>
       </SettingsCard>
 
-      {/* Auth */}
-      <SettingsCard
-        title="Change Credentials"
-        description="Update the owner login username and password"
-      >
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "1fr 1fr",
-            gap: "16px",
-            marginBottom: "16px",
-          }}
-        >
-          <div>
-            <label className="form-label">New Username</label>
-            <input
-              type="text"
-              className="input-field"
-              placeholder="Enter new username"
-              value={newUser}
-              onChange={(e) => setNewUser(e.target.value)}
-            />
-          </div>
-          <div>
-            <label className="form-label">New Password</label>
-            <input
-              type="password"
-              className="input-field"
-              placeholder="Min 6 characters"
-              value={newPass}
-              onChange={(e) => setNewPass(e.target.value)}
-            />
-          </div>
-        </div>
-        <button
-          className="btn btn-warning-sm"
-          onClick={handleChangeAuth}
-          data-testid="change-auth-button"
-        >
-          <i className="ti ti-key" aria-hidden="true" />
-          Update credentials
-        </button>
-      </SettingsCard>
+      {role === "admin" && (
+        <>
+          {/* Auth */}
+          <SettingsCard
+            title="Admin Credentials"
+            description="Update the admin login username and password"
+          >
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "1fr 1fr",
+                gap: "16px",
+                marginBottom: "16px",
+              }}
+            >
+              <div>
+                <label className="form-label">New Admin Username</label>
+                <input
+                  type="text"
+                  className="input-field"
+                  placeholder="Enter new username"
+                  value={newUser}
+                  onChange={(e) => setNewUser(e.target.value)}
+                />
+              </div>
+              <div>
+                <label className="form-label">New Admin Password</label>
+                <input
+                  type="password"
+                  className="input-field"
+                  placeholder="Min 6 characters"
+                  value={newPass}
+                  onChange={(e) => setNewPass(e.target.value)}
+                />
+              </div>
+            </div>
+            <button
+              className="btn btn-warning-sm"
+              onClick={handleChangeAuth}
+              data-testid="change-auth-button"
+            >
+              <i className="ti ti-key" aria-hidden="true" />
+              Update admin credentials
+            </button>
+          </SettingsCard>
 
-      {/* Data */}
-      <SettingsCard
-        title="Data Management"
-        description="Reset or clear stored data — these actions cannot be undone"
-      >
-        <div style={{ display: "flex", gap: "10px" }}>
-          <button
-            className="btn btn-warning-sm"
-            onClick={handleResetDaily}
-            data-testid="reset-daily-button"
+          <SettingsCard
+            title="Staff Credentials"
+            description="Staff can run daily operations but cannot see Reports or sensitive settings actions"
           >
-            <i className="ti ti-refresh" aria-hidden="true" />
-            Reset daily stats
-          </button>
-          <button
-            className="btn btn-danger-sm"
-            onClick={handleClearAll}
-            data-testid="clear-all-button"
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "1fr 1fr",
+                gap: "16px",
+                marginBottom: "16px",
+              }}
+            >
+              <div>
+                <label className="form-label">Staff Username</label>
+                <input
+                  type="text"
+                  className="input-field"
+                  value={newStaffUser}
+                  onChange={(e) => setNewStaffUser(e.target.value)}
+                />
+              </div>
+              <div>
+                <label className="form-label">Staff Password</label>
+                <input
+                  type="password"
+                  className="input-field"
+                  placeholder="Min 6 characters"
+                  value={newStaffPass}
+                  onChange={(e) => setNewStaffPass(e.target.value)}
+                />
+              </div>
+            </div>
+            <button
+              className="btn btn-primary-sm"
+              onClick={handleChangeStaffAuth}
+              data-testid="change-staff-auth-button"
+            >
+              <i className="ti ti-users" aria-hidden="true" />
+              Update staff credentials
+            </button>
+          </SettingsCard>
+
+          {/* Data */}
+          <SettingsCard
+            title="Data Management"
+            description="Reset or clear stored data — these actions cannot be undone"
           >
-            <i className="ti ti-alert-triangle" aria-hidden="true" />
-            Clear all data
-          </button>
-        </div>
-      </SettingsCard>
+            <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
+              <button
+                className="btn btn-warning-sm"
+                onClick={handleResetDaily}
+                data-testid="reset-daily-button"
+              >
+                <i className="ti ti-refresh" aria-hidden="true" />
+                Reset daily stats
+              </button>
+              <button
+                className="btn btn-danger-sm"
+                onClick={handleClearAll}
+                data-testid="clear-all-button"
+              >
+                <i className="ti ti-alert-triangle" aria-hidden="true" />
+                Clear all data
+              </button>
+            </div>
+          </SettingsCard>
         </>
       )}
     </div>

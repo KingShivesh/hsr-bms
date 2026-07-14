@@ -27,8 +27,11 @@ api.interceptors.response.use(
 // Auth
 export const login = (username, password) =>
   api.post("/auth/login", { username, password });
+export const getMe = () => api.get("/auth/me");
 export const changeAuth = (username, password) =>
   api.post("/auth/change", { username, password });
+export const changeStaffAuth = (username, password) =>
+  api.post("/auth/change-staff", { username, password });
 
 // Sessions
 export const startSession = (

@@ -178,6 +178,17 @@ function frameCloseTime(value) {
   });
 }
 
+function runningTotalForSession(session, peakRate, gstPercent) {
+  if (!session) return 0;
+  const mins = Math.max(1, Math.round(session.elapsed / 60));
+  const basePlay = Math.round((mins / 60) * session.rate);
+  const play = Math.round(basePlay * (peakRate?.multiplier || 1));
+  const subtotal = play + (session.foodTotal || 0);
+  const gstAmt =
+    gstPercent > 0 && subtotal > 0 ? Math.round((subtotal * gstPercent) / 100) : 0;
+  return subtotal + gstAmt;
+}
+
 function CustomerInput({ value, onChange, placeholder }) {
   const [suggestions, setSuggestions] = useState([]);
   const [show, setShow] = useState(false);
@@ -1070,6 +1081,92 @@ function CheckoutBillScreen({ bill, onClose }) {
   );
 }
 
+function TableFloorTile({
+  table,
+  session,
+  booking,
+  rates,
+  maintenance,
+  selected,
+  onSelect,
+  peakRate,
+  gstPercent,
+}) {
+  const occupied = !!session;
+  const paused = session?.paused || false;
+  const T = THEME[table.type];
+  const rate = getTableRate(table, rates);
+  const total = runningTotalForSession(session, peakRate, gstPercent);
+  const closedFrames = session?.frames?.filter((frame) => frame.status === "closed") || [];
+  const openFrame = session?.frames?.find((frame) => frame.status === "open");
+  const bookingTime = booking ? bookingDisplayTime(booking) : "";
+
+  let status = "Available";
+  let tone = "idle";
+  if (maintenance) {
+    status = "Maintenance";
+    tone = "maintenance";
+  } else if (occupied) {
+    status = paused ? "Paused" : "Running";
+    tone = paused ? "paused" : "running";
+  } else if (booking) {
+    status = "Booked";
+    tone = "booked";
+  }
+
+  return (
+    <button
+      type="button"
+      className={`table-floor-tile ${selected ? "selected" : ""} ${tone}`}
+      onClick={onSelect}
+      aria-pressed={selected}
+      style={{ "--table-accent": T.accent, "--table-felt": occupied ? T.felt : T.feltDark }}
+    >
+      <div className="table-floor-felt">
+        <div className="table-floor-cushion top" />
+        <div className="table-floor-cushion bottom" />
+        <div className="table-floor-pocket tl" />
+        <div className="table-floor-pocket tr" />
+        <div className="table-floor-pocket bl" />
+        <div className="table-floor-pocket br" />
+        <div className="table-floor-number">{String(table.num).padStart(2, "0")}</div>
+        <div className="table-floor-timer">{fmt(session?.elapsed)}</div>
+        {session?.leakageAlert && <div className="table-floor-alert">Review</div>}
+      </div>
+
+      <div className="table-floor-body">
+        <div className="table-floor-topline">
+          <span className={`table-floor-status ${tone}`}>{status}</span>
+          <strong>₹{rate}/hr</strong>
+        </div>
+        <div className="table-floor-title">
+          T{table.num} · {getTableLabel(table)}
+        </div>
+        <div className="table-floor-meta">
+          {occupied ? (
+            <>
+              <span>₹{total} running</span>
+              <span>
+                {openFrame
+                  ? `Frame ${openFrame.frame_no} live`
+                  : closedFrames.length
+                    ? `${closedFrames.length} frames`
+                    : billingModeLabel(session.billingMode)}
+              </span>
+            </>
+          ) : maintenance ? (
+            <span>{maintenance.reason}</span>
+          ) : booking ? (
+            <span>{booking.customer_name} · {bookingTime}</span>
+          ) : (
+            <span>Tap to start or reserve</span>
+          )}
+        </div>
+      </div>
+    </button>
+  );
+}
+
 function TableCard({
   table,
   session,
@@ -1940,6 +2037,8 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
   const [bookings, setBookings] = useState([]);
   const [quickSessionOpen, setQuickSessionOpen] = useState(false);
   const [checkoutBill, setCheckoutBill] = useState(null);
+  const [selectedTableId, setSelectedTableId] = useState(TABLES[0]?.id || "t1");
+  const detailPanelRef = useRef(null);
 
   const nextBookingByTable = useMemo(() => {
     const recentWindow = Date.now() - 2 * 60 * 60 * 1000;
@@ -2146,6 +2245,7 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
         },
       }));
       setNames((prev) => ({ ...prev, [table.id]: entry.customer_name }));
+      setSelectedTableId(table.id);
       await fetchQueue();
       await fetchBookings();
       showToast(`${entry.customer_name} seated at T${table.num}`, "success");
@@ -2200,6 +2300,7 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
         },
       }));
       setNames((prev) => ({ ...prev, [table.id]: primaryName }));
+      setSelectedTableId(table.id);
       fetchQueue();
       fetchBookings();
     } catch (e) {
@@ -2257,6 +2358,7 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
         },
       }));
       setNames((prev) => ({ ...prev, [table.id]: primaryName }));
+      setSelectedTableId(table.id);
       fetchQueue();
       fetchBookings();
       onSessionEnd?.();
@@ -2481,6 +2583,19 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
   }
 
   const compact = viewMode === "compact";
+  const selectedTable = TABLES.find((table) => table.id === selectedTableId) || TABLES[0];
+
+  function selectTable(tableId) {
+    setSelectedTableId(tableId);
+    if (typeof window !== "undefined" && window.innerWidth <= 1180) {
+      window.setTimeout(() => {
+        detailPanelRef.current?.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      }, 0);
+    }
+  }
 
   function changeViewMode(mode) {
     setViewMode(mode);
@@ -2508,7 +2623,9 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
         <div>
           <div className="tables-view-title">Table floor</div>
           <div className="tables-view-sub">
-            {compact ? "Compact scanning mode" : "Detailed session controls"}
+            {compact
+              ? "Compact floor scan, tap any table for controls"
+              : "Tap a table to view running total, frames and checkout"}
           </div>
         </div>
         <div className="segmented-control" aria-label="Table card density">
@@ -2529,35 +2646,77 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
         </div>
       </div>
 
-      <div className={`tables-grid ${compact ? "compact" : ""}`}>
-        {TABLES.map((table) => (
-          <TableCard
-            key={table.id}
-            table={table}
-            session={sessions[table.id]}
-            booking={nextBookingByTable[table.id] || null}
-            name={names[table.id]}
-            onNameChange={(val) =>
-              setNames((prev) => ({ ...prev, [table.id]: val }))
-            }
-            onStart={handleStart}
-            onPause={handlePause}
-            onReset={handleReset}
-            onStop={handleStop}
-            onReserve={handleReserve}
-            onCancelReserve={handleCancelReserve}
-            rates={rates}
-            maintenance={maintenance[table.id] || null}
-            onMaintenance={handleSetMaintenance}
-            onClearMaintenance={handleClearMaintenance}
-            onStartFrame={handleStartFrame}
-            onCloseFrame={handleCloseFrame}
-            peakRate={peakRate}
-            gstPercent={gstPercent}
-            showToast={showToast}
-            compact={compact}
-          />
-        ))}
+      <div className="table-floor-layout">
+        <div className={`tables-grid table-floor-grid ${compact ? "compact" : ""}`}>
+          {TABLES.map((table) => (
+            <TableFloorTile
+              key={table.id}
+              table={table}
+              session={sessions[table.id]}
+              booking={nextBookingByTable[table.id] || null}
+              rates={rates}
+              maintenance={maintenance[table.id] || null}
+              selected={selectedTable?.id === table.id}
+              onSelect={() => selectTable(table.id)}
+              peakRate={peakRate}
+              gstPercent={gstPercent}
+            />
+          ))}
+        </div>
+
+        {selectedTable && (
+          <aside
+            ref={detailPanelRef}
+            className="table-detail-panel"
+            aria-label={`T${selectedTable.num} details`}
+          >
+            <div className="table-detail-header">
+              <div>
+                <span>Selected table</span>
+                <strong>
+                  T{selectedTable.num} · {getTableLabel(selectedTable)}
+                </strong>
+              </div>
+              <div className="table-detail-total">
+                <span>Running</span>
+                <strong>
+                  ₹{runningTotalForSession(
+                    sessions[selectedTable.id],
+                    peakRate,
+                    gstPercent,
+                  )}
+                </strong>
+              </div>
+            </div>
+
+            <TableCard
+              key={selectedTable.id}
+              table={selectedTable}
+              session={sessions[selectedTable.id]}
+              booking={nextBookingByTable[selectedTable.id] || null}
+              name={names[selectedTable.id]}
+              onNameChange={(val) =>
+                setNames((prev) => ({ ...prev, [selectedTable.id]: val }))
+              }
+              onStart={handleStart}
+              onPause={handlePause}
+              onReset={handleReset}
+              onStop={handleStop}
+              onReserve={handleReserve}
+              onCancelReserve={handleCancelReserve}
+              rates={rates}
+              maintenance={maintenance[selectedTable.id] || null}
+              onMaintenance={handleSetMaintenance}
+              onClearMaintenance={handleClearMaintenance}
+              onStartFrame={handleStartFrame}
+              onCloseFrame={handleCloseFrame}
+              peakRate={peakRate}
+              gstPercent={gstPercent}
+              showToast={showToast}
+              compact={false}
+            />
+          </aside>
+        )}
       </div>
 
       <div className="tables-support-tools">

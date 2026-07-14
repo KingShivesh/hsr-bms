@@ -5,6 +5,7 @@ from database import get_db
 from typing import Optional
 import models
 from audit import log_action
+from deps import require_admin
 
 router = APIRouter()
 
@@ -123,7 +124,11 @@ def delete_menu_item(item_name: str, db: Session = Depends(get_db)):
     return {"ok": True}
 
 @router.post("/reset-daily")
-def reset_daily(manager_pin: str = "", db: Session = Depends(get_db)):
+def reset_daily(
+    manager_pin: str = "",
+    db: Session = Depends(get_db),
+    _: dict = Depends(require_admin),
+):
     today = __import__('datetime').datetime.now().strftime("%d/%m/%Y")
     deleted = db.query(models.Transaction).filter(
         models.Transaction.date.like(f"{today}%")
@@ -139,7 +144,11 @@ def reset_daily(manager_pin: str = "", db: Session = Depends(get_db)):
     return {"ok": True}
 
 @router.post("/clear-all")
-def clear_all(manager_pin: str = "", db: Session = Depends(get_db)):
+def clear_all(
+    manager_pin: str = "",
+    db: Session = Depends(get_db),
+    _: dict = Depends(require_admin),
+):
     tx_count = db.query(models.Transaction).count()
     db.query(models.Transaction).delete()
     db.query(models.ActiveSession).delete()

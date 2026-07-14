@@ -28,6 +28,8 @@ def ensure_runtime_columns():
         "settings": {
             "wr": "INTEGER DEFAULT 320",
             "booking_grace_minutes": "INTEGER DEFAULT 10",
+            "staff_username": "VARCHAR DEFAULT 'staff'",
+            "staff_password": "VARCHAR DEFAULT 'staff123'",
         },
         "bookings": {
             "released_at": "VARCHAR DEFAULT ''",

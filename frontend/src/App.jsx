@@ -4,7 +4,7 @@ import Sidebar from "./components/Sidebar.jsx";
 import Topbar from "./components/Topbar.jsx";
 import CommandBar from "./components/CommandBar.jsx";
 import { ToastProvider } from "./components/Toast.jsx";
-import { getSummary } from "./api/index.js";
+import { getMe, getSummary } from "./api/index.js";
 
 const Dashboard = lazy(() => import("./components/Dashboard.jsx"));
 const TablesTab = lazy(() => import("./components/tabs/TablesTab.jsx"));
@@ -16,6 +16,7 @@ const TournamentTab = lazy(() => import("./components/tabs/TournamentTab.jsx"));
 
 export default function App() {
   const [loggedIn, setLoggedIn] = useState(!!localStorage.getItem("token"));
+  const [role, setRole] = useState(localStorage.getItem("role") || "admin");
   const [page, setPage] = useState("tables");
   const [newSessionRequest, setNewSessionRequest] = useState(0);
   const [metrics, setMetrics] = useState({
@@ -30,10 +31,29 @@ export default function App() {
 
   useEffect(() => {
     if (!loggedIn) return;
+    fetchCurrentUser();
     fetchMetrics();
     const iv = setInterval(fetchMetrics, 10000);
     return () => clearInterval(iv);
   }, [loggedIn]);
+
+  useEffect(() => {
+    if (role === "staff" && page === "reports") {
+      setPage("tables");
+    }
+  }, [role, page]);
+
+  async function fetchCurrentUser() {
+    try {
+      const res = await getMe();
+      const nextRole = res.data.role || "admin";
+      setRole(nextRole);
+      localStorage.setItem("role", nextRole);
+      localStorage.setItem("username", res.data.username || "");
+    } catch (e) {
+      console.error(e);
+    }
+  }
 
   async function fetchMetrics() {
     try {
@@ -47,6 +67,8 @@ export default function App() {
   function handleLogout() {
     if (confirm("Are you sure you want to logout?")) {
       localStorage.removeItem("token");
+      localStorage.removeItem("role");
+      localStorage.removeItem("username");
       setLoggedIn(false);
     }
   }
@@ -56,7 +78,16 @@ export default function App() {
     setNewSessionRequest((request) => request + 1);
   }
 
-  if (!loggedIn) return <Login onLogin={() => setLoggedIn(true)} />;
+  if (!loggedIn) {
+    return (
+      <Login
+        onLogin={(nextRole) => {
+          setRole(nextRole || "admin");
+          setLoggedIn(true);
+        }}
+      />
+    );
+  }
 
   const PAGE_TITLES = {
     dashboard: "Dashboard",
@@ -76,6 +107,7 @@ export default function App() {
           setPage={setPage}
           onLogout={handleLogout}
           activeTables={metrics.active_tables}
+          role={role}
         />
         <div className="main-content">
           <Topbar
@@ -86,6 +118,7 @@ export default function App() {
             page={page}
             setPage={setPage}
             onNewSession={openNewSession}
+            role={role}
           />
           <Suspense
             fallback={
@@ -109,11 +142,11 @@ export default function App() {
                   newSessionRequest={newSessionRequest}
                 />
               )}
-              {page === "reports" && <ReportsTab />}
+              {page === "reports" && role === "admin" && <ReportsTab />}
               {page === "closing" && <ClosingTab />}
               {page === "food" && <FoodTab />}
               {page === "tournaments" && <TournamentTab />}
-              {page === "settings" && <SettingsTab />}
+              {page === "settings" && <SettingsTab role={role} />}
             </div>
           </Suspense>
         </div>

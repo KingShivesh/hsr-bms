@@ -14,6 +14,8 @@ if not existing:
     db.add(models.Settings(
         username    = "admin",
         password    = hash_password("admin123"),
+        staff_username = "staff",
+        staff_password = hash_password("staff123"),
         wr          = 320,
         pr          = 170,
         sr          = 270,
@@ -35,6 +37,13 @@ else:
     if not (existing.password.startswith("$2b$") or existing.password.startswith("$2a$")):
         existing.password = hash_password(existing.password)
         print("Migrated settings password to bcrypt hash.")
+    if not getattr(existing, "staff_username", ""):
+        existing.staff_username = "staff"
+    if not getattr(existing, "staff_password", ""):
+        existing.staff_password = hash_password("staff123")
+    elif not (existing.staff_password.startswith("$2b$") or existing.staff_password.startswith("$2a$")):
+        existing.staff_password = hash_password(existing.staff_password)
+        print("Migrated staff password to bcrypt hash.")
     print("Settings already exist, skipping.")
 
 # ==================== HSR MENU ITEMS ====================

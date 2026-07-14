@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { APP_NAME } from "../config/hsrTables.js";
 
-export default function Sidebar({ page, setPage, onLogout, activeTables }) {
+export default function Sidebar({ page, setPage, onLogout, activeTables, role = "admin" }) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const items = [
     { id: "dashboard", icon: "ti-layout-dashboard", label: "Dashboard" },
@@ -10,7 +10,7 @@ export default function Sidebar({ page, setPage, onLogout, activeTables }) {
     { id: "tournaments", icon: "ti-trophy", label: "Tournaments" },
     { id: "reports", icon: "ti-chart-bar", label: "Reports" },
     { id: "closing", icon: "ti-clipboard-check", label: "Closing" },
-  ];
+  ].filter((item) => role === "admin" || item.id !== "reports");
 
   function navigate(nextPage) {
     setPage(nextPage);
