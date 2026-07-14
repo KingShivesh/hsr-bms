@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
 
-export default function Topbar({ title, onNewSession }) {
+export default function Topbar({ title, onNewSession, role = "admin", username = "" }) {
   const [dt, setDt] = useState("");
   const [dark, setDark] = useState(
     () => localStorage.getItem("darkMode") === "true",
   );
+  const roleLabel = role === "staff" ? "Staff" : "Admin";
+  const displayName = username || roleLabel.toLowerCase();
 
   useEffect(() => {
     function tick() {
@@ -38,6 +40,11 @@ export default function Topbar({ title, onNewSession }) {
     <div className="topbar">
       <div className="topbar-title">{title}</div>
       <div className="topbar-right">
+        <div className={`topbar-user-chip ${role === "staff" ? "staff" : "admin"}`}>
+          <i className={`ti ${role === "staff" ? "ti-user" : "ti-shield-lock"}`} aria-hidden="true" />
+          <span>{roleLabel}</span>
+          <strong>{displayName}</strong>
+        </div>
         <div className="topbar-date">{dt}</div>
 
         {/* Dark mode toggle */}

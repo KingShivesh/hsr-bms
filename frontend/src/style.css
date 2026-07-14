@@ -7782,3 +7782,79 @@ body.dark .table-detail-header span {
     flex-direction: row;
   }
 }
+
+/* Current user indicator */
+.topbar-user-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 38px;
+  max-width: 220px;
+  padding: 7px 10px;
+  border: 1px solid #b9dfc8;
+  border-radius: 999px;
+  background: var(--club-green-soft, #e7f4ec);
+  color: var(--club-green, #17653e);
+  font-size: 12px;
+  font-weight: 900;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.topbar-user-chip.staff {
+  border-color: #c6dcf5;
+  background: #eef6ff;
+  color: #1d4f8f;
+}
+
+.topbar-user-chip i {
+  font-size: 16px;
+  flex-shrink: 0;
+}
+
+.topbar-user-chip span {
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.topbar-user-chip strong {
+  min-width: 0;
+  overflow: hidden;
+  color: inherit;
+  font-size: 12px;
+  font-weight: 800;
+  text-overflow: ellipsis;
+}
+
+body.dark .topbar-user-chip {
+  border-color: rgba(140, 240, 178, 0.35);
+  background: rgba(140, 240, 178, 0.12);
+  color: #8cf0b2;
+}
+
+body.dark .topbar-user-chip.staff {
+  border-color: rgba(147, 197, 253, 0.35);
+  background: rgba(147, 197, 253, 0.12);
+  color: #93c5fd;
+}
+
+@media (max-width: 900px) {
+  .topbar-user-chip {
+    max-width: 128px;
+  }
+
+  .topbar-user-chip strong {
+    display: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .topbar-user-chip {
+    min-height: 36px;
+    padding: 7px 9px;
+  }
+
+  .topbar-user-chip span {
+    display: none;
+  }
+}

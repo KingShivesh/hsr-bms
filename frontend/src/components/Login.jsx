@@ -17,7 +17,7 @@ export default function Login({ onLogin }) {
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("role", res.data.role || "admin");
       localStorage.setItem("username", res.data.username || username);
-      onLogin(res.data.role || "admin");
+      onLogin(res.data.role || "admin", res.data.username || username);
     } catch (err) {
       if (err.response?.status === 401) {
         setError("Invalid username or password");
@@ -79,7 +79,7 @@ export default function Login({ onLogin }) {
         <section className="login-box">
           <div className="login-card-head">
             <div>
-              <div className="login-card-eyebrow">Admin access</div>
+              <div className="login-card-eyebrow">Secure access</div>
               <h1>Sign in</h1>
             </div>
             <div className="login-lock">
@@ -131,7 +131,7 @@ export default function Login({ onLogin }) {
           </form>
 
           <div className="login-footer">
-            Admin: admin / admin123 · Staff: staff / staff123
+            Authorized owner and staff access only
           </div>
         </section>
       </div>

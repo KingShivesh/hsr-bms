@@ -17,6 +17,7 @@ const TournamentTab = lazy(() => import("./components/tabs/TournamentTab.jsx"));
 export default function App() {
   const [loggedIn, setLoggedIn] = useState(!!localStorage.getItem("token"));
   const [role, setRole] = useState(localStorage.getItem("role") || "admin");
+  const [username, setUsername] = useState(localStorage.getItem("username") || "");
   const [page, setPage] = useState("tables");
   const [newSessionRequest, setNewSessionRequest] = useState(0);
   const [metrics, setMetrics] = useState({
@@ -47,9 +48,11 @@ export default function App() {
     try {
       const res = await getMe();
       const nextRole = res.data.role || "admin";
+      const nextUsername = res.data.username || "";
       setRole(nextRole);
+      setUsername(nextUsername);
       localStorage.setItem("role", nextRole);
-      localStorage.setItem("username", res.data.username || "");
+      localStorage.setItem("username", nextUsername);
     } catch (e) {
       console.error(e);
     }
@@ -69,6 +72,8 @@ export default function App() {
       localStorage.removeItem("token");
       localStorage.removeItem("role");
       localStorage.removeItem("username");
+      setRole("admin");
+      setUsername("");
       setLoggedIn(false);
     }
   }
@@ -81,8 +86,9 @@ export default function App() {
   if (!loggedIn) {
     return (
       <Login
-        onLogin={(nextRole) => {
+        onLogin={(nextRole, nextUsername) => {
           setRole(nextRole || "admin");
+          setUsername(nextUsername || "");
           setLoggedIn(true);
         }}
       />
@@ -113,6 +119,8 @@ export default function App() {
           <Topbar
             title={PAGE_TITLES[page]}
             onNewSession={openNewSession}
+            role={role}
+            username={username}
           />
           <CommandBar
             page={page}
