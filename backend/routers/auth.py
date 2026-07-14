@@ -7,6 +7,8 @@ from deps import create_token, get_current_claims, hash_password, require_admin,
 import models
 
 router = APIRouter()
+DEFAULT_STAFF_USERNAME = "staff"
+DEFAULT_STAFF_PASSWORD = "staff123"
 
 
 class LoginRequest(BaseModel):
@@ -26,27 +28,50 @@ def upgrade_staff_password_if_plain(db: Session, settings: models.Settings, plai
         db.commit()
 
 
+def ensure_staff_credentials(db: Session, settings: models.Settings) -> tuple[str, str]:
+    changed = False
+    staff_username = (getattr(settings, "staff_username", "") or "").strip()
+    staff_password = getattr(settings, "staff_password", "") or ""
+
+    if not staff_username:
+        staff_username = DEFAULT_STAFF_USERNAME
+        settings.staff_username = staff_username
+        changed = True
+
+    if not staff_password:
+        staff_password = hash_password(DEFAULT_STAFF_PASSWORD)
+        settings.staff_password = staff_password
+        changed = True
+
+    if changed:
+        db.commit()
+
+    return staff_username, staff_password
+
+
 @router.post("/login")
 def login(body: LoginRequest, db: Session = Depends(get_db)):
     settings = db.query(models.Settings).first()
     if not settings:
         raise HTTPException(status_code=500, detail="Settings not found, run seed.py")
-    if body.username == settings.username and verify_password(body.password, settings.password):
-        upgrade_password_if_plain(db, settings, body.password)
+    username = body.username.strip()
+    password = body.password.strip()
+
+    if username == settings.username and verify_password(password, settings.password):
+        upgrade_password_if_plain(db, settings, password)
         return {
-            "token": create_token(body.username, "admin"),
+            "token": create_token(username, "admin"),
             "role": "admin",
-            "username": body.username,
+            "username": username,
         }
 
-    staff_username = getattr(settings, "staff_username", "staff") or "staff"
-    staff_password = getattr(settings, "staff_password", "staff123") or "staff123"
-    if body.username == staff_username and verify_password(body.password, staff_password):
-        upgrade_staff_password_if_plain(db, settings, body.password)
+    staff_username, staff_password = ensure_staff_credentials(db, settings)
+    if username == staff_username and verify_password(password, staff_password):
+        upgrade_staff_password_if_plain(db, settings, password)
         return {
-            "token": create_token(body.username, "staff"),
+            "token": create_token(username, "staff"),
             "role": "staff",
-            "username": body.username,
+            "username": username,
         }
 
     raise HTTPException(status_code=401, detail="Invalid username or password")

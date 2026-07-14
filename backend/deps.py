@@ -21,8 +21,13 @@ def hash_password(password: str) -> str:
 
 
 def verify_password(plain: str, stored: str) -> bool:
+    if not stored:
+        return False
     if stored.startswith("$2b$") or stored.startswith("$2a$"):
-        return bcrypt.checkpw(plain.encode(), stored.encode())
+        try:
+            return bcrypt.checkpw(plain.encode(), stored.encode())
+        except ValueError:
+            return False
     return plain == stored
 
 

@@ -7686,3 +7686,99 @@ body.dark .table-detail-header span {
     font-size: 16px;
   }
 }
+
+/* Centered closing bill receipt */
+.checkout-bill-screen {
+  align-items: flex-start !important;
+  justify-content: center !important;
+  padding: 28px 18px !important;
+  overflow: auto;
+}
+
+.checkout-bill-shell {
+  width: min(100%, 760px) !important;
+  min-height: auto !important;
+  margin: 0 auto !important;
+  border: 1px solid rgba(191, 208, 189, 0.9);
+  border-radius: 14px;
+  box-shadow: 0 24px 70px rgba(16, 32, 23, 0.22);
+}
+
+.checkout-bill-head,
+.checkout-bill-summary,
+.checkout-bill-section-title,
+.checkout-split-list,
+.checkout-frame-list {
+  width: min(100%, 620px);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.checkout-bill-head {
+  gap: 16px;
+}
+
+.checkout-bill-summary {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.checkout-bill-summary div {
+  text-align: center;
+}
+
+.checkout-split-list,
+.checkout-frame-list {
+  gap: 8px;
+}
+
+.checkout-split-card,
+.checkout-frame-card {
+  padding: 12px 14px;
+}
+
+.checkout-split-main {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.checkout-split-main > div {
+  min-width: 0;
+}
+
+.checkout-split-main strong {
+  flex-shrink: 0;
+  font-size: 22px;
+}
+
+.checkout-split-parts {
+  justify-content: flex-start;
+}
+
+@media (max-width: 640px) {
+  .checkout-bill-screen {
+    padding: 12px 8px !important;
+  }
+
+  .checkout-bill-shell {
+    border-radius: 10px;
+  }
+
+  .checkout-bill-head,
+  .checkout-bill-summary,
+  .checkout-bill-section-title,
+  .checkout-split-list,
+  .checkout-frame-list {
+    width: 100%;
+  }
+
+  .checkout-bill-summary {
+    grid-template-columns: 1fr;
+  }
+
+  .checkout-split-main {
+    align-items: flex-start;
+    flex-direction: row;
+  }
+}
