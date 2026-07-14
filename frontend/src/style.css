@@ -7053,3 +7053,248 @@ body {
     color: var(--club-gold);
   }
 }
+
+/* Readability and touch comfort pass */
+body {
+  line-height: 1.55;
+}
+
+.topbar-title,
+.tables-view-title,
+.queue-title,
+.settings-panel-title,
+.section-title,
+.owner-digest-title,
+.checkout-bill-title,
+.frame-loser-title {
+  line-height: 1.25;
+}
+
+.metric-label,
+.metric-sub,
+.tables-view-sub,
+.dashboard-panel-sub,
+.queue-sub,
+.queue-meta,
+.queue-note,
+.table-rate-line,
+.form-label,
+.table-field-stack > span,
+.active-billing-summary,
+.table-frame-head,
+.table-frame-running,
+.table-frame-paused,
+.checkout-split-meta,
+.checkout-split-parts,
+.checkout-frame-card span,
+.checkout-frame-card time {
+  line-height: 1.35;
+}
+
+.table-control-panel {
+  gap: 14px;
+}
+
+.table-start-panel,
+.table-inline-panel,
+.table-notes-panel,
+.table-frame-panel,
+.table-reservation-info {
+  gap: 10px;
+  padding: 12px;
+}
+
+.table-start-fields {
+  gap: 12px;
+}
+
+.table-field-stack {
+  gap: 7px;
+}
+
+.table-field-stack > span,
+.form-label {
+  font-size: 12px;
+  font-weight: 850;
+}
+
+.table-player-input,
+.table-mini-input,
+.input-field,
+.frame-loser-input {
+  min-height: 48px;
+  font-size: 14px;
+  line-height: 1.35;
+}
+
+.billing-mode-control {
+  gap: 8px;
+}
+
+.billing-mode-control button {
+  min-height: 58px;
+  gap: 5px;
+  padding: 9px 8px;
+}
+
+.billing-mode-control strong {
+  font-size: 13px;
+  line-height: 1.2;
+}
+
+.billing-mode-control span {
+  font-size: 11px;
+  line-height: 1.25;
+  white-space: normal;
+}
+
+.table-control-btn,
+.table-payment-btn,
+.table-secondary-btn,
+.table-notes-btn,
+.table-frame-start,
+.table-frame-end,
+.primary-action-btn,
+.btn,
+.queue-seat-btn,
+.ui-tab-btn,
+.segmented-control button {
+  min-height: 46px;
+  padding: 9px 12px;
+  font-size: 13px;
+  line-height: 1.25;
+}
+
+.table-payment-btn {
+  gap: 4px;
+}
+
+.table-discount-options {
+  gap: 7px;
+}
+
+.table-discount-options button {
+  min-height: 40px;
+  font-size: 12px;
+  line-height: 1.25;
+}
+
+.table-frame-history,
+.table-frame-score,
+.checkout-split-parts {
+  gap: 7px;
+}
+
+.table-frame-history span,
+.table-frame-score span,
+.checkout-split-parts span,
+.booking-status-pill,
+.notes-dot {
+  padding: 5px 9px;
+  font-size: 11px;
+  line-height: 1.2;
+}
+
+.table-session-card > div:first-of-type button {
+  min-height: 38px;
+  padding: 8px 20px !important;
+  font-size: 13px !important;
+  line-height: 1.2;
+}
+
+.table-reservation-name,
+.queue-name,
+.checkout-split-name {
+  line-height: 1.28;
+}
+
+.food-menu-name,
+.cart-line-name,
+.report-stat-label,
+.data-table th,
+.data-table td {
+  line-height: 1.35;
+}
+
+@media (max-width: 640px) {
+  body {
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  .page {
+    padding: 12px 10px 18px;
+  }
+
+  .tables-view-toolbar {
+    gap: 10px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+  }
+
+  .tables-view-title {
+    font-size: 17px;
+  }
+
+  .tables-view-sub {
+    font-size: 13px;
+  }
+
+  .table-control-panel {
+    gap: 13px;
+    padding: 12px;
+  }
+
+  .table-start-panel,
+  .table-inline-panel,
+  .table-notes-panel,
+  .table-frame-panel,
+  .table-reservation-info {
+    padding: 12px;
+  }
+
+  .billing-mode-control {
+    grid-template-columns: 1fr;
+    gap: 9px;
+  }
+
+  .billing-mode-control button {
+    min-height: 54px;
+  }
+
+  .billing-mode-control strong {
+    font-size: 14px;
+  }
+
+  .billing-mode-control span {
+    font-size: 12px;
+  }
+
+  .table-player-input,
+  .table-mini-input,
+  .input-field,
+  .frame-loser-input {
+    min-height: 50px;
+    font-size: 15px;
+  }
+
+  .table-control-btn,
+  .table-payment-btn,
+  .table-secondary-btn,
+  .table-notes-btn,
+  .table-frame-start,
+  .table-frame-end,
+  .primary-action-btn,
+  .btn,
+  .queue-seat-btn,
+  .ui-tab-btn,
+  .segmented-control button {
+    min-height: 48px;
+    font-size: 14px;
+  }
+
+  .table-session-card > div:first-of-type button {
+    min-height: 40px;
+    font-size: 13px !important;
+  }
+}
