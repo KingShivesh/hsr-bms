@@ -6247,6 +6247,7 @@ body.dark {
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
   gap: 14px;
   min-width: 0;
+  align-items: start;
 }
 
 .tables-grid.compact {

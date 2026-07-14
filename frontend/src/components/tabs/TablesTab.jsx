@@ -1146,15 +1146,6 @@ function TableCard({
       }
     : null);
   const displayPlayers = visiblePlayerNames(activePlayers);
-  const primaryDisplayName = displayPlayers[0]
-    || (activeBillingMode === "single" ? "Walk-in customer" : "Frame session");
-  const secondaryDisplayName = displayPlayers.length > 1
-    ? displayPlayers.slice(1).join(", ")
-    : activeBillingMode === "lp"
-      ? "Enter loser name after each frame"
-      : activeBillingMode === "sharing"
-        ? "Names can be added before start"
-        : "";
   const frames = session?.frames || [];
   const openFrame = frames.find((frame) => frame.status === "open");
   const closedFrames = frames.filter((frame) => frame.status === "closed");
@@ -1430,72 +1421,19 @@ function TableCard({
               <div
                 style={{
                   position: "absolute",
-                  top: "48px",
-                  left: "50%",
-                  transform: "translateX(-50%)",
+                  top: "16px",
+                  right: "22px",
                   background: "rgba(239,68,68,0.92)",
                   color: "#fff",
-                  borderRadius: "4px",
-                  padding: "2px 8px",
-                  fontSize: "9px",
+                  borderRadius: "999px",
+                  padding: "3px 9px",
+                  fontSize: "10px",
                   fontWeight: 800,
                   letterSpacing: "0.5px",
+                  zIndex: 3,
                 }}
               >
                 REVIEW
-              </div>
-            )}
-
-            {/* Player names on felt */}
-            {occupied && (
-              <div
-                style={{
-                  position: "absolute",
-                  top: compact ? "46px" : "58px",
-                  left: 0,
-                  right: 0,
-                  textAlign: "center",
-                  zIndex: 2,
-                }}
-              >
-                <div
-                  style={{
-                    fontSize: "12px",
-                    fontWeight: 600,
-                    color: "rgba(255,255,255,0.9)",
-                    textShadow: "0 2px 8px rgba(0,0,0,0.54)",
-                  }}
-                >
-                  {primaryDisplayName}
-                </div>
-                {secondaryDisplayName && (
-                  <div
-                    style={{
-                      fontSize: "11px",
-                      color: "rgba(255,255,255,0.6)",
-                      marginTop: "2px",
-                      textShadow: "0 2px 8px rgba(0,0,0,0.54)",
-                    }}
-                  >
-                    {secondaryDisplayName}
-                  </div>
-                )}
-                <div
-                  style={{
-                    display: "inline-flex",
-                    marginTop: "5px",
-                    padding: "2px 7px",
-                    borderRadius: "999px",
-                  background: "rgba(0,0,0,0.34)",
-                  color: "rgba(255,255,255,0.9)",
-                  fontSize: "9px",
-                  fontWeight: 800,
-                  letterSpacing: "0",
-                  textTransform: "uppercase",
-                }}
-              >
-                  {billingModeLabel(activeBillingMode)}
-                </div>
               </div>
             )}
 
