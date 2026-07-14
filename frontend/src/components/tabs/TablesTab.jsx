@@ -1286,7 +1286,7 @@ function TableCard({
               background: occupied ? T.felt : T.feltDark,
               borderRadius: "6px",
               position: "relative",
-              height: compact ? "132px" : "176px",
+              height: compact ? "160px" : "220px",
               overflow: "hidden",
               transition: "background 0.4s",
             }}
@@ -1389,11 +1389,12 @@ function TableCard({
                 fontSize: compact ? "58px" : "80px",
                 fontWeight: 900,
                 color: occupied
-                  ? "rgba(255,255,255,0.12)"
-                  : "rgba(255,255,255,0.07)",
+                  ? "rgba(255,255,255,0.14)"
+                  : "rgba(255,255,255,0.16)",
                 fontVariantNumeric: "tabular-nums",
                 userSelect: "none",
                 lineHeight: 1,
+                zIndex: 1,
               }}
             >
               {String(table.num).padStart(2, "0")}
@@ -1409,16 +1410,17 @@ function TableCard({
                 textAlign: "center",
                 fontSize: compact
                   ? session?.elapsed >= 3600
-                    ? "17px"
-                    : "21px"
+                    ? "20px"
+                    : "24px"
                   : session?.elapsed >= 3600
-                    ? "22px"
-                    : "28px",
-                fontWeight: 800,
-                color: occupied ? "#fff" : "rgba(255,255,255,0.2)",
+                    ? "25px"
+                    : "32px",
+                fontWeight: 900,
+                color: "#ffffff",
                 fontVariantNumeric: "tabular-nums",
                 letterSpacing: "0",
-                textShadow: occupied ? "0 2px 8px rgba(0,0,0,0.5)" : "none",
+                textShadow: "0 2px 10px rgba(0,0,0,0.68)",
+                zIndex: 2,
               }}
             >
               {fmt(session?.elapsed)}
@@ -1453,6 +1455,7 @@ function TableCard({
                   left: 0,
                   right: 0,
                   textAlign: "center",
+                  zIndex: 2,
                 }}
               >
                 <div
@@ -1460,6 +1463,7 @@ function TableCard({
                     fontSize: "12px",
                     fontWeight: 600,
                     color: "rgba(255,255,255,0.9)",
+                    textShadow: "0 2px 8px rgba(0,0,0,0.54)",
                   }}
                 >
                   {primaryDisplayName}
@@ -1470,6 +1474,7 @@ function TableCard({
                       fontSize: "11px",
                       color: "rgba(255,255,255,0.6)",
                       marginTop: "2px",
+                      textShadow: "0 2px 8px rgba(0,0,0,0.54)",
                     }}
                   >
                     {secondaryDisplayName}
@@ -1481,8 +1486,8 @@ function TableCard({
                     marginTop: "5px",
                     padding: "2px 7px",
                     borderRadius: "999px",
-                  background: "rgba(0,0,0,0.22)",
-                  color: "rgba(255,255,255,0.78)",
+                  background: "rgba(0,0,0,0.34)",
+                  color: "rgba(255,255,255,0.9)",
                   fontSize: "9px",
                   fontWeight: 800,
                   letterSpacing: "0",
@@ -1498,10 +1503,17 @@ function TableCard({
             <div
               style={{
                 position: "absolute",
-                bottom: compact ? "37px" : "44px",
-                left: 0,
-                right: 0,
+                bottom: compact ? "42px" : "52px",
+                left: "50%",
+                transform: "translateX(-50%)",
+                minWidth: compact ? "132px" : "156px",
+                padding: "7px 14px",
+                borderRadius: "14px",
+                background: "rgba(0,0,0,0.28)",
+                boxShadow: "0 10px 24px rgba(0,0,0,0.18)",
+                backdropFilter: "blur(1px)",
                 textAlign: "center",
+                zIndex: 2,
               }}
             >
               {peakRate?.is_peak && occupied && (
@@ -1520,8 +1532,10 @@ function TableCard({
               <div
                 style={{
                   fontSize: "11px",
-                  color: "rgba(255,255,255,0.4)",
+                  color: "rgba(255,255,255,0.86)",
                   letterSpacing: "1px",
+                  fontWeight: 850,
+                  textShadow: "0 1px 5px rgba(0,0,0,0.45)",
                 }}
               >
                 RUNNING TOTAL{gstPercent > 0 ? " (incl. GST est.)" : ""}
@@ -1530,8 +1544,9 @@ function TableCard({
                 style={{
                   fontSize: "20px",
                   lineHeight: 1.1,
-                  fontWeight: 700,
-                  color: occupied ? "#fff" : "rgba(255,255,255,0.15)",
+                  fontWeight: 900,
+                  color: "#ffffff",
+                  textShadow: "0 2px 8px rgba(0,0,0,0.58)",
                 }}
               >
                 ₹{total}
@@ -1575,6 +1590,7 @@ function TableCard({
                   cursor: "pointer",
                   letterSpacing: "0",
                   boxShadow: "0 2px 8px rgba(0,0,0,0.4)",
+                  zIndex: 3,
                 }}
               >
                 <i className="ti ti-receipt-refund" aria-hidden="true" />
@@ -1598,6 +1614,7 @@ function TableCard({
                   cursor: "pointer",
                   letterSpacing: "0",
                   boxShadow: "0 2px 8px rgba(0,0,0,0.4)",
+                  zIndex: 3,
                 }}
               >
                 <i className="ti ti-player-play" aria-hidden="true" />
