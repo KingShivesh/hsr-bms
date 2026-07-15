@@ -8971,6 +8971,18 @@ body.dark .checkout-bill-screen {
   background: var(--premium-surface-2);
 }
 
+.checkout-payment-grid {
+  margin-bottom: 4px;
+  padding: 12px;
+  border: 1px solid var(--premium-border);
+  border-radius: 10px;
+  background: var(--premium-surface-2);
+}
+
+.checkout-payment-grid .table-payment-btn {
+  min-height: 52px;
+}
+
 .checkout-discount-box .table-discount-options {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));

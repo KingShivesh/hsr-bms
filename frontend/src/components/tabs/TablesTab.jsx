@@ -984,7 +984,13 @@ function FrameLoserModal({ frameNo, onChoose, onClose }) {
   );
 }
 
-function CheckoutQuoteScreen({ quote, onClose, onDiscountChange, onFinalize }) {
+function CheckoutQuoteScreen({
+  quote,
+  onClose,
+  onPaymentChange,
+  onDiscountChange,
+  onFinalize,
+}) {
   if (!quote) return null;
   const rec = quote.rec || {};
   const settlement = Array.isArray(rec.player_breakdown)
@@ -1038,6 +1044,30 @@ function CheckoutQuoteScreen({ quote, onClose, onDiscountChange, onFinalize }) {
             <span>Final bill</span>
             <strong>₹{total}</strong>
           </div>
+        </div>
+
+        <div className="checkout-bill-section-title">Payment Method</div>
+        <div className="table-payment-grid checkout-payment-grid">
+          {PAYMENT_METHODS.map((method) => (
+            <button
+              key={method}
+              type="button"
+              className={`table-payment-btn ${quote.paymentMethod === method ? "active" : ""}`}
+              onClick={() => onPaymentChange(method)}
+            >
+              <i
+                className={`ti ${
+                  method === "Cash"
+                    ? "ti-cash"
+                    : method === "UPI"
+                      ? "ti-qrcode"
+                      : "ti-credit-card"
+                }`}
+                aria-hidden="true"
+              />
+              <span>{method}</span>
+            </button>
+          ))}
         </div>
 
         <div className="checkout-bill-section-title">Apply Discount</div>
@@ -2683,6 +2713,38 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
     }
   }
 
+  async function handleCheckoutPaymentChange(paymentMethod) {
+    if (!checkoutQuote) return;
+    const nextQuote = {
+      ...checkoutQuote,
+      paymentMethod,
+      loading: true,
+      error: "",
+    };
+    setCheckoutQuote(nextQuote);
+    try {
+      const res = await quoteSession(
+        checkoutQuote.tableId,
+        paymentMethod,
+        checkoutQuote.discountType,
+        parseInt(checkoutQuote.discountValue, 10) || 0,
+      );
+      setCheckoutQuote((prev) => ({
+        ...(prev || nextQuote),
+        rec: res.data,
+        paymentMethod,
+        loading: false,
+        error: "",
+      }));
+    } catch (e) {
+      setCheckoutQuote((prev) => ({
+        ...(prev || nextQuote),
+        loading: false,
+        error: e.response?.data?.detail || "Failed to update payment method",
+      }));
+    }
+  }
+
   async function handleFinalizeCheckout() {
     if (!checkoutQuote) return;
     const {
@@ -2812,6 +2874,7 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
       <CheckoutQuoteScreen
         quote={checkoutQuote}
         onClose={() => setCheckoutQuote(null)}
+        onPaymentChange={handleCheckoutPaymentChange}
         onDiscountChange={handleCheckoutDiscountChange}
         onFinalize={handleFinalizeCheckout}
       />
