@@ -1007,8 +1007,8 @@ function CheckoutBillScreen({ bill, onClose }) {
               {rec.payment_method || bill.paymentMethod || "Cash"} · {rec.dur || 0} min
             </div>
             <div className="checkout-session-time">
-              <span>Session start {fmtDateTime(sessionStartedAt)}</span>
-              <span>Session end {fmtDateTime(sessionEndedAt)}</span>
+              <span>Session started {fmtDateTime(sessionStartedAt)}</span>
+              <span>Session ended {fmtDateTime(sessionEndedAt)}</span>
             </div>
           </div>
           <button type="button" className="checkout-bill-close" onClick={onClose}>
@@ -1155,6 +1155,7 @@ function TableFloorTile({
         <div className="table-floor-meta">
           {occupied ? (
             <>
+              <span>Started {fmtClock(session.startTime)}</span>
               <span>₹{total} running</span>
               <span>
                 {openFrame
@@ -1776,8 +1777,8 @@ function TableCard({
           {occupied && (
             <div className="active-billing-summary">
               <span>{billingModeLabel(activeBillingMode)}</span>
-              <strong>Start {fmtClock(session.startTime)}</strong>
-              <strong>End {paused ? "Paused" : "Running"}</strong>
+              <strong>Session started {fmtClock(session.startTime)}</strong>
+              <strong>Session end {paused ? "Paused" : "Running"}</strong>
               {activeBillingMode === "sharing" && shareCount > 1 && (
                 <strong>₹{shareAmount} each</strong>
               )}
