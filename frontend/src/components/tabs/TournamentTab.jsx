@@ -2,12 +2,27 @@ import { useEffect, useMemo, useState } from "react";
 import {
   closeTournament,
   createTournament,
+  getActive,
+  getRates,
   getTournament,
   getTournaments,
   recordTournamentWinner,
 } from "../../api/index.js";
+import { HSR_TABLES, getTableLabel, getTableRate } from "../../config/hsrTables.js";
 
 const GAME_TYPES = ["8 Ball", "9 Ball", "10 Ball", "Snooker", "Straight Pool"];
+
+function fmtClock(ms) {
+  if (!ms) return "--:--";
+  return new Date(ms).toLocaleTimeString("en-IN", {
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+}
+
+function recommendedTypeForGame(gameType) {
+  return gameType === "Snooker" ? "SNOOKER" : "POOL";
+}
 
 function Panel({ title, children, action }) {
   return (
@@ -49,6 +64,49 @@ function StatusPill({ status }) {
   );
 }
 
+function TournamentTableFloor({ gameType, rates, sessionsByTable }) {
+  const preferredType = recommendedTypeForGame(gameType);
+
+  return (
+    <div className="tournament-table-grid">
+      {HSR_TABLES.map((table) => {
+        const session = sessionsByTable[table.id];
+        const occupied = !!session;
+        const recommended = table.type === preferredType;
+        return (
+          <div
+            key={table.id}
+            className={`tournament-table-card ${occupied ? "occupied" : "available"} ${recommended ? "recommended" : ""}`}
+          >
+            <div className={`tournament-table-felt ${table.type.toLowerCase()}`}>
+              <span>T{table.num}</span>
+            </div>
+            <div className="tournament-table-main">
+              <div>
+                <strong>{getTableLabel(table)}</strong>
+                <span>₹{getTableRate(table, rates)}/hr · {table.type === "POOL" ? "Pool" : "Snooker"}</span>
+              </div>
+              <em>{occupied ? "Occupied" : "Available"}</em>
+            </div>
+            <div className="tournament-table-meta">
+              {occupied ? (
+                <>
+                  <span>{session.customer_name}</span>
+                  <span>Started {fmtClock(session.start_time)}</span>
+                </>
+              ) : recommended ? (
+                <span>Best fit for {gameType}</span>
+              ) : (
+                <span>Backup table</span>
+              )}
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
 export default function TournamentTab() {
   const [tournaments, setTournaments] = useState([]);
   const [selected, setSelected] = useState(null);
@@ -58,9 +116,14 @@ export default function TournamentTab() {
   const [playersText, setPlayersText] = useState("");
   const [loading, setLoading] = useState(true);
   const [flash, setFlash] = useState("");
+  const [rates, setRates] = useState({ wr: 320, pr: 170, sr: 270 });
+  const [activeSessions, setActiveSessions] = useState([]);
 
   useEffect(() => {
     fetchAll();
+    fetchTableState();
+    const iv = setInterval(fetchTableState, 10000);
+    return () => clearInterval(iv);
     // Run once on mount; later refreshes pass the intended selected tournament explicitly.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -78,6 +141,16 @@ export default function TournamentTab() {
       console.error(e);
     } finally {
       setLoading(false);
+    }
+  }
+
+  async function fetchTableState() {
+    try {
+      const [activeRes, ratesRes] = await Promise.all([getActive(), getRates()]);
+      setActiveSessions(activeRes.data);
+      setRates(ratesRes.data);
+    } catch (e) {
+      console.error(e);
     }
   }
 
@@ -148,6 +221,13 @@ export default function TournamentTab() {
     });
     return Object.entries(grouped).sort(([a], [b]) => Number(a) - Number(b));
   }, [selected]);
+
+  const sessionsByTable = useMemo(() => (
+    activeSessions.reduce((acc, session) => {
+      acc[String(session.table_id || "").toLowerCase()] = session;
+      return acc;
+    }, {})
+  ), [activeSessions]);
 
   if (loading) {
     return (
@@ -251,6 +331,17 @@ export default function TournamentTab() {
       </div>
 
       <div>
+        <Panel title="Tournament Table Floor">
+          <div className="tournament-floor-note">
+            Live table status uses the HSR setup: T1/T2 Wiraka, T3/T4 English, T5 Pool.
+          </div>
+          <TournamentTableFloor
+            gameType={selected?.game_type || gameType}
+            rates={rates}
+            sessionsByTable={sessionsByTable}
+          />
+        </Panel>
+
         {!selected ? (
           <Panel title="Bracket">
             <div style={{ color: "#bbb", padding: "36px", textAlign: "center" }}>

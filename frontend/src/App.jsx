@@ -2,7 +2,6 @@ import { lazy, Suspense, useState, useEffect } from "react";
 import Login from "./components/Login.jsx";
 import Sidebar from "./components/Sidebar.jsx";
 import Topbar from "./components/Topbar.jsx";
-import CommandBar from "./components/CommandBar.jsx";
 import { ToastProvider } from "./components/Toast.jsx";
 import { getMe, getSummary } from "./api/index.js";
 
@@ -121,12 +120,6 @@ export default function App() {
             onNewSession={openNewSession}
             role={role}
             username={username}
-          />
-          <CommandBar
-            page={page}
-            setPage={setPage}
-            onNewSession={openNewSession}
-            role={role}
           />
           <Suspense
             fallback={

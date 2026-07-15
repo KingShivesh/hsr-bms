@@ -8021,3 +8021,142 @@ body.dark .table-session-card.occupied .table-control-panel {
 body.dark .table-session-card.occupied .table-rate-line {
   color: #8cf0b2;
 }
+
+/* Tournament HSR table floor */
+.tournament-floor-note {
+  margin-bottom: 12px;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 800;
+  line-height: 1.35;
+}
+
+.tournament-table-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 10px;
+}
+
+.tournament-table-card {
+  min-width: 0;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: var(--surface);
+  padding: 9px;
+  box-shadow: 0 8px 22px rgba(16, 32, 23, 0.05);
+}
+
+.tournament-table-card.recommended {
+  border-color: #b9dfc8;
+  background: #f6fbf7;
+}
+
+.tournament-table-card.occupied {
+  border-color: #86efac;
+  background: #effaf3;
+}
+
+.tournament-table-card.occupied.recommended {
+  box-shadow: inset 3px 0 0 var(--club-green, #17653e), 0 10px 24px rgba(16, 32, 23, 0.07);
+}
+
+.tournament-table-felt {
+  display: grid;
+  place-items: center;
+  min-height: 70px;
+  border: 6px solid #4a2d0f;
+  border-radius: 8px;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 24px;
+  font-weight: 950;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.48);
+}
+
+.tournament-table-felt.snooker {
+  background: #17653e;
+}
+
+.tournament-table-felt.pool {
+  background: #1a6bb5;
+}
+
+.tournament-table-main {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 9px;
+}
+
+.tournament-table-main > div {
+  min-width: 0;
+}
+
+.tournament-table-main strong,
+.tournament-table-main span,
+.tournament-table-main em,
+.tournament-table-meta span {
+  display: block;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.tournament-table-main strong {
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 950;
+}
+
+.tournament-table-main span,
+.tournament-table-meta span {
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 800;
+  line-height: 1.35;
+}
+
+.tournament-table-main em {
+  flex-shrink: 0;
+  padding: 4px 7px;
+  border-radius: 999px;
+  background: #dcfce7;
+  color: #166534;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 950;
+}
+
+.tournament-table-card.occupied .tournament-table-main em {
+  background: #fff7ed;
+  color: #9a3412;
+}
+
+.tournament-table-meta {
+  display: grid;
+  gap: 2px;
+  margin-top: 7px;
+}
+
+body.dark .tournament-table-card,
+body.dark .tournament-table-card.recommended,
+body.dark .tournament-table-card.occupied {
+  background: var(--surface);
+  border-color: var(--border);
+}
+
+@media (max-width: 640px) {
+  .tournament-table-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .tournament-table-felt {
+    min-height: 58px;
+    font-size: 20px;
+  }
+
+  .tournament-table-main {
+    flex-direction: column;
+  }
+}
