@@ -1366,9 +1366,14 @@ function TableCard({
       )}
 
       <div
-        className={`table-session-card ${compact ? "compact" : ""}`}
+        className={`table-session-card ${compact ? "compact" : ""} ${occupied ? "occupied" : ""}`}
         style={{
-          background: "var(--table-card-bg)",
+          "--occupied-accent": T.accent,
+          "--occupied-card-bg": isPool ? "#eef7ff" : "#effaf3",
+          "--occupied-control-bg": isPool ? "#f2f8ff" : "#f2fbf5",
+          "--occupied-control-surface": isPool ? "#ffffff" : "#ffffff",
+          "--occupied-control-border": isPool ? "#b7d9f5" : "#b8e2c5",
+          background: occupied ? "var(--occupied-card-bg)" : "var(--table-card-bg)",
           borderRadius: "10px",
           overflow: "hidden",
           border: `1px solid ${occupied ? T.accent : "var(--table-card-border)"}`,

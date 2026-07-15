@@ -7954,3 +7954,70 @@ body.dark .topbar-user-chip.staff {
     grid-template-columns: 34px 1fr;
   }
 }
+
+/* Occupied table highlight */
+.table-session-card.occupied {
+  --table-control-bg: var(--occupied-control-bg);
+  --table-control-border: var(--occupied-control-border);
+  --table-control-surface: var(--occupied-control-surface);
+  background: var(--occupied-card-bg) !important;
+  border-color: var(--occupied-accent) !important;
+}
+
+.table-session-card.occupied .table-control-panel {
+  background:
+    linear-gradient(180deg, var(--occupied-control-bg), rgba(255, 255, 255, 0.96));
+}
+
+.table-session-card.occupied .table-control-top {
+  border-bottom: 1px solid var(--occupied-control-border);
+  padding-bottom: 8px;
+}
+
+.table-session-card.occupied .table-rate-line {
+  color: #17462b;
+}
+
+.table-session-card.occupied .table-start-panel,
+.table-session-card.occupied .active-billing-summary,
+.table-session-card.occupied .table-frame-panel,
+.table-session-card.occupied .table-notes-panel,
+.table-session-card.occupied .table-inline-panel,
+.table-session-card.occupied .table-reservation-info,
+.table-session-card.occupied .table-frame-time-row {
+  background: rgba(255, 255, 255, 0.74);
+  border-color: var(--occupied-control-border);
+}
+
+.table-session-card.occupied .active-billing-summary {
+  box-shadow: inset 3px 0 0 var(--occupied-accent);
+}
+
+.table-floor-tile.running .table-floor-body,
+.table-floor-tile.paused .table-floor-body {
+  margin: 8px -2px -2px;
+  padding: 10px;
+  border: 1px solid rgba(32, 128, 79, 0.2);
+  border-radius: 8px;
+  background: rgba(231, 244, 236, 0.72);
+}
+
+.table-floor-tile.paused .table-floor-body {
+  border-color: rgba(217, 164, 65, 0.28);
+  background: rgba(255, 248, 232, 0.82);
+}
+
+body.dark .table-session-card.occupied {
+  --occupied-card-bg: rgba(32, 128, 79, 0.12);
+  --occupied-control-bg: rgba(32, 128, 79, 0.1);
+  --occupied-control-surface: rgba(255, 255, 255, 0.04);
+  --occupied-control-border: rgba(140, 240, 178, 0.28);
+}
+
+body.dark .table-session-card.occupied .table-control-panel {
+  background: var(--occupied-control-bg) !important;
+}
+
+body.dark .table-session-card.occupied .table-rate-line {
+  color: #8cf0b2;
+}
