@@ -574,10 +574,10 @@ export default function FoodTab() {
                           <option key={cat}>{cat}</option>
                         ))}
                       </select>
-                      <button className="btn btn-success-sm" type="button" onClick={handleUpdateMenuItem}>
+                      <button className="btn btn-success-sm food-action-save" type="button" onClick={handleUpdateMenuItem}>
                         Save
                       </button>
-                      <button className="btn" type="button" onClick={() => setEditingItem(null)}>
+                      <button className="btn food-action-neutral" type="button" onClick={() => setEditingItem(null)}>
                         Cancel
                       </button>
                     </>
@@ -588,7 +588,7 @@ export default function FoodTab() {
                         <span>{getItemCat(value)} · ₹{getItemPrice(value)}</span>
                       </div>
                       <button
-                        className="btn"
+                        className={`btn food-action-stock ${getItemAvail(value) ? "is-visible" : "is-hidden"}`}
                         type="button"
                         onClick={async () => {
                           await setItemAvailability(name, !getItemAvail(value));
@@ -598,7 +598,7 @@ export default function FoodTab() {
                         {getItemAvail(value) ? "Hide" : "Show"}
                       </button>
                       <button
-                        className="btn"
+                        className="btn food-action-neutral"
                         type="button"
                         onClick={() =>
                           setEditingItem({
@@ -612,7 +612,7 @@ export default function FoodTab() {
                         Edit
                       </button>
                       <button
-                        className="btn btn-danger-sm"
+                        className="btn btn-danger-sm food-action-delete"
                         type="button"
                         onClick={() => handleDeleteMenuItem(name)}
                       >

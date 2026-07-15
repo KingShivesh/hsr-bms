@@ -49,19 +49,7 @@ export default function Sidebar({ page, setPage, onLogout, activeTables, role = 
 
           {/* Active tables badge next to Tables */}
           {item.id === "tables" && activeTables > 0 && (
-            <span
-              className="sb-badge"
-              style={{
-                background: "#16a34a",
-                color: "#fff",
-                fontSize: "10px",
-                fontWeight: 700,
-                padding: "1px 7px",
-                borderRadius: "10px",
-                minWidth: "18px",
-                textAlign: "center",
-              }}
-            >
+            <span className="sb-badge">
               {activeTables}
             </span>
           )}

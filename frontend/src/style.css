@@ -8160,3 +8160,763 @@ body.dark .tournament-table-card.occupied {
     flex-direction: column;
   }
 }
+
+/* Premium operator UI refresh */
+:root {
+  --premium-bg: #f6f7f3;
+  --premium-surface: #ffffff;
+  --premium-surface-2: #f8faf7;
+  --premium-text: #121a16;
+  --premium-heading: #0d1712;
+  --premium-muted: #687369;
+  --premium-soft: #eef2ed;
+  --premium-border: rgba(18, 26, 22, 0.1);
+  --premium-border-strong: rgba(18, 26, 22, 0.18);
+  --premium-primary: #0f6b4f;
+  --premium-primary-hover: #0b553f;
+  --premium-primary-soft: #e7f4ee;
+  --premium-accent: #b7791f;
+  --premium-accent-hover: #965d12;
+  --premium-accent-soft: #fff6e6;
+  --premium-info: #2f5d8f;
+  --premium-info-soft: #edf4fb;
+  --premium-danger: #b42318;
+  --premium-danger-soft: #fff1ef;
+  --premium-warning: #a15c07;
+  --premium-shadow: 0 10px 28px rgba(15, 23, 42, 0.06);
+  --premium-shadow-soft: 0 1px 2px rgba(15, 23, 42, 0.04);
+  --premium-radius: 10px;
+  --premium-rail: #111814;
+}
+
+body.dark {
+  --premium-bg: #0f1311;
+  --premium-surface: #171c19;
+  --premium-surface-2: #1d2420;
+  --premium-text: #f4f6f2;
+  --premium-heading: #ffffff;
+  --premium-muted: #aab4ad;
+  --premium-soft: #222b26;
+  --premium-border: rgba(255, 255, 255, 0.12);
+  --premium-border-strong: rgba(255, 255, 255, 0.2);
+  --premium-primary: #48c094;
+  --premium-primary-hover: #6be2af;
+  --premium-primary-soft: rgba(72, 192, 148, 0.14);
+  --premium-accent: #e4aa48;
+  --premium-accent-hover: #f3c66f;
+  --premium-accent-soft: rgba(228, 170, 72, 0.16);
+  --premium-info: #8ab4e2;
+  --premium-info-soft: rgba(97, 150, 205, 0.16);
+  --premium-danger: #ff8b7f;
+  --premium-danger-soft: rgba(255, 139, 127, 0.14);
+  --premium-warning: #f3c66f;
+  --premium-shadow: 0 18px 34px rgba(0, 0, 0, 0.22);
+  --premium-shadow-soft: none;
+  --premium-rail: #0a0f0c;
+}
+
+body,
+.shell,
+.app-shell,
+.main-content,
+.page {
+  background:
+    radial-gradient(circle at 20% 0%, rgba(183, 121, 31, 0.05), transparent 28rem),
+    var(--premium-bg) !important;
+  color: var(--premium-text) !important;
+}
+
+body.dark,
+body.dark .app-shell,
+body.dark .main-content,
+body.dark .page {
+  background:
+    radial-gradient(circle at 18% 0%, rgba(228, 170, 72, 0.08), transparent 28rem),
+    var(--premium-bg) !important;
+}
+
+.sidebar {
+  width: 72px !important;
+  background: linear-gradient(180deg, var(--premium-rail), #09110d) !important;
+  border-right: 1px solid rgba(255, 255, 255, 0.08) !important;
+  box-shadow: 10px 0 30px rgba(10, 20, 16, 0.08) !important;
+  transition: width 180ms ease, box-shadow 180ms ease !important;
+  overflow-x: hidden !important;
+  z-index: 30;
+}
+
+.sidebar:hover,
+.sidebar:focus-within {
+  width: 232px !important;
+  box-shadow: 18px 0 38px rgba(10, 20, 16, 0.14) !important;
+}
+
+.main-content {
+  margin-left: 72px !important;
+  transition: margin-left 180ms ease, background-color 180ms ease !important;
+}
+
+.sidebar:hover + .main-content,
+.sidebar:focus-within + .main-content {
+  margin-left: 232px !important;
+}
+
+.sb-logo,
+.sb-item {
+  min-width: 0;
+}
+
+.sb-logo {
+  justify-content: center !important;
+  padding-left: 14px !important;
+  padding-right: 14px !important;
+}
+
+.sidebar:hover .sb-logo,
+.sidebar:focus-within .sb-logo,
+.sidebar.mobile-open .sb-logo {
+  justify-content: flex-start !important;
+}
+
+.sb-logo > div:not(.sb-logo-mark),
+.sb-label,
+.sb-section {
+  max-width: 0;
+  opacity: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  transition: opacity 140ms ease, max-width 180ms ease !important;
+}
+
+.sidebar:hover .sb-logo > div:not(.sb-logo-mark),
+.sidebar:focus-within .sb-logo > div:not(.sb-logo-mark),
+.sidebar:hover .sb-label,
+.sidebar:focus-within .sb-label,
+.sidebar:hover .sb-section,
+.sidebar:focus-within .sb-section,
+.sidebar.mobile-open .sb-logo > div:not(.sb-logo-mark),
+.sidebar.mobile-open .sb-label,
+.sidebar.mobile-open .sb-section {
+  max-width: 160px;
+  opacity: 1;
+}
+
+.sb-item {
+  position: relative !important;
+  justify-content: center !important;
+  gap: 12px !important;
+  color: rgba(244, 246, 242, 0.72) !important;
+  border-radius: 10px !important;
+  box-shadow: none !important;
+}
+
+.sidebar:hover .sb-item,
+.sidebar:focus-within .sb-item,
+.sidebar.mobile-open .sb-item {
+  justify-content: flex-start !important;
+}
+
+.sb-item:hover {
+  background: rgba(255, 255, 255, 0.07) !important;
+  color: #ffffff !important;
+}
+
+.sb-item.active {
+  background: rgba(183, 121, 31, 0.2) !important;
+  color: #f8d58a !important;
+  border-left: 3px solid var(--premium-accent) !important;
+}
+
+.sb-badge {
+  margin-left: auto;
+  min-width: 20px;
+  padding: 2px 7px;
+  border-radius: 999px;
+  background: var(--premium-accent);
+  color: #16120a;
+  font-size: 10px;
+  font-weight: 900;
+  line-height: 1.4;
+  text-align: center;
+}
+
+.sidebar:not(:hover):not(:focus-within):not(.mobile-open) .sb-badge {
+  position: absolute;
+  right: 10px;
+  margin-left: 0;
+}
+
+.topbar {
+  background: color-mix(in srgb, var(--premium-surface) 88%, transparent) !important;
+  border-bottom: 1px solid var(--premium-border) !important;
+  box-shadow: none !important;
+  backdrop-filter: blur(16px);
+}
+
+.topbar-title,
+.section-heading,
+.settings-panel-title,
+.checkout-bill-title,
+.table-floor-title,
+.metric-value {
+  color: var(--premium-heading) !important;
+}
+
+.topbar-date,
+.muted,
+.section-subtitle,
+.table-floor-meta,
+.table-field-stack > span,
+.checkout-bill-sub,
+.checkout-split-meta {
+  color: var(--premium-muted) !important;
+}
+
+.topbar-user-chip {
+  background: var(--premium-accent-soft) !important;
+  border-color: color-mix(in srgb, var(--premium-accent) 38%, transparent) !important;
+  color: var(--premium-accent-hover) !important;
+  box-shadow: none !important;
+}
+
+.topbar-action-btn,
+.primary-action-btn,
+.btn-success-sm,
+.btn-primary-sm,
+.checkout-bill-close,
+.table-control-btn.close,
+.table-frame-start,
+.queue-form .primary-action-btn,
+.booking-form .primary-action-btn {
+  background: var(--premium-primary) !important;
+  border-color: var(--premium-primary) !important;
+  color: #ffffff !important;
+  box-shadow: none !important;
+}
+
+.topbar-action-btn:hover,
+.primary-action-btn:hover,
+.btn-success-sm:hover,
+.btn-primary-sm:hover,
+.checkout-bill-close:hover,
+.table-control-btn.close:hover {
+  background: var(--premium-primary-hover) !important;
+  border-color: var(--premium-primary-hover) !important;
+}
+
+.topbar-icon-btn,
+.btn,
+.table-control-btn,
+.table-secondary-btn,
+.table-notes-btn,
+.table-payment-btn,
+.table-discount-options button,
+.billing-mode-control button,
+.segmented-control button {
+  box-shadow: none !important;
+}
+
+.panel,
+.metric-card,
+.settings-panel,
+.history-section,
+.owner-digest,
+.queue-panel,
+.booking-panel,
+.food-cart-panel,
+.food-menu-card,
+.table-session-card,
+.table-floor-tile,
+.tournament-table-card,
+.checkout-bill-shell {
+  background: var(--premium-surface) !important;
+  border: 1px solid var(--premium-border) !important;
+  border-radius: var(--premium-radius) !important;
+  box-shadow: var(--premium-shadow-soft) !important;
+  color: var(--premium-text) !important;
+}
+
+.panel:hover,
+.metric-card:hover,
+.settings-panel:hover,
+.food-menu-card:hover,
+.table-floor-tile:hover {
+  box-shadow: var(--premium-shadow) !important;
+  border-color: var(--premium-border-strong) !important;
+}
+
+.metric-card {
+  border-top: 3px solid transparent !important;
+}
+
+.metric-card.green,
+.metric-card.blue {
+  border-top-color: var(--premium-info) !important;
+}
+
+.metric-card.amber {
+  border-top-color: var(--premium-accent) !important;
+}
+
+.metric-card.red {
+  border-top-color: var(--premium-danger) !important;
+}
+
+.metric-card .metric-label,
+.metric-card .metric-sub,
+.owner-digest-label,
+.table-occupancy-legend,
+.food-menu-category,
+.food-menu-cart-note {
+  color: var(--premium-muted) !important;
+}
+
+.running-strip {
+  background:
+    linear-gradient(135deg, #243046 0%, #172334 52%, #2f2416 100%) !important;
+  border: 1px solid rgba(183, 121, 31, 0.34) !important;
+  box-shadow: 0 12px 30px rgba(22, 31, 46, 0.12) !important;
+  color: #ffffff !important;
+}
+
+.running-strip-head span {
+  color: #f0b85e !important;
+}
+
+.running-strip-head strong {
+  color: #ffffff !important;
+}
+
+.running-chip {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid rgba(255, 255, 255, 0.14) !important;
+  color: #f6f7f3 !important;
+}
+
+.running-chip strong {
+  color: #f3bd67 !important;
+}
+
+.input-field,
+.table-mini-input,
+.table-player-input,
+input,
+select,
+textarea {
+  background: var(--premium-surface-2) !important;
+  border: 1px solid var(--premium-border) !important;
+  color: var(--premium-text) !important;
+  box-shadow: none !important;
+}
+
+.input-field:focus,
+.table-mini-input:focus,
+.table-player-input:focus,
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: color-mix(in srgb, var(--premium-info) 55%, var(--premium-border)) !important;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--premium-info) 16%, transparent) !important;
+  outline: none !important;
+}
+
+.segmented-control,
+.category-tabs,
+.page-tabs {
+  background: var(--premium-surface) !important;
+  border: 1px solid var(--premium-border) !important;
+  box-shadow: none !important;
+}
+
+.segmented-control button {
+  color: var(--premium-muted) !important;
+}
+
+.segmented-control button.active,
+.category-tabs button.active,
+.page-tabs button.active {
+  background: var(--premium-info) !important;
+  color: #ffffff !important;
+  border-color: var(--premium-info) !important;
+}
+
+.table-floor-layout {
+  gap: 28px !important;
+}
+
+.table-floor-grid,
+.table-floor-grid.compact {
+  align-content: start;
+}
+
+.table-floor-tile {
+  min-height: 0 !important;
+  overflow: hidden;
+}
+
+.table-floor-tile.selected {
+  border-color: var(--premium-accent) !important;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--premium-accent) 18%, transparent) !important;
+}
+
+.table-floor-tile.running,
+.table-floor-tile.paused {
+  border-color: color-mix(in srgb, var(--premium-accent) 38%, var(--premium-border)) !important;
+}
+
+.table-floor-felt {
+  filter: saturate(0.86) brightness(0.96);
+  min-height: 108px !important;
+  border-color: #4b3218 !important;
+}
+
+.table-floor-grid.compact .table-floor-felt {
+  min-height: 86px !important;
+}
+
+.table-floor-number {
+  opacity: 0.28 !important;
+}
+
+.table-floor-status {
+  background: var(--premium-info-soft) !important;
+  color: var(--premium-info) !important;
+  border: 1px solid color-mix(in srgb, var(--premium-info) 20%, transparent) !important;
+}
+
+.table-floor-status.running {
+  background: var(--premium-accent-soft) !important;
+  color: var(--premium-accent-hover) !important;
+  border-color: color-mix(in srgb, var(--premium-accent) 28%, transparent) !important;
+}
+
+.table-floor-tile.running .table-floor-body,
+.table-floor-tile.paused .table-floor-body {
+  margin: 8px 0 0 !important;
+  background: var(--premium-accent-soft) !important;
+  border-color: color-mix(in srgb, var(--premium-accent) 26%, transparent) !important;
+  color: var(--premium-text) !important;
+}
+
+.table-floor-tile.paused .table-floor-body {
+  background: color-mix(in srgb, var(--premium-info-soft) 74%, var(--premium-surface)) !important;
+  border-color: color-mix(in srgb, var(--premium-info) 25%, transparent) !important;
+}
+
+.table-detail-panel .table-session-card {
+  box-shadow: var(--premium-shadow) !important;
+}
+
+.table-session-card {
+  --table-control-bg: var(--premium-surface-2) !important;
+  --table-control-border: var(--premium-border) !important;
+  --table-control-surface: var(--premium-surface) !important;
+  --table-control-muted: var(--premium-muted) !important;
+  --table-control-text: var(--premium-text) !important;
+  --table-control-soft: var(--premium-soft) !important;
+}
+
+.table-session-card.occupied {
+  background: linear-gradient(180deg, var(--premium-accent-soft), var(--premium-surface) 44%) !important;
+  border-color: color-mix(in srgb, var(--premium-accent) 42%, var(--premium-border)) !important;
+}
+
+.table-session-card.occupied .table-control-panel {
+  background: color-mix(in srgb, var(--premium-accent-soft) 42%, var(--premium-surface)) !important;
+}
+
+.table-rate-line {
+  color: var(--premium-muted) !important;
+}
+
+.table-session-card.occupied .table-rate-line,
+.table-session-card.occupied .active-billing-summary strong {
+  color: var(--premium-accent-hover) !important;
+}
+
+.table-start-panel,
+.table-frame-panel,
+.table-notes-panel,
+.table-inline-panel,
+.active-billing-summary,
+.table-reservation-info,
+.table-frame-time-row {
+  background: var(--premium-surface) !important;
+  border-color: var(--premium-border) !important;
+}
+
+.active-billing-summary {
+  box-shadow: inset 3px 0 0 var(--premium-accent) !important;
+}
+
+.billing-mode-control button.active,
+.table-payment-btn.active,
+.table-discount-options button.active {
+  background: var(--premium-info) !important;
+  border-color: var(--premium-info) !important;
+  color: #ffffff !important;
+}
+
+.table-control-btn.pause {
+  background: var(--premium-accent-soft) !important;
+  border-color: color-mix(in srgb, var(--premium-accent) 34%, transparent) !important;
+  color: var(--premium-accent-hover) !important;
+}
+
+.table-control-btn.reset,
+.table-secondary-btn.reserve,
+.table-notes-btn,
+.food-action-neutral,
+.btn:not(.btn-success-sm):not(.btn-primary-sm):not(.btn-danger-sm):not(.btn-warning-sm) {
+  background: var(--premium-surface) !important;
+  border: 1px solid var(--premium-border) !important;
+  color: var(--premium-info) !important;
+}
+
+.btn-warning-sm,
+.food-action-stock.is-hidden {
+  background: var(--premium-accent-soft) !important;
+  border-color: color-mix(in srgb, var(--premium-accent) 34%, transparent) !important;
+  color: var(--premium-accent-hover) !important;
+}
+
+.food-action-stock.is-visible {
+  background: var(--premium-info-soft) !important;
+  border-color: color-mix(in srgb, var(--premium-info) 28%, transparent) !important;
+  color: var(--premium-info) !important;
+}
+
+.btn-danger-sm,
+.food-action-delete,
+.icon-danger-btn {
+  background: var(--premium-danger-soft) !important;
+  border-color: color-mix(in srgb, var(--premium-danger) 28%, transparent) !important;
+  color: var(--premium-danger) !important;
+  box-shadow: none !important;
+}
+
+.food-menu-edit-row {
+  grid-template-columns: minmax(220px, 1fr) repeat(4, minmax(88px, auto)) !important;
+  gap: 10px !important;
+  align-items: center !important;
+}
+
+.food-menu-edit-row .btn,
+.food-menu-edit-row .input-field {
+  min-height: 46px !important;
+  border-radius: 9px !important;
+}
+
+.food-menu-edit-row .btn {
+  padding: 0 14px !important;
+  font-size: 13px !important;
+  font-weight: 850 !important;
+}
+
+.food-menu-edit-main strong,
+.food-menu-name,
+.cart-line-name,
+.checkout-split-name {
+  color: var(--premium-heading) !important;
+}
+
+.food-menu-price,
+.cart-line-price {
+  color: var(--premium-accent-hover) !important;
+}
+
+.checkout-bill-screen {
+  background: rgba(11, 17, 14, 0.62) !important;
+  backdrop-filter: blur(10px) !important;
+}
+
+.checkout-bill-shell {
+  max-width: 880px !important;
+  background: var(--premium-surface) !important;
+  color: var(--premium-text) !important;
+  border-color: var(--premium-border-strong) !important;
+  box-shadow: 0 26px 70px rgba(0, 0, 0, 0.22) !important;
+}
+
+.checkout-bill-head,
+.checkout-bill-summary,
+.checkout-bill-section-title {
+  border-color: var(--premium-border) !important;
+}
+
+.checkout-bill-summary div,
+.checkout-split-card,
+.checkout-frame-card,
+.checkout-session-time span {
+  background: var(--premium-surface-2) !important;
+  border: 1px solid var(--premium-border) !important;
+  color: var(--premium-text) !important;
+}
+
+.checkout-bill-summary strong,
+.checkout-split-amount {
+  color: var(--premium-heading) !important;
+}
+
+.checkout-frame-times strong,
+.checkout-frame-times time,
+.checkout-split-parts span {
+  color: var(--premium-muted) !important;
+}
+
+body.dark .topbar {
+  background: rgba(23, 28, 25, 0.88) !important;
+}
+
+body.dark .topbar-action-btn,
+body.dark .primary-action-btn,
+body.dark .btn-success-sm,
+body.dark .btn-primary-sm,
+body.dark .checkout-bill-close,
+body.dark .table-control-btn.close {
+  color: #07100c !important;
+}
+
+body.dark .panel,
+body.dark .metric-card,
+body.dark .settings-panel,
+body.dark .history-section,
+body.dark .owner-digest,
+body.dark .queue-panel,
+body.dark .booking-panel,
+body.dark .food-cart-panel,
+body.dark .food-menu-card,
+body.dark .table-session-card,
+body.dark .table-floor-tile,
+body.dark .tournament-table-card,
+body.dark .checkout-bill-shell {
+  background: var(--premium-surface) !important;
+  border-color: var(--premium-border) !important;
+  color: var(--premium-text) !important;
+}
+
+body.dark .running-strip {
+  background:
+    linear-gradient(135deg, #1c2636 0%, #111a26 54%, #2b2116 100%) !important;
+  border-color: rgba(228, 170, 72, 0.34) !important;
+}
+
+body.dark .table-floor-felt {
+  filter: saturate(0.72) brightness(0.86);
+}
+
+body.dark .table-floor-tile.running .table-floor-body,
+body.dark .table-floor-tile.paused .table-floor-body,
+body.dark .table-session-card.occupied .table-control-panel,
+body.dark .table-session-card.occupied {
+  background: color-mix(in srgb, var(--premium-accent-soft) 58%, var(--premium-surface)) !important;
+  border-color: color-mix(in srgb, var(--premium-accent) 32%, var(--premium-border)) !important;
+}
+
+body.dark .table-floor-status {
+  color: #dbeafe !important;
+}
+
+body.dark .table-floor-status.running,
+body.dark .table-session-card.occupied .table-rate-line,
+body.dark .table-session-card.occupied .active-billing-summary strong {
+  color: var(--premium-accent-hover) !important;
+}
+
+body.dark .table-floor-title,
+body.dark .table-floor-topline strong,
+body.dark .table-rate-line,
+body.dark .food-menu-edit-main strong,
+body.dark .checkout-bill-title,
+body.dark .checkout-bill-summary strong,
+body.dark .checkout-split-name,
+body.dark .checkout-split-amount {
+  color: var(--premium-heading) !important;
+}
+
+body.dark .table-floor-meta,
+body.dark .table-field-stack > span,
+body.dark .food-menu-edit-main span,
+body.dark .checkout-bill-sub,
+body.dark .checkout-split-meta,
+body.dark .checkout-split-parts span,
+body.dark .checkout-frame-times strong,
+body.dark .checkout-frame-times time {
+  color: var(--premium-muted) !important;
+}
+
+body.dark .input-field,
+body.dark .table-mini-input,
+body.dark .table-player-input,
+body.dark input,
+body.dark select,
+body.dark textarea,
+body.dark .table-start-panel,
+body.dark .table-frame-panel,
+body.dark .table-notes-panel,
+body.dark .table-inline-panel,
+body.dark .active-billing-summary,
+body.dark .table-reservation-info,
+body.dark .table-frame-time-row,
+body.dark .checkout-bill-summary div,
+body.dark .checkout-split-card,
+body.dark .checkout-frame-card,
+body.dark .checkout-session-time span {
+  background: var(--premium-surface-2) !important;
+  border-color: var(--premium-border) !important;
+  color: var(--premium-text) !important;
+}
+
+body.dark .segmented-control button.active,
+body.dark .category-tabs button.active,
+body.dark .page-tabs button.active,
+body.dark .billing-mode-control button.active,
+body.dark .table-payment-btn.active,
+body.dark .table-discount-options button.active {
+  background: var(--premium-info) !important;
+  border-color: var(--premium-info) !important;
+  color: #08111d !important;
+}
+
+body.dark .table-control-btn.pause,
+body.dark .btn-warning-sm,
+body.dark .food-action-stock.is-hidden {
+  color: var(--premium-accent-hover) !important;
+}
+
+body.dark .food-action-stock.is-visible,
+body.dark .table-control-btn.reset,
+body.dark .table-secondary-btn.reserve,
+body.dark .table-notes-btn,
+body.dark .food-action-neutral,
+body.dark .btn:not(.btn-success-sm):not(.btn-primary-sm):not(.btn-danger-sm):not(.btn-warning-sm) {
+  background: var(--premium-surface-2) !important;
+  border-color: var(--premium-border) !important;
+  color: var(--premium-info) !important;
+}
+
+body.dark .checkout-bill-screen {
+  background: rgba(3, 7, 5, 0.72) !important;
+}
+
+@media (max-width: 900px) {
+  .sidebar {
+    width: 60px !important;
+  }
+
+  .sidebar.mobile-open,
+  .sidebar:hover,
+  .sidebar:focus-within {
+    width: min(232px, 82vw) !important;
+  }
+
+  .main-content,
+  .sidebar:hover + .main-content,
+  .sidebar:focus-within + .main-content {
+    margin-left: 60px !important;
+  }
+
+  .food-menu-edit-row {
+    grid-template-columns: 1fr !important;
+  }
+}
