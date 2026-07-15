@@ -61,18 +61,20 @@ export const stopSession = (
   payer_name = "",
   discount_type = "none",
   discount_value = 0,
+  closed_at_ms = "",
 ) =>
   api.post(
-    `/sessions/stop/${tableKey(table_id)}?payment_method=${encodeURIComponent(payment_method)}&payer_name=${encodeURIComponent(payer_name)}&discount_type=${encodeURIComponent(discount_type)}&discount_value=${encodeURIComponent(discount_value)}`,
+    `/sessions/stop/${tableKey(table_id)}?payment_method=${encodeURIComponent(payment_method)}&payer_name=${encodeURIComponent(payer_name)}&discount_type=${encodeURIComponent(discount_type)}&discount_value=${encodeURIComponent(discount_value)}&closed_at_ms=${encodeURIComponent(closed_at_ms)}`,
   );
 export const quoteSession = (
   table_id,
   payment_method = "Cash",
   discount_type = "none",
   discount_value = 0,
+  closed_at_ms = "",
 ) =>
   api.get(
-    `/sessions/quote/${tableKey(table_id)}?payment_method=${encodeURIComponent(payment_method)}&discount_type=${encodeURIComponent(discount_type)}&discount_value=${encodeURIComponent(discount_value)}`,
+    `/sessions/quote/${tableKey(table_id)}?payment_method=${encodeURIComponent(payment_method)}&discount_type=${encodeURIComponent(discount_type)}&discount_value=${encodeURIComponent(discount_value)}&closed_at_ms=${encodeURIComponent(closed_at_ms)}`,
   );
 export const resetSession = (table_id, manager_pin = "") =>
   api.post(

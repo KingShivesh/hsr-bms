@@ -1015,7 +1015,7 @@ function CheckoutQuoteScreen({
             </div>
             <div className="checkout-session-time">
               <span>Session started {fmtDateTime(rec.session_started_at)}</span>
-              <span>Bill preview {fmtDateTime(rec.session_ended_at)}</span>
+              <span>Bill frozen {fmtDateTime(rec.session_ended_at)}</span>
             </div>
           </div>
           <button type="button" className="checkout-bill-close secondary" onClick={onClose}>
@@ -2669,6 +2669,7 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
         paymentMethod,
         discountType: "none",
         discountValue: "",
+        closedAtMs: res.data.session_ended_at,
         rec: res.data,
         loading: false,
         error: "",
@@ -2695,6 +2696,7 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
         checkoutQuote.paymentMethod,
         discountType,
         parseInt(nextValue, 10) || 0,
+        checkoutQuote.closedAtMs,
       );
       setCheckoutQuote((prev) => ({
         ...(prev || nextQuote),
@@ -2728,6 +2730,7 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
         paymentMethod,
         checkoutQuote.discountType,
         parseInt(checkoutQuote.discountValue, 10) || 0,
+        checkoutQuote.closedAtMs,
       );
       setCheckoutQuote((prev) => ({
         ...(prev || nextQuote),
@@ -2752,6 +2755,7 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
       paymentMethod = "Cash",
       discountType = "none",
       discountValue = "",
+      closedAtMs = "",
     } = checkoutQuote;
     try {
       const res = await stopSession(
@@ -2760,6 +2764,7 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
         "",
         discountType,
         parseInt(discountValue, 10) || 0,
+        closedAtMs,
       );
       const rec = { ...res.data };
       setSessions((prev) => {

@@ -291,6 +291,20 @@ def frame_summary_note(frames: list[models.SessionFrame]) -> str:
         f"F{frame.frame_no} lost by {frame.loser_name}" for frame in closed
     )
 
+def billable_minutes(elapsed_ms: float, min_mins: int = 0) -> int:
+    minutes = max(1, int(math.ceil(max(0, elapsed_ms) / 1000 / 60)))
+    if min_mins > 0 and minutes < min_mins:
+        minutes = min_mins
+    return minutes
+
+def checkout_clock_ms(sess: models.ActiveSession, requested_ms: float | None = None) -> float:
+    now_ms = time.time() * 1000
+    if sess.paused:
+        return requested_ms or now_ms
+    if requested_ms:
+        return min(max(requested_ms, sess.start_time), now_ms)
+    return now_ms
+
 def create_frame_for_session(
     db: Session,
     sess: models.ActiveSession,
@@ -382,6 +396,7 @@ def quote_session(
     payment_method: str = "Cash",
     discount_type:  str = "none",
     discount_value: int = 0,
+    closed_at_ms:   float | None = None,
     db: Session = Depends(get_db)
 ):
     sess = active_session_for_table(db, table_id)
@@ -390,14 +405,12 @@ def quote_session(
 
     settings   = db.query(models.Settings).first()
     min_mins   = settings.min_session if settings else 0
-    quoted_at_ms = time.time() * 1000
+    quoted_at_ms = checkout_clock_ms(sess, closed_at_ms)
     session_started_at = sess.start_time
     elapsed_ms = sess.elapsed_ms if sess.paused else quoted_at_ms - sess.start_time
     elapsed_ms = max(0, elapsed_ms)
 
-    minutes = max(1, int(math.floor((elapsed_ms / 1000 / 60) + 0.5)))
-    if min_mins > 0 and minutes < min_mins:
-        minutes = min_mins
+    minutes = billable_minutes(elapsed_ms, min_mins)
     if minutes > MAX_SESSION_DURATION_MINUTES:
         raise HTTPException(
             status_code=400,
@@ -511,6 +524,7 @@ def stop_session(
     payer_name:     str = "",
     discount_type:  str = "none",
     discount_value: int = 0,
+    closed_at_ms:   float | None = None,
     db: Session = Depends(get_db)
 ):
     sess = active_session_for_table(db, table_id)
@@ -520,15 +534,12 @@ def stop_session(
     # Minimum session check
     settings   = db.query(models.Settings).first()
     min_mins   = settings.min_session if settings else 0
-    closed_at_ms = time.time() * 1000
+    closed_at_ms = checkout_clock_ms(sess, closed_at_ms)
     session_started_at = sess.start_time
     elapsed_ms = sess.elapsed_ms if sess.paused else closed_at_ms - sess.start_time
     elapsed_ms = max(0, elapsed_ms)
-    elapsed_m  = elapsed_ms / 1000 / 60
 
-    minutes = max(1, int(math.floor((elapsed_ms / 1000 / 60) + 0.5)))
-    if min_mins > 0 and minutes < min_mins:
-        minutes = min_mins
+    minutes = billable_minutes(elapsed_ms, min_mins)
     if minutes > MAX_SESSION_DURATION_MINUTES:
         raise HTTPException(
             status_code=400,
