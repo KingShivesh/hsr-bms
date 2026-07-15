@@ -9,6 +9,7 @@ import {
   addFood,
   placeFoodOrder,
   getFoodOrders,
+  cancelFoodOrder,
   getFoodStats,
 } from "../../api/index.js";
 
@@ -172,6 +173,15 @@ export default function FoodTab() {
     );
   }
 
+  function updateCartQty(item, qtyValue) {
+    const qty = Math.max(1, parseInt(qtyValue, 10) || 1);
+    setCart((prev) =>
+      prev.map((i) =>
+        i.item === item.item && i.mrp === item.mrp ? { ...i, qty } : i,
+      ),
+    );
+  }
+
   function cartTotal() {
     return cart.reduce((sum, i) => {
       return sum + getCartUnitPrice(i) * i.qty;
@@ -232,6 +242,16 @@ export default function FoodTab() {
       alert(e.response?.data?.detail || "Failed to place order");
     } finally {
       setPlacing(false);
+    }
+  }
+
+  async function handleCancelFoodOrder(orderId) {
+    if (!confirm("Cancel this food order?")) return;
+    try {
+      await cancelFoodOrder(orderId);
+      await fetchAll();
+    } catch (e) {
+      alert(e.response?.data?.detail || "Failed to cancel food order");
     }
   }
 
@@ -437,12 +457,18 @@ export default function FoodTab() {
                           </div>
                         </div>
                         <div
-                          style={{
-                            display: "flex",
-                            alignItems: "center",
-                            gap: "8px",
-                          }}
+                          className="cart-line-actions"
                         >
+                          <label className="cart-qty-control">
+                            <span>Qty</span>
+                            <input
+                              type="number"
+                              min="1"
+                              inputMode="numeric"
+                              value={i.qty}
+                              onChange={(e) => updateCartQty(i, e.target.value)}
+                            />
+                          </label>
                           <span className="cart-line-price">
                             ₹{price * i.qty}
                           </span>
@@ -744,11 +770,12 @@ export default function FoodTab() {
                     <th>Items</th>
                     <th>Payment</th>
                     <th>Total</th>
+                    <th>Action</th>
                   </tr>
                 </thead>
                 <tbody>
                   {orders.map((o, i) => (
-                    <tr key={i}>
+                    <tr key={o.id || i}>
                       <td style={{ color: "#bbb", fontSize: "12px" }}>
                         {o.date}
                       </td>
@@ -761,6 +788,16 @@ export default function FoodTab() {
                       </td>
                       <td style={{ fontWeight: 600, color: "#16a34a" }}>
                         ₹{o.total}
+                      </td>
+                      <td>
+                        <button
+                          type="button"
+                          className="btn btn-danger-sm food-order-cancel"
+                          onClick={() => handleCancelFoodOrder(o.id)}
+                          disabled={!o.id}
+                        >
+                          Cancel
+                        </button>
                       </td>
                     </tr>
                   ))}

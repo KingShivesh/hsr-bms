@@ -376,6 +376,134 @@ def pause_session(table_id: str, db: Session = Depends(get_db)):
     db.commit()
     return {"ok": True, "paused": sess.paused}
 
+@router.get("/quote/{table_id}")
+def quote_session(
+    table_id:       str,
+    payment_method: str = "Cash",
+    discount_type:  str = "none",
+    discount_value: int = 0,
+    db: Session = Depends(get_db)
+):
+    sess = active_session_for_table(db, table_id)
+    if not sess:
+        raise HTTPException(status_code=404, detail="No active session")
+
+    settings   = db.query(models.Settings).first()
+    min_mins   = settings.min_session if settings else 0
+    quoted_at_ms = time.time() * 1000
+    session_started_at = sess.start_time
+    elapsed_ms = sess.elapsed_ms if sess.paused else quoted_at_ms - sess.start_time
+    elapsed_ms = max(0, elapsed_ms)
+
+    minutes = max(1, int(math.floor((elapsed_ms / 1000 / 60) + 0.5)))
+    if min_mins > 0 and minutes < min_mins:
+        minutes = min_mins
+    if minutes > MAX_SESSION_DURATION_MINUTES:
+        raise HTTPException(
+            status_code=400,
+            detail=(
+                "Session duration looks invalid. Please reset this table or "
+                "contact the owner before closing."
+            ),
+        )
+
+    checkout = calc_checkout(
+        db,
+        minutes=minutes,
+        hourly_rate=sess.rate,
+        food_total=sess.food_total,
+    )
+    play      = checkout["play"]
+    food      = checkout["food"]
+    raw_total = checkout["total"]
+    if payment_method not in PAYMENT_METHODS:
+        payment_method = "Cash"
+
+    discount_type = (discount_type or "none").strip().lower()
+    discount_amount = 0
+    if discount_type == "percent_5":
+        discount_amount = round(raw_total * 0.05)
+    elif discount_type == "percent_10":
+        discount_amount = round(raw_total * 0.10)
+    elif discount_type == "rupee":
+        discount_amount = min(max(discount_value, 0), 50, raw_total)
+    elif discount_type != "none":
+        raise HTTPException(status_code=400, detail="Invalid discount type")
+    total = max(0, raw_total - discount_amount)
+
+    food_items = json.loads(sess.food_items or "[]")
+    food_str   = ", ".join(f"{x['item']} x{x['qty']}" for x in food_items) or "None"
+    billing_mode = normalize_billing_mode(getattr(sess, "billing_mode", "single"), sess.split)
+    players = json.loads(getattr(sess, "players_json", "[]") or "[]")
+    if not players:
+        players = clean_players(sess.customer_name, [], sess.split_name or "")
+    frames = active_session_frames(db, sess)
+    if billing_mode == "lp" and any(frame.status == "open" for frame in frames):
+        raise HTTPException(status_code=400, detail="Close the running frame before closing the table.")
+    billable_frames = [frame for frame in frames if frame.status == "closed"]
+    losses_by_player = frame_loss_summary(billable_frames)
+    if billing_mode == "single":
+        payer = sess.customer_name
+    else:
+        payer = ""
+
+    if billing_mode == "lp":
+        recorded_lp_players = [player for player in players if not is_generic_session_player(player)]
+        display_customer = recorded_lp_players[0] if recorded_lp_players else "LP Session"
+    else:
+        display_customer = payer or sess.customer_name
+    share_count = len(players) if billing_mode == "sharing" else 1
+    split_per_head = math.ceil(total / share_count) if share_count > 1 else total
+    player_breakdown = build_player_breakdown(
+        players=players,
+        billing_mode=billing_mode,
+        payer=payer,
+        display_customer=display_customer,
+        final_total=total,
+        food_items=food_items,
+        loss_counts=losses_by_player,
+    )
+    for item in player_breakdown:
+        item["lost_frames"] = losses_by_player.get(item["name"], [])
+    if billing_mode == "lp":
+        player_breakdown = [
+            item for item in player_breakdown
+            if not (
+                is_generic_session_player(item["name"])
+                and item["total"] == 0
+                and not item["lost_frames"]
+            )
+        ]
+
+    return {
+        "tbl": normalize_table_id(table_id).upper(),
+        "nm": display_customer,
+        "dur": minutes,
+        "ply": play,
+        "famt": food,
+        "food": food_str,
+        "tot": total,
+        "raw_total": raw_total,
+        "discount_amount": discount_amount,
+        "discount_type": discount_type,
+        "subtotal": checkout["subtotal"],
+        "gst_amt": checkout["gst_amt"],
+        "gst_percent": checkout["gst_percent"],
+        "peak_surcharge": checkout["peak_surcharge"],
+        "peak_label": checkout["peak_label"],
+        "payment_method": payment_method,
+        "billing_mode": billing_mode,
+        "session_started_at": session_started_at,
+        "session_ended_at": quoted_at_ms,
+        "players": players,
+        "payer_name": payer,
+        "split_per_head": split_per_head,
+        "share_count": share_count,
+        "player_breakdown": player_breakdown,
+        "frames": [serialize_frame(frame) for frame in billable_frames],
+        "quote": True,
+    }
+
 @router.post("/stop/{table_id}")
 def stop_session(
     table_id:       str,

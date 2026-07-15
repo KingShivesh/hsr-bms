@@ -65,6 +65,15 @@ export const stopSession = (
   api.post(
     `/sessions/stop/${tableKey(table_id)}?payment_method=${encodeURIComponent(payment_method)}&payer_name=${encodeURIComponent(payer_name)}&discount_type=${encodeURIComponent(discount_type)}&discount_value=${encodeURIComponent(discount_value)}`,
   );
+export const quoteSession = (
+  table_id,
+  payment_method = "Cash",
+  discount_type = "none",
+  discount_value = 0,
+) =>
+  api.get(
+    `/sessions/quote/${tableKey(table_id)}?payment_method=${encodeURIComponent(payment_method)}&discount_type=${encodeURIComponent(discount_type)}&discount_value=${encodeURIComponent(discount_value)}`,
+  );
 export const resetSession = (table_id, manager_pin = "") =>
   api.post(
     `/sessions/reset/${tableKey(table_id)}?manager_pin=${encodeURIComponent(manager_pin)}`,
@@ -135,6 +144,7 @@ export const saveBookingGrace = (booking_grace_minutes) =>
 export const placeFoodOrder = (customer_name, items, payment_method = "Cash") =>
   api.post("/food/order", { customer_name, items, payment_method });
 export const getFoodOrders = () => api.get("/food/orders");
+export const cancelFoodOrder = (orderId) => api.delete(`/food/orders/${orderId}`);
 export const getFoodStats = () => api.get("/food/stats");
 
 // Maintenance & Notes

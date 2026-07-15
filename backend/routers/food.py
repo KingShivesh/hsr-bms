@@ -67,6 +67,7 @@ def get_food_orders(db: Session = Depends(get_db)):
     orders = db.query(models.FoodOnlyOrder).order_by(models.FoodOnlyOrder.ts.desc()).all()
     return [
         {
+            "id":            o.id,
             "date":          o.date,
             "customer_name": o.customer_name,
             "items":         json.loads(o.items),
@@ -75,6 +76,15 @@ def get_food_orders(db: Session = Depends(get_db)):
         }
         for o in orders
     ]
+
+@router.delete("/orders/{order_id}")
+def cancel_food_order(order_id: int, db: Session = Depends(get_db)):
+    order = db.query(models.FoodOnlyOrder).filter(models.FoodOnlyOrder.id == order_id).first()
+    if not order:
+        raise HTTPException(status_code=404, detail="Food order not found")
+    db.delete(order)
+    db.commit()
+    return {"ok": True}
 
 @router.get("/stats")
 def get_food_stats(db: Session = Depends(get_db)):

@@ -8920,3 +8920,126 @@ body.dark .checkout-bill-screen {
     grid-template-columns: 1fr !important;
   }
 }
+
+/* Food order quantity and checkout discount review */
+.cart-line-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.cart-qty-control {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 6px 4px 9px;
+  border: 1px solid var(--premium-border);
+  border-radius: 8px;
+  background: var(--premium-surface-2);
+  color: var(--premium-muted);
+  font-size: 11px;
+  font-weight: 850;
+}
+
+.cart-qty-control input {
+  width: 58px;
+  min-height: 32px !important;
+  padding: 4px 6px !important;
+  text-align: center;
+  font-weight: 900;
+}
+
+.food-order-cancel {
+  min-height: 34px !important;
+  padding: 0 12px !important;
+  border-radius: 8px !important;
+  font-size: 12px !important;
+}
+
+.checkout-quote-shell {
+  max-width: 820px !important;
+}
+
+.checkout-discount-box {
+  display: grid;
+  gap: 10px;
+  padding: 12px;
+  border: 1px solid var(--premium-border);
+  border-radius: 10px;
+  background: var(--premium-surface-2);
+}
+
+.checkout-discount-box .table-discount-options {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.checkout-final-total {
+  border-color: color-mix(in srgb, var(--premium-accent) 35%, var(--premium-border)) !important;
+  background: var(--premium-accent-soft) !important;
+}
+
+.checkout-final-total strong {
+  color: var(--premium-accent-hover) !important;
+}
+
+.checkout-quote-status,
+.checkout-quote-error {
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.checkout-quote-status {
+  color: var(--premium-muted);
+}
+
+.checkout-quote-error {
+  color: var(--premium-danger);
+}
+
+.checkout-final-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding-top: 16px;
+  border-top: 1px solid var(--premium-border);
+}
+
+.checkout-cancel-btn,
+.checkout-bill-close.secondary {
+  background: var(--premium-surface) !important;
+  border: 1px solid var(--premium-border) !important;
+  color: var(--premium-info) !important;
+}
+
+.checkout-bill-close:disabled {
+  cursor: wait;
+  opacity: 0.7;
+}
+
+body.dark .cart-qty-control,
+body.dark .checkout-discount-box {
+  background: var(--premium-surface-2);
+  border-color: var(--premium-border);
+}
+
+body.dark .checkout-final-total {
+  background: var(--premium-accent-soft) !important;
+}
+
+@media (max-width: 640px) {
+  .cart-line-actions {
+    justify-content: flex-start;
+  }
+
+  .checkout-discount-box .table-discount-options {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .checkout-final-actions {
+    flex-direction: column;
+  }
+}

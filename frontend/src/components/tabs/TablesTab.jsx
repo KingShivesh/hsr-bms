@@ -3,6 +3,7 @@ import {
   startSession,
   pauseSession,
   stopSession,
+  quoteSession,
   resetSession,
   getActive,
   getRates,
@@ -983,6 +984,165 @@ function FrameLoserModal({ frameNo, onChoose, onClose }) {
   );
 }
 
+function CheckoutQuoteScreen({ quote, onClose, onDiscountChange, onFinalize }) {
+  if (!quote) return null;
+  const rec = quote.rec || {};
+  const settlement = Array.isArray(rec.player_breakdown)
+    ? rec.player_breakdown.filter((item) => item && item.name)
+    : [];
+  const total = rec.tot ?? rec.total ?? 0;
+  const rawTotal = rec.raw_total ?? total;
+  const discountAmount = rec.discount_amount || 0;
+  const frames = Array.isArray(rec.frames) ? rec.frames : [];
+
+  return (
+    <div className="checkout-bill-screen" role="dialog" aria-modal="true">
+      <div className="checkout-bill-shell checkout-quote-shell">
+        <div className="checkout-bill-head">
+          <div>
+            <div className="quick-session-eyebrow">Review bill</div>
+            <div className="checkout-bill-title">
+              {quote.tableId?.toUpperCase()} · ₹{total}
+            </div>
+            <div className="checkout-bill-sub">
+              {quote.paymentMethod || rec.payment_method || "Cash"} · {rec.dur || 0} min
+            </div>
+            <div className="checkout-session-time">
+              <span>Session started {fmtDateTime(rec.session_started_at)}</span>
+              <span>Bill preview {fmtDateTime(rec.session_ended_at)}</span>
+            </div>
+          </div>
+          <button type="button" className="checkout-bill-close secondary" onClick={onClose}>
+            Back
+          </button>
+        </div>
+
+        <div className="checkout-bill-summary">
+          <div>
+            <span>Table</span>
+            <strong>₹{rec.ply || 0}</strong>
+          </div>
+          <div>
+            <span>Food</span>
+            <strong>₹{rec.famt || 0}</strong>
+          </div>
+          <div>
+            <span>Before discount</span>
+            <strong>₹{rawTotal}</strong>
+          </div>
+          <div>
+            <span>Discount</span>
+            <strong>₹{discountAmount}</strong>
+          </div>
+          <div className="checkout-final-total">
+            <span>Final bill</span>
+            <strong>₹{total}</strong>
+          </div>
+        </div>
+
+        <div className="checkout-bill-section-title">Apply Discount</div>
+        <div className="checkout-discount-box">
+          <div className="table-discount-options">
+            {DISCOUNT_OPTIONS.map((option) => (
+              <button
+                key={option.id}
+                type="button"
+                className={quote.discountType === option.id ? "active" : ""}
+                onClick={() =>
+                  onDiscountChange(option.id, option.id === "rupee" ? quote.discountValue : "")
+                }
+              >
+                {option.label}
+              </button>
+            ))}
+          </div>
+          {quote.discountType === "rupee" && (
+            <input
+              className="table-mini-input"
+              type="number"
+              min="0"
+              max="50"
+              value={quote.discountValue}
+              onChange={(event) => onDiscountChange("rupee", event.target.value)}
+              placeholder="Max ₹50"
+            />
+          )}
+          {quote.loading && <span className="checkout-quote-status">Updating bill...</span>}
+          {quote.error && <span className="checkout-quote-error">{quote.error}</span>}
+        </div>
+
+        {settlement.length > 0 && (
+          <>
+            <div className="checkout-bill-section-title">Payment Split</div>
+            <div className="checkout-split-list">
+              {settlement.map((item) => {
+                const losses = Array.isArray(item.lost_frames) ? item.lost_frames : [];
+                return (
+                  <div key={item.name} className="checkout-split-card">
+                    <div className="checkout-split-main">
+                      <div>
+                        <div className="checkout-split-name">{item.name}</div>
+                        <div className="checkout-split-meta">
+                          {losses.length
+                            ? `Lost frame ${losses.join(", ")}`
+                            : "No recorded frame loss"}
+                        </div>
+                      </div>
+                      <strong>₹{item.total ?? 0}</strong>
+                    </div>
+                    <div className="checkout-split-parts">
+                      <span>Table ₹{item.table ?? item.play ?? 0}</span>
+                      <span>Food ₹{item.food ?? 0}</span>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </>
+        )}
+
+        {frames.length > 0 && (
+          <>
+            <div className="checkout-bill-section-title">Frames</div>
+            <div className="checkout-frame-list">
+              {frames.map((frame) => (
+                <div key={frame.id || frame.frame_no} className="checkout-frame-card">
+                  <div>
+                    <strong>Frame {frame.frame_no}</strong>
+                    <span>{frame.loser_name || "No loser recorded"}</span>
+                  </div>
+                  <div className="checkout-frame-times">
+                    <time dateTime={frame.started_at ? new Date(frame.started_at).toISOString() : undefined}>
+                      Start {fmtClock(frame.started_at)}
+                    </time>
+                    <time dateTime={frame.ended_at ? new Date(frame.ended_at).toISOString() : undefined}>
+                      End {frame.ended_at ? fmtClock(frame.ended_at) : "Running"}
+                    </time>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </>
+        )}
+
+        <div className="checkout-final-actions">
+          <button type="button" className="btn checkout-cancel-btn" onClick={onClose}>
+            Keep table open
+          </button>
+          <button
+            type="button"
+            className="checkout-bill-close"
+            onClick={onFinalize}
+            disabled={quote.loading}
+          >
+            Close table · ₹{total}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function CheckoutBillScreen({ bill, onClose }) {
   if (!bill) return null;
   const rec = bill.rec || {};
@@ -1203,8 +1363,6 @@ function TableCard({
   const [billingMode, setBillingMode] = useState(() => defaultBillingModeForTable(table));
   const [otherPlayers, setOtherPlayers] = useState("");
   const [paymentMethod, setPaymentMethod] = useState("Cash");
-  const [discountType, setDiscountType] = useState("none");
-  const [discountValue, setDiscountValue] = useState("");
   const [frameLoserOpen, setFrameLoserOpen] = useState(false);
   const [reserveOpen, setReserveOpen] = useState(false);
   const [notesOpen, setNotesOpen] = useState(false);
@@ -1229,8 +1387,6 @@ function TableCard({
     if (!occupied) {
       setBillingMode(defaultBillingModeForTable(table));
       setOtherPlayers("");
-      setDiscountType("none");
-      setDiscountValue("");
     }
   }, [occupied, table]);
 
@@ -1624,7 +1780,7 @@ function TableCard({
                     alert("Close the running frame before closing the table.");
                     return;
                   }
-                  onStop(table.id, paymentMethod, discountType, discountValue);
+                  onStop(table.id, paymentMethod);
                 }}
                 style={{
                   position: "absolute",
@@ -1907,37 +2063,6 @@ function TableCard({
           )}
 
           {occupied && (
-            <div className="table-discount-panel">
-              <div className="table-discount-options">
-                {DISCOUNT_OPTIONS.map((option) => (
-                  <button
-                    key={option.id}
-                    type="button"
-                    className={discountType === option.id ? "active" : ""}
-                    onClick={() => {
-                      setDiscountType(option.id);
-                      if (option.id !== "rupee") setDiscountValue("");
-                    }}
-                  >
-                    {option.label}
-                  </button>
-                ))}
-              </div>
-              {discountType === "rupee" && (
-                <input
-                  className="table-mini-input"
-                  type="number"
-                  min="0"
-                  max="50"
-                  value={discountValue}
-                  onChange={(e) => setDiscountValue(e.target.value)}
-                  placeholder="Max ₹50"
-                />
-              )}
-            </div>
-          )}
-
-          {occupied && (
             <>
               <button
                 onClick={() => setNotesOpen((p) => !p)}
@@ -2064,6 +2189,7 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
   const [queue, setQueue] = useState([]);
   const [bookings, setBookings] = useState([]);
   const [quickSessionOpen, setQuickSessionOpen] = useState(false);
+  const [checkoutQuote, setCheckoutQuote] = useState(null);
   const [checkoutBill, setCheckoutBill] = useState(null);
   const [selectedTableId, setSelectedTableId] = useState(TABLES[0]?.id || "t1");
   const detailPanelRef = useRef(null);
@@ -2500,20 +2626,74 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
     }
   }
 
-  async function handleStop(
-    id,
-    paymentMethod = "Cash",
-    discountType = "none",
-    discountValue = "",
-  ) {
+  async function handleStop(id, paymentMethod = "Cash") {
     const name = (names[id] || "").trim();
     if (!name || !sessions[id]) {
       showToast("No active session", "error");
       return;
     }
-    async function performCheckout() {
+    try {
+      const res = await quoteSession(id, paymentMethod, "none", 0);
+      setCheckoutQuote({
+        tableId: id,
+        paymentMethod,
+        discountType: "none",
+        discountValue: "",
+        rec: res.data,
+        loading: false,
+        error: "",
+      });
+    } catch (e) {
+      showToast(e.response?.data?.detail || "Failed to show bill", "error");
+    }
+  }
+
+  async function handleCheckoutDiscountChange(discountType, discountValue = "") {
+    if (!checkoutQuote) return;
+    const nextValue = discountType === "rupee" ? discountValue : "";
+    const nextQuote = {
+      ...checkoutQuote,
+      discountType,
+      discountValue: nextValue,
+      loading: true,
+      error: "",
+    };
+    setCheckoutQuote(nextQuote);
+    try {
+      const res = await quoteSession(
+        checkoutQuote.tableId,
+        checkoutQuote.paymentMethod,
+        discountType,
+        parseInt(nextValue, 10) || 0,
+      );
+      setCheckoutQuote((prev) => ({
+        ...(prev || nextQuote),
+        rec: res.data,
+        discountType,
+        discountValue: nextValue,
+        loading: false,
+        error: "",
+      }));
+    } catch (e) {
+      setCheckoutQuote((prev) => ({
+        ...(prev || nextQuote),
+        loading: false,
+        error: e.response?.data?.detail || "Failed to update bill",
+      }));
+    }
+  }
+
+  async function handleFinalizeCheckout() {
+    if (!checkoutQuote) return;
+    const {
+      tableId,
+      paymentMethod = "Cash",
+      discountType = "none",
+      discountValue = "",
+    } = checkoutQuote;
+    try {
       const res = await stopSession(
-        id,
+        tableId,
         paymentMethod,
         "",
         discountType,
@@ -2522,23 +2702,20 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
       const rec = { ...res.data };
       setSessions((prev) => {
         const n = { ...prev };
-        delete n[id];
+        delete n[tableId];
         return n;
       });
       setNames((prev) => {
         const n = { ...prev };
-        delete n[id];
+        delete n[tableId];
         return n;
       });
       onSessionEnd();
       fetchQueue();
+      setCheckoutQuote(null);
       showToast(`Table closed (${rec.payment_method || paymentMethod})`, "success");
 
-      setCheckoutBill({ tableId: id, rec, paymentMethod });
-    }
-
-    try {
-      await performCheckout();
+      setCheckoutBill({ tableId, rec, paymentMethod });
     } catch (e) {
       showToast(e.response?.data?.detail || "Failed to close table", "error");
     }
@@ -2632,6 +2809,13 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
 
   return (
     <>
+      <CheckoutQuoteScreen
+        quote={checkoutQuote}
+        onClose={() => setCheckoutQuote(null)}
+        onDiscountChange={handleCheckoutDiscountChange}
+        onFinalize={handleFinalizeCheckout}
+      />
+
       <CheckoutBillScreen
         bill={checkoutBill}
         onClose={() => setCheckoutBill(null)}
