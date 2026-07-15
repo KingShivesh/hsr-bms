@@ -1933,7 +1933,7 @@ function TableCard({
               <div className="table-start-fields">
                 <div className="table-field-stack">
                   <span>
-                    {billingMode === "single" ? "Customer name" : "First name"}
+                    {billingMode === "single" ? "Customer name" : "Player 1"}
                   </span>
                   <CustomerInput
                     value={name}
@@ -1944,7 +1944,7 @@ function TableCard({
                 {billingMode !== "single" && (
                   <div className="table-field-stack">
                     <span>
-                      {billingMode === "lp" ? "Second name" : "Other names"}
+                      {billingMode === "lp" ? "Player 2" : "Other players"}
                     </span>
                     {billingMode === "lp" ? (
                       <CustomerInput
