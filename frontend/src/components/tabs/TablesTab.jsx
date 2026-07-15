@@ -75,7 +75,7 @@ function fmtDateTime(ms) {
 }
 
 function isFullName(name) {
-  return name.trim().split(/\s+/).filter(Boolean).length >= 2;
+  return name.trim().length > 0;
 }
 
 const BILLING_MODES = [
@@ -138,9 +138,9 @@ function buildPlayers(primaryName, extraNames, billingMode) {
 }
 
 function validateBillingPlayers(players, billingMode) {
-  if (!players[0]) return "Please enter the customer's full name.";
+  if (!players[0]) return "Please enter the customer name.";
   const invalid = players.find((name) => !isFullName(name));
-  if (invalid) return `Please enter full name for "${invalid}".`;
+  if (invalid) return `Please enter a name for "${invalid}".`;
   if (billingMode !== "single" && players.length < 2) {
     return "Please enter at least two players for Sharing or LP.";
   }
@@ -300,7 +300,7 @@ function QueuePanel({
   async function submit(e) {
     e.preventDefault();
     if (!isFullName(customerName)) {
-      alert("Please enter the customer's full name (first and last name).");
+      alert("Please enter the customer name.");
       return;
     }
     await onAdd({
@@ -445,7 +445,7 @@ function BookingPanel({ bookings, onCreate, onCancel }) {
   async function submit(e) {
     e.preventDefault();
     if (!isFullName(customerName)) {
-      alert("Please enter the customer's full name (first and last name).");
+      alert("Please enter the customer name.");
       return;
     }
     const selected = TABLES.find((t) => t.id.toUpperCase() === tableId);

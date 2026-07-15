@@ -9,7 +9,7 @@ import {
 } from "../../api/index.js";
 
 function isFullName(name) {
-  return name.trim().split(/\s+/).filter(Boolean).length >= 2;
+  return name.trim().length > 0;
 }
 
 export default function MembersTab() {
@@ -37,7 +37,7 @@ export default function MembersTab() {
     const name = prompt("Enter member name:");
     if (!name) return;
     if (!isFullName(name)) {
-      alert("Please enter the member's full name (first and last name).");
+      alert("Please enter the member name.");
       return;
     }
     try {
