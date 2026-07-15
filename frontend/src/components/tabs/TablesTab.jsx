@@ -63,6 +63,16 @@ function fmtClock(ms) {
   });
 }
 
+function fmtDateTime(ms) {
+  if (!ms) return "--";
+  return new Date(ms).toLocaleString("en-IN", {
+    day: "2-digit",
+    month: "short",
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+}
+
 function isFullName(name) {
   return name.trim().split(/\s+/).filter(Boolean).length >= 2;
 }
@@ -162,17 +172,6 @@ function bookingDisplayTime(booking) {
   return new Date(booking.booking_time).toLocaleString("en-IN", {
     day: "2-digit",
     month: "short",
-    hour: "2-digit",
-    minute: "2-digit",
-  });
-}
-
-function frameCloseTime(value) {
-  const timestamp = Number(value || 0);
-  if (!timestamp) return "Not closed";
-  const date = new Date(timestamp);
-  if (Number.isNaN(date.getTime())) return "Not closed";
-  return date.toLocaleTimeString("en-IN", {
     hour: "2-digit",
     minute: "2-digit",
   });
@@ -992,6 +991,8 @@ function CheckoutBillScreen({ bill, onClose }) {
     : [];
   const total = rec.tot ?? rec.total ?? 0;
   const frames = Array.isArray(rec.frames) ? rec.frames : [];
+  const sessionStartedAt = rec.session_started_at || null;
+  const sessionEndedAt = rec.session_ended_at || rec.ts || null;
 
   return (
     <div className="checkout-bill-screen" role="dialog" aria-modal="true">
@@ -1004,6 +1005,10 @@ function CheckoutBillScreen({ bill, onClose }) {
             </div>
             <div className="checkout-bill-sub">
               {rec.payment_method || bill.paymentMethod || "Cash"} · {rec.dur || 0} min
+            </div>
+            <div className="checkout-session-time">
+              <span>Session start {fmtDateTime(sessionStartedAt)}</span>
+              <span>Session end {fmtDateTime(sessionEndedAt)}</span>
             </div>
           </div>
           <button type="button" className="checkout-bill-close" onClick={onClose}>
@@ -1068,9 +1073,14 @@ function CheckoutBillScreen({ bill, onClose }) {
                     <strong>Frame {frame.frame_no}</strong>
                     <span>{frame.loser_name || "No loser recorded"}</span>
                   </div>
-                  <time dateTime={frame.ended_at ? new Date(frame.ended_at).toISOString() : undefined}>
-                    Closed {frameCloseTime(frame.ended_at)}
-                  </time>
+                  <div className="checkout-frame-times">
+                    <time dateTime={frame.started_at ? new Date(frame.started_at).toISOString() : undefined}>
+                      Start {fmtClock(frame.started_at)}
+                    </time>
+                    <time dateTime={frame.ended_at ? new Date(frame.ended_at).toISOString() : undefined}>
+                      End {frame.ended_at ? fmtClock(frame.ended_at) : "Running"}
+                    </time>
+                  </div>
                 </div>
               ))}
             </div>
@@ -1766,7 +1776,8 @@ function TableCard({
           {occupied && (
             <div className="active-billing-summary">
               <span>{billingModeLabel(activeBillingMode)}</span>
-              <strong>Started {fmtClock(session.startTime)}</strong>
+              <strong>Start {fmtClock(session.startTime)}</strong>
+              <strong>End {paused ? "Paused" : "Running"}</strong>
               {activeBillingMode === "sharing" && shareCount > 1 && (
                 <strong>₹{shareAmount} each</strong>
               )}
@@ -1814,8 +1825,19 @@ function TableCard({
                 <div className="table-frame-history">
                   {recentFrames.map((frame) => (
                     <span key={frame.id || frame.frame_no}>
-                      F{frame.frame_no}: {frame.loser_name} · {frameCloseTime(frame.ended_at)}
+                      F{frame.frame_no}: {frame.loser_name} · {fmtClock(frame.started_at)}-{fmtClock(frame.ended_at)}
                     </span>
+                  ))}
+                </div>
+              )}
+              {frames.length > 0 && (
+                <div className="table-frame-timeline">
+                  {frames.map((frame) => (
+                    <div key={frame.id || frame.frame_no} className="table-frame-time-row">
+                      <strong>F{frame.frame_no}</strong>
+                      <span>Start {fmtClock(frame.started_at)}</span>
+                      <span>End {frame.ended_at ? fmtClock(frame.ended_at) : "Running"}</span>
+                    </div>
                   ))}
                 </div>
               )}

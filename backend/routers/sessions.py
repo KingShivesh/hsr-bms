@@ -392,7 +392,9 @@ def stop_session(
     # Minimum session check
     settings   = db.query(models.Settings).first()
     min_mins   = settings.min_session if settings else 0
-    elapsed_ms = sess.elapsed_ms if sess.paused else time.time() * 1000 - sess.start_time
+    closed_at_ms = time.time() * 1000
+    session_started_at = sess.start_time
+    elapsed_ms = sess.elapsed_ms if sess.paused else closed_at_ms - sess.start_time
     elapsed_ms = max(0, elapsed_ms)
     elapsed_m  = elapsed_ms / 1000 / 60
 
@@ -551,6 +553,8 @@ def stop_session(
         "peak_label": checkout["peak_label"],
         "payment_method": payment_method,
         "billing_mode": billing_mode,
+        "session_started_at": session_started_at,
+        "session_ended_at": closed_at_ms,
         "players": transaction_players,
         "payer_name": payer,
         "split_per_head": split_per_head,
