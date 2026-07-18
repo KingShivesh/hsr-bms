@@ -1392,7 +1392,6 @@ function TableCard({
 }) {
   const [billingMode, setBillingMode] = useState(() => defaultBillingModeForTable(table));
   const [otherPlayers, setOtherPlayers] = useState("");
-  const [paymentMethod, setPaymentMethod] = useState("Cash");
   const [frameLoserOpen, setFrameLoserOpen] = useState(false);
   const [reserveOpen, setReserveOpen] = useState(false);
   const [notesOpen, setNotesOpen] = useState(false);
@@ -1810,7 +1809,7 @@ function TableCard({
                     alert("Close the running frame before closing the table.");
                     return;
                   }
-                  onStop(table.id, paymentMethod);
+                  onStop(table.id);
                 }}
                 style={{
                   position: "absolute",
@@ -2063,32 +2062,6 @@ function TableCard({
                 <i className="ti ti-refresh" aria-hidden="true" />
                 <span>Reset</span>
               </button>
-            </div>
-          )}
-
-          {/* Payment method */}
-          {occupied && (
-            <div className="table-payment-grid">
-              {PAYMENT_METHODS.map((m) => (
-                <button
-                  key={m}
-                  onClick={() => setPaymentMethod(m)}
-                  className={`table-payment-btn ${paymentMethod === m ? "active" : ""}`}
-                  style={{ "--table-accent": T.accent }}
-                >
-                  <i
-                    className={`ti ${
-                      m === "Cash"
-                        ? "ti-cash"
-                        : m === "UPI"
-                          ? "ti-qrcode"
-                          : "ti-credit-card"
-                    }`}
-                    aria-hidden="true"
-                  />
-                  <span>{m}</span>
-                </button>
-              ))}
             </div>
           )}
 
@@ -2657,8 +2630,7 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
   }
 
   async function handleStop(id, paymentMethod = "Cash") {
-    const name = (names[id] || "").trim();
-    if (!name || !sessions[id]) {
+    if (!sessions[id]) {
       showToast("No active session", "error");
       return;
     }
