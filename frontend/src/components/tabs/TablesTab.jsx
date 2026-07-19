@@ -1017,6 +1017,11 @@ function CheckoutQuoteScreen({
               <span>Session started {fmtDateTime(rec.session_started_at)}</span>
               <span>Bill frozen {fmtDateTime(rec.session_ended_at)}</span>
             </div>
+            {rec.duration_capped && (
+              <div className="checkout-cap-warning">
+                Long session capped at {rec.dur} min from {rec.actual_dur} min.
+              </div>
+            )}
           </div>
           <button type="button" className="checkout-bill-close secondary" onClick={onClose}>
             Back
@@ -1200,6 +1205,11 @@ function CheckoutBillScreen({ bill, onClose }) {
               <span>Session started {fmtDateTime(sessionStartedAt)}</span>
               <span>Session ended {fmtDateTime(sessionEndedAt)}</span>
             </div>
+            {rec.duration_capped && (
+              <div className="checkout-cap-warning">
+                Long session capped at {rec.dur} min from {rec.actual_dur} min.
+              </div>
+            )}
           </div>
           <button type="button" className="checkout-bill-close" onClick={onClose}>
             Done

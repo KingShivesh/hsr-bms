@@ -411,14 +411,10 @@ def quote_session(
     elapsed_ms = max(0, elapsed_ms)
 
     minutes = billable_minutes(elapsed_ms, min_mins)
-    if minutes > MAX_SESSION_DURATION_MINUTES:
-        raise HTTPException(
-            status_code=400,
-            detail=(
-                "Session duration looks invalid. Please reset this table or "
-                "contact the owner before closing."
-            ),
-        )
+    actual_minutes = minutes
+    duration_capped = minutes > MAX_SESSION_DURATION_MINUTES
+    if duration_capped:
+        minutes = MAX_SESSION_DURATION_MINUTES
 
     checkout = calc_checkout(
         db,
@@ -492,6 +488,8 @@ def quote_session(
         "tbl": normalize_table_id(table_id).upper(),
         "nm": display_customer,
         "dur": minutes,
+        "actual_dur": actual_minutes,
+        "duration_capped": duration_capped,
         "ply": play,
         "famt": food,
         "food": food_str,
@@ -540,14 +538,10 @@ def stop_session(
     elapsed_ms = max(0, elapsed_ms)
 
     minutes = billable_minutes(elapsed_ms, min_mins)
-    if minutes > MAX_SESSION_DURATION_MINUTES:
-        raise HTTPException(
-            status_code=400,
-            detail=(
-                "Session duration looks invalid. Please reset this table or "
-                "contact the owner before closing."
-            ),
-        )
+    actual_minutes = minutes
+    duration_capped = minutes > MAX_SESSION_DURATION_MINUTES
+    if duration_capped:
+        minutes = MAX_SESSION_DURATION_MINUTES
     checkout = calc_checkout(
         db,
         minutes=minutes,
@@ -623,6 +617,9 @@ def stop_session(
         else players
     )
     notes = sess.notes or ""
+    if duration_capped:
+        cap_note = f"Duration capped at {minutes} min; actual elapsed {actual_minutes} min"
+        notes = f"{notes} | {cap_note}" if notes else cap_note
     if billing_mode == "lp":
         lp_note = "LP settled by recorded frame losses"
         notes = f"{notes} | {lp_note}" if notes else lp_note
@@ -680,6 +677,8 @@ def stop_session(
         "date":  t.date,  "ts":    t.ts,
         "tbl":   t.table_id, "nm": t.customer_name,
         "dur":   t.duration, "ply": t.play_charge,
+        "actual_dur": actual_minutes,
+        "duration_capped": duration_capped,
         "famt":  t.food_charge, "food": t.food_items,
         "tot":   t.total,  "notes": t.notes,
         "raw_total": raw_total,

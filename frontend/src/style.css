@@ -9004,6 +9004,18 @@ body.dark .checkout-bill-screen {
   font-weight: 800;
 }
 
+.checkout-cap-warning {
+  display: inline-flex;
+  margin-top: 10px;
+  padding: 7px 10px;
+  border: 1px solid color-mix(in srgb, var(--premium-accent) 35%, var(--premium-border));
+  border-radius: 999px;
+  background: var(--premium-accent-soft);
+  color: var(--premium-accent-hover);
+  font-size: 12px;
+  font-weight: 850;
+}
+
 .checkout-quote-status {
   color: var(--premium-muted);
 }
