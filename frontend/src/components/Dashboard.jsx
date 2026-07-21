@@ -63,12 +63,12 @@ function TableOccupancyPanel({ sessions, elapsed, onNavigate }) {
           </div>
         </div>
         <button
-          className="dashboard-panel-action"
+          className="dashboard-panel-action dashboard-open-floor-btn"
           type="button"
           onClick={() => onNavigate("tables")}
         >
           <i className="ti ti-layout-grid" aria-hidden="true" />
-          Floor
+          Open floor
         </button>
       </div>
       <div className="hm-legend dashboard-legend">
@@ -317,7 +317,7 @@ export default function Dashboard({ metrics, onNavigate }) {
                 <div className="owner-digest-kicker">Daily owner digest</div>
                 <div className="owner-digest-title">{digest.report.date}</div>
               </div>
-              <button type="button" className="owner-close-day-btn" onClick={openClosingReport}>
+              <button type="button" className="owner-close-day-btn dashboard-close-day-btn" onClick={openClosingReport}>
                 Close day
                 <i className="ti ti-clipboard-check" aria-hidden="true" />
               </button>

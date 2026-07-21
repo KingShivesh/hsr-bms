@@ -9470,3 +9470,80 @@ body.dark .owner-close-day-btn {
   border-color: #e4aa48 !important;
   color: #17100a !important;
 }
+
+/* Explicit component-targeted visibility overrides */
+.dashboard-home .dashboard-open-floor-btn {
+  background: #0f6b4f !important;
+  border: 1px solid #0f6b4f !important;
+  color: #ffffff !important;
+  font-weight: 950 !important;
+}
+
+.dashboard-home .dashboard-open-floor-btn i,
+.dashboard-home .dashboard-open-floor-btn span {
+  color: #ffffff !important;
+}
+
+.dashboard-home .dashboard-close-day-btn {
+  background: #b7791f !important;
+  border: 1px solid #b7791f !important;
+  color: #17100a !important;
+  font-weight: 950 !important;
+}
+
+.dashboard-home .dashboard-close-day-btn i {
+  color: #17100a !important;
+}
+
+.table-floor-tile.running,
+.table-floor-tile.paused {
+  background: linear-gradient(180deg, #ffe3df 0%, #fff5f3 54%, #ffffff 100%) !important;
+  border-color: #dc2626 !important;
+  box-shadow:
+    0 0 0 3px rgba(220, 38, 38, 0.14),
+    0 12px 30px rgba(220, 38, 38, 0.12) !important;
+}
+
+.table-floor-tile.running .table-floor-body,
+.table-floor-tile.paused .table-floor-body {
+  background: #fff1ef !important;
+  border-color: rgba(220, 38, 38, 0.25) !important;
+}
+
+.table-floor-tile.running .table-floor-status,
+.table-floor-tile.paused .table-floor-status {
+  background: #dc2626 !important;
+  border-color: #dc2626 !important;
+  color: #ffffff !important;
+}
+
+.table-floor-tile.running .table-floor-topline strong,
+.table-floor-tile.running .table-floor-title,
+.table-floor-tile.paused .table-floor-topline strong,
+.table-floor-tile.paused .table-floor-title {
+  color: #7f1d1d !important;
+}
+
+body.dark .dashboard-home .dashboard-open-floor-btn {
+  background: #48c094 !important;
+  border-color: #48c094 !important;
+  color: #07100c !important;
+}
+
+body.dark .dashboard-home .dashboard-close-day-btn {
+  background: #e4aa48 !important;
+  border-color: #e4aa48 !important;
+  color: #17100a !important;
+}
+
+body.dark .table-floor-tile.running,
+body.dark .table-floor-tile.paused {
+  background: linear-gradient(180deg, rgba(255, 139, 127, 0.24), rgba(255, 139, 127, 0.12) 54%, var(--premium-surface) 100%) !important;
+  border-color: #ff8b7f !important;
+}
+
+body.dark .table-floor-tile.running .table-floor-body,
+body.dark .table-floor-tile.paused .table-floor-body {
+  background: rgba(255, 139, 127, 0.12) !important;
+  border-color: rgba(255, 139, 127, 0.28) !important;
+}
