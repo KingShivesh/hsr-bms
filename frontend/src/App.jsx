@@ -117,7 +117,6 @@ export default function App() {
         <div className="main-content">
           <Topbar
             title={PAGE_TITLES[page]}
-            onNewSession={openNewSession}
             role={role}
             username={username}
           />
@@ -147,7 +146,15 @@ export default function App() {
               {page === "closing" && <ClosingTab />}
               {page === "food" && <FoodTab />}
               {page === "tournaments" && <TournamentTab />}
-              {page === "settings" && <SettingsTab role={role} />}
+              {page === "settings" && (
+                <SettingsTab
+                  role={role}
+                  onOpenTables={() => {
+                    setPage("tables");
+                    openNewSession();
+                  }}
+                />
+              )}
             </div>
           </Suspense>
         </div>

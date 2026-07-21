@@ -21,7 +21,7 @@ import { HSR_TABLES, TOTAL_TABLES, getTableLabel } from "../config/hsrTables.js"
 const TABLES = HSR_TABLES;
 const tableKey = (tableId) => String(tableId || "").trim().toLowerCase();
 
-const PIE_COLORS = ["#16a34a", "#e11d48", "#d97706"];
+const PIE_COLORS = ["#2f5d8f", "#b7791f", "#0f6b4f"];
 
 function fmt(secs) {
   if (!secs || secs <= 0) return "--:--";
@@ -71,13 +71,13 @@ function TableOccupancyPanel({ sessions, elapsed, onNavigate }) {
           Floor
         </button>
       </div>
-      <div className="hm-legend">
+      <div className="hm-legend dashboard-legend">
         <div className="hm-legend-item">
-          <div className="hm-dot" style={{ background: "#16a34a" }} />
+          <div className="hm-dot" style={{ background: "#2f5d8f" }} />
           Active
         </div>
         <div className="hm-legend-item">
-          <div className="hm-dot" style={{ background: "#e11d48" }} />
+          <div className="hm-dot" style={{ background: "#b7791f" }} />
           Busy (&gt;1hr)
         </div>
         <div className="hm-legend-item">
@@ -390,7 +390,7 @@ export default function Dashboard({ metrics, onNavigate }) {
                   }}
                   cursor={{ fill: "#f5f5f5" }}
                 />
-                <Bar dataKey="revenue" fill="#16a34a" radius={[4, 4, 0, 0]} />
+                <Bar dataKey="revenue" fill="#2f5d8f" radius={[4, 4, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
           ) : (

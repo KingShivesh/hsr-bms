@@ -41,7 +41,7 @@ function SettingsCard({ title, description, children }) {
   );
 }
 
-export default function SettingsTab({ role = "admin" }) {
+export default function SettingsTab({ role = "admin", onOpenTables }) {
   const [wr, setWr] = useState(320);
   const [pr, setPr] = useState(170);
   const [sr, setSr] = useState(270);
@@ -273,6 +273,26 @@ export default function SettingsTab({ role = "admin" }) {
           {flash}
         </div>
       )}
+
+      <SettingsCard
+        title="Table Operations"
+        description="Open the table floor when a session needs to be started or reviewed."
+      >
+        <div className="settings-action-row">
+          <div>
+            <strong>Session controls live on the table floor</strong>
+            <span>Start, reserve, pause, close and review active tables from one focused screen.</span>
+          </div>
+          <button
+            className="btn btn-primary-sm"
+            type="button"
+            onClick={onOpenTables}
+          >
+            <i className="ti ti-billiard" aria-hidden="true" />
+            Open table floor
+          </button>
+        </div>
+      </SettingsCard>
 
       {/* Rates */}
       <SettingsCard
