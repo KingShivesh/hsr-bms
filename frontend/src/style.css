@@ -9405,3 +9405,68 @@ body.dark .table-session-card.occupied .table-rate-line,
 body.dark .table-session-card.occupied .active-billing-summary strong {
   color: var(--premium-danger) !important;
 }
+
+/* Strong visibility pass for client-facing controls */
+.table-session-card.occupied {
+  background:
+    linear-gradient(180deg, #ffe3df 0%, #fff5f3 42%, var(--premium-surface) 100%) !important;
+  border-color: #dc2626 !important;
+  box-shadow:
+    0 0 0 3px rgba(220, 38, 38, 0.18),
+    0 14px 34px rgba(220, 38, 38, 0.12) !important;
+}
+
+.table-session-card.occupied .table-control-panel {
+  background: #fff1ef !important;
+}
+
+.table-session-card.occupied .table-control-top {
+  border-bottom-color: rgba(220, 38, 38, 0.24) !important;
+}
+
+.dashboard-panel-action {
+  background: #0f6b4f !important;
+  border-color: #0f6b4f !important;
+  color: #ffffff !important;
+}
+
+.dashboard-panel-action:hover {
+  background: #0b553f !important;
+  border-color: #0b553f !important;
+  color: #ffffff !important;
+}
+
+.owner-close-day-btn {
+  background: #b7791f !important;
+  border-color: #b7791f !important;
+  color: #17100a !important;
+}
+
+.owner-close-day-btn:hover {
+  background: #965d12 !important;
+  border-color: #965d12 !important;
+  color: #ffffff !important;
+}
+
+body.dark .table-session-card.occupied {
+  background:
+    linear-gradient(180deg, rgba(255, 139, 127, 0.24), rgba(255, 139, 127, 0.12) 44%, var(--premium-surface) 100%) !important;
+  border-color: #ff8b7f !important;
+  box-shadow: 0 0 0 3px rgba(255, 139, 127, 0.18) !important;
+}
+
+body.dark .table-session-card.occupied .table-control-panel {
+  background: rgba(255, 139, 127, 0.12) !important;
+}
+
+body.dark .dashboard-panel-action {
+  background: #48c094 !important;
+  border-color: #48c094 !important;
+  color: #07100c !important;
+}
+
+body.dark .owner-close-day-btn {
+  background: #e4aa48 !important;
+  border-color: #e4aa48 !important;
+  color: #17100a !important;
+}
