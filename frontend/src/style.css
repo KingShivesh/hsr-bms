@@ -8989,6 +8989,46 @@ body.dark .checkout-bill-screen {
   gap: 8px;
 }
 
+.checkout-rupee-discount {
+  display: grid;
+  gap: 6px;
+}
+
+.checkout-rupee-discount-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 8px;
+  align-items: center;
+}
+
+.checkout-rupee-apply-btn {
+  min-height: 44px;
+  padding: 0 16px;
+  border: 1px solid color-mix(in srgb, var(--premium-accent) 35%, var(--premium-border));
+  border-radius: 10px;
+  background: var(--premium-accent-soft);
+  color: var(--premium-accent-hover);
+  font-size: 13px;
+  font-weight: 850;
+  cursor: pointer;
+}
+
+.checkout-rupee-apply-btn:hover:not(:disabled) {
+  border-color: color-mix(in srgb, var(--premium-accent) 55%, var(--premium-border));
+  background: color-mix(in srgb, var(--premium-accent-soft) 72%, var(--premium-surface));
+}
+
+.checkout-rupee-apply-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.checkout-rupee-hint {
+  color: var(--premium-muted);
+  font-size: 12px;
+  font-weight: 750;
+}
+
 .checkout-final-total {
   border-color: color-mix(in srgb, var(--premium-accent) 35%, var(--premium-border)) !important;
   background: var(--premium-accent-soft) !important;
@@ -9061,6 +9101,10 @@ body.dark .checkout-final-total {
 
   .checkout-discount-box .table-discount-options {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .checkout-rupee-discount-row {
+    grid-template-columns: 1fr;
   }
 
   .checkout-final-actions {

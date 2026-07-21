@@ -91,6 +91,12 @@ const DISCOUNT_OPTIONS = [
   { id: "rupee", label: "₹ off" },
 ];
 
+function sanitizeRupeeDiscount(value) {
+  const digits = String(value ?? "").replace(/\D/g, "");
+  if (!digits) return "";
+  return String(Math.min(parseInt(digits, 10), 50));
+}
+
 function defaultBillingModeForTable(table) {
   return table?.type === "POOL" ? "single" : "lp";
 }
@@ -1084,7 +1090,11 @@ function CheckoutQuoteScreen({
                 type="button"
                 className={quote.discountType === option.id ? "active" : ""}
                 onClick={() =>
-                  onDiscountChange(option.id, option.id === "rupee" ? quote.discountValue : "")
+                  onDiscountChange(
+                    option.id,
+                    option.id === "rupee" ? quote.discountValue : "",
+                    true,
+                  )
                 }
               >
                 {option.label}
@@ -1092,15 +1102,31 @@ function CheckoutQuoteScreen({
             ))}
           </div>
           {quote.discountType === "rupee" && (
-            <input
-              className="table-mini-input"
-              type="number"
-              min="0"
-              max="50"
-              value={quote.discountValue}
-              onChange={(event) => onDiscountChange("rupee", event.target.value)}
-              placeholder="Max ₹50"
-            />
+            <div className="checkout-rupee-discount">
+              <div className="checkout-rupee-discount-row">
+                <input
+                  className="table-mini-input"
+                  type="text"
+                  inputMode="numeric"
+                  pattern="[0-9]*"
+                  value={quote.discountValue}
+                  onChange={(event) =>
+                    onDiscountChange("rupee", sanitizeRupeeDiscount(event.target.value), false)
+                  }
+                  placeholder="Max ₹50"
+                  aria-label="Rupee discount amount"
+                />
+                <button
+                  type="button"
+                  className="checkout-rupee-apply-btn"
+                  disabled={quote.loading || !quote.discountValue}
+                  onClick={() => onDiscountChange("rupee", quote.discountValue, true)}
+                >
+                  Apply
+                </button>
+              </div>
+              <span className="checkout-rupee-hint">Enter the rupee amount, then apply.</span>
+            </div>
           )}
           {quote.loading && <span className="checkout-quote-status">Updating bill...</span>}
           {quote.error && <span className="checkout-quote-error">{quote.error}</span>}
@@ -2206,6 +2232,7 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
   const [checkoutBill, setCheckoutBill] = useState(null);
   const [selectedTableId, setSelectedTableId] = useState(TABLES[0]?.id || "t1");
   const detailPanelRef = useRef(null);
+  const checkoutQuoteSeqRef = useRef(0);
 
   const nextBookingByTable = useMemo(() => {
     const recentWindow = Date.now() - 2 * 60 * 60 * 1000;
@@ -2645,6 +2672,7 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
       return;
     }
     try {
+      checkoutQuoteSeqRef.current += 1;
       const res = await quoteSession(id, paymentMethod, "none", 0);
       setCheckoutQuote({
         tableId: id,
@@ -2661,17 +2689,20 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
     }
   }
 
-  async function handleCheckoutDiscountChange(discountType, discountValue = "") {
+  async function handleCheckoutDiscountChange(discountType, discountValue = "", shouldQuote = true) {
     if (!checkoutQuote) return;
-    const nextValue = discountType === "rupee" ? discountValue : "";
+    const nextValue = discountType === "rupee" ? sanitizeRupeeDiscount(discountValue) : "";
     const nextQuote = {
       ...checkoutQuote,
       discountType,
       discountValue: nextValue,
-      loading: true,
+      loading: shouldQuote,
       error: "",
     };
     setCheckoutQuote(nextQuote);
+    const requestSeq = checkoutQuoteSeqRef.current + 1;
+    checkoutQuoteSeqRef.current = requestSeq;
+    if (!shouldQuote) return;
     try {
       const res = await quoteSession(
         checkoutQuote.tableId,
@@ -2680,6 +2711,7 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
         parseInt(nextValue, 10) || 0,
         checkoutQuote.closedAtMs,
       );
+      if (checkoutQuoteSeqRef.current !== requestSeq) return;
       setCheckoutQuote((prev) => ({
         ...(prev || nextQuote),
         rec: res.data,
@@ -2689,6 +2721,7 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
         error: "",
       }));
     } catch (e) {
+      if (checkoutQuoteSeqRef.current !== requestSeq) return;
       setCheckoutQuote((prev) => ({
         ...(prev || nextQuote),
         loading: false,
@@ -2706,6 +2739,8 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
       error: "",
     };
     setCheckoutQuote(nextQuote);
+    const requestSeq = checkoutQuoteSeqRef.current + 1;
+    checkoutQuoteSeqRef.current = requestSeq;
     try {
       const res = await quoteSession(
         checkoutQuote.tableId,
@@ -2714,6 +2749,7 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
         parseInt(checkoutQuote.discountValue, 10) || 0,
         checkoutQuote.closedAtMs,
       );
+      if (checkoutQuoteSeqRef.current !== requestSeq) return;
       setCheckoutQuote((prev) => ({
         ...(prev || nextQuote),
         rec: res.data,
@@ -2722,6 +2758,7 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
         error: "",
       }));
     } catch (e) {
+      if (checkoutQuoteSeqRef.current !== requestSeq) return;
       setCheckoutQuote((prev) => ({
         ...(prev || nextQuote),
         loading: false,
@@ -2745,7 +2782,7 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
         paymentMethod,
         "",
         discountType,
-        parseInt(discountValue, 10) || 0,
+        parseInt(sanitizeRupeeDiscount(discountValue), 10) || 0,
         closedAtMs,
       );
       const rec = { ...res.data };
