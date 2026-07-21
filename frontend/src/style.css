@@ -9338,3 +9338,70 @@ body.dark .settings-action-row {
     flex-direction: column;
   }
 }
+
+/* Occupancy and dashboard action color corrections */
+.topbar-user-chip strong {
+  font-size: 14px !important;
+  text-transform: none !important;
+}
+
+.table-session-card.occupied {
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--premium-danger-soft) 78%, #fff), var(--premium-surface) 46%) !important;
+  border-color: color-mix(in srgb, var(--premium-danger) 46%, var(--premium-border)) !important;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--premium-danger) 13%, transparent) !important;
+}
+
+.table-session-card.occupied .table-control-panel {
+  background: color-mix(in srgb, var(--premium-danger-soft) 42%, var(--premium-surface)) !important;
+}
+
+.table-session-card.occupied .table-rate-line,
+.table-session-card.occupied .active-billing-summary strong {
+  color: var(--premium-danger) !important;
+}
+
+.table-session-card.occupied .table-start-panel,
+.table-session-card.occupied .active-billing-summary,
+.table-session-card.occupied .table-frame-panel,
+.table-session-card.occupied .table-notes-panel,
+.table-session-card.occupied .table-inline-panel,
+.table-session-card.occupied .table-reservation-info,
+.table-session-card.occupied .table-frame-time-row {
+  border-color: color-mix(in srgb, var(--premium-danger) 22%, var(--premium-border)) !important;
+}
+
+.dashboard-panel-action {
+  background: var(--premium-primary-soft) !important;
+  border-color: color-mix(in srgb, var(--premium-primary) 30%, transparent) !important;
+  color: var(--premium-primary) !important;
+}
+
+.dashboard-panel-action:hover {
+  background: var(--premium-primary) !important;
+  border-color: var(--premium-primary) !important;
+  color: #fff !important;
+}
+
+.owner-close-day-btn {
+  background: var(--premium-accent-soft) !important;
+  border-color: color-mix(in srgb, var(--premium-accent) 34%, transparent) !important;
+  color: var(--premium-accent-hover) !important;
+}
+
+.owner-close-day-btn:hover {
+  background: var(--premium-accent) !important;
+  border-color: var(--premium-accent) !important;
+  color: #17100a !important;
+}
+
+body.dark .table-session-card.occupied,
+body.dark .table-session-card.occupied .table-control-panel {
+  background: color-mix(in srgb, var(--premium-danger-soft) 58%, var(--premium-surface)) !important;
+  border-color: color-mix(in srgb, var(--premium-danger) 34%, var(--premium-border)) !important;
+}
+
+body.dark .table-session-card.occupied .table-rate-line,
+body.dark .table-session-card.occupied .active-billing-summary strong {
+  color: var(--premium-danger) !important;
+}

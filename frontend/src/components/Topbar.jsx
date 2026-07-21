@@ -6,6 +6,8 @@ export default function Topbar({ title, role = "admin", username = "" }) {
     () => localStorage.getItem("darkMode") === "true",
   );
   const displayName = username || role;
+  const displayLabel =
+    displayName.charAt(0).toUpperCase() + displayName.slice(1).toLowerCase();
 
   useEffect(() => {
     function tick() {
@@ -41,7 +43,7 @@ export default function Topbar({ title, role = "admin", username = "" }) {
       <div className="topbar-right">
         <div className={`topbar-user-chip ${role === "staff" ? "staff" : "admin"}`}>
           <i className={`ti ${role === "staff" ? "ti-user" : "ti-shield-lock"}`} aria-hidden="true" />
-          <strong>{displayName}</strong>
+          <strong>{displayLabel}</strong>
         </div>
         <div className="topbar-date">{dt}</div>
 
