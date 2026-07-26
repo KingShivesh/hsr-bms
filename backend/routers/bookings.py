@@ -8,6 +8,7 @@ from sqlalchemy.orm import Session
 
 import models
 from database import get_db
+from hsr_config import get_ist_now
 from validators import require_full_name
 
 router = APIRouter()
@@ -62,7 +63,7 @@ def _booking_has_started(db: Session, booking: models.Booking) -> bool:
 def _release_missed_bookings(db: Session) -> None:
     settings = db.query(models.Settings).first()
     grace = max(1, int(getattr(settings, "booking_grace_minutes", 10) or 10))
-    now = datetime.now()
+    now = get_ist_now()
     changed = False
     rows = db.query(models.Booking).filter(models.Booking.status == "booked").all()
     for booking in rows:
@@ -82,7 +83,7 @@ def _release_missed_bookings(db: Session) -> None:
 @router.get("")
 def list_bookings(db: Session = Depends(get_db)):
     _release_missed_bookings(db)
-    now = datetime.now() - timedelta(hours=2)
+    now = get_ist_now() - timedelta(hours=2)
     rows = (
         db.query(models.Booking)
         .filter(models.Booking.status.in_(["booked", "missed"]))
@@ -100,7 +101,7 @@ def list_bookings(db: Session = Depends(get_db)):
 def create_booking(body: BookingBody, db: Session = Depends(get_db)):
     name = require_full_name(body.customer_name, "Booking customer name")
     booking_dt = _parse_time(body.booking_time)
-    if booking_dt < datetime.now() - timedelta(minutes=5):
+    if booking_dt < get_ist_now() - timedelta(minutes=5):
         raise HTTPException(status_code=400, detail="Booking time cannot be in the past")
 
     duration = max(30, min(int(body.duration_mins or 60), 480))
@@ -131,7 +132,7 @@ def create_booking(body: BookingBody, db: Session = Depends(get_db)):
         duration_mins=duration,
         notes=body.notes.strip(),
         status="booked",
-        created_at=datetime.now().strftime("%d/%m/%Y, %H:%M"),
+        created_at=get_ist_now().strftime("%d/%m/%Y, %H:%M"),
         ts=time.time() * 1000,
     )
     db.add(booking)

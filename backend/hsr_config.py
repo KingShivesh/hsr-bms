@@ -1,5 +1,22 @@
+from datetime import datetime
+from zoneinfo import ZoneInfo
+
 APP_NAME = "HSR Snooker Cafe BMS"
 CSV_PREFIX = "hsr_snooker_cafe"
+IST_TZ = ZoneInfo("Asia/Kolkata")
+
+
+def get_ist_now() -> datetime:
+    """Return current venue time as a naive datetime for existing string storage."""
+    return datetime.now(IST_TZ).replace(tzinfo=None)
+
+
+def get_ist_today_str(fmt: str = "%d/%m/%Y") -> str:
+    return get_ist_now().strftime(fmt)
+
+
+def format_ist_now(fmt: str = "%d/%m/%Y, %H:%M:%S") -> str:
+    return get_ist_now().strftime(fmt)
 
 TABLE_RATES = {
     "t1": 320,

@@ -6,6 +6,7 @@ from typing import Optional
 import models
 from audit import log_action
 from deps import require_admin
+from hsr_config import get_ist_today_str
 
 router = APIRouter()
 
@@ -129,7 +130,7 @@ def reset_daily(
     db: Session = Depends(get_db),
     _: dict = Depends(require_admin),
 ):
-    today = __import__('datetime').datetime.now().strftime("%d/%m/%Y")
+    today = get_ist_today_str()
     deleted = db.query(models.Transaction).filter(
         models.Transaction.date.like(f"{today}%")
     ).delete(synchronize_session=False)

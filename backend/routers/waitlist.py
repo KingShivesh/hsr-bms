@@ -1,4 +1,3 @@
-from datetime import datetime
 import time
 
 from fastapi import APIRouter, Depends, HTTPException
@@ -7,7 +6,7 @@ from sqlalchemy.orm import Session
 
 import models
 from database import get_db
-from hsr_config import TABLES
+from hsr_config import TABLES, get_ist_now
 from validators import require_full_name
 
 router = APIRouter()
@@ -89,7 +88,7 @@ def add_waitlist_entry(body: WaitlistBody, db: Session = Depends(get_db)):
         preferred_type=preferred_type,
         notes=body.notes.strip(),
         status="waiting",
-        created_at=datetime.now().strftime("%d/%m/%Y, %H:%M"),
+        created_at=get_ist_now().strftime("%d/%m/%Y, %H:%M"),
         ts=time.time() * 1000,
     )
     db.add(entry)

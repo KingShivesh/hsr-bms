@@ -1,12 +1,11 @@
-from datetime import datetime
-
 from sqlalchemy.orm import Session
 
 import models
+from hsr_config import get_ist_now
 
 
 def get_peak_multiplier(db: Session) -> tuple[float, str]:
-    hour = datetime.now().hour
+    hour = get_ist_now().hour
     for rule in db.query(models.PeakHourRate).all():
         if rule.start_hour <= hour < rule.end_hour:
             return rule.multiplier, rule.label

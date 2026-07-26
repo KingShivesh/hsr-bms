@@ -10,7 +10,7 @@ from typing import Optional
 from audit import get_controls, log_action
 from pricing import calc_checkout, get_peak_multiplier
 from validators import require_full_name
-from hsr_config import rate_for_table
+from hsr_config import format_ist_now, get_ist_now, rate_for_table
 
 router = APIRouter()
 MAX_SESSION_DURATION_MINUTES = 12 * 60
@@ -73,8 +73,9 @@ def booking_datetime_from_clock(clock_value: str) -> datetime:
         hour, minute = [int(part) for part in (clock_value or "").split(":", 1)]
     except ValueError:
         raise HTTPException(status_code=400, detail="Reservation time must be HH:MM.")
-    booking_dt = datetime.now().replace(hour=hour, minute=minute, second=0, microsecond=0)
-    if booking_dt < datetime.now() - timedelta(minutes=5):
+    now = get_ist_now()
+    booking_dt = now.replace(hour=hour, minute=minute, second=0, microsecond=0)
+    if booking_dt < now - timedelta(minutes=5):
         booking_dt = booking_dt + timedelta(days=1)
     return booking_dt
 
@@ -641,7 +642,7 @@ def stop_session(
     serialized_frames = [serialize_frame(frame) for frame in billable_frames]
 
     t = models.Transaction(
-        date          = datetime.now().strftime("%d/%m/%Y, %H:%M:%S"),
+        date          = format_ist_now(),
         ts            = time.time() * 1000,
         table_id      = table_id.upper(),
         customer_name = display_customer,
@@ -855,7 +856,7 @@ def reserve(table_id: str, body: Reservation, db: Session = Depends(get_db)):
         duration_mins=duration,
         notes="Quick table reservation",
         status="booked",
-        created_at=datetime.now().strftime("%d/%m/%Y, %H:%M"),
+        created_at=get_ist_now().strftime("%d/%m/%Y, %H:%M"),
         ts=time.time() * 1000,
     )
     db.add(booking)
@@ -944,12 +945,12 @@ def set_maintenance(table_id: str, body: MaintenanceBody, db: Session = Depends(
     existing = maintenance_for_table(db, table_id)
     if existing:
         existing.reason = body.reason
-        existing.since  = datetime.now().strftime("%d/%m/%Y, %H:%M")
+        existing.since  = get_ist_now().strftime("%d/%m/%Y, %H:%M")
     else:
         db.add(models.TableMaintenance(
             table_id = table_id,
             reason   = body.reason,
-            since    = datetime.now().strftime("%d/%m/%Y, %H:%M"),
+            since    = get_ist_now().strftime("%d/%m/%Y, %H:%M"),
         ))
     db.commit()
     return {"ok": True}

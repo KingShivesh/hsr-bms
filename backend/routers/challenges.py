@@ -1,4 +1,3 @@
-from datetime import datetime
 import time
 
 from fastapi import APIRouter, Depends, HTTPException
@@ -7,6 +6,7 @@ from sqlalchemy.orm import Session
 
 import models
 from database import get_db
+from hsr_config import get_ist_now
 from validators import require_full_name
 
 router = APIRouter()
@@ -60,7 +60,7 @@ def create_challenge(body: ChallengeBody, db: Session = Depends(get_db)):
         preferred_time=body.preferred_time.strip(),
         note=body.note.strip(),
         status="open",
-        created_at=datetime.now().strftime("%d/%m/%Y, %H:%M"),
+        created_at=get_ist_now().strftime("%d/%m/%Y, %H:%M"),
         ts=time.time() * 1000,
     )
     db.add(challenge)

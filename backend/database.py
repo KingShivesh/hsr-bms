@@ -11,13 +11,19 @@ DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./hsr_billiards.db")
 if DATABASE_URL.startswith("postgres://"):
     DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql://", 1)
 
-connect_args = (
-    {"check_same_thread": False}
-    if DATABASE_URL.startswith("sqlite")
-    else {}
-)
+is_sqlite = DATABASE_URL.startswith("sqlite")
+connect_args = {"check_same_thread": False} if is_sqlite else {}
+engine_options = {
+    "connect_args": connect_args,
+    "pool_pre_ping": True,
+}
+if not is_sqlite:
+    engine_options.update({
+        "pool_size": 10,
+        "max_overflow": 20,
+    })
 
-engine = create_engine(DATABASE_URL, connect_args=connect_args)
+engine = create_engine(DATABASE_URL, **engine_options)
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
@@ -28,27 +34,27 @@ def ensure_runtime_columns():
         "settings": {
             "wr": "INTEGER DEFAULT 320",
             "booking_grace_minutes": "INTEGER DEFAULT 10",
-            "staff_username": "VARCHAR DEFAULT 'staff'",
-            "staff_password": "VARCHAR DEFAULT 'staff123'",
+            "staff_username": "VARCHAR(255) DEFAULT 'staff'",
+            "staff_password": "VARCHAR(255) DEFAULT 'staff123'",
         },
         "bookings": {
-            "released_at": "VARCHAR DEFAULT ''",
+            "released_at": "VARCHAR(255) DEFAULT ''",
         },
         "active_sessions": {
-            "billing_mode": "VARCHAR DEFAULT 'single'",
+            "billing_mode": "VARCHAR(50) DEFAULT 'single'",
             "players_json": "TEXT DEFAULT '[]'",
-            "session_key": "VARCHAR DEFAULT ''",
+            "session_key": "VARCHAR(255) DEFAULT ''",
         },
         "session_frames": {
-            "session_key": "VARCHAR DEFAULT ''",
+            "session_key": "VARCHAR(255) DEFAULT ''",
         },
         "transactions": {
-            "billing_mode": "VARCHAR DEFAULT 'single'",
+            "billing_mode": "VARCHAR(50) DEFAULT 'single'",
             "players_json": "TEXT DEFAULT '[]'",
-            "payer_name": "VARCHAR DEFAULT ''",
+            "payer_name": "VARCHAR(255) DEFAULT ''",
         },
         "food_only_orders": {
-            "payment_method": "VARCHAR DEFAULT 'Cash'",
+            "payment_method": "VARCHAR(50) DEFAULT 'Cash'",
         },
     }
     inspector = inspect(engine)

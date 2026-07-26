@@ -1,10 +1,10 @@
-from datetime import datetime
 import time
 
 from fastapi import HTTPException
 from sqlalchemy.orm import Session
 
 from deps import verify_password
+from hsr_config import format_ist_now
 import models
 
 
@@ -41,7 +41,7 @@ def log_action(
     staff: str = "admin",
 ) -> None:
     db.add(models.AuditLog(
-        date=datetime.now().strftime("%d/%m/%Y, %H:%M:%S"),
+        date=format_ist_now(),
         ts=time.time() * 1000,
         action=action,
         severity=severity,

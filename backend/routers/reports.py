@@ -5,9 +5,17 @@ from database import get_db
 from deps import require_admin
 from datetime import datetime, timedelta
 from collections import defaultdict
-import models, io, json
+import models, io, json, time
 from audit import get_controls
-from hsr_config import CSV_PREFIX, POOL_TABLES, SNOOKER_TABLES, TABLE_LABELS, TABLE_RATES
+from hsr_config import (
+    CSV_PREFIX,
+    POOL_TABLES,
+    SNOOKER_TABLES,
+    TABLE_LABELS,
+    TABLE_RATES,
+    get_ist_now,
+    get_ist_today_str,
+)
 
 router = APIRouter()
 MAX_REPORT_DURATION_MINUTES = 12 * 60
@@ -35,9 +43,9 @@ def report_transactions(db: Session):
     ]
 
 def filter_transactions(transactions, period: str):
-    now = datetime.now()
+    now = get_ist_now()
     if period == "today":
-        today = now.strftime("%d/%m/%Y")
+        today = get_ist_today_str()
         return [t for t in transactions if t.date.startswith(today)]
     if period == "week":
         week_ago = now - timedelta(days=7)
@@ -54,7 +62,7 @@ def parse_food_items(raw_items: str | None):
 # ── Summary ──
 @router.get("/summary")
 def get_summary(db: Session = Depends(get_db)):
-    today        = datetime.now().strftime("%d/%m/%Y")
+    today        = get_ist_today_str()
     transactions = [
         t for t in report_transactions(db)
         if t.date and t.date.startswith(today)
@@ -130,7 +138,7 @@ def top_customers(
 ):
     all_txns = report_transactions(db)
 
-    now = datetime.now()
+    now = get_ist_now()
     if period == "month":
         txns = [t for t in all_txns
                 if len(t.date) >= 10
@@ -195,7 +203,7 @@ def table_utilization(db: Session = Depends(get_db), _: dict = Depends(require_a
 # ── Daily closing report ──
 @router.get("/closing-report")
 def closing_report(db: Session = Depends(get_db)):
-    today = datetime.now().strftime("%d/%m/%Y")
+    today = get_ist_today_str()
     txns  = [
         t for t in report_transactions(db)
         if t.date and t.date.startswith(today)
@@ -317,17 +325,18 @@ def closing_report(db: Session = Depends(get_db)):
 
 @router.get("/closing-insights")
 def closing_insights(db: Session = Depends(get_db)):
-    today = datetime.now().strftime("%d/%m/%Y")
-    now_ms = datetime.now().timestamp() * 1000
+    today = get_ist_today_str()
+    now = get_ist_now()
+    now_ms = time.time() * 1000
     controls = get_controls(db)
 
     all_txns = report_transactions(db)
     today_txns = [t for t in all_txns if t.date and t.date.startswith(today)]
     prior_txns = []
-    week_ago = datetime.now() - timedelta(days=7)
+    week_ago = now - timedelta(days=7)
     for t in all_txns:
         dt = parse_date(t)
-        if dt and dt.date() != datetime.now().date() and dt >= week_ago:
+        if dt and dt.date() != now.date() and dt >= week_ago:
             prior_txns.append(t)
 
     today_revenue = sum(t.total for t in today_txns)
@@ -421,8 +430,9 @@ def get_analytics(db: Session = Depends(get_db), _: dict = Depends(require_admin
 
     # Weekly revenue
     weekly = {}
+    now = get_ist_now()
     for i in range(6, -1, -1):
-        d   = datetime.now() - timedelta(days=i)
+        d   = now - timedelta(days=i)
         key = d.strftime("%d/%m")
         weekly[key] = 0
     for t in transactions:
@@ -447,7 +457,7 @@ def get_analytics(db: Session = Depends(get_db), _: dict = Depends(require_admin
     food_rev    = sum(t.food_charge for t in transactions)
 
     # Month over month
-    now      = datetime.now()
+    now      = get_ist_now()
     last_m   = (now.replace(day=1) - timedelta(days=1))
     this_total = sum(t.total for t in transactions
         if len(t.date) >= 10

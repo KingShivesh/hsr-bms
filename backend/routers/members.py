@@ -2,7 +2,7 @@ from fastapi import APIRouter, HTTPException, Depends
 from pydantic import BaseModel
 from sqlalchemy.orm import Session
 from database import get_db
-from datetime import datetime
+from hsr_config import get_ist_today_str
 import models
 from validators import require_full_name
 
@@ -213,5 +213,5 @@ def update_member_on_checkout(name: str, amount: int, db: Session):
     if member:
         member.visits     += 1
         member.spent      += amount
-        member.last_visit  = datetime.now().strftime("%d/%m/%Y")
+        member.last_visit  = get_ist_today_str()
         db.commit()

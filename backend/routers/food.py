@@ -2,10 +2,10 @@ from fastapi import APIRouter, HTTPException, Depends
 from pydantic import BaseModel
 from sqlalchemy.orm import Session
 from database import get_db
-from datetime import datetime
 from typing import List
 import models, json, time
 from collections import Counter, defaultdict
+from hsr_config import format_ist_now
 
 router = APIRouter()
 PAYMENT_METHODS = {"Cash", "UPI", "Card"}
@@ -52,7 +52,7 @@ def place_food_order(body: FoodOnlyOrderBody, db: Session = Depends(get_db)):
         order.append({"item": item_name, "qty": fi.qty, "price": price})
 
     db.add(models.FoodOnlyOrder(
-        date          = datetime.now().strftime("%d/%m/%Y, %H:%M:%S"),
+        date          = format_ist_now(),
         ts            = time.time() * 1000,
         customer_name = body.customer_name,
         items         = json.dumps(order),

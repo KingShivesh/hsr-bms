@@ -1,4 +1,3 @@
-from datetime import datetime
 import time
 from typing import List
 
@@ -8,6 +7,7 @@ from sqlalchemy.orm import Session
 
 from audit import log_action
 from database import get_db
+from hsr_config import format_ist_now
 import models
 
 router = APIRouter()
@@ -81,7 +81,7 @@ def _create_round(db: Session, tournament_id: int, round_no: int, names: list[st
             player2=player2,
             winner=player1 if is_bye else "",
             status="completed" if is_bye else "scheduled",
-            completed_at=datetime.now().strftime("%d/%m/%Y, %H:%M:%S") if is_bye else "",
+            completed_at=format_ist_now() if is_bye else "",
         ))
         match_no += 1
 
@@ -147,7 +147,7 @@ def create_tournament(body: CreateTournament, db: Session = Depends(get_db)):
         entry_fee=max(0, body.entry_fee),
         status="active",
         winner_name="",
-        created_at=datetime.now().strftime("%d/%m/%Y, %H:%M:%S"),
+        created_at=format_ist_now(),
         ts=time.time() * 1000,
     )
     db.add(t)
@@ -210,7 +210,7 @@ def record_winner(
     loser = match.player2 if winner == match.player1 else match.player1
     match.winner = winner
     match.status = "completed"
-    match.completed_at = datetime.now().strftime("%d/%m/%Y, %H:%M:%S")
+    match.completed_at = format_ist_now()
 
     player = db.query(models.TournamentPlayer).filter(
         models.TournamentPlayer.tournament_id == tournament_id,

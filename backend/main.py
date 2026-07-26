@@ -1,4 +1,5 @@
 import os
+import re
 
 from fastapi import Depends, FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -13,15 +14,31 @@ app = FastAPI(title=APP_NAME)
 Base.metadata.create_all(bind=engine)
 ensure_runtime_columns()
 
-allowed_origins = [
-    origin.strip()
-    for origin in os.getenv("ALLOWED_ORIGINS", "http://localhost:5173").split(",")
-    if origin.strip()
-]
+def cors_settings():
+    configured = [
+        origin.strip()
+        for origin in os.getenv(
+            "ALLOWED_ORIGINS",
+            "http://localhost:5173,http://127.0.0.1:5173,https://*.vercel.app",
+        ).split(",")
+        if origin.strip()
+    ]
+    exact_origins = []
+    wildcard_patterns = []
+    for origin in configured:
+        if "*" in origin:
+            wildcard_patterns.append("^" + re.escape(origin).replace("\\*", ".*") + "$")
+        else:
+            exact_origins.append(origin)
+    return exact_origins, "|".join(wildcard_patterns) or None
+
+
+allowed_origins, allowed_origin_regex = cors_settings()
 
 app.add_middleware(
     CORSMiddleware,
     allow_origins=allowed_origins,
+    allow_origin_regex=allowed_origin_regex,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -46,3 +63,8 @@ app.include_router(challenges.router, prefix="/challenges", dependencies=protect
 @app.get("/")
 def root():
     return {"status": f"{APP_NAME} running"}
+
+
+@app.get("/health")
+def health():
+    return {"status": "ok", "service": APP_NAME}
