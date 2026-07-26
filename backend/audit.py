@@ -25,6 +25,8 @@ def get_controls(db: Session) -> models.SecurityControl:
 
 def require_manager_pin(db: Session, pin: str | None) -> None:
     controls = get_controls(db)
+    if not controls.require_pin_for_resets:
+        return
     if not controls.manager_pin_hash:
         raise HTTPException(status_code=400, detail="Manager PIN is not configured")
     if not pin or not verify_password(pin, controls.manager_pin_hash):

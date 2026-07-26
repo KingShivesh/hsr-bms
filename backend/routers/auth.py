@@ -1,5 +1,7 @@
-from fastapi import APIRouter, Depends, HTTPException
-from pydantic import BaseModel
+import time
+
+from fastapi import APIRouter, Depends, HTTPException, Request
+from pydantic import BaseModel, Field
 from sqlalchemy.orm import Session
 
 from database import get_db
@@ -9,16 +11,63 @@ import models
 router = APIRouter()
 DEFAULT_STAFF_USERNAME = "staff"
 DEFAULT_STAFF_PASSWORD = "staff123"
+MAX_LOGIN_FAILURES = 5
+LOGIN_WINDOW_SECONDS = 15 * 60
+LOGIN_LOCK_SECONDS = 10 * 60
+_login_failures: dict[str, list[float]] = {}
 
 
 class LoginRequest(BaseModel):
-    username: str
-    password: str
+    username: str = Field(min_length=1, max_length=80)
+    password: str = Field(min_length=1, max_length=128)
 
 
 class ChangeAuthRequest(BaseModel):
-    username: str
-    password: str
+    username: str = Field(min_length=3, max_length=80)
+    password: str = Field(min_length=8, max_length=128)
+
+
+def login_key(request: Request, username: str) -> str:
+    forwarded_for = request.headers.get("x-forwarded-for", "")
+    client_ip = forwarded_for.split(",", 1)[0].strip()
+    if not client_ip and request.client:
+        client_ip = request.client.host
+    return f"{client_ip or 'unknown'}:{username.strip().lower()}"
+
+
+def assert_login_allowed(request: Request, username: str) -> str:
+    key = login_key(request, username)
+    now = time.time()
+    recent = [
+        ts for ts in _login_failures.get(key, [])
+        if now - ts < LOGIN_WINDOW_SECONDS
+    ]
+    _login_failures[key] = recent
+    if len(recent) >= MAX_LOGIN_FAILURES:
+        raise HTTPException(
+            status_code=429,
+            detail="Too many login attempts. Try again in 10 minutes.",
+            headers={"Retry-After": str(LOGIN_LOCK_SECONDS)},
+        )
+    return key
+
+
+def record_login_failure(key: str) -> None:
+    _login_failures.setdefault(key, []).append(time.time())
+
+
+def clear_login_failures(key: str) -> None:
+    _login_failures.pop(key, None)
+
+
+def get_or_create_settings(db: Session) -> models.Settings:
+    settings = db.query(models.Settings).first()
+    if settings:
+        return settings
+    settings = models.Settings()
+    db.add(settings)
+    db.flush()
+    return settings
 
 
 def upgrade_staff_password_if_plain(db: Session, settings: models.Settings, plain: str) -> None:
@@ -50,15 +99,15 @@ def ensure_staff_credentials(db: Session, settings: models.Settings) -> tuple[st
 
 
 @router.post("/login")
-def login(body: LoginRequest, db: Session = Depends(get_db)):
-    settings = db.query(models.Settings).first()
-    if not settings:
-        raise HTTPException(status_code=500, detail="Settings not found, run seed.py")
+def login(body: LoginRequest, request: Request, db: Session = Depends(get_db)):
+    settings = get_or_create_settings(db)
     username = body.username.strip()
-    password = body.password.strip()
+    password = body.password
+    attempt_key = assert_login_allowed(request, username)
 
     if username == settings.username and verify_password(password, settings.password):
         upgrade_password_if_plain(db, settings, password)
+        clear_login_failures(attempt_key)
         return {
             "token": create_token(username, "admin"),
             "role": "admin",
@@ -68,12 +117,14 @@ def login(body: LoginRequest, db: Session = Depends(get_db)):
     staff_username, staff_password = ensure_staff_credentials(db, settings)
     if username == staff_username and verify_password(password, staff_password):
         upgrade_staff_password_if_plain(db, settings, password)
+        clear_login_failures(attempt_key)
         return {
             "token": create_token(username, "staff"),
             "role": "staff",
             "username": username,
         }
 
+    record_login_failure(attempt_key)
     raise HTTPException(status_code=401, detail="Invalid username or password")
 
 
@@ -88,15 +139,15 @@ def change_auth(
     db: Session = Depends(get_db),
     _: dict = Depends(require_admin),
 ):
-    if len(body.password) < 6:
-        raise HTTPException(status_code=400, detail="Password must be at least 6 characters")
+    username = body.username.strip()
+    password = body.password.strip()
+    if not username:
+        raise HTTPException(status_code=400, detail="Username is required")
 
-    settings = db.query(models.Settings).first()
-    if not settings:
-        raise HTTPException(status_code=500, detail="Settings not found")
+    settings = get_or_create_settings(db)
 
-    settings.username = body.username
-    settings.password = hash_password(body.password)
+    settings.username = username
+    settings.password = hash_password(password)
     db.commit()
     return {"ok": True}
 
@@ -107,14 +158,14 @@ def change_staff_auth(
     db: Session = Depends(get_db),
     _: dict = Depends(require_admin),
 ):
-    if len(body.password) < 6:
-        raise HTTPException(status_code=400, detail="Password must be at least 6 characters")
+    username = body.username.strip()
+    password = body.password.strip()
+    if not username:
+        raise HTTPException(status_code=400, detail="Username is required")
 
-    settings = db.query(models.Settings).first()
-    if not settings:
-        raise HTTPException(status_code=500, detail="Settings not found")
+    settings = get_or_create_settings(db)
 
-    settings.staff_username = body.username
-    settings.staff_password = hash_password(body.password)
+    settings.staff_username = username
+    settings.staff_password = hash_password(password)
     db.commit()
     return {"ok": True}

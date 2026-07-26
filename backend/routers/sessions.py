@@ -7,9 +7,10 @@ from datetime import datetime, timedelta
 from routers.members import update_member_on_checkout
 import models, time, math, json, uuid
 from typing import Optional
-from audit import get_controls, log_action
+from audit import get_controls, log_action, require_manager_pin
 from pricing import calc_checkout, get_peak_multiplier
 from validators import require_full_name
+from deps import require_admin
 from hsr_config import format_ist_now, get_ist_now, rate_for_table
 
 router = APIRouter()
@@ -703,7 +704,13 @@ def stop_session(
     }
 
 @router.post("/reset/{table_id}")
-def reset_session(table_id: str, manager_pin: str = "", db: Session = Depends(get_db)):
+def reset_session(
+    table_id: str,
+    manager_pin: str = "",
+    db: Session = Depends(get_db),
+    _: dict = Depends(require_admin),
+):
+    require_manager_pin(db, manager_pin)
     sess = active_session_for_table(db, table_id)
     if sess:
         elapsed_ms = sess.elapsed_ms if sess.paused else time.time() * 1000 - sess.start_time

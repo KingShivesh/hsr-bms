@@ -1,9 +1,11 @@
+import os
 from datetime import datetime
 from zoneinfo import ZoneInfo
 
 APP_NAME = "HSR Snooker Cafe BMS"
 CSV_PREFIX = "hsr_snooker_cafe"
 IST_TZ = ZoneInfo("Asia/Kolkata")
+DEFAULT_SECRET_KEY = "billiards-secret-key-change-in-production"
 
 
 def get_ist_now() -> datetime:
@@ -17,6 +19,23 @@ def get_ist_today_str(fmt: str = "%d/%m/%Y") -> str:
 
 def format_ist_now(fmt: str = "%d/%m/%Y, %H:%M:%S") -> str:
     return get_ist_now().strftime(fmt)
+
+
+def is_production_env() -> bool:
+    env = (os.getenv("APP_ENV") or os.getenv("ENVIRONMENT") or "").strip().lower()
+    return env in {"prod", "production"} or bool(os.getenv("RENDER"))
+
+
+def validate_runtime_config() -> None:
+    secret = os.getenv("SECRET_KEY", "")
+    if is_production_env() and (
+        not secret
+        or secret == DEFAULT_SECRET_KEY
+        or len(secret) < 32
+    ):
+        raise RuntimeError(
+            "Set a strong SECRET_KEY before running the backend in production."
+        )
 
 TABLE_RATES = {
     "t1": 320,

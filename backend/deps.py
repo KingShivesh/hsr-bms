@@ -8,8 +8,9 @@ from jose import JWTError, jwt
 from sqlalchemy.orm import Session
 
 import models
+from hsr_config import DEFAULT_SECRET_KEY
 
-SECRET_KEY = os.getenv("SECRET_KEY", "billiards-secret-key-change-in-production")
+SECRET_KEY = os.getenv("SECRET_KEY", DEFAULT_SECRET_KEY)
 ALGORITHM = "HS256"
 TOKEN_HOURS = 24
 
@@ -58,11 +59,14 @@ def get_current_claims(
     try:
         payload = jwt.decode(credentials.credentials, SECRET_KEY, algorithms=[ALGORITHM])
         username = payload.get("sub")
+        role = payload.get("role") or "admin"
         if not username:
             raise HTTPException(status_code=401, detail="Invalid token")
+        if role not in {"admin", "staff"}:
+            raise HTTPException(status_code=401, detail="Invalid token role")
         return {
             "username": username,
-            "role": payload.get("role") or "admin",
+            "role": role,
         }
     except JWTError:
         raise HTTPException(

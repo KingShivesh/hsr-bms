@@ -1,16 +1,25 @@
 import os
 import re
 
-from fastapi import Depends, FastAPI
+from fastapi import Depends, FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
 
 import models
 from database import Base, engine, ensure_runtime_columns
 from deps import get_current_user
-from hsr_config import APP_NAME
+from hsr_config import APP_NAME, is_production_env, validate_runtime_config
 from routers import auth, bookings, challenges, food, members, operations, reports, sessions, settings, staff, tournaments, waitlist
 
-app = FastAPI(title=APP_NAME)
+validate_runtime_config()
+MAX_REQUEST_BYTES = int(os.getenv("MAX_REQUEST_BYTES", str(1024 * 1024)))
+
+app = FastAPI(
+    title=APP_NAME,
+    docs_url=None if is_production_env() else "/docs",
+    redoc_url=None if is_production_env() else "/redoc",
+    openapi_url=None if is_production_env() else "/openapi.json",
+)
 Base.metadata.create_all(bind=engine)
 ensure_runtime_columns()
 
@@ -43,6 +52,35 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+@app.middleware("http")
+async def add_security_headers(request: Request, call_next):
+    content_length = request.headers.get("content-length")
+    try:
+        request_bytes = int(content_length or "0")
+    except ValueError:
+        request_bytes = 0
+    if request_bytes > MAX_REQUEST_BYTES:
+        return JSONResponse(
+            status_code=413,
+            content={"detail": "Request body too large"},
+        )
+    response = await call_next(request)
+    response.headers.setdefault("X-Content-Type-Options", "nosniff")
+    response.headers.setdefault("X-Frame-Options", "DENY")
+    response.headers.setdefault("Referrer-Policy", "no-referrer")
+    response.headers.setdefault("Cache-Control", "no-store")
+    response.headers.setdefault(
+        "Permissions-Policy",
+        "camera=(), microphone=(), geolocation=()",
+    )
+    if request.headers.get("x-forwarded-proto") == "https" or request.url.scheme == "https":
+        response.headers.setdefault(
+            "Strict-Transport-Security",
+            "max-age=31536000; includeSubDomains",
+        )
+    return response
+
 
 protected = [Depends(get_current_user)]
 
