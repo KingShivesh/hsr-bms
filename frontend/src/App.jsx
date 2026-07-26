@@ -3,7 +3,7 @@ import Login from "./components/Login.jsx";
 import Sidebar from "./components/Sidebar.jsx";
 import Topbar from "./components/Topbar.jsx";
 import { ToastProvider } from "./components/Toast.jsx";
-import { getMe, getSummary } from "./api/index.js";
+import { getBackendHealth, getMe, getSummary } from "./api/index.js";
 
 const Dashboard = lazy(() => import("./components/Dashboard.jsx"));
 const TablesTab = lazy(() => import("./components/tabs/TablesTab.jsx"));
@@ -13,12 +13,31 @@ const SettingsTab = lazy(() => import("./components/tabs/SettingsTab.jsx"));
 const FoodTab = lazy(() => import("./components/tabs/FoodTab.jsx"));
 const TournamentTab = lazy(() => import("./components/tabs/TournamentTab.jsx"));
 
+function BackendStatusBanner({ backendStatus, onRetry }) {
+  if (backendStatus.state !== "offline") return null;
+  return (
+    <div className="backend-status-banner" role="status">
+      <i className="ti ti-alert-triangle" aria-hidden="true" />
+      <span>{backendStatus.message}</span>
+      {backendStatus.requestId && <code>{backendStatus.requestId}</code>}
+      <button type="button" onClick={onRetry}>
+        Retry
+      </button>
+    </div>
+  );
+}
+
 export default function App() {
   const [loggedIn, setLoggedIn] = useState(!!localStorage.getItem("token"));
   const [role, setRole] = useState(localStorage.getItem("role") || "admin");
   const [username, setUsername] = useState(localStorage.getItem("username") || "");
   const [page, setPage] = useState("tables");
   const [newSessionRequest, setNewSessionRequest] = useState(0);
+  const [backendStatus, setBackendStatus] = useState({
+    state: "checking",
+    message: "Checking backend connection...",
+    requestId: "",
+  });
   const [metrics, setMetrics] = useState({
     sale: 0,
     cust: 0,
@@ -28,6 +47,23 @@ export default function App() {
     avg_time: 0,
     top_table: "-",
   });
+
+  useEffect(() => {
+    checkBackend();
+    const healthIv = setInterval(checkBackend, 30000);
+    const handleBackendFailure = (event) => {
+      setBackendStatus({
+        state: "offline",
+        message: event.detail?.message || "Backend is unreachable.",
+        requestId: event.detail?.requestId || "",
+      });
+    };
+    window.addEventListener("backend:request-failed", handleBackendFailure);
+    return () => {
+      clearInterval(healthIv);
+      window.removeEventListener("backend:request-failed", handleBackendFailure);
+    };
+  }, []);
 
   useEffect(() => {
     if (!loggedIn) return;
@@ -54,6 +90,23 @@ export default function App() {
       localStorage.setItem("username", nextUsername);
     } catch (e) {
       console.error(e);
+    }
+  }
+
+  async function checkBackend() {
+    try {
+      await getBackendHealth();
+      setBackendStatus({
+        state: "online",
+        message: "",
+        requestId: "",
+      });
+    } catch (e) {
+      setBackendStatus({
+        state: "offline",
+        message: e.userMessage || "Backend is unreachable.",
+        requestId: e.config?.headers?.["X-Client-Request-Id"] || "",
+      });
     }
   }
 
@@ -84,13 +137,16 @@ export default function App() {
 
   if (!loggedIn) {
     return (
-      <Login
-        onLogin={(nextRole, nextUsername) => {
-          setRole(nextRole || "admin");
-          setUsername(nextUsername || "");
-          setLoggedIn(true);
-        }}
-      />
+      <>
+        <BackendStatusBanner backendStatus={backendStatus} onRetry={checkBackend} />
+        <Login
+          onLogin={(nextRole, nextUsername) => {
+            setRole(nextRole || "admin");
+            setUsername(nextUsername || "");
+            setLoggedIn(true);
+          }}
+        />
+      </>
     );
   }
 
@@ -120,6 +176,7 @@ export default function App() {
             role={role}
             username={username}
           />
+          <BackendStatusBanner backendStatus={backendStatus} onRetry={checkBackend} />
           <Suspense
             fallback={
               <div className="page">

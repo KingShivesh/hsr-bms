@@ -22,7 +22,7 @@ export default function Login({ onLogin }) {
       if (err.response?.status === 401) {
         setError("Invalid username or password");
       } else {
-        setError("Backend is not reachable. Start the backend and try again.");
+        setError(err.userMessage || "Backend is not reachable. Try again.");
       }
       setTimeout(() => setError(""), 3000);
     } finally {

@@ -1,20 +1,82 @@
 import axios from "axios";
 
+const API_TIMEOUT_MS = Number(import.meta.env.VITE_API_TIMEOUT_MS || 45000);
+const SAFE_RETRY_METHODS = new Set(["get", "head", "options"]);
+const RETRY_DELAYS_MS = [800, 1800];
+let lastBackendEventAt = 0;
+
 const api = axios.create({
   baseURL: import.meta.env.VITE_API_URL || "http://localhost:8000",
+  timeout: API_TIMEOUT_MS,
 });
 
 const tableKey = (table_id) => String(table_id || "").trim().toLowerCase();
+const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+function requestId() {
+  if (globalThis.crypto?.randomUUID) return globalThis.crypto.randomUUID();
+  return `${Date.now()}-${Math.random().toString(16).slice(2)}`;
+}
+
+function shouldRetryRequest(err) {
+  const cfg = err.config || {};
+  const method = String(cfg.method || "get").toLowerCase();
+  if (!SAFE_RETRY_METHODS.has(method)) return false;
+  if (cfg.__retryCount >= RETRY_DELAYS_MS.length) return false;
+  if (cfg.noRetry) return false;
+  if (!err.response) return true;
+  return err.response.status >= 500;
+}
+
+function backendErrorMessage(err) {
+  if (err.code === "ECONNABORTED") {
+    return "Backend took too long to respond. It may be waking up. Please try again.";
+  }
+  if (!err.response) {
+    return "Backend is unreachable. Check internet, Render backend status, or VITE_API_URL.";
+  }
+  if (err.response.status >= 500) {
+    return "Backend had a server error. Try again and check Render logs if it repeats.";
+  }
+  return err.response.data?.detail || err.message || "Request failed";
+}
+
+function notifyBackendFailure(err) {
+  const now = Date.now();
+  if (now - lastBackendEventAt < 8000) return;
+  lastBackendEventAt = now;
+  window.dispatchEvent(
+    new CustomEvent("backend:request-failed", {
+      detail: {
+        message: backendErrorMessage(err),
+        requestId: err.config?.headers?.["X-Client-Request-Id"] || "",
+        status: err.response?.status || 0,
+      },
+    }),
+  );
+}
 
 api.interceptors.request.use((cfg) => {
+  cfg.headers = cfg.headers || {};
   const token = localStorage.getItem("token");
   if (token) cfg.headers.Authorization = `Bearer ${token}`;
+  cfg.headers["X-Client-Request-Id"] = cfg.headers["X-Client-Request-Id"] || requestId();
+  cfg.metadata = { startedAt: Date.now() };
   return cfg;
 });
 
 api.interceptors.response.use(
   (res) => res,
-  (err) => {
+  async (err) => {
+    if (shouldRetryRequest(err)) {
+      err.config.__retryCount = (err.config.__retryCount || 0) + 1;
+      await sleep(RETRY_DELAYS_MS[err.config.__retryCount - 1]);
+      return api(err.config);
+    }
+    err.userMessage = backendErrorMessage(err);
+    if (!err.response || err.response.status >= 500 || err.code === "ECONNABORTED") {
+      notifyBackendFailure(err);
+    }
     const isLogin = err.config?.url?.includes("/auth/login");
     if (err.response?.status === 401 && !isLogin) {
       localStorage.removeItem("token");
@@ -23,6 +85,8 @@ api.interceptors.response.use(
     return Promise.reject(err);
   },
 );
+
+export const getBackendHealth = () => api.get("/ready", { noRetry: false });
 
 // Auth
 export const login = (username, password) =>

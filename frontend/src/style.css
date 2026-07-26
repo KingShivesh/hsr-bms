@@ -9591,3 +9591,67 @@ body.dark .table-floor-tile.paused .table-floor-body {
   background: rgba(255, 139, 127, 0.12) !important;
   border-color: rgba(255, 139, 127, 0.28) !important;
 }
+
+.backend-status-banner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 12px 24px 0;
+  padding: 10px 12px;
+  border: 1px solid color-mix(in srgb, var(--premium-warning) 42%, var(--premium-border));
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--premium-warning) 12%, var(--premium-surface));
+  color: var(--premium-ink);
+  font-size: 13px;
+  font-weight: 750;
+}
+
+.backend-status-banner i {
+  color: var(--premium-warning);
+  font-size: 18px;
+}
+
+.backend-status-banner span {
+  flex: 1;
+  min-width: 0;
+}
+
+.backend-status-banner code {
+  max-width: 220px;
+  overflow: hidden;
+  padding: 4px 7px;
+  border: 1px solid var(--premium-border);
+  border-radius: 7px;
+  color: var(--premium-muted);
+  font-size: 11px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.backend-status-banner button {
+  min-height: 32px;
+  padding: 0 12px;
+  border: 1px solid color-mix(in srgb, var(--premium-accent) 35%, var(--premium-border));
+  border-radius: 8px;
+  background: var(--premium-surface);
+  color: var(--premium-accent-hover);
+  font-size: 12px;
+  font-weight: 850;
+  cursor: pointer;
+}
+
+body.dark .backend-status-banner {
+  background: color-mix(in srgb, var(--premium-warning) 16%, var(--premium-surface));
+}
+
+@media (max-width: 720px) {
+  .backend-status-banner {
+    align-items: flex-start;
+    flex-wrap: wrap;
+    margin: 10px 12px 0;
+  }
+
+  .backend-status-banner span {
+    flex-basis: calc(100% - 32px);
+  }
+}
