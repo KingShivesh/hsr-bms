@@ -50,7 +50,7 @@ export default function App() {
 
   useEffect(() => {
     checkBackend();
-    const healthIv = setInterval(checkBackend, 30000);
+    const healthIv = setInterval(checkBackend, 60000);
     const handleBackendFailure = (event) => {
       setBackendStatus({
         state: "offline",
@@ -69,7 +69,7 @@ export default function App() {
     if (!loggedIn) return;
     fetchCurrentUser();
     fetchMetrics();
-    const iv = setInterval(fetchMetrics, 10000);
+    const iv = setInterval(fetchMetrics, 20000);
     return () => clearInterval(iv);
   }, [loggedIn]);
 

@@ -42,6 +42,24 @@ def report_transactions(db: Session):
         if valid_report_transaction(t)
     ]
 
+def report_transactions_from(query):
+    return [
+        t for t in query.all()
+        if valid_report_transaction(t)
+    ]
+
+def today_transactions(db: Session, today: str | None = None):
+    today = today or get_ist_today_str()
+    return report_transactions_from(
+        db.query(models.Transaction).filter(models.Transaction.date.like(f"{today}%"))
+    )
+
+def recent_transactions(db: Session, days: int):
+    since_ms = (time.time() - days * 24 * 60 * 60) * 1000
+    return report_transactions_from(
+        db.query(models.Transaction).filter(models.Transaction.ts >= since_ms)
+    )
+
 def filter_transactions(transactions, period: str):
     now = get_ist_now()
     if period == "today":
@@ -63,10 +81,7 @@ def parse_food_items(raw_items: str | None):
 @router.get("/summary")
 def get_summary(db: Session = Depends(get_db)):
     today        = get_ist_today_str()
-    transactions = [
-        t for t in report_transactions(db)
-        if t.date and t.date.startswith(today)
-    ]
+    transactions = today_transactions(db, today)
     active = db.query(models.ActiveSession).filter(
         models.ActiveSession.customer_name != ""
     ).count()
@@ -204,10 +219,7 @@ def table_utilization(db: Session = Depends(get_db), _: dict = Depends(require_a
 @router.get("/closing-report")
 def closing_report(db: Session = Depends(get_db)):
     today = get_ist_today_str()
-    txns  = [
-        t for t in report_transactions(db)
-        if t.date and t.date.startswith(today)
-    ]
+    txns  = today_transactions(db, today)
 
     total_revenue  = sum(t.total       for t in txns)
     play_revenue   = sum(t.play_charge for t in txns)
@@ -219,10 +231,9 @@ def closing_report(db: Session = Depends(get_db)):
         method = t.payment_method if t.payment_method in payment_breakdown else "Cash"
         payment_breakdown[method] += t.total
 
-    food_only_orders = [
-        o for o in db.query(models.FoodOnlyOrder).all()
-        if o.date and o.date.startswith(today)
-    ]
+    food_only_orders = db.query(models.FoodOnlyOrder).filter(
+        models.FoodOnlyOrder.date.like(f"{today}%")
+    ).all()
     food_only_revenue = sum(o.total for o in food_only_orders)
     food_only_payment_breakdown = {"Cash": 0, "UPI": 0, "Card": 0}
     for o in food_only_orders:
@@ -330,7 +341,7 @@ def closing_insights(db: Session = Depends(get_db)):
     now_ms = time.time() * 1000
     controls = get_controls(db)
 
-    all_txns = report_transactions(db)
+    all_txns = recent_transactions(db, 8)
     today_txns = [t for t in all_txns if t.date and t.date.startswith(today)]
     prior_txns = []
     week_ago = now - timedelta(days=7)
@@ -426,7 +437,7 @@ def closing_insights(db: Session = Depends(get_db)):
 # ── Analytics (dashboard charts) ──
 @router.get("/analytics")
 def get_analytics(db: Session = Depends(get_db), _: dict = Depends(require_admin)):
-    transactions = report_transactions(db)
+    transactions = recent_transactions(db, 70)
 
     # Weekly revenue
     weekly = {}

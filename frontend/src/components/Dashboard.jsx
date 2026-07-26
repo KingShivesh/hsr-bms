@@ -204,18 +204,23 @@ export default function Dashboard({ metrics, onNavigate }) {
       }
     }
 
+    let deferredLoad = null;
+
     async function fetchAll() {
-      await Promise.all([
-        fetchActive(),
-        fetchAnalytics(),
-        fetchDigest(),
-      ]);
+      await fetchActive();
       setLoading(false);
+      deferredLoad = window.setTimeout(() => {
+        fetchDigest();
+        fetchAnalytics();
+      }, 200);
     }
 
     fetchAll();
-    const iv = setInterval(fetchActive, 15000);
-    return () => clearInterval(iv);
+    const iv = setInterval(fetchActive, 20000);
+    return () => {
+      clearInterval(iv);
+      if (deferredLoad) window.clearTimeout(deferredLoad);
+    };
   }, []);
 
   useEffect(() => {

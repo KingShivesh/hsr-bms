@@ -71,6 +71,36 @@ def ensure_runtime_columns():
             for column, ddl in required.items():
                 if column not in existing:
                     conn.execute(text(f"ALTER TABLE {table} ADD COLUMN {column} {ddl}"))
+        ensure_runtime_indexes(conn, existing_tables)
+
+def ensure_runtime_indexes(conn, existing_tables: set[str]):
+    indexes = {
+        "transactions": [
+            ("idx_transactions_date", "date"),
+            ("idx_transactions_ts", "ts"),
+            ("idx_transactions_table_ts", "table_id, ts"),
+        ],
+        "food_only_orders": [
+            ("idx_food_only_orders_date", "date"),
+            ("idx_food_only_orders_ts", "ts"),
+        ],
+        "active_sessions": [
+            ("idx_active_sessions_customer", "customer_name"),
+        ],
+        "session_frames": [
+            ("idx_session_frames_table_key", "table_id, session_key"),
+        ],
+        "bookings": [
+            ("idx_bookings_status_time", "status, booking_time"),
+        ],
+    }
+    for table, table_indexes in indexes.items():
+        if table not in existing_tables:
+            continue
+        for index_name, columns in table_indexes:
+            conn.execute(text(
+                f"CREATE INDEX IF NOT EXISTS {index_name} ON {table} ({columns})"
+            ))
 
 def get_db():
     db = SessionLocal()
