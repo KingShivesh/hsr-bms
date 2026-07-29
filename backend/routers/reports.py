@@ -1,5 +1,6 @@
-from fastapi import APIRouter, Depends, Query
+from fastapi import APIRouter, Depends, HTTPException, Query
 from fastapi.responses import StreamingResponse
+from pydantic import BaseModel
 from sqlalchemy.orm import Session
 from database import get_db
 from deps import require_admin
@@ -20,6 +21,11 @@ from hsr_config import (
 router = APIRouter()
 MAX_REPORT_DURATION_MINUTES = 12 * 60
 REPORT_TABLES = [table_id.upper() for table_id in TABLE_RATES]
+
+class DayCloseBody(BaseModel):
+    opened_float: int = 0
+    counted_cash: int = 0
+    notes: str = ""
 
 # ── helpers ──
 def parse_date(t: models.Transaction):
@@ -76,6 +82,24 @@ def parse_food_items(raw_items: str | None):
     except json.JSONDecodeError:
         return []
     return parsed if isinstance(parsed, list) else []
+
+def add_payment_breakdown(payment_breakdown: dict[str, int], method: str, total: int, split_json: str | None = ""):
+    if split_json:
+        try:
+            split_rows = json.loads(split_json or "[]")
+        except json.JSONDecodeError:
+            split_rows = []
+        if isinstance(split_rows, list) and split_rows:
+            for row in split_rows:
+                if not isinstance(row, dict):
+                    continue
+                split_method = row.get("method")
+                amount = int(row.get("amount") or 0)
+                if split_method in payment_breakdown and amount > 0:
+                    payment_breakdown[split_method] += amount
+            return
+    safe_method = method if method in payment_breakdown else "Cash"
+    payment_breakdown[safe_method] += total or 0
 
 # ── Summary ──
 @router.get("/summary")
@@ -228,8 +252,12 @@ def closing_report(db: Session = Depends(get_db)):
     avg_duration   = round(sum(t.duration for t in txns) / total_sessions) if total_sessions else 0
     payment_breakdown = {"Cash": 0, "UPI": 0, "Card": 0}
     for t in txns:
-        method = t.payment_method if t.payment_method in payment_breakdown else "Cash"
-        payment_breakdown[method] += t.total
+        add_payment_breakdown(
+            payment_breakdown,
+            t.payment_method,
+            t.total,
+            getattr(t, "payment_split_json", "[]"),
+        )
 
     food_only_orders = db.query(models.FoodOnlyOrder).filter(
         models.FoodOnlyOrder.date.like(f"{today}%")
@@ -248,6 +276,9 @@ def closing_report(db: Session = Depends(get_db)):
         models.ActiveSession.customer_name != ""
     ).all()
     active_table_ids = {s.table_id.lower() for s in active_sessions}
+    day_close = db.query(models.DayClose).filter(
+        models.DayClose.business_date == today
+    ).first()
     open_tables = [
         {
             "table_id": s.table_id.upper(),
@@ -298,6 +329,16 @@ def closing_report(db: Session = Depends(get_db)):
         "upi_total": payment_breakdown["UPI"],
         "card_total": payment_breakdown["Card"],
         "payment_breakdown": payment_breakdown,
+        "day_close": {
+            "closed": bool(day_close),
+            "closed_at": day_close.closed_at if day_close else "",
+            "closed_by": day_close.closed_by if day_close else "",
+            "opened_float": day_close.opened_float if day_close else 0,
+            "counted_cash": day_close.counted_cash if day_close else 0,
+            "expected_cash": day_close.expected_cash if day_close else payment_breakdown["Cash"],
+            "variance": day_close.variance if day_close else 0,
+            "notes": day_close.notes if day_close else "",
+        },
         "total_sessions": total_sessions,
         "avg_duration":   avg_duration,
         "active_tables": len(open_tables),
@@ -329,9 +370,51 @@ def closing_report(db: Session = Depends(get_db)):
         "transactions":   [
             { "tbl": t.table_id, "nm": t.customer_name, "dur": t.duration,
               "ply": t.play_charge, "famt": t.food_charge, "tot": t.total,
-              "payment_method": t.payment_method or "Cash" }
+              "payment_method": t.payment_method or "Cash",
+              "payment_split": parse_food_items(getattr(t, "payment_split_json", "[]")) }
             for t in txns
         ]
+    }
+
+@router.post("/day-close")
+def close_day(
+    body: DayCloseBody,
+    db: Session = Depends(get_db),
+    user: dict = Depends(require_admin),
+):
+    report = closing_report(db)
+    if not report["can_close_day"]:
+        raise HTTPException(status_code=400, detail="Close all running tables before closing the day.")
+
+    expected_cash = report["payment_breakdown"]["Cash"]
+    counted_cash = max(0, int(body.counted_cash or 0))
+    opened_float = max(0, int(body.opened_float or 0))
+    variance = counted_cash - (expected_cash + opened_float)
+    existing = db.query(models.DayClose).filter(
+        models.DayClose.business_date == report["date"]
+    ).first()
+    row = existing or models.DayClose(business_date=report["date"])
+    row.opened_float = opened_float
+    row.counted_cash = counted_cash
+    row.expected_cash = expected_cash
+    row.variance = variance
+    row.payment_breakdown_json = json.dumps(report["payment_breakdown"])
+    row.snapshot_json = json.dumps(report)
+    row.notes = (body.notes or "").strip()
+    row.closed_at = get_ist_now().strftime("%d/%m/%Y, %H:%M:%S")
+    row.closed_by = user.get("username") or "admin"
+    if not existing:
+        db.add(row)
+    db.commit()
+    return {
+        "ok": True,
+        "date": row.business_date,
+        "closed_at": row.closed_at,
+        "closed_by": row.closed_by,
+        "expected_cash": row.expected_cash,
+        "opened_float": row.opened_float,
+        "counted_cash": row.counted_cash,
+        "variance": row.variance,
     }
 
 @router.get("/closing-insights")

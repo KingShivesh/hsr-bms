@@ -41,10 +41,12 @@ def log_action(
     severity: str = "info",
     amount: int = 0,
     staff: str = "admin",
+    table_id: str = "",
 ) -> None:
     db.add(models.AuditLog(
         date=format_ist_now(),
         ts=time.time() * 1000,
+        table_id=(table_id or "").upper(),
         action=action,
         severity=severity,
         staff=staff,

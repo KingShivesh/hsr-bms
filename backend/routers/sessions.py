@@ -15,7 +15,7 @@ from hsr_config import format_ist_now, get_ist_now, rate_for_table
 
 router = APIRouter()
 MAX_SESSION_DURATION_MINUTES = 12 * 60
-PAYMENT_METHODS = {"Cash", "UPI", "Card"}
+PAYMENT_METHODS = {"Cash", "UPI", "Card", "Split"}
 GENERIC_SESSION_PLAYER_NAMES = {"player one", "player two", "walk in customer"}
 
 class StartSession(BaseModel):
@@ -42,6 +42,9 @@ class UpdateNotes(BaseModel):
 
 class CloseFrameBody(BaseModel):
     loser_name: str
+
+class TransferTableBody(BaseModel):
+    target_table_id: str
 
 class MaintenanceBody(BaseModel):
     reason: str = "Under maintenance"
@@ -139,6 +142,38 @@ def distribute_amount(amount: int, count: int) -> list[int]:
     base = amount // count
     remainder = amount % count
     return [base + (1 if index < remainder else 0) for index in range(count)]
+
+def parse_payment_split(raw: str | None, total: int, fallback_method: str) -> tuple[str, list[dict]]:
+    fallback_method = fallback_method if fallback_method in {"Cash", "UPI", "Card"} else "Cash"
+    if not raw:
+        return fallback_method, [{"method": fallback_method, "amount": total}]
+
+    try:
+        parsed = json.loads(raw)
+    except json.JSONDecodeError:
+        raise HTTPException(status_code=400, detail="Invalid payment split")
+    if not isinstance(parsed, list):
+        raise HTTPException(status_code=400, detail="Invalid payment split")
+
+    split_rows = []
+    for row in parsed:
+        if not isinstance(row, dict):
+            continue
+        method = str(row.get("method") or "").strip()
+        amount = int(row.get("amount") or 0)
+        if method not in {"Cash", "UPI", "Card"}:
+            raise HTTPException(status_code=400, detail="Invalid split payment method")
+        if amount < 0:
+            raise HTTPException(status_code=400, detail="Split amount cannot be negative")
+        if amount > 0:
+            split_rows.append({"method": method, "amount": amount})
+
+    if not split_rows:
+        raise HTTPException(status_code=400, detail="Enter at least one payment amount")
+    if sum(row["amount"] for row in split_rows) != total:
+        raise HTTPException(status_code=400, detail="Split payments must match the final bill")
+    stored_method = split_rows[0]["method"] if len(split_rows) == 1 else "Split"
+    return stored_method, split_rows
 
 def allocate_by_weight(weights: dict[str, int], amount: int) -> dict[str, int]:
     names = list(weights.keys())
@@ -373,6 +408,12 @@ def start_session(body: StartSession, db: Session = Depends(get_db)):
     if billing_mode == "lp" and len(players) > 1:
         frame = create_frame_for_session(db, sess, 1)
         frames.append(frame)
+    log_action(
+        db,
+        "session_start",
+        f"{table_id.upper()} started as {billing_mode} at ₹{rate}/hr",
+        table_id=table_id,
+    )
     db.commit()
     for frame in frames:
         db.refresh(frame)
@@ -386,9 +427,12 @@ def pause_session(table_id: str, db: Session = Depends(get_db)):
     if not sess.paused:
         sess.elapsed_ms = time.time() * 1000 - sess.start_time
         sess.paused     = True
+        action = "session_pause"
     else:
         sess.start_time = time.time() * 1000 - sess.elapsed_ms
         sess.paused     = False
+        action = "session_resume"
+    log_action(db, action, f"{normalize_table_id(table_id).upper()} {action.replace('session_', '')}", table_id=table_id)
     db.commit()
     return {"ok": True, "paused": sess.paused}
 
@@ -525,6 +569,8 @@ def stop_session(
     discount_type:  str = "none",
     discount_value: int = 0,
     closed_at_ms:   float | None = None,
+    discount_reason: str = "",
+    payment_split_json: str = "",
     db: Session = Depends(get_db)
 ):
     sess = active_session_for_table(db, table_id)
@@ -567,6 +613,14 @@ def stop_session(
     elif discount_type != "none":
         raise HTTPException(status_code=400, detail="Invalid discount type")
     total = max(0, raw_total - discount_amount)
+    discount_reason = normalize_person_name(discount_reason)
+    if discount_amount > 0 and not discount_reason:
+        raise HTTPException(status_code=400, detail="Enter a reason for the discount.")
+    payment_method, payment_split = parse_payment_split(
+        payment_split_json,
+        total,
+        payment_method,
+    )
 
     food_items = json.loads(sess.food_items or "[]")
     food_str   = ", ".join(f"{x['item']} x{x['qty']}" for x in food_items) or "None"
@@ -629,8 +683,13 @@ def stop_session(
         share_note = f"Sharing between {share_count} players; approx ₹{split_per_head} each"
         notes = f"{notes} | {share_note}" if notes else share_note
     if discount_amount > 0:
-        discount_note = f"Discount ₹{discount_amount} applied; original total ₹{raw_total}"
+        discount_note = f"Discount ₹{discount_amount} applied; original total ₹{raw_total}; reason: {discount_reason}"
         notes = f"{notes} | {discount_note}" if notes else discount_note
+    if payment_method == "Split":
+        payment_note = "Payment split: " + ", ".join(
+            f"{row['method']} ₹{row['amount']}" for row in payment_split
+        )
+        notes = f"{notes} | {payment_note}" if notes else payment_note
     if len(player_breakdown) > 1 or any(item["food"] for item in player_breakdown):
         settlement_note = "Settlement: " + "; ".join(
             f"{item['name']} ₹{item['total']} (table ₹{item['table']}, food ₹{item['food']})"
@@ -662,6 +721,8 @@ def stop_session(
         gst_amt       = checkout["gst_amt"],
         peak_surcharge = checkout["peak_surcharge"],
         payment_method = payment_method,
+        payment_split_json = json.dumps(payment_split),
+        discount_reason = discount_reason,
     )
     db.add(t)
     if player_breakdown:
@@ -673,6 +734,13 @@ def stop_session(
     for frame in frames:
         db.delete(frame)
     db.delete(sess)
+    log_action(
+        db,
+        "session_close",
+        f"{table_id.upper()} closed for ₹{total} via {payment_method}",
+        amount=total,
+        table_id=table_id,
+    )
     db.commit()
 
     return {
@@ -692,6 +760,8 @@ def stop_session(
         "peak_surcharge": checkout["peak_surcharge"],
         "peak_label": checkout["peak_label"],
         "payment_method": payment_method,
+        "payment_split": payment_split,
+        "discount_reason": discount_reason,
         "billing_mode": billing_mode,
         "session_started_at": session_started_at,
         "session_ended_at": closed_at_ms,
@@ -701,6 +771,65 @@ def stop_session(
         "share_count": share_count,
         "player_breakdown": player_breakdown,
         "frames": serialized_frames,
+    }
+
+@router.post("/transfer/{table_id}")
+def transfer_session(
+    table_id: str,
+    body: TransferTableBody,
+    db: Session = Depends(get_db),
+):
+    source_id = normalize_table_id(table_id)
+    target_id = normalize_table_id(body.target_table_id)
+    if not source_id or not target_id:
+        raise HTTPException(status_code=400, detail="Choose a source and target table.")
+    if source_id == target_id:
+        raise HTTPException(status_code=400, detail="Choose a different table.")
+
+    sess = active_session_for_table(db, source_id)
+    if not sess:
+        raise HTTPException(status_code=404, detail="No active session")
+    if active_session_for_table(db, target_id):
+        raise HTTPException(status_code=400, detail="Target table already has a running session.")
+    maint = maintenance_for_table(db, target_id)
+    if maint:
+        raise HTTPException(status_code=400, detail=f"Target table is under maintenance: {maint.reason}")
+
+    settings = db.query(models.Settings).first()
+    old_rate = sess.rate
+    new_rate = rate_for_table(target_id, old_rate, settings)
+    old_key = ensure_session_key(db, sess)
+    new_key = new_session_key(target_id)
+    frames = active_session_frames(db, sess)
+
+    sess.table_id = target_id
+    sess.rate = new_rate
+    sess.session_key = new_key
+    for frame in frames:
+        frame.table_id = target_id
+        frame.session_key = new_key
+
+    log_action(
+        db,
+        "session_transfer",
+        f"{source_id.upper()} transferred to {target_id.upper()} (₹{old_rate}/hr to ₹{new_rate}/hr)",
+        table_id=source_id,
+    )
+    log_action(
+        db,
+        "session_transfer",
+        f"{source_id.upper()} transferred to {target_id.upper()}",
+        table_id=target_id,
+    )
+    db.commit()
+    db.refresh(sess)
+    return {
+        "ok": True,
+        "from": source_id,
+        "to": target_id,
+        "rate": new_rate,
+        "session_key": new_key,
+        "previous_session_key": old_key,
     }
 
 @router.post("/reset/{table_id}")
@@ -720,6 +849,7 @@ def reset_session(
             f"{table_id.upper()} reset while assigned to {sess.customer_name}",
             severity="critical",
             amount=math.ceil((elapsed_ms / 1000) / 60),
+            table_id=table_id,
         )
         for frame in active_session_frames(db, sess):
             db.delete(frame)
@@ -744,6 +874,7 @@ def start_frame(table_id: str, db: Session = Depends(get_db)):
         sess,
         max((existing.frame_no for existing in frames), default=0) + 1,
     )
+    log_action(db, "frame_start", f"Frame {frame.frame_no} started", table_id=table_id)
     db.commit()
     db.refresh(frame)
     frames = active_session_frames(db, sess)
@@ -773,6 +904,7 @@ def close_frame(table_id: str, body: CloseFrameBody, db: Session = Depends(get_d
     open_frame.status = "closed"
     open_frame.ended_at = time.time() * 1000
     open_frame.loser_name = loser_name
+    log_action(db, "frame_close", f"Frame {open_frame.frame_no} lost by {loser_name}", table_id=table_id)
     db.commit()
     frames = active_session_frames(db, sess)
     return {
@@ -821,6 +953,13 @@ def add_food(table_id: str, body: FoodItem, db: Session = Depends(get_db)):
     items.append(line)
     sess.food_items  = json.dumps(items)
     sess.food_total += price
+    log_action(
+        db,
+        "food_add",
+        f"{table_id.upper()} added {line['item']} x{body.qty}",
+        amount=price,
+        table_id=table_id,
+    )
     db.commit()
     return {"ok": True, "food_total": sess.food_total}
 
@@ -944,6 +1083,25 @@ def table_history(table_id: str, db: Session = Depends(get_db)):
             "payer_name": getattr(t, "payer_name", "") or "",
         }
         for t in txns
+    ]
+
+@router.get("/audit/{table_id}")
+def table_audit(table_id: str, limit: int = 30, db: Session = Depends(get_db)):
+    table_code = normalize_table_id(table_id).upper()
+    rows = db.query(models.AuditLog).filter(
+        func.upper(models.AuditLog.table_id) == table_code
+    ).order_by(models.AuditLog.ts.desc()).limit(max(1, min(limit, 100))).all()
+    return [
+        {
+            "date": row.date,
+            "ts": row.ts,
+            "table_id": row.table_id,
+            "action": row.action,
+            "severity": row.severity,
+            "detail": row.detail,
+            "amount": row.amount or 0,
+        }
+        for row in rows
     ]
 
 @router.post("/maintenance/{table_id}")

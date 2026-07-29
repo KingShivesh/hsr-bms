@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getClosingInsights, getClosingReport } from "../../api/index.js";
+import { closeDay, getClosingInsights, getClosingReport } from "../../api/index.js";
 
 function money(value) {
   return `₹${Number(value || 0).toLocaleString("en-IN")}`;
@@ -34,6 +34,9 @@ export default function ClosingTab() {
   const [insights, setInsights] = useState(null);
   const [loading, setLoading] = useState(true);
   const [closedDay, setClosedDay] = useState(false);
+  const [openingFloat, setOpeningFloat] = useState("");
+  const [countedCash, setCountedCash] = useState("");
+  const [closingNotes, setClosingNotes] = useState("");
 
   useEffect(() => {
     async function fetchClosing() {
@@ -44,7 +47,11 @@ export default function ClosingTab() {
         ]);
         setData(reportRes.data);
         setInsights(insightsRes.data);
-        setClosedDay(localStorage.getItem(`dayClosed:${reportRes.data.date}`) === "true");
+        const closeRecord = reportRes.data.day_close || {};
+        setClosedDay(!!closeRecord.closed);
+        setOpeningFloat(closeRecord.opened_float ? String(closeRecord.opened_float) : "");
+        setCountedCash(closeRecord.counted_cash ? String(closeRecord.counted_cash) : "");
+        setClosingNotes(closeRecord.notes || "");
       } catch (e) {
         console.error(e);
       } finally {
@@ -54,14 +61,30 @@ export default function ClosingTab() {
     fetchClosing();
   }, []);
 
-  function markDayClosed() {
+  async function markDayClosed() {
     if (!data?.can_close_day) {
       alert("Close all running tables before closing the day.");
       return;
     }
     if (!confirm("Mark today as closed after verifying Cash, UPI, and Card totals?")) return;
-    localStorage.setItem(`dayClosed:${data.date}`, "true");
-    setClosedDay(true);
+    try {
+      const res = await closeDay(
+        parseInt(openingFloat, 10) || 0,
+        parseInt(countedCash, 10) || 0,
+        closingNotes,
+      );
+      setClosedDay(true);
+      setData((prev) => ({
+        ...prev,
+        day_close: {
+          closed: true,
+          ...res.data,
+          notes: closingNotes,
+        },
+      }));
+    } catch (e) {
+      alert(e.response?.data?.detail || "Failed to close day.");
+    }
   }
 
   if (loading) {
@@ -173,10 +196,52 @@ export default function ClosingTab() {
           <ChecklistRow
             ok={closedDay}
             label="Owner reviewed"
-            detail={closedDay ? "Marked closed on this device." : "Press Close day after review."}
+            detail={closedDay ? `Closed by ${data.day_close?.closed_by || "admin"}.` : "Enter cash count, then close the day."}
           />
         </div>
 
+        <div className="history-section">
+          <div className="section-heading">Cash Close</div>
+          <div className="closing-cash-grid">
+            <label className="table-field-stack">
+              <span>Opening float</span>
+              <input
+                className="table-mini-input"
+                type="number"
+                min="0"
+                value={openingFloat}
+                disabled={closedDay}
+                onChange={(event) => setOpeningFloat(event.target.value)}
+              />
+            </label>
+            <label className="table-field-stack">
+              <span>Counted cash</span>
+              <input
+                className="table-mini-input"
+                type="number"
+                min="0"
+                value={countedCash}
+                disabled={closedDay}
+                onChange={(event) => setCountedCash(event.target.value)}
+              />
+            </label>
+          </div>
+          <div className={`closing-variance ${data.day_close?.variance === 0 ? "ok" : "warn"}`}>
+            Expected cash {money((data.cash_total || 0) + (parseInt(openingFloat, 10) || 0))}
+            {closedDay && ` · Variance ${money(data.day_close?.variance || 0)}`}
+          </div>
+          <textarea
+            className="table-notes-textarea closing-notes-input"
+            rows={2}
+            placeholder="Closing notes"
+            value={closingNotes}
+            disabled={closedDay}
+            onChange={(event) => setClosingNotes(event.target.value)}
+          />
+        </div>
+      </div>
+
+      <div className="closing-layout">
         <div className="history-section">
           <div className="section-heading">Open Tables</div>
           {data.open_tables.length === 0 ? (

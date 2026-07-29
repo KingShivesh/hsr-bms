@@ -52,9 +52,19 @@ def ensure_runtime_columns():
             "billing_mode": "VARCHAR(50) DEFAULT 'single'",
             "players_json": "TEXT DEFAULT '[]'",
             "payer_name": "VARCHAR(255) DEFAULT ''",
+            "payment_split_json": "TEXT DEFAULT '[]'",
+            "discount_reason": "TEXT DEFAULT ''",
         },
         "food_only_orders": {
             "payment_method": "VARCHAR(50) DEFAULT 'Cash'",
+        },
+        "members": {
+            "phone": "VARCHAR(255) DEFAULT ''",
+            "loyalty_points": "INTEGER DEFAULT 0",
+            "notes": "TEXT DEFAULT ''",
+        },
+        "audit_logs": {
+            "table_id": "VARCHAR(50) DEFAULT ''",
         },
     }
     inspector = inspect(engine)
@@ -92,6 +102,13 @@ def ensure_runtime_indexes(conn, existing_tables: set[str]):
         ],
         "bookings": [
             ("idx_bookings_status_time", "status, booking_time"),
+        ],
+        "audit_logs": [
+            ("idx_audit_logs_table_ts", "table_id, ts"),
+            ("idx_audit_logs_action_ts", "action, ts"),
+        ],
+        "day_closes": [
+            ("idx_day_closes_business_date", "business_date"),
         ],
     }
     for table, table_indexes in indexes.items():

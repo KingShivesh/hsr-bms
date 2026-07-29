@@ -9,6 +9,7 @@ import {
   getRates,
   updateNotes,
   getTableHistory,
+  getTableAudit,
   getMaintenance,
   setMaintenance as saveMaintenance,
   clearMaintenance,
@@ -23,6 +24,7 @@ import {
   cancelBooking,
   startFrame,
   closeFrame,
+  transferSession,
 } from "../../api/index.js";
 import { searchMembers } from "../../api/index.js";
 import { useToast } from "../toastContext.js";
@@ -83,7 +85,7 @@ const BILLING_MODES = [
   { id: "sharing", label: "Sharing", hint: "Split payment" },
   { id: "lp", label: "LP", hint: "Loser pays" },
 ];
-const PAYMENT_METHODS = ["Cash", "UPI", "Card"];
+const PAYMENT_METHODS = ["Cash", "UPI", "Card", "Split"];
 const DISCOUNT_OPTIONS = [
   { id: "none", label: "No discount" },
   { id: "percent_5", label: "5%" },
@@ -778,158 +780,88 @@ function QuickSessionModal({
 
 function HistoryModal({ tableId, tableNum, onClose }) {
   const [history, setHistory] = useState([]);
+  const [audit, setAudit] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    getTableHistory(tableId)
-      .then((r) => {
-        setHistory(r.data);
+    Promise.allSettled([getTableHistory(tableId), getTableAudit(tableId)])
+      .then(([historyRes, auditRes]) => {
+        if (historyRes.status === "fulfilled") setHistory(historyRes.value.data);
+        if (auditRes.status === "fulfilled") setAudit(auditRes.value.data);
         setLoading(false);
       })
       .catch(() => setLoading(false));
   }, [tableId]);
 
   return (
-    <div
-      style={{
-        position: "fixed",
-        inset: 0,
-        background: "rgba(0,0,0,0.5)",
-        zIndex: 2000,
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-      }}
-      onClick={onClose}
-    >
-      <div
-        style={{
-          background: "#fff",
-          borderRadius: "12px",
-          padding: "24px",
-          width: "500px",
-          maxWidth: "90vw",
-          maxHeight: "80vh",
-          overflow: "auto",
-        }}
-        onClick={(e) => e.stopPropagation()}
-      >
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            marginBottom: "16px",
-          }}
-        >
-          <div style={{ fontWeight: 600, fontSize: "15px", color: "#111" }}>
-            Table {tableNum} — Last 10 Sessions
+    <div className="modal-backdrop plain" onClick={onClose}>
+      <div className="table-history-modal" onClick={(event) => event.stopPropagation()}>
+        <div className="table-history-head">
+          <div>
+            <strong>Table {tableNum}</strong>
+            <span>Sessions and audit trail</span>
           </div>
-          <button
-            onClick={onClose}
-            style={{
-              background: "none",
-              border: "none",
-              fontSize: "20px",
-              cursor: "pointer",
-              color: "#bbb",
-            }}
-          >
+          <button type="button" onClick={onClose} aria-label="Close history">
             ×
           </button>
         </div>
         {loading ? (
-          <div style={{ textAlign: "center", color: "#bbb", padding: "20px" }}>
-            Loading...
-          </div>
-        ) : history.length === 0 ? (
-          <div
-            style={{
-              textAlign: "center",
-              color: "#bbb",
-              padding: "20px",
-              fontSize: "13px",
-            }}
-          >
-            No sessions yet
-          </div>
+          <div className="table-history-empty">Loading...</div>
         ) : (
-          <table style={{ width: "100%", borderCollapse: "collapse" }}>
-            <thead>
-              <tr>
-                {["Date", "Customer", "Duration", "Total", "Payment"].map(
-                  (h) => (
-                    <th
-                      key={h}
-                      style={{
-                        fontSize: "11px",
-                        color: "#999",
-                        textTransform: "uppercase",
-                        padding: "8px 10px",
-                        textAlign: "left",
-                        borderBottom: "1px solid #f0f0f0",
-                        fontWeight: 500,
-                      }}
-                    >
-                      {h}
-                    </th>
-                  ),
-                )}
-              </tr>
-            </thead>
-            <tbody>
-              {history.map((r, i) => (
-                <tr key={i} style={{ borderBottom: "1px solid #f9f9f9" }}>
-                  <td
-                    style={{
-                      fontSize: "12px",
-                      color: "#bbb",
-                      padding: "8px 10px",
-                    }}
-                  >
-                    {r.date.split(",")[0]}
-                  </td>
-                  <td
-                    style={{
-                      fontSize: "13px",
-                      padding: "8px 10px",
-                      fontWeight: 500,
-                    }}
-                  >
-                    {r.nm}
-                  </td>
-                  <td
-                    style={{
-                      fontSize: "13px",
-                      padding: "8px 10px",
-                      color: "#888",
-                    }}
-                  >
-                    {r.dur}m
-                  </td>
-                  <td
-                    style={{
-                      fontSize: "13px",
-                      padding: "8px 10px",
-                      fontWeight: 600,
-                      color: "#16a34a",
-                    }}
-                  >
-                    ₹{r.tot}
-                  </td>
-                  <td
-                    style={{
-                      fontSize: "12px",
-                      padding: "8px 10px",
-                      color: "#888",
-                    }}
-                  >
-                    {r.payment_method || "Cash"}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          <>
+            <div className="table-history-title">Last sessions</div>
+            {history.length === 0 ? (
+              <div className="table-history-empty">No sessions yet</div>
+            ) : (
+              <table className="data-table table-history-table">
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>Customer</th>
+                    <th>Duration</th>
+                    <th>Total</th>
+                    <th>Payment</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {history.map((row, index) => (
+                    <tr key={`${row.date}-${index}`}>
+                      <td>{row.date?.split(",")[0]}</td>
+                      <td>{row.nm}</td>
+                      <td>{row.dur}m</td>
+                      <td>₹{row.tot}</td>
+                      <td>{row.payment_method || "Cash"}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            )}
+            <div className="table-history-title">Audit trail</div>
+            {audit.length === 0 ? (
+              <div className="table-history-empty">No table audit yet</div>
+            ) : (
+              <table className="data-table table-history-table">
+                <thead>
+                  <tr>
+                    <th>Time</th>
+                    <th>Action</th>
+                    <th>Detail</th>
+                    <th>Amount</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {audit.map((row, index) => (
+                    <tr key={`${row.ts}-${index}`}>
+                      <td>{row.date}</td>
+                      <td>{String(row.action || "").replaceAll("_", " ")}</td>
+                      <td>{row.detail}</td>
+                      <td>{row.amount ? `₹${row.amount}` : "-"}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            )}
+          </>
         )}
       </div>
     </div>
@@ -1006,6 +938,12 @@ function CheckoutQuoteScreen({
   const rawTotal = rec.raw_total ?? total;
   const discountAmount = rec.discount_amount || 0;
   const frames = Array.isArray(rec.frames) ? rec.frames : [];
+  const splitRows = quote.paymentSplit || { Cash: "", UPI: "", Card: "" };
+  const splitTotal = ["Cash", "UPI", "Card"].reduce(
+    (sum, method) => sum + (parseInt(splitRows[method], 10) || 0),
+    0,
+  );
+  const splitRemaining = total - splitTotal;
 
   return (
     <div className="checkout-bill-screen" role="dialog" aria-modal="true">
@@ -1072,7 +1010,9 @@ function CheckoutQuoteScreen({
                     ? "ti-cash"
                     : method === "UPI"
                       ? "ti-qrcode"
-                      : "ti-credit-card"
+                      : method === "Card"
+                        ? "ti-credit-card"
+                        : "ti-arrows-split"
                 }`}
                 aria-hidden="true"
               />
@@ -1080,6 +1020,33 @@ function CheckoutQuoteScreen({
             </button>
           ))}
         </div>
+        {quote.paymentMethod === "Split" && (
+          <div className="checkout-split-payment-box">
+            {["Cash", "UPI", "Card"].map((method) => (
+              <label className="table-field-stack" key={method}>
+                <span>{method}</span>
+                <input
+                  className="table-mini-input"
+                  type="number"
+                  min="0"
+                  inputMode="numeric"
+                  value={splitRows[method] || ""}
+                  onChange={(event) =>
+                    onPaymentChange("Split", {
+                      ...splitRows,
+                      [method]: event.target.value,
+                    })
+                  }
+                />
+              </label>
+            ))}
+            <div className={`checkout-split-payment-total ${splitRemaining === 0 ? "ok" : "warn"}`}>
+              {splitRemaining === 0
+                ? "Split matches final bill"
+                : `Remaining ₹${splitRemaining}`}
+            </div>
+          </div>
+        )}
 
         <div className="checkout-bill-section-title">Apply Discount</div>
         <div className="checkout-discount-box">
@@ -1127,6 +1094,20 @@ function CheckoutQuoteScreen({
               </div>
               <span className="checkout-rupee-hint">Enter the rupee amount, then apply.</span>
             </div>
+          )}
+          {quote.discountType !== "none" && (
+            <label className="table-field-stack checkout-discount-reason">
+              <span>Discount reason</span>
+              <input
+                className="table-mini-input"
+                type="text"
+                value={quote.discountReason || ""}
+                onChange={(event) =>
+                  onDiscountChange(quote.discountType, quote.discountValue, false, event.target.value)
+                }
+                placeholder="Owner approved / service issue"
+              />
+            </label>
           )}
           {quote.loading && <span className="checkout-quote-status">Updating bill...</span>}
           {quote.error && <span className="checkout-quote-error">{quote.error}</span>}
@@ -1214,6 +1195,7 @@ function CheckoutBillScreen({ bill, onClose }) {
   const frames = Array.isArray(rec.frames) ? rec.frames : [];
   const sessionStartedAt = rec.session_started_at || null;
   const sessionEndedAt = rec.session_ended_at || rec.ts || null;
+  const paymentSplit = Array.isArray(rec.payment_split) ? rec.payment_split : [];
 
   return (
     <div className="checkout-bill-screen" role="dialog" aria-modal="true">
@@ -1262,6 +1244,23 @@ function CheckoutBillScreen({ bill, onClose }) {
             </div>
           )}
         </div>
+        {rec.discount_amount > 0 && rec.discount_reason && (
+          <div className="checkout-applied-note">
+            Discount reason: {rec.discount_reason}
+          </div>
+        )}
+        {paymentSplit.length > 0 && (
+          <>
+            <div className="checkout-bill-section-title">Payment Received</div>
+            <div className="checkout-payment-received">
+              {paymentSplit.map((row) => (
+                <span key={row.method}>
+                  {row.method} ₹{row.amount}
+                </span>
+              ))}
+            </div>
+          </>
+        )}
 
         <div className="checkout-bill-section-title">Payment Split</div>
         <div className="checkout-split-list">
@@ -1414,6 +1413,8 @@ function TableCard({
   onPause,
   onReset,
   onStop,
+  onTransfer,
+  transferTargets = [],
   onReserve,
   onCancelReserve,
   rates,
@@ -1431,6 +1432,8 @@ function TableCard({
   const [frameLoserOpen, setFrameLoserOpen] = useState(false);
   const [reserveOpen, setReserveOpen] = useState(false);
   const [notesOpen, setNotesOpen] = useState(false);
+  const [transferOpen, setTransferOpen] = useState(false);
+  const [transferTarget, setTransferTarget] = useState("");
   const [showHistory, setShowHistory] = useState(false);
   const [maintOpen, setMaintOpen] = useState(false);
   const [resvName, setResvName] = useState("");
@@ -2104,6 +2107,44 @@ function TableCard({
           {occupied && (
             <>
               <button
+                onClick={() => setTransferOpen((prev) => !prev)}
+                className={`table-notes-btn ${transferOpen ? "active" : ""}`}
+              >
+                <i className="ti ti-arrows-exchange" aria-hidden="true" />
+                <span>{transferOpen ? "Close transfer" : "Transfer table"}</span>
+              </button>
+              {transferOpen && (
+                <div className="table-inline-panel">
+                  <label className="table-field-stack">
+                    <span>Move to</span>
+                    <select
+                      className="table-mini-input"
+                      value={transferTarget}
+                      onChange={(event) => setTransferTarget(event.target.value)}
+                    >
+                      <option value="">Choose table</option>
+                      {transferTargets.map((target) => (
+                        <option key={target.id} value={target.id}>
+                          T{target.num} · {getTableLabel(target)}
+                        </option>
+                      ))}
+                    </select>
+                  </label>
+                  <button
+                    type="button"
+                    className="table-mini-primary reserve"
+                    disabled={!transferTarget}
+                    onClick={async () => {
+                      await onTransfer(table.id, transferTarget);
+                      setTransferTarget("");
+                      setTransferOpen(false);
+                    }}
+                  >
+                    Transfer
+                  </button>
+                </div>
+              )}
+              <button
                 onClick={() => setNotesOpen((p) => !p)}
                 className={`table-notes-btn ${notesOpen || session?.notes ? "active" : ""}`}
               >
@@ -2677,8 +2718,10 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
       setCheckoutQuote({
         tableId: id,
         paymentMethod,
+        paymentSplit: { Cash: "", UPI: "", Card: "" },
         discountType: "none",
         discountValue: "",
+        discountReason: "",
         closedAtMs: res.data.session_ended_at,
         rec: res.data,
         loading: false,
@@ -2689,13 +2732,31 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
     }
   }
 
-  async function handleCheckoutDiscountChange(discountType, discountValue = "", shouldQuote = true) {
+  async function handleTransfer(fromTableId, toTableId) {
+    if (!fromTableId || !toTableId) return;
+    try {
+      await transferSession(fromTableId, toTableId);
+      setSelectedTableId(tableKey(toTableId));
+      await fetchActive();
+      showToast(`Moved ${fromTableId.toUpperCase()} to ${toTableId.toUpperCase()}`, "success");
+    } catch (e) {
+      showToast(e.response?.data?.detail || "Failed to transfer table", "error");
+    }
+  }
+
+  async function handleCheckoutDiscountChange(
+    discountType,
+    discountValue = "",
+    shouldQuote = true,
+    discountReason = checkoutQuote?.discountReason || "",
+  ) {
     if (!checkoutQuote) return;
     const nextValue = discountType === "rupee" ? sanitizeRupeeDiscount(discountValue) : "";
     const nextQuote = {
       ...checkoutQuote,
       discountType,
       discountValue: nextValue,
+      discountReason: discountType === "none" ? "" : discountReason,
       loading: shouldQuote,
       error: "",
     };
@@ -2717,6 +2778,7 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
         rec: res.data,
         discountType,
         discountValue: nextValue,
+        discountReason: discountType === "none" ? "" : discountReason,
         loading: false,
         error: "",
       }));
@@ -2730,11 +2792,12 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
     }
   }
 
-  async function handleCheckoutPaymentChange(paymentMethod) {
+  async function handleCheckoutPaymentChange(paymentMethod, paymentSplit = null) {
     if (!checkoutQuote) return;
     const nextQuote = {
       ...checkoutQuote,
       paymentMethod,
+      paymentSplit: paymentSplit || checkoutQuote.paymentSplit || { Cash: "", UPI: "", Card: "" },
       loading: true,
       error: "",
     };
@@ -2754,6 +2817,7 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
         ...(prev || nextQuote),
         rec: res.data,
         paymentMethod,
+        paymentSplit: paymentSplit || prev?.paymentSplit || nextQuote.paymentSplit,
         loading: false,
         error: "",
       }));
@@ -2772,10 +2836,32 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
     const {
       tableId,
       paymentMethod = "Cash",
+      paymentSplit = { Cash: "", UPI: "", Card: "" },
       discountType = "none",
       discountValue = "",
+      discountReason = "",
       closedAtMs = "",
     } = checkoutQuote;
+    const total = checkoutQuote.rec?.tot ?? checkoutQuote.rec?.total ?? 0;
+    const splitPayload = paymentMethod === "Split"
+      ? ["Cash", "UPI", "Card"]
+          .map((method) => ({ method, amount: parseInt(paymentSplit[method], 10) || 0 }))
+          .filter((row) => row.amount > 0)
+      : [];
+    if (paymentMethod === "Split") {
+      const splitTotal = splitPayload.reduce((sum, row) => sum + row.amount, 0);
+      if (splitTotal !== total) {
+        showToast(`Split payments must total ₹${total}`, "error");
+        return;
+      }
+    }
+    const hasDiscount =
+      discountType !== "none" &&
+      (checkoutQuote.rec?.discount_amount || discountType !== "rupee" || parseInt(discountValue, 10) > 0);
+    if (hasDiscount && !discountReason.trim()) {
+      showToast("Enter a reason for the discount", "error");
+      return;
+    }
     try {
       const res = await stopSession(
         tableId,
@@ -2784,6 +2870,8 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
         discountType,
         parseInt(sanitizeRupeeDiscount(discountValue), 10) || 0,
         closedAtMs,
+        discountReason.trim(),
+        splitPayload,
       );
       const rec = { ...res.data };
       setSessions((prev) => {
@@ -3001,6 +3089,13 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
               onPause={handlePause}
               onReset={handleReset}
               onStop={handleStop}
+              onTransfer={handleTransfer}
+              transferTargets={TABLES.filter(
+                (table) =>
+                  table.id !== selectedTable.id &&
+                  !sessions[table.id] &&
+                  !maintenance[table.id],
+              )}
               onReserve={handleReserve}
               onCancelReserve={handleCancelReserve}
               rates={rates}

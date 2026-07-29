@@ -20,10 +20,13 @@ class Member(Base):
     id          = Column(Integer, primary_key=True, index=True)
     customer_id = Column(String,  unique=True, index=True)
     name        = Column(String,  index=True)
+    phone       = Column(String,  default="")
     visits      = Column(Integer, default=0)
     spent       = Column(Integer, default=0)
+    loyalty_points = Column(Integer, default=0)
     member_type = Column(String,  default="Regular")
     last_visit  = Column(String,  default="-")
+    notes       = Column(Text,    default="")
 
 class Transaction(Base):
     __tablename__ = "transactions"
@@ -47,6 +50,8 @@ class Transaction(Base):
     gst_amt        = Column(Integer, default=0)
     peak_surcharge = Column(Integer, default=0)
     payment_method = Column(String,  default="Cash")   # Cash / UPI
+    payment_split_json = Column(Text, default="[]")
+    discount_reason = Column(Text, default="")
 
 class ActiveSession(Base):
     __tablename__ = "active_sessions"
@@ -170,11 +175,26 @@ class AuditLog(Base):
     id       = Column(Integer, primary_key=True, index=True)
     date     = Column(String)
     ts       = Column(Float)
+    table_id = Column(String, default="", index=True)
     action   = Column(String, index=True)
     severity = Column(String, default="info")
     staff    = Column(String, default="admin")
     detail   = Column(Text, default="")
     amount   = Column(Integer, default=0)
+
+class DayClose(Base):
+    __tablename__ = "day_closes"
+    id = Column(Integer, primary_key=True, index=True)
+    business_date = Column(String, unique=True, index=True)
+    opened_float = Column(Integer, default=0)
+    counted_cash = Column(Integer, default=0)
+    expected_cash = Column(Integer, default=0)
+    variance = Column(Integer, default=0)
+    payment_breakdown_json = Column(Text, default="{}")
+    snapshot_json = Column(Text, default="{}")
+    notes = Column(Text, default="")
+    closed_at = Column(String)
+    closed_by = Column(String, default="admin")
 
 class Tournament(Base):
     __tablename__ = "tournaments"

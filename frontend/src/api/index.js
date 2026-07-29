@@ -126,6 +126,8 @@ const sessionCheckoutParams = (
   discount_type = "none",
   discount_value = 0,
   closed_at_ms = "",
+  discount_reason = "",
+  payment_split = [],
 ) => {
   const params = new URLSearchParams({
     payment_method,
@@ -135,6 +137,10 @@ const sessionCheckoutParams = (
   });
   if (closed_at_ms !== "" && closed_at_ms !== null && closed_at_ms !== undefined) {
     params.set("closed_at_ms", String(closed_at_ms));
+  }
+  if (discount_reason) params.set("discount_reason", discount_reason);
+  if (Array.isArray(payment_split) && payment_split.length) {
+    params.set("payment_split_json", JSON.stringify(payment_split));
   }
   return params.toString();
 };
@@ -146,6 +152,8 @@ export const stopSession = (
   discount_type = "none",
   discount_value = 0,
   closed_at_ms = "",
+  discount_reason = "",
+  payment_split = [],
 ) =>
   api.post(
     `/sessions/stop/${tableKey(table_id)}?${sessionCheckoutParams(
@@ -154,6 +162,8 @@ export const stopSession = (
       discount_type,
       discount_value,
       closed_at_ms,
+      discount_reason,
+      payment_split,
     )}`,
   );
 export const quoteSession = (
@@ -187,6 +197,10 @@ export const addReserve = (table_id, name, time) =>
 export const cancelReserve = (table_id) =>
   api.delete(`/sessions/${tableKey(table_id)}/reserve`);
 export const getActive = () => api.get("/sessions/active");
+export const transferSession = (table_id, target_table_id) =>
+  api.post(`/sessions/transfer/${tableKey(table_id)}`, {
+    target_table_id: tableKey(target_table_id),
+  });
 
 // Members
 export const getMembers = () => api.get("/members");
@@ -250,6 +264,8 @@ export const updateNotes = (table_id, notes) =>
   api.post(`/sessions/${tableKey(table_id)}/notes`, { notes });
 export const getTableHistory = (table_id) =>
   api.get(`/sessions/history/${tableKey(table_id)}`);
+export const getTableAudit = (table_id) =>
+  api.get(`/sessions/audit/${tableKey(table_id)}`);
 export const getMaintenance = () => api.get("/sessions/maintenance");
 export const setMaintenance = (table_id, reason) =>
   api.post(`/sessions/maintenance/${tableKey(table_id)}`, { reason });
@@ -260,6 +276,8 @@ export const getTopCustomers = (period) =>
   api.get(`/reports/top-customers?period=${period}`);
 export const getTableUtilization = () => api.get("/reports/table-utilization");
 export const getClosingReport = () => api.get("/reports/closing-report");
+export const closeDay = (opened_float, counted_cash, notes = "") =>
+  api.post("/reports/day-close", { opened_float, counted_cash, notes });
 export const getClosingInsights = () => api.get("/reports/closing-insights");
 export const getAdvancedAnalytics = () => api.get("/reports/advanced-analytics");
 

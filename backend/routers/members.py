@@ -84,6 +84,15 @@ def _similarity(a: str, b: str) -> int:
         return 90
     return 0
 
+def _member_tier(spent: int) -> str:
+    if spent >= 25000:
+        return "Platinum"
+    if spent >= 10000:
+        return "Gold"
+    if spent >= 3000:
+        return "Silver"
+    return "Regular"
+
 
 @router.get("/search")
 def search_members(q: str = "", db: Session = Depends(get_db)):
@@ -99,7 +108,9 @@ def get_members(db: Session = Depends(get_db)):
     members = db.query(models.Member).order_by(models.Member.spent.desc()).all()
     return [
         {"id": m.customer_id, "nm": m.name, "vis": m.visits,
-         "spt": m.spent, "typ": m.member_type, "lst": m.last_visit}
+         "spt": m.spent, "typ": m.member_type, "lst": m.last_visit,
+         "pts": getattr(m, "loyalty_points", 0) or 0,
+         "phone": getattr(m, "phone", "") or ""}
         for m in members
     ]
 
@@ -207,11 +218,25 @@ def delete_member(customer_id: str, db: Session = Depends(get_db)):
     return {"ok": True}
 
 def update_member_on_checkout(name: str, amount: int, db: Session):
+    clean_name = " ".join((name or "").strip().split())
+    if not clean_name or clean_name.lower() in {"lp session", "walk in customer", "player one", "player two"}:
+        return
     member = db.query(models.Member).filter(
-        models.Member.name.ilike(name)
+        models.Member.name.ilike(clean_name)
     ).first()
-    if member:
-        member.visits     += 1
-        member.spent      += amount
-        member.last_visit  = get_ist_today_str()
-        db.commit()
+    if not member:
+        member = models.Member(
+            customer_id=_next_customer_id(db),
+            name=clean_name,
+            visits=0,
+            spent=0,
+            member_type="Regular",
+            last_visit="-",
+        )
+        db.add(member)
+        db.flush()
+    member.visits += 1
+    member.spent += max(0, int(amount or 0))
+    member.loyalty_points = (getattr(member, "loyalty_points", 0) or 0) + max(0, int(amount or 0)) // 100
+    member.member_type = _member_tier(member.spent)
+    member.last_visit = get_ist_today_str()
