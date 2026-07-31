@@ -83,6 +83,13 @@ def parse_food_items(raw_items: str | None):
         return []
     return parsed if isinstance(parsed, list) else []
 
+def parse_payment_split(raw_split: str | None):
+    try:
+        parsed = json.loads(raw_split or "[]")
+    except json.JSONDecodeError:
+        return []
+    return parsed if isinstance(parsed, list) else []
+
 def add_payment_breakdown(payment_breakdown: dict[str, int], method: str, total: int, split_json: str | None = ""):
     if split_json:
         try:
@@ -142,6 +149,78 @@ def get_history(db: Session = Depends(get_db), _: dict = Depends(require_admin))
           "split_names": t.split_names or "" }
         for t in txns
     ]
+
+@router.get("/invoices")
+def get_invoices(db: Session = Depends(get_db), _: dict = Depends(require_admin)):
+    table_txns = db.query(models.Transaction).order_by(models.Transaction.ts.desc()).limit(250).all()
+    food_orders = db.query(models.FoodOnlyOrder).order_by(models.FoodOnlyOrder.ts.desc()).limit(250).all()
+    invoices = []
+    for txn in table_txns:
+        items = [
+            {
+                "description": f"{txn.table_id} table time",
+                "qty": txn.duration or 0,
+                "rate": txn.play_charge or 0,
+                "total": txn.play_charge or 0,
+            }
+        ]
+        if txn.food_charge:
+            items.append({
+                "description": txn.food_items or "Food",
+                "qty": 1,
+                "rate": txn.food_charge,
+                "total": txn.food_charge,
+            })
+        invoices.append({
+            "id": f"T-{txn.id}",
+            "kind": "table",
+            "date": txn.date,
+            "ts": txn.ts or 0,
+            "customer_name": txn.customer_name,
+            "customer_phone": "",
+            "table_id": txn.table_id,
+            "duration": txn.duration or 0,
+            "subtotal": (txn.play_charge or 0) + (txn.food_charge or 0),
+            "tax_amount": txn.gst_amt or 0,
+            "discount_amount": max(0, ((txn.play_charge or 0) + (txn.food_charge or 0) + (txn.gst_amt or 0) + (txn.peak_surcharge or 0)) - (txn.total or 0)),
+            "total": txn.total or 0,
+            "payment_method": txn.payment_method or "Cash",
+            "payment_split": parse_payment_split(getattr(txn, "payment_split_json", "[]")),
+            "status": "Paid",
+            "cashier": "admin",
+            "items": items,
+            "notes": txn.notes or "",
+        })
+    for order in food_orders:
+        invoices.append({
+            "id": f"F-{order.id}",
+            "kind": "food",
+            "date": order.date,
+            "ts": order.ts or 0,
+            "customer_name": order.customer_name,
+            "customer_phone": "",
+            "table_id": "",
+            "duration": 0,
+            "subtotal": order.total or 0,
+            "tax_amount": 0,
+            "discount_amount": 0,
+            "total": order.total or 0,
+            "payment_method": order.payment_method or "Cash",
+            "payment_split": [],
+            "status": "Paid",
+            "cashier": "admin",
+            "items": [
+                {
+                    "description": item.get("item") or item.get("name") or "Food",
+                    "qty": item.get("qty") or 1,
+                    "rate": item.get("price") or 0,
+                    "total": (item.get("price") or 0) * (item.get("qty") or 1),
+                }
+                for item in parse_food_items(order.items)
+            ],
+            "notes": "Food-only order",
+        })
+    return sorted(invoices, key=lambda row: row["ts"], reverse=True)[:250]
 
 # ── Filtered CSV export ──
 @router.get("/export")

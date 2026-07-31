@@ -78,9 +78,10 @@ export default function MembersTab() {
   }
 
   const totalMembers = members.length;
-  const premiumCount = members.filter((m) => m.typ === "Premium").length;
+  const premiumCount = members.filter((m) => ["Silver", "Gold", "Platinum", "Premium"].includes(m.typ)).length;
   const totalRevenue = members.reduce((a, m) => a + m.spt, 0);
   const totalVisits = members.reduce((a, m) => a + m.vis, 0);
+  const totalPoints = members.reduce((a, m) => a + (m.pts || 0), 0);
 
   return (
     <div>
@@ -88,7 +89,7 @@ export default function MembersTab() {
       <div
         style={{
           display: "grid",
-          gridTemplateColumns: "repeat(4,1fr)",
+          gridTemplateColumns: "repeat(auto-fit,minmax(160px,1fr))",
           gap: "12px",
           marginBottom: "24px",
         }}
@@ -102,6 +103,7 @@ export default function MembersTab() {
             color: "#16a34a",
           },
           { label: "Total Visits", value: totalVisits, color: "#2563eb" },
+          { label: "Loyalty Points", value: totalPoints, color: "#7c3aed" },
         ].map((s, i) => (
           <div
             key={i}
@@ -132,6 +134,20 @@ export default function MembersTab() {
       </div>
 
       {/* Header */}
+      <div className="member-plan-grid">
+        {[
+          { tier: "Silver", spend: "₹3,000+", benefit: "Recognise regulars and encourage repeat play." },
+          { tier: "Gold", spend: "₹10,000+", benefit: "High-value customer tag for better service priority." },
+          { tier: "Platinum", spend: "₹25,000+", benefit: "Owner can spot VIP customers instantly." },
+        ].map((plan) => (
+          <div className="member-plan-card" key={plan.tier}>
+            <span>{plan.spend}</span>
+            <strong>{plan.tier}</strong>
+            <p>{plan.benefit}</p>
+          </div>
+        ))}
+      </div>
+
       {duplicates.length > 0 && (
         <div className="member-merge-panel">
           <div className="member-merge-head">
@@ -235,7 +251,7 @@ export default function MembersTab() {
                   }}
                 >
                   <span style={{ fontSize: "11px", color: "#bbb" }}>
-                    {m.id || "—"}
+                    {m.id || "—"}{m.phone ? ` · ${m.phone}` : ""}
                   </span>
                   <span
                     className={`member-badge ${m.typ === "Premium" ? "badge-premium" : "badge-regular"}`}
@@ -280,6 +296,10 @@ export default function MembersTab() {
                   {m.lst}
                 </div>
                 <div className="member-stat-label">Last Visit</div>
+              </div>
+              <div className="member-stat">
+                <div className="member-stat-value">{m.pts || 0}</div>
+                <div className="member-stat-label">Points</div>
               </div>
             </div>
           </div>

@@ -9777,6 +9777,274 @@ body.dark .backend-status-banner {
   margin-top: 10px;
 }
 
+.ops-page {
+  display: grid;
+  gap: 18px;
+}
+
+.ops-hero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px;
+  border: 1px solid var(--premium-border);
+  border-radius: 12px;
+  background: var(--premium-surface);
+}
+
+.ops-hero h2 {
+  margin: 2px 0;
+  color: var(--premium-ink);
+  font-size: 24px;
+}
+
+.ops-hero p {
+  margin: 0;
+  color: var(--premium-muted);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.inventory-toolbar,
+.inventory-form-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.inventory-toolbar .table-mini-input {
+  min-width: min(280px, 100%);
+}
+
+.inventory-form {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 12px;
+}
+
+.inventory-form .section-heading,
+.inventory-form .full,
+.inventory-form-actions {
+  grid-column: 1 / -1;
+}
+
+.inventory-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 14px;
+}
+
+.inventory-card,
+.member-plan-card,
+.notification-row,
+.invoice-preview-modal {
+  border: 1px solid var(--premium-border);
+  border-radius: 12px;
+  background: var(--premium-surface);
+  color: var(--premium-ink);
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+}
+
+.inventory-card {
+  display: grid;
+  gap: 12px;
+  padding: 14px;
+}
+
+.inventory-card.alert {
+  border-color: color-mix(in srgb, var(--premium-warning) 42%, var(--premium-border));
+  background: color-mix(in srgb, var(--premium-warning) 7%, var(--premium-surface));
+}
+
+.inventory-card-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.inventory-card-head span,
+.member-plan-card span {
+  color: var(--premium-muted);
+  font-size: 11px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.inventory-card-head strong,
+.member-plan-card strong {
+  display: block;
+  color: var(--premium-ink);
+  font-size: 16px;
+}
+
+.inventory-card-head em {
+  align-self: flex-start;
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--premium-accent) 11%, transparent);
+  color: var(--premium-accent-hover);
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 900;
+}
+
+.inventory-card.alert .inventory-card-head em {
+  background: color-mix(in srgb, var(--premium-warning) 14%, transparent);
+  color: var(--premium-warning);
+}
+
+.inventory-qty strong {
+  color: var(--premium-ink);
+  font-size: 34px;
+  line-height: 1;
+}
+
+.inventory-qty span {
+  margin-left: 6px;
+  color: var(--premium-muted);
+  font-weight: 800;
+}
+
+.inventory-meta {
+  display: grid;
+  gap: 4px;
+  color: var(--premium-muted);
+  font-size: 12px;
+  font-weight: 750;
+}
+
+.inventory-actions,
+.checkout-payment-received {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.inventory-actions button {
+  min-height: 34px;
+  padding: 0 10px;
+  border: 1px solid var(--premium-border);
+  border-radius: 8px;
+  background: var(--premium-surface);
+  color: var(--premium-ink);
+  font-weight: 850;
+  cursor: pointer;
+}
+
+.inventory-actions button.danger {
+  color: #b91c1c;
+}
+
+.invoice-preview-modal {
+  width: min(640px, 94vw);
+  max-height: 88vh;
+  overflow: auto;
+  padding: 20px;
+}
+
+.invoice-brand,
+.invoice-customer,
+.invoice-totals {
+  display: grid;
+  gap: 4px;
+  margin: 12px 0;
+  padding: 12px;
+  border: 1px solid var(--premium-border);
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--premium-ink) 3%, var(--premium-surface));
+}
+
+.invoice-brand span,
+.invoice-customer span,
+.invoice-totals span {
+  color: var(--premium-muted);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.invoice-totals .final {
+  color: var(--premium-ink);
+  font-size: 18px;
+}
+
+.invoice-lines {
+  margin-top: 12px;
+}
+
+.invoice-print-btn {
+  margin-top: 12px;
+}
+
+.notification-filters {
+  justify-content: flex-start;
+}
+
+.notification-list {
+  display: grid;
+  gap: 10px;
+}
+
+.notification-row {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 12px;
+  padding: 13px;
+}
+
+.notification-row i {
+  display: grid;
+  width: 38px;
+  height: 38px;
+  place-items: center;
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--premium-accent) 10%, transparent);
+  color: var(--premium-accent-hover);
+  font-size: 20px;
+}
+
+.notification-row.warning i {
+  background: color-mix(in srgb, var(--premium-warning) 13%, transparent);
+  color: var(--premium-warning);
+}
+
+.notification-row.critical i {
+  background: rgba(220, 38, 38, 0.11);
+  color: #dc2626;
+}
+
+.notification-row strong,
+.notification-row span {
+  display: block;
+}
+
+.notification-row span,
+.notification-row em {
+  color: var(--premium-muted);
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 750;
+}
+
+.member-plan-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.member-plan-card {
+  padding: 14px;
+}
+
+.member-plan-card p {
+  margin: 6px 0 0;
+  color: var(--premium-muted);
+  font-size: 12px;
+  font-weight: 750;
+}
+
 @media (max-width: 720px) {
   .backend-status-banner {
     align-items: flex-start;

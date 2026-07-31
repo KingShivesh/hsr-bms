@@ -196,6 +196,19 @@ class DayClose(Base):
     closed_at = Column(String)
     closed_by = Column(String, default="admin")
 
+class InventoryItem(Base):
+    __tablename__ = "inventory_items"
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String, unique=True, index=True)
+    category = Column(String, default="Supplies")
+    quantity = Column(Integer, default=0)
+    unit = Column(String, default="pcs")
+    min_alert_threshold = Column(Integer, default=0)
+    supplier = Column(String, default="")
+    unit_cost = Column(Integer, default=0)
+    last_restocked = Column(String, default="")
+    notes = Column(Text, default="")
+
 class Tournament(Base):
     __tablename__ = "tournaments"
     id          = Column(Integer, primary_key=True, index=True)

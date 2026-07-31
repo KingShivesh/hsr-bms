@@ -8,9 +8,13 @@ export default function Sidebar({ page, setPage, onLogout, activeTables, role = 
     { id: "tables", icon: "ti-circle-dot", label: "Tables" },
     { id: "food", icon: "ti-tools-kitchen-2", label: "Food Orders" },
     { id: "tournaments", icon: "ti-trophy", label: "Tournaments" },
+    { id: "members", icon: "ti-users", label: "Members", adminOnly: true },
+    { id: "billing", icon: "ti-receipt", label: "Billing", adminOnly: true },
+    { id: "inventory", icon: "ti-package", label: "Inventory", adminOnly: true },
+    { id: "notifications", icon: "ti-bell", label: "Notifications" },
     { id: "reports", icon: "ti-chart-bar", label: "Reports" },
     { id: "closing", icon: "ti-clipboard-check", label: "Closing" },
-  ].filter((item) => role === "admin" || item.id !== "reports");
+  ].filter((item) => role === "admin" || (!item.adminOnly && item.id !== "reports"));
 
   function navigate(nextPage) {
     setPage(nextPage);

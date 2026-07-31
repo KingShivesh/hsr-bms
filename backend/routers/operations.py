@@ -7,6 +7,7 @@ import models
 from audit import get_controls, log_action
 from deps import hash_password, require_admin
 from pricing import get_peak_multiplier
+import time
 
 router = APIRouter()
 
@@ -166,3 +167,68 @@ def get_audit_logs(
         }
         for r in rows
     ]
+
+@router.get("/notifications")
+def get_notifications(db: Session = Depends(get_db)):
+    now_ms = time.time() * 1000
+    rows = []
+
+    for item in db.query(models.InventoryItem).all():
+        quantity = item.quantity or 0
+        threshold = item.min_alert_threshold or 0
+        if quantity <= threshold:
+            rows.append({
+                "id": f"stock-{item.id}",
+                "type": "inventory",
+                "title": "Out of stock" if quantity <= 0 else "Low stock alert",
+                "message": f"{item.name} has {quantity} {item.unit or 'pcs'} left.",
+                "severity": "critical" if quantity <= 0 else "warning",
+                "time": item.last_restocked or "",
+                "read": False,
+            })
+
+    active_sessions = db.query(models.ActiveSession).filter(
+        models.ActiveSession.customer_name != ""
+    ).all()
+    for sess in active_sessions:
+        elapsed_mins = round(((now_ms - (sess.start_time or now_ms)) / 1000 / 60)) if not sess.paused else round((sess.elapsed_ms or 0) / 1000 / 60)
+        if elapsed_mins >= 90:
+            rows.append({
+                "id": f"long-session-{sess.table_id}",
+                "type": "billing",
+                "title": "Long running table",
+                "message": f"{sess.table_id.upper()} has been running for {elapsed_mins} minutes.",
+                "severity": "warning",
+                "time": "Now",
+                "read": False,
+            })
+
+    bookings = db.query(models.Booking).filter(
+        models.Booking.status == "booked"
+    ).order_by(models.Booking.booking_time.asc()).limit(5).all()
+    for booking in bookings:
+        rows.append({
+            "id": f"booking-{booking.id}",
+            "type": "booking",
+            "title": "Upcoming reservation",
+            "message": f"{booking.customer_name} booked {booking.table_id or 'ANY'} at {booking.booking_time}.",
+            "severity": "info",
+            "time": booking.created_at or "",
+            "read": False,
+        })
+
+    recent_audit = db.query(models.AuditLog).filter(
+        models.AuditLog.severity.in_(["critical", "warning"])
+    ).order_by(models.AuditLog.ts.desc()).limit(5).all()
+    for row in recent_audit:
+        rows.append({
+            "id": f"audit-{row.id}",
+            "type": "system",
+            "title": row.action.replace("_", " ").title(),
+            "message": row.detail,
+            "severity": row.severity,
+            "time": row.date,
+            "read": False,
+        })
+
+    return rows[:30]

@@ -12,6 +12,10 @@ const ClosingTab = lazy(() => import("./components/tabs/ClosingTab.jsx"));
 const SettingsTab = lazy(() => import("./components/tabs/SettingsTab.jsx"));
 const FoodTab = lazy(() => import("./components/tabs/FoodTab.jsx"));
 const TournamentTab = lazy(() => import("./components/tabs/TournamentTab.jsx"));
+const MembersTab = lazy(() => import("./components/tabs/MembersTab.jsx"));
+const BillingTab = lazy(() => import("./components/tabs/BillingTab.jsx"));
+const InventoryTab = lazy(() => import("./components/tabs/InventoryTab.jsx"));
+const NotificationsTab = lazy(() => import("./components/tabs/NotificationsTab.jsx"));
 
 function BackendStatusBanner({ backendStatus, onRetry }) {
   if (backendStatus.state !== "offline") return null;
@@ -74,7 +78,7 @@ export default function App() {
   }, [loggedIn]);
 
   useEffect(() => {
-    if (role === "staff" && page === "reports") {
+    if (role === "staff" && ["reports", "billing", "inventory", "members"].includes(page)) {
       setPage("tables");
     }
   }, [role, page]);
@@ -157,6 +161,10 @@ export default function App() {
     closing: "Daily Closing",
     food: "Food Orders",
     tournaments: "Tournaments",
+    members: "Members",
+    billing: "Billing & Invoices",
+    inventory: "Inventory",
+    notifications: "Notifications",
     settings: "Settings",
   };
 
@@ -203,6 +211,10 @@ export default function App() {
               {page === "closing" && <ClosingTab />}
               {page === "food" && <FoodTab />}
               {page === "tournaments" && <TournamentTab />}
+              {page === "members" && role === "admin" && <MembersTab />}
+              {page === "billing" && role === "admin" && <BillingTab />}
+              {page === "inventory" && role === "admin" && <InventoryTab />}
+              {page === "notifications" && <NotificationsTab />}
               {page === "settings" && (
                 <SettingsTab
                   role={role}

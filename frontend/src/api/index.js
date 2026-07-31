@@ -218,6 +218,7 @@ export const mergeMembers = (primary_id, duplicate_id) =>
 // Reports
 export const getSummary = () => api.get("/reports/summary");
 export const getHistory = () => api.get("/reports/history");
+export const getInvoices = () => api.get("/reports/invoices");
 export const exportCSV = (period = "all") =>
   api.get(`/reports/export?period=${period}`, { responseType: "blob" });
 export const getAnalytics = () => api.get("/reports/analytics");
@@ -298,6 +299,16 @@ export const saveGST = (gst_percent) =>
   api.post("/operations/gst", { gst_percent });
 export const getAuditLogs = (limit = 50) =>
   api.get(`/operations/audit-logs?limit=${limit}`);
+export const getNotifications = () => api.get("/operations/notifications");
+
+// Inventory
+export const getInventory = () => api.get("/inventory");
+export const getInventorySummary = () => api.get("/inventory/summary");
+export const addInventoryItem = (item) => api.post("/inventory", item);
+export const updateInventoryItem = (id, item) => api.put(`/inventory/${id}`, item);
+export const adjustInventoryItem = (id, delta, reason = "") =>
+  api.post(`/inventory/${id}/adjust`, { delta, reason });
+export const deleteInventoryItem = (id) => api.delete(`/inventory/${id}`);
 
 // Waitlist / smart queue
 export const getWaitlist = () => api.get("/waitlist");
