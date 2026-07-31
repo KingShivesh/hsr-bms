@@ -259,36 +259,6 @@ export default function Dashboard({ metrics, onNavigate }) {
 
   return (
     <div className="dashboard-home">
-      <section className="clubflow-quickbar">
-        <div className="clubflow-quickbar-lead">
-          <div className="clubflow-quickbar-icon">
-            <i className="ti ti-bolt" aria-hidden="true" />
-          </div>
-          <div>
-            <h2>Quick Operations</h2>
-            <p>Fast triggers for floor staff, reception and owner checks.</p>
-          </div>
-        </div>
-        <div className="clubflow-quickbar-actions">
-          <button type="button" className="is-green" onClick={() => onNavigate("tables")}>
-            <i className="ti ti-player-play" aria-hidden="true" />
-            Start Session
-          </button>
-          <button type="button" className="is-blue" onClick={() => onNavigate("reservations")}>
-            <i className="ti ti-calendar-plus" aria-hidden="true" />
-            New Booking
-          </button>
-          <button type="button" className="is-indigo" onClick={() => onNavigate("members")}>
-            <i className="ti ti-user-plus" aria-hidden="true" />
-            Add Member
-          </button>
-          <button type="button" className="is-dark" onClick={() => onNavigate("food")}>
-            <i className="ti ti-tools-kitchen-2" aria-hidden="true" />
-            Cafe POS
-          </button>
-        </div>
-      </section>
-
       <RunningTablesBar sessions={sessions} elapsed={elapsed} onNavigate={onNavigate} />
 
       {/* Metrics */}

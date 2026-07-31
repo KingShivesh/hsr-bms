@@ -110,10 +110,6 @@ def ensure_runtime_indexes(conn, existing_tables: set[str]):
         "day_closes": [
             ("idx_day_closes_business_date", "business_date"),
         ],
-        "inventory_items": [
-            ("idx_inventory_items_category", "category"),
-            ("idx_inventory_items_name", "name"),
-        ],
     }
     for table, table_indexes in indexes.items():
         if table not in existing_tables:
