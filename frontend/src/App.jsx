@@ -181,8 +181,11 @@ export default function App() {
         <div className="main-content">
           <Topbar
             title={PAGE_TITLES[page]}
+            page={page}
             role={role}
             username={username}
+            activeTables={metrics.active_tables}
+            onNavigate={setPage}
           />
           <BackendStatusBanner backendStatus={backendStatus} onRetry={checkBackend} />
           <Suspense
