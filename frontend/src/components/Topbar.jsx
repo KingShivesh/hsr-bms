@@ -2,13 +2,17 @@ import { useState, useEffect } from "react";
 import { TOTAL_TABLES } from "../config/hsrTables.js";
 
 const PAGE_META = {
-  dashboard: "Real-time venue performance and floor monitoring",
+  dashboard: "Real-time club performance and revenue monitoring",
   tables: "Live 5-table floor grid, sessions, LP frames and checkout",
+  waitlist: "Manage walk-in queue, party sizes, and auto-seating",
+  reservations: "Manage table bookings and schedule timelines",
   food: "Snacks, beverages and table order billing",
   tournaments: "Tournament tables, recommendations and brackets",
   members: "Member records, loyalty points and spending history",
+  plans: "Silver, Gold and VIP member tier configurations",
   billing: "Invoice archive, receipts and payment breakdowns",
   inventory: "Equipment, cafe stock and low-stock alerts",
+  staff: "Shift schedules, performance metrics and attendance",
   notifications: "System alerts, bookings, stock and billing reminders",
   reports: "Revenue charts, peak hours and closing analytics",
   closing: "Cash drawer tally, payment split and end-of-day audit",
@@ -81,8 +85,11 @@ export default function Topbar({
         <button
           className="topbar-command"
           type="button"
-          onClick={() => onNavigate?.("tables")}
-          title="Open table management"
+          onClick={() => {
+            window.dispatchEvent(new Event("command:open"));
+            onNavigate?.(page);
+          }}
+          title="Open command palette"
         >
           <i className="ti ti-command" aria-hidden="true" />
           <span>Search or Command</span>

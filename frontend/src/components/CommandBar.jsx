@@ -16,10 +16,10 @@ export default function CommandBar({ page, setPage, onNewSession, role = "admin"
       },
       {
         id: "queue",
-        label: "Smart table queue",
-        hint: "Tables",
+        label: "Waitlist queue",
+        hint: "Walk-ins",
         icon: "ti-list-check",
-        action: () => setPage("tables"),
+        action: () => setPage("waitlist"),
       },
       {
         id: "dashboard",
@@ -30,15 +30,22 @@ export default function CommandBar({ page, setPage, onNewSession, role = "admin"
       },
       {
         id: "tables",
-        label: "Tables",
+        label: "Table management",
         hint: "Floor view",
-        icon: "ti-circle-dot",
+        icon: "ti-layout-grid",
         action: () => setPage("tables"),
       },
       {
+        id: "reservations",
+        label: "Reservations",
+        hint: "Bookings and slots",
+        icon: "ti-calendar",
+        action: () => setPage("reservations"),
+      },
+      {
         id: "food",
-        label: "Food orders",
-        hint: "Menu and cart",
+        label: "Food & Cafe POS",
+        hint: "Menu and billing",
         icon: "ti-tools-kitchen-2",
         action: () => setPage("food"),
       },
@@ -51,10 +58,26 @@ export default function CommandBar({ page, setPage, onNewSession, role = "admin"
       },
       {
         id: "reports",
-        label: "Reports",
+        label: "Analytics & reports",
         hint: "Bills and table performance",
         icon: "ti-chart-bar",
         action: () => setPage("reports"),
+        adminOnly: true,
+      },
+      {
+        id: "plans",
+        label: "Membership plans",
+        hint: "Silver, Gold, VIP",
+        icon: "ti-award",
+        action: () => setPage("plans"),
+        adminOnly: true,
+      },
+      {
+        id: "staff",
+        label: "Staff & roster",
+        hint: "Shift board",
+        icon: "ti-user-check",
+        action: () => setPage("staff"),
         adminOnly: true,
       },
       {
@@ -96,8 +119,15 @@ export default function CommandBar({ page, setPage, onNewSession, role = "admin"
       }
       if (e.key === "Escape") setOpen(false);
     }
+    function onOpenCommand() {
+      setOpen(true);
+    }
     window.addEventListener("keydown", onKeyDown);
-    return () => window.removeEventListener("keydown", onKeyDown);
+    window.addEventListener("command:open", onOpenCommand);
+    return () => {
+      window.removeEventListener("keydown", onKeyDown);
+      window.removeEventListener("command:open", onOpenCommand);
+    };
   }, []);
 
   useEffect(() => {

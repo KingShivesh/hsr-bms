@@ -2,6 +2,7 @@ import { lazy, Suspense, useState, useEffect } from "react";
 import Login from "./components/Login.jsx";
 import Sidebar from "./components/Sidebar.jsx";
 import Topbar from "./components/Topbar.jsx";
+import CommandBar from "./components/CommandBar.jsx";
 import { ToastProvider } from "./components/Toast.jsx";
 import { getBackendHealth, getMe, getSummary } from "./api/index.js";
 
@@ -16,6 +17,10 @@ const MembersTab = lazy(() => import("./components/tabs/MembersTab.jsx"));
 const BillingTab = lazy(() => import("./components/tabs/BillingTab.jsx"));
 const InventoryTab = lazy(() => import("./components/tabs/InventoryTab.jsx"));
 const NotificationsTab = lazy(() => import("./components/tabs/NotificationsTab.jsx"));
+const WaitlistTab = lazy(() => import("./components/tabs/WaitlistTab.jsx"));
+const ReservationsTab = lazy(() => import("./components/tabs/ReservationsTab.jsx"));
+const StaffTab = lazy(() => import("./components/tabs/StaffTab.jsx"));
+const PlansTab = lazy(() => import("./components/tabs/PlansTab.jsx"));
 
 function BackendStatusBanner({ backendStatus, onRetry }) {
   if (backendStatus.state !== "offline") return null;
@@ -78,7 +83,7 @@ export default function App() {
   }, [loggedIn]);
 
   useEffect(() => {
-    if (role === "staff" && ["reports", "billing", "inventory", "members"].includes(page)) {
+    if (role === "staff" && ["reports", "billing", "inventory", "members", "staff", "plans"].includes(page)) {
       setPage("tables");
     }
   }, [role, page]);
@@ -157,11 +162,15 @@ export default function App() {
   const PAGE_TITLES = {
     dashboard: "Dashboard",
     tables: "Tables",
+    waitlist: "Waitlist Queue",
+    reservations: "Reservations",
     reports: "Reports",
     closing: "Daily Closing",
     food: "Food Orders",
     tournaments: "Tournaments",
     members: "Members",
+    plans: "Membership Plans",
+    staff: "Staff & Roster",
     billing: "Billing & Invoices",
     inventory: "Inventory",
     notifications: "Notifications",
@@ -213,8 +222,12 @@ export default function App() {
               {page === "reports" && role === "admin" && <ReportsTab />}
               {page === "closing" && <ClosingTab />}
               {page === "food" && <FoodTab />}
+              {page === "waitlist" && <WaitlistTab />}
+              {page === "reservations" && <ReservationsTab />}
               {page === "tournaments" && <TournamentTab />}
               {page === "members" && role === "admin" && <MembersTab />}
+              {page === "plans" && role === "admin" && <PlansTab />}
+              {page === "staff" && role === "admin" && <StaffTab />}
               {page === "billing" && role === "admin" && <BillingTab />}
               {page === "inventory" && role === "admin" && <InventoryTab />}
               {page === "notifications" && <NotificationsTab />}
@@ -229,6 +242,7 @@ export default function App() {
               )}
             </div>
           </Suspense>
+          <CommandBar page={page} setPage={setPage} onNewSession={openNewSession} role={role} />
         </div>
       </div>
     </ToastProvider>

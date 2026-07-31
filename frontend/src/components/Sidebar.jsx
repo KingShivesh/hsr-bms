@@ -10,6 +10,8 @@ export default function Sidebar({ page, setPage, onLogout, activeTables, role = 
       items: [
         { id: "dashboard", icon: "ti-layout-dashboard", label: "Dashboard" },
         { id: "tables", icon: "ti-layout-grid", label: "Table Management", badge: activeTables > 0 ? `${activeTables} Active` : "" },
+        { id: "waitlist", icon: "ti-clock", label: "Waitlist Queue" },
+        { id: "reservations", icon: "ti-calendar", label: "Reservations" },
         { id: "food", icon: "ti-tools-kitchen-2", label: "Food & Cafe POS" },
         { id: "billing", icon: "ti-receipt", label: "Billing & Invoices", adminOnly: true },
       ],
@@ -20,7 +22,9 @@ export default function Sidebar({ page, setPage, onLogout, activeTables, role = 
         { id: "members", icon: "ti-users", label: "Club Members", adminOnly: true },
         { id: "tournaments", icon: "ti-trophy", label: "Tournaments" },
         { id: "closing", icon: "ti-lock-check", label: "Shift EOD Closing" },
+        { id: "plans", icon: "ti-award", label: "Membership Plans", adminOnly: true },
         { id: "reports", icon: "ti-chart-bar", label: "Analytics & Reports", adminOnly: true },
+        { id: "staff", icon: "ti-user-check", label: "Staff & Roster", adminOnly: true },
         { id: "inventory", icon: "ti-package", label: "Inventory & Stocks", adminOnly: true },
       ],
     },
