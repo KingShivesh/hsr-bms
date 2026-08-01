@@ -31,7 +31,7 @@ export default function App() {
   const [loggedIn, setLoggedIn] = useState(!!localStorage.getItem("token"));
   const [role, setRole] = useState(localStorage.getItem("role") || "admin");
   const [username, setUsername] = useState(localStorage.getItem("username") || "");
-  const [page, setPage] = useState("tables");
+  const [page, setPage] = useState("dashboard");
   const [newSessionRequest, setNewSessionRequest] = useState(0);
   const [backendStatus, setBackendStatus] = useState({
     state: "checking",

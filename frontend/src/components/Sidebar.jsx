@@ -39,10 +39,14 @@ export default function Sidebar({ page, setPage, onLogout, activeTables, role = 
 
       <div className="sb-section">Main</div>
       {items.map((item) => (
-        <div
+        <button
+          type="button"
           key={item.id}
           className={`sb-item ${page === item.id ? "active" : ""}`}
           onClick={() => navigate(item.id)}
+          title={item.label}
+          aria-label={item.label}
+          aria-current={page === item.id ? "page" : undefined}
         >
           <i className={`ti ${item.icon}`} aria-hidden="true" />
           <span className="sb-label">{item.label}</span>
@@ -53,23 +57,33 @@ export default function Sidebar({ page, setPage, onLogout, activeTables, role = 
               {activeTables}
             </span>
           )}
-        </div>
+        </button>
       ))}
 
       <div className="sb-section">System</div>
-      <div
+      <button
+        type="button"
         className={`sb-item ${page === "settings" ? "active" : ""}`}
         onClick={() => navigate("settings")}
+        title="Settings"
+        aria-label="Settings"
+        aria-current={page === "settings" ? "page" : undefined}
       >
         <i className="ti ti-settings" aria-hidden="true" />
         <span className="sb-label">Settings</span>
-      </div>
+      </button>
 
       <div className="sb-bottom">
-        <div className="sb-item" onClick={onLogout}>
+        <button
+          type="button"
+          className="sb-item"
+          onClick={onLogout}
+          title="Logout"
+          aria-label="Logout"
+        >
           <i className="ti ti-logout" aria-hidden="true" />
           <span className="sb-label">Logout</span>
-        </div>
+        </button>
       </div>
     </div>
   );

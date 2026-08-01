@@ -1,149 +1,119 @@
-import { useState, useEffect } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
-  BarChart,
+  Area,
+  AreaChart,
   Bar,
+  BarChart,
+  CartesianGrid,
+  Cell,
+  Pie,
+  PieChart,
+  ResponsiveContainer,
+  Tooltip,
   XAxis,
   YAxis,
-  Tooltip,
-  ResponsiveContainer,
-  PieChart,
-  Pie,
-  Cell,
 } from "recharts";
 import {
   getActive,
   getAnalytics,
-  getClosingReport,
   getClosingInsights,
+  getClosingReport,
 } from "../api/index.js";
 import { HSR_TABLES, TOTAL_TABLES, getTableLabel } from "../config/hsrTables.js";
 
 const TABLES = HSR_TABLES;
 const tableKey = (tableId) => String(tableId || "").trim().toLowerCase();
+const PIE_COLORS = ["#1f7a4f", "#2563eb", "#d97706"];
 
-const PIE_COLORS = ["#2f5d8f", "#b7791f", "#0f6b4f"];
+function money(value = 0) {
+  return `₹${Number(value || 0).toLocaleString("en-IN")}`;
+}
 
-function fmt(secs) {
-  if (!secs || secs <= 0) return "--:--";
+function fmtTime(secs = 0) {
+  if (!secs || secs <= 0) return "00:00";
   const h = Math.floor(secs / 3600);
   const m = String(Math.floor((secs % 3600) / 60)).padStart(2, "0");
-  const s = String(secs % 60).padStart(2, "0");
+  const s = String(Math.floor(secs % 60)).padStart(2, "0");
   return h > 0 ? `${h}:${m}:${s}` : `${m}:${s}`;
 }
 
-function SectionTitle({ children }) {
+function estimateTableCharge(session, elapsedSecs) {
+  if (!session) return 0;
+  const minutes = Math.max(1, Math.ceil((elapsedSecs || 0) / 60));
+  return Math.ceil((minutes * (session.rate || 0)) / 60);
+}
+
+function SectionHead({ eyebrow, title, action }) {
   return (
-    <div
-      style={{
-        fontSize: "12px",
-        color: "#999",
-        letterSpacing: "0.5px",
-        textTransform: "uppercase",
-        fontWeight: 500,
-        marginBottom: "14px",
-      }}
-    >
-      {children}
+    <div className="ops-section-head">
+      <div>
+        {eyebrow && <span>{eyebrow}</span>}
+        <h3>{title}</h3>
+      </div>
+      {action}
     </div>
   );
 }
 
-function TableOccupancyPanel({ sessions, elapsed, onNavigate }) {
-  const activeCount = TABLES.filter((t) => sessions[t.id]).length;
-  const busyCount = TABLES.filter((t) => (elapsed[t.id] || 0) > 3600).length;
-  const idleCount = Math.max(TABLES.length - activeCount, 0);
-
+function HeroCommand({ metrics, ownerTotal, activeCount, onNavigate }) {
+  const idleCount = Math.max(TOTAL_TABLES - activeCount, 0);
   return (
-    <div className="panel dashboard-occupancy-panel">
-      <div className="dashboard-panel-head">
-        <div>
-          <SectionTitle>Table occupancy</SectionTitle>
-          <div className="dashboard-panel-sub">
-            {activeCount} active · {idleCount} idle · {busyCount} over 1 hr
-          </div>
-        </div>
-        <button
-          className="dashboard-panel-action dashboard-open-floor-btn"
-          type="button"
-          onClick={() => onNavigate("tables")}
-        >
-          <i className="ti ti-layout-grid" aria-hidden="true" />
-          Open floor
+    <section className="ops-hero">
+      <div className="ops-hero-copy">
+        <span className="ops-eyebrow">Live command center</span>
+        <h2>Today is at {money(ownerTotal)}</h2>
+        <p>
+          {activeCount} tables running, {idleCount} idle, {metrics.sessions || 0} closed sessions.
+          Use this screen to spot stuck tables, food misses and closing risk.
+        </p>
+      </div>
+      <div className="ops-hero-actions">
+        <button type="button" className="ops-action primary" onClick={() => onNavigate("tables")}>
+          <i className="ti ti-player-play" aria-hidden="true" />
+          Open Floor
+        </button>
+        <button type="button" className="ops-action" onClick={() => onNavigate("food")}>
+          <i className="ti ti-tools-kitchen-2" aria-hidden="true" />
+          Food POS
+        </button>
+        <button type="button" className="ops-action warning" onClick={() => onNavigate("closing")}>
+          <i className="ti ti-lock-check" aria-hidden="true" />
+          Closing
         </button>
       </div>
-      <div className="hm-legend dashboard-legend">
-        <div className="hm-legend-item">
-          <div className="hm-dot" style={{ background: "#2f5d8f" }} />
-          Active
-        </div>
-        <div className="hm-legend-item">
-          <div className="hm-dot" style={{ background: "#b7791f" }} />
-          Busy (&gt;1hr)
-        </div>
-        <div className="hm-legend-item">
-          <div className="hm-dot" style={{ background: "#e5e7eb" }} />
-          Idle
-        </div>
-      </div>
-      <div className="heatmap dashboard-occupancy-grid">
-        {TABLES.map((t) => {
-          const sess = sessions[t.id];
-          const secs = elapsed[t.id] || 0;
-          const state = !sess ? "idle" : secs > 3600 ? "busy" : "active";
-          return (
-            <div
-              key={t.id}
-              className={`hm-cell ${state}`}
-              onClick={() => onNavigate("tables")}
-              role="button"
-              tabIndex={0}
-              onKeyDown={(e) => {
-                if (e.key === "Enter" || e.key === " ") onNavigate("tables");
-              }}
-            >
-              <div className="hm-num">T{t.num}</div>
-              <div className="hm-type">{getTableLabel(t)}</div>
-              {sess ? (
-                <>
-                  <div className="hm-player">
-                    {sess.customer_name.split(" ")[0]}
-                  </div>
-                  <div className="hm-timer">{fmt(secs)}</div>
-                </>
-              ) : (
-                <div className="hm-timer">--:--</div>
-              )}
-            </div>
-          );
-        })}
-      </div>
-    </div>
+    </section>
   );
 }
 
-function RunningTablesBar({ sessions, elapsed, onNavigate }) {
-  const running = TABLES
-    .filter((table) => sessions[table.id])
-    .map((table) => ({
-      table,
-      session: sessions[table.id],
-      elapsed: elapsed[table.id] || 0,
-    }));
-
+function KpiCard({ label, value, sub, tone = "neutral", icon }) {
   return (
-    <button className="running-strip" type="button" onClick={() => onNavigate("tables")}>
-      <div className="running-strip-head">
-        <span>{running.length} running</span>
-        <strong>{running.length ? "Open floor" : "All tables idle"}</strong>
+    <article className={`ops-kpi ${tone}`}>
+      <div className="ops-kpi-top">
+        <span>{label}</span>
+        <i className={`ti ${icon}`} aria-hidden="true" />
       </div>
-      <div className="running-strip-list">
-        {running.length === 0 ? (
-          <span className="running-chip idle">No active sessions</span>
+      <strong>{value}</strong>
+      <p>{sub}</p>
+    </article>
+  );
+}
+
+function RunningStrip({ runningTables, onNavigate }) {
+  return (
+    <button className="ops-running-strip" type="button" onClick={() => onNavigate("tables")}>
+      <div>
+        <span>{runningTables.length} running now</span>
+        <strong>{runningTables.length ? "Monitor active tables" : "All tables idle"}</strong>
+      </div>
+      <div className="ops-running-chips">
+        {runningTables.length === 0 ? (
+          <em>No active sessions</em>
         ) : (
-          running.map(({ table, session, elapsed: secs }) => (
-            <span className="running-chip" key={table.id}>
-              T{table.num} <strong>{fmt(secs)}</strong>
-              <em>{session.customer_name?.split(" ")[0] || "Player"}</em>
+          runningTables.map(({ table, session, elapsedSecs }) => (
+            <span key={table.id}>
+              T{table.num}
+              <b>{fmtTime(elapsedSecs)}</b>
+              <small>{money(estimateTableCharge(session, elapsedSecs) + (session.food_total || 0))}</small>
             </span>
           ))
         )}
@@ -153,28 +123,273 @@ function RunningTablesBar({ sessions, elapsed, onNavigate }) {
   );
 }
 
+function LiveFloor({ sessions, elapsed, onNavigate }) {
+  return (
+    <section className="ops-panel ops-floor-panel">
+      <SectionHead
+        eyebrow="Floor control"
+        title="Live Table Floor"
+        action={
+          <button type="button" className="ops-link-btn" onClick={() => onNavigate("tables")}>
+            Manage tables
+          </button>
+        }
+      />
+      <div className="ops-floor-grid">
+        {TABLES.map((table) => {
+          const session = sessions[table.id];
+          const elapsedSecs = elapsed[table.id] || 0;
+          const active = Boolean(session);
+          const busy = elapsedSecs >= 3600;
+          const paused = session?.paused;
+          const runningTotal = active
+            ? estimateTableCharge(session, elapsedSecs) + (session.food_total || 0)
+            : 0;
+          return (
+            <button
+              type="button"
+              key={table.id}
+              className={`ops-table-card ${active ? "active" : "idle"} ${busy ? "busy" : ""} ${paused ? "paused" : ""}`}
+              onClick={() => onNavigate("tables")}
+            >
+              <div className="ops-table-top">
+                <strong>T{table.num}</strong>
+                <span>{getTableLabel(table)}</span>
+              </div>
+              <div className="ops-table-status">
+                <i className="ti ti-circle-filled" aria-hidden="true" />
+                {paused ? "Paused" : active ? "Running" : "Available"}
+              </div>
+              <div className="ops-table-main">
+                <span>{active ? fmtTime(elapsedSecs) : "--:--"}</span>
+                <strong>{money(runningTotal)}</strong>
+              </div>
+              <div className="ops-table-meta">
+                {active ? (
+                  <>
+                    <span>{session.customer_name || "Player"}</span>
+                    <span>{session.billing_mode || "single"} · Food {money(session.food_total || 0)}</span>
+                  </>
+                ) : (
+                  <>
+                    <span>Ready to start</span>
+                    <span>Tap to open table controls</span>
+                  </>
+                )}
+              </div>
+            </button>
+          );
+        })}
+      </div>
+    </section>
+  );
+}
+
+function ActionQueue({ actions }) {
+  return (
+    <section className="ops-panel">
+      <SectionHead eyebrow="Needs attention" title="Action Queue" />
+      <div className="ops-action-list">
+        {actions.map((item) => (
+          <div className={`ops-action-row ${item.tone}`} key={item.title}>
+            <i className={`ti ${item.icon}`} aria-hidden="true" />
+            <div>
+              <strong>{item.title}</strong>
+              <span>{item.detail}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function CloseReadiness({ digest, activeCount, onNavigate }) {
+  const report = digest?.report;
+  const openTables = report?.open_tables?.length ?? activeCount;
+  const closed = Boolean(report?.day_close?.closed);
+  const ready = !openTables && !closed;
+  return (
+    <section className={`ops-panel ops-close-card ${closed ? "closed" : ready ? "ready" : "blocked"}`}>
+      <SectionHead
+        eyebrow="End of day"
+        title={closed ? "Day Already Closed" : ready ? "Ready To Close" : "Closing Blocked"}
+        action={
+          <button type="button" className="ops-link-btn" onClick={() => onNavigate("closing")}>
+            View closing
+          </button>
+        }
+      />
+      <div className="ops-close-grid">
+        <div>
+          <span>Open tables</span>
+          <strong>{openTables}</strong>
+        </div>
+        <div>
+          <span>Expected cash</span>
+          <strong>{money(report?.day_close?.expected_cash ?? report?.cash_total ?? 0)}</strong>
+        </div>
+        <div>
+          <span>Peak hour</span>
+          <strong>{report?.peak_hour || "-"}</strong>
+        </div>
+      </div>
+      <p>
+        {closed
+          ? `Closed at ${report?.day_close?.closed_at || "-"} by ${report?.day_close?.closed_by || "-"}`
+          : ready
+            ? "All tables are clear. Count cash and lock the shift."
+            : "Close running tables first, then complete cash and payment reconciliation."}
+      </p>
+    </section>
+  );
+}
+
+function PaymentMix({ cashTotal, upiTotal, cardTotal }) {
+  const rows = [
+    { label: "Cash", value: cashTotal, tone: "cash" },
+    { label: "UPI", value: upiTotal, tone: "upi" },
+    { label: "Card", value: cardTotal, tone: "card" },
+  ];
+  const total = rows.reduce((sum, row) => sum + row.value, 0);
+  return (
+    <section className="ops-panel">
+      <SectionHead eyebrow="Collection" title="Payment Mix" />
+      <div className="ops-payment-list">
+        {rows.map((row) => {
+          const pct = total ? Math.round((row.value / total) * 100) : 0;
+          return (
+            <div className="ops-payment-row" key={row.label}>
+              <div>
+                <strong>{row.label}</strong>
+                <span>{pct}% of collected revenue</span>
+              </div>
+              <em>{money(row.value)}</em>
+              <div className="ops-payment-track">
+                <span className={row.tone} style={{ width: `${pct}%` }} />
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </section>
+  );
+}
+
+function Insights({ digest }) {
+  const insights = digest?.insights?.insights?.slice(0, 3) || [];
+  return (
+    <section className="ops-panel">
+      <SectionHead eyebrow="Owner digest" title="Smart Checks" />
+      <div className="ops-insights">
+        {insights.length ? (
+          insights.map((insight, index) => (
+            <div className={`ops-insight ${insight.type || "info"}`} key={`${insight.title}-${index}`}>
+              <i className="ti ti-bulb" aria-hidden="true" />
+              <div>
+                <strong>{insight.title}</strong>
+                <span>{insight.detail}</span>
+              </div>
+            </div>
+          ))
+        ) : (
+          <div className="ops-insight positive">
+            <i className="ti ti-check" aria-hidden="true" />
+            <div>
+              <strong>No unusual activity</strong>
+              <span>Run a few sessions and insights will populate here.</span>
+            </div>
+          </div>
+        )}
+      </div>
+    </section>
+  );
+}
+
+function Charts({ analytics, pieData }) {
+  return (
+    <div className="ops-chart-grid">
+      <section className="ops-panel">
+        <SectionHead eyebrow="Trend" title="Revenue Last 7 Days" />
+        {analytics ? (
+          <ResponsiveContainer width="100%" height={220}>
+            <AreaChart data={analytics.weekly}>
+              <defs>
+                <linearGradient id="dashRevenue" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor="#2563eb" stopOpacity={0.35} />
+                  <stop offset="95%" stopColor="#2563eb" stopOpacity={0.02} />
+                </linearGradient>
+              </defs>
+              <CartesianGrid strokeDasharray="3 3" vertical={false} opacity={0.18} />
+              <XAxis dataKey="date" tick={{ fontSize: 11, fill: "#7b8794" }} axisLine={false} tickLine={false} />
+              <YAxis
+                tick={{ fontSize: 11, fill: "#7b8794" }}
+                axisLine={false}
+                tickLine={false}
+                tickFormatter={(v) => (v >= 1000 ? `₹${Math.round(v / 1000)}k` : `₹${v}`)}
+              />
+              <Tooltip formatter={(v) => [money(v), "Revenue"]} />
+              <Area type="monotone" dataKey="revenue" stroke="#2563eb" fill="url(#dashRevenue)" strokeWidth={3} />
+            </AreaChart>
+          </ResponsiveContainer>
+        ) : (
+          <div className="ops-empty-chart">Loading chart...</div>
+        )}
+      </section>
+
+      <section className="ops-panel">
+        <SectionHead eyebrow="Source" title="Revenue Split" />
+        {pieData.length ? (
+          <div className="ops-breakdown">
+            <ResponsiveContainer width="100%" height={190}>
+              <PieChart>
+                <Pie data={pieData} cx="50%" cy="50%" innerRadius={52} outerRadius={78} paddingAngle={3} dataKey="value">
+                  {pieData.map((_, i) => (
+                    <Cell key={i} fill={PIE_COLORS[i % PIE_COLORS.length]} />
+                  ))}
+                </Pie>
+                <Tooltip formatter={(v) => [money(v), ""]} />
+              </PieChart>
+            </ResponsiveContainer>
+            <div className="ops-breakdown-list">
+              {pieData.map((row, index) => (
+                <div key={row.name}>
+                  <span style={{ background: PIE_COLORS[index % PIE_COLORS.length] }} />
+                  <strong>{row.name}</strong>
+                  <em>{money(row.value)}</em>
+                </div>
+              ))}
+            </div>
+          </div>
+        ) : (
+          <div className="ops-empty-chart">No revenue split yet</div>
+        )}
+      </section>
+    </div>
+  );
+}
+
 export default function Dashboard({ metrics, onNavigate }) {
   const [sessions, setSessions] = useState({});
   const [elapsed, setElapsed] = useState({});
   const [analytics, setAnalytics] = useState(null);
   const [digest, setDigest] = useState(null);
-  const [, setLoading] = useState(true);
 
   useEffect(() => {
     async function fetchActive() {
       try {
         const res = await getActive();
-        const s = {},
-          e = {};
-        res.data.forEach((x) => {
-          const id = tableKey(x.table_id);
-          s[id] = { ...x, table_id: id };
-          e[id] = Math.floor(
-            (x.paused ? x.elapsed_ms : Date.now() - x.start_time) / 1000,
+        const nextSessions = {};
+        const nextElapsed = {};
+        res.data.forEach((session) => {
+          const id = tableKey(session.table_id);
+          nextSessions[id] = { ...session, table_id: id };
+          nextElapsed[id] = Math.floor(
+            (session.paused ? session.elapsed_ms : Date.now() - session.start_time) / 1000,
           );
         });
-        setSessions(s);
-        setElapsed(e);
+        setSessions(nextSessions);
+        setElapsed(nextElapsed);
       } catch (err) {
         console.error(err);
       }
@@ -195,59 +410,48 @@ export default function Dashboard({ metrics, onNavigate }) {
           getClosingReport(),
           getClosingInsights(),
         ]);
-        setDigest({
-          report: reportRes.data,
-          insights: insightRes.data,
-        });
+        setDigest({ report: reportRes.data, insights: insightRes.data });
       } catch (err) {
         console.error(err);
       }
     }
 
-    let deferredLoad = null;
-
-    async function fetchAll() {
-      await fetchActive();
-      setLoading(false);
-      deferredLoad = window.setTimeout(() => {
-        fetchDigest();
-        fetchAnalytics();
-      }, 200);
-    }
-
-    fetchAll();
-    const iv = setInterval(fetchActive, 20000);
+    fetchActive();
+    const deferredLoad = window.setTimeout(() => {
+      fetchDigest();
+      fetchAnalytics();
+    }, 200);
+    const activeInterval = window.setInterval(fetchActive, 20000);
     return () => {
-      clearInterval(iv);
-      if (deferredLoad) window.clearTimeout(deferredLoad);
+      window.clearTimeout(deferredLoad);
+      window.clearInterval(activeInterval);
     };
   }, []);
 
   useEffect(() => {
-    const iv = setInterval(() => {
+    const interval = window.setInterval(() => {
       setElapsed((prev) => {
         const next = { ...prev };
         Object.keys(next).forEach((id) => {
-          if (!sessions[id]?.paused) next[id] = next[id] + 1;
+          if (!sessions[id]?.paused) next[id] += 1;
         });
         return next;
       });
     }, 1000);
-    return () => clearInterval(iv);
+    return () => window.clearInterval(interval);
   }, [sessions]);
 
-  // Pie chart data
-  const pieData = analytics
-    ? [
-        { name: "Pool", value: analytics.breakdown.pool },
-        { name: "Snooker", value: analytics.breakdown.snooker },
-        { name: "Food", value: analytics.breakdown.food },
-      ].filter((d) => d.value > 0)
-    : [];
-
-  function openClosingReport() {
-    onNavigate("closing");
-  }
+  const runningTables = useMemo(
+    () =>
+      TABLES
+        .filter((table) => sessions[table.id])
+        .map((table) => ({
+          table,
+          session: sessions[table.id],
+          elapsedSecs: elapsed[table.id] || 0,
+        })),
+    [sessions, elapsed],
+  );
 
   const ownerReport = digest?.report;
   const cashTotal = ownerReport?.cash_total || 0;
@@ -256,245 +460,132 @@ export default function Dashboard({ metrics, onNavigate }) {
   const ownerTotal = ownerReport
     ? (ownerReport.total_revenue || 0) + (ownerReport.food_only_revenue || 0)
     : metrics.sale;
+  const liveTableTotal = runningTables.reduce(
+    (sum, { session, elapsedSecs }) => sum + estimateTableCharge(session, elapsedSecs) + (session.food_total || 0),
+    0,
+  );
+  const foodAttachment = ownerTotal > 0 ? Math.round(((metrics.food || 0) / ownerTotal) * 100) : 0;
+  const avgTableMinutes = runningTables.length
+    ? Math.round(runningTables.reduce((sum, row) => sum + row.elapsedSecs / 60, 0) / runningTables.length)
+    : 0;
+
+  const actionItems = useMemo(() => {
+    const items = [];
+    const paused = runningTables.filter((row) => row.session.paused);
+    const longRunning = runningTables.filter((row) => row.elapsedSecs >= 90 * 60);
+    if (paused.length) {
+      items.push({
+        title: `${paused.length} table${paused.length > 1 ? "s" : ""} paused`,
+        detail: "Resume or close paused tables before the shift gets confusing.",
+        tone: "warning",
+        icon: "ti-player-pause",
+      });
+    }
+    if (longRunning.length) {
+      items.push({
+        title: `${longRunning.length} long session${longRunning.length > 1 ? "s" : ""}`,
+        detail: "Check if players need a frame close, food prompt, or checkout.",
+        tone: "critical",
+        icon: "ti-clock-exclamation",
+      });
+    }
+    if (runningTables.length && foodAttachment < 10) {
+      items.push({
+        title: "Food attachment is low",
+        detail: "Prompt tea, fries, cold drinks or cigarettes during checkout.",
+        tone: "info",
+        icon: "ti-tools-kitchen-2",
+      });
+    }
+    if (ownerReport?.open_tables?.length) {
+      items.push({
+        title: "Closing has open tables",
+        detail: `${ownerReport.open_tables.length} table(s) must be closed before EOD.`,
+        tone: "warning",
+        icon: "ti-lock-open",
+      });
+    }
+    if (!items.length) {
+      items.push({
+        title: "Floor is under control",
+        detail: "No stuck tables or urgent owner actions right now.",
+        tone: "positive",
+        icon: "ti-circle-check",
+      });
+    }
+    return items.slice(0, 4);
+  }, [runningTables, foodAttachment, ownerReport]);
+
+  const pieData = analytics
+    ? [
+        { name: "Snooker", value: analytics.breakdown.snooker },
+        { name: "Pool", value: analytics.breakdown.pool },
+        { name: "Food", value: analytics.breakdown.food },
+      ].filter((row) => row.value > 0)
+    : [];
 
   return (
-    <div className="dashboard-home">
-      <RunningTablesBar sessions={sessions} elapsed={elapsed} onNavigate={onNavigate} />
+    <div className="ops-dashboard">
+      <HeroCommand
+        metrics={metrics}
+        ownerTotal={ownerTotal}
+        activeCount={runningTables.length}
+        onNavigate={onNavigate}
+      />
 
-      {/* Metrics */}
-      <div className="metrics-grid">
-        <div className="metric-card green">
-          <div className="metric-label">Today Sales</div>
-          <div className="metric-value">
-            ₹{ownerTotal.toLocaleString("en-IN")}
-          </div>
-          <div className="metric-sub">{metrics.sessions} sessions today</div>
-        </div>
-        <div className="metric-card blue">
-          <div className="metric-label">Active Tables</div>
-          <div className="metric-value">
-            {metrics.active_tables} / {TOTAL_TABLES}
-          </div>
-          <div className="metric-sub">
-            {Math.max(TOTAL_TABLES - metrics.active_tables, 0)} idle right now
-          </div>
-        </div>
-        <div className="metric-card">
-          <div className="metric-label">Cash</div>
-          <div className="metric-value">₹{cashTotal.toLocaleString("en-IN")}</div>
-          <div className="metric-sub">From closed tables</div>
-        </div>
-        <div className="metric-card">
-          <div className="metric-label">UPI</div>
-          <div className="metric-value">₹{upiTotal.toLocaleString("en-IN")}</div>
-          <div className="metric-sub">From closed tables</div>
-        </div>
-        <div className="metric-card">
-          <div className="metric-label">Card</div>
-          <div className="metric-value">₹{cardTotal.toLocaleString("en-IN")}</div>
-          <div className="metric-sub">From closed tables</div>
-        </div>
-        <div className="metric-card amber">
-          <div className="metric-label">Food Sales</div>
-          <div className="metric-value">
-            ₹{metrics.food.toLocaleString("en-IN")}
-          </div>
-          <div className="metric-sub">
-            {metrics.sale > 0
-              ? Math.round((metrics.food / metrics.sale) * 100)
-              : 0}
-            % of revenue
-          </div>
-        </div>
-      </div>
+      <RunningStrip runningTables={runningTables} onNavigate={onNavigate} />
 
-      <div className="dashboard-at-glance">
-        <TableOccupancyPanel
-          sessions={sessions}
-          elapsed={elapsed}
-          onNavigate={onNavigate}
+      <div className="ops-kpi-grid">
+        <KpiCard
+          label="Today Revenue"
+          value={money(ownerTotal)}
+          sub={`${metrics.sessions || 0} sessions closed today`}
+          tone="green"
+          icon="ti-cash"
         />
-
-        {digest && (
-          <div className="owner-digest">
-            <div className="owner-digest-head">
-              <div>
-                <div className="owner-digest-kicker">Daily owner digest</div>
-                <div className="owner-digest-title">{digest.report.date}</div>
-              </div>
-              <button type="button" className="owner-close-day-btn dashboard-close-day-btn" onClick={openClosingReport}>
-                Close day
-                <i className="ti ti-clipboard-check" aria-hidden="true" />
-              </button>
-            </div>
-            <div className="owner-digest-grid">
-              <div>
-                <span>Revenue</span>
-                <strong>₹{digest.report.total_revenue.toLocaleString("en-IN")}</strong>
-              </div>
-              <div>
-                <span>Sessions</span>
-                <strong>{digest.report.total_sessions}</strong>
-              </div>
-              <div>
-                <span>Food</span>
-                <strong>₹{digest.report.food_revenue.toLocaleString("en-IN")}</strong>
-              </div>
-              <div>
-                <span>Peak hour</span>
-                <strong>{digest.report.peak_hour}</strong>
-              </div>
-            </div>
-            <div className="owner-digest-insight">
-              <i className="ti ti-bulb" aria-hidden="true" />
-              <div>
-                <strong>{digest.insights.insights[0]?.title || "Clean close outlook"}</strong>
-                <span>{digest.insights.insights[0]?.detail || "No unusual activity detected so far."}</span>
-              </div>
-            </div>
-          </div>
-        )}
-        {!digest && (
-          <div className="owner-digest owner-digest-loading">
-            <div className="owner-digest-kicker">Daily owner digest</div>
-            <div className="owner-digest-title">Loading...</div>
-          </div>
-        )}
+        <KpiCard
+          label="Live Floor Value"
+          value={money(liveTableTotal)}
+          sub="Estimated value still running"
+          tone="blue"
+          icon="ti-live-view"
+        />
+        <KpiCard
+          label="Active Tables"
+          value={`${runningTables.length}/${TOTAL_TABLES}`}
+          sub={`${Math.max(TOTAL_TABLES - runningTables.length, 0)} tables idle now`}
+          tone="amber"
+          icon="ti-layout-grid"
+        />
+        <KpiCard
+          label="Avg Live Time"
+          value={`${avgTableMinutes}m`}
+          sub="Average active session age"
+          icon="ti-clock"
+        />
+        <KpiCard
+          label="Food Revenue"
+          value={money(metrics.food)}
+          sub={`${foodAttachment}% of today's revenue`}
+          tone="blue"
+          icon="ti-tools-kitchen-2"
+        />
       </div>
 
-      <div className="dashboard-sales-grid">
-        <div className="panel">
-          <SectionTitle>Revenue — last 7 days</SectionTitle>
-          {analytics ? (
-            <ResponsiveContainer width="100%" height={180}>
-              <BarChart data={analytics.weekly} barSize={28}>
-                <XAxis
-                  dataKey="date"
-                  tick={{ fontSize: 11, fill: "#bbb" }}
-                  axisLine={false}
-                  tickLine={false}
-                />
-                <YAxis
-                  tick={{ fontSize: 11, fill: "#bbb" }}
-                  axisLine={false}
-                  tickLine={false}
-                  tickFormatter={(v) =>
-                    v >= 1000 ? `₹${(v / 1000).toFixed(0)}k` : `₹${v}`
-                  }
-                />
-                <Tooltip
-                  formatter={(v) => [
-                    `₹${v.toLocaleString("en-IN")}`,
-                    "Revenue",
-                  ]}
-                  contentStyle={{
-                    background: "#fff",
-                    border: "1px solid #f0f0f0",
-                    borderRadius: "8px",
-                    fontSize: "12px",
-                  }}
-                  cursor={{ fill: "#f5f5f5" }}
-                />
-                <Bar dataKey="revenue" fill="#2f5d8f" radius={[4, 4, 0, 0]} />
-              </BarChart>
-            </ResponsiveContainer>
-          ) : (
-            <div
-              style={{
-                height: 180,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                color: "#bbb",
-                fontSize: "13px",
-              }}
-            >
-              Loading chart...
-            </div>
-          )}
-        </div>
-
-        <div className="panel">
-          <SectionTitle>Revenue breakdown</SectionTitle>
-          {pieData.length > 0 ? (
-            <>
-              <ResponsiveContainer width="100%" height={160}>
-                <PieChart>
-                  <Pie
-                    data={pieData}
-                    cx="50%"
-                    cy="50%"
-                    innerRadius={45}
-                    outerRadius={70}
-                    paddingAngle={3}
-                    dataKey="value"
-                  >
-                    {pieData.map((_, i) => (
-                      <Cell key={i} fill={PIE_COLORS[i % PIE_COLORS.length]} />
-                    ))}
-                  </Pie>
-                  <Tooltip
-                    formatter={(v) => [`₹${v.toLocaleString("en-IN")}`, ""]}
-                    contentStyle={{
-                      background: "#fff",
-                      border: "1px solid #f0f0f0",
-                      borderRadius: "8px",
-                      fontSize: "12px",
-                    }}
-                  />
-                </PieChart>
-              </ResponsiveContainer>
-              <div
-                style={{ display: "flex", flexDirection: "column", gap: "6px" }}
-              >
-                {pieData.map((d, i) => (
-                  <div
-                    key={i}
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                      fontSize: "12px",
-                    }}
-                  >
-                    <div
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "6px",
-                      }}
-                    >
-                      <div
-                        style={{
-                          width: "8px",
-                          height: "8px",
-                          borderRadius: "50%",
-                          background: PIE_COLORS[i],
-                        }}
-                      />
-                      <span style={{ color: "#555" }}>{d.name}</span>
-                    </div>
-                    <span style={{ fontWeight: 600, color: "#111" }}>
-                      ₹{d.value.toLocaleString("en-IN")}
-                    </span>
-                  </div>
-                ))}
-              </div>
-            </>
-          ) : (
-            <div
-              style={{
-                color: "#bbb",
-                fontSize: "13px",
-                textAlign: "center",
-                padding: "20px 0",
-              }}
-            >
-              No data yet
-            </div>
-          )}
+      <div className="ops-main-grid">
+        <LiveFloor sessions={sessions} elapsed={elapsed} onNavigate={onNavigate} />
+        <div className="ops-side-stack">
+          <ActionQueue actions={actionItems} />
+          <CloseReadiness digest={digest} activeCount={runningTables.length} onNavigate={onNavigate} />
         </div>
       </div>
+
+      <div className="ops-lower-grid">
+        <PaymentMix cashTotal={cashTotal} upiTotal={upiTotal} cardTotal={cardTotal} />
+        <Insights digest={digest} />
+      </div>
+
+      <Charts analytics={analytics} pieData={pieData} />
     </div>
   );
 }
