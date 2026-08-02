@@ -9800,6 +9800,7 @@ body.dark .backend-status-banner {
 .ops-hero,
 .ops-panel,
 .ops-kpi,
+.ops-quickbar,
 .ops-running-strip {
   border: 1px solid rgba(15, 23, 42, 0.1);
   background: #fff;
@@ -9908,6 +9909,100 @@ body.dark .backend-status-banner {
   color: #fde68a;
 }
 
+.ops-quickbar {
+  display: grid;
+  grid-template-columns: minmax(180px, 0.55fr) minmax(0, 2fr);
+  align-items: center;
+  gap: 14px;
+  min-height: 86px;
+  padding: 14px 16px;
+  border-radius: 18px;
+  background:
+    linear-gradient(135deg, rgba(248, 250, 252, 0.95), rgba(239, 246, 255, 0.82)),
+    #fff;
+}
+
+.ops-quickbar > div:first-child strong {
+  display: block;
+  margin-top: 4px;
+  color: #0f172a;
+  font-size: 17px;
+  font-weight: 950;
+}
+
+.ops-quick-actions {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.ops-quick-action {
+  min-height: 58px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 10px;
+  background: rgba(255, 255, 255, 0.82);
+  color: #172033;
+  cursor: pointer;
+  text-align: left;
+  transition: transform 0.16s ease, border-color 0.16s ease, box-shadow 0.16s ease;
+}
+
+.ops-quick-action:hover {
+  transform: translateY(-1px);
+  border-color: #bfdbfe;
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
+}
+
+.ops-quick-action i {
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  border-radius: 12px;
+  background: #eff6ff;
+  color: #2563eb;
+  font-size: 18px;
+}
+
+.ops-quick-action.primary i {
+  background: #dcfce7;
+  color: #16a34a;
+}
+
+.ops-quick-action.food i,
+.ops-quick-action.closing i {
+  background: #fffbeb;
+  color: #d97706;
+}
+
+.ops-quick-action.queue i {
+  background: #f5f3ff;
+  color: #7c3aed;
+}
+
+.ops-quick-action b,
+.ops-quick-action small {
+  display: block;
+}
+
+.ops-quick-action b {
+  color: #0f172a;
+  font-size: 12px;
+  font-weight: 950;
+}
+
+.ops-quick-action small {
+  margin-top: 2px;
+  color: #64748b;
+  font-size: 11px;
+  font-weight: 800;
+}
+
 .ops-running-strip {
   width: 100%;
   display: grid;
@@ -9972,7 +10067,7 @@ body.dark .backend-status-banner {
 
 .ops-kpi-grid {
   display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
+  grid-template-columns: repeat(6, minmax(0, 1fr));
   gap: 14px;
 }
 
@@ -10352,6 +10447,171 @@ body.dark .backend-status-banner {
   gap: 18px;
 }
 
+.ops-clubflow-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.ops-mini-metrics {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.ops-mini-metrics div {
+  min-height: 72px;
+  padding: 12px;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  background: #f8fafc;
+}
+
+.ops-mini-metrics div.warning {
+  background: #fffbeb;
+  border-color: #fde68a;
+}
+
+.ops-mini-metrics span {
+  display: block;
+  color: #64748b;
+  font-size: 10px;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.ops-mini-metrics strong {
+  display: block;
+  margin-top: 6px;
+  color: #0f172a;
+  font-size: 22px;
+  font-weight: 950;
+}
+
+.ops-compact-list,
+.ops-timeline,
+.ops-food-demand {
+  display: grid;
+  gap: 10px;
+}
+
+.ops-compact-list > div,
+.ops-timeline > div,
+.ops-empty-line {
+  display: grid;
+  grid-template-columns: 34px minmax(0, 1fr);
+  gap: 10px;
+  align-items: start;
+  min-height: 54px;
+  padding: 10px;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  background: #f8fafc;
+}
+
+.ops-compact-list i,
+.ops-timeline i,
+.ops-empty-line i {
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border-radius: 11px;
+  background: #eff6ff;
+  color: #2563eb;
+  font-size: 17px;
+}
+
+.ops-compact-list b,
+.ops-timeline b,
+.ops-empty-line b {
+  display: block;
+  color: #0f172a;
+  font-size: 12px;
+  font-weight: 950;
+  text-transform: capitalize;
+}
+
+.ops-compact-list small,
+.ops-timeline small,
+.ops-empty-line small {
+  display: block;
+  margin-top: 2px;
+  color: #64748b;
+  font-size: 11px;
+  font-weight: 760;
+  line-height: 1.35;
+}
+
+.ops-food-demand > div {
+  display: grid;
+  gap: 8px;
+}
+
+.ops-food-demand span {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.ops-food-demand b,
+.ops-food-demand small {
+  color: #0f172a;
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.ops-food-demand small {
+  color: #64748b;
+  white-space: nowrap;
+}
+
+.ops-food-demand em {
+  display: block;
+  min-width: 6px;
+  height: 7px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #d97706, #facc15);
+}
+
+.ops-recent-orders {
+  display: grid;
+  gap: 8px;
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid #e2e8f0;
+}
+
+.ops-recent-orders div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  color: #64748b;
+  font-size: 12px;
+  font-weight: 850;
+}
+
+.ops-recent-orders strong {
+  color: #0f172a;
+  font-weight: 950;
+}
+
+.ops-timeline > div {
+  position: relative;
+}
+
+.ops-timeline > div.positive i {
+  background: #f0fdf4;
+  color: #16a34a;
+}
+
+.ops-timeline > div.critical i {
+  background: #fff1f2;
+  color: #dc2626;
+}
+
 .ops-empty-chart {
   min-height: 180px;
   display: grid;
@@ -10395,6 +10655,7 @@ body.dark .backend-status-banner {
 body.dark .ops-hero,
 body.dark .ops-panel,
 body.dark .ops-kpi,
+body.dark .ops-quickbar,
 body.dark .ops-running-strip {
   border-color: rgba(148, 163, 184, 0.16);
   background: #111827;
@@ -10408,12 +10669,21 @@ body.dark .ops-hero {
 
 body.dark .ops-kpi strong,
 body.dark .ops-section-head h3,
+body.dark .ops-quickbar > div:first-child strong,
+body.dark .ops-quick-action b,
 body.dark .ops-running-strip > div:first-child strong,
 body.dark .ops-table-top strong,
 body.dark .ops-table-main span,
 body.dark .ops-action-row strong,
 body.dark .ops-insight strong,
 body.dark .ops-close-grid strong,
+body.dark .ops-mini-metrics strong,
+body.dark .ops-compact-list b,
+body.dark .ops-timeline b,
+body.dark .ops-empty-line b,
+body.dark .ops-food-demand b,
+body.dark .ops-food-demand small,
+body.dark .ops-recent-orders strong,
 body.dark .ops-payment-row strong,
 body.dark .ops-payment-row em,
 body.dark .ops-breakdown-list strong,
@@ -10423,24 +10693,53 @@ body.dark .ops-breakdown-list em {
 
 body.dark .ops-kpi-top span,
 body.dark .ops-kpi p,
+body.dark .ops-quick-action small,
 body.dark .ops-table-top span,
 body.dark .ops-table-status,
 body.dark .ops-table-meta span,
 body.dark .ops-action-row span,
 body.dark .ops-insight span,
 body.dark .ops-close-card p,
+body.dark .ops-mini-metrics span,
+body.dark .ops-compact-list small,
+body.dark .ops-timeline small,
+body.dark .ops-empty-line small,
+body.dark .ops-recent-orders div,
 body.dark .ops-payment-row span {
   color: #94a3b8;
 }
 
 body.dark .ops-kpi-top i,
+body.dark .ops-quick-action,
 body.dark .ops-table-card,
 body.dark .ops-action-row,
 body.dark .ops-insight,
 body.dark .ops-close-grid div,
+body.dark .ops-mini-metrics div,
+body.dark .ops-compact-list > div,
+body.dark .ops-timeline > div,
+body.dark .ops-empty-line,
 body.dark .ops-payment-track {
   border-color: rgba(148, 163, 184, 0.16);
   background: #0f172a;
+}
+
+body.dark .ops-quickbar {
+  background:
+    linear-gradient(135deg, rgba(17, 24, 39, 0.96), rgba(15, 23, 42, 0.96)),
+    #111827;
+}
+
+body.dark .ops-quick-action i,
+body.dark .ops-compact-list i,
+body.dark .ops-timeline i,
+body.dark .ops-empty-line i {
+  background: rgba(37, 99, 235, 0.18);
+  color: #93c5fd;
+}
+
+body.dark .ops-recent-orders {
+  border-top-color: rgba(148, 163, 184, 0.16);
 }
 
 body.dark .ops-table-card.active {
@@ -10484,6 +10783,10 @@ button.sb-item:focus-visible {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
+  .ops-quick-actions {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
   .ops-floor-grid {
     grid-template-columns: repeat(3, minmax(160px, 1fr));
   }
@@ -10492,7 +10795,12 @@ button.sb-item:focus-visible {
 @media (max-width: 980px) {
   .ops-main-grid,
   .ops-lower-grid,
+  .ops-clubflow-grid,
   .ops-chart-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .ops-quickbar {
     grid-template-columns: 1fr;
   }
 
@@ -10513,6 +10821,7 @@ button.sb-item:focus-visible {
   }
 
   .ops-kpi-grid,
+  .ops-quick-actions,
   .ops-floor-grid,
   .ops-close-grid {
     grid-template-columns: 1fr;

@@ -16,8 +16,13 @@ import {
 import {
   getActive,
   getAnalytics,
+  getAuditLogs,
+  getBookings,
   getClosingInsights,
   getClosingReport,
+  getFoodOrders,
+  getFoodStats,
+  getWaitlist,
 } from "../api/index.js";
 import { HSR_TABLES, TOTAL_TABLES, getTableLabel } from "../config/hsrTables.js";
 
@@ -35,6 +40,23 @@ function fmtTime(secs = 0) {
   const m = String(Math.floor((secs % 3600) / 60)).padStart(2, "0");
   const s = String(Math.floor(secs % 60)).padStart(2, "0");
   return h > 0 ? `${h}:${m}:${s}` : `${m}:${s}`;
+}
+
+function fmtShortDateTime(value) {
+  if (!value) return "-";
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return String(value);
+  return date.toLocaleString("en-IN", {
+    day: "2-digit",
+    month: "short",
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+}
+
+function pct(value, total) {
+  if (!total) return 0;
+  return Math.max(0, Math.min(100, Math.round((value / total) * 100)));
 }
 
 function estimateTableCharge(session, elapsedSecs) {
@@ -95,6 +117,71 @@ function KpiCard({ label, value, sub, tone = "neutral", icon }) {
       <strong>{value}</strong>
       <p>{sub}</p>
     </article>
+  );
+}
+
+function QuickOperations({ onNavigate, activeCount, waitingCount, bookingCount }) {
+  const actions = [
+    {
+      label: "Start Table",
+      sub: `${Math.max(TOTAL_TABLES - activeCount, 0)} idle`,
+      icon: "ti-player-play",
+      page: "tables",
+      tone: "primary",
+    },
+    {
+      label: "Food POS",
+      sub: "Counter order",
+      icon: "ti-tools-kitchen-2",
+      page: "food",
+      tone: "food",
+    },
+    {
+      label: "Bookings",
+      sub: `${bookingCount} active`,
+      icon: "ti-calendar-plus",
+      page: "tables",
+      tone: "booking",
+    },
+    {
+      label: "Queue",
+      sub: `${waitingCount} waiting`,
+      icon: "ti-clock",
+      page: "tables",
+      tone: "queue",
+    },
+    {
+      label: "Closing",
+      sub: activeCount ? `${activeCount} open` : "Ready",
+      icon: "ti-lock-check",
+      page: "closing",
+      tone: "closing",
+    },
+  ];
+
+  return (
+    <section className="ops-quickbar" aria-label="Quick operations">
+      <div>
+        <span className="ops-eyebrow">Quick operations</span>
+        <strong>Front desk actions</strong>
+      </div>
+      <div className="ops-quick-actions">
+        {actions.map((action) => (
+          <button
+            type="button"
+            key={action.label}
+            className={`ops-quick-action ${action.tone}`}
+            onClick={() => onNavigate(action.page)}
+          >
+            <i className={`ti ${action.icon}`} aria-hidden="true" />
+            <span>
+              <b>{action.label}</b>
+              <small>{action.sub}</small>
+            </span>
+          </button>
+        ))}
+      </div>
+    </section>
   );
 }
 
@@ -306,6 +393,178 @@ function Insights({ digest }) {
   );
 }
 
+function QueueBookings({ waitlist, bookings, onNavigate }) {
+  const nextBookings = bookings
+    .filter((booking) => booking.status === "booked")
+    .slice(0, 3);
+  const missedCount = bookings.filter((booking) => booking.status === "missed").length;
+
+  return (
+    <section className="ops-panel">
+      <SectionHead
+        eyebrow="Reception"
+        title="Queue & Bookings"
+        action={
+          <button type="button" className="ops-link-btn" onClick={() => onNavigate("tables")}>
+            Manage
+          </button>
+        }
+      />
+      <div className="ops-mini-metrics">
+        <div>
+          <span>Waiting</span>
+          <strong>{waitlist.length}</strong>
+        </div>
+        <div>
+          <span>Bookings</span>
+          <strong>{nextBookings.length}</strong>
+        </div>
+        <div className={missedCount ? "warning" : ""}>
+          <span>Missed</span>
+          <strong>{missedCount}</strong>
+        </div>
+      </div>
+      <div className="ops-compact-list">
+        {waitlist.slice(0, 2).map((entry) => (
+          <div key={`queue-${entry.id}`}>
+            <i className="ti ti-user-clock" aria-hidden="true" />
+            <span>
+              <b>{entry.customer_name}</b>
+              <small>
+                Queue #{entry.position} · {entry.preferred_type || "Any"} · {entry.wait_mins || 0}m
+              </small>
+            </span>
+          </div>
+        ))}
+        {nextBookings.map((booking) => (
+          <div key={`booking-${booking.id}`}>
+            <i className="ti ti-calendar-event" aria-hidden="true" />
+            <span>
+              <b>{booking.customer_name}</b>
+              <small>
+                {booking.table_id || "ANY"} · {fmtShortDateTime(booking.booking_time)}
+              </small>
+            </span>
+          </div>
+        ))}
+        {!waitlist.length && !nextBookings.length && (
+          <div className="ops-empty-line">
+            <i className="ti ti-circle-check" aria-hidden="true" />
+            <span>
+              <b>No queue pressure</b>
+              <small>Walk-ins can be seated directly.</small>
+            </span>
+          </div>
+        )}
+      </div>
+    </section>
+  );
+}
+
+function PopularFood({ foodStats, foodOrders, onNavigate }) {
+  const topItems = foodStats.slice(0, 5);
+  const recentOrders = foodOrders.slice(0, 2);
+  return (
+    <section className="ops-panel">
+      <SectionHead
+        eyebrow="Cafe"
+        title="Food Demand"
+        action={
+          <button type="button" className="ops-link-btn" onClick={() => onNavigate("food")}>
+            POS
+          </button>
+        }
+      />
+      {topItems.length ? (
+        <div className="ops-food-demand">
+          {topItems.map((item, index) => {
+            const maxQty = topItems[0]?.qty || 1;
+            return (
+              <div key={item.name}>
+                <span>
+                  <b>{index + 1}. {item.name}</b>
+                  <small>{item.qty} sold · {money(item.revenue)}</small>
+                </span>
+                <em style={{ width: `${pct(item.qty, maxQty)}%` }} />
+              </div>
+            );
+          })}
+        </div>
+      ) : (
+        <div className="ops-empty-line">
+          <i className="ti ti-tools-kitchen-2" aria-hidden="true" />
+          <span>
+            <b>No food trend yet</b>
+            <small>Orders will create a top-sellers list here.</small>
+          </span>
+        </div>
+      )}
+      {recentOrders.length > 0 && (
+        <div className="ops-recent-orders">
+          {recentOrders.map((order) => (
+            <div key={order.id}>
+              <span>{order.customer_name || "Counter"}</span>
+              <strong>{money(order.total)}</strong>
+            </div>
+          ))}
+        </div>
+      )}
+    </section>
+  );
+}
+
+function RecentActivity({ auditLogs, runningTables, foodOrders }) {
+  const liveRows = runningTables.map(({ table, session, elapsedSecs }) => ({
+    id: `live-${table.id}`,
+    icon: "ti-player-play",
+    title: `T${table.num} running`,
+    detail: `${session.customer_name || "Player"} · ${fmtTime(elapsedSecs)} · ${money(estimateTableCharge(session, elapsedSecs))}`,
+    tone: "positive",
+  }));
+  const orderRows = foodOrders.slice(0, 2).map((order) => ({
+    id: `order-${order.id}`,
+    icon: "ti-tools-kitchen-2",
+    title: `Food order ${money(order.total)}`,
+    detail: `${order.customer_name || "Counter"} · ${order.payment_method || "Cash"}`,
+    tone: "info",
+  }));
+  const auditRows = auditLogs.slice(0, 4).map((log) => ({
+    id: `audit-${log.id}`,
+    icon: log.severity === "danger" ? "ti-alert-triangle" : "ti-activity",
+    title: log.action?.replaceAll("_", " ") || "Activity",
+    detail: `${log.staff || "system"} · ${log.detail || log.date || ""}`,
+    tone: log.severity === "danger" ? "critical" : "info",
+  }));
+  const rows = [...liveRows, ...orderRows, ...auditRows].slice(0, 6);
+
+  return (
+    <section className="ops-panel">
+      <SectionHead eyebrow="Audit trail" title="Recent Activity" />
+      <div className="ops-timeline">
+        {rows.length ? (
+          rows.map((row) => (
+            <div className={row.tone} key={row.id}>
+              <i className={`ti ${row.icon}`} aria-hidden="true" />
+              <span>
+                <b>{row.title}</b>
+                <small>{row.detail}</small>
+              </span>
+            </div>
+          ))
+        ) : (
+          <div className="ops-empty-line">
+            <i className="ti ti-history" aria-hidden="true" />
+            <span>
+              <b>No recent activity</b>
+              <small>Session and checkout activity will appear here.</small>
+            </span>
+          </div>
+        )}
+      </div>
+    </section>
+  );
+}
+
 function Charts({ analytics, pieData }) {
   return (
     <div className="ops-chart-grid">
@@ -374,6 +633,11 @@ export default function Dashboard({ metrics, onNavigate }) {
   const [elapsed, setElapsed] = useState({});
   const [analytics, setAnalytics] = useState(null);
   const [digest, setDigest] = useState(null);
+  const [waitlist, setWaitlist] = useState([]);
+  const [bookings, setBookings] = useState([]);
+  const [foodStats, setFoodStats] = useState([]);
+  const [foodOrders, setFoodOrders] = useState([]);
+  const [auditLogs, setAuditLogs] = useState([]);
 
   useEffect(() => {
     async function fetchActive() {
@@ -416,15 +680,33 @@ export default function Dashboard({ metrics, onNavigate }) {
       }
     }
 
+    async function fetchOperations() {
+      const results = await Promise.allSettled([
+        getWaitlist(),
+        getBookings(),
+        getFoodStats(),
+        getFoodOrders(),
+        getAuditLogs(12),
+      ]);
+      if (results[0].status === "fulfilled") setWaitlist(results[0].value.data || []);
+      if (results[1].status === "fulfilled") setBookings(results[1].value.data || []);
+      if (results[2].status === "fulfilled") setFoodStats(results[2].value.data || []);
+      if (results[3].status === "fulfilled") setFoodOrders(results[3].value.data || []);
+      if (results[4].status === "fulfilled") setAuditLogs(results[4].value.data || []);
+    }
+
     fetchActive();
     const deferredLoad = window.setTimeout(() => {
       fetchDigest();
       fetchAnalytics();
+      fetchOperations();
     }, 200);
     const activeInterval = window.setInterval(fetchActive, 20000);
+    const operationsInterval = window.setInterval(fetchOperations, 45000);
     return () => {
       window.clearTimeout(deferredLoad);
       window.clearInterval(activeInterval);
+      window.clearInterval(operationsInterval);
     };
   }, []);
 
@@ -465,9 +747,11 @@ export default function Dashboard({ metrics, onNavigate }) {
     0,
   );
   const foodAttachment = ownerTotal > 0 ? Math.round(((metrics.food || 0) / ownerTotal) * 100) : 0;
+  const occupancyPercent = pct(runningTables.length, TOTAL_TABLES);
   const avgTableMinutes = runningTables.length
     ? Math.round(runningTables.reduce((sum, row) => sum + row.elapsedSecs / 60, 0) / runningTables.length)
     : 0;
+  const upcomingBookings = bookings.filter((booking) => booking.status === "booked");
 
   const actionItems = useMemo(() => {
     const items = [];
@@ -533,6 +817,13 @@ export default function Dashboard({ metrics, onNavigate }) {
         onNavigate={onNavigate}
       />
 
+      <QuickOperations
+        onNavigate={onNavigate}
+        activeCount={runningTables.length}
+        waitingCount={waitlist.length}
+        bookingCount={upcomingBookings.length}
+      />
+
       <RunningStrip runningTables={runningTables} onNavigate={onNavigate} />
 
       <div className="ops-kpi-grid">
@@ -553,7 +844,7 @@ export default function Dashboard({ metrics, onNavigate }) {
         <KpiCard
           label="Active Tables"
           value={`${runningTables.length}/${TOTAL_TABLES}`}
-          sub={`${Math.max(TOTAL_TABLES - runningTables.length, 0)} tables idle now`}
+          sub={`${occupancyPercent}% occupancy right now`}
           tone="amber"
           icon="ti-layout-grid"
         />
@@ -570,6 +861,13 @@ export default function Dashboard({ metrics, onNavigate }) {
           tone="blue"
           icon="ti-tools-kitchen-2"
         />
+        <KpiCard
+          label="Queue / Booking"
+          value={`${waitlist.length}/${upcomingBookings.length}`}
+          sub={`${waitlist.length} waiting, ${upcomingBookings.length} upcoming`}
+          tone={waitlist.length ? "amber" : "neutral"}
+          icon="ti-calendar-clock"
+        />
       </div>
 
       <div className="ops-main-grid">
@@ -583,6 +881,12 @@ export default function Dashboard({ metrics, onNavigate }) {
       <div className="ops-lower-grid">
         <PaymentMix cashTotal={cashTotal} upiTotal={upiTotal} cardTotal={cardTotal} />
         <Insights digest={digest} />
+      </div>
+
+      <div className="ops-clubflow-grid">
+        <QueueBookings waitlist={waitlist} bookings={bookings} onNavigate={onNavigate} />
+        <PopularFood foodStats={foodStats} foodOrders={foodOrders} onNavigate={onNavigate} />
+        <RecentActivity auditLogs={auditLogs} runningTables={runningTables} foodOrders={foodOrders} />
       </div>
 
       <Charts analytics={analytics} pieData={pieData} />
