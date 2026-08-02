@@ -12,6 +12,9 @@ const ClosingTab = lazy(() => import("./components/tabs/ClosingTab.jsx"));
 const SettingsTab = lazy(() => import("./components/tabs/SettingsTab.jsx"));
 const FoodTab = lazy(() => import("./components/tabs/FoodTab.jsx"));
 const TournamentTab = lazy(() => import("./components/tabs/TournamentTab.jsx"));
+const MembersTab = lazy(() => import("./components/tabs/MembersTab.jsx"));
+const OperationsTab = lazy(() => import("./components/tabs/OperationsTab.jsx"));
+const ClubSuiteTab = lazy(() => import("./components/tabs/ClubSuiteTab.jsx"));
 
 function BackendStatusBanner({ backendStatus, onRetry }) {
   if (backendStatus.state !== "offline") return null;
@@ -74,7 +77,8 @@ export default function App() {
   }, [loggedIn]);
 
   useEffect(() => {
-    if (role === "staff" && page === "reports") {
+    const adminOnly = new Set(["reports", "settings", "operations", "members", "memberships", "staff"]);
+    if (role === "staff" && adminOnly.has(page)) {
       setPage("tables");
     }
   }, [role, page]);
@@ -151,13 +155,22 @@ export default function App() {
   }
 
   const PAGE_TITLES = {
-    dashboard: "Dashboard",
-    tables: "Tables",
-    reports: "Reports",
+    dashboard: "Executive Overview",
+    tables: "Live Table Floor",
+    waitlist: "Smart Waitlist",
+    reservations: "Reservations & Slots",
+    food: "Food & Cafe POS",
+    billing: "Billing & Invoices",
+    members: "Club Members",
+    tournaments: "Tournament Hub",
     closing: "Daily Closing",
-    food: "Food Orders",
-    tournaments: "Tournaments",
-    settings: "Settings",
+    reports: "Analytics & Reports",
+    operations: "Operations Control",
+    inventory: "Inventory & Stocks",
+    memberships: "Membership Plans",
+    staff: "Staff & Roster",
+    notifications: "Notification Center",
+    settings: "Club Settings",
   };
 
   return (
@@ -175,6 +188,8 @@ export default function App() {
             title={PAGE_TITLES[page]}
             role={role}
             username={username}
+            activeTables={metrics.active_tables}
+            totalTables={5}
           />
           <BackendStatusBanner backendStatus={backendStatus} onRetry={checkBackend} />
           <Suspense
@@ -203,6 +218,17 @@ export default function App() {
               {page === "closing" && <ClosingTab />}
               {page === "food" && <FoodTab />}
               {page === "tournaments" && <TournamentTab />}
+              {page === "members" && role === "admin" && <MembersTab />}
+              {page === "operations" && role === "admin" && <OperationsTab />}
+              {[
+                "waitlist",
+                "reservations",
+                "billing",
+                "inventory",
+                "notifications",
+                "memberships",
+                "staff",
+              ].includes(page) && <ClubSuiteTab view={page} />}
               {page === "settings" && (
                 <SettingsTab
                   role={role}

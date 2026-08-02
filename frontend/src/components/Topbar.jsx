@@ -1,13 +1,40 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 
-export default function Topbar({ title, role = "admin", username = "" }) {
+const PAGE_DESCRIPTIONS = {
+  "Executive Overview": "Real-time venue performance, revenue, queue and closing health",
+  "Live Table Floor": "Manage active sessions, frames, reservations and table controls",
+  "Smart Waitlist": "Walk-in queue, seating pressure and booking conflicts",
+  "Reservations & Slots": "Table-wise booking commitments and no-show risk",
+  "Food & Cafe POS": "Snacks, beverages, cigarettes and counter billing",
+  "Billing & Invoices": "Recent settlements, food-only bills and payment checks",
+  "Club Members": "Customer profiles, visits, spend and merge tools",
+  "Tournament Hub": "Knockouts, entries and prize tracking",
+  "Daily Closing": "End-of-day audit, cash tally and shift lock",
+  "Analytics & Reports": "Revenue, history and operational reporting",
+  "Operations Control": "Peak rates, GST and operational rules",
+  "Inventory & Stocks": "Menu availability, stock risk and table maintenance",
+  "Membership Plans": "Loyalty tiers and top customer targets",
+  "Staff & Roster": "Staff action summary from audit logs",
+  "Notification Center": "System alerts, booking misses and sensitive events",
+  "Club Settings": "Rates, credentials and system configuration",
+};
+
+export default function Topbar({
+  title,
+  role = "admin",
+  username = "",
+  activeTables = 0,
+  totalTables = 5,
+}) {
   const [dt, setDt] = useState("");
+  const [clock, setClock] = useState("");
   const [dark, setDark] = useState(
     () => localStorage.getItem("darkMode") === "true",
   );
   const displayName = username || role;
   const displayLabel =
     displayName.charAt(0).toUpperCase() + displayName.slice(1).toLowerCase();
+  const occupancy = totalTables ? Math.round((activeTables / totalTables) * 100) : 0;
 
   useEffect(() => {
     function tick() {
@@ -15,12 +42,17 @@ export default function Topbar({ title, role = "admin", username = "" }) {
       setDt(
         d.toLocaleDateString("en-IN", {
           weekday: "short",
-          year: "numeric",
           month: "short",
           day: "numeric",
-        }) +
-          " • " +
-          d.toLocaleTimeString("en-IN"),
+        }),
+      );
+      setClock(
+        d.toLocaleTimeString("en-IN", {
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+          hour12: true,
+        }),
       );
     }
     tick();
@@ -38,16 +70,30 @@ export default function Topbar({ title, role = "admin", username = "" }) {
   }, [dark]);
 
   return (
-    <div className="topbar">
-      <div className="topbar-title">{title}</div>
+    <header className="topbar cf-topbar">
+      <div className="cf-title-block">
+        <div className="topbar-title">{title}</div>
+        <p>{PAGE_DESCRIPTIONS[title] || "HSR Snooker Cafe management console"}</p>
+      </div>
       <div className="topbar-right">
+        <div className="cf-occupancy-pill">
+          <span />
+          <strong>{activeTables}/{totalTables} Tables Active</strong>
+          <em>{occupancy}% occupied</em>
+        </div>
+        <div className="cf-command-pill">
+          <i className="ti ti-command" aria-hidden="true" />
+          <span>Search or Command</span>
+          <kbd>⌘K</kbd>
+        </div>
         <div className={`topbar-user-chip ${role === "staff" ? "staff" : "admin"}`}>
           <i className={`ti ${role === "staff" ? "ti-user" : "ti-shield-lock"}`} aria-hidden="true" />
           <strong>{displayLabel}</strong>
         </div>
-        <div className="topbar-date">{dt}</div>
-
-        {/* Dark mode toggle */}
+        <div className="topbar-date">
+          <i className="ti ti-clock" aria-hidden="true" />
+          <span>{dt} · {clock}</span>
+        </div>
         <button
           className="topbar-icon-btn"
           onClick={() => setDark((p) => !p)}
@@ -56,8 +102,7 @@ export default function Topbar({ title, role = "admin", username = "" }) {
         >
           <i className={`ti ${dark ? "ti-sun" : "ti-moon"}`} aria-hidden="true" />
         </button>
-
       </div>
-    </div>
+    </header>
   );
 }

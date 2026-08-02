@@ -31,17 +31,26 @@ export default function Login({ onLogin }) {
   }
 
   return (
-    <div className="login-container">
-      <div className="login-shell">
+    <div className="login-container cf-login-container">
+      <div className="login-shell cf-login-shell">
         <section className="login-showcase" aria-label={APP_NAME}>
           <div className="login-brand">
             <div className="login-brand-mark">
-              <i className="ti ti-circle-dot" aria-hidden="true" />
+              HSR
             </div>
             <div>
-              <div className="login-kicker">Venue Control</div>
+              <div className="login-kicker">Bengaluru Pro Edition</div>
               <div className="login-title">{APP_NAME}</div>
             </div>
+          </div>
+
+          <div className="cf-login-copy">
+            <span>Cloud BMS console</span>
+            <h2>Run tables, food, bookings and closing from one screen.</h2>
+            <p>
+              Built for fast counter operations: live timers, LP frames, cafe POS,
+              reservations, billing audit and owner-ready shift closing.
+            </p>
           </div>
 
           <div className="login-table-visual" aria-hidden="true">
@@ -73,14 +82,18 @@ export default function Login({ onLogin }) {
               <span>{TABLE_RANGE}</span>
               <small>HSR Setup</small>
             </div>
+            <div>
+              <span>24/7</span>
+              <small>Live Ops</small>
+            </div>
           </div>
         </section>
 
-        <section className="login-box">
+        <section className="login-box cf-login-box">
           <div className="login-card-head">
             <div>
-              <div className="login-card-eyebrow">Secure access</div>
-              <h1>Sign in</h1>
+              <div className="login-card-eyebrow">Secure staff access</div>
+              <h1>Welcome back</h1>
             </div>
             <div className="login-lock">
               <i className="ti ti-lock" aria-hidden="true" />
@@ -120,7 +133,7 @@ export default function Login({ onLogin }) {
             </div>
             <button
               type="submit"
-              className="btn-login"
+              className="btn-login cf-btn-login"
               disabled={loading}
               data-testid="login-button"
             >
@@ -131,7 +144,7 @@ export default function Login({ onLogin }) {
           </form>
 
           <div className="login-footer">
-            Authorized owner and staff access only
+            Authorized owner and staff access only · Sessions sync through the live backend
           </div>
         </section>
       </div>
