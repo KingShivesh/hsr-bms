@@ -4,6 +4,7 @@ import { APP_NAME } from "../config/hsrTables.js";
 export default function Sidebar({ page, setPage, onLogout, activeTables, role = "admin" }) {
   const [collapsed, setCollapsed] = useState(() => localStorage.getItem("sidebarCollapsed") === "true");
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [railOpen, setRailOpen] = useState(false);
 
   function setCollapsedPersisted(next) {
     setCollapsed(next);
@@ -13,38 +14,43 @@ export default function Sidebar({ page, setPage, onLogout, activeTables, role = 
   const groups = [
     {
       title: "Core operational",
+      tone: "core",
       items: [
-        { id: "dashboard", icon: "ti-layout-dashboard", label: "Dashboard" },
+        { id: "dashboard", icon: "ti-layout-dashboard", label: "Dashboard", tone: "blue" },
         {
           id: "tables",
           icon: "ti-layout-grid",
           label: "Table Management",
           badge: activeTables > 0 ? `${activeTables} Active` : "",
+          badgeTone: "success",
+          tone: "green",
         },
-        { id: "waitlist", icon: "ti-clock", label: "Waitlist Queue" },
-        { id: "reservations", icon: "ti-calendar-event", label: "Reservations" },
-        { id: "food", icon: "ti-tools-kitchen-2", label: "Food & Cafe POS" },
-        { id: "billing", icon: "ti-receipt", label: "Billing & Invoices" },
+        { id: "waitlist", icon: "ti-clock", label: "Waitlist Queue", tone: "amber" },
+        { id: "reservations", icon: "ti-calendar-event", label: "Reservations", tone: "purple" },
+        { id: "food", icon: "ti-tools-kitchen-2", label: "Food & Cafe POS", tone: "orange" },
+        { id: "billing", icon: "ti-receipt", label: "Billing & Invoices", tone: "blue" },
       ],
     },
     {
       title: "Management",
+      tone: "manage",
       items: [
-        { id: "members", icon: "ti-users", label: "Club Members", adminOnly: true },
-        { id: "tournaments", icon: "ti-trophy", label: "Tournaments" },
-        { id: "closing", icon: "ti-lock-check", label: "Shift EOD Closing" },
-        { id: "memberships", icon: "ti-award", label: "Membership Plans", adminOnly: true },
-        { id: "reports", icon: "ti-chart-bar", label: "Analytics & Reports", adminOnly: true },
-        { id: "operations", icon: "ti-adjustments", label: "Operations Control", adminOnly: true },
-        { id: "staff", icon: "ti-user-check", label: "Staff & Roster", adminOnly: true },
-        { id: "inventory", icon: "ti-package", label: "Inventory & Stocks" },
+        { id: "members", icon: "ti-users", label: "Club Members", adminOnly: true, tone: "purple" },
+        { id: "tournaments", icon: "ti-trophy", label: "Tournaments", tone: "amber" },
+        { id: "closing", icon: "ti-lock-check", label: "Shift EOD Closing", tone: "red" },
+        { id: "memberships", icon: "ti-award", label: "Membership Plans", adminOnly: true, tone: "purple" },
+        { id: "reports", icon: "ti-chart-bar", label: "Analytics & Reports", adminOnly: true, tone: "blue" },
+        { id: "operations", icon: "ti-adjustments", label: "Operations Control", adminOnly: true, tone: "slate" },
+        { id: "staff", icon: "ti-user-check", label: "Staff & Roster", adminOnly: true, tone: "green" },
+        { id: "inventory", icon: "ti-package", label: "Inventory & Stocks", tone: "amber" },
       ],
     },
     {
       title: "System",
+      tone: "system",
       items: [
-        { id: "notifications", icon: "ti-bell", label: "Notifications" },
-        { id: "settings", icon: "ti-settings", label: "Club Settings", adminOnly: true },
+        { id: "notifications", icon: "ti-bell", label: "Notifications", tone: "red" },
+        { id: "settings", icon: "ti-settings", label: "Club Settings", adminOnly: true, tone: "slate" },
       ],
     },
   ].map((group) => ({
@@ -57,10 +63,20 @@ export default function Sidebar({ page, setPage, onLogout, activeTables, role = 
     setMobileOpen(false);
   }
 
-  const compact = collapsed && !mobileOpen;
+  const compact = collapsed && !mobileOpen && !railOpen;
 
   return (
-    <aside className={`sidebar cf-sidebar ${compact ? "collapsed" : ""} ${mobileOpen ? "mobile-open" : ""}`}>
+    <aside
+      className={`sidebar cf-sidebar ${compact ? "collapsed" : ""} ${mobileOpen ? "mobile-open" : ""}`}
+      onMouseEnter={() => setRailOpen(true)}
+      onMouseLeave={() => setRailOpen(false)}
+      onFocusCapture={() => setRailOpen(true)}
+      onBlurCapture={(event) => {
+        if (!event.currentTarget.contains(event.relatedTarget)) {
+          setRailOpen(false);
+        }
+      }}
+    >
       <div className="cf-sidebar-head">
         <div className="sb-logo">
           <div className="sb-logo-mark">HSR</div>
@@ -88,7 +104,7 @@ export default function Sidebar({ page, setPage, onLogout, activeTables, role = 
       </div>
 
       <div className="cf-quick-shell">
-        <button type="button" className="cf-quick-btn" onClick={() => navigate("dashboard")}>
+        <button type="button" className="cf-quick-btn" onClick={() => navigate("tables")}>
           <i className="ti ti-bolt" aria-hidden="true" />
           <span>Quick Operations</span>
         </button>
@@ -103,6 +119,7 @@ export default function Sidebar({ page, setPage, onLogout, activeTables, role = 
                 type="button"
                 key={item.id}
                 className={`sb-item ${page === item.id ? "active" : ""}`}
+                data-tone={item.tone || "blue"}
                 onClick={() => navigate(item.id)}
                 title={item.label}
                 aria-label={item.label}
@@ -110,7 +127,7 @@ export default function Sidebar({ page, setPage, onLogout, activeTables, role = 
               >
                 <i className={`ti ${item.icon}`} aria-hidden="true" />
                 <span className="sb-label">{item.label}</span>
-                {item.badge && <span className="sb-badge">{item.badge}</span>}
+                {item.badge && <span className="sb-badge" data-tone={item.badgeTone || item.tone || "blue"}>{item.badge}</span>}
               </button>
             ))}
           </div>

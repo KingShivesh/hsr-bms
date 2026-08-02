@@ -79,6 +79,28 @@ function EmptyState({ icon = "ti-info-circle", title, detail }) {
   );
 }
 
+function SuiteHero({ eyebrow, title, detail, tone = "blue", metrics = [] }) {
+  return (
+    <div className={`cf-hero cf-hero-${tone}`}>
+      <div>
+        <span>{eyebrow}</span>
+        <h1>{title}</h1>
+        <p>{detail}</p>
+      </div>
+      {!!metrics.length && (
+        <div className="cf-hero-metrics">
+          {metrics.map((metric) => (
+            <div key={metric.label}>
+              <strong>{metric.value}</strong>
+              <small>{metric.label}</small>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
 function RowList({ rows }) {
   if (!rows.length) {
     return (
@@ -109,12 +131,18 @@ function WaitlistView({ waitlist, bookings }) {
   const missed = bookings.filter((booking) => booking.status === "missed");
   const upcoming = bookings.filter((booking) => booking.status === "booked");
   return (
-    <div className="cf-page">
-      <div className="cf-hero">
-        <span>Reception flow</span>
-        <h1>Smart Waitlist Queue</h1>
-        <p>Track walk-ins, queue pressure and booking conflicts before they become front-desk confusion.</p>
-      </div>
+    <div className="cf-page cf-page-queue">
+      <SuiteHero
+        tone="amber"
+        eyebrow="Reception flow"
+        title="Smart Waitlist Queue"
+        detail="Track walk-ins, queue pressure and booking conflicts before they become front-desk confusion."
+        metrics={[
+          { label: "waiting", value: waitlist.length },
+          { label: "booked", value: upcoming.length },
+          { label: "missed", value: missed.length },
+        ]}
+      />
       <div className="cf-stat-grid">
         <Stat label="Waiting" value={waitlist.length} icon="ti-user-clock" tone="purple" />
         <Stat label="Upcoming Bookings" value={upcoming.length} icon="ti-calendar-event" />
@@ -153,12 +181,17 @@ function ReservationsView({ bookings }) {
     bookings: booked.filter((booking) => String(booking.table_id).toLowerCase() === table.id),
   }));
   return (
-    <div className="cf-page">
-      <div className="cf-hero">
-        <span>Reservation desk</span>
-        <h1>Reservations & Slots</h1>
-        <p>See table-wise commitments and no-show risk without digging into the table floor.</p>
-      </div>
+    <div className="cf-page cf-page-reservations">
+      <SuiteHero
+        tone="purple"
+        eyebrow="Reservation desk"
+        title="Reservations & Slots"
+        detail="See table-wise commitments and no-show risk without digging into the table floor."
+        metrics={[
+          { label: "active bookings", value: booked.length },
+          { label: "tables covered", value: tableBookings.filter((row) => row.bookings.length).length },
+        ]}
+      />
       <div className="cf-calendar-grid">
         {tableBookings.map(({ table, bookings: rows }) => (
           <section className="cf-table-slot" key={table.id}>
@@ -184,6 +217,8 @@ function ReservationsView({ bookings }) {
 }
 
 function BillingView({ history, foodOrders }) {
+  const tableTotal = history.reduce((sum, bill) => sum + Number(bill.total || bill.amount || 0), 0);
+  const foodTotal = foodOrders.reduce((sum, order) => sum + Number(order.total || 0), 0);
   const recentBills = history.slice(0, 12).map((bill) => ({
     id: `bill-${bill.id || bill.date}-${bill.table_id}`,
     icon: "ti-receipt",
@@ -199,12 +234,17 @@ function BillingView({ history, foodOrders }) {
     amount: money(order.total),
   }));
   return (
-    <div className="cf-page">
-      <div className="cf-hero">
-        <span>Money desk</span>
-        <h1>Billing & Invoices</h1>
-        <p>Fast view of table settlements and cafe bills, designed for cashier reconciliation.</p>
-      </div>
+    <div className="cf-page cf-page-billing">
+      <SuiteHero
+        tone="blue"
+        eyebrow="Money desk"
+        title="Billing & Invoices"
+        detail="Fast view of table settlements and cafe bills, designed for cashier reconciliation."
+        metrics={[
+          { label: "table bill value", value: money(tableTotal) },
+          { label: "food bill value", value: money(foodTotal) },
+        ]}
+      />
       <div className="cf-two-col">
         <Section eyebrow="Tables" title="Recent Table Bills">
           <RowList rows={recentBills} />
@@ -221,12 +261,18 @@ function InventoryView({ menu, maintenance }) {
   const unavailable = menu.filter((item) => item.available === false);
   const cigarettes = menu.filter((item) => /cig|cigg|cigarette/i.test(item.name));
   return (
-    <div className="cf-page">
-      <div className="cf-hero">
-        <span>Stock control</span>
-        <h1>Inventory & Stocks</h1>
-        <p>Operational stock visibility for cafe availability, cigarettes and table maintenance.</p>
-      </div>
+    <div className="cf-page cf-page-inventory">
+      <SuiteHero
+        tone="green"
+        eyebrow="Stock control"
+        title="Inventory & Stocks"
+        detail="Operational stock visibility for cafe availability, cigarettes and table maintenance."
+        metrics={[
+          { label: "menu items", value: menu.length },
+          { label: "out of stock", value: unavailable.length },
+          { label: "maintenance", value: maintenance.length },
+        ]}
+      />
       <div className="cf-stat-grid">
         <Stat label="Menu Items" value={menu.length} icon="ti-package" />
         <Stat label="Out of Stock" value={unavailable.length} icon="ti-alert-circle" tone="amber" />
@@ -286,12 +332,17 @@ function NotificationsView({ auditLogs, waitlist, bookings, maintenance }) {
     })),
   ];
   return (
-    <div className="cf-page">
-      <div className="cf-hero">
-        <span>Control alerts</span>
-        <h1>Notification Center</h1>
-        <p>One place for missed bookings, waitlist pressure, maintenance and sensitive audit events.</p>
-      </div>
+    <div className="cf-page cf-page-notifications">
+      <SuiteHero
+        tone="red"
+        eyebrow="Control alerts"
+        title="Notification Center"
+        detail="One place for missed bookings, waitlist pressure, maintenance and sensitive audit events."
+        metrics={[
+          { label: "alerts", value: notifications.length },
+          { label: "audit events", value: auditLogs.length },
+        ]}
+      />
       <Section eyebrow="Alerts" title="Live Notifications">
         <RowList rows={notifications} />
       </Section>
@@ -306,12 +357,17 @@ function MembershipPlansView({ topCustomers }) {
     { name: "Premium VIP", price: 1999, benefit: "VIP tag, best customer tracking and preferred table history." },
   ];
   return (
-    <div className="cf-page">
-      <div className="cf-hero">
-        <span>Loyalty</span>
-        <h1>Membership Plans</h1>
-        <p>A simple membership surface for repeat players, VIPs and owner-level customer focus.</p>
-      </div>
+    <div className="cf-page cf-page-memberships">
+      <SuiteHero
+        tone="purple"
+        eyebrow="Loyalty"
+        title="Membership Plans"
+        detail="A simple membership surface for repeat players, VIPs and owner-level customer focus."
+        metrics={[
+          { label: "plans", value: plans.length },
+          { label: "targets", value: topCustomers.length },
+        ]}
+      />
       <div className="cf-plan-grid">
         {plans.map((plan) => (
           <section className="cf-plan" key={plan.name}>
@@ -351,12 +407,17 @@ function StaffView({ auditLogs }) {
     detail: `${value.actions} logged action(s) · ${value.risk} risk action(s)`,
   }));
   return (
-    <div className="cf-page">
-      <div className="cf-hero">
-        <span>Team overview</span>
-        <h1>Staff & Roster</h1>
-        <p>Lightweight staff activity view using the audit trail, without adding heavy HR complexity.</p>
-      </div>
+    <div className="cf-page cf-page-staff">
+      <SuiteHero
+        tone="slate"
+        eyebrow="Team overview"
+        title="Staff & Roster"
+        detail="Lightweight staff activity view using the audit trail, without adding heavy HR complexity."
+        metrics={[
+          { label: "staff/system actors", value: rows.length },
+          { label: "logged actions", value: auditLogs.length },
+        ]}
+      />
       <Section eyebrow="Activity" title="Staff Action Summary">
         <RowList rows={rows} />
       </Section>

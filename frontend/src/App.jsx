@@ -190,6 +190,7 @@ export default function App() {
             username={username}
             activeTables={metrics.active_tables}
             totalTables={5}
+            onNavigate={setPage}
           />
           <BackendStatusBanner backendStatus={backendStatus} onRetry={checkBackend} />
           <Suspense

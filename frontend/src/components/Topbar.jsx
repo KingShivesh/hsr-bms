@@ -25,6 +25,7 @@ export default function Topbar({
   username = "",
   activeTables = 0,
   totalTables = 5,
+  onNavigate,
 }) {
   const [dt, setDt] = useState("");
   const [clock, setClock] = useState("");
@@ -81,11 +82,20 @@ export default function Topbar({
           <strong>{activeTables}/{totalTables} Tables Active</strong>
           <em>{occupancy}% occupied</em>
         </div>
-        <div className="cf-command-pill">
+        <button type="button" className="cf-command-pill" onClick={() => onNavigate?.("tables")}>
           <i className="ti ti-command" aria-hidden="true" />
-          <span>Search or Command</span>
+          <span>Open Floor Control</span>
           <kbd>⌘K</kbd>
-        </div>
+        </button>
+        <button
+          type="button"
+          className="topbar-icon-btn cf-notification-btn"
+          onClick={() => onNavigate?.("notifications")}
+          title="Open notifications"
+          aria-label="Open notifications"
+        >
+          <i className="ti ti-bell" aria-hidden="true" />
+        </button>
         <div className={`topbar-user-chip ${role === "staff" ? "staff" : "admin"}`}>
           <i className={`ti ${role === "staff" ? "ti-user" : "ti-shield-lock"}`} aria-hidden="true" />
           <strong>{displayLabel}</strong>
