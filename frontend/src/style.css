@@ -9896,7 +9896,7 @@ body.dark .backend-status-banner {
 }
 
 .cf-sidebar-head {
-  min-height: 68px;
+  min-height: 60px;
   display: flex;
   align-items: center;
   gap: 10px;
@@ -9963,12 +9963,12 @@ body.dark .backend-status-banner {
 }
 
 .cf-quick-shell {
-  padding: 12px;
+  padding: 10px 12px;
 }
 
 .cf-quick-btn {
   width: 100%;
-  min-height: 44px;
+  min-height: 38px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -9989,9 +9989,9 @@ body.dark .backend-status-banner {
   flex: 1;
   display: grid;
   align-content: start;
-  gap: 22px;
+  gap: 10px;
   overflow-y: auto;
-  padding: 4px 12px 14px;
+  padding: 2px 12px 10px;
 }
 
 .cf-nav-group {
@@ -10000,7 +10000,7 @@ body.dark .backend-status-banner {
 }
 
 .cf-sidebar .sb-section {
-  padding: 0 10px 6px;
+  padding: 0 10px 4px;
   color: #64748b;
   font-size: 10px;
   font-weight: 950;
@@ -10009,12 +10009,12 @@ body.dark .backend-status-banner {
 
 .cf-sidebar .sb-item {
   width: 100%;
-  min-height: 42px;
+  min-height: 35px;
   display: flex;
   align-items: center;
   gap: 11px;
   margin: 0;
-  padding: 10px 11px;
+  padding: 8px 11px;
   border: 0;
   border-radius: 12px;
   background: transparent;
@@ -10116,7 +10116,7 @@ body.dark .backend-status-banner {
   display: flex;
   align-items: center;
   gap: 9px;
-  padding: 8px 10px 10px;
+  padding: 6px 10px 8px;
 }
 
 .cf-user-mini > div {
@@ -12350,5 +12350,388 @@ body.dark .cf-hero-metrics div {
 
   .cf-hero-metrics {
     grid-template-columns: 1fr;
+  }
+}
+
+/* ClubFlow-style CRUD controls */
+.cf-toolbar,
+.cf-data-row,
+.cf-modal {
+  border: 1px solid rgba(148, 163, 184, 0.28);
+  background: #fff;
+  box-shadow: 0 10px 28px rgba(15, 23, 42, 0.05);
+}
+
+.cf-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  min-height: 76px;
+  border-radius: 16px;
+  padding: 14px 16px;
+}
+
+.cf-toolbar strong,
+.cf-toolbar span {
+  display: block;
+}
+
+.cf-toolbar strong {
+  color: #0f172a;
+  font-size: 15px;
+  font-weight: 950;
+}
+
+.cf-toolbar span {
+  margin-top: 3px;
+  color: #64748b;
+  font-size: 12px;
+  font-weight: 760;
+}
+
+.cf-toolbar-actions,
+.cf-row-actions,
+.cf-modal-actions,
+.cf-inline-form {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.cf-toolbar-actions > button:not(.cf-action-btn) {
+  min-height: 36px;
+  border: 1px solid #dbe4ef;
+  border-radius: 999px;
+  padding: 7px 12px;
+  background: #f8fafc;
+  color: #64748b;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 900;
+  text-transform: capitalize;
+}
+
+.cf-toolbar-actions > button.active {
+  background: #eff6ff;
+  color: #2563eb;
+  border-color: #bfdbfe;
+}
+
+.cf-action-btn {
+  min-height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  border: 1px solid #dbe4ef;
+  border-radius: 11px;
+  padding: 8px 12px;
+  background: #f8fafc;
+  color: #334155;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 950;
+  white-space: nowrap;
+  transition: transform 0.16s ease, border-color 0.16s ease, box-shadow 0.16s ease;
+}
+
+.cf-action-btn:hover:not(:disabled) {
+  transform: translateY(-1px);
+  border-color: #bfdbfe;
+  box-shadow: 0 10px 22px rgba(15, 23, 42, 0.08);
+}
+
+.cf-action-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.cf-action-btn.primary {
+  border-color: rgba(37, 99, 235, 0.3);
+  background: #2563eb;
+  color: #fff;
+}
+
+.cf-action-btn.success {
+  border-color: rgba(22, 163, 74, 0.28);
+  background: #dcfce7;
+  color: #166534;
+}
+
+.cf-action-btn.warning {
+  border-color: rgba(217, 119, 6, 0.28);
+  background: #fffbeb;
+  color: #92400e;
+}
+
+.cf-action-btn.danger {
+  border-color: rgba(220, 38, 38, 0.24);
+  background: #fff1f2;
+  color: #b91c1c;
+}
+
+.cf-row {
+  grid-template-columns: 38px minmax(0, 1fr) auto auto !important;
+}
+
+.cf-row-actions select,
+.cf-inline-form select,
+.cf-inline-form input,
+.cf-form-field input,
+.cf-form-field select,
+.cf-form-field textarea {
+  min-height: 38px;
+  border: 1px solid #dbe4ef;
+  border-radius: 11px;
+  background: #fff;
+  color: #0f172a;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 800;
+  outline: none;
+}
+
+.cf-row-actions select,
+.cf-inline-form select,
+.cf-inline-form input {
+  padding: 7px 10px;
+}
+
+.cf-inline-form input {
+  width: min(180px, 42vw);
+}
+
+.cf-inventory-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(340px, 0.75fr);
+  gap: 18px;
+  align-items: start;
+}
+
+.cf-data-table {
+  display: grid;
+  gap: 10px;
+}
+
+.cf-data-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  min-height: 70px;
+  border-radius: 14px;
+  padding: 12px;
+}
+
+.cf-data-row strong,
+.cf-data-row span {
+  display: block;
+}
+
+.cf-data-row strong {
+  color: #0f172a;
+  font-size: 13px;
+  font-weight: 950;
+}
+
+.cf-data-row span {
+  margin-top: 3px;
+  color: #64748b;
+  font-size: 12px;
+  font-weight: 760;
+}
+
+.cf-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 2500;
+  display: grid;
+  place-items: center;
+  padding: 18px;
+  background: rgba(15, 23, 42, 0.56);
+  backdrop-filter: blur(8px);
+}
+
+.cf-modal {
+  width: min(520px, 100%);
+  max-height: min(720px, calc(100vh - 36px));
+  overflow-y: auto;
+  border-radius: 18px;
+  padding: 18px;
+}
+
+.cf-modal-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.cf-modal-head h3 {
+  margin: 0;
+  color: #0f172a;
+  font-size: 18px;
+  font-weight: 950;
+}
+
+.cf-modal-head button {
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border: 1px solid #dbe4ef;
+  border-radius: 10px;
+  background: #f8fafc;
+  color: #64748b;
+  cursor: pointer;
+}
+
+.cf-form {
+  display: grid;
+  gap: 14px;
+  padding-top: 16px;
+}
+
+.cf-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.cf-form-field {
+  display: grid;
+  gap: 6px;
+}
+
+.cf-form-field > span {
+  color: #475569;
+  font-size: 11px;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.cf-form-field input,
+.cf-form-field select,
+.cf-form-field textarea {
+  width: 100%;
+  padding: 10px 12px;
+}
+
+.cf-form-field textarea {
+  min-height: 84px;
+  resize: vertical;
+}
+
+.cf-modal-actions {
+  justify-content: flex-end;
+  padding-top: 4px;
+}
+
+body.dark .cf-toolbar,
+body.dark .cf-data-row,
+body.dark .cf-modal {
+  border-color: rgba(148, 163, 184, 0.16);
+  background: #111827;
+  box-shadow: none;
+}
+
+body.dark .cf-toolbar strong,
+body.dark .cf-data-row strong,
+body.dark .cf-modal-head h3 {
+  color: #f8fafc;
+}
+
+body.dark .cf-toolbar span,
+body.dark .cf-data-row span,
+body.dark .cf-form-field > span {
+  color: #94a3b8;
+}
+
+body.dark .cf-row-actions select,
+body.dark .cf-inline-form select,
+body.dark .cf-inline-form input,
+body.dark .cf-form-field input,
+body.dark .cf-form-field select,
+body.dark .cf-form-field textarea,
+body.dark .cf-modal-head button,
+body.dark .cf-toolbar-actions > button:not(.cf-action-btn),
+body.dark .cf-action-btn {
+  border-color: rgba(148, 163, 184, 0.16);
+  background: #0f172a;
+  color: #e5e7eb;
+}
+
+body.dark .cf-action-btn.primary {
+  background: #2563eb;
+  color: #fff;
+}
+
+body.dark .cf-action-btn.success {
+  background: rgba(22, 163, 74, 0.18);
+  color: #86efac;
+}
+
+body.dark .cf-action-btn.warning {
+  background: rgba(217, 119, 6, 0.18);
+  color: #fbbf24;
+}
+
+body.dark .cf-action-btn.danger {
+  background: rgba(220, 38, 38, 0.18);
+  color: #fca5a5;
+}
+
+body.dark .cf-modal-head {
+  border-bottom-color: rgba(148, 163, 184, 0.16);
+}
+
+@media (max-width: 980px) {
+  .cf-inventory-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .cf-data-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 760px) {
+  .cf-toolbar {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .cf-toolbar-actions,
+  .cf-row-actions,
+  .cf-inline-form {
+    align-items: stretch;
+    width: 100%;
+  }
+
+  .cf-toolbar-actions > button,
+  .cf-row-actions > *,
+  .cf-inline-form > *,
+  .cf-action-btn {
+    flex: 1 1 auto;
+  }
+
+  .cf-row {
+    grid-template-columns: 38px minmax(0, 1fr) !important;
+  }
+
+  .cf-row-actions {
+    grid-column: 1 / -1;
+  }
+
+  .cf-form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .cf-modal-actions {
+    flex-direction: column-reverse;
   }
 }

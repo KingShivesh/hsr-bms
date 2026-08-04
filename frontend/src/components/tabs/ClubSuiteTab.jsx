@@ -1,6 +1,15 @@
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import {
+  addMenuItem,
+  addWaitlistEntry,
+  cancelBooking,
+  cancelFoodOrder,
+  cancelWaitlistEntry,
+  clearMaintenance,
+  createBooking,
+  deleteMenuItem,
   getAuditLogs,
+  getActive,
   getBookings,
   getFoodOrders,
   getFoodStats,
@@ -10,6 +19,10 @@ import {
   getTableUtilization,
   getTopCustomers,
   getWaitlist,
+  seatWaitlistEntry,
+  setItemAvailability,
+  setMaintenance,
+  updateMenuItem,
 } from "../../api/index.js";
 import { HSR_TABLES } from "../../config/hsrTables.js";
 
@@ -30,6 +43,12 @@ function asArray(value) {
   ));
 }
 
+function asMaintenanceRows(value) {
+  if (Array.isArray(value)) return value;
+  if (!value || typeof value !== "object") return [];
+  return Object.entries(value).map(([table_id, item]) => ({ table_id, ...(item || {}) }));
+}
+
 function shortDate(value) {
   if (!value) return "-";
   const date = new Date(value);
@@ -40,6 +59,16 @@ function shortDate(value) {
     hour: "2-digit",
     minute: "2-digit",
   });
+}
+
+function isoLocalNowPlus(minutes = 30) {
+  const date = new Date(Date.now() + minutes * 60 * 1000);
+  const pad = (value) => String(value).padStart(2, "0");
+  return [
+    date.getFullYear(),
+    pad(date.getMonth() + 1),
+    pad(date.getDate()),
+  ].join("-") + `T${pad(date.getHours())}:${pad(date.getMinutes())}`;
 }
 
 function Section({ eyebrow, title, action, children }) {
@@ -54,6 +83,40 @@ function Section({ eyebrow, title, action, children }) {
       </div>
       {children}
     </section>
+  );
+}
+
+function ActionButton({ tone = "default", icon, children, ...props }) {
+  return (
+    <button type="button" className={`cf-action-btn ${tone}`} {...props}>
+      {icon && <i className={`ti ${icon}`} aria-hidden="true" />}
+      <span>{children}</span>
+    </button>
+  );
+}
+
+function Modal({ title, onClose, children }) {
+  return (
+    <div className="cf-modal-backdrop" role="presentation">
+      <div className="cf-modal" role="dialog" aria-modal="true" aria-label={title}>
+        <div className="cf-modal-head">
+          <h3>{title}</h3>
+          <button type="button" onClick={onClose} aria-label="Close">
+            <i className="ti ti-x" aria-hidden="true" />
+          </button>
+        </div>
+        {children}
+      </div>
+    </div>
+  );
+}
+
+function FormField({ label, children }) {
+  return (
+    <label className="cf-form-field">
+      <span>{label}</span>
+      {children}
+    </label>
   );
 }
 
@@ -121,15 +184,47 @@ function RowList({ rows }) {
             <span>{row.detail}</span>
           </div>
           {row.amount && <em>{row.amount}</em>}
+          {row.action}
         </div>
       ))}
     </div>
   );
 }
 
-function WaitlistView({ waitlist, bookings }) {
+function WaitlistView({ waitlist, bookings, activeSessions, maintenance, actions, busy }) {
+  const [showAdd, setShowAdd] = useState(false);
+  const [seatTarget, setSeatTarget] = useState({});
+  const [form, setForm] = useState({
+    customer_name: "",
+    phone: "",
+    party_size: 2,
+    preferred_type: "ANY",
+    notes: "",
+  });
   const missed = bookings.filter((booking) => booking.status === "missed");
   const upcoming = bookings.filter((booking) => booking.status === "booked");
+  const activeIds = new Set(activeSessions.map((session) => String(session.table_id || "").toLowerCase()));
+  const maintenanceIds = new Set(maintenance.map((row) => String(row.table_id || "").toLowerCase()));
+  const availableTables = HSR_TABLES.filter(
+    (table) => !activeIds.has(table.id) && !maintenanceIds.has(table.id),
+  );
+
+  async function submitWaitlist(event) {
+    event.preventDefault();
+    await actions.addWaitlist(form);
+    setForm({ customer_name: "", phone: "", party_size: 2, preferred_type: "ANY", notes: "" });
+    setShowAdd(false);
+  }
+
+  async function seatEntry(entry) {
+    const tableId = seatTarget[entry.id] || entry.recommended_table?.id || availableTables[0]?.id || "";
+    if (!tableId) {
+      alert("No available table to seat this customer.");
+      return;
+    }
+    await actions.seatWaitlist(entry.id, tableId);
+  }
+
   return (
     <div className="cf-page cf-page-queue">
       <SuiteHero
@@ -143,6 +238,15 @@ function WaitlistView({ waitlist, bookings }) {
           { label: "missed", value: missed.length },
         ]}
       />
+      <div className="cf-toolbar">
+        <div>
+          <strong>Queue desk</strong>
+          <span>{availableTables.length} tables available for seating</span>
+        </div>
+        <ActionButton tone="primary" icon="ti-user-plus" onClick={() => setShowAdd(true)}>
+          Add Walk-in Guest
+        </ActionButton>
+      </div>
       <div className="cf-stat-grid">
         <Stat label="Waiting" value={waitlist.length} icon="ti-user-clock" tone="purple" />
         <Stat label="Upcoming Bookings" value={upcoming.length} icon="ti-calendar-event" />
@@ -156,6 +260,28 @@ function WaitlistView({ waitlist, bookings }) {
               icon: "ti-clock",
               title: `${entry.position}. ${entry.customer_name}`,
               detail: `${entry.party_size} player(s) · ${entry.preferred_type || "Any table"} · ${entry.wait_mins || 0} min wait`,
+              action: (
+                <div className="cf-row-actions">
+                  <select
+                    value={seatTarget[entry.id] || entry.recommended_table?.id || availableTables[0]?.id || ""}
+                    onChange={(event) => setSeatTarget((prev) => ({ ...prev, [entry.id]: event.target.value }))}
+                    disabled={busy}
+                  >
+                    <option value="">Select table</option>
+                    {availableTables.map((table) => (
+                      <option value={table.id} key={table.id}>
+                        T{table.num} · {table.label}
+                      </option>
+                    ))}
+                  </select>
+                  <ActionButton tone="success" icon="ti-armchair" onClick={() => seatEntry(entry)} disabled={busy}>
+                    Seat
+                  </ActionButton>
+                  <ActionButton tone="danger" icon="ti-x" onClick={() => actions.cancelWaitlist(entry.id)} disabled={busy}>
+                    Cancel
+                  </ActionButton>
+                </div>
+              ),
             }))}
           />
         </Section>
@@ -170,16 +296,99 @@ function WaitlistView({ waitlist, bookings }) {
           />
         </Section>
       </div>
+      {showAdd && (
+        <Modal title="Add Walk-in Guest" onClose={() => setShowAdd(false)}>
+          <form className="cf-form" onSubmit={submitWaitlist}>
+            <FormField label="Customer full name">
+              <input
+                required
+                value={form.customer_name}
+                onChange={(event) => setForm((prev) => ({ ...prev, customer_name: event.target.value }))}
+                placeholder="First and last name"
+              />
+            </FormField>
+            <FormField label="Phone">
+              <input
+                value={form.phone}
+                onChange={(event) => setForm((prev) => ({ ...prev, phone: event.target.value }))}
+                placeholder="Optional"
+              />
+            </FormField>
+            <div className="cf-form-grid">
+              <FormField label="Players">
+                <input
+                  type="number"
+                  min="1"
+                  value={form.party_size}
+                  onChange={(event) => setForm((prev) => ({ ...prev, party_size: Number(event.target.value) || 1 }))}
+                />
+              </FormField>
+              <FormField label="Preferred table">
+                <select
+                  value={form.preferred_type}
+                  onChange={(event) => setForm((prev) => ({ ...prev, preferred_type: event.target.value }))}
+                >
+                  <option value="ANY">Any</option>
+                  <option value="SNOOKER">Snooker</option>
+                  <option value="POOL">Pool</option>
+                </select>
+              </FormField>
+            </div>
+            <FormField label="Notes">
+              <textarea
+                value={form.notes}
+                onChange={(event) => setForm((prev) => ({ ...prev, notes: event.target.value }))}
+                placeholder="Preference, regular customer, callback note"
+              />
+            </FormField>
+            <div className="cf-modal-actions">
+              <ActionButton onClick={() => setShowAdd(false)}>Cancel</ActionButton>
+              <button className="cf-action-btn primary" type="submit" disabled={busy}>
+                <i className="ti ti-user-plus" aria-hidden="true" />
+                <span>Add to Queue</span>
+              </button>
+            </div>
+          </form>
+        </Modal>
+      )}
     </div>
   );
 }
 
-function ReservationsView({ bookings }) {
+function ReservationsView({ bookings, actions, busy }) {
+  const [showAdd, setShowAdd] = useState(false);
+  const [filter, setFilter] = useState("all");
+  const [form, setForm] = useState({
+    customer_name: "",
+    phone: "",
+    table_id: "ANY",
+    table_type: "ANY",
+    booking_time: isoLocalNowPlus(30),
+    duration_mins: 60,
+    notes: "",
+  });
   const booked = bookings.filter((booking) => booking.status === "booked");
+  const visibleBookings = bookings.filter((booking) => filter === "all" || booking.status === filter);
   const tableBookings = HSR_TABLES.map((table) => ({
     table,
     bookings: booked.filter((booking) => String(booking.table_id).toLowerCase() === table.id),
   }));
+
+  async function submitBooking(event) {
+    event.preventDefault();
+    await actions.createBooking(form);
+    setForm({
+      customer_name: "",
+      phone: "",
+      table_id: "ANY",
+      table_type: "ANY",
+      booking_time: isoLocalNowPlus(30),
+      duration_mins: 60,
+      notes: "",
+    });
+    setShowAdd(false);
+  }
+
   return (
     <div className="cf-page cf-page-reservations">
       <SuiteHero
@@ -192,6 +401,27 @@ function ReservationsView({ bookings }) {
           { label: "tables covered", value: tableBookings.filter((row) => row.bookings.length).length },
         ]}
       />
+      <div className="cf-toolbar">
+        <div>
+          <strong>Reservation board</strong>
+          <span>Create bookings, spot conflicts and cancel no-shows.</span>
+        </div>
+        <div className="cf-toolbar-actions">
+          {["all", "booked", "missed"].map((status) => (
+            <button
+              type="button"
+              key={status}
+              className={filter === status ? "active" : ""}
+              onClick={() => setFilter(status)}
+            >
+              {status}
+            </button>
+          ))}
+          <ActionButton tone="primary" icon="ti-calendar-plus" onClick={() => setShowAdd(true)}>
+            New Reservation
+          </ActionButton>
+        </div>
+      </div>
       <div className="cf-calendar-grid">
         {tableBookings.map(({ table, bookings: rows }) => (
           <section className="cf-table-slot" key={table.id}>
@@ -212,11 +442,119 @@ function ReservationsView({ bookings }) {
           </section>
         ))}
       </div>
+      <Section eyebrow="Bookings" title="Reservation Register">
+        <RowList
+          rows={visibleBookings.slice(0, 14).map((booking) => ({
+            id: `booking-row-${booking.id}`,
+            icon: booking.status === "missed" ? "ti-alert-triangle" : "ti-calendar-event",
+            title: booking.customer_name,
+            detail: `${booking.table_id || "ANY"} · ${shortDate(booking.booking_time)} · ${booking.duration_mins || 60} min · ${booking.phone || "No phone"}`,
+            action: (
+              <div className="cf-row-actions">
+                <ActionButton
+                  tone="danger"
+                  icon="ti-calendar-x"
+                  onClick={() => actions.cancelBooking(booking.id)}
+                  disabled={busy || booking.status !== "booked"}
+                >
+                  Cancel
+                </ActionButton>
+              </div>
+            ),
+          }))}
+        />
+      </Section>
+      {showAdd && (
+        <Modal title="New Reservation" onClose={() => setShowAdd(false)}>
+          <form className="cf-form" onSubmit={submitBooking}>
+            <FormField label="Customer full name">
+              <input
+                required
+                value={form.customer_name}
+                onChange={(event) => setForm((prev) => ({ ...prev, customer_name: event.target.value }))}
+                placeholder="First and last name"
+              />
+            </FormField>
+            <FormField label="Phone">
+              <input
+                value={form.phone}
+                onChange={(event) => setForm((prev) => ({ ...prev, phone: event.target.value }))}
+                placeholder="Optional"
+              />
+            </FormField>
+            <div className="cf-form-grid">
+              <FormField label="Table">
+                <select
+                  value={form.table_id}
+                  onChange={(event) => {
+                    const table = HSR_TABLES.find((row) => row.id.toUpperCase() === event.target.value);
+                    setForm((prev) => ({
+                      ...prev,
+                      table_id: event.target.value,
+                      table_type: table?.type || prev.table_type,
+                    }));
+                  }}
+                >
+                  <option value="ANY">Any table</option>
+                  {HSR_TABLES.map((table) => (
+                    <option value={table.id.toUpperCase()} key={table.id}>
+                      T{table.num} · {table.label}
+                    </option>
+                  ))}
+                </select>
+              </FormField>
+              <FormField label="Table type">
+                <select
+                  value={form.table_type}
+                  onChange={(event) => setForm((prev) => ({ ...prev, table_type: event.target.value }))}
+                >
+                  <option value="ANY">Any</option>
+                  <option value="SNOOKER">Snooker</option>
+                  <option value="POOL">Pool</option>
+                </select>
+              </FormField>
+            </div>
+            <div className="cf-form-grid">
+              <FormField label="Date and time">
+                <input
+                  required
+                  type="datetime-local"
+                  value={form.booking_time}
+                  onChange={(event) => setForm((prev) => ({ ...prev, booking_time: event.target.value }))}
+                />
+              </FormField>
+              <FormField label="Duration">
+                <input
+                  type="number"
+                  min="30"
+                  step="15"
+                  value={form.duration_mins}
+                  onChange={(event) => setForm((prev) => ({ ...prev, duration_mins: Number(event.target.value) || 60 }))}
+                />
+              </FormField>
+            </div>
+            <FormField label="Notes">
+              <textarea
+                value={form.notes}
+                onChange={(event) => setForm((prev) => ({ ...prev, notes: event.target.value }))}
+                placeholder="Advance, preference, phone reminder"
+              />
+            </FormField>
+            <div className="cf-modal-actions">
+              <ActionButton onClick={() => setShowAdd(false)}>Cancel</ActionButton>
+              <button className="cf-action-btn primary" type="submit" disabled={busy}>
+                <i className="ti ti-calendar-plus" aria-hidden="true" />
+                <span>Create Booking</span>
+              </button>
+            </div>
+          </form>
+        </Modal>
+      )}
     </div>
   );
 }
 
-function BillingView({ history, foodOrders }) {
+function BillingView({ history, foodOrders, actions, busy }) {
   const tableTotal = history.reduce((sum, bill) => sum + Number(bill.total || bill.amount || 0), 0);
   const foodTotal = foodOrders.reduce((sum, order) => sum + Number(order.total || 0), 0);
   const recentBills = history.slice(0, 12).map((bill) => ({
@@ -232,6 +570,18 @@ function BillingView({ history, foodOrders }) {
     title: order.customer_name || "Counter order",
     detail: `${order.payment_method || "Cash"} · ${order.items?.length || 0} item(s)`,
     amount: money(order.total),
+    action: (
+      <div className="cf-row-actions">
+        <ActionButton
+          tone="danger"
+          icon="ti-receipt-refund"
+          onClick={() => actions.cancelFoodOrder(order.id)}
+          disabled={busy}
+        >
+          Cancel
+        </ActionButton>
+      </div>
+    ),
   }));
   return (
     <div className="cf-page cf-page-billing">
@@ -245,6 +595,12 @@ function BillingView({ history, foodOrders }) {
           { label: "food bill value", value: money(foodTotal) },
         ]}
       />
+      <div className="cf-toolbar">
+        <div>
+          <strong>Cashier register</strong>
+          <span>Review table settlements and cancel incorrect food-only orders.</span>
+        </div>
+      </div>
       <div className="cf-two-col">
         <Section eyebrow="Tables" title="Recent Table Bills">
           <RowList rows={recentBills} />
@@ -257,9 +613,57 @@ function BillingView({ history, foodOrders }) {
   );
 }
 
-function InventoryView({ menu, maintenance }) {
+function InventoryView({ menu, maintenance, actions, busy }) {
+  const [showAdd, setShowAdd] = useState(false);
+  const [editing, setEditing] = useState(null);
+  const [maintenanceForm, setMaintenanceForm] = useState({ table_id: "t1", reason: "Under maintenance" });
+  const [menuForm, setMenuForm] = useState({
+    name: "",
+    price: "",
+    category: "Veg Snacks",
+  });
   const unavailable = menu.filter((item) => item.available === false);
   const cigarettes = menu.filter((item) => /cig|cigg|cigarette/i.test(item.name));
+  const categories = [
+    "Veg Snacks",
+    "Non Veg Snacks",
+    "Egg",
+    "Maggie",
+    "Hot Beverages",
+    "Cold Beverages",
+    "Cigarettes",
+  ];
+
+  async function submitMenuItem(event) {
+    event.preventDefault();
+    const price = Number(menuForm.price);
+    if (!menuForm.name.trim() || price < 0) {
+      alert("Enter item name and valid price.");
+      return;
+    }
+    await actions.addMenuItem(menuForm.name, price, menuForm.category);
+    setMenuForm({ name: "", price: "", category: menuForm.category });
+    setShowAdd(false);
+  }
+
+  async function submitEdit(event) {
+    event.preventDefault();
+    if (!editing) return;
+    const price = Number(editing.price);
+    if (!editing.newName.trim() || price < 0) {
+      alert("Enter item name and valid price.");
+      return;
+    }
+    await actions.updateMenuItem(editing.oldName, editing.newName, price, editing.category);
+    setEditing(null);
+  }
+
+  async function submitMaintenance(event) {
+    event.preventDefault();
+    await actions.setMaintenance(maintenanceForm.table_id, maintenanceForm.reason);
+    setMaintenanceForm({ table_id: maintenanceForm.table_id, reason: "Under maintenance" });
+  }
+
   return (
     <div className="cf-page cf-page-inventory">
       <SuiteHero
@@ -273,33 +677,202 @@ function InventoryView({ menu, maintenance }) {
           { label: "maintenance", value: maintenance.length },
         ]}
       />
+      <div className="cf-toolbar">
+        <div>
+          <strong>Inventory command</strong>
+          <span>Edit cafe menu stock and manage tables under maintenance.</span>
+        </div>
+        <ActionButton tone="primary" icon="ti-package-plus" onClick={() => setShowAdd(true)}>
+          Add Menu Item
+        </ActionButton>
+      </div>
       <div className="cf-stat-grid">
         <Stat label="Menu Items" value={menu.length} icon="ti-package" />
         <Stat label="Out of Stock" value={unavailable.length} icon="ti-alert-circle" tone="amber" />
         <Stat label="Cigarette Items" value={cigarettes.length} icon="ti-smoking" tone="purple" />
       </div>
-      <div className="cf-two-col">
-        <Section eyebrow="Availability" title="Unavailable Items">
-          <RowList
-            rows={unavailable.map((item) => ({
-              id: `menu-${item.name}`,
-              icon: "ti-package-off",
-              title: item.name,
-              detail: `${item.category || "Menu"} · ${money(item.price)}`,
-            }))}
-          />
+      <div className="cf-inventory-grid">
+        <Section eyebrow="Menu CRUD" title="Food Menu & Availability">
+          <div className="cf-data-table">
+            {menu.slice(0, 18).map((item) => (
+              <div className="cf-data-row" key={item.name}>
+                <div>
+                  <strong>{item.name}</strong>
+                  <span>{item.category || "Menu"} · {money(item.price)} · {item.available === false ? "Out of stock" : "In stock"}</span>
+                </div>
+                <div className="cf-row-actions">
+                  <ActionButton
+                    icon="ti-pencil"
+                    onClick={() => setEditing({
+                      oldName: item.name,
+                      newName: item.name,
+                      price: item.price,
+                      category: item.category || "Veg Snacks",
+                    })}
+                  >
+                    Edit
+                  </ActionButton>
+                  <ActionButton
+                    tone={item.available === false ? "success" : "warning"}
+                    icon={item.available === false ? "ti-check" : "ti-package-off"}
+                    onClick={() => actions.setItemAvailability(item.name, item.available === false)}
+                    disabled={busy}
+                  >
+                    {item.available === false ? "In stock" : "Out"}
+                  </ActionButton>
+                  <ActionButton
+                    tone="danger"
+                    icon="ti-trash"
+                    onClick={() => actions.deleteMenuItem(item.name)}
+                    disabled={busy}
+                  >
+                    Delete
+                  </ActionButton>
+                </div>
+              </div>
+            ))}
+            {!menu.length && (
+              <EmptyState
+                icon="ti-package"
+                title="No menu items"
+                detail="Add snacks, drinks or cigarettes to start building the menu."
+              />
+            )}
+          </div>
         </Section>
-        <Section eyebrow="Floor" title="Maintenance Tables">
+
+        <Section
+          eyebrow="Floor"
+          title="Table Maintenance"
+          action={
+            <form className="cf-inline-form" onSubmit={submitMaintenance}>
+              <select
+                value={maintenanceForm.table_id}
+                onChange={(event) => setMaintenanceForm((prev) => ({ ...prev, table_id: event.target.value }))}
+              >
+                {HSR_TABLES.map((table) => (
+                  <option value={table.id} key={table.id}>
+                    T{table.num}
+                  </option>
+                ))}
+              </select>
+              <input
+                value={maintenanceForm.reason}
+                onChange={(event) => setMaintenanceForm((prev) => ({ ...prev, reason: event.target.value }))}
+                placeholder="Reason"
+              />
+              <button className="cf-action-btn warning" type="submit" disabled={busy}>
+                <i className="ti ti-tool" aria-hidden="true" />
+                <span>Mark</span>
+              </button>
+            </form>
+          }
+        >
           <RowList
             rows={maintenance.map((row) => ({
               id: `maint-${row.table_id}`,
               icon: "ti-tool",
               title: String(row.table_id || "").toUpperCase(),
-              detail: row.reason || "Marked for maintenance",
+              detail: `${row.reason || "Marked for maintenance"} · ${row.since || "No time"}`,
+              action: (
+                <div className="cf-row-actions">
+                  <ActionButton
+                    tone="success"
+                    icon="ti-tool-off"
+                    onClick={() => actions.clearMaintenance(row.table_id)}
+                    disabled={busy}
+                  >
+                    Clear
+                  </ActionButton>
+                </div>
+              ),
             }))}
           />
         </Section>
       </div>
+      {showAdd && (
+        <Modal title="Add Menu Item" onClose={() => setShowAdd(false)}>
+          <form className="cf-form" onSubmit={submitMenuItem}>
+            <FormField label="Item name">
+              <input
+                required
+                value={menuForm.name}
+                onChange={(event) => setMenuForm((prev) => ({ ...prev, name: event.target.value }))}
+                placeholder="Coffee, fries, cigarette pack"
+              />
+            </FormField>
+            <div className="cf-form-grid">
+              <FormField label="Price">
+                <input
+                  required
+                  type="number"
+                  min="0"
+                  value={menuForm.price}
+                  onChange={(event) => setMenuForm((prev) => ({ ...prev, price: event.target.value }))}
+                />
+              </FormField>
+              <FormField label="Category">
+                <select
+                  value={menuForm.category}
+                  onChange={(event) => setMenuForm((prev) => ({ ...prev, category: event.target.value }))}
+                >
+                  {categories.map((category) => (
+                    <option value={category} key={category}>{category}</option>
+                  ))}
+                </select>
+              </FormField>
+            </div>
+            <div className="cf-modal-actions">
+              <ActionButton onClick={() => setShowAdd(false)}>Cancel</ActionButton>
+              <button className="cf-action-btn primary" type="submit" disabled={busy}>
+                <i className="ti ti-package-plus" aria-hidden="true" />
+                <span>Add Item</span>
+              </button>
+            </div>
+          </form>
+        </Modal>
+      )}
+      {editing && (
+        <Modal title="Edit Menu Item" onClose={() => setEditing(null)}>
+          <form className="cf-form" onSubmit={submitEdit}>
+            <FormField label="Item name">
+              <input
+                required
+                value={editing.newName}
+                onChange={(event) => setEditing((prev) => ({ ...prev, newName: event.target.value }))}
+              />
+            </FormField>
+            <div className="cf-form-grid">
+              <FormField label="Price">
+                <input
+                  required
+                  type="number"
+                  min="0"
+                  value={editing.price}
+                  onChange={(event) => setEditing((prev) => ({ ...prev, price: event.target.value }))}
+                />
+              </FormField>
+              <FormField label="Category">
+                <select
+                  value={editing.category}
+                  onChange={(event) => setEditing((prev) => ({ ...prev, category: event.target.value }))}
+                >
+                  {categories.map((category) => (
+                    <option value={category} key={category}>{category}</option>
+                  ))}
+                </select>
+              </FormField>
+            </div>
+            <div className="cf-modal-actions">
+              <ActionButton onClick={() => setEditing(null)}>Cancel</ActionButton>
+              <button className="cf-action-btn primary" type="submit" disabled={busy}>
+                <i className="ti ti-device-floppy" aria-hidden="true" />
+                <span>Save Changes</span>
+              </button>
+            </div>
+          </form>
+        </Modal>
+      )}
     </div>
   );
 }
@@ -429,6 +1002,7 @@ export default function ClubSuiteTab({ view }) {
   const [data, setData] = useState({
     waitlist: [],
     bookings: [],
+    activeSessions: [],
     history: [],
     foodOrders: [],
     foodStats: [],
@@ -438,43 +1012,89 @@ export default function ClubSuiteTab({ view }) {
     topCustomers: [],
     utilization: [],
   });
+  const [busy, setBusy] = useState(false);
+
+  const loadData = useCallback(async (shouldCommit = () => true) => {
+    const results = await Promise.allSettled([
+      getWaitlist(),
+      getBookings(),
+      getActive(),
+      getHistory(),
+      getFoodOrders(),
+      getFoodStats(),
+      getMenuFull(),
+      getMaintenance(),
+      getAuditLogs(50),
+      getTopCustomers("all"),
+      getTableUtilization(),
+    ]);
+    if (!shouldCommit()) return;
+    setData({
+      waitlist: results[0].status === "fulfilled" ? asArray(results[0].value.data) : [],
+      bookings: results[1].status === "fulfilled" ? asArray(results[1].value.data) : [],
+      activeSessions: results[2].status === "fulfilled" ? asArray(results[2].value.data) : [],
+      history: results[3].status === "fulfilled" ? asArray(results[3].value.data) : [],
+      foodOrders: results[4].status === "fulfilled" ? asArray(results[4].value.data) : [],
+      foodStats: results[5].status === "fulfilled" ? asArray(results[5].value.data) : [],
+      menu: results[6].status === "fulfilled" ? asArray(results[6].value.data) : [],
+      maintenance: results[7].status === "fulfilled" ? asMaintenanceRows(results[7].value.data) : [],
+      auditLogs: results[8].status === "fulfilled" ? asArray(results[8].value.data) : [],
+      topCustomers: results[9].status === "fulfilled" ? asArray(results[9].value.data) : [],
+      utilization: results[10].status === "fulfilled" ? asArray(results[10].value.data) : [],
+    });
+  }, []);
 
   useEffect(() => {
     let alive = true;
-    async function load() {
-      const results = await Promise.allSettled([
-        getWaitlist(),
-        getBookings(),
-        getHistory(),
-        getFoodOrders(),
-        getFoodStats(),
-        getMenuFull(),
-        getMaintenance(),
-        getAuditLogs(50),
-        getTopCustomers("all"),
-        getTableUtilization(),
-      ]);
-      if (!alive) return;
-      setData({
-        waitlist: results[0].status === "fulfilled" ? asArray(results[0].value.data) : [],
-        bookings: results[1].status === "fulfilled" ? asArray(results[1].value.data) : [],
-        history: results[2].status === "fulfilled" ? asArray(results[2].value.data) : [],
-        foodOrders: results[3].status === "fulfilled" ? asArray(results[3].value.data) : [],
-        foodStats: results[4].status === "fulfilled" ? asArray(results[4].value.data) : [],
-        menu: results[5].status === "fulfilled" ? asArray(results[5].value.data) : [],
-        maintenance: results[6].status === "fulfilled" ? asArray(results[6].value.data) : [],
-        auditLogs: results[7].status === "fulfilled" ? asArray(results[7].value.data) : [],
-        topCustomers: results[8].status === "fulfilled" ? asArray(results[8].value.data) : [],
-        utilization: results[9].status === "fulfilled" ? asArray(results[9].value.data) : [],
-      });
-    }
-    load();
+    loadData(() => alive);
     return () => {
       alive = false;
     };
-  }, [view]);
+  }, [view, loadData]);
 
-  const props = useMemo(() => data, [data]);
+  const runAction = useCallback(async (action, confirmText = "") => {
+    if (confirmText && !confirm(confirmText)) return;
+    setBusy(true);
+    try {
+      await action();
+      await loadData();
+    } catch (error) {
+      alert(error.response?.data?.detail || "Action failed");
+    } finally {
+      setBusy(false);
+    }
+  }, [loadData]);
+
+  const actions = useMemo(() => ({
+    addWaitlist: (body) => runAction(() => addWaitlistEntry(body)),
+    seatWaitlist: (entryId, tableId) => runAction(() => seatWaitlistEntry(entryId, tableId)),
+    cancelWaitlist: (entryId) => runAction(
+      () => cancelWaitlistEntry(entryId),
+      "Cancel this waitlist entry?",
+    ),
+    createBooking: (body) => runAction(() => createBooking(body)),
+    cancelBooking: (bookingId) => runAction(
+      () => cancelBooking(bookingId),
+      "Cancel this reservation?",
+    ),
+    cancelFoodOrder: (orderId) => runAction(
+      () => cancelFoodOrder(orderId),
+      "Cancel this food order?",
+    ),
+    addMenuItem: (name, price, category) => runAction(() => addMenuItem(name, price, category)),
+    updateMenuItem: (oldName, newName, price, category) => runAction(
+      () => updateMenuItem(oldName, newName, price, category),
+    ),
+    deleteMenuItem: (name) => runAction(
+      () => deleteMenuItem(name),
+      `Delete ${name}?`,
+    ),
+    setItemAvailability: (name, available) => runAction(() => setItemAvailability(name, available)),
+    setMaintenance: (tableId, reason) => runAction(() => setMaintenance(tableId, reason)),
+    clearMaintenance: (tableId) => runAction(() => clearMaintenance(tableId)),
+  }), [runAction]);
+
+  const props = useMemo(() => ({ ...data, actions, busy }), [data, actions, busy]);
 
   if (view === "waitlist") return <WaitlistView {...props} />;
   if (view === "reservations") return <ReservationsView {...props} />;

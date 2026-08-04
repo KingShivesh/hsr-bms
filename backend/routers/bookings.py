@@ -8,7 +8,7 @@ from sqlalchemy.orm import Session
 
 import models
 from database import get_db
-from hsr_config import get_ist_now
+from hsr_config import IST_TZ, get_ist_now
 from validators import require_full_name
 
 router = APIRouter()
@@ -26,9 +26,12 @@ class BookingBody(BaseModel):
 
 def _parse_time(value: str) -> datetime:
     try:
-        return datetime.fromisoformat(value)
+        parsed = datetime.fromisoformat(value)
     except ValueError:
         raise HTTPException(status_code=400, detail="Booking time must be a valid date/time")
+    if parsed.tzinfo is not None:
+        parsed = parsed.astimezone(IST_TZ).replace(tzinfo=None)
+    return parsed
 
 
 def _format_booking(b: models.Booking) -> dict:
