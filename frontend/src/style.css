@@ -10627,10 +10627,173 @@ body.dark .cf-plan small {
 .ops-panel,
 .ops-kpi,
 .ops-quickbar,
+.ops-cockpit,
 .ops-running-strip {
   border: 1px solid rgba(15, 23, 42, 0.1);
   background: #fff;
   box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04), 0 18px 40px rgba(15, 23, 42, 0.05);
+}
+
+.ops-cockpit {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(420px, 0.9fr);
+  gap: 18px;
+  min-height: 214px;
+  padding: 18px;
+  border-radius: 22px;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.96), rgba(239, 246, 255, 0.92)),
+    #fff;
+}
+
+.ops-cockpit-main {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 132px;
+  align-items: center;
+  gap: 18px;
+  min-height: 178px;
+  padding: 22px;
+  border-radius: 18px;
+  background:
+    linear-gradient(135deg, rgba(15, 23, 42, 0.96), rgba(30, 64, 175, 0.9)),
+    #0f172a;
+  color: #fff;
+  overflow: hidden;
+}
+
+.ops-cockpit-copy h2 {
+  margin: 8px 0;
+  color: #fff;
+  font-size: clamp(26px, 3vw, 44px);
+  font-weight: 950;
+  line-height: 1.02;
+}
+
+.ops-cockpit-copy p {
+  max-width: 650px;
+  margin: 0;
+  color: #cbd5e1;
+  font-size: 13px;
+  font-weight: 720;
+  line-height: 1.55;
+}
+
+.ops-health-ring {
+  --score: 80%;
+  width: 120px;
+  height: 120px;
+  display: grid;
+  place-items: center;
+  justify-self: end;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at center, #0f172a 0 58%, transparent 59%),
+    conic-gradient(#22c55e var(--score), rgba(255, 255, 255, 0.16) 0);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.12);
+}
+
+.ops-health-ring.warning {
+  background:
+    radial-gradient(circle at center, #0f172a 0 58%, transparent 59%),
+    conic-gradient(#f59e0b var(--score), rgba(255, 255, 255, 0.16) 0);
+}
+
+.ops-health-ring strong,
+.ops-health-ring span {
+  grid-area: 1 / 1;
+  text-align: center;
+}
+
+.ops-health-ring strong {
+  margin-top: -12px;
+  color: #fff;
+  font-size: 34px;
+  font-weight: 950;
+}
+
+.ops-health-ring span {
+  margin-top: 42px;
+  color: #cbd5e1;
+  font-size: 10px;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.ops-command-deck {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.ops-command-deck button {
+  min-height: 78px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border: 1px solid #dbe4ef;
+  border-radius: 16px;
+  padding: 14px;
+  background: #fff;
+  color: #172033;
+  cursor: pointer;
+  text-align: left;
+  transition: transform 0.16s ease, box-shadow 0.16s ease, border-color 0.16s ease;
+}
+
+.ops-command-deck button:hover {
+  transform: translateY(-1px);
+  border-color: #bfdbfe;
+  box-shadow: 0 14px 28px rgba(15, 23, 42, 0.08);
+}
+
+.ops-command-deck button.primary {
+  border-color: rgba(22, 163, 74, 0.22);
+  background: linear-gradient(135deg, #f0fdf4, #fff);
+}
+
+.ops-command-deck button.danger {
+  border-color: rgba(217, 119, 6, 0.24);
+  background: linear-gradient(135deg, #fffbeb, #fff);
+}
+
+.ops-command-deck i {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  border-radius: 14px;
+  background: #eff6ff;
+  color: #2563eb;
+  font-size: 21px;
+}
+
+.ops-command-deck button.primary i {
+  background: #dcfce7;
+  color: #16a34a;
+}
+
+.ops-command-deck button.danger i {
+  background: #fffbeb;
+  color: #d97706;
+}
+
+.ops-command-deck b,
+.ops-command-deck small {
+  display: block;
+}
+
+.ops-command-deck b {
+  color: #0f172a;
+  font-size: 13px;
+  font-weight: 950;
+}
+
+.ops-command-deck small {
+  margin-top: 3px;
+  color: #64748b;
+  font-size: 11px;
+  font-weight: 800;
 }
 
 .ops-hero {
@@ -11482,6 +11645,7 @@ body.dark .ops-hero,
 body.dark .ops-panel,
 body.dark .ops-kpi,
 body.dark .ops-quickbar,
+body.dark .ops-cockpit,
 body.dark .ops-running-strip {
   border-color: rgba(148, 163, 184, 0.16);
   background: #111827;
@@ -11493,10 +11657,21 @@ body.dark .ops-hero {
   background: linear-gradient(135deg, #020617, #172554);
 }
 
+body.dark .ops-cockpit {
+  background:
+    linear-gradient(135deg, rgba(17, 24, 39, 0.96), rgba(15, 23, 42, 0.96)),
+    #111827;
+}
+
+body.dark .ops-cockpit-main {
+  background: linear-gradient(135deg, #020617, #172554);
+}
+
 body.dark .ops-kpi strong,
 body.dark .ops-section-head h3,
 body.dark .ops-quickbar > div:first-child strong,
 body.dark .ops-quick-action b,
+body.dark .ops-command-deck b,
 body.dark .ops-running-strip > div:first-child strong,
 body.dark .ops-table-top strong,
 body.dark .ops-table-main span,
@@ -11520,6 +11695,7 @@ body.dark .ops-breakdown-list em {
 body.dark .ops-kpi-top span,
 body.dark .ops-kpi p,
 body.dark .ops-quick-action small,
+body.dark .ops-command-deck small,
 body.dark .ops-table-top span,
 body.dark .ops-table-status,
 body.dark .ops-table-meta span,
@@ -11537,6 +11713,7 @@ body.dark .ops-payment-row span {
 
 body.dark .ops-kpi-top i,
 body.dark .ops-quick-action,
+body.dark .ops-command-deck button,
 body.dark .ops-table-card,
 body.dark .ops-action-row,
 body.dark .ops-insight,
@@ -11550,6 +11727,14 @@ body.dark .ops-payment-track {
   background: #0f172a;
 }
 
+body.dark .ops-command-deck button.primary {
+  background: linear-gradient(135deg, rgba(22, 163, 74, 0.14), #0f172a);
+}
+
+body.dark .ops-command-deck button.danger {
+  background: linear-gradient(135deg, rgba(217, 119, 6, 0.14), #0f172a);
+}
+
 body.dark .ops-quickbar {
   background:
     linear-gradient(135deg, rgba(17, 24, 39, 0.96), rgba(15, 23, 42, 0.96)),
@@ -11557,6 +11742,7 @@ body.dark .ops-quickbar {
 }
 
 body.dark .ops-quick-action i,
+body.dark .ops-command-deck i,
 body.dark .ops-compact-list i,
 body.dark .ops-timeline i,
 body.dark .ops-empty-line i {
@@ -11605,6 +11791,10 @@ button.sb-item:focus-visible {
 }
 
 @media (max-width: 1320px) {
+  .ops-cockpit {
+    grid-template-columns: 1fr;
+  }
+
   .ops-kpi-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
@@ -11626,6 +11816,14 @@ button.sb-item:focus-visible {
     grid-template-columns: 1fr;
   }
 
+  .ops-cockpit-main {
+    grid-template-columns: 1fr;
+  }
+
+  .ops-health-ring {
+    justify-self: start;
+  }
+
   .ops-quickbar {
     grid-template-columns: 1fr;
   }
@@ -11639,6 +11837,71 @@ button.sb-item:focus-visible {
   .ops-hero {
     align-items: flex-start;
     flex-direction: column;
+  }
+
+  .ops-cockpit,
+  .ops-cockpit-main {
+    border-radius: 14px;
+    padding: 14px;
+  }
+
+  .ops-cockpit {
+    gap: 10px;
+  }
+
+  .ops-cockpit-main {
+    min-height: 0;
+    gap: 12px;
+  }
+
+  .ops-cockpit-copy h2 {
+    font-size: 24px;
+  }
+
+  .ops-cockpit-copy p {
+    font-size: 12px;
+  }
+
+  .ops-health-ring {
+    width: 82px;
+    height: 82px;
+  }
+
+  .ops-health-ring strong {
+    margin-top: -10px;
+    font-size: 24px;
+  }
+
+  .ops-health-ring span {
+    margin-top: 30px;
+    font-size: 9px;
+  }
+
+  .ops-command-deck {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .ops-command-deck button {
+    min-height: 64px;
+    gap: 8px;
+    border-radius: 12px;
+    padding: 10px;
+  }
+
+  .ops-command-deck i {
+    width: 34px;
+    height: 34px;
+    border-radius: 10px;
+    font-size: 17px;
+  }
+
+  .ops-command-deck b {
+    font-size: 11px;
+  }
+
+  .ops-command-deck small {
+    font-size: 10px;
   }
 
   .ops-hero-actions,

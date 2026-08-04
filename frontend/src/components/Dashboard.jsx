@@ -77,30 +77,80 @@ function SectionHead({ eyebrow, title, action }) {
   );
 }
 
-function HeroCommand({ metrics, ownerTotal, activeCount, onNavigate }) {
-  const idleCount = Math.max(TOTAL_TABLES - activeCount, 0);
+function BusinessPulse({
+  ownerTotal,
+  liveTableTotal,
+  activeCount,
+  foodAttachment,
+  waitlistCount,
+  openTables,
+  longRunningCount,
+  onNavigate,
+}) {
+  const riskScore = openTables * 14 + longRunningCount * 10 + waitlistCount * 6 + (foodAttachment < 10 ? 8 : 0);
+  const healthScore = Math.max(52, Math.min(99, 96 - riskScore));
+  const status =
+    openTables > 0
+      ? "Close blockers"
+      : longRunningCount > 0
+        ? "Review long tables"
+        : waitlistCount > 0
+          ? "Seat queue"
+          : "Under control";
+  const statusTone = openTables || longRunningCount ? "warning" : "good";
+
   return (
-    <section className="ops-hero">
-      <div className="ops-hero-copy">
-        <span className="ops-eyebrow">Live command center</span>
-        <h2>Today is at {money(ownerTotal)}</h2>
-        <p>
-          {activeCount} tables running, {idleCount} idle, {metrics.sessions || 0} closed sessions.
-          Use this screen to spot stuck tables, food misses and closing risk.
-        </p>
+    <section className="ops-cockpit">
+      <div className="ops-cockpit-main">
+        <div className="ops-cockpit-copy">
+          <span className="ops-eyebrow">Owner command cockpit</span>
+          <h2>Business health is {healthScore}%</h2>
+          <p>
+            {status}. Today has {money(ownerTotal)} closed revenue and {money(liveTableTotal)} still
+            running on the floor.
+          </p>
+        </div>
+        <div className={`ops-health-ring ${statusTone}`} style={{ "--score": `${healthScore}%` }}>
+          <strong>{healthScore}</strong>
+          <span>Health</span>
+        </div>
       </div>
-      <div className="ops-hero-actions">
-        <button type="button" className="ops-action primary" onClick={() => onNavigate("tables")}>
+
+      <div className="ops-command-deck">
+        <button type="button" className="primary" onClick={() => onNavigate("tables")}>
           <i className="ti ti-player-play" aria-hidden="true" />
-          Open Floor
+          <span>
+            <b>Open Floor</b>
+            <small>{activeCount}/{TOTAL_TABLES} active tables</small>
+          </span>
         </button>
-        <button type="button" className="ops-action" onClick={() => onNavigate("food")}>
+        <button type="button" onClick={() => onNavigate("food")}>
           <i className="ti ti-tools-kitchen-2" aria-hidden="true" />
-          Food POS
+          <span>
+            <b>Cafe POS</b>
+            <small>{foodAttachment}% food attachment</small>
+          </span>
         </button>
-        <button type="button" className="ops-action warning" onClick={() => onNavigate("closing")}>
+        <button type="button" onClick={() => onNavigate("waitlist")}>
+          <i className="ti ti-user-clock" aria-hidden="true" />
+          <span>
+            <b>Waitlist</b>
+            <small>{waitlistCount} waiting now</small>
+          </span>
+        </button>
+        <button type="button" onClick={() => onNavigate("reservations")}>
+          <i className="ti ti-calendar-event" aria-hidden="true" />
+          <span>
+            <b>Bookings</b>
+            <small>Manage table slots</small>
+          </span>
+        </button>
+        <button type="button" className="danger" onClick={() => onNavigate("closing")}>
           <i className="ti ti-lock-check" aria-hidden="true" />
-          Closing
+          <span>
+            <b>Close Shift</b>
+            <small>{openTables ? `${openTables} blockers` : "Ready check"}</small>
+          </span>
         </button>
       </div>
     </section>
@@ -140,14 +190,14 @@ function QuickOperations({ onNavigate, activeCount, waitingCount, bookingCount }
       label: "Bookings",
       sub: `${bookingCount} active`,
       icon: "ti-calendar-plus",
-      page: "tables",
+      page: "reservations",
       tone: "booking",
     },
     {
       label: "Queue",
       sub: `${waitingCount} waiting`,
       icon: "ti-clock",
-      page: "tables",
+      page: "waitlist",
       tone: "queue",
     },
     {
@@ -739,6 +789,7 @@ export default function Dashboard({ metrics, onNavigate }) {
   const cashTotal = ownerReport?.cash_total || 0;
   const upiTotal = ownerReport?.upi_total || 0;
   const cardTotal = ownerReport?.card_total || 0;
+  const openTableCount = ownerReport?.open_tables?.length || runningTables.length;
   const ownerTotal = ownerReport
     ? (ownerReport.total_revenue || 0) + (ownerReport.food_only_revenue || 0)
     : metrics.sale;
@@ -752,6 +803,7 @@ export default function Dashboard({ metrics, onNavigate }) {
     ? Math.round(runningTables.reduce((sum, row) => sum + row.elapsedSecs / 60, 0) / runningTables.length)
     : 0;
   const upcomingBookings = bookings.filter((booking) => booking.status === "booked");
+  const longRunningCount = runningTables.filter((row) => row.elapsedSecs >= 90 * 60).length;
 
   const actionItems = useMemo(() => {
     const items = [];
@@ -810,10 +862,14 @@ export default function Dashboard({ metrics, onNavigate }) {
 
   return (
     <div className="ops-dashboard">
-      <HeroCommand
-        metrics={metrics}
+      <BusinessPulse
         ownerTotal={ownerTotal}
+        liveTableTotal={liveTableTotal}
         activeCount={runningTables.length}
+        foodAttachment={foodAttachment}
+        waitlistCount={waitlist.length}
+        openTables={openTableCount}
+        longRunningCount={longRunningCount}
         onNavigate={onNavigate}
       />
 
