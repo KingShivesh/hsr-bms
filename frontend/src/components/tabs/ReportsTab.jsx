@@ -11,6 +11,7 @@ import {
   getAdvancedAnalytics,
 } from "../../api/index.js";
 import { CSV_PREFIX } from "../../config/hsrTables.js";
+import { useToast } from "../toastContext.js";
 
 const PERIODS = [
   { id: "today", label: "Today" },
@@ -102,7 +103,7 @@ function LoadingState({ title = "Loading report..." }) {
 }
 
 // ── Bills ──
-function HistoryView({ history, period, onPeriodChange, selectedDate, onDateChange, onExport }) {
+function HistoryView({ history, period, onPeriodChange, selectedDate, onDateChange, onExport, exporting = false }) {
   const [search, setSearch] = useState("");
   const labelBillingMode = (mode) => {
     if (mode === "sharing") return "Sharing";
@@ -166,18 +167,19 @@ function HistoryView({ history, period, onPeriodChange, selectedDate, onDateChan
           />
           <button
             onClick={onExport}
+            disabled={exporting}
             style={{
               fontSize: "12px",
               padding: "6px 14px",
               borderRadius: "6px",
-              cursor: "pointer",
+              cursor: exporting ? "wait" : "pointer",
               background: "#f0fdf4",
               color: "#16a34a",
               border: "1px solid #bbf7d0",
               fontWeight: 500,
             }}
           >
-            Export CSV
+            {exporting ? "Exporting..." : "Export CSV"}
           </button>
         </div>
       </div>
@@ -942,6 +944,7 @@ function AdvancedAnalyticsView() {
 
 // ── Main Reports Tab ──
 export default function ReportsTab() {
+  const { showToast } = useToast();
   const [activeTab, setActiveTab] = useState(
     () => {
       const savedTab = localStorage.getItem("reportsDefaultTab");
@@ -959,6 +962,7 @@ export default function ReportsTab() {
     top_table: "-",
   });
   const [history, setHistory] = useState([]);
+  const [exporting, setExporting] = useState(false);
 
   useEffect(() => {
     fetchSummary();
@@ -985,6 +989,7 @@ export default function ReportsTab() {
   }
 
   async function handleExport() {
+    setExporting(true);
     try {
       const res = await exportCSV(period);
       const url = window.URL.createObjectURL(new Blob([res.data]));
@@ -993,8 +998,11 @@ export default function ReportsTab() {
       a.download = `${CSV_PREFIX}_${period}_${Date.now()}.csv`;
       a.click();
       window.URL.revokeObjectURL(url);
+      showToast("CSV export downloaded", "success");
     } catch {
-      alert("Failed to export CSV");
+      showToast("Failed to export CSV", "error");
+    } finally {
+      setExporting(false);
     }
   }
 
@@ -1045,10 +1053,11 @@ export default function ReportsTab() {
           history={history}
           period={period}
           onPeriodChange={setPeriod}
-          selectedDate={selectedDate}
-          onDateChange={setSelectedDate}
-          onExport={handleExport}
-        />
+	          selectedDate={selectedDate}
+	          onDateChange={setSelectedDate}
+	          onExport={handleExport}
+	          exporting={exporting}
+	        />
       )}
       {activeTab === "customers" && <TopCustomersView />}
       {activeTab === "tables" && <UtilizationView />}

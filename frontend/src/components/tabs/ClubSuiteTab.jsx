@@ -142,13 +142,13 @@ function EmptyState({ icon = "ti-info-circle", title, detail }) {
   );
 }
 
-function RowList({ rows }) {
+function RowList({ rows, emptyTitle = "Nothing pending", emptyDetail = "New activity will appear here automatically." }) {
   if (!rows.length) {
     return (
       <EmptyState
         icon="ti-circle-check"
-        title="Nothing pending"
-        detail="This area will populate automatically as staff use the system."
+        title={emptyTitle}
+        detail={emptyDetail}
       />
     );
   }
@@ -169,7 +169,7 @@ function RowList({ rows }) {
   );
 }
 
-function WaitlistView({ waitlist, bookings, activeSessions, maintenance, actions, busy, activeAction }) {
+function WaitlistView({ waitlist, bookings, activeSessions, maintenance, actions, busy, activeAction, showToast }) {
   const [showAdd, setShowAdd] = useState(false);
   const [seatTarget, setSeatTarget] = useState({});
   const [form, setForm] = useState({
@@ -198,7 +198,7 @@ function WaitlistView({ waitlist, bookings, activeSessions, maintenance, actions
   async function seatEntry(entry) {
     const tableId = seatTarget[entry.id] || entry.recommended_table?.id || availableTables[0]?.id || "";
     if (!tableId) {
-      alert("No available table to seat this customer.");
+      showToast("No available table to seat this customer.", "error");
       return;
     }
     await actions.seatWaitlist(entry.id, tableId);
@@ -223,6 +223,8 @@ function WaitlistView({ waitlist, bookings, activeSessions, maintenance, actions
       <div className="cf-two-col">
         <Section eyebrow="Queue" title="Walk-ins Waiting">
           <RowList
+            emptyTitle="No guests waiting"
+            emptyDetail="Walk-in customers added from the queue desk will show here."
             rows={waitlist.map((entry) => ({
               id: `wait-${entry.id}`,
               icon: "ti-clock",
@@ -255,6 +257,8 @@ function WaitlistView({ waitlist, bookings, activeSessions, maintenance, actions
         </Section>
         <Section eyebrow="Bookings" title="Upcoming / Missed">
           <RowList
+            emptyTitle="No bookings to review"
+            emptyDetail="Upcoming and missed bookings will appear here."
             rows={[...upcoming, ...missed].slice(0, 10).map((booking) => ({
               id: `booking-${booking.id}`,
               icon: booking.status === "missed" ? "ti-alert-triangle" : "ti-calendar",
@@ -411,6 +415,8 @@ function ReservationsView({ bookings, actions, busy, activeAction }) {
       </div>
       <Section eyebrow="Bookings" title="Reservation Register">
         <RowList
+          emptyTitle="No reservations found"
+          emptyDetail="Create a reservation to start filling the register."
           rows={visibleBookings.slice(0, 14).map((booking) => ({
             id: `booking-row-${booking.id}`,
             icon: booking.status === "missed" ? "ti-alert-triangle" : "ti-calendar-event",
@@ -565,17 +571,25 @@ function BillingView({ history, foodOrders, actions, busy, activeAction }) {
       </div>
       <div className="cf-two-col">
         <Section eyebrow="Tables" title="Recent Table Bills">
-          <RowList rows={recentBills} />
+          <RowList
+            emptyTitle="No table bills yet"
+            emptyDetail="Closed table sessions will appear in this register."
+            rows={recentBills}
+          />
         </Section>
         <Section eyebrow="Cafe" title="Recent Food Bills">
-          <RowList rows={foodRows} />
+          <RowList
+            emptyTitle="No food bills yet"
+            emptyDetail="Food-only orders will appear here after checkout."
+            rows={foodRows}
+          />
         </Section>
       </div>
     </div>
   );
 }
 
-function InventoryView({ menu, maintenance, actions, busy, activeAction }) {
+function InventoryView({ menu, maintenance, actions, busy, activeAction, showToast }) {
   const [showAdd, setShowAdd] = useState(false);
   const [editing, setEditing] = useState(null);
   const [maintenanceForm, setMaintenanceForm] = useState({ table_id: "t1", reason: "Under maintenance" });
@@ -600,7 +614,7 @@ function InventoryView({ menu, maintenance, actions, busy, activeAction }) {
     event.preventDefault();
     const price = Number(menuForm.price);
     if (!menuForm.name.trim() || price < 0) {
-      alert("Enter item name and valid price.");
+      showToast("Enter item name and valid price.", "error");
       return;
     }
     const success = await actions.addMenuItem(menuForm.name, price, menuForm.category);
@@ -614,7 +628,7 @@ function InventoryView({ menu, maintenance, actions, busy, activeAction }) {
     if (!editing) return;
     const price = Number(editing.price);
     if (!editing.newName.trim() || price < 0) {
-      alert("Enter item name and valid price.");
+      showToast("Enter item name and valid price.", "error");
       return;
     }
     const success = await actions.updateMenuItem(editing.oldName, editing.newName, price, editing.category);
@@ -723,6 +737,8 @@ function InventoryView({ menu, maintenance, actions, busy, activeAction }) {
           }
         >
           <RowList
+            emptyTitle="No tables in maintenance"
+            emptyDetail="Tables marked unavailable will show here until cleared."
             rows={maintenance.map((row) => ({
               id: `maint-${row.table_id}`,
               icon: "ti-tool",
@@ -866,7 +882,11 @@ function NotificationsView({ auditLogs, waitlist, bookings, maintenance }) {
         <Stat label="Maintenance" value={maintenance.length} />
       </div>
       <Section eyebrow="Alerts" title="Live Notifications">
-        <RowList rows={notifications} />
+        <RowList
+          emptyTitle="No live notifications"
+          emptyDetail="Waitlist, booking, maintenance and audit alerts will appear here."
+          rows={notifications}
+        />
       </Section>
     </div>
   );
@@ -896,6 +916,8 @@ function MembershipPlansView({ topCustomers }) {
       </div>
       <Section eyebrow="Customers" title="Top Customer Targets">
         <RowList
+          emptyTitle="No customer targets yet"
+          emptyDetail="Repeat customers will appear after more sessions are closed."
           rows={topCustomers.slice(0, 8).map((customer, index) => ({
             id: customer.customer_id || `${customer.name}-${index}`,
             icon: "ti-user-star",
@@ -934,7 +956,11 @@ function StaffView({ auditLogs }) {
         }, 0)} />
       </div>
       <Section eyebrow="Activity" title="Staff Action Summary">
-        <RowList rows={rows} />
+        <RowList
+          emptyTitle="No staff activity yet"
+          emptyDetail="Staff and system actions will appear as the venue is used."
+          rows={rows}
+        />
       </Section>
     </div>
   );
@@ -957,6 +983,7 @@ export default function ClubSuiteTab({ view }) {
   });
   const [busy, setBusy] = useState(false);
   const [activeAction, setActiveAction] = useState("");
+  const [loading, setLoading] = useState(true);
 
   const loadData = useCallback(async (shouldCommit = () => true) => {
     const results = await Promise.allSettled([
@@ -986,6 +1013,7 @@ export default function ClubSuiteTab({ view }) {
       topCustomers: results[9].status === "fulfilled" ? asArray(results[9].value.data) : [],
       utilization: results[10].status === "fulfilled" ? asArray(results[10].value.data) : [],
     });
+    setLoading(false);
   }, []);
 
   useEffect(() => {
@@ -1088,7 +1116,26 @@ export default function ClubSuiteTab({ view }) {
     }),
   }), [runAction]);
 
-  const props = useMemo(() => ({ ...data, actions, busy, activeAction }), [data, actions, busy, activeAction]);
+  const props = useMemo(
+    () => ({ ...data, actions, busy, activeAction, showToast }),
+    [data, actions, busy, activeAction, showToast],
+  );
+
+  if (loading) {
+    return (
+      <div className="cf-page">
+        <div className="page-skeleton compact" aria-label="Loading workspace data">
+          <div className="skeleton-line skeleton-title" />
+          <div className="skeleton-grid">
+            <div className="skeleton-card" />
+            <div className="skeleton-card" />
+            <div className="skeleton-card" />
+          </div>
+          <div className="skeleton-panel" />
+        </div>
+      </div>
+    );
+  }
 
   if (view === "waitlist") return <WaitlistView {...props} />;
   if (view === "reservations") return <ReservationsView {...props} />;

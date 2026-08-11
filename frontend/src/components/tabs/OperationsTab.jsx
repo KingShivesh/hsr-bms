@@ -7,6 +7,7 @@ import {
   saveGST,
   getCurrentRate,
 } from "../../api/index.js";
+import { useToast } from "../toastContext.js";
 
 function TabBtn({ active, onClick, children }) {
   return (
@@ -52,12 +53,14 @@ function Panel({ title, description, children }) {
 
 // ── Peak Hours ──
 function PeakHoursView() {
+  const { showToast } = useToast();
   const [rules, setRules] = useState([]);
   const [currentRate, setCurrentRate] = useState(null);
   const [startHour, setStartHour] = useState(18);
   const [endHour, setEndHour] = useState(22);
   const [multiplier, setMultiplier] = useState(1.5);
   const [label, setLabel] = useState("Evening Peak");
+  const [activeAction, setActiveAction] = useState("");
 
   useEffect(() => {
     fetchAll();
@@ -78,9 +81,10 @@ function PeakHoursView() {
 
   async function handleAdd() {
     if (startHour >= endHour) {
-      alert("Start hour must be before end hour");
+      showToast("Start hour must be before end hour", "error");
       return;
     }
+    setActiveAction("peak-add");
     try {
       await addPeakHour(
         parseInt(startHour),
@@ -88,19 +92,26 @@ function PeakHoursView() {
         parseFloat(multiplier),
         label,
       );
-      fetchAll();
+      await fetchAll();
+      showToast("Peak hour rule added", "success");
     } catch (e) {
-      alert(e.response?.data?.detail || "Failed");
+      showToast(e.response?.data?.detail || "Failed to add peak hour rule", "error");
+    } finally {
+      setActiveAction("");
     }
   }
 
   async function handleDelete(id) {
     if (!confirm("Delete this rule?")) return;
+    setActiveAction(`peak-delete-${id}`);
     try {
       await deletePeakHour(id);
-      fetchAll();
+      await fetchAll();
+      showToast("Peak hour rule deleted", "success");
     } catch {
-      alert("Failed");
+      showToast("Failed to delete peak hour rule", "error");
+    } finally {
+      setActiveAction("");
     }
   }
 
@@ -181,18 +192,19 @@ function PeakHoursView() {
               </div>
               <button
                 onClick={() => handleDelete(r.id)}
+                disabled={!!activeAction}
                 style={{
                   fontSize: "11px",
                   padding: "4px 10px",
                   borderRadius: "4px",
-                  cursor: "pointer",
+                  cursor: activeAction ? "wait" : "pointer",
                   background: "#fff1f2",
                   color: "#e11d48",
                   border: "1px solid #fecdd3",
                   fontWeight: 500,
                 }}
               >
-                Delete
+                {activeAction === `peak-delete-${r.id}` ? "Deleting..." : "Delete"}
               </button>
             </div>
           ))}
@@ -258,8 +270,9 @@ function PeakHoursView() {
           className="btn btn-primary-sm"
           style={{ marginBottom: "1px" }}
           onClick={handleAdd}
+          disabled={!!activeAction}
         >
-          Add Rule
+          {activeAction === "peak-add" ? "Adding..." : "Add Rule"}
         </button>
       </div>
       <div style={{ fontSize: "12px", color: "#bbb", marginTop: "8px" }}>
@@ -272,8 +285,10 @@ function PeakHoursView() {
 
 // ── GST ──
 function GSTView() {
+  const { showToast } = useToast();
   const [gst, setGst] = useState(0);
   const [flash, setFlash] = useState("");
+  const [saving, setSaving] = useState(false);
 
   useEffect(() => {
     getGST()
@@ -282,12 +297,16 @@ function GSTView() {
   }, []);
 
   async function handleSave() {
+    setSaving(true);
     try {
       await saveGST(parseFloat(gst) || 0);
       setFlash("GST setting saved");
+      showToast("GST setting saved", "success");
       setTimeout(() => setFlash(""), 2500);
     } catch {
-      alert("Failed to save GST");
+      showToast("Failed to save GST", "error");
+    } finally {
+      setSaving(false);
     }
   }
 
@@ -334,8 +353,9 @@ function GSTView() {
           className="btn btn-primary-sm"
           style={{ marginBottom: "1px" }}
           onClick={handleSave}
+          disabled={saving}
         >
-          Save
+          {saving ? "Saving..." : "Save"}
         </button>
       </div>
 

@@ -1,9 +1,53 @@
 import { useEffect, useMemo, useState } from "react";
+import {
+  getActive,
+  getAuditLogs,
+  getBookings,
+  getFoodOrders,
+  getWaitlist,
+} from "../api/index.js";
+import { HSR_TABLES, getTableLabel } from "../config/hsrTables.js";
 
 export default function CommandBar({ page, setPage, onNewSession, role = "admin" }) {
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
   const [activeIndex, setActiveIndex] = useState(0);
+  const [searchData, setSearchData] = useState({
+    sessions: [],
+    waitlist: [],
+    bookings: [],
+    foodOrders: [],
+    auditLogs: [],
+  });
+  const [loadingData, setLoadingData] = useState(false);
+
+  useEffect(() => {
+    if (!open) return;
+    let alive = true;
+    async function loadSearchData() {
+      setLoadingData(true);
+      const results = await Promise.allSettled([
+        getActive(),
+        getWaitlist(),
+        getBookings(),
+        getFoodOrders(),
+        role === "admin" ? getAuditLogs(8) : Promise.resolve({ data: [] }),
+      ]);
+      if (!alive) return;
+      setSearchData({
+        sessions: results[0].status === "fulfilled" ? results[0].value.data || [] : [],
+        waitlist: results[1].status === "fulfilled" ? results[1].value.data || [] : [],
+        bookings: results[2].status === "fulfilled" ? results[2].value.data || [] : [],
+        foodOrders: results[3].status === "fulfilled" ? results[3].value.data || [] : [],
+        auditLogs: results[4].status === "fulfilled" ? results[4].value.data || [] : [],
+      });
+      setLoadingData(false);
+    }
+    loadSearchData();
+    return () => {
+      alive = false;
+    };
+  }, [open, role]);
 
   const commands = useMemo(
     () => [
@@ -70,12 +114,53 @@ export default function CommandBar({ page, setPage, onNewSession, role = "admin"
         hint: "Pricing and controls",
         icon: "ti-settings",
         action: () => setPage("settings"),
+        adminOnly: true,
       },
     ],
     [onNewSession, setPage],
   );
 
-  const allowedCommands = commands.filter((cmd) => role === "admin" || !cmd.adminOnly);
+  const dynamicCommands = useMemo(() => {
+    const sessionCommands = searchData.sessions.map((session) => ({
+      id: `session-${session.table_id}`,
+      label: `${String(session.table_id || "").toUpperCase()} running table`,
+      hint: `${session.customer_name || "Player"} · ${getTableLabel(HSR_TABLES.find((table) => table.id === String(session.table_id || "").toLowerCase())) || "Table"} · open controls`,
+      icon: "ti-player-play",
+      action: () => setPage("tables"),
+    }));
+    const waitlistCommands = searchData.waitlist.slice(0, 8).map((entry) => ({
+      id: `wait-${entry.id}`,
+      label: entry.customer_name || "Waiting guest",
+      hint: `Waitlist #${entry.position || "-"} · ${entry.preferred_type || "Any table"}`,
+      icon: "ti-user-clock",
+      action: () => setPage("waitlist"),
+    }));
+    const bookingCommands = searchData.bookings.slice(0, 8).map((booking) => ({
+      id: `booking-${booking.id}`,
+      label: booking.customer_name || "Booking",
+      hint: `${booking.table_id || "ANY"} · ${booking.status || "booked"} reservation`,
+      icon: "ti-calendar-event",
+      action: () => setPage("reservations"),
+    }));
+    const foodCommands = searchData.foodOrders.slice(0, 6).map((order) => ({
+      id: `food-${order.id}`,
+      label: `${order.customer_name || "Counter"} food order`,
+      hint: `₹${Number(order.total || 0).toLocaleString("en-IN")} · ${order.payment_method || "Cash"}`,
+      icon: "ti-tools-kitchen-2",
+      action: () => setPage("food"),
+    }));
+    const auditCommands = searchData.auditLogs.slice(0, 6).map((log) => ({
+      id: `audit-${log.id}`,
+      label: log.action?.replaceAll("_", " ") || "Audit event",
+      hint: `${log.staff || "system"} · ${log.detail || log.date || ""}`,
+      icon: log.severity === "danger" ? "ti-alert-triangle" : "ti-activity",
+      action: () => setPage("reports"),
+      adminOnly: true,
+    }));
+    return [...sessionCommands, ...waitlistCommands, ...bookingCommands, ...foodCommands, ...auditCommands];
+  }, [searchData, setPage]);
+
+  const allowedCommands = [...commands, ...dynamicCommands].filter((cmd) => role === "admin" || !cmd.adminOnly);
   const filtered = allowedCommands.filter((cmd) => {
     const q = query.trim().toLowerCase();
     if (!q) return true;
@@ -96,8 +181,15 @@ export default function CommandBar({ page, setPage, onNewSession, role = "admin"
       }
       if (e.key === "Escape") setOpen(false);
     }
+    function onOpenCommand() {
+      setOpen(true);
+    }
     window.addEventListener("keydown", onKeyDown);
-    return () => window.removeEventListener("keydown", onKeyDown);
+    window.addEventListener("command:open", onOpenCommand);
+    return () => {
+      window.removeEventListener("keydown", onKeyDown);
+      window.removeEventListener("command:open", onOpenCommand);
+    };
   }, []);
 
   useEffect(() => {
@@ -157,7 +249,9 @@ export default function CommandBar({ page, setPage, onNewSession, role = "admin"
           <span>Esc</span>
         </div>
         <div className="command-list">
-          {filtered.length === 0 ? (
+          {loadingData && !query.trim() ? (
+            <div className="command-empty">Loading live results...</div>
+          ) : filtered.length === 0 ? (
             <div className="command-empty">No matching command</div>
           ) : (
             filtered.map((cmd, index) => (

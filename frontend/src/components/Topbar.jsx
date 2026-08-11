@@ -73,6 +73,17 @@ export default function Topbar({
   return (
     <header className="topbar cf-topbar">
       <div className="cf-title-block">
+        <div className="topbar-breadcrumb">
+          <button type="button" onClick={() => onNavigate?.("dashboard")}>
+            Dashboard
+          </button>
+          {title !== "Executive Overview" && (
+            <>
+              <i className="ti ti-chevron-right" aria-hidden="true" />
+              <span>{title}</span>
+            </>
+          )}
+        </div>
         <div className="topbar-title">{title}</div>
         <p>{PAGE_DESCRIPTIONS[title] || "HSR Snooker Cafe management console"}</p>
       </div>
@@ -82,9 +93,13 @@ export default function Topbar({
           <strong>{activeTables}/{totalTables} Tables Active</strong>
           <em>{occupancy}% occupied</em>
         </div>
-        <button type="button" className="cf-command-pill" onClick={() => onNavigate?.("tables")}>
+        <button
+          type="button"
+          className="cf-command-pill"
+          onClick={() => window.dispatchEvent(new Event("command:open"))}
+        >
           <i className="ti ti-command" aria-hidden="true" />
-          <span>Open Floor Control</span>
+          <span>Search Actions</span>
           <kbd>⌘K</kbd>
         </button>
         <button

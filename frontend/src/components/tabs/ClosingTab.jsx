@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { closeDay, getClosingInsights, getClosingReport } from "../../api/index.js";
+import { useToast } from "../toastContext.js";
 
 function money(value) {
   return `₹${Number(value || 0).toLocaleString("en-IN")}`;
@@ -30,6 +31,7 @@ function ChecklistRow({ ok, label, detail }) {
 }
 
 export default function ClosingTab() {
+  const { showToast } = useToast();
   const [data, setData] = useState(null);
   const [insights, setInsights] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -37,6 +39,7 @@ export default function ClosingTab() {
   const [openingFloat, setOpeningFloat] = useState("");
   const [countedCash, setCountedCash] = useState("");
   const [closingNotes, setClosingNotes] = useState("");
+  const [closingBusy, setClosingBusy] = useState(false);
 
   useEffect(() => {
     async function fetchClosing() {
@@ -63,10 +66,11 @@ export default function ClosingTab() {
 
   async function markDayClosed() {
     if (!data?.can_close_day) {
-      alert("Close all running tables before closing the day.");
+      showToast("Close all running tables before closing the day.", "error");
       return;
     }
     if (!confirm("Mark today as closed after verifying Cash, UPI, and Card totals?")) return;
+    setClosingBusy(true);
     try {
       const res = await closeDay(
         parseInt(openingFloat, 10) || 0,
@@ -82,8 +86,11 @@ export default function ClosingTab() {
           notes: closingNotes,
         },
       }));
+      showToast("Day closed", "success");
     } catch (e) {
-      alert(e.response?.data?.detail || "Failed to close day.");
+      showToast(e.response?.data?.detail || "Failed to close day.", "error");
+    } finally {
+      setClosingBusy(false);
     }
   }
 
@@ -135,11 +142,11 @@ export default function ClosingTab() {
           <button
             className={`btn ${closedDay ? "btn-success-sm" : "btn-primary-sm"}`}
             type="button"
-            disabled={closedDay}
+            disabled={closedDay || closingBusy}
             onClick={markDayClosed}
           >
             <i className={`ti ${closedDay ? "ti-circle-check" : "ti-lock-check"}`} aria-hidden="true" />
-            {closedDay ? "Day closed" : "Close day"}
+            {closingBusy ? "Closing..." : closedDay ? "Day closed" : "Close day"}
           </button>
         </div>
       </div>

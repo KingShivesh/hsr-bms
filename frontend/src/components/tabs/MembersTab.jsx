@@ -7,14 +7,17 @@ import {
   getMemberDuplicates,
   mergeMembers,
 } from "../../api/index.js";
+import { useToast } from "../toastContext.js";
 
 function isFullName(name) {
   return name.trim().length > 0;
 }
 
 export default function MembersTab() {
+  const { showToast } = useToast();
   const [members, setMembers] = useState([]);
   const [duplicates, setDuplicates] = useState([]);
+  const [activeAction, setActiveAction] = useState("");
 
   useEffect(() => {
     fetchMembers();
@@ -37,43 +40,59 @@ export default function MembersTab() {
     const name = prompt("Enter member name:");
     if (!name) return;
     if (!isFullName(name)) {
-      alert("Please enter the member name.");
+      showToast("Please enter the member name.", "error");
       return;
     }
+    setActiveAction("member-add");
     try {
       await addMember(name.trim());
-      fetchMembers();
+      await fetchMembers();
+      showToast("Member added", "success");
     } catch (e) {
-      alert(e.response?.data?.detail || "Failed to add member");
+      showToast(e.response?.data?.detail || "Failed to add member", "error");
+    } finally {
+      setActiveAction("");
     }
   }
 
   async function handleUpgrade(customerId) {
+    setActiveAction(`member-upgrade-${customerId}`);
     try {
       await upgradeMember(customerId);
-      fetchMembers();
+      await fetchMembers();
+      showToast("Member status updated", "success");
     } catch {
-      alert("Failed to upgrade member");
+      showToast("Failed to upgrade member", "error");
+    } finally {
+      setActiveAction("");
     }
   }
 
   async function handleDelete(customerId) {
     if (!confirm("Delete this member?")) return;
+    setActiveAction(`member-delete-${customerId}`);
     try {
       await deleteMember(customerId);
-      fetchMembers();
+      await fetchMembers();
+      showToast("Member deleted", "success");
     } catch {
-      alert("Failed to delete member");
+      showToast("Failed to delete member", "error");
+    } finally {
+      setActiveAction("");
     }
   }
 
   async function handleMerge(primaryId, duplicateId, primaryName, duplicateName) {
     if (!confirm(`Merge "${duplicateName}" into "${primaryName}"? This combines visits, spend, and transaction history.`)) return;
+    setActiveAction(`member-merge-${primaryId}-${duplicateId}`);
     try {
       await mergeMembers(primaryId, duplicateId);
-      fetchMembers();
+      await fetchMembers();
+      showToast("Member profiles merged", "success");
     } catch (e) {
-      alert(e.response?.data?.detail || "Failed to merge members");
+      showToast(e.response?.data?.detail || "Failed to merge members", "error");
+    } finally {
+      setActiveAction("");
     }
   }
 
@@ -164,8 +183,9 @@ export default function MembersTab() {
                     onClick={() =>
                       handleMerge(group.primary.id, match.id, group.primary.name, match.name)
                     }
+                    disabled={!!activeAction}
                   >
-                    Merge
+                    {activeAction === `member-merge-${group.primary.id}-${match.id}` ? "Merging..." : "Merge"}
                   </button>
                 </div>
               )),
@@ -188,10 +208,11 @@ export default function MembersTab() {
         <button
           className="member-add-btn"
           onClick={handleAdd}
+          disabled={!!activeAction}
           data-testid="add-member-button"
         >
           <i className="ti ti-user-plus" aria-hidden="true" />
-          <span>Add member</span>
+          <span>{activeAction === "member-add" ? "Adding..." : "Add member"}</span>
         </button>
       </div>
 
@@ -248,19 +269,21 @@ export default function MembersTab() {
                 <button
                   className={`member-action-btn ${m.typ === "Premium" ? "is-downgrade" : "is-upgrade"}`}
                   onClick={() => handleUpgrade(m.id)}
+                  disabled={!!activeAction}
                 >
                   <i
                     className={`ti ${m.typ === "Premium" ? "ti-arrow-down" : "ti-arrow-up"}`}
                     aria-hidden="true"
                   />
-                  {m.typ === "Premium" ? "Downgrade" : "Upgrade"}
+                  {activeAction === `member-upgrade-${m.id}` ? "Saving..." : m.typ === "Premium" ? "Downgrade" : "Upgrade"}
                 </button>
                 <button
                   className="member-action-btn is-delete"
                   onClick={() => handleDelete(m.id)}
+                  disabled={!!activeAction}
                 >
                   <i className="ti ti-trash" aria-hidden="true" />
-                  Delete
+                  {activeAction === `member-delete-${m.id}` ? "Deleting..." : "Delete"}
                 </button>
               </div>
             </div>

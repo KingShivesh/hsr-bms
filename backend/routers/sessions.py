@@ -9,7 +9,6 @@ import models, time, math, json, uuid
 from typing import Optional
 from audit import get_controls, log_action, require_manager_pin
 from pricing import calc_checkout, get_peak_multiplier
-from validators import require_full_name
 from deps import require_admin
 from hsr_config import format_ist_now, get_ist_now, rate_for_table
 
@@ -117,6 +116,11 @@ def normalize_billing_mode(mode: str | None, split: bool) -> str:
     if mode in {"single", "sharing", "lp"}:
         return mode
     return "lp" if split else "single"
+
+def default_players_for_mode(billing_mode: str) -> list[str]:
+    if billing_mode == "single":
+        return ["Walk In Customer"]
+    return ["Player One", "Player Two"]
 
 def clean_players(primary: str, extra_players: list[str] | None, split_name: str = "") -> list[str]:
     raw = [primary]
@@ -365,13 +369,14 @@ def start_session(body: StartSession, db: Session = Depends(get_db)):
     table_id = normalize_table_id(body.table_id)
     if not table_id:
         raise HTTPException(status_code=400, detail="Table is required.")
-    customer_name = require_full_name(body.customer_name, "Customer name")
     billing_mode = normalize_billing_mode(body.billing_mode, body.split)
+    fallback_players = default_players_for_mode(billing_mode)
+    customer_name = normalize_person_name(body.customer_name) or fallback_players[0]
     players = clean_players(customer_name, body.players, body.split_name)
     if billing_mode != "single" and len(players) < 2:
+        players = clean_players(players[0] if players else fallback_players[0], fallback_players[1:], "")
+    if billing_mode != "single" and len(players) < 2:
         raise HTTPException(status_code=400, detail="Enter at least two players for Sharing or LP.")
-    for index, player in enumerate(players):
-        require_full_name(player, f"Player {index + 1} name")
     if billing_mode == "single":
         players = [customer_name]
     split_name = ", ".join(players[1:])

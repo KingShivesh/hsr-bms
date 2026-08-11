@@ -28,7 +28,7 @@ export default function Sidebar({ page, setPage, onLogout, activeTables, role = 
         { id: "waitlist", icon: "ti-clock", label: "Waitlist Queue", tone: "amber" },
         { id: "reservations", icon: "ti-calendar-event", label: "Reservations", tone: "purple" },
         { id: "food", icon: "ti-tools-kitchen-2", label: "Food & Cafe POS", tone: "orange" },
-        { id: "billing", icon: "ti-receipt", label: "Billing & Invoices", tone: "blue" },
+        { id: "billing", icon: "ti-receipt", label: "Billing & Invoices", staffHidden: true, tone: "blue" },
       ],
     },
     {
@@ -36,26 +36,26 @@ export default function Sidebar({ page, setPage, onLogout, activeTables, role = 
       tone: "manage",
       items: [
         { id: "members", icon: "ti-users", label: "Club Members", adminOnly: true, tone: "purple" },
-        { id: "tournaments", icon: "ti-trophy", label: "Tournaments", tone: "amber" },
+        { id: "tournaments", icon: "ti-trophy", label: "Tournaments", staffHidden: true, tone: "amber" },
         { id: "closing", icon: "ti-lock-check", label: "Shift EOD Closing", tone: "red" },
         { id: "memberships", icon: "ti-award", label: "Membership Plans", adminOnly: true, tone: "purple" },
         { id: "reports", icon: "ti-chart-bar", label: "Analytics & Reports", adminOnly: true, tone: "blue" },
         { id: "operations", icon: "ti-adjustments", label: "Operations Control", adminOnly: true, tone: "slate" },
         { id: "staff", icon: "ti-user-check", label: "Staff & Roster", adminOnly: true, tone: "green" },
-        { id: "inventory", icon: "ti-package", label: "Inventory & Stocks", tone: "amber" },
+        { id: "inventory", icon: "ti-package", label: "Inventory & Stocks", staffHidden: true, tone: "amber" },
       ],
     },
     {
       title: "System",
       tone: "system",
       items: [
-        { id: "notifications", icon: "ti-bell", label: "Notifications", tone: "red" },
+        { id: "notifications", icon: "ti-bell", label: "Notifications", staffHidden: true, tone: "red" },
         { id: "settings", icon: "ti-settings", label: "Club Settings", adminOnly: true, tone: "slate" },
       ],
     },
   ].map((group) => ({
     ...group,
-    items: group.items.filter((item) => role === "admin" || !item.adminOnly),
+    items: group.items.filter((item) => role === "admin" || (!item.adminOnly && !item.staffHidden)),
   }));
 
   function navigate(nextPage) {

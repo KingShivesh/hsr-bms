@@ -16,6 +16,7 @@ import {
   saveBookingGrace,
   changeStaffAuth,
 } from "../../api/index.js";
+import { useToast } from "../toastContext.js";
 
 const CATEGORIES = ["Drinks", "Snacks", "Meals", "Cigarettes"];
 
@@ -32,6 +33,7 @@ function SettingsCard({ title, description, children }) {
 }
 
 export default function SettingsTab({ role = "admin", onOpenTables }) {
+  const { showToast } = useToast();
   const [wr, setWr] = useState(320);
   const [pr, setPr] = useState(170);
   const [sr, setSr] = useState(270);
@@ -50,6 +52,10 @@ export default function SettingsTab({ role = "admin", onOpenTables }) {
   const [newStaffPass, setNewStaffPass] = useState("");
   const [flash, setFlash] = useState("");
   const [activeCategory, setActiveCategory] = useState("All");
+  const [dangerOpen, setDangerOpen] = useState(false);
+  const [dangerPin, setDangerPin] = useState("");
+  const [dangerConfirm, setDangerConfirm] = useState("");
+  const [dangerBusy, setDangerBusy] = useState("");
 
   useEffect(() => {
     fetchAll();
@@ -88,6 +94,7 @@ export default function SettingsTab({ role = "admin", onOpenTables }) {
 
   function showFlash(msg) {
     setFlash(msg);
+    showToast(msg, "success");
     setTimeout(() => setFlash(""), 2500);
   }
 
@@ -107,7 +114,7 @@ export default function SettingsTab({ role = "admin", onOpenTables }) {
       );
       showFlash("Rates saved");
     } catch {
-      alert("Failed to save rates");
+      showToast("Failed to save rates", "error");
     }
   }
 
@@ -116,7 +123,7 @@ export default function SettingsTab({ role = "admin", onOpenTables }) {
       await saveMinSession(parseInt(minSession) || 0);
       showFlash("Minimum session time saved");
     } catch {
-      alert("Failed to save");
+      showToast("Failed to save", "error");
     }
   }
 
@@ -126,13 +133,13 @@ export default function SettingsTab({ role = "admin", onOpenTables }) {
       fetchAll();
       showFlash("Booking grace period saved");
     } catch {
-      alert("Failed to save booking grace period");
+      showToast("Failed to save booking grace period", "error");
     }
   }
 
   async function handleAddItem() {
     if (!newItem || !newPrice) {
-      alert("Enter item name and price");
+      showToast("Enter item name and price", "error");
       return;
     }
     try {
@@ -143,7 +150,7 @@ export default function SettingsTab({ role = "admin", onOpenTables }) {
       fetchAll();
       showFlash("Item added");
     } catch (e) {
-      alert(e.response?.data?.detail || "Failed to add item");
+      showToast(e.response?.data?.detail || "Failed to add item", "error");
     }
   }
 
@@ -158,7 +165,7 @@ export default function SettingsTab({ role = "admin", onOpenTables }) {
       fetchAll();
       showFlash("Item updated");
     } catch {
-      alert("Failed to update item");
+      showToast("Failed to update item", "error");
     }
   }
 
@@ -167,8 +174,9 @@ export default function SettingsTab({ role = "admin", onOpenTables }) {
     try {
       await deleteMenuItem(name);
       fetchAll();
+      showFlash("Item deleted");
     } catch {
-      alert("Failed to delete item");
+      showToast("Failed to delete item", "error");
     }
   }
 
@@ -176,37 +184,38 @@ export default function SettingsTab({ role = "admin", onOpenTables }) {
     try {
       await setItemAvailability(name, !current);
       fetchAll();
+      showFlash(current ? "Item marked out of stock" : "Item marked in stock");
     } catch {
-      alert("Failed to update availability");
+      showToast("Failed to update availability", "error");
     }
   }
 
   async function handleChangeAuth() {
     if (!newUser || !newPass) {
-      alert("Enter both username and password");
+      showToast("Enter both username and password", "error");
       return;
     }
     if (newPass.length < 6) {
-      alert("Password must be at least 6 characters");
+      showToast("Password must be at least 6 characters", "error");
       return;
     }
     try {
       await changeAuth(newUser, newPass);
-      alert("Credentials updated. Please login again.");
+      showToast("Credentials updated. Please login again.", "success");
       localStorage.removeItem("token");
-      window.location.reload();
+      setTimeout(() => window.location.reload(), 700);
     } catch {
-      alert("Failed to update credentials");
+      showToast("Failed to update credentials", "error");
     }
   }
 
   async function handleChangeStaffAuth() {
     if (!newStaffUser || !newStaffPass) {
-      alert("Enter both staff username and password");
+      showToast("Enter both staff username and password", "error");
       return;
     }
     if (newStaffPass.length < 6) {
-      alert("Password must be at least 6 characters");
+      showToast("Password must be at least 6 characters", "error");
       return;
     }
     try {
@@ -214,28 +223,41 @@ export default function SettingsTab({ role = "admin", onOpenTables }) {
       setNewStaffPass("");
       showFlash("Staff credentials updated");
     } catch (e) {
-      alert(e.response?.data?.detail || "Failed to update staff credentials");
+      showToast(e.response?.data?.detail || "Failed to update staff credentials", "error");
     }
   }
 
   async function handleResetDaily() {
-    if (!confirm("Reset today's statistics?")) return;
+    if (dangerConfirm.trim().toUpperCase() !== "RESET") {
+      showToast("Type RESET before resetting daily stats", "error");
+      return;
+    }
+    setDangerBusy("reset");
     try {
-      await resetDaily("");
+      await resetDaily(dangerPin);
+      setDangerConfirm("");
       showFlash("Today's stats reset");
     } catch (e) {
-      alert(e.response?.data?.detail || "Failed to reset");
+      showToast(e.response?.data?.detail || "Failed to reset", "error");
+    } finally {
+      setDangerBusy("");
     }
   }
 
   async function handleClearAll() {
-    if (!confirm("Clear ALL data? This cannot be undone!")) return;
+    if (dangerConfirm.trim().toUpperCase() !== "CLEAR") {
+      showToast("Type CLEAR before clearing all data", "error");
+      return;
+    }
+    setDangerBusy("clear");
     try {
-      await clearAll("");
-      alert("All data cleared");
-      window.location.reload();
+      await clearAll(dangerPin);
+      showToast("All data cleared", "success");
+      setTimeout(() => window.location.reload(), 700);
     } catch (e) {
-      alert(e.response?.data?.detail || "Failed to clear data");
+      showToast(e.response?.data?.detail || "Failed to clear data", "error");
+    } finally {
+      setDangerBusy("");
     }
   }
 
@@ -557,28 +579,68 @@ export default function SettingsTab({ role = "admin", onOpenTables }) {
             </button>
           </SettingsCard>
 
-          {/* Data */}
           <SettingsCard
-            title="Data Management"
-            description="Reset or clear stored data — these actions cannot be undone"
+            title="Danger Zone"
+            description="Protected reset tools for setup and emergency recovery only"
           >
-            <div className="settings-data-actions">
-              <button
-                className="btn btn-warning-sm"
-                onClick={handleResetDaily}
-                data-testid="reset-daily-button"
-              >
-                <i className="ti ti-refresh" aria-hidden="true" />
-                Reset daily stats
-              </button>
+            <div className="settings-danger-zone">
               <button
                 className="btn btn-danger-sm"
-                onClick={handleClearAll}
-                data-testid="clear-all-button"
+                type="button"
+                onClick={() => setDangerOpen((open) => !open)}
               >
-                <i className="ti ti-alert-triangle" aria-hidden="true" />
-                Clear all data
+                <i className="ti ti-shield-lock" aria-hidden="true" />
+                {dangerOpen ? "Hide protected actions" : "Show protected actions"}
               </button>
+              {dangerOpen && (
+                <div className="settings-danger-panel">
+                  <div className="settings-inline-note muted">
+                    Use this only before handover or when recovering demo/test data. Type RESET for daily stats or CLEAR for all data.
+                  </div>
+                  <div className="settings-credentials-grid">
+                    <div>
+                      <label className="form-label">Manager PIN</label>
+                      <input
+                        type="password"
+                        className="input-field"
+                        placeholder="Required if manager PIN is enabled"
+                        value={dangerPin}
+                        onChange={(e) => setDangerPin(e.target.value)}
+                      />
+                    </div>
+                    <div>
+                      <label className="form-label">Confirmation word</label>
+                      <input
+                        type="text"
+                        className="input-field"
+                        placeholder="RESET or CLEAR"
+                        value={dangerConfirm}
+                        onChange={(e) => setDangerConfirm(e.target.value)}
+                      />
+                    </div>
+                  </div>
+                  <div className="settings-data-actions">
+                    <button
+                      className="btn btn-warning-sm"
+                      onClick={handleResetDaily}
+                      disabled={dangerBusy === "reset"}
+                      data-testid="reset-daily-button"
+                    >
+                      <i className="ti ti-refresh" aria-hidden="true" />
+                      {dangerBusy === "reset" ? "Resetting..." : "Reset daily stats"}
+                    </button>
+                    <button
+                      className="btn btn-danger-sm"
+                      onClick={handleClearAll}
+                      disabled={dangerBusy === "clear"}
+                      data-testid="clear-all-button"
+                    >
+                      <i className="ti ti-alert-triangle" aria-hidden="true" />
+                      {dangerBusy === "clear" ? "Clearing..." : "Clear all data"}
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
           </SettingsCard>
         </>

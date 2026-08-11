@@ -2,6 +2,7 @@ import { lazy, Suspense, useState, useEffect } from "react";
 import Login from "./components/Login.jsx";
 import Sidebar from "./components/Sidebar.jsx";
 import Topbar from "./components/Topbar.jsx";
+import CommandBar from "./components/CommandBar.jsx";
 import { ToastProvider } from "./components/Toast.jsx";
 import { getBackendHealth, getMe, getSummary } from "./api/index.js";
 
@@ -26,6 +27,20 @@ function BackendStatusBanner({ backendStatus, onRetry }) {
       <button type="button" onClick={onRetry}>
         Retry
       </button>
+    </div>
+  );
+}
+
+function PageSkeleton() {
+  return (
+    <div className="page-skeleton" aria-label="Loading page">
+      <div className="skeleton-line skeleton-title" />
+      <div className="skeleton-grid">
+        <div className="skeleton-card" />
+        <div className="skeleton-card" />
+        <div className="skeleton-card" />
+      </div>
+      <div className="skeleton-panel" />
     </div>
   );
 }
@@ -77,7 +92,18 @@ export default function App() {
   }, [loggedIn]);
 
   useEffect(() => {
-    const adminOnly = new Set(["reports", "settings", "operations", "members", "memberships", "staff"]);
+    const adminOnly = new Set([
+      "reports",
+      "settings",
+      "operations",
+      "members",
+      "memberships",
+      "staff",
+      "billing",
+      "inventory",
+      "notifications",
+      "tournaments",
+    ]);
     if (role === "staff" && adminOnly.has(page)) {
       setPage("tables");
     }
@@ -196,18 +222,13 @@ export default function App() {
           <Suspense
             fallback={
               <div className="page">
-                <div className="loading-state">
-                  <div className="loading-state-icon">
-                    <i className="ti ti-loader-2" aria-hidden="true" />
-                  </div>
-                  <div className="loading-state-title">Loading view...</div>
-                </div>
+                <PageSkeleton />
               </div>
             }
           >
             <div className="page">
               {page === "dashboard" && (
-                <Dashboard metrics={metrics} onNavigate={setPage} />
+                <Dashboard metrics={metrics} onNavigate={setPage} role={role} />
               )}
               {page === "tables" && (
                 <TablesTab
@@ -242,6 +263,12 @@ export default function App() {
             </div>
           </Suspense>
         </div>
+        <CommandBar
+          page={page}
+          setPage={setPage}
+          onNewSession={openNewSession}
+          role={role}
+        />
       </div>
     </ToastProvider>
   );

@@ -55,6 +55,7 @@ export default function FoodTab() {
   const [activeCat, setActiveCat] = useState("All");
   const [placing, setPlacing] = useState(false);
   const [busyAction, setBusyAction] = useState("");
+  const [confirmCancelOrderId, setConfirmCancelOrderId] = useState(null);
   const busyActionRef = useRef("");
   const [lastOrder, setLastOrder] = useState(null);
   const [newItem, setNewItem] = useState({
@@ -288,13 +289,18 @@ export default function FoodTab() {
   }
 
   async function handleCancelFoodOrder(orderId) {
-    if (!confirm("Cancel this food order?")) return;
+    if (confirmCancelOrderId !== orderId) {
+      setConfirmCancelOrderId(orderId);
+      showToast("Tap Confirm cancel to remove this food order", "info");
+      return;
+    }
     if (busyActionRef.current) return;
     busyActionRef.current = `order-cancel-${orderId}`;
     setBusyAction(`order-cancel-${orderId}`);
     try {
       await cancelFoodOrder(orderId);
       await fetchAll();
+      setConfirmCancelOrderId(null);
       showToast("Food order cancelled", "success");
     } catch (e) {
       showToast(e.response?.data?.detail || "Failed to cancel food order", "error");
@@ -845,11 +851,15 @@ export default function FoodTab() {
                       <td>
                         <button
                           type="button"
-	                          className="btn btn-danger-sm food-order-cancel"
+                          className="btn btn-danger-sm food-order-cancel"
 	                          onClick={() => handleCancelFoodOrder(o.id)}
 	                          disabled={!o.id || busyAction === `order-cancel-${o.id}`}
 	                        >
-	                          {busyAction === `order-cancel-${o.id}` ? "Cancelling..." : "Cancel"}
+	                          {busyAction === `order-cancel-${o.id}`
+                              ? "Cancelling..."
+                              : confirmCancelOrderId === o.id
+                                ? "Confirm cancel"
+                                : "Cancel"}
 	                        </button>
                       </td>
                     </tr>

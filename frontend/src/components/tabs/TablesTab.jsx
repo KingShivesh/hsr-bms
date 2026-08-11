@@ -299,6 +299,7 @@ function QueuePanel({
   onCancel,
   activeCount,
   busyActions = {},
+  showToast,
 }) {
   const [customerName, setCustomerName] = useState("");
   const [phone, setPhone] = useState("");
@@ -309,7 +310,7 @@ function QueuePanel({
   async function submit(e) {
     e.preventDefault();
     if (!isFullName(customerName)) {
-      alert("Please enter the customer name.");
+      showToast?.("Please enter the customer name.", "error");
       return;
     }
     const success = await onAdd({
@@ -433,7 +434,7 @@ function QueuePanel({
   );
 }
 
-function BookingPanel({ bookings, onCreate, onCancel, busyActions = {} }) {
+function BookingPanel({ bookings, onCreate, onCancel, busyActions = {}, showToast }) {
   const defaultTime = () => {
     const d = new Date(Date.now() + 60 * 60 * 1000);
     d.setMinutes(0, 0, 0);
@@ -456,7 +457,7 @@ function BookingPanel({ bookings, onCreate, onCancel, busyActions = {} }) {
   async function submit(e) {
     e.preventDefault();
     if (!isFullName(customerName)) {
-      alert("Please enter the customer name.");
+      showToast?.("Please enter the customer name.", "error");
       return;
     }
     const selected = TABLES.find((t) => t.id.toUpperCase() === tableId);
@@ -612,6 +613,7 @@ function QuickSessionModal({
   rates,
   onStart,
   busyActions = {},
+  showToast,
 }) {
   const [tableId, setTableId] = useState("");
   const [player1, setPlayer1] = useState("");
@@ -645,7 +647,7 @@ function QuickSessionModal({
   async function submit(e) {
     e.preventDefault();
     if (!selectedTable) {
-      alert("No available table to start.");
+      showToast?.("No available table to start.", "error");
       return;
     }
     const ok = await onStart({
@@ -2064,7 +2066,7 @@ function TableCard({
               <div className="table-start-fields">
                 <div className="table-field-stack">
                   <span>
-                    {billingMode === "single" ? "Customer name" : "Player 1"}
+                    {billingMode === "single" ? "Customer name optional" : "Player 1 optional"}
                   </span>
                   <CustomerInput
                     value={name}
@@ -2075,7 +2077,7 @@ function TableCard({
                 {billingMode !== "single" && (
                   <div className="table-field-stack">
                     <span>
-                      {billingMode === "lp" ? "Player 2" : "Other players"}
+                      {billingMode === "lp" ? "Player 2 optional" : "Other players optional"}
                     </span>
                     {billingMode === "lp" ? (
                       <CustomerInput
@@ -2105,6 +2107,13 @@ function TableCard({
                 <strong>₹{shareAmount} each</strong>
               )}
               {activeBillingMode === "lp" && <strong>frames decide split</strong>}
+            </div>
+          )}
+
+          {occupied && openFrame && (
+            <div className="table-blocker-banner">
+              <i className="ti ti-alert-triangle" aria-hidden="true" />
+              <span>Frame {openFrame.frame_no} is live. End this frame before closing the table.</span>
             </div>
           )}
 
@@ -2624,6 +2633,8 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
         setSelectedTableId(table.id);
         await fetchQueue();
         await fetchBookings();
+        await fetchActive();
+        onSessionEnd?.();
         showToast(`${entry.customer_name} seated at T${table.num}`, "success");
         return true;
       } catch (e) {
@@ -2681,8 +2692,10 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
         }));
         setNames((prev) => ({ ...prev, [table.id]: primaryName }));
         setSelectedTableId(table.id);
-        fetchQueue();
-        fetchBookings();
+        await fetchQueue();
+        await fetchBookings();
+        await fetchActive();
+        onSessionEnd?.();
         showToast(`Session started on T${table.num}`, "success");
         return true;
       } catch (e) {
@@ -2744,8 +2757,9 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
         }));
         setNames((prev) => ({ ...prev, [table.id]: primaryName }));
         setSelectedTableId(table.id);
-        fetchQueue();
-        fetchBookings();
+        await fetchQueue();
+        await fetchBookings();
+        await fetchActive();
         onSessionEnd?.();
         showToast(`Session started on T${table.num}`, "success");
         return true;
@@ -2775,6 +2789,8 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
             },
           };
         });
+        await fetchActive();
+        onSessionEnd?.();
         showToast(res.data.paused ? "Table paused" : "Table resumed", "success");
         return true;
       } catch {
@@ -2798,6 +2814,8 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
           delete n[id];
           return n;
         });
+        await fetchActive();
+        onSessionEnd?.();
         showToast("Table reset", "success");
         return true;
       } catch (e) {
@@ -2820,6 +2838,7 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
             currentFrame: res.data.frame || null,
           },
         }));
+        await fetchActive();
         showToast(`Frame ${res.data.frame?.frame_no || ""} started`, "success");
         return true;
       } catch (e) {
@@ -2845,6 +2864,7 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
             currentFrame: frames.find((frame) => frame.status === "open") || null,
           },
         }));
+        await fetchActive();
         showToast(`Frame ${res.data.frame?.frame_no || ""} closed`, "success");
         return true;
       } catch (e) {
@@ -3042,7 +3062,9 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
         return n;
       });
       onSessionEnd();
-      fetchQueue();
+      await fetchQueue();
+      await fetchBookings();
+      await fetchActive();
       setCheckoutQuote(null);
       showToast(`Table closed (${rec.payment_method || paymentMethod})`, "success");
 
@@ -3199,6 +3221,7 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
         rates={rates}
         onStart={handleQuickStart}
         busyActions={busyActions}
+        showToast={showToast}
       />
 
       <div className="tables-view-toolbar">
@@ -3318,6 +3341,7 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
           onSeat={handleSeatQueue}
           onCancel={handleCancelQueue}
           busyActions={busyActions}
+          showToast={showToast}
         />
 
         <BookingPanel
@@ -3325,6 +3349,7 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
           onCreate={handleCreateBooking}
           onCancel={handleCancelBooking}
           busyActions={busyActions}
+          showToast={showToast}
         />
       </div>
     </>

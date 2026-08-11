@@ -9,6 +9,7 @@ import {
   recordTournamentWinner,
 } from "../../api/index.js";
 import { HSR_TABLES, getTableLabel, getTableRate } from "../../config/hsrTables.js";
+import { useToast } from "../toastContext.js";
 
 const GAME_TYPES = ["8 Ball", "9 Ball", "10 Ball", "Snooker", "Straight Pool"];
 
@@ -108,6 +109,7 @@ function TournamentTableFloor({ gameType, rates, sessionsByTable }) {
 }
 
 export default function TournamentTab() {
+  const { showToast } = useToast();
   const [tournaments, setTournaments] = useState([]);
   const [selected, setSelected] = useState(null);
   const [name, setName] = useState("Friday Knockout");
@@ -118,6 +120,7 @@ export default function TournamentTab() {
   const [flash, setFlash] = useState("");
   const [rates, setRates] = useState({ wr: 320, pr: 170, sr: 270 });
   const [activeSessions, setActiveSessions] = useState([]);
+  const [activeAction, setActiveAction] = useState("");
 
   useEffect(() => {
     fetchAll();
@@ -165,9 +168,10 @@ export default function TournamentTab() {
       .map((p) => p.trim())
       .filter(Boolean);
     if (players.length < 2) {
-      alert("Add at least 2 players, one per line");
+      showToast("Add at least 2 players, one per line", "error");
       return;
     }
+    setActiveAction("tournament-create");
     try {
       const res = await createTournament(
         name,
@@ -177,39 +181,53 @@ export default function TournamentTab() {
       );
       setPlayersText("");
       showFlash("Tournament created");
-      fetchAll(res.data.id);
+      showToast("Tournament created", "success");
+      await fetchAll(res.data.id);
     } catch (e) {
-      alert(e.response?.data?.detail || "Failed to create tournament");
+      showToast(e.response?.data?.detail || "Failed to create tournament", "error");
+    } finally {
+      setActiveAction("");
     }
   }
 
   async function handleSelect(id) {
+    setActiveAction(`tournament-select-${id}`);
     try {
       const res = await getTournament(id);
       setSelected(res.data);
     } catch (e) {
-      alert(e.response?.data?.detail || "Failed to load tournament");
+      showToast(e.response?.data?.detail || "Failed to load tournament", "error");
+    } finally {
+      setActiveAction("");
     }
   }
 
   async function handleWinner(match, winner) {
+    setActiveAction(`winner-${match.id}-${winner}`);
     try {
       const res = await recordTournamentWinner(selected.id, match.id, winner);
       setSelected(res.data);
-      fetchAll(res.data.id);
+      await fetchAll(res.data.id);
+      showToast(`${winner} marked winner`, "success");
     } catch (e) {
-      alert(e.response?.data?.detail || "Failed to record winner");
+      showToast(e.response?.data?.detail || "Failed to record winner", "error");
+    } finally {
+      setActiveAction("");
     }
   }
 
   async function handleClose() {
     if (!selected || !confirm("Close this tournament?")) return;
+    setActiveAction("tournament-close");
     try {
       const res = await closeTournament(selected.id);
       setSelected(res.data);
-      fetchAll(res.data.id);
+      await fetchAll(res.data.id);
+      showToast("Tournament closed", "success");
     } catch {
-      alert("Failed to close tournament");
+      showToast("Failed to close tournament", "error");
+    } finally {
+      setActiveAction("");
     }
   }
 
@@ -290,8 +308,8 @@ export default function TournamentTab() {
             onChange={(e) => setPlayersText(e.target.value)}
             style={{ resize: "vertical" }}
           />
-          <button className="btn btn-primary-sm" onClick={handleCreate}>
-            Create Bracket
+          <button className="btn btn-primary-sm" onClick={handleCreate} disabled={!!activeAction}>
+            {activeAction === "tournament-create" ? "Creating..." : "Create Bracket"}
           </button>
         </Panel>
 
@@ -305,6 +323,7 @@ export default function TournamentTab() {
               <button
                 key={t.id}
                 onClick={() => handleSelect(t.id)}
+                disabled={!!activeAction}
                 style={{
                   width: "100%",
                   textAlign: "left",
@@ -318,7 +337,9 @@ export default function TournamentTab() {
                 }}
               >
                 <div style={{ display: "flex", justifyContent: "space-between" }}>
-                  <span style={{ fontWeight: 700, fontSize: "13px" }}>{t.name}</span>
+                  <span style={{ fontWeight: 700, fontSize: "13px" }}>
+                    {activeAction === `tournament-select-${t.id}` ? "Loading..." : t.name}
+                  </span>
                   <StatusPill status={t.status} />
                 </div>
                 <div style={{ color: selected?.id === t.id ? "#bbb" : "#999", fontSize: "11px", marginTop: "4px" }}>
@@ -355,8 +376,8 @@ export default function TournamentTab() {
               <div style={{ display: "flex", gap: "8px", alignItems: "center" }}>
                 <StatusPill status={selected.status} />
                 {selected.status !== "completed" && (
-                  <button className="btn btn-warning-sm" onClick={handleClose}>
-                    Close
+                  <button className="btn btn-warning-sm" onClick={handleClose} disabled={!!activeAction}>
+                    {activeAction === "tournament-close" ? "Closing..." : "Close"}
                   </button>
                 )}
               </div>
@@ -426,7 +447,7 @@ export default function TournamentTab() {
                         return (
                           <button
                             key={p}
-                            disabled={m.status === "completed" || selected.status === "completed"}
+                            disabled={!!activeAction || m.status === "completed" || selected.status === "completed"}
                             onClick={() => handleWinner(m, p)}
                             style={{
                               width: "100%",
@@ -439,13 +460,13 @@ export default function TournamentTab() {
                               borderRadius: "6px",
                               padding: "8px 10px",
                               marginBottom: "6px",
-                              cursor: m.status === "completed" ? "default" : "pointer",
+                              cursor: activeAction ? "wait" : m.status === "completed" ? "default" : "pointer",
                               fontWeight: won ? 700 : 500,
                             }}
                           >
                             <span>{p}</span>
                             <span style={{ fontSize: "11px", color: won ? "#16a34a" : "#bbb" }}>
-                              {won ? "Winner" : m.status === "completed" ? "" : "Pick"}
+                              {activeAction === `winner-${m.id}-${p}` ? "Saving..." : won ? "Winner" : m.status === "completed" ? "" : "Pick"}
                             </span>
                           </button>
                         );
