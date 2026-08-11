@@ -25,6 +25,7 @@ import {
   updateMenuItem,
 } from "../../api/index.js";
 import { HSR_TABLES } from "../../config/hsrTables.js";
+import { useToast } from "../toastContext.js";
 
 function money(value = 0) {
   return `₹${Number(value || 0).toLocaleString("en-IN")}`;
@@ -191,7 +192,7 @@ function RowList({ rows }) {
   );
 }
 
-function WaitlistView({ waitlist, bookings, activeSessions, maintenance, actions, busy }) {
+function WaitlistView({ waitlist, bookings, activeSessions, maintenance, actions, busy, activeAction }) {
   const [showAdd, setShowAdd] = useState(false);
   const [seatTarget, setSeatTarget] = useState({});
   const [form, setForm] = useState({
@@ -211,7 +212,8 @@ function WaitlistView({ waitlist, bookings, activeSessions, maintenance, actions
 
   async function submitWaitlist(event) {
     event.preventDefault();
-    await actions.addWaitlist(form);
+    const success = await actions.addWaitlist(form);
+    if (!success) return;
     setForm({ customer_name: "", phone: "", party_size: 2, preferred_type: "ANY", notes: "" });
     setShowAdd(false);
   }
@@ -275,10 +277,10 @@ function WaitlistView({ waitlist, bookings, activeSessions, maintenance, actions
                     ))}
                   </select>
                   <ActionButton tone="success" icon="ti-armchair" onClick={() => seatEntry(entry)} disabled={busy}>
-                    Seat
+                    {activeAction === `wait-seat-${entry.id}` ? "Seating..." : "Seat"}
                   </ActionButton>
                   <ActionButton tone="danger" icon="ti-x" onClick={() => actions.cancelWaitlist(entry.id)} disabled={busy}>
-                    Cancel
+                    {activeAction === `wait-cancel-${entry.id}` ? "Cancelling..." : "Cancel"}
                   </ActionButton>
                 </div>
               ),
@@ -345,7 +347,7 @@ function WaitlistView({ waitlist, bookings, activeSessions, maintenance, actions
               <ActionButton onClick={() => setShowAdd(false)}>Cancel</ActionButton>
               <button className="cf-action-btn primary" type="submit" disabled={busy}>
                 <i className="ti ti-user-plus" aria-hidden="true" />
-                <span>Add to Queue</span>
+                <span>{activeAction === "wait-add" ? "Adding..." : "Add to Queue"}</span>
               </button>
             </div>
           </form>
@@ -355,7 +357,7 @@ function WaitlistView({ waitlist, bookings, activeSessions, maintenance, actions
   );
 }
 
-function ReservationsView({ bookings, actions, busy }) {
+function ReservationsView({ bookings, actions, busy, activeAction }) {
   const [showAdd, setShowAdd] = useState(false);
   const [filter, setFilter] = useState("all");
   const [form, setForm] = useState({
@@ -376,7 +378,8 @@ function ReservationsView({ bookings, actions, busy }) {
 
   async function submitBooking(event) {
     event.preventDefault();
-    await actions.createBooking(form);
+    const success = await actions.createBooking(form);
+    if (!success) return;
     setForm({
       customer_name: "",
       phone: "",
@@ -457,7 +460,7 @@ function ReservationsView({ bookings, actions, busy }) {
                   onClick={() => actions.cancelBooking(booking.id)}
                   disabled={busy || booking.status !== "booked"}
                 >
-                  Cancel
+                  {activeAction === `booking-cancel-${booking.id}` ? "Cancelling..." : "Cancel"}
                 </ActionButton>
               </div>
             ),
@@ -544,7 +547,7 @@ function ReservationsView({ bookings, actions, busy }) {
               <ActionButton onClick={() => setShowAdd(false)}>Cancel</ActionButton>
               <button className="cf-action-btn primary" type="submit" disabled={busy}>
                 <i className="ti ti-calendar-plus" aria-hidden="true" />
-                <span>Create Booking</span>
+                <span>{activeAction === "booking-create" ? "Creating..." : "Create Booking"}</span>
               </button>
             </div>
           </form>
@@ -554,7 +557,7 @@ function ReservationsView({ bookings, actions, busy }) {
   );
 }
 
-function BillingView({ history, foodOrders, actions, busy }) {
+function BillingView({ history, foodOrders, actions, busy, activeAction }) {
   const tableTotal = history.reduce((sum, bill) => sum + Number(bill.total || bill.amount || 0), 0);
   const foodTotal = foodOrders.reduce((sum, order) => sum + Number(order.total || 0), 0);
   const recentBills = history.slice(0, 12).map((bill) => ({
@@ -578,7 +581,7 @@ function BillingView({ history, foodOrders, actions, busy }) {
           onClick={() => actions.cancelFoodOrder(order.id)}
           disabled={busy}
         >
-          Cancel
+          {activeAction === `food-cancel-${order.id}` ? "Cancelling..." : "Cancel"}
         </ActionButton>
       </div>
     ),
@@ -613,7 +616,7 @@ function BillingView({ history, foodOrders, actions, busy }) {
   );
 }
 
-function InventoryView({ menu, maintenance, actions, busy }) {
+function InventoryView({ menu, maintenance, actions, busy, activeAction }) {
   const [showAdd, setShowAdd] = useState(false);
   const [editing, setEditing] = useState(null);
   const [maintenanceForm, setMaintenanceForm] = useState({ table_id: "t1", reason: "Under maintenance" });
@@ -641,7 +644,8 @@ function InventoryView({ menu, maintenance, actions, busy }) {
       alert("Enter item name and valid price.");
       return;
     }
-    await actions.addMenuItem(menuForm.name, price, menuForm.category);
+    const success = await actions.addMenuItem(menuForm.name, price, menuForm.category);
+    if (!success) return;
     setMenuForm({ name: "", price: "", category: menuForm.category });
     setShowAdd(false);
   }
@@ -654,13 +658,15 @@ function InventoryView({ menu, maintenance, actions, busy }) {
       alert("Enter item name and valid price.");
       return;
     }
-    await actions.updateMenuItem(editing.oldName, editing.newName, price, editing.category);
+    const success = await actions.updateMenuItem(editing.oldName, editing.newName, price, editing.category);
+    if (!success) return;
     setEditing(null);
   }
 
   async function submitMaintenance(event) {
     event.preventDefault();
-    await actions.setMaintenance(maintenanceForm.table_id, maintenanceForm.reason);
+    const success = await actions.setMaintenance(maintenanceForm.table_id, maintenanceForm.reason);
+    if (!success) return;
     setMaintenanceForm({ table_id: maintenanceForm.table_id, reason: "Under maintenance" });
   }
 
@@ -718,7 +724,7 @@ function InventoryView({ menu, maintenance, actions, busy }) {
                     onClick={() => actions.setItemAvailability(item.name, item.available === false)}
                     disabled={busy}
                   >
-                    {item.available === false ? "In stock" : "Out"}
+                    {activeAction === `stock-${item.name}` ? "Saving..." : item.available === false ? "In stock" : "Out"}
                   </ActionButton>
                   <ActionButton
                     tone="danger"
@@ -726,7 +732,7 @@ function InventoryView({ menu, maintenance, actions, busy }) {
                     onClick={() => actions.deleteMenuItem(item.name)}
                     disabled={busy}
                   >
-                    Delete
+                    {activeAction === `menu-delete-${item.name}` ? "Deleting..." : "Delete"}
                   </ActionButton>
                 </div>
               </div>
@@ -763,7 +769,7 @@ function InventoryView({ menu, maintenance, actions, busy }) {
               />
               <button className="cf-action-btn warning" type="submit" disabled={busy}>
                 <i className="ti ti-tool" aria-hidden="true" />
-                <span>Mark</span>
+                <span>{activeAction === "maintenance-set" ? "Saving..." : "Mark"}</span>
               </button>
             </form>
           }
@@ -782,7 +788,7 @@ function InventoryView({ menu, maintenance, actions, busy }) {
                     onClick={() => actions.clearMaintenance(row.table_id)}
                     disabled={busy}
                   >
-                    Clear
+                    {activeAction === `maintenance-clear-${row.table_id}` ? "Clearing..." : "Clear"}
                   </ActionButton>
                 </div>
               ),
@@ -826,7 +832,7 @@ function InventoryView({ menu, maintenance, actions, busy }) {
               <ActionButton onClick={() => setShowAdd(false)}>Cancel</ActionButton>
               <button className="cf-action-btn primary" type="submit" disabled={busy}>
                 <i className="ti ti-package-plus" aria-hidden="true" />
-                <span>Add Item</span>
+                <span>{activeAction === "menu-add" ? "Adding..." : "Add Item"}</span>
               </button>
             </div>
           </form>
@@ -867,7 +873,7 @@ function InventoryView({ menu, maintenance, actions, busy }) {
               <ActionButton onClick={() => setEditing(null)}>Cancel</ActionButton>
               <button className="cf-action-btn primary" type="submit" disabled={busy}>
                 <i className="ti ti-device-floppy" aria-hidden="true" />
-                <span>Save Changes</span>
+                <span>{activeAction === `menu-edit-${editing.oldName}` ? "Saving..." : "Save Changes"}</span>
               </button>
             </div>
           </form>
@@ -999,6 +1005,7 @@ function StaffView({ auditLogs }) {
 }
 
 export default function ClubSuiteTab({ view }) {
+  const { showToast } = useToast();
   const [data, setData] = useState({
     waitlist: [],
     bookings: [],
@@ -1013,6 +1020,7 @@ export default function ClubSuiteTab({ view }) {
     utilization: [],
   });
   const [busy, setBusy] = useState(false);
+  const [activeAction, setActiveAction] = useState("");
 
   const loadData = useCallback(async (shouldCommit = () => true) => {
     const results = await Promise.allSettled([
@@ -1052,49 +1060,99 @@ export default function ClubSuiteTab({ view }) {
     };
   }, [view, loadData]);
 
-  const runAction = useCallback(async (action, confirmText = "") => {
-    if (confirmText && !confirm(confirmText)) return;
+  const runAction = useCallback(async (action, {
+    confirmText = "",
+    actionKey = "action",
+    successMessage = "",
+  } = {}) => {
+    if (confirmText && !confirm(confirmText)) return false;
     setBusy(true);
+    setActiveAction(actionKey);
     try {
       await action();
       await loadData();
+      if (successMessage) showToast(successMessage, "success");
+      return true;
     } catch (error) {
-      alert(error.response?.data?.detail || "Action failed");
+      showToast(error.response?.data?.detail || "Action failed", "error");
+      return false;
     } finally {
       setBusy(false);
+      setActiveAction("");
     }
-  }, [loadData]);
+  }, [loadData, showToast]);
 
   const actions = useMemo(() => ({
-    addWaitlist: (body) => runAction(() => addWaitlistEntry(body)),
-    seatWaitlist: (entryId, tableId) => runAction(() => seatWaitlistEntry(entryId, tableId)),
+    addWaitlist: (body) => runAction(() => addWaitlistEntry(body), {
+      actionKey: "wait-add",
+      successMessage: "Guest added to queue",
+    }),
+    seatWaitlist: (entryId, tableId) => runAction(() => seatWaitlistEntry(entryId, tableId), {
+      actionKey: `wait-seat-${entryId}`,
+      successMessage: "Guest seated",
+    }),
     cancelWaitlist: (entryId) => runAction(
       () => cancelWaitlistEntry(entryId),
-      "Cancel this waitlist entry?",
+      {
+        confirmText: "Cancel this waitlist entry?",
+        actionKey: `wait-cancel-${entryId}`,
+        successMessage: "Waitlist entry cancelled",
+      },
     ),
-    createBooking: (body) => runAction(() => createBooking(body)),
+    createBooking: (body) => runAction(() => createBooking(body), {
+      actionKey: "booking-create",
+      successMessage: "Booking created",
+    }),
     cancelBooking: (bookingId) => runAction(
       () => cancelBooking(bookingId),
-      "Cancel this reservation?",
+      {
+        confirmText: "Cancel this reservation?",
+        actionKey: `booking-cancel-${bookingId}`,
+        successMessage: "Reservation cancelled",
+      },
     ),
     cancelFoodOrder: (orderId) => runAction(
       () => cancelFoodOrder(orderId),
-      "Cancel this food order?",
+      {
+        confirmText: "Cancel this food order?",
+        actionKey: `food-cancel-${orderId}`,
+        successMessage: "Food order cancelled",
+      },
     ),
-    addMenuItem: (name, price, category) => runAction(() => addMenuItem(name, price, category)),
+    addMenuItem: (name, price, category) => runAction(() => addMenuItem(name, price, category), {
+      actionKey: "menu-add",
+      successMessage: "Menu item added",
+    }),
     updateMenuItem: (oldName, newName, price, category) => runAction(
       () => updateMenuItem(oldName, newName, price, category),
+      {
+        actionKey: `menu-edit-${oldName}`,
+        successMessage: "Menu item saved",
+      },
     ),
     deleteMenuItem: (name) => runAction(
       () => deleteMenuItem(name),
-      `Delete ${name}?`,
+      {
+        confirmText: `Delete ${name}?`,
+        actionKey: `menu-delete-${name}`,
+        successMessage: "Menu item deleted",
+      },
     ),
-    setItemAvailability: (name, available) => runAction(() => setItemAvailability(name, available)),
-    setMaintenance: (tableId, reason) => runAction(() => setMaintenance(tableId, reason)),
-    clearMaintenance: (tableId) => runAction(() => clearMaintenance(tableId)),
+    setItemAvailability: (name, available) => runAction(() => setItemAvailability(name, available), {
+      actionKey: `stock-${name}`,
+      successMessage: available ? "Item marked in stock" : "Item marked out of stock",
+    }),
+    setMaintenance: (tableId, reason) => runAction(() => setMaintenance(tableId, reason), {
+      actionKey: "maintenance-set",
+      successMessage: "Maintenance saved",
+    }),
+    clearMaintenance: (tableId) => runAction(() => clearMaintenance(tableId), {
+      actionKey: `maintenance-clear-${tableId}`,
+      successMessage: "Maintenance cleared",
+    }),
   }), [runAction]);
 
-  const props = useMemo(() => ({ ...data, actions, busy }), [data, actions, busy]);
+  const props = useMemo(() => ({ ...data, actions, busy, activeAction }), [data, actions, busy, activeAction]);
 
   if (view === "waitlist") return <WaitlistView {...props} />;
   if (view === "reservations") return <ReservationsView {...props} />;

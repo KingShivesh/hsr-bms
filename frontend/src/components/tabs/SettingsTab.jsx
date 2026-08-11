@@ -22,19 +22,9 @@ const CATEGORIES = ["Drinks", "Snacks", "Meals", "Cigarettes"];
 function SettingsCard({ title, description, children }) {
   return (
     <div className="settings-panel">
-      <div
-        style={{
-          marginBottom: "16px",
-          paddingBottom: "12px",
-          borderBottom: "1px solid #f0f0f0",
-        }}
-      >
+      <div className="settings-card-heading">
         <div className="settings-panel-title">{title}</div>
-        {description && (
-          <div style={{ fontSize: "12px", color: "#bbb", marginTop: "3px" }}>
-            {description}
-          </div>
-        )}
+        {description && <div className="settings-card-description">{description}</div>}
       </div>
       {children}
     </div>
@@ -256,23 +246,8 @@ export default function SettingsTab({ role = "admin", onOpenTables }) {
       : menuEntries.filter(([, v]) => getItemCat(v) === activeCategory);
 
   return (
-    <div style={{ maxWidth: "780px" }}>
-      {flash && (
-        <div
-          style={{
-            background: "#f0fdf4",
-            border: "1px solid #bbf7d0",
-            borderRadius: "8px",
-            padding: "10px 16px",
-            marginBottom: "16px",
-            fontSize: "13px",
-            color: "#16a34a",
-            fontWeight: 500,
-          }}
-        >
-          {flash}
-        </div>
-      )}
+    <div className="settings-page-shell">
+      {flash && <div className="settings-flash">{flash}</div>}
 
       <SettingsCard
         title="Table Operations"
@@ -299,14 +274,7 @@ export default function SettingsTab({ role = "admin", onOpenTables }) {
         title="HSR Table Rates"
         description="Set the hourly billing rate for each HSR table group."
       >
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))",
-            gap: "16px",
-            marginBottom: "16px",
-          }}
-        >
+        <div className="settings-form-grid">
           <div>
             <label className="form-label">Wiraka Rate T1/T2 (₹/hour)</label>
             <input
@@ -346,21 +314,19 @@ export default function SettingsTab({ role = "admin", onOpenTables }) {
         title="Minimum Session Time"
         description="Bill at least this many minutes on checkout (0 = disabled)"
       >
-        <div style={{ display: "flex", gap: "12px", alignItems: "flex-end" }}>
-          <div style={{ flex: 1 }}>
+        <div className="settings-inline-row">
+          <div className="settings-inline-field">
             <label className="form-label">Minimum minutes</label>
             <input
               type="number"
               min="0"
               className="input-field"
-              style={{ marginBottom: 0 }}
               value={minSession}
               onChange={(e) => setMinSession(e.target.value)}
             />
           </div>
           <button
             className="btn btn-primary-sm"
-            style={{ marginBottom: "1px" }}
             onClick={handleSaveMinSession}
           >
             <i className="ti ti-device-floppy" aria-hidden="true" />
@@ -368,7 +334,7 @@ export default function SettingsTab({ role = "admin", onOpenTables }) {
           </button>
         </div>
         {minSession > 0 && (
-          <div style={{ fontSize: "12px", color: "#2563eb", marginTop: "8px" }}>
+          <div className="settings-inline-note info">
             Short sessions will close normally and bill as {minSession} minutes
           </div>
         )}
@@ -378,29 +344,27 @@ export default function SettingsTab({ role = "admin", onOpenTables }) {
         title="Booking Grace Period"
         description="Auto-release no-show bookings after the grace period"
       >
-        <div style={{ display: "flex", gap: "12px", alignItems: "flex-end" }}>
-          <div style={{ flex: 1 }}>
+        <div className="settings-inline-row">
+          <div className="settings-inline-field">
             <label className="form-label">Grace minutes after booking time</label>
             <input
               type="number"
               min="1"
               max="120"
               className="input-field"
-              style={{ marginBottom: 0 }}
               value={bookingGraceMinutes}
               onChange={(e) => setBookingGraceMinutes(e.target.value)}
             />
           </div>
           <button
             className="btn btn-primary-sm"
-            style={{ marginBottom: "1px" }}
             onClick={handleSaveBookingGrace}
           >
             <i className="ti ti-device-floppy" aria-hidden="true" />
             Save
           </button>
         </div>
-        <div style={{ fontSize: "12px", color: "#64748b", marginTop: "8px" }}>
+        <div className="settings-inline-note muted">
           Bookings become missed after {bookingGraceMinutes || 10} minutes if no matching table session has started.
         </div>
       </SettingsCard>
@@ -411,31 +375,12 @@ export default function SettingsTab({ role = "admin", onOpenTables }) {
         description="Manage items, categories and availability"
       >
         {/* Category filter */}
-        <div
-          style={{
-            display: "flex",
-            gap: "6px",
-            marginBottom: "14px",
-            flexWrap: "wrap",
-          }}
-        >
+        <div className="settings-chip-row">
           {["All", ...CATEGORIES].map((cat) => (
             <button
               key={cat}
               onClick={() => setActiveCategory(cat)}
-              style={{
-                fontSize: "12px",
-                padding: "4px 14px",
-                borderRadius: "6px",
-                cursor: "pointer",
-                fontWeight: activeCategory === cat ? 600 : 400,
-                background: activeCategory === cat ? "#111" : "#fff",
-                color: activeCategory === cat ? "#fff" : "#888",
-                border:
-                  activeCategory === cat
-                    ? "1px solid #111"
-                    : "1px solid #e5e5e5",
-              }}
+              className={`settings-chip ${activeCategory === cat ? "active" : ""}`}
             >
               {cat}
             </button>
@@ -445,19 +390,10 @@ export default function SettingsTab({ role = "admin", onOpenTables }) {
         {filteredMenu.map(([k, v]) => {
           const avail = getItemAvail(v);
           return (
-            <div
-              key={k}
-              style={{
-                display: "flex",
-                gap: "8px",
-                marginBottom: "8px",
-                alignItems: "center",
-                opacity: avail ? 1 : 0.5,
-              }}
-            >
+            <div key={k} className={`settings-menu-row ${avail ? "" : "is-disabled"}`}>
               <input
                 className="input-field"
-                style={{ flex: 2, margin: 0 }}
+                data-size="name"
                 value={editName[k] || ""}
                 onChange={(e) =>
                   setEditName((p) => ({ ...p, [k]: e.target.value }))
@@ -466,7 +402,7 @@ export default function SettingsTab({ role = "admin", onOpenTables }) {
               <input
                 type="number"
                 className="input-field"
-                style={{ flex: 1, margin: 0 }}
+                data-size="price"
                 value={editPrice[k] || ""}
                 onChange={(e) =>
                   setEditPrice((p) => ({ ...p, [k]: e.target.value }))
@@ -474,7 +410,7 @@ export default function SettingsTab({ role = "admin", onOpenTables }) {
               />
               <select
                 className="input-field"
-                style={{ flex: 1, margin: 0 }}
+                data-size="category"
                 value={editCat[k] || "Snacks"}
                 onChange={(e) =>
                   setEditCat((p) => ({ ...p, [k]: e.target.value }))
@@ -486,7 +422,6 @@ export default function SettingsTab({ role = "admin", onOpenTables }) {
               </select>
               <button
                 className="btn btn-primary-sm"
-                style={{ whiteSpace: "nowrap" }}
                 onClick={() => handleUpdateItem(k)}
               >
                 <i className="ti ti-device-floppy" aria-hidden="true" />
@@ -495,7 +430,6 @@ export default function SettingsTab({ role = "admin", onOpenTables }) {
               <button
                 onClick={() => handleToggleAvail(k, avail)}
                 className={`btn ${avail ? "btn-success-sm" : "btn-danger-sm"}`}
-                style={{ whiteSpace: "nowrap" }}
               >
                 <i className={avail ? "ti ti-check" : "ti ti-x"} aria-hidden="true" />
                 {avail ? "In stock" : "Out"}
@@ -512,19 +446,10 @@ export default function SettingsTab({ role = "admin", onOpenTables }) {
         })}
 
         {/* Add new item */}
-        <div
-          style={{
-            display: "flex",
-            gap: "8px",
-            paddingTop: "12px",
-            borderTop: "1px solid #f5f5f5",
-            alignItems: "center",
-            flexWrap: "wrap",
-          }}
-        >
+        <div className="settings-add-menu-row">
           <input
             className="input-field"
-            style={{ flex: 2, margin: 0, minWidth: "100px" }}
+            data-size="name"
             placeholder="Item name"
             value={newItem}
             onChange={(e) => setNewItem(e.target.value)}
@@ -532,14 +457,14 @@ export default function SettingsTab({ role = "admin", onOpenTables }) {
           <input
             type="number"
             className="input-field"
-            style={{ flex: 1, margin: 0, minWidth: "70px" }}
+            data-size="price"
             placeholder="₹ Price"
             value={newPrice}
             onChange={(e) => setNewPrice(e.target.value)}
           />
           <select
             className="input-field"
-            style={{ flex: 1, margin: 0, minWidth: "90px" }}
+            data-size="category"
             value={newCat}
             onChange={(e) => setNewCat(e.target.value)}
           >
@@ -565,14 +490,7 @@ export default function SettingsTab({ role = "admin", onOpenTables }) {
             title="Admin Credentials"
             description="Update the admin login username and password"
           >
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "1fr 1fr",
-                gap: "16px",
-                marginBottom: "16px",
-              }}
-            >
+            <div className="settings-credentials-grid">
               <div>
                 <label className="form-label">New Admin Username</label>
                 <input
@@ -608,14 +526,7 @@ export default function SettingsTab({ role = "admin", onOpenTables }) {
             title="Staff Credentials"
             description="Staff can run daily operations but cannot see Reports or sensitive settings actions"
           >
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "1fr 1fr",
-                gap: "16px",
-                marginBottom: "16px",
-              }}
-            >
+            <div className="settings-credentials-grid">
               <div>
                 <label className="form-label">Staff Username</label>
                 <input
@@ -651,7 +562,7 @@ export default function SettingsTab({ role = "admin", onOpenTables }) {
             title="Data Management"
             description="Reset or clear stored data — these actions cannot be undone"
           >
-            <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
+            <div className="settings-data-actions">
               <button
                 className="btn btn-warning-sm"
                 onClick={handleResetDaily}

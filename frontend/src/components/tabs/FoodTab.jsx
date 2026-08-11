@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import {
   getMenu,
   addMenuItem,
@@ -12,6 +12,7 @@ import {
   cancelFoodOrder,
   getFoodStats,
 } from "../../api/index.js";
+import { useToast } from "../toastContext.js";
 
 const CATEGORIES = [
   "All",
@@ -39,6 +40,7 @@ function EmptyState({ icon = "ti-info-circle", title, detail }) {
 }
 
 export default function FoodTab() {
+  const { showToast } = useToast();
   const [menu, setMenu] = useState({});
   const [stats, setStats] = useState([]);
   const [orders, setOrders] = useState([]);
@@ -52,6 +54,8 @@ export default function FoodTab() {
   const [activeTab, setActiveTab] = useState("order");
   const [activeCat, setActiveCat] = useState("All");
   const [placing, setPlacing] = useState(false);
+  const [busyAction, setBusyAction] = useState("");
+  const busyActionRef = useRef("");
   const [lastOrder, setLastOrder] = useState(null);
   const [newItem, setNewItem] = useState({
     name: "",
@@ -108,15 +112,22 @@ export default function FoodTab() {
     const name = newItem.name.trim();
     const price = parseInt(newItem.price, 10);
     if (!name || !price || price <= 0) {
-      alert("Enter item name and valid price");
+      showToast("Enter item name and valid price", "error");
       return;
     }
+    if (busyActionRef.current) return;
+    busyActionRef.current = "menu-add";
+    setBusyAction("menu-add");
     try {
       await addMenuItem(name, price, newItem.category);
       setNewItem({ name: "", price: "", category: newItem.category });
       await fetchAll();
+      showToast("Menu item added", "success");
     } catch (e) {
-      alert(e.response?.data?.detail || "Failed to add item");
+      showToast(e.response?.data?.detail || "Failed to add item", "error");
+    } finally {
+      busyActionRef.current = "";
+      setBusyAction("");
     }
   }
 
@@ -125,9 +136,12 @@ export default function FoodTab() {
     const name = editingItem.newName.trim();
     const price = parseInt(editingItem.price, 10);
     if (!name || !price || price <= 0) {
-      alert("Enter item name and valid price");
+      showToast("Enter item name and valid price", "error");
       return;
     }
+    if (busyActionRef.current) return;
+    busyActionRef.current = `menu-edit-${editingItem.oldName}`;
+    setBusyAction(`menu-edit-${editingItem.oldName}`);
     try {
       await updateMenuItem(
         editingItem.oldName,
@@ -137,18 +151,45 @@ export default function FoodTab() {
       );
       setEditingItem(null);
       await fetchAll();
+      showToast("Menu item saved", "success");
     } catch (e) {
-      alert(e.response?.data?.detail || "Failed to update item");
+      showToast(e.response?.data?.detail || "Failed to update item", "error");
+    } finally {
+      busyActionRef.current = "";
+      setBusyAction("");
     }
   }
 
   async function handleDeleteMenuItem(name) {
     if (!confirm(`Delete ${name}?`)) return;
+    if (busyActionRef.current) return;
+    busyActionRef.current = `menu-delete-${name}`;
+    setBusyAction(`menu-delete-${name}`);
     try {
       await deleteMenuItem(name);
       await fetchAll();
+      showToast("Menu item deleted", "success");
     } catch (e) {
-      alert(e.response?.data?.detail || "Failed to delete item");
+      showToast(e.response?.data?.detail || "Failed to delete item", "error");
+    } finally {
+      busyActionRef.current = "";
+      setBusyAction("");
+    }
+  }
+
+  async function handleToggleAvailability(name, value) {
+    if (busyActionRef.current) return;
+    busyActionRef.current = `stock-${name}`;
+    setBusyAction(`stock-${name}`);
+    try {
+      await setItemAvailability(name, value);
+      await fetchAll();
+      showToast(value ? "Item shown in stock" : "Item hidden from menu", "success");
+    } catch (e) {
+      showToast(e.response?.data?.detail || "Failed to update stock", "error");
+    } finally {
+      busyActionRef.current = "";
+      setBusyAction("");
     }
   }
 
@@ -190,15 +231,15 @@ export default function FoodTab() {
 
   async function placeOrder() {
     if (orderTarget === "standalone" && !customerName.trim()) {
-      alert("Enter customer name");
+      showToast("Enter customer name", "error");
       return;
     }
     if (orderTarget === "table" && (!selectedTable || !selectedPlayer)) {
-      alert("Select table and player");
+      showToast("Select table and player", "error");
       return;
     }
     if (cart.length === 0) {
-      alert("Add items to cart");
+      showToast("Add items to cart", "error");
       return;
     }
     setPlacing(true);
@@ -238,8 +279,9 @@ export default function FoodTab() {
       setCart([]);
       setCustomerName("");
       fetchAll();
+      showToast("Food order placed", "success");
     } catch (e) {
-      alert(e.response?.data?.detail || "Failed to place order");
+      showToast(e.response?.data?.detail || "Failed to place order", "error");
     } finally {
       setPlacing(false);
     }
@@ -247,11 +289,18 @@ export default function FoodTab() {
 
   async function handleCancelFoodOrder(orderId) {
     if (!confirm("Cancel this food order?")) return;
+    if (busyActionRef.current) return;
+    busyActionRef.current = `order-cancel-${orderId}`;
+    setBusyAction(`order-cancel-${orderId}`);
     try {
       await cancelFoodOrder(orderId);
       await fetchAll();
+      showToast("Food order cancelled", "success");
     } catch (e) {
-      alert(e.response?.data?.detail || "Failed to cancel food order");
+      showToast(e.response?.data?.detail || "Failed to cancel food order", "error");
+    } finally {
+      busyActionRef.current = "";
+      setBusyAction("");
     }
   }
 
@@ -561,8 +610,8 @@ export default function FoodTab() {
                 <option key={cat}>{cat}</option>
               ))}
             </select>
-            <button className="primary-action-btn" type="submit">
-              Add item
+            <button className="primary-action-btn" type="submit" disabled={busyAction === "menu-add"}>
+              {busyAction === "menu-add" ? "Adding..." : "Add item"}
             </button>
           </form>
 
@@ -600,8 +649,13 @@ export default function FoodTab() {
                           <option key={cat}>{cat}</option>
                         ))}
                       </select>
-                      <button className="btn btn-success-sm food-action-save" type="button" onClick={handleUpdateMenuItem}>
-                        Save
+                      <button
+                        className="btn btn-success-sm food-action-save"
+                        type="button"
+                        onClick={handleUpdateMenuItem}
+                        disabled={busyAction === `menu-edit-${name}`}
+                      >
+                        {busyAction === `menu-edit-${name}` ? "Saving..." : "Save"}
                       </button>
                       <button className="btn food-action-neutral" type="button" onClick={() => setEditingItem(null)}>
                         Cancel
@@ -616,13 +670,11 @@ export default function FoodTab() {
                       <button
                         className={`btn food-action-stock ${getItemAvail(value) ? "is-visible" : "is-hidden"}`}
                         type="button"
-                        onClick={async () => {
-                          await setItemAvailability(name, !getItemAvail(value));
-                          await fetchAll();
-                        }}
-                      >
-                        {getItemAvail(value) ? "Hide" : "Show"}
-                      </button>
+	                        onClick={() => handleToggleAvailability(name, !getItemAvail(value))}
+	                        disabled={busyAction === `stock-${name}`}
+	                      >
+	                        {busyAction === `stock-${name}` ? "Saving..." : getItemAvail(value) ? "Hide" : "Show"}
+	                      </button>
                       <button
                         className="btn food-action-neutral"
                         type="button"
@@ -638,12 +690,13 @@ export default function FoodTab() {
                         Edit
                       </button>
                       <button
-                        className="btn btn-danger-sm food-action-delete"
-                        type="button"
-                        onClick={() => handleDeleteMenuItem(name)}
-                      >
-                        Delete
-                      </button>
+	                        className="btn btn-danger-sm food-action-delete"
+	                        type="button"
+	                        onClick={() => handleDeleteMenuItem(name)}
+	                        disabled={busyAction === `menu-delete-${name}`}
+	                      >
+	                        {busyAction === `menu-delete-${name}` ? "Deleting..." : "Delete"}
+	                      </button>
                     </>
                   )}
                 </div>
@@ -792,12 +845,12 @@ export default function FoodTab() {
                       <td>
                         <button
                           type="button"
-                          className="btn btn-danger-sm food-order-cancel"
-                          onClick={() => handleCancelFoodOrder(o.id)}
-                          disabled={!o.id}
-                        >
-                          Cancel
-                        </button>
+	                          className="btn btn-danger-sm food-order-cancel"
+	                          onClick={() => handleCancelFoodOrder(o.id)}
+	                          disabled={!o.id || busyAction === `order-cancel-${o.id}`}
+	                        >
+	                          {busyAction === `order-cancel-${o.id}` ? "Cancelling..." : "Cancel"}
+	                        </button>
                       </td>
                     </tr>
                   ))}

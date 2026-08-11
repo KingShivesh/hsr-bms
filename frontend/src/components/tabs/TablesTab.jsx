@@ -298,6 +298,7 @@ function QueuePanel({
   onSeat,
   onCancel,
   activeCount,
+  busyActions = {},
 }) {
   const [customerName, setCustomerName] = useState("");
   const [phone, setPhone] = useState("");
@@ -311,13 +312,14 @@ function QueuePanel({
       alert("Please enter the customer name.");
       return;
     }
-    await onAdd({
+    const success = await onAdd({
       customer_name: customerName,
       phone,
       party_size: Number(partySize) || 1,
       preferred_type: preferredType,
       notes,
     });
+    if (!success) return;
     setCustomerName("");
     setPhone("");
     setPartySize(1);
@@ -374,8 +376,8 @@ function QueuePanel({
           value={notes}
           onChange={(e) => setNotes(e.target.value)}
         />
-        <button className="primary-action-btn" type="submit">
-          Add to queue
+        <button className="primary-action-btn" type="submit" disabled={!!busyActions["queue-add"]}>
+          {busyActions["queue-add"] ? "Adding..." : "Add to queue"}
         </button>
       </form>
 
@@ -407,18 +409,19 @@ function QueuePanel({
                   <button
                     type="button"
                     className="queue-seat-btn"
-                    disabled={!table}
+                    disabled={!table || !!busyActions[`seat-queue:${entry.id}`]}
                     onClick={() => table && onSeat(entry, table.id)}
                   >
-                    {table ? `Seat T${table.num}` : "Waiting"}
+                    {busyActions[`seat-queue:${entry.id}`] ? "Seating..." : table ? `Seat T${table.num}` : "Waiting"}
                   </button>
                   <button
                     type="button"
                     className="icon-danger-btn"
                     onClick={() => onCancel(entry.id)}
+                    disabled={!!busyActions[`cancel-queue:${entry.id}`]}
                     aria-label={`Remove ${entry.customer_name} from queue`}
                   >
-                    ×
+                    {busyActions[`cancel-queue:${entry.id}`] ? "..." : "×"}
                   </button>
                 </div>
               </div>
@@ -430,7 +433,7 @@ function QueuePanel({
   );
 }
 
-function BookingPanel({ bookings, onCreate, onCancel }) {
+function BookingPanel({ bookings, onCreate, onCancel, busyActions = {} }) {
   const defaultTime = () => {
     const d = new Date(Date.now() + 60 * 60 * 1000);
     d.setMinutes(0, 0, 0);
@@ -457,7 +460,7 @@ function BookingPanel({ bookings, onCreate, onCancel }) {
       return;
     }
     const selected = TABLES.find((t) => t.id.toUpperCase() === tableId);
-    await onCreate({
+    const success = await onCreate({
       customer_name: customerName,
       phone,
       table_id: tableId,
@@ -466,6 +469,7 @@ function BookingPanel({ bookings, onCreate, onCancel }) {
       duration_mins: Number(durationMins) || 60,
       notes,
     });
+    if (!success) return;
     setCustomerName("");
     setPhone("");
     setTableId("ANY");
@@ -539,8 +543,8 @@ function BookingPanel({ bookings, onCreate, onCancel }) {
           value={notes}
           onChange={(e) => setNotes(e.target.value)}
         />
-        <button className="primary-action-btn" type="submit">
-          Book table
+        <button className="primary-action-btn" type="submit" disabled={!!busyActions["booking-create"]}>
+          {busyActions["booking-create"] ? "Booking..." : "Book table"}
         </button>
       </form>
       <div className="booking-list">
@@ -584,9 +588,10 @@ function BookingPanel({ bookings, onCreate, onCancel }) {
                     className="icon-danger-btn"
                     type="button"
                     onClick={() => onCancel(booking.id)}
+                    disabled={!!busyActions[`cancel-booking:${booking.id}`]}
                     aria-label="Cancel booking"
                   >
-                    ×
+                    {busyActions[`cancel-booking:${booking.id}`] ? "..." : "×"}
                   </button>
                 </div>
               </div>
@@ -606,6 +611,7 @@ function QuickSessionModal({
   maintenance,
   rates,
   onStart,
+  busyActions = {},
 }) {
   const [tableId, setTableId] = useState("");
   const [player1, setPlayer1] = useState("");
@@ -618,6 +624,7 @@ function QuickSessionModal({
   const selectedTable =
     tables.find((table) => table.id === tableId) || availableTables[0] || null;
   const selectedRate = getTableRate(selectedTable, rates);
+  const startBusy = selectedTable ? !!busyActions[`start:${selectedTable.id}`] : false;
 
   useEffect(() => {
     if (!open) {
@@ -768,9 +775,9 @@ function QuickSessionModal({
           <button
             type="submit"
             className="primary-action-btn"
-            disabled={!selectedTable}
+            disabled={!selectedTable || startBusy}
           >
-            Start session
+            {startBusy ? "Starting..." : "Start session"}
           </button>
         </div>
       </form>
@@ -868,13 +875,13 @@ function HistoryModal({ tableId, tableNum, onClose }) {
   );
 }
 
-function FrameLoserModal({ frameNo, onChoose, onClose }) {
+function FrameLoserModal({ frameNo, loading = false, onChoose, onClose }) {
   const [customerName, setCustomerName] = useState("");
 
   function handleSubmit(event) {
     event.preventDefault();
     const cleanName = customerName.trim();
-    if (!cleanName) return;
+    if (!cleanName || loading) return;
     onChoose(cleanName);
   }
 
@@ -894,6 +901,7 @@ function FrameLoserModal({ frameNo, onChoose, onClose }) {
             className="quick-session-close"
             onClick={onClose}
             aria-label="Close loser prompt"
+            disabled={loading}
           >
             <i className="ti ti-x" aria-hidden="true" />
           </button>
@@ -912,9 +920,64 @@ function FrameLoserModal({ frameNo, onChoose, onClose }) {
           <button
             type="submit"
             className="frame-loser-submit"
-            disabled={!customerName.trim()}
+            disabled={!customerName.trim() || loading}
           >
-            Close frame
+            {loading ? "Closing..." : "Close frame"}
+          </button>
+        </div>
+      </form>
+    </div>
+  );
+}
+
+function ResetConfirmModal({ tableId, loading, onClose, onConfirm }) {
+  const [pin, setPin] = useState("");
+
+  return (
+    <div className="frame-loser-backdrop" role="dialog" aria-modal="true">
+      <form
+        className="frame-loser-modal"
+        onSubmit={async (event) => {
+          event.preventDefault();
+          const success = await onConfirm(pin.trim());
+          if (success) onClose();
+        }}
+      >
+        <div className="frame-loser-head">
+          <div>
+            <div className="quick-session-eyebrow">Reset table</div>
+            <div className="frame-loser-title">{tableId.toUpperCase()}</div>
+            <p className="frame-loser-copy">
+              This clears the running session without creating a bill.
+            </p>
+          </div>
+          <button
+            type="button"
+            className="quick-session-close"
+            onClick={onClose}
+            aria-label="Close reset confirmation"
+            disabled={loading}
+          >
+            <i className="ti ti-x" aria-hidden="true" />
+          </button>
+        </div>
+        <div className="frame-loser-form">
+          <label className="form-label" htmlFor={`reset-pin-${tableId}`}>
+            Manager PIN, if required
+          </label>
+          <input
+            id={`reset-pin-${tableId}`}
+            className="frame-loser-input"
+            value={pin}
+            onChange={(event) => setPin(event.target.value)}
+            autoFocus
+          />
+          <button
+            type="submit"
+            className="frame-loser-submit"
+            disabled={loading}
+          >
+            {loading ? "Resetting..." : "Reset table"}
           </button>
         </div>
       </form>
@@ -1175,9 +1238,9 @@ function CheckoutQuoteScreen({
             type="button"
             className="checkout-bill-close"
             onClick={onFinalize}
-            disabled={quote.loading}
+            disabled={quote.loading || quote.finalizing}
           >
-            Close table · ₹{total}
+            {quote.finalizing ? "Closing..." : `Close table · ₹${total}`}
           </button>
         </div>
       </div>
@@ -1421,10 +1484,13 @@ function TableCard({
   maintenance,
   onMaintenance,
   onClearMaintenance,
+  onSaveNotes,
   onStartFrame,
   onCloseFrame,
   peakRate,
   gstPercent,
+  showToast,
+  busyActions = {},
   compact = false,
 }) {
   const [billingMode, setBillingMode] = useState(() => defaultBillingModeForTable(table));
@@ -1436,10 +1502,12 @@ function TableCard({
   const [transferTarget, setTransferTarget] = useState("");
   const [showHistory, setShowHistory] = useState(false);
   const [maintOpen, setMaintOpen] = useState(false);
+  const [resetOpen, setResetOpen] = useState(false);
   const [resvName, setResvName] = useState("");
   const [resvTime, setResvTime] = useState("");
   const [notes, setNotes] = useState("");
   const [maintReason, setMaintReason] = useState("Under maintenance");
+  const clearMaintenanceBusy = !!busyActions[`clear-maintenance:${table.id}`];
 
   useEffect(() => {
     if (session?.notes !== undefined) setNotes(session.notes || "");
@@ -1492,6 +1560,17 @@ function TableCard({
   const scorePlayers = Array.from(new Set([...displayPlayers, ...Object.keys(frameLossCounts)]));
   const shareCount = activeBillingMode === "sharing" ? Math.max(1, activePlayers.length) : 1;
   const shareAmount = shareCount > 1 ? Math.ceil(total / shareCount) : total;
+  const startBusy = !!busyActions[`start:${table.id}`];
+  const quoteBusy = !!busyActions[`quote:${table.id}`];
+  const pauseBusy = !!busyActions[`pause:${table.id}`];
+  const resetBusy = !!busyActions[`reset:${table.id}`];
+  const maintenanceBusy = !!busyActions[`maintenance:${table.id}`];
+  const notesBusy = !!busyActions[`notes:${table.id}`];
+  const startFrameBusy = !!busyActions[`start-frame:${table.id}`];
+  const closeFrameBusy = !!busyActions[`close-frame:${table.id}`];
+  const transferBusy = !!busyActions[`transfer:${table.id}`];
+  const reserveBusy = !!busyActions[`reserve:${table.id}`];
+  const cancelReserveBusy = !!busyActions[`cancel-reserve:${table.id}`];
 
   useEffect(() => {
     if (!session || !openFrame || paused) setFrameLoserOpen(false);
@@ -1550,6 +1629,7 @@ function TableCard({
           </div>
           <button
             onClick={() => onClearMaintenance(table.id)}
+            disabled={clearMaintenanceBusy}
             style={{
               background: "#16a34a",
               color: "#fff",
@@ -1558,10 +1638,10 @@ function TableCard({
               padding: "8px 16px",
               fontSize: "12px",
               fontWeight: 600,
-              cursor: "pointer",
+              cursor: clearMaintenanceBusy ? "wait" : "pointer",
             }}
           >
-            Mark Available
+            {clearMaintenanceBusy ? "Saving..." : "Mark Available"}
           </button>
         </div>
       </div>
@@ -1581,11 +1661,21 @@ function TableCard({
       {frameLoserOpen && openFrame && (
         <FrameLoserModal
           frameNo={openFrame.frame_no}
+          loading={closeFrameBusy}
           onClose={() => setFrameLoserOpen(false)}
-          onChoose={(player) => {
-            setFrameLoserOpen(false);
-            onCloseFrame(table.id, player);
+          onChoose={async (player) => {
+            const success = await onCloseFrame(table.id, player);
+            if (success) setFrameLoserOpen(false);
           }}
+        />
+      )}
+
+      {resetOpen && (
+        <ResetConfirmModal
+          tableId={table.id}
+          loading={resetBusy}
+          onClose={() => setResetOpen(false)}
+          onConfirm={(pin) => onReset(table.id, pin)}
         />
       )}
 
@@ -1845,11 +1935,12 @@ function TableCard({
               <button
                 onClick={() => {
                   if (openFrame) {
-                    alert("Close the running frame before closing the table.");
+                    showToast?.("Close the running frame before closing the table.", "error");
                     return;
                   }
                   onStop(table.id);
                 }}
+                disabled={quoteBusy}
                 style={{
                   position: "absolute",
                   bottom: "8px",
@@ -1862,18 +1953,19 @@ function TableCard({
                   padding: "6px 28px",
                   fontSize: "12px",
                   fontWeight: 700,
-                  cursor: "pointer",
+                  cursor: quoteBusy ? "wait" : "pointer",
                   letterSpacing: "0",
                   boxShadow: "0 2px 8px rgba(0,0,0,0.4)",
                   zIndex: 3,
                 }}
               >
                 <i className="ti ti-receipt-refund" aria-hidden="true" />
-                <span>CLOSE TABLE</span>
+                <span>{quoteBusy ? "LOADING..." : "CLOSE TABLE"}</span>
               </button>
             ) : (
               <button
                 onClick={() => onStart(table, billingMode, otherPlayers)}
+                disabled={startBusy}
                 style={{
                   position: "absolute",
                   bottom: "8px",
@@ -1886,14 +1978,14 @@ function TableCard({
                   padding: "6px 28px",
                   fontSize: "12px",
                   fontWeight: 700,
-                  cursor: "pointer",
+                  cursor: startBusy ? "wait" : "pointer",
                   letterSpacing: "0",
                   boxShadow: "0 2px 8px rgba(0,0,0,0.4)",
                   zIndex: 3,
                 }}
               >
                 <i className="ti ti-player-play" aria-hidden="true" />
-                <span>START</span>
+                <span>{startBusy ? "STARTING..." : "START"}</span>
               </button>
             )}
           </div>
@@ -1938,19 +2030,18 @@ function TableCard({
               />
               <button
                 onClick={async () => {
-                  try {
-                    await onMaintenance(table.id, maintReason);
-                    setMaintOpen(false);
-                  } catch {
-                    alert("Failed");
-                  }
-                }}
-                className="table-mini-primary maintenance"
-              >
-                Set maintenance
-              </button>
-            </div>
-          )}
+                    const success = await onMaintenance(table.id, maintReason);
+                    if (success) {
+                      setMaintOpen(false);
+                    }
+                  }}
+                  className="table-mini-primary maintenance"
+                  disabled={maintenanceBusy}
+                >
+                  {maintenanceBusy ? "Saving..." : "Set maintenance"}
+                </button>
+              </div>
+            )}
 
           {!occupied && (
             <div className="table-start-panel">
@@ -2035,9 +2126,10 @@ function TableCard({
                   className="table-frame-end"
                   data-testid={`end-frame-${table.id}`}
                   onClick={() => setFrameLoserOpen(true)}
+                  disabled={closeFrameBusy}
                 >
                   <i className="ti ti-flag-check" aria-hidden="true" />
-                  End frame
+                  {closeFrameBusy ? "Closing..." : "End frame"}
                 </button>
               </>
             ) : (
@@ -2046,9 +2138,10 @@ function TableCard({
                   className="table-frame-start"
                   data-testid={`start-frame-${table.id}`}
                   onClick={() => onStartFrame(table.id)}
+                  disabled={startFrameBusy}
                 >
                   <i className="ti ti-player-play" aria-hidden="true" />
-                  Start frame {nextFrameNo}
+                  {startFrameBusy ? "Starting..." : `Start frame ${nextFrameNo}`}
                 </button>
               )}
               {recentFrames.length > 0 && (
@@ -2089,17 +2182,19 @@ function TableCard({
                 onClick={() => onPause(table.id)}
                 data-testid={`pause-${table.id}`}
                 className={`table-control-btn ${paused ? "resume" : "pause"}`}
+                disabled={pauseBusy}
               >
                 <i className={`ti ${paused ? "ti-player-play" : "ti-player-pause"}`} aria-hidden="true" />
-                <span>{paused ? "Resume" : "Pause"}</span>
+                <span>{pauseBusy ? "Saving..." : paused ? "Resume" : "Pause"}</span>
               </button>
               <button
-                onClick={() => onReset(table.id)}
+                onClick={() => setResetOpen(true)}
                 data-testid={`reset-${table.id}`}
                 className="table-control-btn reset"
+                disabled={resetBusy}
               >
                 <i className="ti ti-refresh" aria-hidden="true" />
-                <span>Reset</span>
+                <span>{resetBusy ? "Resetting..." : "Reset"}</span>
               </button>
             </div>
           )}
@@ -2133,14 +2228,16 @@ function TableCard({
                   <button
                     type="button"
                     className="table-mini-primary reserve"
-                    disabled={!transferTarget}
+                    disabled={!transferTarget || transferBusy}
                     onClick={async () => {
-                      await onTransfer(table.id, transferTarget);
-                      setTransferTarget("");
-                      setTransferOpen(false);
+                      const success = await onTransfer(table.id, transferTarget);
+                      if (success) {
+                        setTransferTarget("");
+                        setTransferOpen(false);
+                      }
                     }}
                   >
-                    Transfer
+                    {transferBusy ? "Moving..." : "Transfer"}
                   </button>
                 </div>
               )}
@@ -2163,16 +2260,15 @@ function TableCard({
                   />
                   <button
                     onClick={async () => {
-                      try {
-                        await updateNotes(table.id, notes);
+                      const success = await onSaveNotes(table.id, notes);
+                      if (success) {
                         setNotesOpen(false);
-                      } catch {
-                        alert("Failed");
                       }
                     }}
                     className="table-notes-save"
+                    disabled={notesBusy}
                   >
-                    Save
+                    {notesBusy ? "Saving..." : "Save"}
                   </button>
                 </div>
               )}
@@ -2211,15 +2307,18 @@ function TableCard({
                     />
                   </label>
                   <button
-                    onClick={() => {
-                      onReserve(table.id, resvName, resvTime);
-                      setResvName("");
-                      setResvTime("");
-                      setReserveOpen(false);
+                    onClick={async () => {
+                      const success = await onReserve(table.id, resvName, resvTime);
+                      if (success) {
+                        setResvName("");
+                        setResvTime("");
+                        setReserveOpen(false);
+                      }
                     }}
                     className="table-mini-primary reserve"
+                    disabled={reserveBusy}
                   >
-                    Confirm Reservation
+                    {reserveBusy ? "Reserving..." : "Confirm Reservation"}
                   </button>
                 </div>
               )}
@@ -2240,8 +2339,9 @@ function TableCard({
               <button
                 onClick={() => onCancelReserve(table.id)}
                 className="table-reservation-cancel"
+                disabled={cancelReserveBusy}
               >
-                Cancel
+                {cancelReserveBusy ? "Cancelling..." : "Cancel"}
               </button>
             </div>
           )}
@@ -2272,8 +2372,28 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
   const [checkoutQuote, setCheckoutQuote] = useState(null);
   const [checkoutBill, setCheckoutBill] = useState(null);
   const [selectedTableId, setSelectedTableId] = useState(TABLES[0]?.id || "t1");
+  const [busyActions, setBusyActions] = useState({});
+  const busyActionsRef = useRef({});
   const detailPanelRef = useRef(null);
   const checkoutQuoteSeqRef = useRef(0);
+
+  async function runBusyAction(key, action) {
+    if (busyActionsRef.current[key]) return false;
+    busyActionsRef.current = { ...busyActionsRef.current, [key]: true };
+    setBusyActions((prev) => ({ ...prev, [key]: true }));
+    try {
+      return await action();
+    } finally {
+      const nextRef = { ...busyActionsRef.current };
+      delete nextRef[key];
+      busyActionsRef.current = nextRef;
+      setBusyActions((prev) => {
+        const next = { ...prev };
+        delete next[key];
+        return next;
+      });
+    }
+  }
 
   const nextBookingByTable = useMemo(() => {
     const recentWindow = Date.now() - 2 * 60 * 60 * 1000;
@@ -2413,80 +2533,102 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
   }
 
   async function handleCreateBooking(booking) {
-    try {
-      await createBooking(booking);
-      await fetchBookings();
-      showToast(`${booking.customer_name} booked`, "success");
-    } catch (e) {
-      showToast(e.response?.data?.detail || "Failed to create booking", "error");
-    }
+    return runBusyAction("booking-create", async () => {
+      try {
+        await createBooking(booking);
+        await fetchBookings();
+        showToast(`${booking.customer_name} booked`, "success");
+        return true;
+      } catch (e) {
+        showToast(e.response?.data?.detail || "Failed to create booking", "error");
+        return false;
+      }
+    });
   }
 
   async function handleCancelBooking(bookingId) {
-    try {
-      await cancelBooking(bookingId);
-      await fetchBookings();
-    } catch {
-      showToast("Failed to cancel booking", "error");
-    }
+    return runBusyAction(`cancel-booking:${bookingId}`, async () => {
+      try {
+        await cancelBooking(bookingId);
+        await fetchBookings();
+        showToast("Booking cancelled", "success");
+        return true;
+      } catch {
+        showToast("Failed to cancel booking", "error");
+        return false;
+      }
+    });
   }
 
   async function handleAddToQueue(entry) {
-    try {
-      await addWaitlistEntry(entry);
-      await fetchQueue();
-      showToast(`${entry.customer_name} added to queue`, "success");
-    } catch (e) {
-      showToast(e.response?.data?.detail || "Failed to add to queue", "error");
-    }
+    return runBusyAction("queue-add", async () => {
+      try {
+        await addWaitlistEntry(entry);
+        await fetchQueue();
+        showToast(`${entry.customer_name} added to queue`, "success");
+        return true;
+      } catch (e) {
+        showToast(e.response?.data?.detail || "Failed to add to queue", "error");
+        return false;
+      }
+    });
   }
 
   async function handleCancelQueue(entryId) {
-    try {
-      await cancelWaitlistEntry(entryId);
-      await fetchQueue();
-    } catch {
-      showToast("Failed to remove queue entry", "error");
-    }
+    return runBusyAction(`cancel-queue:${entryId}`, async () => {
+      try {
+        await cancelWaitlistEntry(entryId);
+        await fetchQueue();
+        showToast("Queue entry removed", "success");
+        return true;
+      } catch {
+        showToast("Failed to remove queue entry", "error");
+        return false;
+      }
+    });
   }
 
   async function handleSeatQueue(entry, tableId) {
     const table = TABLES.find((t) => t.id === tableId);
-    if (!table) return;
+    if (!table) return false;
     const rate = getTableRate(table, rates);
     const players = [entry.customer_name];
-    try {
-      const res = await startSession(table.id, entry.customer_name, rate, false, "", "single", players);
-      const frames = res.data.frames || [];
-      await seatWaitlistEntry(entry.id, table.id);
-      setSessions((prev) => ({
-        ...prev,
-        [table.id]: {
-          startTime: Date.now(),
-          elapsed: 0,
-          rate,
-          paused: false,
-          foodTotal: 0,
-          foodItems: [],
-          reservation: null,
-          notes: entry.notes || "",
-          billingMode: "single",
-          players,
-          frames,
-          currentFrame: frames.find((frame) => frame.status === "open") || null,
-          loserPays: false,
-          player1: entry.customer_name,
-          player2: "",
-        },
-      }));
-      setNames((prev) => ({ ...prev, [table.id]: entry.customer_name }));
-      setSelectedTableId(table.id);
-      await fetchQueue();
-      await fetchBookings();
-      showToast(`${entry.customer_name} seated at T${table.num}`, "success");
-    } catch (e) {
-      showToast(e.response?.data?.detail || "Failed to seat customer", "error");
-    }
+    return runBusyAction(`seat-queue:${entry.id}`, async () => {
+      try {
+        const res = await startSession(table.id, entry.customer_name, rate, false, "", "single", players);
+        const frames = res.data.frames || [];
+        await seatWaitlistEntry(entry.id, table.id);
+        setSessions((prev) => ({
+          ...prev,
+          [table.id]: {
+            startTime: Date.now(),
+            elapsed: 0,
+            rate,
+            paused: false,
+            foodTotal: 0,
+            foodItems: [],
+            reservation: null,
+            notes: entry.notes || "",
+            billingMode: "single",
+            players,
+            frames,
+            currentFrame: frames.find((frame) => frame.status === "open") || null,
+            loserPays: false,
+            player1: entry.customer_name,
+            player2: "",
+          },
+        }));
+        setNames((prev) => ({ ...prev, [table.id]: entry.customer_name }));
+        setSelectedTableId(table.id);
+        await fetchQueue();
+        await fetchBookings();
+        showToast(`${entry.customer_name} seated at T${table.num}`, "success");
+        return true;
+      } catch (e) {
+        showToast(e.response?.data?.detail || "Failed to seat customer", "error");
+        return false;
+      }
+    });
   }
 
   async function handleStart(table, billingMode, otherPlayers) {
@@ -2495,52 +2637,57 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
     const primaryName = players[0];
     const validation = validateBillingPlayers(players, billingMode);
     if (validation) {
-      alert(validation);
-      return;
+      showToast(validation, "error");
+      return false;
     }
     if (sessions[table.id]) {
-      alert("Session already running");
-      return;
+      showToast("Session already running", "error");
+      return false;
     }
     const rate = getTableRate(table, rates);
-    try {
-      const res = await startSession(
-        table.id,
-        primaryName,
-        rate,
-        billingMode !== "single",
-        players.slice(1).join(", "),
-        billingMode,
-        players,
-      );
-      const frames = res.data.frames || [];
-      setSessions((prev) => ({
-        ...prev,
-        [table.id]: {
-          startTime: Date.now(),
-          elapsed: 0,
+    return runBusyAction(`start:${table.id}`, async () => {
+      try {
+        const res = await startSession(
+          table.id,
+          primaryName,
           rate,
-          paused: false,
-          foodTotal: 0,
-          foodItems: [],
-          reservation: null,
-          notes: "",
+          billingMode !== "single",
+          players.slice(1).join(", "),
           billingMode,
           players,
-          frames,
-          currentFrame: frames.find((frame) => frame.status === "open") || null,
-          loserPays: billingMode === "lp",
-          player1: players[0],
-          player2: players.slice(1).join(", "),
-        },
-      }));
-      setNames((prev) => ({ ...prev, [table.id]: primaryName }));
-      setSelectedTableId(table.id);
-      fetchQueue();
-      fetchBookings();
-    } catch (e) {
-      alert(e.response?.data?.detail || "Failed to start");
-    }
+        );
+        const frames = res.data.frames || [];
+        setSessions((prev) => ({
+          ...prev,
+          [table.id]: {
+            startTime: Date.now(),
+            elapsed: 0,
+            rate,
+            paused: false,
+            foodTotal: 0,
+            foodItems: [],
+            reservation: null,
+            notes: "",
+            billingMode,
+            players,
+            frames,
+            currentFrame: frames.find((frame) => frame.status === "open") || null,
+            loserPays: billingMode === "lp",
+            player1: players[0],
+            player2: players.slice(1).join(", "),
+          },
+        }));
+        setNames((prev) => ({ ...prev, [table.id]: primaryName }));
+        setSelectedTableId(table.id);
+        fetchQueue();
+        fetchBookings();
+        showToast(`Session started on T${table.num}`, "success");
+        return true;
+      } catch (e) {
+        showToast(e.response?.data?.detail || "Failed to start", "error");
+        return false;
+      }
+    });
   }
 
   async function handleQuickStart({ table, player1, billingMode, otherPlayers }) {
@@ -2549,199 +2696,206 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
     const primaryName = players[0];
     const validation = validateBillingPlayers(players, billingMode);
     if (validation) {
-      alert(validation);
+      showToast(validation, "error");
       return false;
     }
     if (sessions[table.id]) {
-      alert("Session already running");
+      showToast("Session already running", "error");
       return false;
     }
     if (maintenance[table.id]) {
-      alert(`Table is under maintenance: ${maintenance[table.id].reason}`);
+      showToast(`Table is under maintenance: ${maintenance[table.id].reason}`, "error");
       return false;
     }
     const rate = getTableRate(table, rates);
-    try {
-      const res = await startSession(
-        table.id,
-        primaryName,
-        rate,
-        billingMode !== "single",
-        players.slice(1).join(", "),
-        billingMode,
-        players,
-      );
-      const frames = res.data.frames || [];
-      setSessions((prev) => ({
-        ...prev,
-        [table.id]: {
-          startTime: Date.now(),
-          elapsed: 0,
+    return runBusyAction(`start:${table.id}`, async () => {
+      try {
+        const res = await startSession(
+          table.id,
+          primaryName,
           rate,
-          paused: false,
-          foodTotal: 0,
-          foodItems: [],
-          reservation: null,
-          notes: "",
+          billingMode !== "single",
+          players.slice(1).join(", "),
           billingMode,
           players,
-          frames,
-          currentFrame: frames.find((frame) => frame.status === "open") || null,
-          loserPays: billingMode === "lp",
-          player1: players[0],
-          player2: players.slice(1).join(", "),
-        },
-      }));
-      setNames((prev) => ({ ...prev, [table.id]: primaryName }));
-      setSelectedTableId(table.id);
-      fetchQueue();
-      fetchBookings();
-      onSessionEnd?.();
-      showToast(`Session started on T${table.num}`, "success");
-      return true;
-    } catch (e) {
-      showToast(e.response?.data?.detail || "Failed to start session", "error");
-      return false;
-    }
+        );
+        const frames = res.data.frames || [];
+        setSessions((prev) => ({
+          ...prev,
+          [table.id]: {
+            startTime: Date.now(),
+            elapsed: 0,
+            rate,
+            paused: false,
+            foodTotal: 0,
+            foodItems: [],
+            reservation: null,
+            notes: "",
+            billingMode,
+            players,
+            frames,
+            currentFrame: frames.find((frame) => frame.status === "open") || null,
+            loserPays: billingMode === "lp",
+            player1: players[0],
+            player2: players.slice(1).join(", "),
+          },
+        }));
+        setNames((prev) => ({ ...prev, [table.id]: primaryName }));
+        setSelectedTableId(table.id);
+        fetchQueue();
+        fetchBookings();
+        onSessionEnd?.();
+        showToast(`Session started on T${table.num}`, "success");
+        return true;
+      } catch (e) {
+        showToast(e.response?.data?.detail || "Failed to start session", "error");
+        return false;
+      }
+    });
   }
 
   async function handlePause(id) {
-    if (!sessions[id]) return;
-    try {
-      const res = await pauseSession(id);
-      setSessions((prev) => {
-        const sess = prev[id];
-        const nowPaused = res.data.paused;
-        return {
-          ...prev,
-          [id]: {
-            ...sess,
-            paused: nowPaused,
-            startTime: nowPaused
-              ? sess.startTime
-              : Date.now() - sess.elapsed * 1000,
-          },
-        };
-      });
-    } catch {
-      alert("Failed to pause");
-    }
+    if (!sessions[id]) return false;
+    return runBusyAction(`pause:${id}`, async () => {
+      try {
+        const res = await pauseSession(id);
+        setSessions((prev) => {
+          const sess = prev[id];
+          const nowPaused = res.data.paused;
+          return {
+            ...prev,
+            [id]: {
+              ...sess,
+              paused: nowPaused,
+              startTime: nowPaused
+                ? sess.startTime
+                : Date.now() - sess.elapsed * 1000,
+            },
+          };
+        });
+        showToast(res.data.paused ? "Table paused" : "Table resumed", "success");
+        return true;
+      } catch {
+        showToast("Failed to pause", "error");
+        return false;
+      }
+    });
   }
 
-  async function handleReset(id) {
-    if (!confirm("Reset this table?")) return;
-    try {
-      await resetSession(id);
-      setSessions((prev) => {
-        const n = { ...prev };
-        delete n[id];
-        return n;
-      });
-      setNames((prev) => {
-        const n = { ...prev };
-        delete n[id];
-        return n;
-      });
-    } catch (e) {
-      if (e.response?.status === 403) {
-        const pin = prompt("Manager PIN required:");
-        if (!pin) return;
-        try {
-          await resetSession(id, pin);
-          setSessions((prev) => {
-            const n = { ...prev };
-            delete n[id];
-            return n;
-          });
-          setNames((prev) => {
-            const n = { ...prev };
-            delete n[id];
-            return n;
-          });
-          return;
-        } catch (retryErr) {
-          alert(retryErr.response?.data?.detail || "Failed to reset");
-          return;
-        }
+  async function handleReset(id, pin = "") {
+    return runBusyAction(`reset:${id}`, async () => {
+      try {
+        await resetSession(id, pin);
+        setSessions((prev) => {
+          const n = { ...prev };
+          delete n[id];
+          return n;
+        });
+        setNames((prev) => {
+          const n = { ...prev };
+          delete n[id];
+          return n;
+        });
+        showToast("Table reset", "success");
+        return true;
+      } catch (e) {
+        showToast(e.response?.data?.detail || "Failed to reset", "error");
+        return false;
       }
-      alert(e.response?.data?.detail || "Failed to reset");
-    }
+    });
   }
 
   async function handleStartFrame(id) {
-    if (!sessions[id]) return;
-    try {
-      const res = await startFrame(id);
-      setSessions((prev) => ({
-        ...prev,
-        [id]: {
-          ...prev[id],
-          frames: res.data.frames || [],
-          currentFrame: res.data.frame || null,
-        },
-      }));
-      showToast(`Frame ${res.data.frame?.frame_no || ""} started`, "success");
-    } catch (e) {
-      showToast(e.response?.data?.detail || "Failed to start frame", "error");
-    }
+    if (!sessions[id]) return false;
+    return runBusyAction(`start-frame:${id}`, async () => {
+      try {
+        const res = await startFrame(id);
+        setSessions((prev) => ({
+          ...prev,
+          [id]: {
+            ...prev[id],
+            frames: res.data.frames || [],
+            currentFrame: res.data.frame || null,
+          },
+        }));
+        showToast(`Frame ${res.data.frame?.frame_no || ""} started`, "success");
+        return true;
+      } catch (e) {
+        showToast(e.response?.data?.detail || "Failed to start frame", "error");
+        return false;
+      }
+    });
   }
 
   async function handleCloseFrame(id, loserName) {
-    if (!sessions[id]) return;
-    try {
-      const res = await closeFrame(id, loserName);
-      const frames = res.data.frames || [];
-      const players = res.data.players || sessions[id].players || [];
-      setSessions((prev) => ({
-        ...prev,
-        [id]: {
-          ...prev[id],
-          frames,
-          players,
-          currentFrame: frames.find((frame) => frame.status === "open") || null,
-        },
-      }));
-      showToast(`Frame ${res.data.frame?.frame_no || ""} closed`, "success");
-    } catch (e) {
-      showToast(e.response?.data?.detail || "Failed to close frame", "error");
-    }
+    if (!sessions[id]) return false;
+    return runBusyAction(`close-frame:${id}`, async () => {
+      try {
+        const res = await closeFrame(id, loserName);
+        const frames = res.data.frames || [];
+        const players = res.data.players || sessions[id].players || [];
+        setSessions((prev) => ({
+          ...prev,
+          [id]: {
+            ...prev[id],
+            frames,
+            players,
+            currentFrame: frames.find((frame) => frame.status === "open") || null,
+          },
+        }));
+        showToast(`Frame ${res.data.frame?.frame_no || ""} closed`, "success");
+        return true;
+      } catch (e) {
+        showToast(e.response?.data?.detail || "Failed to close frame", "error");
+        return false;
+      }
+    });
   }
 
   async function handleStop(id, paymentMethod = "Cash") {
     if (!sessions[id]) {
       showToast("No active session", "error");
-      return;
+      return false;
     }
-    try {
-      checkoutQuoteSeqRef.current += 1;
-      const res = await quoteSession(id, paymentMethod, "none", 0);
-      setCheckoutQuote({
-        tableId: id,
-        paymentMethod,
-        paymentSplit: { Cash: "", UPI: "", Card: "" },
-        discountType: "none",
-        discountValue: "",
-        discountReason: "",
-        closedAtMs: res.data.session_ended_at,
-        rec: res.data,
-        loading: false,
-        error: "",
-      });
-    } catch (e) {
-      showToast(e.response?.data?.detail || "Failed to show bill", "error");
-    }
+    return runBusyAction(`quote:${id}`, async () => {
+      try {
+        checkoutQuoteSeqRef.current += 1;
+        const res = await quoteSession(id, paymentMethod, "none", 0);
+        setCheckoutQuote({
+          tableId: id,
+          paymentMethod,
+          paymentSplit: { Cash: "", UPI: "", Card: "" },
+          discountType: "none",
+          discountValue: "",
+          discountReason: "",
+          closedAtMs: res.data.session_ended_at,
+          rec: res.data,
+          loading: false,
+          finalizing: false,
+          error: "",
+        });
+        return true;
+      } catch (e) {
+        showToast(e.response?.data?.detail || "Failed to show bill", "error");
+        return false;
+      }
+    });
   }
 
   async function handleTransfer(fromTableId, toTableId) {
-    if (!fromTableId || !toTableId) return;
-    try {
-      await transferSession(fromTableId, toTableId);
-      setSelectedTableId(tableKey(toTableId));
-      await fetchActive();
-      showToast(`Moved ${fromTableId.toUpperCase()} to ${toTableId.toUpperCase()}`, "success");
-    } catch (e) {
-      showToast(e.response?.data?.detail || "Failed to transfer table", "error");
-    }
+    if (!fromTableId || !toTableId) return false;
+    return runBusyAction(`transfer:${fromTableId}`, async () => {
+      try {
+        await transferSession(fromTableId, toTableId);
+        setSelectedTableId(tableKey(toTableId));
+        await fetchActive();
+        showToast(`Moved ${fromTableId.toUpperCase()} to ${toTableId.toUpperCase()}`, "success");
+        return true;
+      } catch (e) {
+        showToast(e.response?.data?.detail || "Failed to transfer table", "error");
+        return false;
+      }
+    });
   }
 
   async function handleCheckoutDiscountChange(
@@ -2862,6 +3016,7 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
       showToast("Enter a reason for the discount", "error");
       return;
     }
+    setCheckoutQuote((prev) => (prev ? { ...prev, finalizing: true } : prev));
     try {
       const res = await stopSession(
         tableId,
@@ -2892,73 +3047,110 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
       setCheckoutBill({ tableId, rec, paymentMethod });
     } catch (e) {
       showToast(e.response?.data?.detail || "Failed to close table", "error");
+      setCheckoutQuote((prev) => (prev ? { ...prev, finalizing: false } : prev));
     }
   }
 
   async function handleReserve(id, name, time) {
     if (!name || !time) {
-      alert("Enter name and time");
-      return;
+      showToast("Enter name and time", "error");
+      return false;
     }
     const table = TABLES.find((item) => item.id === tableKey(id));
-    try {
-      await createBooking({
-        customer_name: name,
-        phone: "",
-        table_id: tableKey(id).toUpperCase(),
-        table_type: table?.type || "ANY",
-        booking_time: bookingDateTimeFromClock(time),
-        duration_mins: 60,
-        notes: "Quick table reservation",
-      });
-      await fetchBookings();
-      showToast(`${name} reserved ${tableKey(id).toUpperCase()}`, "success");
-    } catch (e) {
-      showToast(e.response?.data?.detail || "Failed to reserve", "error");
-    }
+    return runBusyAction(`reserve:${tableKey(id)}`, async () => {
+      try {
+        await createBooking({
+          customer_name: name,
+          phone: "",
+          table_id: tableKey(id).toUpperCase(),
+          table_type: table?.type || "ANY",
+          booking_time: bookingDateTimeFromClock(time),
+          duration_mins: 60,
+          notes: "Quick table reservation",
+        });
+        await fetchBookings();
+        showToast(`${name} reserved ${tableKey(id).toUpperCase()}`, "success");
+        return true;
+      } catch (e) {
+        showToast(e.response?.data?.detail || "Failed to reserve", "error");
+        return false;
+      }
+    });
   }
 
   async function handleCancelReserve(id) {
     const booking = nextBookingByTable[tableKey(id)];
-    try {
-      if (booking?.id) {
-        await cancelBooking(booking.id);
-        await fetchBookings();
-        showToast("Reservation cancelled", "success");
-        return;
+    return runBusyAction(`cancel-reserve:${tableKey(id)}`, async () => {
+      try {
+        if (booking?.id) {
+          await cancelBooking(booking.id);
+          await fetchBookings();
+          showToast("Reservation cancelled", "success");
+          return true;
+        }
+        setSessions((prev) => ({
+          ...prev,
+          [tableKey(id)]: { ...(prev[tableKey(id)] || {}), reservation: null },
+        }));
+        showToast("Reservation cleared", "success");
+        return true;
+      } catch (e) {
+        showToast(e.response?.data?.detail || "Failed to cancel reservation", "error");
+        return false;
       }
-      setSessions((prev) => ({
-        ...prev,
-        [tableKey(id)]: { ...(prev[tableKey(id)] || {}), reservation: null },
-      }));
-    } catch (e) {
-      showToast(e.response?.data?.detail || "Failed to cancel reservation", "error");
-    }
+    });
   }
 
   async function handleSetMaintenance(tableId, reason) {
-    try {
-      await saveMaintenance(tableId, reason);
-      setMaintenance((prev) => ({
-        ...prev,
-        [tableId]: { reason, since: new Date().toLocaleString("en-IN") },
-      }));
-    } catch {
-      alert("Failed");
-    }
+    return runBusyAction(`maintenance:${tableId}`, async () => {
+      try {
+        await saveMaintenance(tableId, reason);
+        setMaintenance((prev) => ({
+          ...prev,
+          [tableId]: { reason, since: new Date().toLocaleString("en-IN") },
+        }));
+        showToast("Maintenance saved", "success");
+        return true;
+      } catch {
+        showToast("Failed to save maintenance", "error");
+        return false;
+      }
+    });
   }
 
   async function handleClearMaintenance(tableId) {
-    try {
-      await clearMaintenance(tableId);
-      setMaintenance((prev) => {
-        const n = { ...prev };
-        delete n[tableId];
-        return n;
-      });
-    } catch {
-      alert("Failed");
-    }
+    return runBusyAction(`clear-maintenance:${tableId}`, async () => {
+      try {
+        await clearMaintenance(tableId);
+        setMaintenance((prev) => {
+          const n = { ...prev };
+          delete n[tableId];
+          return n;
+        });
+        showToast("Table marked available", "success");
+        return true;
+      } catch {
+        showToast("Failed to clear maintenance", "error");
+        return false;
+      }
+    });
+  }
+
+  async function handleSaveNotes(tableId, value) {
+    return runBusyAction(`notes:${tableId}`, async () => {
+      try {
+        await updateNotes(tableId, value);
+        setSessions((prev) => ({
+          ...prev,
+          [tableId]: { ...prev[tableId], notes: value },
+        }));
+        showToast("Notes saved", "success");
+        return true;
+      } catch {
+        showToast("Failed to save notes", "error");
+        return false;
+      }
+    });
   }
 
   const compact = viewMode === "compact";
@@ -3004,6 +3196,7 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
         maintenance={maintenance}
         rates={rates}
         onStart={handleQuickStart}
+        busyActions={busyActions}
       />
 
       <div className="tables-view-toolbar">
@@ -3102,11 +3295,13 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
               maintenance={maintenance[selectedTable.id] || null}
               onMaintenance={handleSetMaintenance}
               onClearMaintenance={handleClearMaintenance}
+              onSaveNotes={handleSaveNotes}
               onStartFrame={handleStartFrame}
               onCloseFrame={handleCloseFrame}
               peakRate={peakRate}
               gstPercent={gstPercent}
               showToast={showToast}
+              busyActions={busyActions}
               compact={false}
             />
           </aside>
@@ -3120,12 +3315,14 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
           onAdd={handleAddToQueue}
           onSeat={handleSeatQueue}
           onCancel={handleCancelQueue}
+          busyActions={busyActions}
         />
 
         <BookingPanel
           bookings={bookings}
           onCreate={handleCreateBooking}
           onCancel={handleCancelBooking}
+          busyActions={busyActions}
         />
       </div>
     </>
