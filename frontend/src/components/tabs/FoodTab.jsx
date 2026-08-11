@@ -742,7 +742,7 @@ export default function FoodTab() {
                           #{i + 1}
                         </td>
                         <td style={{ fontWeight: 500 }}>{s.name}</td>
-                        <td style={{ color: "#2563eb", fontWeight: 600 }}>
+                        <td style={{ color: "var(--accent)", fontWeight: 600 }}>
                           {s.qty}
                         </td>
                         <td style={{ color: "#16a34a", fontWeight: 600 }}>
@@ -773,7 +773,7 @@ export default function FoodTab() {
                                       ? "#16a34a"
                                       : i === stats.length - 1
                                         ? "#e11d48"
-                                        : "#2563eb",
+                                        : "var(--accent)",
                                   borderRadius: "3px",
                                 }}
                               />
@@ -836,7 +836,7 @@ export default function FoodTab() {
                       <td style={{ fontSize: "12px", color: "#888" }}>
                         {o.items.map((x) => `${x.item} x${x.qty}`).join(", ")}
                       </td>
-                      <td style={{ fontWeight: 700, color: o.payment_method === "UPI" ? "#2563eb" : "#16a34a" }}>
+                      <td style={{ fontWeight: 700, color: o.payment_method === "UPI" ? "var(--accent)" : "#16a34a" }}>
                         {o.payment_method || "Cash"}
                       </td>
                       <td style={{ fontWeight: 600, color: "#16a34a" }}>

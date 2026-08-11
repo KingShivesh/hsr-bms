@@ -28,7 +28,7 @@ import { HSR_TABLES, TOTAL_TABLES, getTableLabel } from "../config/hsrTables.js"
 
 const TABLES = HSR_TABLES;
 const tableKey = (tableId) => String(tableId || "").trim().toLowerCase();
-const PIE_COLORS = ["#1f7a4f", "#2563eb", "#d97706"];
+const PIE_COLORS = ["var(--accent)", "var(--success)", "var(--warning)"];
 
 function money(value = 0) {
   return `₹${Number(value || 0).toLocaleString("en-IN")}`;
@@ -625,8 +625,8 @@ function Charts({ analytics, pieData }) {
             <AreaChart data={analytics.weekly}>
               <defs>
                 <linearGradient id="dashRevenue" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#2563eb" stopOpacity={0.35} />
-                  <stop offset="95%" stopColor="#2563eb" stopOpacity={0.02} />
+                  <stop offset="5%" stopColor="var(--accent)" stopOpacity={0.35} />
+                  <stop offset="95%" stopColor="var(--accent)" stopOpacity={0.02} />
                 </linearGradient>
               </defs>
               <CartesianGrid strokeDasharray="3 3" vertical={false} opacity={0.18} />
@@ -638,7 +638,7 @@ function Charts({ analytics, pieData }) {
                 tickFormatter={(v) => (v >= 1000 ? `₹${Math.round(v / 1000)}k` : `₹${v}`)}
               />
               <Tooltip formatter={(v) => [money(v), "Revenue"]} />
-              <Area type="monotone" dataKey="revenue" stroke="#2563eb" fill="url(#dashRevenue)" strokeWidth={3} />
+              <Area type="monotone" dataKey="revenue" stroke="var(--accent)" fill="url(#dashRevenue)" strokeWidth={3} />
             </AreaChart>
           </ResponsiveContainer>
         ) : (

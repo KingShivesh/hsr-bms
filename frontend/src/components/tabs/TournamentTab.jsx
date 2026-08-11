@@ -54,9 +54,9 @@ function StatusPill({ status }) {
         padding: "2px 8px",
         borderRadius: "999px",
         fontWeight: 700,
-        background: done ? "#f0fdf4" : "#eff6ff",
-        color: done ? "#16a34a" : "#2563eb",
-        border: `1px solid ${done ? "#bbf7d0" : "#bfdbfe"}`,
+        background: done ? "#f0fdf4" : "var(--accent-bg)",
+        color: done ? "#16a34a" : "var(--accent)",
+        border: `1px solid ${done ? "#bbf7d0" : "color-mix(in srgb, var(--accent) 28%, var(--border))"}`,
       }}
     >
       {done ? "COMPLETED" : "ACTIVE"}

@@ -359,7 +359,7 @@ function TopCustomersView() {
                     </span>
                   </td>
                   <td style={{ fontWeight: 500 }}>{c.name}</td>
-                  <td style={{ color: "#2563eb", fontWeight: 500 }}>
+                  <td style={{ color: "var(--accent)", fontWeight: 500 }}>
                     {c.visits}
                   </td>
                   <td style={{ color: "#888" }}>
@@ -418,7 +418,7 @@ function UtilizationView() {
         <StatCard
           label="Total Sessions"
           value={data.reduce((a, d) => a + d.sessions, 0)}
-          color="#2563eb"
+          color="var(--accent)"
         />
         <StatCard
           label="Total Revenue"
@@ -469,7 +469,7 @@ function UtilizationView() {
                     {d.type}
                   </span>
                 </td>
-                <td style={{ color: "#2563eb", fontWeight: 500 }}>
+                <td style={{ color: "var(--accent)", fontWeight: 500 }}>
                   {d.sessions}
                 </td>
                 <td style={{ color: "#888" }}>{d.avg_dur}m</td>
@@ -608,7 +608,7 @@ function ClosingReportView() {
         <StatCard
           label="Sessions"
           value={data.total_sessions}
-          color="#2563eb"
+          color="var(--accent)"
         />
         <StatCard
           label="Avg Duration"
@@ -655,7 +655,7 @@ function ClosingReportView() {
                 .map(([tbl, stats], i) => (
                   <tr key={i}>
                     <td style={{ fontWeight: 600 }}>{tbl}</td>
-                    <td style={{ color: "#2563eb" }}>{stats.sessions}</td>
+                    <td style={{ color: "var(--accent)" }}>{stats.sessions}</td>
                     <td style={{ fontWeight: 600, color: "#16a34a" }}>
                       ₹{stats.revenue.toLocaleString("en-IN")}
                     </td>
@@ -764,7 +764,7 @@ function ClosingInsightsView() {
     positive: ["#f0fdf4", "#16a34a", "#bbf7d0"],
     warning: ["#fffbeb", "#d97706", "#fde68a"],
     critical: ["#fff1f2", "#e11d48", "#fecdd3"],
-    info: ["#eff6ff", "#2563eb", "#bfdbfe"],
+    info: ["var(--accent-bg)", "var(--accent)", "color-mix(in srgb, var(--accent) 28%, var(--border))"],
   };
 
   if (!data) {
@@ -784,7 +784,7 @@ function ClosingInsightsView() {
         }}
       >
         <StatCard label="Revenue" value={`₹${data.metrics.revenue.toLocaleString("en-IN")}`} color="#16a34a" />
-        <StatCard label="Sessions" value={data.metrics.sessions} color="#2563eb" />
+        <StatCard label="Sessions" value={data.metrics.sessions} color="var(--accent)" />
         <StatCard label="Food" value={`₹${data.metrics.food.toLocaleString("en-IN")}`} color="#d97706" />
       </div>
 
@@ -857,7 +857,7 @@ function AuditLogView() {
             rows.map((r) => (
               <tr key={r.id}>
                 <td style={{ color: "#999", fontSize: "12px" }}>{r.date}</td>
-                <td style={{ fontWeight: 700, color: r.severity === "critical" ? "#e11d48" : r.severity === "warning" ? "#d97706" : "#2563eb" }}>
+                <td style={{ fontWeight: 700, color: r.severity === "critical" ? "#e11d48" : r.severity === "warning" ? "#d97706" : "var(--accent)" }}>
                   {r.severity}
                 </td>
                 <td style={{ fontWeight: 600 }}>{r.action}</td>
@@ -886,7 +886,7 @@ function AdvancedAnalyticsView() {
   return (
     <div>
       <div className="advanced-grid">
-        <StatCard label="Retention" value={`${data.retention_rate}%`} color="#2563eb" />
+        <StatCard label="Retention" value={`${data.retention_rate}%`} color="var(--accent)" />
         <StatCard label="Repeat Customers" value={`${data.repeat_customers}/${data.total_customers}`} color="#16a34a" />
         <StatCard label="Food Attachment" value={`${data.food_attachment_rate}%`} color="#d97706" />
         <StatCard label="Avg Spend / Customer" value={`₹${data.avg_spend_per_customer.toLocaleString("en-IN")}`} color="#111" />
@@ -1017,7 +1017,7 @@ export default function ReportsTab() {
         <StatCard
           label="Sessions Today"
           value={summary.sessions}
-          color="#2563eb"
+          color="var(--accent)"
         />
         <StatCard
           label="Avg Duration"

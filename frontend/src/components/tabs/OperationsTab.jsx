@@ -344,11 +344,11 @@ function GSTView() {
           style={{
             marginTop: "12px",
             padding: "10px 14px",
-            background: "#eff6ff",
-            border: "1px solid #bfdbfe",
+            background: "var(--accent-bg)",
+            border: "1px solid color-mix(in srgb, var(--accent) 28%, var(--border))",
             borderRadius: "8px",
             fontSize: "12px",
-            color: "#2563eb",
+            color: "var(--accent-text)",
           }}
         >
           A bill of ₹500 will have ₹{Math.round((500 * parseFloat(gst)) / 100)}{" "}

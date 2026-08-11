@@ -94,14 +94,14 @@ export default function MembersTab() {
         }}
       >
         {[
-          { label: "Total Members", value: totalMembers, color: "#111" },
-          { label: "Premium Members", value: premiumCount, color: "#d97706" },
+          { label: "Total Members", value: totalMembers, color: "var(--text-primary)" },
+          { label: "Premium Members", value: premiumCount, color: "var(--warning)" },
           {
             label: "Total Revenue",
             value: `₹${totalRevenue.toLocaleString("en-IN")}`,
-            color: "#16a34a",
+            color: "var(--success)",
           },
-          { label: "Total Visits", value: totalVisits, color: "#2563eb" },
+          { label: "Total Visits", value: totalVisits, color: "var(--accent)" },
         ].map((s, i) => (
           <div
             key={i}

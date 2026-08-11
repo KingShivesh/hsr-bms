@@ -35,18 +35,18 @@ const tableKey = (tableId) => String(tableId || "").trim().toLowerCase();
 
 const THEME = {
   POOL: {
-    felt: "#1a6bb5",
-    feltDark: "#1558a0",
-    cushion: "#1e7fd4",
-    rail: "#4a3000",
-    accent: "#60b4ff",
+    felt: "var(--accent)",
+    feltDark: "var(--accent-hover)",
+    cushion: "var(--success)",
+    rail: "var(--venue-rail)",
+    accent: "var(--accent)",
   },
   SNOOKER: {
-    felt: "#1a6b35",
-    feltDark: "#155a2c",
-    cushion: "#1e8040",
-    rail: "#3a2000",
-    accent: "#4ade80",
+    felt: "var(--accent)",
+    feltDark: "var(--accent-hover)",
+    cushion: "var(--success)",
+    rail: "var(--venue-rail)",
+    accent: "var(--accent)",
   },
 };
 
@@ -275,9 +275,9 @@ function CustomerInput({ value, onChange, placeholder }) {
               <span
                 style={{
                   fontSize: "10px",
-                  color: "#2563eb",
-                  background: "#eff6ff",
-                  border: "1px solid #bfdbfe",
+                  color: "var(--accent-text)",
+                  background: "var(--accent-bg)",
+                  border: "1px solid color-mix(in srgb, var(--accent) 28%, var(--border))",
                   padding: "1px 6px",
                   borderRadius: "3px",
                 }}
@@ -1683,15 +1683,17 @@ function TableCard({
         className={`table-session-card ${compact ? "compact" : ""} ${occupied ? "occupied" : ""}`}
         style={{
           "--occupied-accent": T.accent,
-          "--occupied-card-bg": isPool ? "#eef7ff" : "#effaf3",
-          "--occupied-control-bg": isPool ? "#f2f8ff" : "#f2fbf5",
-          "--occupied-control-surface": isPool ? "#ffffff" : "#ffffff",
-          "--occupied-control-border": isPool ? "#b7d9f5" : "#b8e2c5",
+          "--occupied-card-bg": "color-mix(in srgb, var(--accent-bg) 55%, var(--surface))",
+          "--occupied-control-bg": "color-mix(in srgb, var(--accent-bg) 42%, var(--surface))",
+          "--occupied-control-surface": "var(--surface)",
+          "--occupied-control-border": "color-mix(in srgb, var(--accent) 24%, var(--border))",
           background: occupied ? "var(--occupied-card-bg)" : "var(--table-card-bg)",
           borderRadius: "10px",
           overflow: "hidden",
           border: `1px solid ${occupied ? T.accent : "var(--table-card-border)"}`,
-          boxShadow: occupied ? `0 16px 34px ${T.accent}22` : "0 1px 2px rgba(15, 23, 42, 0.04)",
+          boxShadow: occupied
+            ? "0 16px 34px color-mix(in srgb, var(--accent) 18%, transparent)"
+            : "0 1px 2px rgba(15, 23, 42, 0.04)",
           transition: "all 0.3s",
         }}
       >
