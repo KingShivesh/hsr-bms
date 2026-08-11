@@ -121,7 +121,6 @@ export default function Sidebar({ page, setPage, onLogout, activeTables, role = 
                 className={`sb-item ${page === item.id ? "active" : ""}`}
                 data-tone={item.tone || "blue"}
                 onClick={() => navigate(item.id)}
-                title={item.label}
                 aria-label={item.label}
                 aria-current={page === item.id ? "page" : undefined}
               >
@@ -146,7 +145,6 @@ export default function Sidebar({ page, setPage, onLogout, activeTables, role = 
           type="button"
           className="sb-item"
           onClick={onLogout}
-          title="Logout"
           aria-label="Logout"
         >
           <i className="ti ti-logout" aria-hidden="true" />

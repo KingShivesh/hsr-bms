@@ -124,16 +124,16 @@ export default function ClosingTab() {
       <div className="closing-hero">
         <div>
           <div className="closing-eyebrow">Shift end</div>
-          <h2>Daily Closing</h2>
-          <p>{data.date}</p>
+          <strong className="closing-date">{data.date}</strong>
+          <p>Verify cash, active tables and exceptions before locking the day.</p>
         </div>
         <div className="closing-actions">
-          <button className="btn btn-primary-sm" type="button" onClick={() => window.print()}>
+          <button className="btn" type="button" onClick={() => window.print()}>
             <i className="ti ti-printer" aria-hidden="true" />
             Print
           </button>
           <button
-            className={`btn ${closedDay ? "btn-success-sm" : "btn-warning-sm"}`}
+            className={`btn ${closedDay ? "btn-success-sm" : "btn-primary-sm"}`}
             type="button"
             disabled={closedDay}
             onClick={markDayClosed}

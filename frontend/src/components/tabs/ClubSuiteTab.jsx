@@ -121,14 +121,13 @@ function FormField({ label, children }) {
   );
 }
 
-function Stat({ label, value, icon, tone = "blue" }) {
+function Stat({ label, value }) {
   return (
-    <article className={`cf-stat ${tone}`}>
+    <article className="cf-stat">
       <div>
         <span>{label}</span>
         <strong>{value}</strong>
       </div>
-      <i className={`ti ${icon}`} aria-hidden="true" />
     </article>
   );
 }
@@ -139,28 +138,6 @@ function EmptyState({ icon = "ti-info-circle", title, detail }) {
       <i className={`ti ${icon}`} aria-hidden="true" />
       <strong>{title}</strong>
       <span>{detail}</span>
-    </div>
-  );
-}
-
-function SuiteHero({ eyebrow, title, detail, tone = "blue", metrics = [] }) {
-  return (
-    <div className={`cf-hero cf-hero-${tone}`}>
-      <div>
-        <span>{eyebrow}</span>
-        <h1>{title}</h1>
-        <p>{detail}</p>
-      </div>
-      {!!metrics.length && (
-        <div className="cf-hero-metrics">
-          {metrics.map((metric) => (
-            <div key={metric.label}>
-              <strong>{metric.value}</strong>
-              <small>{metric.label}</small>
-            </div>
-          ))}
-        </div>
-      )}
     </div>
   );
 }
@@ -229,17 +206,6 @@ function WaitlistView({ waitlist, bookings, activeSessions, maintenance, actions
 
   return (
     <div className="cf-page cf-page-queue">
-      <SuiteHero
-        tone="amber"
-        eyebrow="Reception flow"
-        title="Smart Waitlist Queue"
-        detail="Track walk-ins, queue pressure and booking conflicts before they become front-desk confusion."
-        metrics={[
-          { label: "waiting", value: waitlist.length },
-          { label: "booked", value: upcoming.length },
-          { label: "missed", value: missed.length },
-        ]}
-      />
       <div className="cf-toolbar">
         <div>
           <strong>Queue desk</strong>
@@ -250,9 +216,9 @@ function WaitlistView({ waitlist, bookings, activeSessions, maintenance, actions
         </ActionButton>
       </div>
       <div className="cf-stat-grid">
-        <Stat label="Waiting" value={waitlist.length} icon="ti-user-clock" tone="purple" />
-        <Stat label="Upcoming Bookings" value={upcoming.length} icon="ti-calendar-event" />
-        <Stat label="Missed Bookings" value={missed.length} icon="ti-alert-circle" tone="amber" />
+        <Stat label="Waiting" value={waitlist.length} />
+        <Stat label="Upcoming Bookings" value={upcoming.length} />
+        <Stat label="Missed Bookings" value={missed.length} />
       </div>
       <div className="cf-two-col">
         <Section eyebrow="Queue" title="Walk-ins Waiting">
@@ -394,16 +360,6 @@ function ReservationsView({ bookings, actions, busy, activeAction }) {
 
   return (
     <div className="cf-page cf-page-reservations">
-      <SuiteHero
-        tone="purple"
-        eyebrow="Reservation desk"
-        title="Reservations & Slots"
-        detail="See table-wise commitments and no-show risk without digging into the table floor."
-        metrics={[
-          { label: "active bookings", value: booked.length },
-          { label: "tables covered", value: tableBookings.filter((row) => row.bookings.length).length },
-        ]}
-      />
       <div className="cf-toolbar">
         <div>
           <strong>Reservation board</strong>
@@ -425,10 +381,15 @@ function ReservationsView({ bookings, actions, busy, activeAction }) {
           </ActionButton>
         </div>
       </div>
+      <div className="cf-stat-grid">
+        <Stat label="Active Bookings" value={booked.length} />
+        <Stat label="Tables Covered" value={tableBookings.filter((row) => row.bookings.length).length} />
+        <Stat label="Missed Bookings" value={bookings.filter((booking) => booking.status === "missed").length} />
+      </div>
       <div className="cf-calendar-grid">
         {tableBookings.map(({ table, bookings: rows }) => (
           <section className="cf-table-slot" key={table.id}>
-            <div>
+            <div className="cf-table-slot-head">
               <strong>T{table.num}</strong>
               <span>{table.label || table.type || table.id}</span>
             </div>
@@ -440,7 +401,10 @@ function ReservationsView({ bookings, actions, busy, activeAction }) {
                 </p>
               ))
             ) : (
-              <em>Open slots</em>
+              <div className="cf-table-slot-empty">
+                <em>Open</em>
+                <small>No reservations scheduled</small>
+              </div>
             )}
           </section>
         ))}
@@ -588,21 +552,16 @@ function BillingView({ history, foodOrders, actions, busy, activeAction }) {
   }));
   return (
     <div className="cf-page cf-page-billing">
-      <SuiteHero
-        tone="blue"
-        eyebrow="Money desk"
-        title="Billing & Invoices"
-        detail="Fast view of table settlements and cafe bills, designed for cashier reconciliation."
-        metrics={[
-          { label: "table bill value", value: money(tableTotal) },
-          { label: "food bill value", value: money(foodTotal) },
-        ]}
-      />
       <div className="cf-toolbar">
         <div>
           <strong>Cashier register</strong>
           <span>Review table settlements and cancel incorrect food-only orders.</span>
         </div>
+      </div>
+      <div className="cf-stat-grid">
+        <Stat label="Table Bill Value" value={money(tableTotal)} />
+        <Stat label="Food Bill Value" value={money(foodTotal)} />
+        <Stat label="Food Orders" value={foodOrders.length} />
       </div>
       <div className="cf-two-col">
         <Section eyebrow="Tables" title="Recent Table Bills">
@@ -672,17 +631,6 @@ function InventoryView({ menu, maintenance, actions, busy, activeAction }) {
 
   return (
     <div className="cf-page cf-page-inventory">
-      <SuiteHero
-        tone="green"
-        eyebrow="Stock control"
-        title="Inventory & Stocks"
-        detail="Operational stock visibility for cafe availability, cigarettes and table maintenance."
-        metrics={[
-          { label: "menu items", value: menu.length },
-          { label: "out of stock", value: unavailable.length },
-          { label: "maintenance", value: maintenance.length },
-        ]}
-      />
       <div className="cf-toolbar">
         <div>
           <strong>Inventory command</strong>
@@ -693,9 +641,9 @@ function InventoryView({ menu, maintenance, actions, busy, activeAction }) {
         </ActionButton>
       </div>
       <div className="cf-stat-grid">
-        <Stat label="Menu Items" value={menu.length} icon="ti-package" />
-        <Stat label="Out of Stock" value={unavailable.length} icon="ti-alert-circle" tone="amber" />
-        <Stat label="Cigarette Items" value={cigarettes.length} icon="ti-smoking" tone="purple" />
+        <Stat label="Menu Items" value={menu.length} />
+        <Stat label="Out of Stock" value={unavailable.length} />
+        <Stat label="Cigarette Items" value={cigarettes.length} />
       </div>
       <div className="cf-inventory-grid">
         <Section eyebrow="Menu CRUD" title="Food Menu & Availability">
@@ -912,16 +860,11 @@ function NotificationsView({ auditLogs, waitlist, bookings, maintenance }) {
   ];
   return (
     <div className="cf-page cf-page-notifications">
-      <SuiteHero
-        tone="red"
-        eyebrow="Control alerts"
-        title="Notification Center"
-        detail="One place for missed bookings, waitlist pressure, maintenance and sensitive audit events."
-        metrics={[
-          { label: "alerts", value: notifications.length },
-          { label: "audit events", value: auditLogs.length },
-        ]}
-      />
+      <div className="cf-stat-grid">
+        <Stat label="Alerts" value={notifications.length} />
+        <Stat label="Audit Events" value={auditLogs.length} />
+        <Stat label="Maintenance" value={maintenance.length} />
+      </div>
       <Section eyebrow="Alerts" title="Live Notifications">
         <RowList rows={notifications} />
       </Section>
@@ -937,16 +880,11 @@ function MembershipPlansView({ topCustomers }) {
   ];
   return (
     <div className="cf-page cf-page-memberships">
-      <SuiteHero
-        tone="purple"
-        eyebrow="Loyalty"
-        title="Membership Plans"
-        detail="A simple membership surface for repeat players, VIPs and owner-level customer focus."
-        metrics={[
-          { label: "plans", value: plans.length },
-          { label: "targets", value: topCustomers.length },
-        ]}
-      />
+      <div className="cf-stat-grid">
+        <Stat label="Plans" value={plans.length} />
+        <Stat label="Targets" value={topCustomers.length} />
+        <Stat label="Starting Price" value={money(Math.min(...plans.map((plan) => plan.price)))} />
+      </div>
       <div className="cf-plan-grid">
         {plans.map((plan) => (
           <section className="cf-plan" key={plan.name}>
@@ -987,16 +925,14 @@ function StaffView({ auditLogs }) {
   }));
   return (
     <div className="cf-page cf-page-staff">
-      <SuiteHero
-        tone="slate"
-        eyebrow="Team overview"
-        title="Staff & Roster"
-        detail="Lightweight staff activity view using the audit trail, without adding heavy HR complexity."
-        metrics={[
-          { label: "staff/system actors", value: rows.length },
-          { label: "logged actions", value: auditLogs.length },
-        ]}
-      />
+      <div className="cf-stat-grid">
+        <Stat label="Staff/System Actors" value={rows.length} />
+        <Stat label="Logged Actions" value={auditLogs.length} />
+        <Stat label="Risk Actions" value={rows.reduce((sum, row) => {
+          const match = row.detail.match(/(\d+) risk/);
+          return sum + (match ? Number(match[1]) : 0);
+        }, 0)} />
+      </div>
       <Section eyebrow="Activity" title="Staff Action Summary">
         <RowList rows={rows} />
       </Section>
