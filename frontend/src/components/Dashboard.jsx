@@ -179,145 +179,139 @@ function BusinessPulse({
   );
 }
 
-function QuickOperations({ onNavigate, activeCount, waitingCount, bookingCount }) {
+function DashboardRangeFilter({ dateRange, onDateRangeChange }) {
+  return (
+    <label className="ops-range-filter">
+      <i className="ti ti-calendar" aria-hidden="true" />
+      <span>Register Range</span>
+      <select value={dateRange} onChange={(event) => onDateRangeChange(event.target.value)}>
+        <option value="today">Today</option>
+        <option value="week">Last 7 days</option>
+        <option value="all">All time</option>
+      </select>
+    </label>
+  );
+}
+
+function QuickOperations({ onNavigate }) {
   const actions = [
     {
       label: "Start Table",
-      sub: "",
       icon: "ti-player-play",
       page: "tables",
-      tone: "primary",
     },
     {
       label: "Food POS",
-      sub: "Counter order",
       icon: "ti-tools-kitchen-2",
       page: "food",
-      tone: "food",
     },
     {
       label: "Bookings",
-      sub: `${bookingCount} active`,
       icon: "ti-calendar-plus",
       page: "reservations",
-      tone: "booking",
     },
     {
       label: "Queue",
-      sub: `${waitingCount} waiting`,
       icon: "ti-clock",
       page: "waitlist",
-      tone: "queue",
     },
     {
       label: "Closing",
-      sub: activeCount ? `${activeCount} open` : "Ready",
       icon: "ti-lock-check",
       page: "closing",
-      tone: "closing",
     },
   ];
 
   return (
-    <div className="ops-quick-actions">
-      {actions.map((action) => (
-        <button
-          type="button"
-          key={action.label}
-          className={`ops-quick-action ${action.tone}`}
-          onClick={() => onNavigate(action.page)}
-        >
-          <i className={`ti ${action.icon}`} aria-hidden="true" />
-          <span>
-            <b>{action.label}</b>
-            {action.sub && <small>{action.sub}</small>}
-          </span>
-        </button>
-      ))}
-    </div>
-  );
-}
-
-function DashboardControlStrip({
-  dateRange,
-  onDateRangeChange,
-  search,
-  onSearchChange,
-  role,
-  onNavigate,
-  activeCount,
-  waitingCount,
-  bookingCount,
-}) {
-  return (
-    <section className="ops-control-strip" aria-label="Dashboard controls">
-      <div className="ops-control-primary">
-        <div>
-          <span className="ops-eyebrow">{role === "staff" ? "Operator view" : "Executive view"}</span>
-          <strong>{role === "staff" ? "Live floor control" : "Venue performance dashboard"}</strong>
-        </div>
-        <div className="ops-control-actions">
-          <label>
-            <i className="ti ti-calendar" aria-hidden="true" />
-            <span>Register range</span>
-            <select value={dateRange} onChange={(event) => onDateRangeChange(event.target.value)}>
-              <option value="today">Today</option>
-              <option value="week">Last 7 days</option>
-              <option value="all">All time</option>
-            </select>
-          </label>
-          <label className="ops-dashboard-search">
-            <i className="ti ti-search" aria-hidden="true" />
-            <input
-              value={search}
-              onChange={(event) => onSearchChange(event.target.value)}
-              placeholder="Search tables, orders, bookings..."
-            />
-          </label>
-        </div>
+    <section className="ops-quick-section" aria-label="Quick actions">
+      <div className="ops-quick-actions">
+        {actions.map((action) => (
+          <button
+            type="button"
+            key={action.label}
+            className="ops-quick-action"
+            onClick={() => onNavigate(action.page)}
+          >
+            <i className={`ti ${action.icon}`} aria-hidden="true" />
+            <span>{action.label}</span>
+          </button>
+        ))}
       </div>
-      <QuickOperations
-        onNavigate={onNavigate}
-        activeCount={activeCount}
-        waitingCount={waitingCount}
-        bookingCount={bookingCount}
-      />
     </section>
   );
 }
 
-function KpiCard({ label, value, sub, tone = "neutral", icon, trend = "0%", direction = "neutral" }) {
+function KpiCard({ label, value, sub, icon }) {
   return (
-    <article className={`ops-kpi ${tone}`}>
+    <article className="ops-kpi">
       <div className="ops-kpi-top">
         <span>{label}</span>
         <i className={`ti ${icon}`} aria-hidden="true" />
       </div>
       <strong>{value}</strong>
-      <p>
-        <em className={`ops-kpi-trend ${direction}`}>
-          <i className={`ti ${direction === "down" ? "ti-trending-down" : direction === "up" ? "ti-trending-up" : "ti-minus"}`} aria-hidden="true" />
-          {trend}
-        </em>
-        <span>{sub}</span>
-      </p>
+      <p>{sub}</p>
     </article>
+  );
+}
+
+function KeyMetricsSection({
+  dateRange,
+  onDateRangeChange,
+  ownerTotal,
+  sessionCount,
+  liveTableTotal,
+  activeCount,
+  occupancyPercent,
+  foodAttachment,
+  foodRevenue,
+}) {
+  return (
+    <section className="ops-metrics-section" aria-label="Key metrics">
+      <div className="ops-metrics-head">
+        <h3>Key Metrics</h3>
+        <DashboardRangeFilter dateRange={dateRange} onDateRangeChange={onDateRangeChange} />
+      </div>
+      <div className="ops-kpi-grid four">
+        <KpiCard
+          label="Today Revenue"
+          value={money(ownerTotal)}
+          sub={`${sessionCount || 0} sessions closed today`}
+          icon="ti-cash"
+        />
+        <KpiCard
+          label="Live Floor Value"
+          value={money(liveTableTotal)}
+          sub="Estimated value still running"
+          icon="ti-live-view"
+        />
+        <KpiCard
+          label="Active Tables"
+          value={`${activeCount}/${TOTAL_TABLES}`}
+          sub={`${occupancyPercent}% occupancy right now`}
+          icon="ti-layout-grid"
+        />
+        <KpiCard
+          label="Food Attach"
+          value={`${foodAttachment}%`}
+          sub={`${money(foodRevenue)} food revenue`}
+          icon="ti-tools-kitchen-2"
+        />
+      </div>
+    </section>
   );
 }
 
 function LiveFloor({ sessions, elapsed, onNavigate }) {
   const activeCount = TABLES.filter((table) => Boolean(sessions[table.id])).length;
+  const idleCount = Math.max(TOTAL_TABLES - activeCount, 0);
   return (
     <section className="ops-panel ops-floor-panel">
       <SectionHead
-        title="Live Table Floor"
+        title={`Live Floor — ${activeCount ? `${activeCount} running / ${idleCount} idle` : `${idleCount} idle`}`}
         action={
-          <div className="ops-section-actions">
-            <span className="ops-live-pill">{activeCount} running now</span>
-            <button type="button" className="ops-link-btn" onClick={() => onNavigate("tables")}>
-              Manage tables
-            </button>
-          </div>
+          <button type="button" className="ops-link-btn" onClick={() => onNavigate("tables")}>
+            Manage tables
+          </button>
         }
       />
       <div className="ops-floor-grid">
@@ -370,20 +364,72 @@ function LiveFloor({ sessions, elapsed, onNavigate }) {
   );
 }
 
-function ActionQueue({ actions }) {
-  const compact = actions.length === 1 && actions[0]?.tone === "positive";
+function AttentionPanel({ actions, digest, activeCount, bookings, waitlist, onNavigate }) {
+  const report = digest?.report;
+  const openTables = report?.open_tables?.length ?? activeCount;
+  const closed = Boolean(report?.day_close?.closed);
+  const missedCount = bookings.filter((booking) => booking.status === "missed").length;
+  const attention = actions.filter((item) => item.tone !== "positive");
+
+  if (missedCount) {
+    attention.push({
+      title: `${missedCount} missed booking${missedCount > 1 ? "s" : ""}`,
+      tone: "warning",
+      icon: "ti-calendar-x",
+      page: "reservations",
+    });
+  }
+  if (waitlist.length) {
+    attention.push({
+      title: `${waitlist.length} guest${waitlist.length > 1 ? "s" : ""} waiting`,
+      tone: "info",
+      icon: "ti-user-clock",
+      page: "waitlist",
+    });
+  }
+  if (openTables) {
+    attention.push({
+      title: `${openTables} open table${openTables > 1 ? "s" : ""} before closing`,
+      tone: "warning",
+      icon: "ti-lock-open",
+      page: "closing",
+    });
+  } else if (!closed) {
+    attention.push({
+      title: "Ready for end-of-day closing",
+      tone: "positive",
+      icon: "ti-lock-check",
+      page: "closing",
+    });
+  }
+
+  const uniqueItems = attention.filter((item, index, list) => (
+    list.findIndex((candidate) => candidate.title === item.title) === index
+  )).slice(0, 6);
+
+  if (!uniqueItems.length || uniqueItems.every((item) => item.tone === "positive")) {
+    return (
+      <button type="button" className="ops-attention-inline" onClick={() => onNavigate("closing")}>
+        <i className="ti ti-circle-check" aria-hidden="true" />
+        <span>Everything's on track</span>
+      </button>
+    );
+  }
+
   return (
-    <section className={`ops-panel ${compact ? "ops-status-panel" : ""}`}>
-      <SectionHead title="Action Queue" />
-      <div className={`ops-action-list ${compact ? "compact" : ""}`}>
-        {actions.map((item) => (
-          <div className={`ops-action-row ${item.tone}`} key={item.title}>
+    <section className="ops-panel ops-attention-panel">
+      <SectionHead title="Attention" />
+      <div className="ops-attention-list">
+        {uniqueItems.map((item) => (
+          <button
+            type="button"
+            className={`ops-attention-row ${item.tone}`}
+            key={item.title}
+            onClick={() => onNavigate(item.page || "tables")}
+          >
             <i className={`ti ${item.icon}`} aria-hidden="true" />
-            <div>
-              <strong>{item.title}</strong>
-              <span>{item.detail}</span>
-            </div>
-          </div>
+            <span>{item.title}</span>
+          </button>
         ))}
       </div>
     </section>
@@ -747,135 +793,6 @@ function TodayTimeline({ runningTables, foodOrders, bookings, auditLogs, onNavig
   );
 }
 
-function StaffOpsHeader({ runningTables, waitlist, bookings, foodOrders, onNavigate }) {
-  const openBookings = bookings.filter((booking) => booking.status === "booked").length;
-  const urgent = [
-    runningTables.length ? `${runningTables.length} table${runningTables.length > 1 ? "s" : ""} live` : "Floor idle",
-    waitlist.length ? `${waitlist.length} waiting` : "No waitlist",
-    foodOrders.length ? `${foodOrders.length} food order${foodOrders.length > 1 ? "s" : ""}` : "No food queue",
-    openBookings ? `${openBookings} booking${openBookings > 1 ? "s" : ""}` : "No bookings",
-  ];
-  return (
-    <section className="ops-staff-header">
-      <div>
-        <span className="ops-eyebrow">Staff operations desk</span>
-        <h2>Run the floor from here</h2>
-        <p>{urgent.join(" · ")}</p>
-      </div>
-      <div className="ops-staff-actions">
-        <button type="button" className="ops-action primary" onClick={() => onNavigate("tables")}>
-          <i className="ti ti-player-play" aria-hidden="true" />
-          Tables
-        </button>
-        <button type="button" className="ops-action" onClick={() => onNavigate("food")}>
-          <i className="ti ti-tools-kitchen-2" aria-hidden="true" />
-          Food
-        </button>
-        <button type="button" className="ops-action" onClick={() => onNavigate("closing")}>
-          <i className="ti ti-lock-check" aria-hidden="true" />
-          Closing
-        </button>
-      </div>
-    </section>
-  );
-}
-
-function StaffDashboard({
-  dateRange,
-  onDateRangeChange,
-  dashboardSearch,
-  onDashboardSearchChange,
-  runningTables,
-  sessions,
-  elapsed,
-  waitlist,
-  bookings,
-  foodOrders,
-  actionItems,
-  workRows,
-  tableSort,
-  onTableSortChange,
-  tablePage,
-  onTablePageChange,
-  onNavigate,
-}) {
-  const upcomingBookings = bookings.filter((booking) => booking.status === "booked");
-  return (
-    <div className="ops-dashboard staff-mode">
-      <DashboardControlStrip
-        dateRange={dateRange}
-        onDateRangeChange={onDateRangeChange}
-        search={dashboardSearch}
-        onSearchChange={onDashboardSearchChange}
-        role="staff"
-        onNavigate={onNavigate}
-        activeCount={runningTables.length}
-        waitingCount={waitlist.length}
-        bookingCount={upcomingBookings.length}
-      />
-      <StaffOpsHeader
-        runningTables={runningTables}
-        waitlist={waitlist}
-        bookings={bookings}
-        foodOrders={foodOrders}
-        onNavigate={onNavigate}
-      />
-      <div className="ops-kpi-grid four">
-        <KpiCard
-          label="Active Tables"
-          value={`${runningTables.length}/${TOTAL_TABLES}`}
-          sub="tables live right now"
-          trend={`${Math.max(TOTAL_TABLES - runningTables.length, 0)} idle`}
-          direction={runningTables.length ? "up" : "neutral"}
-          tone="green"
-          icon="ti-layout-grid"
-        />
-        <KpiCard
-          label="Live Floor Value"
-          value={money(runningTables.reduce((sum, row) => sum + estimateTableCharge(row.session, row.elapsedSecs) + (row.session.food_total || 0), 0))}
-          sub="estimated running bill"
-          trend="live"
-          direction="up"
-          tone="blue"
-          icon="ti-live-view"
-        />
-        <KpiCard
-          label="Waitlist"
-          value={waitlist.length}
-          sub="guests waiting"
-          trend={waitlist.length ? "seat now" : "clear"}
-          direction={waitlist.length ? "down" : "neutral"}
-          tone={waitlist.length ? "amber" : "neutral"}
-          icon="ti-user-clock"
-        />
-        <KpiCard
-          label="Food Orders"
-          value={foodOrders.length}
-          sub="recent food bills"
-          trend="POS"
-          direction="neutral"
-          icon="ti-tools-kitchen-2"
-        />
-      </div>
-      <div className="ops-staff-grid">
-        <LiveFloor sessions={sessions} elapsed={elapsed} onNavigate={onNavigate} />
-        <div className="ops-side-stack">
-          <ActionQueue actions={actionItems} />
-          <QueueBookings waitlist={waitlist} bookings={bookings} onNavigate={onNavigate} />
-        </div>
-      </div>
-      <DashboardDataTable
-        rows={workRows}
-        sort={tableSort}
-        onSortChange={onTableSortChange}
-        page={tablePage}
-        onPageChange={onTablePageChange}
-        onNavigate={onNavigate}
-      />
-    </div>
-  );
-}
-
 function OwnerIntelligence({ utilization, foodAttachment, longRunningCount, waitlistCount, ownerTotal, liveTableTotal, onNavigate }) {
   const topTable = utilization
     .filter((row) => Number(row.revenue || 0) > 0)
@@ -1135,9 +1052,6 @@ function Charts({ analytics, pieData }) {
 
 export default function Dashboard({ metrics, onNavigate, role = "admin" }) {
   const [dateRange, setDateRange] = useState("today");
-  const [dashboardSearch, setDashboardSearch] = useState("");
-  const [tableSort, setTableSort] = useState({ key: "time", direction: "desc" });
-  const [tablePage, setTablePage] = useState(1);
   const [sessions, setSessions] = useState({});
   const [elapsed, setElapsed] = useState({});
   const [analytics, setAnalytics] = useState(null);
@@ -1247,9 +1161,6 @@ export default function Dashboard({ metrics, onNavigate, role = "admin" }) {
   );
 
   const ownerReport = digest?.report;
-  const cashTotal = ownerReport?.cash_total || 0;
-  const upiTotal = ownerReport?.upi_total || 0;
-  const cardTotal = ownerReport?.card_total || 0;
   const ownerTotal = ownerReport
     ? (ownerReport.total_revenue || 0) + (ownerReport.food_only_revenue || 0)
     : metrics.sale;
@@ -1259,7 +1170,6 @@ export default function Dashboard({ metrics, onNavigate, role = "admin" }) {
   );
   const foodAttachment = ownerTotal > 0 ? Math.round(((metrics.food || 0) / ownerTotal) * 100) : 0;
   const occupancyPercent = pct(runningTables.length, TOTAL_TABLES);
-  const upcomingBookings = bookings.filter((booking) => booking.status === "booked");
 
   const actionItems = useMemo(() => {
     const items = [];
@@ -1317,192 +1227,30 @@ export default function Dashboard({ metrics, onNavigate, role = "admin" }) {
     return items.slice(0, 4);
   }, [runningTables, foodAttachment, ownerReport]);
 
-  const workRows = useMemo(() => {
-    const query = dashboardSearch.trim().toLowerCase();
-    const rows = [
-      ...runningTables.map(({ table, session, elapsedSecs }) => {
-        const amount = estimateTableCharge(session, elapsedSecs) + (session.food_total || 0);
-        return {
-          id: `table-${table.id}`,
-          type: "Table",
-          tone: session.paused ? "warning" : "active",
-          name: `T${table.num} · ${getTableLabel(table)}`,
-          detail: `${session.customer_name || "Player"} · ${session.billing_mode || "single"}`,
-          status: session.paused ? "Paused" : "Running",
-          amount,
-          amountLabel: money(amount),
-          time: fmtTime(elapsedSecs),
-          dateMs: Date.now(),
-          page: "tables",
-        };
-      }),
-      ...foodOrders.slice(0, 12).map((order) => {
-        const dateMs = parseDateLoose(order.created_at || order.timestamp || order.date);
-        return {
-          id: `food-${order.id}`,
-          type: "Food",
-          tone: "food",
-          name: order.customer_name || "Counter order",
-          detail: `${order.items?.length || 0} item(s) · ${order.payment_method || "Cash"}`,
-          status: "Billed",
-          amount: Number(order.total || 0),
-          amountLabel: money(order.total),
-          time: order.date || "-",
-          dateMs,
-          page: "food",
-        };
-      }),
-      ...bookings.slice(0, 12).map((booking) => {
-        const dateMs = parseDateLoose(booking.booking_time);
-        return {
-          id: `booking-${booking.id}`,
-          type: "Booking",
-          tone: booking.status === "missed" ? "warning" : "booking",
-          name: booking.customer_name || "Guest booking",
-          detail: `${booking.table_id || "ANY"} · ${booking.duration_mins || 60} min`,
-          status: booking.status || "booked",
-          amount: 0,
-          amountLabel: "-",
-          time: fmtShortDateTime(booking.booking_time),
-          dateMs,
-          page: "reservations",
-        };
-      }),
-      ...auditLogs.slice(0, 10).map((log) => {
-        const dateMs = parseDateLoose(log.created_at || log.timestamp || log.date);
-        return {
-          id: `audit-${log.id}`,
-          type: "Audit",
-          tone: log.severity === "danger" || log.severity === "critical" ? "critical" : "audit",
-          name: log.action?.replaceAll("_", " ") || "System activity",
-          detail: `${log.staff || "system"} · ${log.detail || ""}`,
-          status: log.severity || "info",
-          amount: Number(log.amount || 0),
-          amountLabel: log.amount ? money(log.amount) : "-",
-          time: log.date || "-",
-          dateMs,
-          page: "reports",
-          adminOnly: true,
-        };
-      }),
-    ].filter((row) => role === "admin" || !row.adminOnly);
-    return rows.filter((row) => (
-      isInDashboardRange(row.dateMs, dateRange)
-      && (!query || `${row.type} ${row.name} ${row.detail} ${row.status} ${row.time}`.toLowerCase().includes(query))
-    ));
-  }, [runningTables, foodOrders, bookings, auditLogs, dashboardSearch, dateRange, role]);
-
-  useEffect(() => {
-    setTablePage(1);
-  }, [dashboardSearch, tableSort, dateRange]);
-
-  const pieData = analytics
-    ? [
-        { name: "Snooker", value: analytics.breakdown.snooker },
-        { name: "Pool", value: analytics.breakdown.pool },
-        { name: "Food", value: analytics.breakdown.food },
-      ].filter((row) => row.value > 0)
-    : [];
-
-  if (role === "staff") {
-    return (
-      <StaffDashboard
-        dateRange={dateRange}
-        onDateRangeChange={setDateRange}
-        dashboardSearch={dashboardSearch}
-        onDashboardSearchChange={setDashboardSearch}
-        runningTables={runningTables}
-        sessions={sessions}
-        elapsed={elapsed}
-        waitlist={waitlist}
-        bookings={bookings}
-        foodOrders={foodOrders}
-        actionItems={actionItems}
-        workRows={workRows}
-        tableSort={tableSort}
-        onTableSortChange={setTableSort}
-        tablePage={tablePage}
-        onTablePageChange={setTablePage}
-        onNavigate={onNavigate}
-      />
-    );
-  }
-
   return (
-    <div className="ops-dashboard">
-      <DashboardControlStrip
+    <div className="ops-dashboard ops-dashboard-minimal">
+      <KeyMetricsSection
         dateRange={dateRange}
         onDateRangeChange={setDateRange}
-        search={dashboardSearch}
-        onSearchChange={setDashboardSearch}
-        role={role}
-        onNavigate={onNavigate}
+        ownerTotal={ownerTotal}
+        sessionCount={metrics.sessions}
+        liveTableTotal={liveTableTotal}
         activeCount={runningTables.length}
-        waitingCount={waitlist.length}
-        bookingCount={upcomingBookings.length}
+        occupancyPercent={occupancyPercent}
+        foodAttachment={foodAttachment}
+        foodRevenue={metrics.food}
       />
 
-      <div className="ops-kpi-grid four">
-        <KpiCard
-          label="Today Revenue"
-          value={money(ownerTotal)}
-          sub={`${metrics.sessions || 0} sessions closed today`}
-          trend={metrics.sessions ? `${metrics.sessions} bills` : "0 bills"}
-          direction={ownerTotal ? "up" : "neutral"}
-          tone="green"
-          icon="ti-cash"
-        />
-        <KpiCard
-          label="Live Floor Value"
-          value={money(liveTableTotal)}
-          sub="Estimated value still running"
-          trend={`${runningTables.length} live`}
-          direction={liveTableTotal ? "up" : "neutral"}
-          tone="blue"
-          icon="ti-live-view"
-        />
-        <KpiCard
-          label="Active Tables"
-          value={`${runningTables.length}/${TOTAL_TABLES}`}
-          sub={`${occupancyPercent}% occupancy right now`}
-          trend={`${Math.max(TOTAL_TABLES - runningTables.length, 0)} idle`}
-          direction={runningTables.length ? "up" : "neutral"}
-          tone="amber"
-          icon="ti-layout-grid"
-        />
-        <KpiCard
-          label="Food Attach"
-          value={`${foodAttachment}%`}
-          sub={`${money(metrics.food)} food revenue`}
-          trend={foodAttachment >= 15 ? "healthy" : "low"}
-          direction={foodAttachment >= 15 ? "up" : "down"}
-          tone={foodAttachment >= 15 ? "green" : "amber"}
-          icon="ti-tools-kitchen-2"
-        />
-      </div>
+      <QuickOperations onNavigate={onNavigate} />
 
-      <div className="ops-main-grid">
-        <LiveFloor sessions={sessions} elapsed={elapsed} onNavigate={onNavigate} />
-        <div className="ops-side-stack">
-          <ActionQueue actions={actionItems} />
-          <CloseReadiness digest={digest} activeCount={runningTables.length} onNavigate={onNavigate} />
-        </div>
-      </div>
+      <LiveFloor sessions={sessions} elapsed={elapsed} onNavigate={onNavigate} />
 
-      <Charts analytics={analytics} pieData={pieData} />
-
-      <div className="ops-clubflow-grid">
-        <QueueBookings waitlist={waitlist} bookings={bookings} onNavigate={onNavigate} />
-        <PopularFood foodStats={foodStats} foodOrders={foodOrders} onNavigate={onNavigate} />
-        <PaymentMix cashTotal={cashTotal} upiTotal={upiTotal} cardTotal={cardTotal} />
-      </div>
-
-      <DashboardDataTable
-        rows={workRows}
-        sort={tableSort}
-        onSortChange={setTableSort}
-        page={tablePage}
-        onPageChange={setTablePage}
+      <AttentionPanel
+        actions={actionItems}
+        digest={digest}
+        activeCount={runningTables.length}
+        bookings={bookings}
+        waitlist={waitlist}
         onNavigate={onNavigate}
       />
     </div>
