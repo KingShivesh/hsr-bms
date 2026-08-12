@@ -179,60 +179,11 @@ function BusinessPulse({
   );
 }
 
-function DashboardControlStrip({ dateRange, onDateRangeChange, search, onSearchChange, role }) {
-  return (
-    <section className="ops-control-strip" aria-label="Dashboard controls">
-      <div>
-        <span className="ops-eyebrow">{role === "staff" ? "Operator view" : "Executive view"}</span>
-        <strong>{role === "staff" ? "Live floor control" : "Venue performance dashboard"}</strong>
-      </div>
-      <div className="ops-control-actions">
-        <label>
-          <i className="ti ti-calendar" aria-hidden="true" />
-          <span>Register range</span>
-          <select value={dateRange} onChange={(event) => onDateRangeChange(event.target.value)}>
-            <option value="today">Today</option>
-            <option value="week">Last 7 days</option>
-            <option value="all">All time</option>
-          </select>
-        </label>
-        <label className="ops-dashboard-search">
-          <i className="ti ti-search" aria-hidden="true" />
-          <input
-            value={search}
-            onChange={(event) => onSearchChange(event.target.value)}
-            placeholder="Search tables, orders, bookings..."
-          />
-        </label>
-      </div>
-    </section>
-  );
-}
-
-function KpiCard({ label, value, sub, tone = "neutral", icon, trend = "0%", direction = "neutral" }) {
-  return (
-    <article className={`ops-kpi ${tone}`}>
-      <div className="ops-kpi-top">
-        <span>{label}</span>
-        <i className={`ti ${icon}`} aria-hidden="true" />
-      </div>
-      <strong>{value}</strong>
-      <p>
-        <em className={`ops-kpi-trend ${direction}`}>
-          <i className={`ti ${direction === "down" ? "ti-trending-down" : direction === "up" ? "ti-trending-up" : "ti-minus"}`} aria-hidden="true" />
-          {trend}
-        </em>
-        <span>{sub}</span>
-      </p>
-    </article>
-  );
-}
-
 function QuickOperations({ onNavigate, activeCount, waitingCount, bookingCount }) {
   const actions = [
     {
       label: "Start Table",
-      sub: `${Math.max(TOTAL_TABLES - activeCount, 0)} idle`,
+      sub: "",
       icon: "ti-player-play",
       page: "tables",
       tone: "primary",
@@ -268,66 +219,105 @@ function QuickOperations({ onNavigate, activeCount, waitingCount, bookingCount }
   ];
 
   return (
-    <section className="ops-quickbar" aria-label="Quick operations">
-      <div>
-        <span className="ops-eyebrow">Quick operations</span>
-        <strong>Front desk actions</strong>
+    <div className="ops-quick-actions">
+      {actions.map((action) => (
+        <button
+          type="button"
+          key={action.label}
+          className={`ops-quick-action ${action.tone}`}
+          onClick={() => onNavigate(action.page)}
+        >
+          <i className={`ti ${action.icon}`} aria-hidden="true" />
+          <span>
+            <b>{action.label}</b>
+            {action.sub && <small>{action.sub}</small>}
+          </span>
+        </button>
+      ))}
+    </div>
+  );
+}
+
+function DashboardControlStrip({
+  dateRange,
+  onDateRangeChange,
+  search,
+  onSearchChange,
+  role,
+  onNavigate,
+  activeCount,
+  waitingCount,
+  bookingCount,
+}) {
+  return (
+    <section className="ops-control-strip" aria-label="Dashboard controls">
+      <div className="ops-control-primary">
+        <div>
+          <span className="ops-eyebrow">{role === "staff" ? "Operator view" : "Executive view"}</span>
+          <strong>{role === "staff" ? "Live floor control" : "Venue performance dashboard"}</strong>
+        </div>
+        <div className="ops-control-actions">
+          <label>
+            <i className="ti ti-calendar" aria-hidden="true" />
+            <span>Register range</span>
+            <select value={dateRange} onChange={(event) => onDateRangeChange(event.target.value)}>
+              <option value="today">Today</option>
+              <option value="week">Last 7 days</option>
+              <option value="all">All time</option>
+            </select>
+          </label>
+          <label className="ops-dashboard-search">
+            <i className="ti ti-search" aria-hidden="true" />
+            <input
+              value={search}
+              onChange={(event) => onSearchChange(event.target.value)}
+              placeholder="Search tables, orders, bookings..."
+            />
+          </label>
+        </div>
       </div>
-      <div className="ops-quick-actions">
-        {actions.map((action) => (
-          <button
-            type="button"
-            key={action.label}
-            className={`ops-quick-action ${action.tone}`}
-            onClick={() => onNavigate(action.page)}
-          >
-            <i className={`ti ${action.icon}`} aria-hidden="true" />
-            <span>
-              <b>{action.label}</b>
-              <small>{action.sub}</small>
-            </span>
-          </button>
-        ))}
-      </div>
+      <QuickOperations
+        onNavigate={onNavigate}
+        activeCount={activeCount}
+        waitingCount={waitingCount}
+        bookingCount={bookingCount}
+      />
     </section>
   );
 }
 
-function RunningStrip({ runningTables, onNavigate }) {
+function KpiCard({ label, value, sub, tone = "neutral", icon, trend = "0%", direction = "neutral" }) {
   return (
-    <button className="ops-running-strip" type="button" onClick={() => onNavigate("tables")}>
-      <div>
-        <span>{runningTables.length} running now</span>
-        <strong>{runningTables.length ? "Monitor active tables" : "All tables idle"}</strong>
+    <article className={`ops-kpi ${tone}`}>
+      <div className="ops-kpi-top">
+        <span>{label}</span>
+        <i className={`ti ${icon}`} aria-hidden="true" />
       </div>
-      <div className="ops-running-chips">
-        {runningTables.length === 0 ? (
-          <em>No active sessions</em>
-        ) : (
-          runningTables.map(({ table, session, elapsedSecs }) => (
-            <span key={table.id}>
-              T{table.num}
-              <b>{fmtTime(elapsedSecs)}</b>
-              <small>{money(estimateTableCharge(session, elapsedSecs) + (session.food_total || 0))}</small>
-            </span>
-          ))
-        )}
-      </div>
-      <i className="ti ti-chevron-right" aria-hidden="true" />
-    </button>
+      <strong>{value}</strong>
+      <p>
+        <em className={`ops-kpi-trend ${direction}`}>
+          <i className={`ti ${direction === "down" ? "ti-trending-down" : direction === "up" ? "ti-trending-up" : "ti-minus"}`} aria-hidden="true" />
+          {trend}
+        </em>
+        <span>{sub}</span>
+      </p>
+    </article>
   );
 }
 
 function LiveFloor({ sessions, elapsed, onNavigate }) {
+  const activeCount = TABLES.filter((table) => Boolean(sessions[table.id])).length;
   return (
     <section className="ops-panel ops-floor-panel">
       <SectionHead
-        eyebrow="Floor control"
         title="Live Table Floor"
         action={
-          <button type="button" className="ops-link-btn" onClick={() => onNavigate("tables")}>
-            Manage tables
-          </button>
+          <div className="ops-section-actions">
+            <span className="ops-live-pill">{activeCount} running now</span>
+            <button type="button" className="ops-link-btn" onClick={() => onNavigate("tables")}>
+              Manage tables
+            </button>
+          </div>
         }
       />
       <div className="ops-floor-grid">
@@ -381,10 +371,11 @@ function LiveFloor({ sessions, elapsed, onNavigate }) {
 }
 
 function ActionQueue({ actions }) {
+  const compact = actions.length === 1 && actions[0]?.tone === "positive";
   return (
-    <section className="ops-panel">
-      <SectionHead eyebrow="Needs attention" title="Action Queue" />
-      <div className="ops-action-list">
+    <section className={`ops-panel ${compact ? "ops-status-panel" : ""}`}>
+      <SectionHead title="Action Queue" />
+      <div className={`ops-action-list ${compact ? "compact" : ""}`}>
         {actions.map((item) => (
           <div className={`ops-action-row ${item.tone}`} key={item.title}>
             <i className={`ti ${item.icon}`} aria-hidden="true" />
@@ -817,6 +808,10 @@ function StaffDashboard({
         search={dashboardSearch}
         onSearchChange={onDashboardSearchChange}
         role="staff"
+        onNavigate={onNavigate}
+        activeCount={runningTables.length}
+        waitingCount={waitlist.length}
+        bookingCount={upcomingBookings.length}
       />
       <StaffOpsHeader
         runningTables={runningTables}
@@ -825,13 +820,6 @@ function StaffDashboard({
         foodOrders={foodOrders}
         onNavigate={onNavigate}
       />
-      <QuickOperations
-        onNavigate={onNavigate}
-        activeCount={runningTables.length}
-        waitingCount={waitlist.length}
-        bookingCount={upcomingBookings.length}
-      />
-      <RunningStrip runningTables={runningTables} onNavigate={onNavigate} />
       <div className="ops-kpi-grid four">
         <KpiCard
           label="Active Tables"
@@ -1448,16 +1436,11 @@ export default function Dashboard({ metrics, onNavigate, role = "admin" }) {
         search={dashboardSearch}
         onSearchChange={setDashboardSearch}
         role={role}
-      />
-
-      <QuickOperations
         onNavigate={onNavigate}
         activeCount={runningTables.length}
         waitingCount={waitlist.length}
         bookingCount={upcomingBookings.length}
       />
-
-      <RunningStrip runningTables={runningTables} onNavigate={onNavigate} />
 
       <div className="ops-kpi-grid four">
         <KpiCard
