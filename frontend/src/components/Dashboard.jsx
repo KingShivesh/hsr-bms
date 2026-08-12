@@ -15,13 +15,9 @@ import {
 } from "recharts";
 import {
   getActive,
-  getAnalytics,
-  getAuditLogs,
   getBookings,
   getClosingInsights,
   getClosingReport,
-  getFoodOrders,
-  getFoodStats,
   getWaitlist,
 } from "../api/index.js";
 import { HSR_TABLES, TOTAL_TABLES, getTableLabel } from "../config/hsrTables.js";
@@ -52,28 +48,6 @@ function fmtShortDateTime(value) {
     hour: "2-digit",
     minute: "2-digit",
   });
-}
-
-function parseDateLoose(value) {
-  if (!value) return null;
-  if (typeof value === "number") return value;
-  const direct = new Date(value);
-  if (!Number.isNaN(direct.getTime())) return direct.getTime();
-  const match = String(value).match(/^(\d{1,2})[/-](\d{1,2})[/-](\d{2,4})(?:.*?(\d{1,2}):(\d{2}))?/);
-  if (!match) return null;
-  const [, day, month, rawYear, hour = "0", minute = "0"] = match;
-  const year = rawYear.length === 2 ? `20${rawYear}` : rawYear;
-  const parsed = new Date(Number(year), Number(month) - 1, Number(day), Number(hour), Number(minute));
-  return Number.isNaN(parsed.getTime()) ? null : parsed.getTime();
-}
-
-function isInDashboardRange(timestamp, range) {
-  if (range === "all" || !timestamp) return true;
-  const now = new Date();
-  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
-  if (range === "today") return timestamp >= today;
-  const weekStart = today - 6 * 24 * 60 * 60 * 1000;
-  return timestamp >= weekStart;
 }
 
 function pct(value, total) {
@@ -1054,13 +1028,9 @@ export default function Dashboard({ metrics, onNavigate, role = "admin" }) {
   const [dateRange, setDateRange] = useState("today");
   const [sessions, setSessions] = useState({});
   const [elapsed, setElapsed] = useState({});
-  const [analytics, setAnalytics] = useState(null);
   const [digest, setDigest] = useState(null);
   const [waitlist, setWaitlist] = useState([]);
   const [bookings, setBookings] = useState([]);
-  const [foodStats, setFoodStats] = useState([]);
-  const [foodOrders, setFoodOrders] = useState([]);
-  const [auditLogs, setAuditLogs] = useState([]);
 
   useEffect(() => {
     async function fetchActive() {
@@ -1082,15 +1052,6 @@ export default function Dashboard({ metrics, onNavigate, role = "admin" }) {
       }
     }
 
-    async function fetchAnalytics() {
-      try {
-        const res = await getAnalytics();
-        setAnalytics(res.data);
-      } catch (err) {
-        console.error(err);
-      }
-    }
-
     async function fetchDigest() {
       try {
         const [reportRes, insightRes] = await Promise.all([
@@ -1107,22 +1068,15 @@ export default function Dashboard({ metrics, onNavigate, role = "admin" }) {
       const results = await Promise.allSettled([
         getWaitlist(),
         getBookings(),
-        getFoodStats(),
-        getFoodOrders(),
-        getAuditLogs(12),
       ]);
       if (results[0].status === "fulfilled") setWaitlist(results[0].value.data || []);
       if (results[1].status === "fulfilled") setBookings(results[1].value.data || []);
-      if (results[2].status === "fulfilled") setFoodStats(results[2].value.data || []);
-      if (results[3].status === "fulfilled") setFoodOrders(results[3].value.data || []);
-      if (results[4].status === "fulfilled") setAuditLogs(results[4].value.data || []);
     }
 
     fetchActive();
     const deferredLoad = window.setTimeout(() => {
       if (role === "admin") {
         fetchDigest();
-        fetchAnalytics();
       }
       fetchOperations();
     }, 200);
