@@ -32,10 +32,20 @@
   --icon-box-sm: 34px;
   --icon-box-md: 40px;
   --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
-  --accent: #0f6e56;
-  --accent-hover: #0a5845;
-  --accent-bg: #e1f5ee;
-  --accent-text: #085041;
+  --accent: #10b981;
+  --accent-hover: #059669;
+  --accent-bg: #dff8ee;
+  --accent-text: #047857;
+  --luxury-charcoal: #0f172a;
+  --luxury-black: #111827;
+  --luxury-card: rgba(255, 255, 255, 0.78);
+  --luxury-card-dark: rgba(17, 24, 39, 0.82);
+  --luxury-gold: #fbbf24;
+  --luxury-blue: #3b82f6;
+  --luxury-crimson: #ef4444;
+  --luxury-glass-border: rgba(255, 255, 255, 0.22);
+  --luxury-shadow: 0 24px 70px rgba(15, 23, 42, 0.12);
+  --luxury-shadow-soft: 0 12px 34px rgba(15, 23, 42, 0.08);
   --surface: #fff;
   --surface-muted: #f7f8fa;
   --border: #e8ebef;
@@ -76,12 +86,12 @@ textarea:focus-visible {
 
 /* ── Dark mode ── */
 body.dark {
-  background: #0f0f0f;
+  background: #0f172a;
   color: #e5e5e5;
-  --accent: #48c094;
-  --accent-hover: #6be2af;
-  --accent-bg: rgba(72, 192, 148, 0.14);
-  --accent-text: #bff7dd;
+  --accent: #10b981;
+  --accent-hover: #34d399;
+  --accent-bg: rgba(16, 185, 129, 0.14);
+  --accent-text: #a7f3d0;
   --surface: #111827;
   --surface-muted: #080d16;
   --border: rgba(148, 163, 184, 0.16);
@@ -13765,5 +13775,489 @@ body.dark .ops-hero p {
 
   .table-detail-panel .table-session-card > div:first-child > div {
     height: 136px !important;
+  }
+}
+
+/* Luxury snooker-club UI polish: existing layout and behavior preserved */
+body {
+  font-family: Inter, Geist, var(--font-sans);
+  background:
+    radial-gradient(circle at 18% -10%, color-mix(in srgb, var(--accent) 10%, transparent), transparent 34rem),
+    radial-gradient(circle at 88% 8%, color-mix(in srgb, var(--luxury-gold) 10%, transparent), transparent 30rem),
+    linear-gradient(180deg, #f8fafc 0%, #eef3f7 100%);
+}
+
+body.dark {
+  background:
+    radial-gradient(circle at 20% -10%, rgba(16, 185, 129, 0.18), transparent 34rem),
+    radial-gradient(circle at 85% 4%, rgba(251, 191, 36, 0.12), transparent 30rem),
+    linear-gradient(180deg, var(--luxury-charcoal) 0%, #070b12 100%);
+}
+
+.main-content,
+.page {
+  background: transparent !important;
+}
+
+.cf-topbar,
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 80;
+  border-bottom: 1px solid color-mix(in srgb, var(--border) 74%, transparent) !important;
+  background: color-mix(in srgb, var(--surface) 78%, transparent) !important;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.36), 0 18px 44px rgba(15, 23, 42, 0.06) !important;
+  backdrop-filter: blur(18px) saturate(1.25);
+  -webkit-backdrop-filter: blur(18px) saturate(1.25);
+}
+
+body.dark .cf-topbar,
+body.dark .topbar {
+  background: rgba(15, 23, 42, 0.74) !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.28) !important;
+}
+
+.cf-sidebar {
+  background:
+    linear-gradient(180deg, rgba(15, 23, 42, 0.96), rgba(17, 24, 39, 0.98)) !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+  box-shadow: 20px 0 60px rgba(15, 23, 42, 0.18) !important;
+}
+
+.cf-sidebar .sb-logo-name,
+.cf-sidebar .cf-user-mini b {
+  color: #f8fafc !important;
+}
+
+.cf-sidebar .sb-logo-sub,
+.cf-sidebar .cf-user-mini small,
+.cf-sidebar .sb-section {
+  color: rgba(226, 232, 240, 0.58) !important;
+}
+
+.cf-sidebar .sb-item,
+.cf-quick-btn {
+  border: 1px solid transparent !important;
+  border-radius: var(--radius-lg) !important;
+  color: rgba(226, 232, 240, 0.76) !important;
+  transition: background 0.18s ease, border-color 0.18s ease, color 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease !important;
+}
+
+.cf-sidebar .sb-item:hover,
+.cf-quick-btn:hover {
+  background: rgba(255, 255, 255, 0.07) !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+  color: #fff !important;
+  transform: translateX(2px);
+}
+
+.cf-sidebar .sb-item.active {
+  background:
+    linear-gradient(135deg, rgba(16, 185, 129, 0.22), rgba(251, 191, 36, 0.1)) !important;
+  border-color: rgba(16, 185, 129, 0.34) !important;
+  color: #fff !important;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05), 0 12px 28px rgba(16, 185, 129, 0.12) !important;
+}
+
+.cf-sidebar .sb-item i,
+.cf-quick-btn i,
+.topbar-icon-btn i,
+.ops-kpi-top i,
+.cf-action-btn i,
+.table-utility-btn i,
+.table-control-btn i,
+.table-payment-btn i {
+  transition: transform 0.18s ease, color 0.18s ease, background 0.18s ease;
+}
+
+.cf-sidebar .sb-item:hover i,
+.topbar-icon-btn:hover i,
+.ops-quick-action:hover i,
+.cf-action-btn:hover i {
+  transform: translateY(-1px) scale(1.04);
+}
+
+.ops-panel,
+.ops-kpi,
+.ops-quickbar,
+.ops-running-strip,
+.ops-control-strip,
+.ops-staff-header,
+.settings-panel,
+.settings-card,
+.panel,
+.history-section,
+.member-card,
+.cf-panel,
+.cf-card,
+.cf-data-row,
+.food-menu-card,
+.table-session-card,
+.table-maintenance-card,
+.metric-card {
+  border: 1px solid color-mix(in srgb, var(--border) 80%, transparent) !important;
+  border-radius: var(--radius-lg) !important;
+  background: var(--luxury-card) !important;
+  box-shadow: var(--luxury-shadow-soft) !important;
+  backdrop-filter: blur(12px) saturate(1.15);
+  -webkit-backdrop-filter: blur(12px) saturate(1.15);
+  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease, background 0.18s ease !important;
+}
+
+.ops-panel:hover,
+.ops-kpi:hover,
+.settings-panel:hover,
+.cf-card:hover,
+.cf-data-row:hover,
+.food-menu-card:hover,
+.table-session-card:hover,
+.metric-card:hover {
+  transform: translateY(-2px);
+  border-color: color-mix(in srgb, var(--accent) 28%, var(--border)) !important;
+  box-shadow: var(--luxury-shadow) !important;
+}
+
+body.dark .ops-panel,
+body.dark .ops-kpi,
+body.dark .ops-quickbar,
+body.dark .ops-running-strip,
+body.dark .ops-control-strip,
+body.dark .ops-staff-header,
+body.dark .settings-panel,
+body.dark .settings-card,
+body.dark .panel,
+body.dark .history-section,
+body.dark .member-card,
+body.dark .cf-panel,
+body.dark .cf-card,
+body.dark .cf-data-row,
+body.dark .food-menu-card,
+body.dark .table-session-card,
+body.dark .table-maintenance-card,
+body.dark .metric-card {
+  background: var(--luxury-card-dark) !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+  box-shadow: 0 18px 52px rgba(0, 0, 0, 0.26) !important;
+}
+
+.topbar-title,
+.ops-control-strip strong,
+.ops-section-head h3,
+.settings-panel-title,
+.settings-card-heading h3,
+.cf-title-block h1,
+.panel-title {
+  letter-spacing: -0.01em;
+}
+
+.ops-kpi strong,
+.metric-value,
+.table-floor-timer,
+.table-session-card [style*="font-variant-numeric"] {
+  font-variant-numeric: tabular-nums;
+  animation: luxury-value-rise 0.34s ease both;
+}
+
+@keyframes luxury-value-rise {
+  from {
+    opacity: 0.76;
+    transform: translateY(3px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.btn,
+.primary-action-btn,
+.topbar-action-btn,
+.cf-action-btn,
+.dashboard-panel-action,
+.owner-close-day-btn,
+.table-control-btn,
+.table-payment-btn,
+.table-secondary-btn,
+.table-notes-btn,
+.queue-seat-btn,
+.booking-offer-btn,
+.member-add-btn,
+.member-action-btn,
+.ui-tab-btn,
+.food-order-cancel,
+.checkout-bill-close,
+.checkout-rupee-apply-btn {
+  border-radius: var(--radius-md) !important;
+  transition: transform 0.16s ease, box-shadow 0.16s ease, background 0.16s ease, border-color 0.16s ease, opacity 0.16s ease !important;
+}
+
+.btn:hover:not(:disabled),
+.primary-action-btn:hover:not(:disabled),
+.topbar-action-btn:hover:not(:disabled),
+.cf-action-btn:hover:not(:disabled),
+.dashboard-panel-action:hover:not(:disabled),
+.owner-close-day-btn:hover:not(:disabled),
+.table-control-btn:hover:not(:disabled),
+.table-payment-btn:hover:not(:disabled),
+.table-secondary-btn:hover:not(:disabled),
+.table-notes-btn:hover:not(:disabled),
+.queue-seat-btn:hover:not(:disabled),
+.booking-offer-btn:hover:not(:disabled),
+.member-add-btn:hover:not(:disabled),
+.member-action-btn:hover:not(:disabled),
+.ui-tab-btn:hover:not(:disabled),
+.checkout-bill-close:hover:not(:disabled),
+.checkout-rupee-apply-btn:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 14px 30px rgba(15, 23, 42, 0.12) !important;
+}
+
+.btn:active:not(:disabled),
+.primary-action-btn:active:not(:disabled),
+.topbar-action-btn:active:not(:disabled),
+.cf-action-btn:active:not(:disabled),
+.table-control-btn:active:not(:disabled),
+.table-payment-btn:active:not(:disabled),
+.table-secondary-btn:active:not(:disabled),
+.table-notes-btn:active:not(:disabled) {
+  transform: translateY(0) scale(0.99);
+  box-shadow: 0 6px 14px rgba(15, 23, 42, 0.1) !important;
+}
+
+.primary-action-btn,
+.btn-primary-sm,
+.cf-action-btn.primary,
+.table-frame-start,
+.table-control-btn.resume,
+.dashboard-open-floor-btn {
+  border-color: color-mix(in srgb, var(--accent) 82%, #fff) !important;
+  background:
+    linear-gradient(135deg, var(--accent), var(--accent-hover)) !important;
+  color: #fff !important;
+  box-shadow: 0 14px 34px color-mix(in srgb, var(--accent) 24%, transparent) !important;
+}
+
+.btn-danger-sm,
+.cf-action-btn.danger,
+.table-frame-end,
+.table-control-btn.close,
+.food-order-cancel {
+  border-color: color-mix(in srgb, var(--luxury-crimson) 72%, #fff) !important;
+  background:
+    linear-gradient(135deg, var(--luxury-crimson), #c53030) !important;
+  color: #fff !important;
+}
+
+.btn-warning-sm,
+.cf-action-btn.warning,
+.owner-close-day-btn {
+  border-color: color-mix(in srgb, var(--luxury-gold) 55%, var(--border)) !important;
+  background: color-mix(in srgb, var(--luxury-gold) 14%, var(--surface)) !important;
+  color: color-mix(in srgb, var(--luxury-gold) 55%, var(--text-primary)) !important;
+}
+
+button:disabled,
+.btn:disabled,
+.primary-action-btn:disabled,
+.cf-action-btn:disabled {
+  filter: grayscale(0.2);
+  opacity: 0.58 !important;
+  cursor: not-allowed !important;
+  box-shadow: none !important;
+}
+
+.input-field,
+.table-mini-input,
+.frame-loser-input,
+.quick-session-modal input,
+.quick-session-modal select,
+.checkout-rupee-discount input,
+textarea,
+select {
+  border-radius: var(--radius-md) !important;
+  border-color: color-mix(in srgb, var(--border) 92%, transparent) !important;
+  background: color-mix(in srgb, var(--surface) 88%, transparent) !important;
+  transition: border-color 0.16s ease, box-shadow 0.16s ease, background 0.16s ease !important;
+}
+
+.input-field:focus,
+.table-mini-input:focus,
+.frame-loser-input:focus,
+.quick-session-modal input:focus,
+.quick-session-modal select:focus,
+textarea:focus,
+select:focus {
+  border-color: color-mix(in srgb, var(--accent) 56%, var(--border)) !important;
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 14%, transparent) !important;
+}
+
+.table-session-card:not(.occupied) {
+  position: relative;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04), 0 0 0 1px color-mix(in srgb, var(--success) 10%, transparent) !important;
+}
+
+.table-session-card:not(.occupied):hover {
+  border-color: color-mix(in srgb, var(--success) 34%, var(--border)) !important;
+  box-shadow: 0 16px 40px color-mix(in srgb, var(--success) 14%, transparent) !important;
+}
+
+.table-session-card.occupied {
+  position: relative;
+  border-color: color-mix(in srgb, var(--luxury-crimson) 44%, var(--border)) !important;
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--luxury-crimson) 7%, var(--surface)), var(--surface)) !important;
+  box-shadow: 0 18px 52px color-mix(in srgb, var(--luxury-crimson) 18%, transparent) !important;
+}
+
+body.dark .table-session-card.occupied {
+  background:
+    linear-gradient(180deg, rgba(239, 68, 68, 0.12), rgba(17, 24, 39, 0.86)) !important;
+  border-color: rgba(239, 68, 68, 0.34) !important;
+}
+
+.table-session-card.occupied::after,
+.table-floor-tile.running::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
+.table-frame-panel.running {
+  animation: luxury-frame-pulse 2.4s ease-in-out infinite;
+}
+
+@keyframes luxury-frame-pulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--luxury-gold) 24%, transparent);
+  }
+  50% {
+    box-shadow: 0 0 0 5px color-mix(in srgb, var(--luxury-gold) 0%, transparent);
+  }
+}
+
+.table-payment-btn.active,
+.ui-tab-btn.active,
+.settings-chip.active,
+.ops-table-pill.active {
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 24%, transparent), 0 10px 24px color-mix(in srgb, var(--accent) 12%, transparent) !important;
+}
+
+.food-menu-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.food-menu-card::before {
+  content: "";
+  width: 40px;
+  height: 40px;
+  display: block;
+  margin-bottom: var(--space-3);
+  border-radius: 14px;
+  background:
+    radial-gradient(circle at 32% 30%, rgba(255, 255, 255, 0.95), transparent 24%),
+    linear-gradient(135deg, color-mix(in srgb, var(--accent) 18%, var(--surface)), color-mix(in srgb, var(--luxury-gold) 12%, var(--surface)));
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 18%, transparent);
+}
+
+.food-menu-card.active::before {
+  background:
+    radial-gradient(circle at 32% 30%, rgba(255, 255, 255, 0.92), transparent 24%),
+    linear-gradient(135deg, var(--accent), var(--accent-hover));
+}
+
+.food-menu-price,
+.checkout-bill-total strong,
+.checkout-summary-card strong,
+.ops-payment-row em {
+  color: var(--accent-text) !important;
+  font-variant-numeric: tabular-nums;
+}
+
+.recharts-wrapper .recharts-cartesian-grid line {
+  stroke: color-mix(in srgb, var(--border) 70%, transparent);
+}
+
+.recharts-tooltip-wrapper {
+  filter: drop-shadow(0 18px 34px rgba(15, 23, 42, 0.16));
+}
+
+.ops-empty-chart,
+.cf-empty,
+.ops-empty-line {
+  border-radius: var(--radius-lg);
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--accent-bg) 46%, var(--surface)), color-mix(in srgb, var(--surface) 88%, transparent));
+}
+
+.toast,
+.backend-status-banner,
+.settings-flash {
+  border-radius: var(--radius-lg) !important;
+  box-shadow: var(--luxury-shadow-soft) !important;
+  backdrop-filter: blur(14px) saturate(1.2);
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  border: 3px solid transparent;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--text-muted) 54%, transparent);
+  background-clip: padding-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: color-mix(in srgb, var(--accent) 62%, transparent);
+  background-clip: padding-box;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+@media (max-width: 760px) {
+  .cf-topbar,
+  .topbar {
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+  }
+
+  .ops-panel,
+  .ops-kpi,
+  .settings-panel,
+  .cf-card,
+  .food-menu-card,
+  .table-session-card {
+    border-radius: var(--radius-md) !important;
+  }
+
+  .btn,
+  .primary-action-btn,
+  .cf-action-btn,
+  .table-control-btn,
+  .table-payment-btn,
+  .table-secondary-btn,
+  .table-notes-btn,
+  .ui-tab-btn {
+    min-height: var(--btn-h-lg) !important;
   }
 }
