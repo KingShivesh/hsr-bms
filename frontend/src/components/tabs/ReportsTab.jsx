@@ -65,7 +65,7 @@ function TabBtn({ active, onClick, children }) {
 }
 
 function StatCard({ label, value, color }) {
-  const statColor = color === "#111" ? "var(--venue-text, var(--text))" : color;
+  const statColor = color === "var(--text-primary)" ? "var(--venue-text, var(--text))" : color;
   return (
     <div
       className="report-stat-card"
@@ -143,7 +143,7 @@ function HistoryView({ history, period, onPeriodChange, selectedDate, onDateChan
           gap: "10px",
         }}
       >
-        <div style={{ fontSize: "13px", fontWeight: 600, color: "var(--venue-text, var(--text))" }}>
+        <div style={{ fontSize: "var(--text-sm)", fontWeight: "var(--weight-semibold)", color: "var(--venue-text, var(--text))" }}>
           Bills
         </div>
         <div style={{ display: "flex", gap: "6px", flexWrap: "wrap" }}>
@@ -169,14 +169,14 @@ function HistoryView({ history, period, onPeriodChange, selectedDate, onDateChan
             onClick={onExport}
             disabled={exporting}
             style={{
-              fontSize: "12px",
+              fontSize: "var(--text-sm)",
               padding: "6px 14px",
-              borderRadius: "6px",
+              borderRadius: "var(--radius-sm)",
               cursor: exporting ? "wait" : "pointer",
-              background: "#f0fdf4",
-              color: "#16a34a",
-              border: "1px solid #bbf7d0",
-              fontWeight: 500,
+              background: "var(--success-bg)",
+              color: "var(--success)",
+              border: "1px solid color-mix(in srgb, var(--success) 28%, var(--border))",
+              fontWeight: "var(--weight-medium)",
             }}
           >
             {exporting ? "Exporting..." : "Export CSV"}
@@ -223,31 +223,31 @@ function HistoryView({ history, period, onPeriodChange, selectedDate, onDateChan
             ) : (
               filtered.map((r, i) => (
                 <tr key={i}>
-                  <td style={{ color: "#bbb", fontSize: "12px" }}>{formatBillDate(r)}</td>
+                  <td style={{ color: "var(--text-muted)", fontSize: "var(--text-sm)" }}>{formatBillDate(r)}</td>
                   <td>
                     <span
                       style={{
-                        background: "#f5f5f5",
-                        color: "#111",
+                        background: "var(--surface-muted)",
+                        color: "var(--text-primary)",
                         padding: "2px 8px",
-                        borderRadius: "4px",
-                        fontSize: "12px",
-                        fontWeight: 600,
+                        borderRadius: "var(--radius-sm)",
+                        fontSize: "var(--text-sm)",
+                        fontWeight: "var(--weight-semibold)",
                       }}
                     >
                       {r.tbl}
                     </span>
                   </td>
-                  <td style={{ fontWeight: 500 }}>{r.nm}</td>
-                  <td style={{ color: "#64748b", fontSize: "12px", fontWeight: 700 }}>
+                  <td style={{ fontWeight: "var(--weight-medium)" }}>{r.nm}</td>
+                  <td style={{ color: "var(--text-secondary)", fontSize: "var(--text-sm)", fontWeight: "var(--weight-bold)" }}>
                     {labelBillingMode(r.billing_mode)}
                   </td>
-                  <td style={{ color: "#888" }}>{r.dur}m</td>
-                  <td style={{ color: "#16a34a", fontWeight: 500 }}>
+                  <td style={{ color: "var(--text-secondary)" }}>{r.dur}m</td>
+                  <td style={{ color: "var(--success)", fontWeight: "var(--weight-medium)" }}>
                     ₹{r.ply}
                   </td>
-                  <td style={{ color: "#d97706" }}>₹{r.famt || 0}</td>
-                  <td style={{ fontWeight: 700 }}>₹{r.tot}</td>
+                  <td style={{ color: "var(--warning)" }}>₹{r.famt || 0}</td>
+                  <td style={{ fontWeight: "var(--weight-bold)" }}>₹{r.tot}</td>
                 </tr>
               ))
             )}
@@ -285,10 +285,10 @@ function TopCustomersView() {
           marginBottom: "16px",
         }}
       >
-        <div style={{ fontSize: "14px", fontWeight: 600, color: "var(--venue-text, var(--text))" }}>
+        <div style={{ fontSize: "var(--text-base)", fontWeight: "var(--weight-semibold)", color: "var(--venue-text, var(--text))" }}>
           Regular Customers{" "}
           {data && (
-            <span style={{ fontSize: "12px", color: "#bbb", fontWeight: 400 }}>
+            <span style={{ fontSize: "var(--text-sm)", color: "var(--text-muted)", fontWeight: "var(--weight-regular)" }}>
               — {data.label}
             </span>
           )}
@@ -335,42 +335,42 @@ function TopCustomersView() {
                   <td>
                     <span
                       style={{
-                        fontSize: "12px",
-                        fontWeight: 700,
+                        fontSize: "var(--text-sm)",
+                        fontWeight: "var(--weight-bold)",
                         padding: "2px 8px",
-                        borderRadius: "4px",
+                        borderRadius: "var(--radius-sm)",
                         background:
                           i === 0
-                            ? "#fefce8"
+                            ? "var(--warning-bg)"
                             : i === 1
-                              ? "#f5f5f5"
+                              ? "var(--surface-muted)"
                               : i === 2
-                                ? "#fff7ed"
-                                : "#fafafa",
+                                ? "var(--warning-bg)"
+                                : "var(--surface-muted)",
                         color:
                           i === 0
-                            ? "#854d0e"
+                            ? "var(--warning)"
                             : i === 1
-                              ? "#555"
+                              ? "var(--text-secondary)"
                               : i === 2
-                                ? "#9a3412"
-                                : "#888",
+                                ? "var(--warning)"
+                                : "var(--text-secondary)",
                       }}
                     >
                       #{i + 1}
                     </span>
                   </td>
-                  <td style={{ fontWeight: 500 }}>{c.name}</td>
-                  <td style={{ color: "var(--accent)", fontWeight: 500 }}>
+                  <td style={{ fontWeight: "var(--weight-medium)" }}>{c.name}</td>
+                  <td style={{ color: "var(--accent)", fontWeight: "var(--weight-medium)" }}>
                     {c.visits}
                   </td>
-                  <td style={{ color: "#888" }}>
+                  <td style={{ color: "var(--text-secondary)" }}>
                     ₹{c.play.toLocaleString("en-IN")}
                   </td>
-                  <td style={{ color: "#d97706" }}>
+                  <td style={{ color: "var(--warning)" }}>
                     ₹{c.food.toLocaleString("en-IN")}
                   </td>
-                  <td style={{ fontWeight: 700, color: "#16a34a" }}>
+                  <td style={{ fontWeight: "var(--weight-bold)", color: "var(--success)" }}>
                     ₹{c.spent.toLocaleString("en-IN")}
                   </td>
                 </tr>
@@ -399,9 +399,9 @@ function UtilizationView() {
     <div>
       <div
         style={{
-          fontSize: "14px",
-          fontWeight: 600,
-          color: "#111",
+          fontSize: "var(--text-base)",
+          fontWeight: "var(--weight-semibold)",
+          color: "var(--text-primary)",
           marginBottom: "16px",
         }}
       >
@@ -425,17 +425,17 @@ function UtilizationView() {
         <StatCard
           label="Total Revenue"
           value={`₹${data.reduce((a, d) => a + d.revenue, 0).toLocaleString("en-IN")}`}
-          color="#16a34a"
+          color="var(--success)"
         />
         <StatCard
           label="Best Table"
           value={data[0]?.table || "—"}
-          color="#d97706"
+          color="var(--warning)"
         />
         <StatCard
           label="Avg Duration"
           value={`${Math.round(data.reduce((a, d) => a + (d.avg_dur || 0), 0) / Math.max(data.filter((d) => d.sessions > 0).length, 1))}m`}
-          color="#111"
+          color="var(--text-primary)"
         />
       </div>
 
@@ -455,30 +455,30 @@ function UtilizationView() {
           <tbody>
             {data.map((d, i) => (
               <tr key={i}>
-                <td style={{ fontWeight: 600 }}>{d.table}</td>
+                <td style={{ fontWeight: "var(--weight-semibold)" }}>{d.table}</td>
                 <td>
                   <span
                     style={{
-                      fontSize: "10px",
-                      fontWeight: 600,
+                      fontSize: "var(--text-xs)",
+                      fontWeight: "var(--weight-semibold)",
                       padding: "2px 8px",
-                      borderRadius: "4px",
-                      background: d.type === "POOL" ? "#f0fdf4" : "#fff1f2",
-                      color: d.type === "POOL" ? "#16a34a" : "#e11d48",
-                      border: `1px solid ${d.type === "POOL" ? "#bbf7d0" : "#fecdd3"}`,
+                      borderRadius: "var(--radius-sm)",
+                      background: d.type === "POOL" ? "var(--success-bg)" : "var(--danger-bg)",
+                      color: d.type === "POOL" ? "var(--success)" : "var(--danger)",
+                      border: `1px solid ${d.type === "POOL" ? "color-mix(in srgb, var(--success) 28%, var(--border))" : "color-mix(in srgb, var(--danger) 24%, var(--border))"}`,
                     }}
                   >
                     {d.type}
                   </span>
                 </td>
-                <td style={{ color: "var(--accent)", fontWeight: 500 }}>
+                <td style={{ color: "var(--accent)", fontWeight: "var(--weight-medium)" }}>
                   {d.sessions}
                 </td>
-                <td style={{ color: "#888" }}>{d.avg_dur}m</td>
-                <td style={{ color: "#d97706" }}>
+                <td style={{ color: "var(--text-secondary)" }}>{d.avg_dur}m</td>
+                <td style={{ color: "var(--warning)" }}>
                   ₹{d.food_rev.toLocaleString("en-IN")}
                 </td>
-                <td style={{ fontWeight: 700, color: "#16a34a" }}>
+                <td style={{ fontWeight: "var(--weight-bold)", color: "var(--success)" }}>
                   ₹{d.revenue.toLocaleString("en-IN")}
                 </td>
                 <td>
@@ -493,21 +493,21 @@ function UtilizationView() {
                       style={{
                         flex: 1,
                         height: "6px",
-                        background: "#f0f0f0",
-                        borderRadius: "3px",
+                        background: "var(--border)",
+                        borderRadius: "var(--radius-sm)",
                       }}
                     >
                       <div
                         style={{
                           width: `${Math.round((d.revenue / maxRevenue) * 100)}%`,
                           height: "6px",
-                          background: "#16a34a",
-                          borderRadius: "3px",
+                          background: "var(--success)",
+                          borderRadius: "var(--radius-sm)",
                         }}
                       />
                     </div>
                     <span
-                      style={{ fontSize: "11px", color: "#bbb", width: "36px" }}
+                      style={{ fontSize: "var(--text-xs)", color: "var(--text-muted)", width: "36px" }}
                     >
                       {d.utilization_pct}%
                     </span>
@@ -572,10 +572,10 @@ function ClosingReportView() {
         }}
       >
         <div>
-          <div style={{ fontSize: "14px", fontWeight: 600, color: "var(--venue-text, var(--text))" }}>
+          <div style={{ fontSize: "var(--text-base)", fontWeight: "var(--weight-semibold)", color: "var(--venue-text, var(--text))" }}>
             Daily Closing Report
           </div>
-          <div style={{ fontSize: "12px", color: "#bbb", marginTop: "2px" }}>
+          <div style={{ fontSize: "var(--text-sm)", color: "var(--text-muted)", marginTop: "2px" }}>
             {data.date}
           </div>
         </div>
@@ -605,7 +605,7 @@ function ClosingReportView() {
         <StatCard
           label="Total Revenue"
           value={`₹${data.total_revenue.toLocaleString("en-IN")}`}
-          color="#16a34a"
+          color="var(--success)"
         />
         <StatCard
           label="Sessions"
@@ -615,19 +615,19 @@ function ClosingReportView() {
         <StatCard
           label="Avg Duration"
           value={`${data.avg_duration}m`}
-          color="#111"
+          color="var(--text-primary)"
         />
         <StatCard
           label="Play Revenue"
           value={`₹${data.play_revenue.toLocaleString("en-IN")}`}
-          color="#111"
+          color="var(--text-primary)"
         />
         <StatCard
           label="Food Revenue"
           value={`₹${data.food_revenue.toLocaleString("en-IN")}`}
-          color="#d97706"
+          color="var(--warning)"
         />
-        <StatCard label="Peak Hour" value={data.peak_hour} color="#e11d48" />
+        <StatCard label="Peak Hour" value={data.peak_hour} color="var(--danger)" />
       </div>
 
       {/* Table breakdown */}
@@ -635,9 +635,9 @@ function ClosingReportView() {
         <div className="history-section" style={{ marginBottom: "16px" }}>
           <div
             style={{
-              fontSize: "13px",
-              fontWeight: 600,
-              color: "#111",
+              fontSize: "var(--text-sm)",
+              fontWeight: "var(--weight-semibold)",
+              color: "var(--text-primary)",
               marginBottom: "12px",
             }}
           >
@@ -656,9 +656,9 @@ function ClosingReportView() {
                 .sort((a, b) => b[1].revenue - a[1].revenue)
                 .map(([tbl, stats], i) => (
                   <tr key={i}>
-                    <td style={{ fontWeight: 600 }}>{tbl}</td>
+                    <td style={{ fontWeight: "var(--weight-semibold)" }}>{tbl}</td>
                     <td style={{ color: "var(--accent)" }}>{stats.sessions}</td>
-                    <td style={{ fontWeight: 600, color: "#16a34a" }}>
+                    <td style={{ fontWeight: "var(--weight-semibold)", color: "var(--success)" }}>
                       ₹{stats.revenue.toLocaleString("en-IN")}
                     </td>
                   </tr>
@@ -673,9 +673,9 @@ function ClosingReportView() {
         <div className="history-section" style={{ marginBottom: "16px" }}>
           <div
             style={{
-              fontSize: "13px",
-              fontWeight: 600,
-              color: "#111",
+              fontSize: "var(--text-sm)",
+              fontWeight: "var(--weight-semibold)",
+              color: "var(--text-primary)",
               marginBottom: "12px",
             }}
           >
@@ -693,8 +693,8 @@ function ClosingReportView() {
                 .sort((a, b) => b[1] - a[1])
                 .map(([item, qty], i) => (
                   <tr key={i}>
-                    <td style={{ fontWeight: 500 }}>{item}</td>
-                    <td style={{ color: "#d97706", fontWeight: 600 }}>{qty}</td>
+                    <td style={{ fontWeight: "var(--weight-medium)" }}>{item}</td>
+                    <td style={{ color: "var(--warning)", fontWeight: "var(--weight-semibold)" }}>{qty}</td>
                   </tr>
                 ))}
             </tbody>
@@ -707,9 +707,9 @@ function ClosingReportView() {
         <div className="history-section">
           <div
             style={{
-              fontSize: "13px",
-              fontWeight: 600,
-              color: "#111",
+              fontSize: "var(--text-sm)",
+              fontWeight: "var(--weight-semibold)",
+              color: "var(--text-primary)",
               marginBottom: "12px",
             }}
           >
@@ -729,12 +729,12 @@ function ClosingReportView() {
             <tbody>
               {data.transactions.map((t, i) => (
                 <tr key={i}>
-                  <td style={{ fontWeight: 600 }}>{t.tbl}</td>
-                  <td style={{ fontWeight: 500 }}>{t.nm}</td>
-                  <td style={{ color: "#888" }}>{t.dur}m</td>
-                  <td style={{ color: "#16a34a" }}>₹{t.ply}</td>
-                  <td style={{ color: "#d97706" }}>₹{t.famt}</td>
-                  <td style={{ fontWeight: 700 }}>₹{t.tot}</td>
+                  <td style={{ fontWeight: "var(--weight-semibold)" }}>{t.tbl}</td>
+                  <td style={{ fontWeight: "var(--weight-medium)" }}>{t.nm}</td>
+                  <td style={{ color: "var(--text-secondary)" }}>{t.dur}m</td>
+                  <td style={{ color: "var(--success)" }}>₹{t.ply}</td>
+                  <td style={{ color: "var(--warning)" }}>₹{t.famt}</td>
+                  <td style={{ fontWeight: "var(--weight-bold)" }}>₹{t.tot}</td>
                 </tr>
               ))}
             </tbody>
@@ -763,9 +763,9 @@ function ClosingInsightsView() {
   }, []);
 
   const colors = {
-    positive: ["#f0fdf4", "#16a34a", "#bbf7d0"],
-    warning: ["#fffbeb", "#d97706", "#fde68a"],
-    critical: ["#fff1f2", "#e11d48", "#fecdd3"],
+    positive: ["var(--success-bg)", "var(--success)", "color-mix(in srgb, var(--success) 28%, var(--border))"],
+    warning: ["var(--warning-bg)", "var(--warning)", "color-mix(in srgb, var(--warning) 28%, var(--border))"],
+    critical: ["var(--danger-bg)", "var(--danger)", "color-mix(in srgb, var(--danger) 24%, var(--border))"],
     info: ["var(--accent-bg)", "var(--accent)", "color-mix(in srgb, var(--accent) 28%, var(--border))"],
   };
 
@@ -785,13 +785,13 @@ function ClosingInsightsView() {
           marginBottom: "18px",
         }}
       >
-        <StatCard label="Revenue" value={`₹${data.metrics.revenue.toLocaleString("en-IN")}`} color="#16a34a" />
+        <StatCard label="Revenue" value={`₹${data.metrics.revenue.toLocaleString("en-IN")}`} color="var(--success)" />
         <StatCard label="Sessions" value={data.metrics.sessions} color="var(--accent)" />
-        <StatCard label="Food" value={`₹${data.metrics.food.toLocaleString("en-IN")}`} color="#d97706" />
+        <StatCard label="Food" value={`₹${data.metrics.food.toLocaleString("en-IN")}`} color="var(--warning)" />
       </div>
 
       <div className="history-section">
-        <div style={{ fontSize: "14px", fontWeight: 700, marginBottom: "14px" }}>
+        <div style={{ fontSize: "var(--text-base)", fontWeight: "var(--weight-bold)", marginBottom: "14px" }}>
           Smart Closing Insights
         </div>
         {data.insights.map((insight, i) => {
@@ -803,15 +803,15 @@ function ClosingInsightsView() {
                 background: bg,
                 color: fg,
                 border: `1px solid ${border}`,
-                borderRadius: "8px",
+                borderRadius: "var(--radius-sm)",
                 padding: "12px 14px",
                 marginBottom: "10px",
               }}
             >
-              <div style={{ fontWeight: 800, fontSize: "13px", marginBottom: "4px" }}>
+              <div style={{ fontWeight: "var(--weight-heavy)", fontSize: "var(--text-sm)", marginBottom: "4px" }}>
                 {insight.title}
               </div>
-              <div style={{ fontSize: "12px", color: "#555" }}>{insight.detail}</div>
+              <div style={{ fontSize: "var(--text-sm)", color: "var(--text-secondary)" }}>{insight.detail}</div>
             </div>
           );
         })}
@@ -831,7 +831,7 @@ function AuditLogView() {
 
   return (
     <div className="history-section">
-      <div style={{ fontSize: "14px", fontWeight: 700, marginBottom: "14px" }}>
+      <div style={{ fontSize: "var(--text-base)", fontWeight: "var(--weight-bold)", marginBottom: "14px" }}>
         Anti-Leakage Audit Log
       </div>
       <table className="data-table">
@@ -858,11 +858,11 @@ function AuditLogView() {
           ) : (
             rows.map((r) => (
               <tr key={r.id}>
-                <td style={{ color: "#999", fontSize: "12px" }}>{r.date}</td>
-                <td style={{ fontWeight: 700, color: r.severity === "critical" ? "#e11d48" : r.severity === "warning" ? "#d97706" : "var(--accent)" }}>
+                <td style={{ color: "var(--text-secondary)", fontSize: "var(--text-sm)" }}>{r.date}</td>
+                <td style={{ fontWeight: "var(--weight-bold)", color: r.severity === "critical" ? "var(--danger)" : r.severity === "warning" ? "var(--warning)" : "var(--accent)" }}>
                   {r.severity}
                 </td>
-                <td style={{ fontWeight: 600 }}>{r.action}</td>
+                <td style={{ fontWeight: "var(--weight-semibold)" }}>{r.action}</td>
                 <td>{r.detail}</td>
                 <td>{r.amount ? `₹${r.amount.toLocaleString("en-IN")}` : "—"}</td>
               </tr>
@@ -889,9 +889,9 @@ function AdvancedAnalyticsView() {
     <div>
       <div className="advanced-grid">
         <StatCard label="Retention" value={`${data.retention_rate}%`} color="var(--accent)" />
-        <StatCard label="Repeat Customers" value={`${data.repeat_customers}/${data.total_customers}`} color="#16a34a" />
-        <StatCard label="Food Attachment" value={`${data.food_attachment_rate}%`} color="#d97706" />
-        <StatCard label="Avg Spend / Customer" value={`₹${data.avg_spend_per_customer.toLocaleString("en-IN")}`} color="#111" />
+        <StatCard label="Repeat Customers" value={`${data.repeat_customers}/${data.total_customers}`} color="var(--success)" />
+        <StatCard label="Food Attachment" value={`${data.food_attachment_rate}%`} color="var(--warning)" />
+        <StatCard label="Avg Spend / Customer" value={`₹${data.avg_spend_per_customer.toLocaleString("en-IN")}`} color="var(--text-primary)" />
       </div>
 
       <div className="analytics-panels">
@@ -913,9 +913,9 @@ function AdvancedAnalyticsView() {
               <tbody>
                 {data.table_profitability.map((row) => (
                   <tr key={row.table}>
-                    <td style={{ fontWeight: 700 }}>{row.table}</td>
+                    <td style={{ fontWeight: "var(--weight-bold)" }}>{row.table}</td>
                     <td>{row.sessions}</td>
-                    <td style={{ color: "#16a34a", fontWeight: 700 }}>₹{row.revenue.toLocaleString("en-IN")}</td>
+                    <td style={{ color: "var(--success)", fontWeight: "var(--weight-bold)" }}>₹{row.revenue.toLocaleString("en-IN")}</td>
                     <td>{row.avg_duration}m</td>
                     <td>₹{row.revenue_per_session.toLocaleString("en-IN")}</td>
                   </tr>
@@ -1020,7 +1020,7 @@ export default function ReportsTab() {
         <StatCard
           label="Today's Revenue"
           value={`₹${summary.sale.toLocaleString("en-IN")}`}
-          color="#16a34a"
+          color="var(--success)"
         />
         <StatCard
           label="Sessions Today"
@@ -1030,9 +1030,9 @@ export default function ReportsTab() {
         <StatCard
           label="Avg Duration"
           value={`${summary.avg_time}m`}
-          color="#111"
+          color="var(--text-primary)"
         />
-        <StatCard label="Top Table" value={summary.top_table} color="#d97706" />
+        <StatCard label="Top Table" value={summary.top_table} color="var(--warning)" />
       </div>
 
       {/* Sub-tab navigation */}

@@ -1002,9 +1002,9 @@ function Charts({ analytics, pieData }) {
                 </linearGradient>
               </defs>
               <CartesianGrid strokeDasharray="3 3" vertical={false} opacity={0.18} />
-              <XAxis dataKey="date" tick={{ fontSize: 11, fill: "#7b8794" }} axisLine={false} tickLine={false} />
+              <XAxis dataKey="date" tick={{ fontSize: "var(--text-sm)", fill: "var(--text-secondary)" }} axisLine={false} tickLine={false} />
               <YAxis
-                tick={{ fontSize: 11, fill: "#7b8794" }}
+                tick={{ fontSize: "var(--text-sm)", fill: "var(--text-secondary)" }}
                 axisLine={false}
                 tickLine={false}
                 tickFormatter={(v) => (v >= 1000 ? `₹${Math.round(v / 1000)}k` : `₹${v}`)}

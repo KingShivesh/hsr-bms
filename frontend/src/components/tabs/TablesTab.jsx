@@ -240,11 +240,11 @@ function CustomerInput({ value, onChange, placeholder }) {
             left: 0,
             right: 0,
             zIndex: 300,
-            background: "#fff",
-            border: "1px solid #e5e5e5",
-            borderRadius: "6px",
+            background: "var(--surface)",
+            border: "1px solid var(--border)",
+            borderRadius: "var(--radius-sm)",
             marginTop: "3px",
-            boxShadow: "0 4px 16px rgba(0,0,0,0.1)",
+            boxShadow: "var(--shadow-md)",
             overflow: "hidden",
           }}
         >
@@ -261,25 +261,25 @@ function CustomerInput({ value, onChange, placeholder }) {
                 alignItems: "center",
                 padding: "8px 10px",
                 cursor: "pointer",
-                fontSize: "12px",
+                fontSize: "var(--text-sm)",
                 borderBottom:
-                  i < suggestions.length - 1 ? "1px solid #f5f5f5" : "none",
-                background: "#fff",
+                  i < suggestions.length - 1 ? "1px solid var(--border)" : "none",
+                background: "var(--surface)",
               }}
               onMouseEnter={(e) =>
-                (e.currentTarget.style.background = "#fafafa")
+                (e.currentTarget.style.background = "var(--surface-muted)")
               }
-              onMouseLeave={(e) => (e.currentTarget.style.background = "#fff")}
+              onMouseLeave={(e) => (e.currentTarget.style.background = "var(--surface)")}
             >
-              <span style={{ color: "#111", fontWeight: 500 }}>{m.nm}</span>
+              <span style={{ color: "var(--text-primary)", fontWeight: "var(--weight-medium)" }}>{m.nm}</span>
               <span
                 style={{
-                  fontSize: "10px",
+                  fontSize: "var(--text-xs)",
                   color: "var(--accent-text)",
                   background: "var(--accent-bg)",
                   border: "1px solid color-mix(in srgb, var(--accent) 28%, var(--border))",
                   padding: "1px 6px",
-                  borderRadius: "3px",
+                  borderRadius: "var(--radius-sm)",
                 }}
               >
                 {m.id}
@@ -1582,10 +1582,10 @@ function TableCard({
     position: "absolute",
     width: "18px",
     height: "18px",
-    background: "#050505",
+    background: "var(--text-primary)",
     borderRadius: "50%",
-    border: "2px solid #000",
-    boxShadow: "inset 0 2px 6px rgba(0,0,0,0.9), 0 0 0 1px #222",
+    border: "2px solid color-mix(in srgb, var(--text-primary) 90%, var(--surface))",
+    boxShadow: "inset 0 2px 6px rgba(0,0,0,0.9), 0 0 0 1px var(--border)",
   };
 
   if (maintenance) {
@@ -1593,18 +1593,18 @@ function TableCard({
       <div
         className={`table-maintenance-card ${compact ? "compact" : ""}`}
         style={{
-          background: "#1a1a1a",
-          borderRadius: "12px",
+          background: "var(--surface)",
+          borderRadius: "var(--radius-md)",
           padding: "12px",
-          border: "2px solid #f59e0b",
+          border: "2px solid var(--warning)",
         }}
       >
         <div style={{ textAlign: "center", padding: "16px 0" }}>
           <div
             style={{
-              fontSize: "11px",
-              fontWeight: 700,
-              color: "#f59e0b",
+              fontSize: "var(--text-xs)",
+              fontWeight: "var(--weight-bold)",
+              color: "var(--warning)",
               letterSpacing: "2px",
               marginBottom: "8px",
             }}
@@ -1613,19 +1613,19 @@ function TableCard({
           </div>
           <div
             style={{
-              fontSize: "28px",
-              fontWeight: 800,
-              color: "rgba(255,255,255,0.1)",
+              fontSize: "var(--text-3xl)",
+              fontWeight: "var(--weight-heavy)",
+              color: "var(--text-muted)",
               marginBottom: "8px",
             }}
           >
             {String(table.num).padStart(2, "0")}
           </div>
-          <div style={{ fontSize: "12px", color: "#888", marginBottom: "4px" }}>
+          <div style={{ fontSize: "var(--text-sm)", color: "var(--text-secondary)", marginBottom: "4px" }}>
             {maintenance.reason}
           </div>
           <div
-            style={{ fontSize: "11px", color: "#555", marginBottom: "16px" }}
+            style={{ fontSize: "var(--text-xs)", color: "var(--text-muted)", marginBottom: "16px" }}
           >
             Since {maintenance.since}
           </div>
@@ -1633,13 +1633,13 @@ function TableCard({
             onClick={() => onClearMaintenance(table.id)}
             disabled={clearMaintenanceBusy}
             style={{
-              background: "#16a34a",
-              color: "#fff",
+              background: "var(--accent)",
+              color: "var(--surface)",
               border: "none",
-              borderRadius: "6px",
+              borderRadius: "var(--radius-sm)",
               padding: "8px 16px",
-              fontSize: "12px",
-              fontWeight: 600,
+              fontSize: "var(--text-sm)",
+              fontWeight: "var(--weight-semibold)",
               cursor: clearMaintenanceBusy ? "wait" : "pointer",
             }}
           >
@@ -1690,12 +1690,12 @@ function TableCard({
           "--occupied-control-surface": "var(--surface)",
           "--occupied-control-border": "color-mix(in srgb, var(--accent) 24%, var(--border))",
           background: occupied ? "var(--occupied-card-bg)" : "var(--table-card-bg)",
-          borderRadius: "10px",
+          borderRadius: "var(--radius-md)",
           overflow: "hidden",
           border: `1px solid ${occupied ? T.accent : "var(--table-card-border)"}`,
           boxShadow: occupied
             ? "0 16px 34px color-mix(in srgb, var(--accent) 18%, transparent)"
-            : "0 1px 2px rgba(15, 23, 42, 0.04)",
+            : "var(--shadow-sm)",
           transition: "all 0.3s",
         }}
       >
@@ -1706,7 +1706,7 @@ function TableCard({
           <div
             style={{
               background: occupied ? T.felt : T.feltDark,
-              borderRadius: "6px",
+              borderRadius: "var(--radius-sm)",
               position: "relative",
               height: compact ? "160px" : "220px",
               overflow: "hidden",
@@ -1722,7 +1722,7 @@ function TableCard({
                 right: "22px",
                 height: "6px",
                 background: T.cushion,
-                borderRadius: "3px",
+                borderRadius: "var(--radius-sm)",
                 opacity: 0.8,
               }}
             />
@@ -1734,7 +1734,7 @@ function TableCard({
                 right: "22px",
                 height: "6px",
                 background: T.cushion,
-                borderRadius: "3px",
+                borderRadius: "var(--radius-sm)",
                 opacity: 0.8,
               }}
             />
@@ -1746,7 +1746,7 @@ function TableCard({
                 bottom: "22px",
                 width: "6px",
                 background: T.cushion,
-                borderRadius: "3px",
+                borderRadius: "var(--radius-sm)",
                 opacity: 0.8,
               }}
             />
@@ -1758,7 +1758,7 @@ function TableCard({
                 bottom: "22px",
                 width: "6px",
                 background: T.cushion,
-                borderRadius: "3px",
+                borderRadius: "var(--radius-sm)",
                 opacity: 0.8,
               }}
             />
@@ -1808,8 +1808,8 @@ function TableCard({
                 top: "50%",
                 left: "50%",
                 transform: "translate(-50%,-50%)",
-                fontSize: compact ? "58px" : "80px",
-                fontWeight: 900,
+                fontSize: compact ? "var(--text-3xl)" : "calc(var(--text-3xl) * 2.8)",
+                fontWeight: "var(--weight-black)",
                 color: occupied
                   ? "rgba(255,255,255,0.14)"
                   : "rgba(255,255,255,0.16)",
@@ -1832,13 +1832,13 @@ function TableCard({
                 textAlign: "center",
                 fontSize: compact
                   ? session?.elapsed >= 3600
-                    ? "20px"
-                    : "24px"
+                    ? "var(--text-xl)"
+                    : "var(--text-2xl)"
                   : session?.elapsed >= 3600
-                    ? "25px"
-                    : "32px",
-                fontWeight: 900,
-                color: "#ffffff",
+                    ? "var(--text-2xl)"
+                    : "var(--text-3xl)",
+                fontWeight: "var(--weight-black)",
+                color: "var(--surface)",
                 fontVariantNumeric: "tabular-nums",
                 letterSpacing: "0",
                 textShadow: "0 2px 10px rgba(0,0,0,0.68)",
@@ -1854,12 +1854,12 @@ function TableCard({
                   position: "absolute",
                   top: "16px",
                   right: "22px",
-                  background: "rgba(239,68,68,0.92)",
-                  color: "#fff",
+                  background: "var(--danger)",
+                  color: "var(--surface)",
                   borderRadius: "999px",
                   padding: "3px 9px",
-                  fontSize: "10px",
-                  fontWeight: 800,
+                  fontSize: "var(--text-xs)",
+                  fontWeight: "var(--weight-heavy)",
                   letterSpacing: "0.5px",
                   zIndex: 3,
                 }}
@@ -1877,7 +1877,7 @@ function TableCard({
                 transform: "translateX(-50%)",
                 minWidth: compact ? "132px" : "156px",
                 padding: "7px 14px",
-                borderRadius: "14px",
+                borderRadius: "var(--radius-md)",
                 background: "rgba(0,0,0,0.28)",
                 boxShadow: "0 10px 24px rgba(0,0,0,0.18)",
                 backdropFilter: "blur(1px)",
@@ -1888,8 +1888,8 @@ function TableCard({
               {peakRate?.is_peak && occupied && (
                 <div
                   style={{
-                    fontSize: "9px",
-                    color: "#fbbf24",
+                    fontSize: "var(--text-xs)",
+                    color: "var(--warning)",
                     letterSpacing: "0.5px",
                     marginBottom: "2px",
                   }}
@@ -1900,10 +1900,10 @@ function TableCard({
               )}
               <div
                 style={{
-                  fontSize: "11px",
+                  fontSize: "var(--text-xs)",
                   color: "rgba(255,255,255,0.86)",
                   letterSpacing: "1px",
-                  fontWeight: 850,
+                  fontWeight: "var(--weight-heavy)",
                   textShadow: "0 1px 5px rgba(0,0,0,0.45)",
                 }}
               >
@@ -1911,10 +1911,10 @@ function TableCard({
               </div>
               <div
                 style={{
-                  fontSize: "20px",
+                  fontSize: "var(--text-xl)",
                   lineHeight: 1.1,
-                  fontWeight: 900,
-                  color: "#ffffff",
+                  fontWeight: "var(--weight-black)",
+                  color: "var(--surface)",
                   textShadow: "0 2px 8px rgba(0,0,0,0.58)",
                 }}
               >
@@ -1925,8 +1925,8 @@ function TableCard({
                   style={{
                     marginTop: "2px",
                     color: "rgba(255,255,255,0.65)",
-                    fontSize: "10px",
-                    fontWeight: 700,
+                    fontSize: "var(--text-xs)",
+                    fontWeight: "var(--weight-bold)",
                   }}
                 >
                   ₹{shareAmount} each · {shareCount} players
@@ -1950,13 +1950,13 @@ function TableCard({
                   bottom: "8px",
                   left: "50%",
                   transform: "translateX(-50%)",
-                  background: "#dc2626",
-                  color: "#fff",
+                  background: "var(--danger)",
+                  color: "var(--surface)",
                   border: "none",
-                  borderRadius: "5px",
+                  borderRadius: "var(--radius-sm)",
                   padding: "6px 28px",
-                  fontSize: "12px",
-                  fontWeight: 700,
+                  fontSize: "var(--text-sm)",
+                  fontWeight: "var(--weight-bold)",
                   cursor: quoteBusy ? "wait" : "pointer",
                   letterSpacing: "0",
                   boxShadow: "0 2px 8px rgba(0,0,0,0.4)",
@@ -1976,12 +1976,12 @@ function TableCard({
                   left: "50%",
                   transform: "translateX(-50%)",
                   background: T.accent,
-                  color: isPool ? "#fff" : "#000",
+                  color: isPool ? "var(--surface)" : "var(--text-primary)",
                   border: "none",
-                  borderRadius: "5px",
+                  borderRadius: "var(--radius-sm)",
                   padding: "6px 28px",
-                  fontSize: "12px",
-                  fontWeight: 700,
+                  fontSize: "var(--text-sm)",
+                  fontWeight: "var(--weight-bold)",
                   cursor: startBusy ? "wait" : "pointer",
                   letterSpacing: "0",
                   boxShadow: "0 2px 8px rgba(0,0,0,0.4)",

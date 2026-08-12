@@ -14,14 +14,14 @@ function TabBtn({ active, onClick, children }) {
     <button
       onClick={onClick}
       style={{
-        fontSize: "13px",
+        fontSize: "var(--text-sm)",
         padding: "6px 18px",
-        borderRadius: "6px",
+        borderRadius: "var(--radius-sm)",
         cursor: "pointer",
         fontWeight: active ? 600 : 400,
-        background: active ? "#111" : "#fff",
-        color: active ? "#fff" : "#888",
-        border: active ? "1px solid #111" : "1px solid #e5e5e5",
+        background: active ? "var(--text-primary)" : "var(--surface)",
+        color: active ? "var(--surface)" : "var(--text-secondary)",
+        border: active ? "1px solid var(--text-primary)" : "1px solid var(--border)",
       }}
     >
       {children}
@@ -36,12 +36,12 @@ function Panel({ title, description, children }) {
         style={{
           marginBottom: "16px",
           paddingBottom: "12px",
-          borderBottom: "1px solid #f0f0f0",
+          borderBottom: "1px solid var(--border)",
         }}
       >
         <div className="settings-panel-title">{title}</div>
         {description && (
-          <div style={{ fontSize: "12px", color: "#bbb", marginTop: "3px" }}>
+          <div style={{ fontSize: "var(--text-sm)", color: "var(--text-muted)", marginTop: "3px" }}>
             {description}
           </div>
         )}
@@ -132,9 +132,9 @@ function PeakHoursView() {
             alignItems: "center",
             gap: "10px",
             padding: "10px 14px",
-            background: currentRate.is_peak ? "#fffbeb" : "#f0fdf4",
-            border: `1px solid ${currentRate.is_peak ? "#fde68a" : "#bbf7d0"}`,
-            borderRadius: "8px",
+            background: currentRate.is_peak ? "var(--warning-bg)" : "var(--success-bg)",
+            border: `1px solid ${currentRate.is_peak ? "color-mix(in srgb, var(--warning) 28%, var(--border))" : "color-mix(in srgb, var(--success) 28%, var(--border))"}`,
+            borderRadius: "var(--radius-sm)",
             marginBottom: "16px",
           }}
         >
@@ -143,14 +143,14 @@ function PeakHoursView() {
               width: "8px",
               height: "8px",
               borderRadius: "50%",
-              background: currentRate.is_peak ? "#d97706" : "#16a34a",
+              background: currentRate.is_peak ? "var(--warning)" : "var(--success)",
             }}
           />
           <div
             style={{
-              fontSize: "13px",
-              fontWeight: 500,
-              color: currentRate.is_peak ? "#d97706" : "#16a34a",
+              fontSize: "var(--text-sm)",
+              fontWeight: "var(--weight-medium)",
+              color: currentRate.is_peak ? "var(--warning)" : "var(--success)",
             }}
           >
             {currentRate.is_peak
@@ -171,20 +171,20 @@ function PeakHoursView() {
                 justifyContent: "space-between",
                 alignItems: "center",
                 padding: "10px 12px",
-                background: "#fafafa",
-                border: "1px solid #f0f0f0",
-                borderRadius: "8px",
+                background: "var(--surface-muted)",
+                border: "1px solid var(--border)",
+                borderRadius: "var(--radius-sm)",
                 marginBottom: "8px",
               }}
             >
               <div>
                 <div
-                  style={{ fontSize: "13px", fontWeight: 600, color: "#111" }}
+                  style={{ fontSize: "var(--text-sm)", fontWeight: "var(--weight-semibold)", color: "var(--text-primary)" }}
                 >
                   {r.label}
                 </div>
                 <div
-                  style={{ fontSize: "12px", color: "#888", marginTop: "2px" }}
+                  style={{ fontSize: "var(--text-sm)", color: "var(--text-secondary)", marginTop: "2px" }}
                 >
                   {fmtHour(r.start_hour)} – {fmtHour(r.end_hour)} ·{" "}
                   {r.multiplier}× rate
@@ -194,14 +194,14 @@ function PeakHoursView() {
                 onClick={() => handleDelete(r.id)}
                 disabled={!!activeAction}
                 style={{
-                  fontSize: "11px",
+                  fontSize: "var(--text-xs)",
                   padding: "4px 10px",
-                  borderRadius: "4px",
+                  borderRadius: "var(--radius-sm)",
                   cursor: activeAction ? "wait" : "pointer",
-                  background: "#fff1f2",
-                  color: "#e11d48",
-                  border: "1px solid #fecdd3",
-                  fontWeight: 500,
+                  background: "var(--danger-bg)",
+                  color: "var(--danger)",
+                  border: "1px solid color-mix(in srgb, var(--danger) 24%, var(--border))",
+                  fontWeight: "var(--weight-medium)",
                 }}
               >
                 {activeAction === `peak-delete-${r.id}` ? "Deleting..." : "Delete"}
@@ -275,7 +275,7 @@ function PeakHoursView() {
           {activeAction === "peak-add" ? "Adding..." : "Add Rule"}
         </button>
       </div>
-      <div style={{ fontSize: "12px", color: "#bbb", marginTop: "8px" }}>
+      <div style={{ fontSize: "var(--text-sm)", color: "var(--text-muted)", marginTop: "8px" }}>
         Example: Start 18, End 22, Multiplier 1.5 = 50% surcharge from 6pm to
         10pm
       </div>
@@ -318,14 +318,14 @@ function GSTView() {
       {flash && (
         <div
           style={{
-            background: "#f0fdf4",
-            border: "1px solid #bbf7d0",
-            borderRadius: "6px",
+            background: "var(--success-bg)",
+            border: "1px solid color-mix(in srgb, var(--success) 28%, var(--border))",
+            borderRadius: "var(--radius-sm)",
             padding: "8px 12px",
             marginBottom: "12px",
-            fontSize: "12px",
-            color: "#16a34a",
-            fontWeight: 500,
+            fontSize: "var(--text-sm)",
+            color: "var(--success)",
+            fontWeight: "var(--weight-medium)",
           }}
         >
           {flash}
@@ -346,7 +346,7 @@ function GSTView() {
               value={gst}
               onChange={(e) => setGst(e.target.value)}
             />
-            <span style={{ fontSize: "13px", color: "#888" }}>%</span>
+            <span style={{ fontSize: "var(--text-sm)", color: "var(--text-secondary)" }}>%</span>
           </div>
         </div>
         <button
@@ -366,8 +366,8 @@ function GSTView() {
             padding: "10px 14px",
             background: "var(--accent-bg)",
             border: "1px solid color-mix(in srgb, var(--accent) 28%, var(--border))",
-            borderRadius: "8px",
-            fontSize: "12px",
+            borderRadius: "var(--radius-sm)",
+            fontSize: "var(--text-sm)",
             color: "var(--accent-text)",
           }}
         >
@@ -377,7 +377,7 @@ function GSTView() {
       )}
 
       {parseFloat(gst) === 0 && (
-        <div style={{ marginTop: "8px", fontSize: "12px", color: "#bbb" }}>
+        <div style={{ marginTop: "8px", fontSize: "var(--text-sm)", color: "var(--text-muted)" }}>
           GST is currently disabled. Set a percentage above to enable it.
         </div>
       )}

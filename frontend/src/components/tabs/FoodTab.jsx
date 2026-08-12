@@ -543,12 +543,12 @@ export default function FoodTab() {
                       display: "flex",
                       justifyContent: "space-between",
                       padding: "12px 0 8px",
-                      fontWeight: 700,
-                      fontSize: "15px",
+                      fontWeight: "var(--weight-bold)",
+                      fontSize: "var(--text-base)",
                     }}
                   >
                     <span>Total</span>
-                    <span style={{ color: "#16a34a" }}>₹{cartTotal()}</span>
+                    <span style={{ color: "var(--success)" }}>₹{cartTotal()}</span>
                   </div>
 
                   <button
@@ -744,14 +744,14 @@ export default function FoodTab() {
                     const pct = Math.round((s.qty / maxQty) * 100);
                     return (
                       <tr key={i}>
-                        <td style={{ color: "#bbb", fontSize: "12px" }}>
+                        <td style={{ color: "var(--text-muted)", fontSize: "var(--text-sm)" }}>
                           #{i + 1}
                         </td>
-                        <td style={{ fontWeight: 500 }}>{s.name}</td>
-                        <td style={{ color: "var(--accent)", fontWeight: 600 }}>
+                        <td style={{ fontWeight: "var(--weight-medium)" }}>{s.name}</td>
+                        <td style={{ color: "var(--accent)", fontWeight: "var(--weight-semibold)" }}>
                           {s.qty}
                         </td>
-                        <td style={{ color: "#16a34a", fontWeight: 600 }}>
+                        <td style={{ color: "var(--success)", fontWeight: "var(--weight-semibold)" }}>
                           ₹{s.revenue.toLocaleString("en-IN")}
                         </td>
                         <td>
@@ -766,8 +766,8 @@ export default function FoodTab() {
                               style={{
                                 flex: 1,
                                 height: "6px",
-                                background: "#f0f0f0",
-                                borderRadius: "3px",
+                                background: "var(--border)",
+                                borderRadius: "var(--radius-sm)",
                               }}
                             >
                               <div
@@ -776,18 +776,18 @@ export default function FoodTab() {
                                   height: "6px",
                                   background:
                                     i === 0
-                                      ? "#16a34a"
+                                      ? "var(--success)"
                                       : i === stats.length - 1
-                                        ? "#e11d48"
+                                        ? "var(--danger)"
                                         : "var(--accent)",
-                                  borderRadius: "3px",
+                                  borderRadius: "var(--radius-sm)",
                                 }}
                               />
                             </div>
                             <span
                               style={{
-                                fontSize: "11px",
-                                color: "#bbb",
+                                fontSize: "var(--text-xs)",
+                                color: "var(--text-muted)",
                                 width: "32px",
                               }}
                             >
@@ -835,17 +835,17 @@ export default function FoodTab() {
                 <tbody>
                   {orders.map((o, i) => (
                     <tr key={o.id || i}>
-                      <td style={{ color: "#bbb", fontSize: "12px" }}>
+                      <td style={{ color: "var(--text-muted)", fontSize: "var(--text-sm)" }}>
                         {o.date}
                       </td>
-                      <td style={{ fontWeight: 500 }}>{o.customer_name}</td>
-                      <td style={{ fontSize: "12px", color: "#888" }}>
+                      <td style={{ fontWeight: "var(--weight-medium)" }}>{o.customer_name}</td>
+                      <td style={{ fontSize: "var(--text-sm)", color: "var(--text-secondary)" }}>
                         {o.items.map((x) => `${x.item} x${x.qty}`).join(", ")}
                       </td>
-                      <td style={{ fontWeight: 700, color: o.payment_method === "UPI" ? "var(--accent)" : "#16a34a" }}>
+                      <td style={{ fontWeight: "var(--weight-bold)", color: o.payment_method === "UPI" ? "var(--accent)" : "var(--success)" }}>
                         {o.payment_method || "Cash"}
                       </td>
-                      <td style={{ fontWeight: 600, color: "#16a34a" }}>
+                      <td style={{ fontWeight: "var(--weight-semibold)", color: "var(--success)" }}>
                         ₹{o.total}
                       </td>
                       <td>

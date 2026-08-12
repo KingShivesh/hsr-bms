@@ -291,9 +291,9 @@ export default function ClosingTab() {
                   .sort((a, b) => b[1].revenue - a[1].revenue)
                   .map(([table, stats]) => (
                     <tr key={table}>
-                      <td style={{ fontWeight: 800 }}>{table}</td>
+                      <td style={{ fontWeight: "var(--weight-heavy)" }}>{table}</td>
                       <td>{stats.sessions}</td>
-                      <td style={{ color: "#16a34a", fontWeight: 800 }}>{money(stats.revenue)}</td>
+                      <td style={{ color: "var(--success)", fontWeight: "var(--weight-heavy)" }}>{money(stats.revenue)}</td>
                     </tr>
                   ))}
               </tbody>
@@ -322,7 +322,7 @@ export default function ClosingTab() {
                   .map(([item, qty]) => (
                     <tr key={item}>
                       <td>{item}</td>
-                      <td style={{ fontWeight: 800 }}>{qty}</td>
+                      <td style={{ fontWeight: "var(--weight-heavy)" }}>{qty}</td>
                     </tr>
                   ))}
               </tbody>
@@ -351,10 +351,10 @@ export default function ClosingTab() {
             <tbody>
               {corrections.map((row, index) => (
                 <tr key={`${row.action}-${row.date}-${index}`}>
-                  <td style={{ color: "#64748b", fontSize: "12px" }}>{row.date}</td>
-                  <td style={{ color: "#e11d48", fontWeight: 800 }}>{row.action.replaceAll("_", " ")}</td>
+                  <td style={{ color: "var(--text-secondary)", fontSize: "var(--text-sm)" }}>{row.date}</td>
+                  <td style={{ color: "var(--danger)", fontWeight: "var(--weight-heavy)" }}>{row.action.replaceAll("_", " ")}</td>
                   <td>{row.detail}</td>
-                  <td style={{ fontWeight: 800 }}>{row.amount || "-"}</td>
+                  <td style={{ fontWeight: "var(--weight-heavy)" }}>{row.amount || "-"}</td>
                 </tr>
               ))}
             </tbody>

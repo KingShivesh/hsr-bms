@@ -125,17 +125,17 @@ export default function MembersTab() {
           <div
             key={i}
             style={{
-              background: "#fff",
-              border: "1px solid #f0f0f0",
-              borderRadius: "8px",
+              background: "var(--surface)",
+              border: "1px solid var(--border)",
+              borderRadius: "var(--radius-sm)",
               padding: "14px 16px",
               borderTop: `2px solid ${s.color}`,
             }}
           >
             <div
               style={{
-                fontSize: "11px",
-                color: "#bbb",
+                fontSize: "var(--text-xs)",
+                color: "var(--text-muted)",
                 textTransform: "uppercase",
                 letterSpacing: "0.5px",
                 marginBottom: "6px",
@@ -143,7 +143,7 @@ export default function MembersTab() {
             >
               {s.label}
             </div>
-            <div style={{ fontSize: "22px", fontWeight: 600, color: s.color }}>
+            <div style={{ fontSize: "var(--text-2xl)", fontWeight: "var(--weight-semibold)", color: s.color }}>
               {s.value}
             </div>
           </div>
@@ -202,7 +202,7 @@ export default function MembersTab() {
           marginBottom: "16px",
         }}
       >
-        <div style={{ fontSize: "14px", fontWeight: 600, color: "#111" }}>
+        <div style={{ fontSize: "var(--text-base)", fontWeight: "var(--weight-semibold)", color: "var(--text-primary)" }}>
           All Members
         </div>
         <button
@@ -220,9 +220,9 @@ export default function MembersTab() {
         <div
           style={{
             textAlign: "center",
-            color: "#bbb",
+            color: "var(--text-muted)",
             padding: "40px 0",
-            fontSize: "13px",
+            fontSize: "var(--text-sm)",
           }}
         >
           No members yet. Add your first member above.
@@ -243,7 +243,7 @@ export default function MembersTab() {
             >
               <div>
                 <div
-                  style={{ fontWeight: 600, color: "#111", fontSize: "14px" }}
+                  style={{ fontWeight: "var(--weight-semibold)", color: "var(--text-primary)", fontSize: "var(--text-base)" }}
                 >
                   {m.nm}
                 </div>
@@ -255,7 +255,7 @@ export default function MembersTab() {
                     marginTop: "3px",
                   }}
                 >
-                  <span style={{ fontSize: "11px", color: "#bbb" }}>
+                  <span style={{ fontSize: "var(--text-xs)", color: "var(--text-muted)" }}>
                     {m.id || "—"}
                   </span>
                   <span
@@ -299,7 +299,7 @@ export default function MembersTab() {
                 <div className="member-stat-label">Spent</div>
               </div>
               <div className="member-stat">
-                <div className="member-stat-value" style={{ fontSize: "14px" }}>
+                <div className="member-stat-value" style={{ fontSize: "var(--text-base)" }}>
                   {m.lst}
                 </div>
                 <div className="member-stat-label">Last Visit</div>

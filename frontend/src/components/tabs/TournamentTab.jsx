@@ -35,7 +35,7 @@ function Panel({ title, children, action }) {
           alignItems: "center",
           marginBottom: "16px",
           paddingBottom: "12px",
-          borderBottom: "1px solid #f0f0f0",
+          borderBottom: "1px solid var(--border)",
         }}
       >
         <div className="settings-panel-title">{title}</div>
@@ -51,13 +51,13 @@ function StatusPill({ status }) {
   return (
     <span
       style={{
-        fontSize: "10px",
+        fontSize: "var(--text-xs)",
         padding: "2px 8px",
         borderRadius: "999px",
-        fontWeight: 700,
-        background: done ? "#f0fdf4" : "var(--accent-bg)",
-        color: done ? "#16a34a" : "var(--accent)",
-        border: `1px solid ${done ? "#bbf7d0" : "color-mix(in srgb, var(--accent) 28%, var(--border))"}`,
+        fontWeight: "var(--weight-bold)",
+        background: done ? "var(--success-bg)" : "var(--accent-bg)",
+        color: done ? "var(--success)" : "var(--accent)",
+        border: `1px solid ${done ? "color-mix(in srgb, var(--success) 28%, var(--border))" : "color-mix(in srgb, var(--accent) 28%, var(--border))"}`,
       }}
     >
       {done ? "COMPLETED" : "ACTIVE"}
@@ -249,7 +249,7 @@ export default function TournamentTab() {
 
   if (loading) {
     return (
-      <div style={{ color: "#bbb", padding: "40px", textAlign: "center" }}>
+      <div style={{ color: "var(--text-muted)", padding: "40px", textAlign: "center" }}>
         Loading tournaments...
       </div>
     );
@@ -261,13 +261,13 @@ export default function TournamentTab() {
         {flash && (
           <div
             style={{
-              background: "#f0fdf4",
-              border: "1px solid #bbf7d0",
-              borderRadius: "8px",
+              background: "var(--success-bg)",
+              border: "1px solid color-mix(in srgb, var(--success) 28%, var(--border))",
+              borderRadius: "var(--radius-sm)",
               padding: "10px 14px",
-              color: "#16a34a",
-              fontSize: "13px",
-              fontWeight: 600,
+              color: "var(--success)",
+              fontSize: "var(--text-sm)",
+              fontWeight: "var(--weight-semibold)",
               marginBottom: "14px",
             }}
           >
@@ -315,7 +315,7 @@ export default function TournamentTab() {
 
         <Panel title="Events">
           {tournaments.length === 0 ? (
-            <div style={{ color: "#bbb", fontSize: "13px", padding: "10px 0" }}>
+            <div style={{ color: "var(--text-muted)", fontSize: "var(--text-sm)", padding: "10px 0" }}>
               No tournaments yet
             </div>
           ) : (
@@ -327,22 +327,22 @@ export default function TournamentTab() {
                 style={{
                   width: "100%",
                   textAlign: "left",
-                  background: selected?.id === t.id ? "#111" : "#fff",
-                  color: selected?.id === t.id ? "#fff" : "#111",
-                  border: "1px solid #e5e5e5",
-                  borderRadius: "8px",
+                  background: selected?.id === t.id ? "var(--text-primary)" : "var(--surface)",
+                  color: selected?.id === t.id ? "var(--surface)" : "var(--text-primary)",
+                  border: "1px solid var(--border)",
+                  borderRadius: "var(--radius-sm)",
                   padding: "10px 12px",
                   marginBottom: "8px",
                   cursor: "pointer",
                 }}
               >
                 <div style={{ display: "flex", justifyContent: "space-between" }}>
-                  <span style={{ fontWeight: 700, fontSize: "13px" }}>
+                  <span style={{ fontWeight: "var(--weight-bold)", fontSize: "var(--text-sm)" }}>
                     {activeAction === `tournament-select-${t.id}` ? "Loading..." : t.name}
                   </span>
                   <StatusPill status={t.status} />
                 </div>
-                <div style={{ color: selected?.id === t.id ? "#bbb" : "#999", fontSize: "11px", marginTop: "4px" }}>
+                <div style={{ color: selected?.id === t.id ? "var(--text-muted)" : "var(--text-secondary)", fontSize: "var(--text-xs)", marginTop: "4px" }}>
                   {t.game_type} · ₹{t.entry_fee || 0}
                 </div>
               </button>
@@ -365,7 +365,7 @@ export default function TournamentTab() {
 
         {!selected ? (
           <Panel title="Bracket">
-            <div style={{ color: "#bbb", padding: "36px", textAlign: "center" }}>
+            <div style={{ color: "var(--text-muted)", padding: "36px", textAlign: "center" }}>
               Create or select a tournament
             </div>
           </Panel>
@@ -400,16 +400,16 @@ export default function TournamentTab() {
                 <div
                   key={label}
                   style={{
-                    border: "1px solid #f0f0f0",
-                    borderRadius: "8px",
+                    border: "1px solid var(--border)",
+                    borderRadius: "var(--radius-sm)",
                     padding: "12px",
-                    background: "#fff",
+                    background: "var(--surface)",
                   }}
                 >
-                  <div style={{ color: "#999", fontSize: "11px", marginBottom: "4px" }}>
+                  <div style={{ color: "var(--text-secondary)", fontSize: "var(--text-xs)", marginBottom: "4px" }}>
                     {label}
                   </div>
-                  <div style={{ color: "#111", fontWeight: 700 }}>{value}</div>
+                  <div style={{ color: "var(--text-primary)", fontWeight: "var(--weight-bold)" }}>{value}</div>
                 </div>
               ))}
             </div>
@@ -419,10 +419,10 @@ export default function TournamentTab() {
                 <div key={roundNo} style={{ minWidth: "260px" }}>
                   <div
                     style={{
-                      fontSize: "12px",
+                      fontSize: "var(--text-sm)",
                       textTransform: "uppercase",
-                      color: "#999",
-                      fontWeight: 700,
+                      color: "var(--text-secondary)",
+                      fontWeight: "var(--weight-bold)",
                       marginBottom: "10px",
                     }}
                   >
@@ -432,14 +432,14 @@ export default function TournamentTab() {
                     <div
                       key={m.id}
                       style={{
-                        border: "1px solid #e5e5e5",
-                        borderRadius: "8px",
+                        border: "1px solid var(--border)",
+                        borderRadius: "var(--radius-sm)",
                         padding: "10px",
                         marginBottom: "10px",
-                        background: m.status === "completed" ? "#fafafa" : "#fff",
+                        background: m.status === "completed" ? "var(--surface-muted)" : "var(--surface)",
                       }}
                     >
-                      <div style={{ fontSize: "11px", color: "#aaa", marginBottom: "8px" }}>
+                      <div style={{ fontSize: "var(--text-xs)", color: "var(--text-muted)", marginBottom: "8px" }}>
                         Match {m.match_no}
                       </div>
                       {[m.player1, m.player2].filter(Boolean).map((p) => {
@@ -454,10 +454,10 @@ export default function TournamentTab() {
                               display: "flex",
                               justifyContent: "space-between",
                               alignItems: "center",
-                              border: won ? "1px solid #bbf7d0" : "1px solid #f0f0f0",
-                              background: won ? "#f0fdf4" : "#fff",
-                              color: won ? "#16a34a" : "#111",
-                              borderRadius: "6px",
+                              border: won ? "1px solid color-mix(in srgb, var(--success) 28%, var(--border))" : "1px solid var(--border)",
+                              background: won ? "var(--success-bg)" : "var(--surface)",
+                              color: won ? "var(--success)" : "var(--text-primary)",
+                              borderRadius: "var(--radius-sm)",
                               padding: "8px 10px",
                               marginBottom: "6px",
                               cursor: activeAction ? "wait" : m.status === "completed" ? "default" : "pointer",
@@ -465,14 +465,14 @@ export default function TournamentTab() {
                             }}
                           >
                             <span>{p}</span>
-                            <span style={{ fontSize: "11px", color: won ? "#16a34a" : "#bbb" }}>
+                            <span style={{ fontSize: "var(--text-xs)", color: won ? "var(--success)" : "var(--text-muted)" }}>
                               {activeAction === `winner-${m.id}-${p}` ? "Saving..." : won ? "Winner" : m.status === "completed" ? "" : "Pick"}
                             </span>
                           </button>
                         );
                       })}
                       {!m.player2 && (
-                        <div style={{ color: "#bbb", fontSize: "12px", padding: "4px 2px" }}>
+                        <div style={{ color: "var(--text-muted)", fontSize: "var(--text-sm)", padding: "4px 2px" }}>
                           Bye advanced automatically
                         </div>
                       )}
