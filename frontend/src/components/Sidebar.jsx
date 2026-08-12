@@ -38,7 +38,6 @@ export default function Sidebar({ page, setPage, onLogout, activeTables, role = 
         { id: "members", icon: "ti-users", label: "Club Members", adminOnly: true, tone: "purple" },
         { id: "tournaments", icon: "ti-trophy", label: "Tournaments", staffHidden: true, tone: "amber" },
         { id: "closing", icon: "ti-lock-check", label: "Shift EOD Closing", tone: "red" },
-        { id: "memberships", icon: "ti-award", label: "Membership Plans", adminOnly: true, tone: "purple" },
         { id: "reports", icon: "ti-chart-bar", label: "Analytics & Reports", adminOnly: true, tone: "blue" },
         { id: "operations", icon: "ti-adjustments", label: "Operations Control", adminOnly: true, tone: "slate" },
         { id: "staff", icon: "ti-user-check", label: "Staff & Roster", adminOnly: true, tone: "green" },

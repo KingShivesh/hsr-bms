@@ -10608,8 +10608,7 @@ body.dark .backend-status-banner {
 
 .cf-panel,
 .cf-stat,
-.cf-table-slot,
-.cf-plan {
+.cf-table-slot {
   border: 1px solid rgba(15, 23, 42, 0.1);
   border-radius: var(--radius-lg);
   background: #fff;
@@ -10623,8 +10622,7 @@ body.dark .backend-status-banner {
   text-transform: uppercase;
 }
 
-.cf-stat-grid,
-.cf-plan-grid {
+.cf-stat-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: var(--space-4);
@@ -10829,39 +10827,6 @@ body.dark .cf-table-slot-empty em {
   font-size: var(--text-sm);
 }
 
-.cf-plan {
-  padding: var(--space-5);
-  border-top: 3px solid var(--accent);
-}
-
-.cf-plan span {
-  color: var(--accent);
-  font-size: var(--text-sm);
-  font-weight: var(--weight-black);
-  text-transform: uppercase;
-}
-
-.cf-plan strong {
-  display: block;
-  margin-top: var(--space-4);
-  color: #0f172a;
-  font-size: var(--text-3xl);
-  font-weight: var(--weight-black);
-}
-
-.cf-plan small {
-  color: #64748b;
-  font-size: var(--text-sm);
-}
-
-.cf-plan p {
-  margin: var(--space-3) 0 0;
-  color: #64748b;
-  font-size: var(--text-base);
-  font-weight: var(--weight-heavy);
-  line-height: 1.45;
-}
-
 body.dark .cf-topbar {
   background: rgba(15, 23, 42, 0.9);
   border-bottom-color: rgba(148, 163, 184, 0.16);
@@ -10879,8 +10844,7 @@ body.dark .cf-command-pill,
 body.dark .topbar-date,
 body.dark .cf-panel,
 body.dark .cf-stat,
-body.dark .cf-table-slot,
-body.dark .cf-plan {
+body.dark .cf-table-slot {
   border-color: rgba(148, 163, 184, 0.16);
   background: #111827;
   box-shadow: none;
@@ -10900,8 +10864,7 @@ body.dark .cf-row strong,
 body.dark .cf-row em,
 body.dark .cf-empty strong,
 body.dark .cf-table-slot strong,
-body.dark .cf-table-slot b,
-body.dark .cf-plan strong {
+body.dark .cf-table-slot b {
   color: #f8fafc;
 }
 
@@ -10910,15 +10873,12 @@ body.dark .cf-row span,
 body.dark .cf-empty span,
 body.dark .cf-table-slot span,
 body.dark .cf-table-slot em,
-body.dark .cf-table-slot small,
-body.dark .cf-plan p,
-body.dark .cf-plan small {
+body.dark .cf-table-slot small {
   color: #94a3b8;
 }
 
 @media (max-width: 1180px) {
   .cf-stat-grid,
-  .cf-plan-grid,
   .cf-calendar-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -10986,7 +10946,6 @@ body.dark .cf-plan small {
 
   .cf-two-col,
   .cf-stat-grid,
-  .cf-plan-grid,
   .cf-calendar-grid {
     grid-template-columns: 1fr;
   }
@@ -13046,8 +13005,7 @@ body.dark .page {
 
 .cf-panel,
 .cf-stat,
-.cf-table-slot,
-.cf-plan {
+.cf-table-slot {
   border-color: rgba(148, 163, 184, 0.28) !important;
   border-radius: var(--radius-lg) !important;
   box-shadow: 0 10px 28px rgba(15, 23, 42, 0.06) !important;
@@ -13075,8 +13033,7 @@ body.dark .cf-notification-btn:hover {
 
 body.dark .cf-panel,
 body.dark .cf-stat,
-body.dark .cf-table-slot,
-body.dark .cf-plan {
+body.dark .cf-table-slot {
   background: #111827 !important;
   border-color: rgba(148, 163, 184, 0.16) !important;
   box-shadow: none !important;

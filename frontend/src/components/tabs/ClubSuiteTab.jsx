@@ -892,45 +892,6 @@ function NotificationsView({ auditLogs, waitlist, bookings, maintenance }) {
   );
 }
 
-function MembershipPlansView({ topCustomers }) {
-  const plans = [
-    { name: "Silver", price: 499, benefit: "Basic profile, visit tracking and 5% courtesy discount marker." },
-    { name: "Gold", price: 999, benefit: "Priority booking marker, higher spend visibility and 10% discount marker." },
-    { name: "Premium VIP", price: 1999, benefit: "VIP tag, best customer tracking and preferred table history." },
-  ];
-  return (
-    <div className="cf-page cf-page-memberships">
-      <div className="cf-stat-grid">
-        <Stat label="Plans" value={plans.length} />
-        <Stat label="Targets" value={topCustomers.length} />
-        <Stat label="Starting Price" value={money(Math.min(...plans.map((plan) => plan.price)))} />
-      </div>
-      <div className="cf-plan-grid">
-        {plans.map((plan) => (
-          <section className="cf-plan" key={plan.name}>
-            <span>{plan.name}</span>
-            <strong>{money(plan.price)}<small>/mo</small></strong>
-            <p>{plan.benefit}</p>
-          </section>
-        ))}
-      </div>
-      <Section eyebrow="Customers" title="Top Customer Targets">
-        <RowList
-          emptyTitle="No customer targets yet"
-          emptyDetail="Repeat customers will appear after more sessions are closed."
-          rows={topCustomers.slice(0, 8).map((customer, index) => ({
-            id: customer.customer_id || `${customer.name}-${index}`,
-            icon: "ti-user-star",
-            title: customer.name || customer.customer_name || "Customer",
-            detail: `${customer.visits || customer.sessions || 0} visits`,
-            amount: money(customer.spent || customer.total || customer.revenue || 0),
-          }))}
-        />
-      </Section>
-    </div>
-  );
-}
-
 function StaffView({ auditLogs }) {
   const staffMap = auditLogs.reduce((acc, log) => {
     const key = log.staff || "system";
@@ -1142,7 +1103,6 @@ export default function ClubSuiteTab({ view }) {
   if (view === "billing") return <BillingView {...props} />;
   if (view === "inventory") return <InventoryView {...props} />;
   if (view === "notifications") return <NotificationsView {...props} />;
-  if (view === "memberships") return <MembershipPlansView {...props} />;
   if (view === "staff") return <StaffView {...props} />;
   return <WaitlistView {...props} />;
 }

@@ -13,7 +13,6 @@ const PAGE_DESCRIPTIONS = {
   "Analytics & Reports": "Revenue, history and operational reporting",
   "Operations Control": "Peak rates, GST and operational rules",
   "Inventory & Stocks": "Menu availability, stock risk and table maintenance",
-  "Membership Plans": "Loyalty tiers and top customer targets",
   "Staff & Roster": "Staff action summary from audit logs",
   "Notification Center": "System alerts, booking misses and sensitive events",
   "Club Settings": "Rates, credentials and system configuration",

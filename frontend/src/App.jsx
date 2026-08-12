@@ -97,7 +97,6 @@ export default function App() {
       "settings",
       "operations",
       "members",
-      "memberships",
       "staff",
       "billing",
       "inventory",
@@ -193,7 +192,6 @@ export default function App() {
     reports: "Analytics & Reports",
     operations: "Operations Control",
     inventory: "Inventory & Stocks",
-    memberships: "Membership Plans",
     staff: "Staff & Roster",
     notifications: "Notification Center",
     settings: "Club Settings",
@@ -248,7 +246,6 @@ export default function App() {
                 "billing",
                 "inventory",
                 "notifications",
-                "memberships",
                 "staff",
               ].includes(page) && <ClubSuiteTab view={page} />}
               {page === "settings" && (
