@@ -87,6 +87,53 @@ function Section({ eyebrow, title, action, children }) {
   );
 }
 
+const WORKSPACE_REQUESTS = [
+  "waitlist",
+  "reservations",
+  "active tables",
+  "billing history",
+  "food orders",
+  "food stats",
+  "menu",
+  "maintenance",
+  "audit logs",
+  "top customers",
+  "table utilization",
+];
+
+function WorkspaceLoading() {
+  return (
+    <div className="cf-page">
+      <div className="page-skeleton compact" role="status" aria-live="polite" aria-label="Loading workspace data">
+        <div className="page-skeleton-status">
+          <i className="ti ti-loader-2" aria-hidden="true" />
+          <span>Loading workspace data...</span>
+        </div>
+        <div className="skeleton-line skeleton-title" />
+        <div className="skeleton-grid">
+          <div className="skeleton-card" />
+          <div className="skeleton-card" />
+          <div className="skeleton-card" />
+        </div>
+        <div className="skeleton-panel" />
+      </div>
+    </div>
+  );
+}
+
+function LoadErrorBanner({ message, onRetry }) {
+  if (!message) return null;
+  return (
+    <div className="load-error-banner" role="alert">
+      <i className="ti ti-alert-circle" aria-hidden="true" />
+      <span>{message}</span>
+      <button type="button" onClick={onRetry}>
+        Retry
+      </button>
+    </div>
+  );
+}
+
 function ActionButton({ tone = "default", icon, children, ...props }) {
   return (
     <button type="button" className={`cf-action-btn ${tone}`} {...props}>
@@ -945,41 +992,58 @@ export default function ClubSuiteTab({ view }) {
   const [busy, setBusy] = useState(false);
   const [activeAction, setActiveAction] = useState("");
   const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState("");
 
-  const loadData = useCallback(async (shouldCommit = () => true) => {
-    const results = await Promise.allSettled([
-      getWaitlist(),
-      getBookings(),
-      getActive(),
-      getHistory(),
-      getFoodOrders(),
-      getFoodStats(),
-      getMenuFull(),
-      getMaintenance(),
-      getAuditLogs(50),
-      getTopCustomers("all"),
-      getTableUtilization(),
-    ]);
-    if (!shouldCommit()) return;
-    setData({
-      waitlist: results[0].status === "fulfilled" ? asArray(results[0].value.data) : [],
-      bookings: results[1].status === "fulfilled" ? asArray(results[1].value.data) : [],
-      activeSessions: results[2].status === "fulfilled" ? asArray(results[2].value.data) : [],
-      history: results[3].status === "fulfilled" ? asArray(results[3].value.data) : [],
-      foodOrders: results[4].status === "fulfilled" ? asArray(results[4].value.data) : [],
-      foodStats: results[5].status === "fulfilled" ? asArray(results[5].value.data) : [],
-      menu: results[6].status === "fulfilled" ? asArray(results[6].value.data) : [],
-      maintenance: results[7].status === "fulfilled" ? asMaintenanceRows(results[7].value.data) : [],
-      auditLogs: results[8].status === "fulfilled" ? asArray(results[8].value.data) : [],
-      topCustomers: results[9].status === "fulfilled" ? asArray(results[9].value.data) : [],
-      utilization: results[10].status === "fulfilled" ? asArray(results[10].value.data) : [],
-    });
-    setLoading(false);
+  const loadData = useCallback(async (shouldCommit = () => true, { showLoading = false } = {}) => {
+    if (showLoading) setLoading(true);
+    setLoadError("");
+    try {
+      const results = await Promise.allSettled([
+        getWaitlist(),
+        getBookings(),
+        getActive(),
+        getHistory(),
+        getFoodOrders(),
+        getFoodStats(),
+        getMenuFull(),
+        getMaintenance(),
+        getAuditLogs(50),
+        getTopCustomers("all"),
+        getTableUtilization(),
+      ]);
+      if (!shouldCommit()) return;
+      const failed = results
+        .map((result, index) => (result.status === "rejected" ? WORKSPACE_REQUESTS[index] : ""))
+        .filter(Boolean);
+      setData({
+        waitlist: results[0].status === "fulfilled" ? asArray(results[0].value.data) : [],
+        bookings: results[1].status === "fulfilled" ? asArray(results[1].value.data) : [],
+        activeSessions: results[2].status === "fulfilled" ? asArray(results[2].value.data) : [],
+        history: results[3].status === "fulfilled" ? asArray(results[3].value.data) : [],
+        foodOrders: results[4].status === "fulfilled" ? asArray(results[4].value.data) : [],
+        foodStats: results[5].status === "fulfilled" ? asArray(results[5].value.data) : [],
+        menu: results[6].status === "fulfilled" ? asArray(results[6].value.data) : [],
+        maintenance: results[7].status === "fulfilled" ? asMaintenanceRows(results[7].value.data) : [],
+        auditLogs: results[8].status === "fulfilled" ? asArray(results[8].value.data) : [],
+        topCustomers: results[9].status === "fulfilled" ? asArray(results[9].value.data) : [],
+        utilization: results[10].status === "fulfilled" ? asArray(results[10].value.data) : [],
+      });
+      setLoadError(
+        failed.length
+          ? `Could not load ${failed.join(", ")}. Retry once the backend responds.`
+          : "",
+      );
+    } catch (error) {
+      if (!shouldCommit()) return;
+      setLoadError(error.userMessage || "Workspace data could not load. Check the backend connection and retry.");
+    } finally {
+      if (shouldCommit()) setLoading(false);
+    }
   }, []);
 
   useEffect(() => {
     let alive = true;
-    loadData(() => alive);
+    loadData(() => alive, { showLoading: true });
     return () => {
       alive = false;
     };
@@ -1083,26 +1147,21 @@ export default function ClubSuiteTab({ view }) {
   );
 
   if (loading) {
-    return (
-      <div className="cf-page">
-        <div className="page-skeleton compact" aria-label="Loading workspace data">
-          <div className="skeleton-line skeleton-title" />
-          <div className="skeleton-grid">
-            <div className="skeleton-card" />
-            <div className="skeleton-card" />
-            <div className="skeleton-card" />
-          </div>
-          <div className="skeleton-panel" />
-        </div>
-      </div>
-    );
+    return <WorkspaceLoading />;
   }
 
-  if (view === "waitlist") return <WaitlistView {...props} />;
-  if (view === "reservations") return <ReservationsView {...props} />;
-  if (view === "billing") return <BillingView {...props} />;
-  if (view === "inventory") return <InventoryView {...props} />;
-  if (view === "notifications") return <NotificationsView {...props} />;
-  if (view === "staff") return <StaffView {...props} />;
-  return <WaitlistView {...props} />;
+  const content =
+    view === "reservations" ? <ReservationsView {...props} /> :
+    view === "billing" ? <BillingView {...props} /> :
+    view === "inventory" ? <InventoryView {...props} /> :
+    view === "notifications" ? <NotificationsView {...props} /> :
+    view === "staff" ? <StaffView {...props} /> :
+    <WaitlistView {...props} />;
+
+  return (
+    <>
+      <LoadErrorBanner message={loadError} onRetry={() => loadData(() => true, { showLoading: true })} />
+      {content}
+    </>
+  );
 }

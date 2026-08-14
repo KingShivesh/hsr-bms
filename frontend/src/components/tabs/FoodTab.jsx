@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import {
   getMenu,
   addMenuItem,
@@ -45,6 +45,8 @@ export default function FoodTab() {
   const [stats, setStats] = useState([]);
   const [orders, setOrders] = useState([]);
   const [activeSessions, setActiveSessions] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState("");
   const [cart, setCart] = useState([]);
   const [customerName, setCustomerName] = useState("");
   const [paymentMethod, setPaymentMethod] = useState("Cash");
@@ -65,31 +67,48 @@ export default function FoodTab() {
   });
   const [editingItem, setEditingItem] = useState(null);
 
-  useEffect(() => {
-    fetchAll();
-  }, []);
-
-  async function fetchAll() {
+  const fetchAll = useCallback(async ({ showLoading = false } = {}) => {
+    if (showLoading) setLoading(true);
+    setLoadError("");
     try {
-      const [mRes, sRes, oRes, activeRes] = await Promise.all([
+      const requests = [
         getMenu(),
         getFoodStats(),
         getFoodOrders(),
         getActive(),
-      ]);
-      setMenu(mRes.data);
-      setStats(sRes.data);
-      setOrders(oRes.data);
-      setActiveSessions(
-        activeRes.data.map((session) => ({
+      ];
+      const labels = ["menu items", "food stats", "order history", "active tables"];
+      const [menuRes, statsRes, ordersRes, activeRes] = await Promise.allSettled(requests);
+      const failed = [menuRes, statsRes, ordersRes, activeRes]
+        .map((result, index) => (result.status === "rejected" ? labels[index] : ""))
+        .filter(Boolean);
+
+      if (menuRes.status === "fulfilled") setMenu(menuRes.value.data || {});
+      if (statsRes.status === "fulfilled") setStats(Array.isArray(statsRes.value.data) ? statsRes.value.data : []);
+      if (ordersRes.status === "fulfilled") setOrders(Array.isArray(ordersRes.value.data) ? ordersRes.value.data : []);
+      if (activeRes.status === "fulfilled") {
+        setActiveSessions((Array.isArray(activeRes.value.data) ? activeRes.value.data : []).map((session) => ({
           ...session,
           table_id: tableKey(session.table_id),
-        })),
-      );
+        })));
+      }
+
+      if (failed.length) {
+        const message = `Could not load ${failed.join(", ")}. Retry once the backend responds.`;
+        setLoadError(message);
+        if (!showLoading) showToast(message, "error");
+      }
     } catch (e) {
       console.error(e);
+      setLoadError(e.userMessage || "Food POS could not load. Check the backend connection and retry.");
+    } finally {
+      if (showLoading) setLoading(false);
     }
-  }
+  }, [showToast]);
+
+  useEffect(() => {
+    fetchAll({ showLoading: true });
+  }, [fetchAll]);
 
   function getItemPrice(v) {
     return typeof v === "object" ? v.price : v;
@@ -322,8 +341,30 @@ export default function FoodTab() {
           .filter(Boolean)
           .flatMap((name) => String(name).split(",").map((part) => part.trim()).filter(Boolean));
 
+  if (loading) {
+    return (
+      <div className="loading-state" role="status" aria-live="polite">
+        <div className="loading-state-icon">
+          <i className="ti ti-loader-2" aria-hidden="true" />
+        </div>
+        <div className="loading-state-title">Loading Food & Cafe POS...</div>
+        <div className="loading-state-detail">Fetching menu items, active tables and order history.</div>
+      </div>
+    );
+  }
+
   return (
     <div>
+      {loadError && (
+        <div className="load-error-banner" role="alert">
+          <i className="ti ti-alert-circle" aria-hidden="true" />
+          <span>{loadError}</span>
+          <button type="button" onClick={() => fetchAll({ showLoading: true })}>
+            Retry
+          </button>
+        </div>
+      )}
+
       {/* Tab switcher */}
       <div className="segmented-control page-tabs">
         {[

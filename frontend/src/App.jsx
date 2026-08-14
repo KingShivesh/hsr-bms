@@ -33,7 +33,11 @@ function BackendStatusBanner({ backendStatus, onRetry }) {
 
 function PageSkeleton() {
   return (
-    <div className="page-skeleton" aria-label="Loading page">
+    <div className="page-skeleton" role="status" aria-live="polite" aria-label="Loading page">
+      <div className="page-skeleton-status">
+        <i className="ti ti-loader-2" aria-hidden="true" />
+        <span>Loading page...</span>
+      </div>
       <div className="skeleton-line skeleton-title" />
       <div className="skeleton-grid">
         <div className="skeleton-card" />
