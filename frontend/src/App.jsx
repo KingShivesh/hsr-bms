@@ -196,7 +196,7 @@ export default function App() {
     reports: "Analytics & Reports",
     operations: "Operations Control",
     inventory: "Inventory & Stocks",
-    staff: "Staff & Roster",
+    staff: "Activity Log",
     notifications: "Notification Center",
     settings: "Club Settings",
   };

@@ -6531,7 +6531,7 @@ body.dark {
 }
 
 .hm-cell.busy {
-  background: var(--surface)7ed;
+  background: var(--warning-bg);
   border-color: color-mix(in srgb, var(--warning) 28%, var(--border));
 }
 
@@ -6678,7 +6678,7 @@ body.dark {
 }
 
 .table-control-btn.pause {
-  background: var(--surface)7ed;
+  background: var(--warning-bg);
   border-color: color-mix(in srgb, var(--warning) 28%, var(--border));
   color: var(--warning);
 }
@@ -7679,7 +7679,7 @@ body {
 }
 
 .table-floor-tile.maintenance {
-  background: linear-gradient(180deg, var(--surface)7ed, var(--surface));
+  background: linear-gradient(180deg, var(--danger-bg), var(--surface));
 }
 
 .table-floor-felt {
@@ -7823,7 +7823,7 @@ body {
 
 .table-floor-status.paused,
 .table-floor-status.booked {
-  background: var(--surface)7ed;
+  background: var(--warning-bg);
   color: var(--warning);
 }
 
@@ -8374,12 +8374,16 @@ body.dark .table-session-card.occupied .table-rate-line {
   background: var(--success-bg);
 }
 
-.tournament-table-card.occupied {
+.tournament-table-card.occupied,
+.tournament-table-card.running,
+.tournament-table-card.paused {
   border-color: var(--success);
   background: var(--success-bg);
 }
 
-.tournament-table-card.occupied.recommended {
+.tournament-table-card.occupied.recommended,
+.tournament-table-card.running.recommended,
+.tournament-table-card.paused.recommended {
   box-shadow: inset 3px 0 0 var(--club-green, var(--accent)), 0 10px 24px rgba(16, 32, 23, 0.07);
 }
 
@@ -8451,9 +8455,22 @@ body.dark .table-session-card.occupied .table-rate-line {
   font-weight: var(--weight-black);
 }
 
-.tournament-table-card.occupied .tournament-table-main em {
-  background: var(--surface)7ed;
+.tournament-table-card.running .tournament-table-main em,
+.tournament-table-card.paused .tournament-table-main em {
+  background: var(--warning-bg);
   color: var(--warning);
+}
+
+.cf-table-slot-status {
+  display: inline-flex !important;
+  align-items: center;
+  width: fit-content;
+  margin-bottom: var(--space-2);
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: var(--warning-bg);
+  color: var(--warning) !important;
+  line-height: 1;
 }
 
 .tournament-table-meta {
@@ -8462,9 +8479,122 @@ body.dark .table-session-card.occupied .table-rate-line {
   margin-top: 7px;
 }
 
+.table-status-card {
+  display: grid;
+  gap: var(--space-3);
+  min-width: 0;
+  min-height: 148px;
+  padding: var(--space-4);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  box-shadow: var(--shadow-sm);
+}
+
+.table-status-card.recommended {
+  border-color: color-mix(in srgb, var(--accent) 34%, var(--border));
+  background: color-mix(in srgb, var(--accent-bg) 44%, var(--surface));
+}
+
+.table-status-card.running,
+.table-status-card.paused {
+  border-color: color-mix(in srgb, var(--success) 34%, var(--border));
+}
+
+.table-status-card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  min-width: 0;
+}
+
+.table-status-card-index {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--icon-box-md);
+  height: var(--icon-box-md);
+  border-radius: var(--radius-sm);
+  background: var(--surface-muted);
+  color: var(--text-primary);
+  font-size: var(--text-base);
+  font-weight: var(--weight-bold);
+  font-variant-numeric: tabular-nums;
+}
+
+.table-status-badge {
+  display: inline-flex;
+  align-items: center;
+  max-width: 100%;
+  min-height: 24px;
+  padding: 0 var(--space-2);
+  border-radius: 999px;
+  background: var(--surface-muted);
+  color: var(--text-secondary);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-bold);
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.table-status-badge.running {
+  background: var(--success-bg);
+  color: var(--success);
+}
+
+.table-status-badge.paused,
+.table-status-badge.booked {
+  background: var(--warning-bg);
+  color: var(--warning);
+}
+
+.table-status-badge.maintenance {
+  background: var(--danger-bg);
+  color: var(--danger);
+}
+
+.table-status-card-main {
+  display: grid;
+  gap: var(--space-1);
+  min-width: 0;
+}
+
+.table-status-card-main strong,
+.table-status-card-main span,
+.table-status-card-detail {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.table-status-card-main strong {
+  color: var(--text-primary);
+  font-size: var(--text-lg);
+  font-weight: var(--weight-bold);
+}
+
+.table-status-card-main span,
+.table-status-card-detail {
+  color: var(--text-secondary);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+}
+
+.table-status-card-detail {
+  align-self: end;
+}
+
 body.dark .tournament-table-card,
 body.dark .tournament-table-card.recommended,
 body.dark .tournament-table-card.occupied {
+  background: var(--surface);
+  border-color: var(--border);
+}
+
+body.dark .table-status-card,
+body.dark .table-status-card.recommended {
   background: var(--surface);
   border-color: var(--border);
 }
@@ -10231,7 +10361,7 @@ body.dark .backend-status-banner {
 }
 
 .cf-sidebar {
-  width: 264px !important;
+  width: 288px !important;
   background: var(--text-primary) !important;
   color: var(--text-secondary) !important;
   border-right: 1px solid rgba(148, 163, 184, 0.16) !important;
@@ -10246,7 +10376,7 @@ body.dark .backend-status-banner {
 }
 
 .cf-sidebar ~ .main-content {
-  margin-left: 264px !important;
+  margin-left: 288px !important;
   transition: margin-left 0.22s ease;
 }
 
@@ -10902,7 +11032,7 @@ body.dark .cf-table-slot small {
   }
 
   .cf-sidebar.mobile-open {
-    width: min(264px, 86vw) !important;
+    width: min(288px, 86vw) !important;
   }
 
   .cf-sidebar ~ .main-content,
@@ -12950,7 +13080,7 @@ body.dark .page {
 .cf-sidebar,
 .cf-sidebar.collapsed:hover,
 .cf-sidebar.collapsed:focus-within {
-  width: 264px !important;
+  width: 288px !important;
   background: linear-gradient(180deg, var(--cf-rail), var(--text-primary)) !important;
   color: var(--text-secondary) !important;
   border-right: 1px solid rgba(148, 163, 184, 0.18) !important;
@@ -12967,7 +13097,7 @@ body.dark .page {
 .cf-sidebar ~ .main-content,
 .cf-sidebar.collapsed:hover ~ .main-content,
 .cf-sidebar.collapsed:focus-within ~ .main-content {
-  margin-left: 264px !important;
+  margin-left: 288px !important;
   transition: margin-left 180ms ease !important;
 }
 
@@ -13011,6 +13141,9 @@ body.dark .page {
 
 .cf-sidebar .sb-item {
   position: relative !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: var(--space-3) !important;
   width: 100% !important;
   min-height: var(--btn-h-lg) !important;
   justify-content: flex-start !important;
@@ -13050,8 +13183,19 @@ body.dark .page {
 }
 
 .cf-sidebar .sb-label {
+  flex: 1 1 auto !important;
+  min-width: 0 !important;
   max-width: none !important;
   opacity: 1 !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+}
+
+.cf-sidebar .sb-badge {
+  flex: 0 0 auto !important;
+  margin-left: auto !important;
+  white-space: nowrap !important;
 }
 
 .cf-sidebar .sb-badge[data-tone="success"] {
@@ -13151,7 +13295,7 @@ body.dark .cf-table-slot p {
   .cf-sidebar.mobile-open,
   .cf-sidebar.mobile-open:hover,
   .cf-sidebar.mobile-open:focus-within {
-    width: min(264px, 86vw) !important;
+    width: min(288px, 86vw) !important;
   }
 
   .cf-sidebar ~ .main-content,
@@ -13693,6 +13837,94 @@ body.dark .cf-modal-head {
 
 .load-error-banner button:active {
   transform: scale(0.98);
+}
+
+.operations-rule-list {
+  display: grid;
+  gap: var(--space-3);
+  margin-top: var(--space-5);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--border);
+}
+
+.operations-rule-list-head,
+.operations-rule-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.operations-rule-list-head strong {
+  color: var(--text-primary);
+  font-size: var(--text-base);
+  font-weight: var(--weight-bold);
+}
+
+.operations-rule-list-head span,
+.operations-rule-empty,
+.operations-rule-row span {
+  color: var(--text-secondary);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+}
+
+.operations-rule-table {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.operations-rule-row {
+  min-height: 58px;
+  padding: var(--space-3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+}
+
+.operations-rule-row > div:first-child {
+  display: grid;
+  gap: var(--space-1);
+  min-width: 0;
+}
+
+.operations-rule-row strong,
+.operations-rule-row span {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.operations-rule-row strong {
+  color: var(--text-primary);
+  font-size: var(--text-base);
+  font-weight: var(--weight-bold);
+}
+
+.operations-rule-row em {
+  flex: 0 0 auto;
+  min-width: 48px;
+  color: var(--accent);
+  font-size: var(--text-base);
+  font-style: normal;
+  font-weight: var(--weight-bold);
+  text-align: right;
+}
+
+.operations-rule-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex: 0 0 auto;
+}
+
+.operations-rule-empty {
+  padding: var(--space-4);
+  border: 1px dashed var(--border);
+  border-radius: var(--radius-md);
+  background: var(--surface-muted);
+  text-align: center;
 }
 
 .cf-empty {

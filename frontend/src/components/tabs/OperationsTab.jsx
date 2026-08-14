@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import {
   getPeakHours,
   addPeakHour,
+  updatePeakHour,
   deletePeakHour,
   getGST,
   saveGST,
@@ -60,6 +61,7 @@ function PeakHoursView() {
   const [endHour, setEndHour] = useState(22);
   const [multiplier, setMultiplier] = useState(1.5);
   const [label, setLabel] = useState("Evening Peak");
+  const [editingId, setEditingId] = useState(null);
   const [activeAction, setActiveAction] = useState("");
 
   useEffect(() => {
@@ -79,26 +81,53 @@ function PeakHoursView() {
     }
   }
 
-  async function handleAdd() {
+  async function handleSaveRule() {
     if (startHour >= endHour) {
       showToast("Start hour must be before end hour", "error");
       return;
     }
-    setActiveAction("peak-add");
+    const actionKey = editingId ? `peak-edit-${editingId}` : "peak-add";
+    setActiveAction(actionKey);
     try {
-      await addPeakHour(
-        parseInt(startHour),
-        parseInt(endHour),
+      const payload = [
+        parseInt(startHour, 10),
+        parseInt(endHour, 10),
         parseFloat(multiplier),
         label,
-      );
+      ];
+      if (editingId) {
+        await updatePeakHour(editingId, ...payload);
+      } else {
+        await addPeakHour(...payload);
+      }
       await fetchAll();
-      showToast("Peak hour rule added", "success");
+      showToast(editingId ? "Peak hour rule saved" : "Peak hour rule added", "success");
+      setEditingId(null);
+      setLabel("Evening Peak");
+      setStartHour(18);
+      setEndHour(22);
+      setMultiplier(1.5);
     } catch (e) {
-      showToast(e.response?.data?.detail || "Failed to add peak hour rule", "error");
+      showToast(e.response?.data?.detail || "Failed to save peak hour rule", "error");
     } finally {
       setActiveAction("");
     }
+  }
+
+  function startEdit(rule) {
+    setEditingId(rule.id);
+    setLabel(rule.label || "Peak Hours");
+    setStartHour(rule.start_hour);
+    setEndHour(rule.end_hour);
+    setMultiplier(rule.multiplier);
+  }
+
+  function cancelEdit() {
+    setEditingId(null);
+    setLabel("Evening Peak");
+    setStartHour(18);
+    setEndHour(22);
+    setMultiplier(1.5);
   }
 
   async function handleDelete(id) {
@@ -160,57 +189,6 @@ function PeakHoursView() {
         </div>
       )}
 
-      {/* Existing rules */}
-      {rules.length > 0 && (
-        <div style={{ marginBottom: "16px" }}>
-          {rules.map((r, i) => (
-            <div
-              key={i}
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-                padding: "10px 12px",
-                background: "var(--surface-muted)",
-                border: "1px solid var(--border)",
-                borderRadius: "var(--radius-sm)",
-                marginBottom: "8px",
-              }}
-            >
-              <div>
-                <div
-                  style={{ fontSize: "var(--text-sm)", fontWeight: "var(--weight-semibold)", color: "var(--text-primary)" }}
-                >
-                  {r.label}
-                </div>
-                <div
-                  style={{ fontSize: "var(--text-sm)", color: "var(--text-secondary)", marginTop: "2px" }}
-                >
-                  {fmtHour(r.start_hour)} – {fmtHour(r.end_hour)} ·{" "}
-                  {r.multiplier}× rate
-                </div>
-              </div>
-              <button
-                onClick={() => handleDelete(r.id)}
-                disabled={!!activeAction}
-                style={{
-                  fontSize: "var(--text-xs)",
-                  padding: "4px 10px",
-                  borderRadius: "var(--radius-sm)",
-                  cursor: activeAction ? "wait" : "pointer",
-                  background: "var(--danger-bg)",
-                  color: "var(--danger)",
-                  border: "1px solid color-mix(in srgb, var(--danger) 24%, var(--border))",
-                  fontWeight: "var(--weight-medium)",
-                }}
-              >
-                {activeAction === `peak-delete-${r.id}` ? "Deleting..." : "Delete"}
-              </button>
-            </div>
-          ))}
-        </div>
-      )}
-
       {/* Add new rule */}
       <div
         style={{
@@ -269,15 +247,73 @@ function PeakHoursView() {
         <button
           className="btn btn-primary-sm"
           style={{ marginBottom: "1px" }}
-          onClick={handleAdd}
+          onClick={handleSaveRule}
           disabled={!!activeAction}
         >
-          {activeAction === "peak-add" ? "Adding..." : "Add Rule"}
+          {activeAction === "peak-add"
+            ? "Adding..."
+            : editingId && activeAction === `peak-edit-${editingId}`
+              ? "Saving..."
+              : editingId
+                ? "Save Rule"
+                : "Add Rule"}
         </button>
+        {editingId && (
+          <button
+            className="btn"
+            style={{ marginBottom: "1px" }}
+            onClick={cancelEdit}
+            disabled={!!activeAction}
+          >
+            Cancel Edit
+          </button>
+        )}
       </div>
       <div style={{ fontSize: "var(--text-sm)", color: "var(--text-muted)", marginTop: "8px" }}>
         Example: Start 18, End 22, Multiplier 1.5 = 50% surcharge from 6pm to
         10pm
+      </div>
+
+      <div className="operations-rule-list" aria-label="Existing peak-hour rules">
+        <div className="operations-rule-list-head">
+          <strong>Existing rules</strong>
+          <span>{rules.length} saved</span>
+        </div>
+        {rules.length === 0 ? (
+          <div className="operations-rule-empty">
+            No peak-hour rules saved yet.
+          </div>
+        ) : (
+          <div className="operations-rule-table">
+            {rules.map((rule) => (
+              <div className="operations-rule-row" key={rule.id}>
+                <div>
+                  <strong>{rule.label}</strong>
+                  <span>{fmtHour(rule.start_hour)} - {fmtHour(rule.end_hour)}</span>
+                </div>
+                <em>{rule.multiplier}x</em>
+                <div className="operations-rule-actions">
+                  <button
+                    type="button"
+                    className="btn"
+                    onClick={() => startEdit(rule)}
+                    disabled={!!activeAction}
+                  >
+                    Edit
+                  </button>
+                  <button
+                    type="button"
+                    className="btn btn-danger-sm"
+                    onClick={() => handleDelete(rule.id)}
+                    disabled={!!activeAction}
+                  >
+                    {activeAction === `peak-delete-${rule.id}` ? "Deleting..." : "Delete"}
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </Panel>
   );

@@ -21,6 +21,7 @@ import {
   getWaitlist,
 } from "../api/index.js";
 import { HSR_TABLES, TOTAL_TABLES, getTableLabel } from "../config/hsrTables.js";
+import { getTableStatus } from "../config/tableStatus.js";
 
 const TABLES = HSR_TABLES;
 const tableKey = (tableId) => String(tableId || "").trim().toLowerCase();
@@ -294,7 +295,7 @@ function LiveFloor({ sessions, elapsed, onNavigate }) {
           const elapsedSecs = elapsed[table.id] || 0;
           const active = Boolean(session);
           const busy = elapsedSecs >= 3600;
-          const paused = session?.paused;
+          const status = getTableStatus({ session });
           const runningTotal = active
             ? estimateTableCharge(session, elapsedSecs) + (session.food_total || 0)
             : 0;
@@ -302,7 +303,7 @@ function LiveFloor({ sessions, elapsed, onNavigate }) {
             <button
               type="button"
               key={table.id}
-              className={`ops-table-card ${active ? "active" : "idle"} ${busy ? "busy" : ""} ${paused ? "paused" : ""}`}
+              className={`ops-table-card ${active ? "active" : "idle"} ${busy ? "busy" : ""} ${status.className}`}
               onClick={() => onNavigate("tables")}
             >
               <div className="ops-table-top">
@@ -311,7 +312,7 @@ function LiveFloor({ sessions, elapsed, onNavigate }) {
               </div>
               <div className="ops-table-status">
                 <i className="ti ti-circle-filled" aria-hidden="true" />
-                {paused ? "Paused" : active ? "Running" : "Available"}
+                {status.label}
               </div>
               <div className="ops-table-main">
                 <span>{active ? fmtTime(elapsedSecs) : "--:--"}</span>

@@ -29,6 +29,7 @@ import {
 import { searchMembers } from "../../api/index.js";
 import { useToast } from "../toastContext.js";
 import { HSR_TABLES, getTableLabel, getTableRate } from "../../config/hsrTables.js";
+import { getTableStatus } from "../../config/tableStatus.js";
 
 const TABLES = HSR_TABLES;
 const tableKey = (tableId) => String(tableId || "").trim().toLowerCase();
@@ -1393,7 +1394,6 @@ function TableFloorTile({
   gstPercent,
 }) {
   const occupied = !!session;
-  const paused = session?.paused || false;
   const T = THEME[table.type];
   const rate = getTableRate(table, rates);
   const total = runningTotalForSession(session, peakRate, gstPercent);
@@ -1401,18 +1401,8 @@ function TableFloorTile({
   const openFrame = session?.frames?.find((frame) => frame.status === "open");
   const bookingTime = booking ? bookingDisplayTime(booking) : "";
 
-  let status = "Available";
-  let tone = "idle";
-  if (maintenance) {
-    status = "Maintenance";
-    tone = "maintenance";
-  } else if (occupied) {
-    status = paused ? "Paused" : "Running";
-    tone = paused ? "paused" : "running";
-  } else if (booking) {
-    status = "Booked";
-    tone = "booked";
-  }
+  const status = getTableStatus({ session, booking, maintenance });
+  const tone = status.tone;
 
   return (
     <button
@@ -1436,7 +1426,7 @@ function TableFloorTile({
 
       <div className="table-floor-body">
         <div className="table-floor-topline">
-          <span className={`table-floor-status ${tone}`}>{status}</span>
+          <span className={`table-floor-status ${tone}`}>{status.label}</span>
           <strong>₹{rate}/hr</strong>
         </div>
         <div className="table-floor-title">

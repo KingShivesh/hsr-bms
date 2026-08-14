@@ -56,6 +56,27 @@ def add_peak_hour(
     db.commit()
     return {"ok": True}
 
+@router.put("/peak-hours/{rule_id}")
+def update_peak_hour(
+    rule_id: int,
+    body: PeakHourBody,
+    db: Session = Depends(get_db),
+    _: dict = Depends(require_admin),
+):
+    if not (0 <= body.start_hour < body.end_hour <= 24):
+        raise HTTPException(status_code=400, detail="Peak hours must be between 0 and 24, with start before end")
+    if body.multiplier <= 0 or body.multiplier > 5:
+        raise HTTPException(status_code=400, detail="Peak multiplier must be between 0 and 5")
+    rule = db.query(models.PeakHourRate).filter(models.PeakHourRate.id == rule_id).first()
+    if not rule:
+        raise HTTPException(status_code=404, detail="Rule not found")
+    rule.start_hour = body.start_hour
+    rule.end_hour = body.end_hour
+    rule.multiplier = body.multiplier
+    rule.label = body.label.strip() or "Peak Hours"
+    db.commit()
+    return {"ok": True}
+
 @router.delete("/peak-hours/{rule_id}")
 def delete_peak_hour(
     rule_id: int,

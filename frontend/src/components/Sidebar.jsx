@@ -40,7 +40,7 @@ export default function Sidebar({ page, setPage, onLogout, activeTables, role = 
         { id: "closing", icon: "ti-lock-check", label: "Shift EOD Closing", tone: "red" },
         { id: "reports", icon: "ti-chart-bar", label: "Analytics & Reports", adminOnly: true, tone: "blue" },
         { id: "operations", icon: "ti-adjustments", label: "Operations Control", adminOnly: true, tone: "slate" },
-        { id: "staff", icon: "ti-user-check", label: "Staff & Roster", adminOnly: true, tone: "green" },
+        { id: "staff", icon: "ti-user-check", label: "Activity Log", adminOnly: true, tone: "green" },
         { id: "inventory", icon: "ti-package", label: "Inventory & Stocks", staffHidden: true, tone: "amber" },
       ],
     },

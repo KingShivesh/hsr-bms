@@ -8,7 +8,8 @@ import {
   getTournaments,
   recordTournamentWinner,
 } from "../../api/index.js";
-import { HSR_TABLES, getTableLabel, getTableRate } from "../../config/hsrTables.js";
+import { HSR_TABLES } from "../../config/hsrTables.js";
+import TableStatusCard from "../TableStatusCard.jsx";
 import { useToast } from "../toastContext.js";
 
 const GAME_TYPES = ["8 Ball", "9 Ball", "10 Ball", "Snooker", "Straight Pool"];
@@ -74,34 +75,21 @@ function TournamentTableFloor({ gameType, rates, sessionsByTable }) {
         const session = sessionsByTable[table.id];
         const occupied = !!session;
         const recommended = table.type === preferredType;
+        const detail = occupied
+          ? `${session.customer_name || "Player"} · Started ${fmtClock(session.start_time)}`
+          : recommended
+            ? `Best fit for ${gameType}`
+            : "Backup table";
         return (
-          <div
+          <TableStatusCard
             key={table.id}
-            className={`tournament-table-card ${occupied ? "occupied" : "available"} ${recommended ? "recommended" : ""}`}
-          >
-            <div className={`tournament-table-felt ${table.type.toLowerCase()}`}>
-              <span>T{table.num}</span>
-            </div>
-            <div className="tournament-table-main">
-              <div>
-                <strong>{getTableLabel(table)}</strong>
-                <span>₹{getTableRate(table, rates)}/hr · {table.type === "POOL" ? "Pool" : "Snooker"}</span>
-              </div>
-              <em>{occupied ? "Occupied" : "Available"}</em>
-            </div>
-            <div className="tournament-table-meta">
-              {occupied ? (
-                <>
-                  <span>{session.customer_name}</span>
-                  <span>Started {fmtClock(session.start_time)}</span>
-                </>
-              ) : recommended ? (
-                <span>Best fit for {gameType}</span>
-              ) : (
-                <span>Backup table</span>
-              )}
-            </div>
-          </div>
+            table={table}
+            session={session}
+            rates={rates}
+            recommended={recommended}
+            recommendedLabel={`Best fit for ${gameType}`}
+            detail={detail}
+          />
         );
       })}
     </div>

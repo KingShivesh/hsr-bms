@@ -290,6 +290,13 @@ export const addPeakHour = (start_hour, end_hour, multiplier, label) =>
     multiplier,
     label,
   });
+export const updatePeakHour = (id, start_hour, end_hour, multiplier, label) =>
+  api.put(`/operations/peak-hours/${id}`, {
+    start_hour,
+    end_hour,
+    multiplier,
+    label,
+  });
 export const deletePeakHour = (id) =>
   api.delete(`/operations/peak-hours/${id}`);
 export const getCurrentRate = () => api.get("/operations/current-rate");

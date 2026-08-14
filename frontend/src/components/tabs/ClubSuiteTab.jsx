@@ -25,6 +25,7 @@ import {
   updateMenuItem,
 } from "../../api/index.js";
 import { HSR_TABLES } from "../../config/hsrTables.js";
+import { getTableStatus } from "../../config/tableStatus.js";
 import { useToast } from "../toastContext.js";
 
 function money(value = 0) {
@@ -438,27 +439,33 @@ function ReservationsView({ bookings, actions, busy, activeAction }) {
         <Stat label="Missed Bookings" value={bookings.filter((booking) => booking.status === "missed").length} />
       </div>
       <div className="cf-calendar-grid">
-        {tableBookings.map(({ table, bookings: rows }) => (
-          <section className="cf-table-slot" key={table.id}>
-            <div className="cf-table-slot-head">
-              <strong>T{table.num}</strong>
-              <span>{table.label || table.type || table.id}</span>
-            </div>
-            {rows.length ? (
-              rows.slice(0, 3).map((booking) => (
-                <p key={booking.id}>
-                  <b>{booking.customer_name}</b>
-                  <small>{shortDate(booking.booking_time)}</small>
-                </p>
-              ))
-            ) : (
-              <div className="cf-table-slot-empty">
-                <em>Open</em>
-                <small>No reservations scheduled</small>
+        {tableBookings.map(({ table, bookings: rows }) => {
+          const tableStatus = getTableStatus({ booking: rows[0] });
+          return (
+            <section className="cf-table-slot" key={table.id}>
+              <div className="cf-table-slot-head">
+                <strong>T{table.num}</strong>
+                <span>{table.label || table.type || table.id}</span>
               </div>
-            )}
-          </section>
-        ))}
+              {rows.length ? (
+                <>
+                  <em className={`cf-table-slot-status ${tableStatus.tone}`}>{tableStatus.label}</em>
+                  {rows.slice(0, 3).map((booking) => (
+                    <p key={booking.id}>
+                      <b>{booking.customer_name}</b>
+                      <small>{shortDate(booking.booking_time)}</small>
+                    </p>
+                  ))}
+                </>
+              ) : (
+                <div className="cf-table-slot-empty">
+                  <em>{tableStatus.label}</em>
+                  <small>No reservations scheduled</small>
+                </div>
+              )}
+            </section>
+          );
+        })}
       </div>
       <Section eyebrow="Bookings" title="Reservation Register">
         <RowList

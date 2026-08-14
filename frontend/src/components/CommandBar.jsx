@@ -209,16 +209,7 @@ export default function CommandBar({ page, setPage, onNewSession, role = "admin"
   }
 
   if (!open) {
-    return (
-      <button
-        type="button"
-        className="command-fab"
-        onClick={() => setOpen(true)}
-        title="Open command bar"
-      >
-        <i className="ti ti-command" aria-hidden="true" />
-      </button>
-    );
+    return null;
   }
 
   return (
