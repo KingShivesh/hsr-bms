@@ -61,8 +61,8 @@
   --luxury-blue: var(--accent);
   --luxury-crimson: var(--danger);
   --luxury-glass-border: var(--border);
-  --luxury-shadow: var(--shadow-md);
-  --luxury-shadow-soft: var(--shadow-sm);
+  --luxury-shadow: var(--elevation-2);
+  --luxury-shadow-soft: var(--elevation-1);
   --bg: var(--surface-muted);
   --surface-soft: var(--surface-muted);
   --border-strong: var(--border);
@@ -71,6 +71,12 @@
   --muted-soft: var(--text-muted);
   --shadow-sm: 0 1px 2px rgba(16, 24, 40, 0.04);
   --shadow-md: 0 12px 28px rgba(16, 24, 40, 0.08);
+  --elevation-1: 0 1px 2px rgba(16, 24, 40, 0.04);
+  --elevation-2: 0 4px 12px rgba(16, 24, 40, 0.08);
+  --elevation-3: 0 16px 40px rgba(16, 24, 40, 0.12);
+  --motion-fast: 140ms;
+  --motion-med: 180ms;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   --focus: 0 0 0 3px color-mix(in srgb, var(--accent) 18%, transparent);
 }
 
@@ -119,6 +125,9 @@ body.dark {
   --muted-soft: var(--text-muted);
   --shadow-sm: none;
   --shadow-md: 0 18px 36px rgba(0, 0, 0, 0.28);
+  --elevation-1: 0 1px 2px rgba(0, 0, 0, 0.22);
+  --elevation-2: 0 4px 14px rgba(0, 0, 0, 0.28);
+  --elevation-3: 0 16px 40px rgba(0, 0, 0, 0.36);
 }
 
 body.dark .sidebar {
@@ -2147,7 +2156,7 @@ body.dark .closing-insight.critical {
   border-radius: var(--radius-md);
   background: var(--venue-card, var(--surface));
   color: var(--venue-text, var(--text));
-  box-shadow: 0 18px 40px rgba(16, 24, 40, 0.16);
+  box-shadow: var(--elevation-2);
   cursor: pointer;
   font-size: var(--text-2xl);
 }
@@ -2170,7 +2179,7 @@ body.dark .closing-insight.critical {
   border: 1px solid var(--venue-line, var(--border));
   border-radius: var(--radius-md);
   background: var(--venue-card, var(--surface));
-  box-shadow: 0 28px 70px rgba(15, 23, 42, 0.24);
+  box-shadow: var(--elevation-3);
 }
 
 .command-input-wrap {
@@ -3078,7 +3087,7 @@ body.dark .table-frame-running {
   border-radius: var(--radius-md);
   background: var(--venue-card, var(--surface));
   color: var(--venue-text, var(--text));
-  box-shadow: 0 24px 70px rgba(15, 23, 42, 0.28);
+  box-shadow: var(--elevation-3);
   padding: var(--space-5);
 }
 
@@ -4497,7 +4506,7 @@ button:disabled,
   border-radius: var(--radius-md);
   background: var(--venue-card, var(--surface));
   color: var(--venue-text, var(--text));
-  box-shadow: 0 18px 42px rgba(16, 24, 40, 0.14);
+  box-shadow: var(--elevation-2);
   font-family: "Courier New", monospace;
 }
 
@@ -4552,7 +4561,7 @@ button:disabled,
   border-radius: var(--radius-md);
   background: var(--venue-card, var(--surface));
   color: var(--venue-text, var(--text));
-  box-shadow: 0 24px 70px rgba(15, 23, 42, 0.24);
+  box-shadow: var(--elevation-3);
   padding: 18px;
 }
 
@@ -5004,7 +5013,7 @@ body {
 .history-section:hover,
 .settings-panel:hover,
 .member-card:hover {
-  box-shadow: 0 14px 34px rgba(16, 24, 40, 0.08);
+  box-shadow: var(--elevation-2);
 }
 
 .metric-card {
@@ -5098,7 +5107,7 @@ body {
   border-radius: var(--radius-md);
   background: var(--venue-felt);
   color: var(--text-inverse);
-  box-shadow: 0 14px 30px rgba(31, 122, 79, 0.22);
+  box-shadow: var(--elevation-2);
 }
 
 .login-brand-mark i {
@@ -5120,7 +5129,7 @@ body {
 .login-box {
   padding: 30px;
   border-radius: var(--radius-md);
-  box-shadow: 0 24px 56px rgba(16, 21, 19, 0.22);
+  box-shadow: var(--elevation-3);
 }
 
 .login-footer {
@@ -5132,7 +5141,7 @@ body {
 
 .toast {
   border-radius: var(--radius-sm);
-  box-shadow: 0 18px 40px rgba(16, 24, 40, 0.16);
+  box-shadow: var(--elevation-2);
 }
 
 body.dark .main-content {
@@ -5224,7 +5233,7 @@ body.dark .login-footer {
   border: 1px solid rgba(15, 23, 42, 0.1);
   border-radius: var(--radius-lg);
   background: var(--surface);
-  box-shadow: 0 28px 70px rgba(15, 23, 42, 0.14);
+  box-shadow: var(--elevation-3);
 }
 
 .login-showcase {
@@ -5258,7 +5267,7 @@ body.dark .login-footer {
   border-radius: var(--radius-lg);
   background: rgba(140, 240, 178, 0.12);
   color: var(--accent-hover);
-  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.2);
+  box-shadow: var(--elevation-2);
 }
 
 .login-kicker {
@@ -5515,7 +5524,7 @@ body.dark .login-footer {
   margin-top: 6px;
   border-radius: var(--radius-sm);
   background: var(--accent);
-  box-shadow: 0 14px 28px rgba(31, 122, 79, 0.18);
+  box-shadow: var(--elevation-2);
   transition:
     transform 0.15s,
     box-shadow 0.15s,
@@ -5525,7 +5534,7 @@ body.dark .login-footer {
 
 .btn-login:hover {
   background: var(--accent);
-  box-shadow: 0 18px 36px rgba(31, 122, 79, 0.24);
+  box-shadow: var(--elevation-2);
   opacity: 1;
   transform: translateY(-1px);
 }
@@ -5561,7 +5570,7 @@ body.dark .login-container {
 body.dark .login-shell {
   border-color: var(--border);
   background: var(--text-primary);
-  box-shadow: 0 28px 70px rgba(0, 0, 0, 0.34);
+  box-shadow: var(--elevation-3);
 }
 
 body.dark .login-showcase {
@@ -7322,7 +7331,7 @@ body {
 }
 
 .login-shell {
-  box-shadow: 0 28px 80px rgba(16, 32, 23, 0.16);
+  box-shadow: var(--elevation-3);
 }
 
 .login-showcase {
@@ -7643,17 +7652,17 @@ body {
   border: 1px solid rgba(191, 208, 189, 0.9);
   border-radius: var(--radius-sm);
   background: rgba(255, 255, 255, 0.96);
-  box-shadow: 0 8px 22px rgba(16, 32, 23, 0.06);
+  box-shadow: var(--elevation-1);
   color: var(--text);
   cursor: pointer;
   text-align: left;
-  transition: border-color 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease;
+  transition: border-color var(--motion-fast) var(--ease-out), box-shadow var(--motion-fast) var(--ease-out), transform var(--motion-fast) var(--ease-out);
 }
 
 .table-floor-tile:hover {
   transform: translateY(-1px);
   border-color: rgba(32, 128, 79, 0.45);
-  box-shadow: 0 14px 28px rgba(16, 32, 23, 0.1);
+  box-shadow: var(--elevation-2);
 }
 
 .table-floor-tile.selected {
@@ -8015,7 +8024,7 @@ body.dark .table-detail-header span {
   margin: 0 auto !important;
   border: 1px solid rgba(191, 208, 189, 0.9);
   border-radius: var(--radius-md);
-  box-shadow: 0 24px 70px rgba(16, 32, 23, 0.22);
+  box-shadow: var(--elevation-3);
 }
 
 .checkout-bill-head,
@@ -11064,18 +11073,18 @@ body.dark .cf-table-slot small {
   color: var(--text-primary);
   cursor: pointer;
   text-align: left;
-  transition: transform 0.16s ease, box-shadow 0.16s ease, border-color 0.16s ease;
+  transition: transform var(--motion-fast) var(--ease-out), box-shadow var(--motion-fast) var(--ease-out), border-color var(--motion-fast) var(--ease-out);
 }
 
 .ops-command-deck button:hover {
   transform: translateY(-1px);
   border-color: color-mix(in srgb, var(--accent) 24%, var(--border));
-  box-shadow: 0 14px 28px rgba(15, 23, 42, 0.08);
+  box-shadow: var(--elevation-2);
 }
 
 .ops-command-deck button:active {
   transform: translateY(0);
-  box-shadow: 0 6px 14px rgba(15, 23, 42, 0.08);
+  box-shadow: var(--elevation-1);
 }
 
 .ops-command-deck button.primary {
@@ -11201,13 +11210,13 @@ body.dark .cf-table-slot small {
   cursor: pointer;
   font-size: var(--text-sm);
   font-weight: var(--weight-black);
-  transition: transform 0.16s ease, border-color 0.16s ease, box-shadow 0.16s ease;
+  transition: transform var(--motion-fast) var(--ease-out), border-color var(--motion-fast) var(--ease-out), box-shadow var(--motion-fast) var(--ease-out);
 }
 
 .ops-action:hover,
 .ops-link-btn:hover {
   transform: translateY(-1px);
-  box-shadow: 0 8px 18px rgba(15, 23, 42, 0.08);
+  box-shadow: var(--elevation-2);
 }
 
 .ops-action:active,
@@ -11283,7 +11292,7 @@ body.dark .cf-table-slot small {
   color: var(--text-primary);
   cursor: pointer;
   text-align: center;
-  transition: transform 0.16s ease, border-color 0.16s ease, box-shadow 0.16s ease;
+  transition: transform var(--motion-fast) var(--ease-out), border-color var(--motion-fast) var(--ease-out), box-shadow var(--motion-fast) var(--ease-out);
 }
 
 .ops-quick-action:hover {
@@ -11707,7 +11716,7 @@ body.dark .cf-table-slot small {
   background: var(--surface-muted);
   cursor: pointer;
   text-align: left;
-  transition: transform 0.16s ease, border-color 0.16s ease, box-shadow 0.16s ease;
+  transition: transform var(--motion-fast) var(--ease-out), border-color var(--motion-fast) var(--ease-out), box-shadow var(--motion-fast) var(--ease-out);
 }
 
 .ops-table-card:hover {
@@ -12235,7 +12244,7 @@ body.dark .cf-table-slot small {
   width: 100%;
   cursor: pointer;
   text-align: left;
-  transition: transform 0.16s ease, border-color 0.16s ease, box-shadow 0.16s ease;
+  transition: transform var(--motion-fast) var(--ease-out), border-color var(--motion-fast) var(--ease-out), box-shadow var(--motion-fast) var(--ease-out);
 }
 
 .ops-today-row:hover {
@@ -13255,7 +13264,7 @@ body.dark .cf-table-slot p {
   font-size: var(--text-sm);
   font-weight: var(--weight-black);
   white-space: nowrap;
-  transition: transform 0.16s ease, border-color 0.16s ease, box-shadow 0.16s ease;
+  transition: transform var(--motion-fast) var(--ease-out), border-color var(--motion-fast) var(--ease-out), box-shadow var(--motion-fast) var(--ease-out);
 }
 
 .cf-action-btn:hover:not(:disabled) {
@@ -13854,7 +13863,7 @@ body.dark .cf-topbar,
 body.dark .topbar {
   background: rgba(15, 23, 42, 0.74) !important;
   border-color: rgba(255, 255, 255, 0.08) !important;
-  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.28) !important;
+  box-shadow: var(--elevation-3) !important;
 }
 
 .cf-sidebar {
@@ -13880,7 +13889,7 @@ body.dark .topbar {
   border: 1px solid transparent !important;
   border-radius: var(--radius-lg) !important;
   color: rgba(226, 232, 240, 0.76) !important;
-  transition: background 0.18s ease, border-color 0.18s ease, color 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease !important;
+  transition: background var(--motion-fast) var(--ease-out), border-color var(--motion-fast) var(--ease-out), color var(--motion-fast) var(--ease-out), transform var(--motion-fast) var(--ease-out), box-shadow var(--motion-fast) var(--ease-out) !important;
 }
 
 .cf-sidebar .sb-item:hover,
@@ -13907,14 +13916,23 @@ body.dark .topbar {
 .table-utility-btn i,
 .table-control-btn i,
 .table-payment-btn i {
-  transition: transform 0.18s ease, color 0.18s ease, background 0.18s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--icon-sm);
+  min-width: var(--icon-sm);
+  height: var(--icon-sm);
+  line-height: 1;
+  font-size: var(--icon-sm);
+  transform: translateY(0.5px);
+  transition: transform var(--motion-fast) var(--ease-out), color var(--motion-fast) var(--ease-out), background var(--motion-fast) var(--ease-out);
 }
 
 .cf-sidebar .sb-item:hover i,
 .topbar-icon-btn:hover i,
 .ops-quick-action:hover i,
 .cf-action-btn:hover i {
-  transform: translateY(-1px) scale(1.04);
+  transform: translateY(-0.5px) scale(1.03);
 }
 
 .ops-panel,
@@ -13939,9 +13957,10 @@ body.dark .topbar {
   border-radius: var(--radius-lg) !important;
   background: var(--luxury-card) !important;
   box-shadow: var(--luxury-shadow-soft) !important;
+  height: 100%;
   backdrop-filter: blur(12px) saturate(1.15);
   -webkit-backdrop-filter: blur(12px) saturate(1.15);
-  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease, background 0.18s ease !important;
+  transition: transform var(--motion-fast) var(--ease-out), box-shadow var(--motion-fast) var(--ease-out), border-color var(--motion-fast) var(--ease-out), background var(--motion-fast) var(--ease-out) !important;
 }
 
 .ops-panel:hover,
@@ -13952,7 +13971,7 @@ body.dark .topbar {
 .food-menu-card:hover,
 .table-session-card:hover,
 .metric-card:hover {
-  transform: translateY(-2px);
+  transform: translateY(-1px);
   border-color: color-mix(in srgb, var(--accent) 28%, var(--border)) !important;
   box-shadow: var(--luxury-shadow) !important;
 }
@@ -13977,7 +13996,7 @@ body.dark .table-maintenance-card,
 body.dark .metric-card {
   background: var(--luxury-card-dark) !important;
   border-color: rgba(255, 255, 255, 0.08) !important;
-  box-shadow: 0 18px 52px rgba(0, 0, 0, 0.26) !important;
+  box-shadow: var(--elevation-2) !important;
 }
 
 .topbar-title,
@@ -14028,7 +14047,12 @@ body.dark .metric-card {
 .checkout-bill-close,
 .checkout-rupee-apply-btn {
   border-radius: var(--radius-md) !important;
-  transition: transform 0.16s ease, box-shadow 0.16s ease, background 0.16s ease, border-color 0.16s ease, opacity 0.16s ease !important;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-width: 0;
+  transition: transform var(--motion-fast) var(--ease-out), box-shadow var(--motion-fast) var(--ease-out), background var(--motion-fast) var(--ease-out), border-color var(--motion-fast) var(--ease-out), opacity var(--motion-fast) var(--ease-out) !important;
 }
 
 .btn:hover:not(:disabled),
@@ -14049,7 +14073,7 @@ body.dark .metric-card {
 .checkout-bill-close:hover:not(:disabled),
 .checkout-rupee-apply-btn:hover:not(:disabled) {
   transform: translateY(-1px);
-  box-shadow: 0 14px 30px rgba(15, 23, 42, 0.12) !important;
+  box-shadow: var(--elevation-2) !important;
 }
 
 .btn:active:not(:disabled),
@@ -14060,8 +14084,8 @@ body.dark .metric-card {
 .table-payment-btn:active:not(:disabled),
 .table-secondary-btn:active:not(:disabled),
 .table-notes-btn:active:not(:disabled) {
-  transform: translateY(0) scale(0.99);
-  box-shadow: 0 6px 14px rgba(15, 23, 42, 0.1) !important;
+  transform: translateY(0) scale(0.98);
+  box-shadow: var(--elevation-1) !important;
 }
 
 .primary-action-btn,
@@ -14074,7 +14098,7 @@ body.dark .metric-card {
   background:
     linear-gradient(135deg, var(--accent), var(--accent-hover)) !important;
   color: var(--text-inverse) !important;
-  box-shadow: 0 14px 34px color-mix(in srgb, var(--accent) 24%, transparent) !important;
+  box-shadow: var(--elevation-2) !important;
 }
 
 .btn-danger-sm,
@@ -14101,8 +14125,9 @@ button:disabled,
 .primary-action-btn:disabled,
 .cf-action-btn:disabled {
   filter: grayscale(0.2);
-  opacity: 0.58 !important;
+  opacity: 0.46 !important;
   cursor: not-allowed !important;
+  transform: none !important;
   box-shadow: none !important;
 }
 
@@ -14117,7 +14142,7 @@ select {
   border-radius: var(--radius-md) !important;
   border-color: color-mix(in srgb, var(--border) 92%, transparent) !important;
   background: color-mix(in srgb, var(--surface) 88%, transparent) !important;
-  transition: border-color 0.16s ease, box-shadow 0.16s ease, background 0.16s ease !important;
+  transition: border-color var(--motion-fast) var(--ease-out), box-shadow var(--motion-fast) var(--ease-out), background var(--motion-fast) var(--ease-out) !important;
 }
 
 .input-field:focus,
@@ -14129,6 +14154,41 @@ textarea:focus,
 select:focus {
   border-color: color-mix(in srgb, var(--accent) 56%, var(--border)) !important;
   box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 14%, transparent) !important;
+}
+
+.btn i,
+.primary-action-btn i,
+.topbar-action-btn i,
+.cf-action-btn i,
+.table-control-btn i,
+.table-payment-btn i,
+.table-secondary-btn i,
+.table-notes-btn i,
+.member-action-btn i,
+.ui-tab-btn i,
+.checkout-bill-close i,
+.ops-link-btn i,
+.ops-command-deck button i,
+.ops-table-card i,
+.topbar-icon-btn i {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--icon-sm);
+  min-width: var(--icon-sm);
+  height: var(--icon-sm);
+  line-height: 1;
+  font-size: var(--icon-sm);
+  transform: translateY(0.5px);
+}
+
+.topbar-icon-btn i,
+.topbar-action-btn i,
+.ops-kpi-top i {
+  width: var(--icon-md);
+  min-width: var(--icon-md);
+  height: var(--icon-md);
+  font-size: var(--icon-md);
 }
 
 .table-session-card:not(.occupied) {
@@ -14146,7 +14206,7 @@ select:focus {
   border-color: color-mix(in srgb, var(--luxury-crimson) 44%, var(--border)) !important;
   background:
     linear-gradient(180deg, color-mix(in srgb, var(--luxury-crimson) 7%, var(--surface)), var(--surface)) !important;
-  box-shadow: 0 18px 52px color-mix(in srgb, var(--luxury-crimson) 18%, transparent) !important;
+  box-shadow: var(--elevation-2) !important;
 }
 
 body.dark .table-session-card.occupied {
@@ -14188,6 +14248,77 @@ body.dark .table-session-card.occupied {
 .food-menu-card {
   position: relative;
   overflow: hidden;
+}
+
+.metric-card,
+.report-stat-card,
+.ops-kpi,
+.food-menu-card,
+.member-card,
+.tournament-table-card,
+.cf-card,
+.cf-panel,
+.settings-card,
+.table-session-card,
+.checkout-split-card,
+.checkout-frame-card {
+  min-width: 0;
+}
+
+.food-menu-card strong,
+.food-menu-card span,
+.member-card h3,
+.member-card strong,
+.member-card span,
+.tournament-table-main strong,
+.tournament-table-main span,
+.tournament-table-main em,
+.cf-data-row strong,
+.cf-data-row span,
+.ops-table-card strong,
+.ops-table-card span,
+.table-rate-line,
+.table-detail-total strong,
+.data-table td,
+.ops-data-table td {
+  min-width: 0;
+}
+
+.food-menu-card strong,
+.member-card h3,
+.tournament-table-main strong,
+.cf-data-row strong,
+.ops-table-card strong,
+.table-rate-line,
+.data-table td > span,
+.data-table td > strong,
+.ops-data-table td strong,
+.ops-data-table td small {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.data-table th,
+.data-table td,
+.ops-data-table th,
+.ops-data-table td {
+  vertical-align: middle;
+  font-variant-numeric: tabular-nums;
+}
+
+.data-table th:last-child,
+.data-table td:last-child,
+.ops-data-table th:last-child,
+.ops-data-table td:last-child {
+  text-align: right;
+}
+
+.data-table td:has(.btn),
+.data-table td:has(button),
+.ops-data-table td:has(.btn),
+.ops-data-table td:has(button) {
+  text-align: right;
 }
 
 .food-menu-card::before {
@@ -14233,12 +14364,99 @@ body.dark .table-session-card.occupied {
     linear-gradient(135deg, color-mix(in srgb, var(--accent-bg) 46%, var(--surface)), color-mix(in srgb, var(--surface) 88%, transparent));
 }
 
+.empty-state,
+.cf-empty,
+.ops-empty-line,
+.ops-empty-chart,
+.table-history-empty,
+.command-empty {
+  text-align: center;
+  text-wrap: balance;
+}
+
+.empty-state-icon,
+.cf-empty i,
+.ops-empty-line i {
+  width: var(--icon-box-md);
+  min-width: var(--icon-box-md);
+  height: var(--icon-box-md);
+  display: inline-grid;
+  place-items: center;
+  margin-inline: auto;
+}
+
+.frame-loser-modal,
+.quick-session-modal,
+.table-history-modal,
+.cf-modal,
+.checkout-bill-panel {
+  animation: polished-panel-in var(--motion-med) var(--ease-out) both;
+  box-shadow: var(--elevation-3) !important;
+}
+
+.modal-backdrop,
+.frame-loser-backdrop,
+.cf-modal-backdrop,
+.checkout-bill-screen {
+  animation: polished-backdrop-in var(--motion-med) var(--ease-out) both;
+}
+
+@keyframes polished-panel-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes polished-backdrop-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 .toast,
 .backend-status-banner,
 .settings-flash {
   border-radius: var(--radius-lg) !important;
   box-shadow: var(--luxury-shadow-soft) !important;
   backdrop-filter: blur(14px) saturate(1.2);
+}
+
+.toast {
+  animation: polished-toast-in var(--motion-med) var(--ease-out) both;
+}
+
+.toast.is-exiting {
+  animation: polished-toast-out var(--motion-med) var(--ease-out) both;
+}
+
+@keyframes polished-toast-in {
+  from {
+    opacity: 0;
+    transform: translateX(12px) translateY(-4px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) translateY(0) scale(1);
+  }
+}
+
+@keyframes polished-toast-out {
+  from {
+    opacity: 1;
+    transform: translateX(0) translateY(0) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(12px) translateY(-4px) scale(0.98);
+  }
 }
 
 ::-webkit-scrollbar {

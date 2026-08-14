@@ -6,10 +6,13 @@ export function ToastProvider({ children }) {
 
   const showToast = useCallback((message, type = "success") => {
     const id = Date.now() + Math.random();
-    setToasts((prev) => [...prev, { id, message, type }]);
+    setToasts((prev) => [...prev, { id, message, type, exiting: false }]);
     setTimeout(() => {
-      setToasts((prev) => prev.filter((t) => t.id !== id));
-    }, 3200);
+      setToasts((prev) => prev.map((t) => (t.id === id ? { ...t, exiting: true } : t)));
+      setTimeout(() => {
+        setToasts((prev) => prev.filter((t) => t.id !== id));
+      }, 190);
+    }, 3000);
   }, []);
 
   return (
@@ -17,7 +20,7 @@ export function ToastProvider({ children }) {
       {children}
       <div className="toast-container" aria-live="polite">
         {toasts.map((t) => (
-          <div key={t.id} className={`toast toast-${t.type}`}>
+          <div key={t.id} className={`toast toast-${t.type} ${t.exiting ? "is-exiting" : ""}`}>
             {t.message}
           </div>
         ))}
