@@ -9,13 +9,12 @@ import {
   createBooking,
   deleteMenuItem,
   getAuditLogs,
-  getActive,
   getBookings,
   getFoodOrders,
   getFoodStats,
   getHistory,
-  getMaintenance,
   getMenuFull,
+  getTableState,
   getTableUtilization,
   getTopCustomers,
   getWaitlist,
@@ -91,12 +90,11 @@ function Section({ eyebrow, title, action, children }) {
 const WORKSPACE_REQUESTS = [
   "waitlist",
   "reservations",
-  "active tables",
+  "table state",
   "billing history",
   "food orders",
   "food stats",
   "menu",
-  "maintenance",
   "audit logs",
   "top customers",
   "table utilization",
@@ -375,7 +373,7 @@ function WaitlistView({ waitlist, bookings, activeSessions, maintenance, actions
   );
 }
 
-function ReservationsView({ bookings, actions, busy, activeAction }) {
+function ReservationsView({ bookings, tableState, actions, busy, activeAction }) {
   const [showAdd, setShowAdd] = useState(false);
   const [filter, setFilter] = useState("all");
   const [form, setForm] = useState({
@@ -392,6 +390,7 @@ function ReservationsView({ bookings, actions, busy, activeAction }) {
   const tableBookings = HSR_TABLES.map((table) => ({
     table,
     bookings: booked.filter((booking) => String(booking.table_id).toLowerCase() === table.id),
+    state: tableState.find((row) => String(row.id).toLowerCase() === table.id),
   }));
 
   async function submitBooking(event) {
@@ -439,8 +438,12 @@ function ReservationsView({ bookings, actions, busy, activeAction }) {
         <Stat label="Missed Bookings" value={bookings.filter((booking) => booking.status === "missed").length} />
       </div>
       <div className="cf-calendar-grid">
-        {tableBookings.map(({ table, bookings: rows }) => {
-          const tableStatus = getTableStatus({ booking: rows[0] });
+        {tableBookings.map(({ table, bookings: rows, state }) => {
+          const tableStatus = getTableStatus({
+            session: state?.session,
+            booking: state?.booking || rows[0],
+            maintenance: state?.maintenance,
+          });
           return (
             <section className="cf-table-slot" key={table.id}>
               <div className="cf-table-slot-head">
@@ -987,6 +990,7 @@ export default function ClubSuiteTab({ view }) {
     waitlist: [],
     bookings: [],
     activeSessions: [],
+    tableState: [],
     history: [],
     foodOrders: [],
     foodStats: [],
@@ -1008,12 +1012,11 @@ export default function ClubSuiteTab({ view }) {
       const results = await Promise.allSettled([
         getWaitlist(),
         getBookings(),
-        getActive(),
+        getTableState(),
         getHistory(),
         getFoodOrders(),
         getFoodStats(),
         getMenuFull(),
-        getMaintenance(),
         getAuditLogs(50),
         getTopCustomers("all"),
         getTableUtilization(),
@@ -1022,18 +1025,20 @@ export default function ClubSuiteTab({ view }) {
       const failed = results
         .map((result, index) => (result.status === "rejected" ? WORKSPACE_REQUESTS[index] : ""))
         .filter(Boolean);
+      const tableStatePayload = results[2].status === "fulfilled" ? results[2].value.data || {} : {};
       setData({
         waitlist: results[0].status === "fulfilled" ? asArray(results[0].value.data) : [],
         bookings: results[1].status === "fulfilled" ? asArray(results[1].value.data) : [],
-        activeSessions: results[2].status === "fulfilled" ? asArray(results[2].value.data) : [],
+        activeSessions: asArray(tableStatePayload.active_sessions),
+        tableState: asArray(tableStatePayload.tables),
         history: results[3].status === "fulfilled" ? asArray(results[3].value.data) : [],
         foodOrders: results[4].status === "fulfilled" ? asArray(results[4].value.data) : [],
         foodStats: results[5].status === "fulfilled" ? asArray(results[5].value.data) : [],
         menu: results[6].status === "fulfilled" ? asArray(results[6].value.data) : [],
-        maintenance: results[7].status === "fulfilled" ? asMaintenanceRows(results[7].value.data) : [],
-        auditLogs: results[8].status === "fulfilled" ? asArray(results[8].value.data) : [],
-        topCustomers: results[9].status === "fulfilled" ? asArray(results[9].value.data) : [],
-        utilization: results[10].status === "fulfilled" ? asArray(results[10].value.data) : [],
+        maintenance: asMaintenanceRows(tableStatePayload.maintenance),
+        auditLogs: results[7].status === "fulfilled" ? asArray(results[7].value.data) : [],
+        topCustomers: results[8].status === "fulfilled" ? asArray(results[8].value.data) : [],
+        utilization: results[9].status === "fulfilled" ? asArray(results[9].value.data) : [],
       });
       setLoadError(
         failed.length

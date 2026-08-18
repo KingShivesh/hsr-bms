@@ -8,6 +8,7 @@ from datetime import datetime, timedelta
 from collections import defaultdict
 import models, io, json, time
 from audit import get_controls
+from live_state import dashboard_payload
 from hsr_config import (
     CSV_PREFIX,
     POOL_TABLES,
@@ -122,32 +123,17 @@ def add_payment_breakdown(payment_breakdown: dict[str, int], method: str, total:
 # ── Summary ──
 @router.get("/summary")
 def get_summary(db: Session = Depends(get_db)):
-    today        = get_ist_today_str()
-    transactions = today_transactions(db, today)
-    yesterday_transactions = dated_transactions(db, get_ist_now() - timedelta(days=1))
-    active = db.query(models.ActiveSession).filter(
-        models.ActiveSession.customer_name != ""
-    ).count()
-
-    total_sale = sum(t.total    for t in transactions)
-    total_food = sum(t.food_charge for t in transactions)
-    total_cust = len(transactions)
-    avg_time   = 0
-    top_table  = "-"
-
-    if transactions:
-        avg_time = round(sum(t.duration for t in transactions) / len(transactions))
-        table_counts = {}
-        for t in transactions:
-            table_counts[t.table_id] = table_counts.get(t.table_id, 0) + 1
-        top_table = max(table_counts, key=table_counts.get)
-
+    payload = dashboard_payload(db)
     return {
-        "sale": total_sale, "cust": total_cust, "food": total_food,
-        "sessions": len(transactions), "avg_time": avg_time,
-        "top_table": top_table, "active_tables": active,
-        "yesterday": daily_summary_payload(yesterday_transactions),
+        **payload["metrics"],
+        "yesterday": payload["yesterday"],
+        "trends": payload["trends"],
     }
+
+
+@router.get("/dashboard")
+def get_dashboard(db: Session = Depends(get_db)):
+    return dashboard_payload(db)
 
 # ── History ──
 @router.get("/history")

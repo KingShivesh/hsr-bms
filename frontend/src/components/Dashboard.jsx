@@ -14,14 +14,10 @@ import {
   YAxis,
 } from "recharts";
 import {
-  getActive,
-  getBookings,
-  getClosingInsights,
-  getClosingReport,
-  getWaitlist,
+  getDashboardLive,
 } from "../api/index.js";
 import { HSR_TABLES, TOTAL_TABLES, getTableLabel } from "../config/hsrTables.js";
-import { getTableStatus } from "../config/tableStatus.js";
+import { getTableStatusByKey } from "../config/tableStatus.js";
 
 const TABLES = HSR_TABLES;
 const tableKey = (tableId) => String(tableId || "").trim().toLowerCase();
@@ -71,6 +67,16 @@ function trendFromComparison(current, previous, label) {
     tone: delta > 0 ? "up" : "down",
     icon: delta > 0 ? "ti-arrow-up-right" : "ti-arrow-down-right",
     label: `${delta > 0 ? "+" : ""}${delta}% vs yesterday`,
+  };
+}
+
+function normalizeTrend(trend, fallback) {
+  if (!trend) return fallback || { tone: "neutral", icon: "ti-minus", label: "same as usual" };
+  const direction = trend.direction || trend.tone || "flat";
+  return {
+    tone: direction === "up" ? "up" : direction === "down" ? "down" : "neutral",
+    icon: direction === "up" ? "ti-arrow-up-right" : direction === "down" ? "ti-arrow-down-right" : "ti-minus",
+    label: trend.label || fallback?.label || "same as usual",
   };
 }
 
@@ -264,18 +270,11 @@ function KeyMetricsSection({
   foodAttachment,
   foodRevenue,
   yesterday,
+  trends,
 }) {
   const yesterdayData = yesterday || {};
-  const liveTrend = yesterdayData.avg_bill
-    ? trendFromComparison(liveTableTotal, yesterdayData.avg_bill, "live value")
-    : { tone: "neutral", icon: "ti-minus", label: "live estimate now" };
-  const activeTrend = yesterdayData.tables_used
-    ? {
-      tone: "neutral",
-      icon: activeCount >= yesterdayData.tables_used ? "ti-arrow-up-right" : "ti-arrow-down-right",
-      label: `${activeCount - yesterdayData.tables_used > 0 ? "+" : ""}${activeCount - yesterdayData.tables_used} vs tables used yesterday`,
-    }
-    : { tone: "neutral", icon: "ti-minus", label: `${TOTAL_TABLES - activeCount} idle now` };
+  const liveTrend = normalizeTrend(trends?.live_floor_value, { tone: "neutral", icon: "ti-minus", label: "live estimate now" });
+  const activeTrend = normalizeTrend(trends?.active_tables, { tone: "neutral", icon: "ti-minus", label: `${TOTAL_TABLES - activeCount} idle now` });
   return (
     <section className="ops-metrics-section" aria-label="Key metrics">
       <div className="ops-metrics-head">
@@ -289,7 +288,7 @@ function KeyMetricsSection({
           value={money(ownerTotal)}
           sub={`${sessionCount || 0} sessions closed today`}
           icon="ti-cash"
-          trend={trendFromComparison(ownerTotal, yesterdayData.sale, "revenue")}
+          trend={normalizeTrend(trends?.today_revenue, trendFromComparison(ownerTotal, yesterdayData.total_revenue ?? yesterdayData.sale, "revenue"))}
         />
         <KpiCard
           label="Live Floor Value"
@@ -310,15 +309,15 @@ function KeyMetricsSection({
           value={`${foodAttachment}%`}
           sub={`${money(foodRevenue)} food revenue`}
           icon="ti-tools-kitchen-2"
-          trend={trendFromComparison(foodAttachment, yesterdayData.food_attach, "food attach")}
+          trend={normalizeTrend(trends?.food_attach, trendFromComparison(foodAttachment, yesterdayData.food_attach, "food attach"))}
         />
       </div>
     </section>
   );
 }
 
-function LiveFloor({ sessions, elapsed, onNavigate }) {
-  const activeCount = TABLES.filter((table) => Boolean(sessions[table.id])).length;
+function LiveFloor({ tables, elapsed, onNavigate }) {
+  const activeCount = tables.filter((table) => Boolean(table.session)).length;
   const idleCount = Math.max(TOTAL_TABLES - activeCount, 0);
   return (
     <section className="ops-panel ops-floor-panel">
@@ -331,15 +330,13 @@ function LiveFloor({ sessions, elapsed, onNavigate }) {
         }
       />
       <div className="ops-floor-grid">
-        {TABLES.map((table) => {
-          const session = sessions[table.id];
-          const elapsedSecs = elapsed[table.id] || 0;
+        {tables.map((table) => {
+          const session = table.session;
+          const elapsedSecs = elapsed[table.id] ?? table.elapsed_seconds ?? 0;
           const active = Boolean(session);
           const busy = elapsedSecs >= 3600;
-          const status = getTableStatus({ session });
-          const runningTotal = active
-            ? estimateTableCharge(session, elapsedSecs) + (session.food_total || 0)
-            : 0;
+          const status = getTableStatusByKey(table.status_key);
+          const runningTotal = table.running_total || session?.running_total || 0;
           return (
             <button
               type="button"
@@ -380,46 +377,8 @@ function LiveFloor({ sessions, elapsed, onNavigate }) {
   );
 }
 
-function AttentionPanel({ actions, digest, activeCount, bookings, waitlist, onNavigate }) {
-  const report = digest?.report;
-  const openTables = report?.open_tables?.length ?? activeCount;
-  const closed = Boolean(report?.day_close?.closed);
-  const missedCount = bookings.filter((booking) => booking.status === "missed").length;
-  const attention = actions.filter((item) => item.tone !== "positive");
-
-  if (missedCount) {
-    attention.push({
-      title: `${missedCount} missed booking${missedCount > 1 ? "s" : ""}`,
-      tone: "warning",
-      icon: "ti-calendar-x",
-      page: "reservations",
-    });
-  }
-  if (waitlist.length) {
-    attention.push({
-      title: `${waitlist.length} guest${waitlist.length > 1 ? "s" : ""} waiting`,
-      tone: "info",
-      icon: "ti-user-clock",
-      page: "waitlist",
-    });
-  }
-  if (openTables) {
-    attention.push({
-      title: `${openTables} open table${openTables > 1 ? "s" : ""} before closing`,
-      tone: "warning",
-      icon: "ti-lock-open",
-      page: "closing",
-    });
-  } else if (!closed) {
-    attention.push({
-      title: "Ready for end-of-day closing",
-      tone: "positive",
-      icon: "ti-lock-check",
-      page: "closing",
-    });
-  }
-
-  const uniqueItems = attention.filter((item, index, list) => (
+function AttentionPanel({ actions, onNavigate }) {
+  const uniqueItems = actions.filter((item, index, list) => (
     list.findIndex((candidate) => candidate.title === item.title) === index
   )).slice(0, 6);
 
@@ -439,7 +398,7 @@ function AttentionPanel({ actions, digest, activeCount, bookings, waitlist, onNa
         {uniqueItems.map((item) => (
           <button
             type="button"
-            className={`ops-attention-row ${item.tone}`}
+            className={`ops-attention-row ${item.tone || item.type || "info"}`}
             key={item.title}
             onClick={() => onNavigate(item.page || "tables")}
           >
@@ -1068,66 +1027,42 @@ function Charts({ analytics, pieData }) {
 
 export default function Dashboard({ metrics, onNavigate, role = "admin" }) {
   const [dateRange, setDateRange] = useState("today");
-  const [sessions, setSessions] = useState({});
+  const [liveData, setLiveData] = useState(null);
   const [elapsed, setElapsed] = useState({});
-  const [digest, setDigest] = useState(null);
-  const [waitlist, setWaitlist] = useState([]);
-  const [bookings, setBookings] = useState([]);
+  const [loadError, setLoadError] = useState("");
 
   useEffect(() => {
-    async function fetchActive() {
+    async function fetchDashboard() {
       try {
-        const res = await getActive();
-        const nextSessions = {};
+        const res = await getDashboardLive();
+        const payload = res.data || {};
         const nextElapsed = {};
-        res.data.forEach((session) => {
-          const id = tableKey(session.table_id);
-          nextSessions[id] = { ...session, table_id: id };
-          nextElapsed[id] = Math.floor(
-            (session.paused ? session.elapsed_ms : Date.now() - session.start_time) / 1000,
-          );
+        (payload.tables || []).forEach((table) => {
+          const id = tableKey(table.id);
+          if (table.session) {
+            nextElapsed[id] = Number(table.session.elapsed_seconds || table.elapsed_seconds || 0);
+          }
         });
-        setSessions(nextSessions);
+        setLiveData(payload);
         setElapsed(nextElapsed);
+        setLoadError("");
       } catch (err) {
         console.error(err);
+        setLoadError(err.userMessage || "Dashboard data could not load. Retrying...");
       }
     }
 
-    async function fetchDigest() {
-      try {
-        const [reportRes, insightRes] = await Promise.all([
-          getClosingReport(),
-          getClosingInsights(),
-        ]);
-        setDigest({ report: reportRes.data, insights: insightRes.data });
-      } catch (err) {
-        console.error(err);
-      }
-    }
-
-    async function fetchOperations() {
-      const results = await Promise.allSettled([
-        getWaitlist(),
-        getBookings(),
-      ]);
-      if (results[0].status === "fulfilled") setWaitlist(results[0].value.data || []);
-      if (results[1].status === "fulfilled") setBookings(results[1].value.data || []);
-    }
-
-    fetchActive();
-    const deferredLoad = window.setTimeout(() => {
-      if (role === "admin") {
-        fetchDigest();
-      }
-      fetchOperations();
-    }, 200);
-    const activeInterval = window.setInterval(fetchActive, 20000);
-    const operationsInterval = window.setInterval(fetchOperations, 45000);
+    fetchDashboard();
+    const activeInterval = window.setInterval(fetchDashboard, 15000);
+    const handleStorageChange = (event) => {
+      if (event.key === "hsr:last-data-change") fetchDashboard();
+    };
+    window.addEventListener("hsr:data-changed", fetchDashboard);
+    window.addEventListener("storage", handleStorageChange);
     return () => {
-      window.clearTimeout(deferredLoad);
       window.clearInterval(activeInterval);
-      window.clearInterval(operationsInterval);
+      window.removeEventListener("hsr:data-changed", fetchDashboard);
+      window.removeEventListener("storage", handleStorageChange);
     };
   }, [role]);
 
@@ -1136,38 +1071,57 @@ export default function Dashboard({ metrics, onNavigate, role = "admin" }) {
       setElapsed((prev) => {
         const next = { ...prev };
         Object.keys(next).forEach((id) => {
-          if (!sessions[id]?.paused) next[id] += 1;
+          const table = liveData?.tables?.find((row) => tableKey(row.id) === id);
+          if (!table?.session?.paused) next[id] += 1;
         });
         return next;
       });
     }, 1000);
     return () => window.clearInterval(interval);
-  }, [sessions]);
+  }, [liveData]);
+
+  const liveTables = liveData?.tables || TABLES.map((table) => ({
+    ...table,
+    status_key: "available",
+    status_label: "Available",
+    status_tone: "idle",
+    running_total: 0,
+    elapsed_seconds: 0,
+  }));
 
   const runningTables = useMemo(
     () =>
-      TABLES
-        .filter((table) => sessions[table.id])
+      liveTables
+        .filter((table) => table.session)
         .map((table) => ({
           table,
-          session: sessions[table.id],
+          session: table.session,
           elapsedSecs: elapsed[table.id] || 0,
         })),
-    [sessions, elapsed],
+    [liveTables, elapsed],
   );
 
-  const ownerReport = digest?.report;
-  const ownerTotal = ownerReport
-    ? (ownerReport.total_revenue || 0) + (ownerReport.food_only_revenue || 0)
-    : metrics.sale;
-  const liveTableTotal = runningTables.reduce(
-    (sum, { session, elapsedSecs }) => sum + estimateTableCharge(session, elapsedSecs) + (session.food_total || 0),
-    0,
-  );
-  const foodAttachment = ownerTotal > 0 ? Math.round(((metrics.food || 0) / ownerTotal) * 100) : 0;
-  const occupancyPercent = pct(runningTables.length, TOTAL_TABLES);
+  const canonicalMetrics = liveData?.metrics || metrics;
+  const ownerTotal = canonicalMetrics.total_revenue ?? canonicalMetrics.sale ?? 0;
+  const liveTableTotal = canonicalMetrics.live_floor_value || 0;
+  const foodAttachment = canonicalMetrics.food_attach ?? (ownerTotal > 0 ? Math.round(((canonicalMetrics.food || 0) / ownerTotal) * 100) : 0);
+  const occupancyPercent = canonicalMetrics.occupancy ?? pct(runningTables.length, TOTAL_TABLES);
 
   const actionItems = useMemo(() => {
+    if (liveData?.attention?.length) {
+      return liveData.attention.map((item) => ({
+        title: item.title,
+        detail: item.detail,
+        tone: item.type || item.tone || "info",
+        icon:
+          item.type === "critical"
+            ? "ti-alert-triangle"
+            : item.type === "warning"
+              ? "ti-alert-circle"
+              : "ti-info-circle",
+        page: item.page || "tables",
+      }));
+    }
     const items = [];
     const paused = runningTables.filter((row) => row.session.paused);
     const longRunning = runningTables.filter((row) => row.elapsedSecs >= 90 * 60);
@@ -1204,14 +1158,6 @@ export default function Dashboard({ metrics, onNavigate, role = "admin" }) {
         icon: "ti-tools-kitchen-2",
       });
     }
-    if (ownerReport?.open_tables?.length) {
-      items.push({
-        title: "Closing has open tables",
-        detail: `${ownerReport.open_tables.length} table(s) must be closed before EOD.`,
-        tone: "warning",
-        icon: "ti-lock-open",
-      });
-    }
     if (!items.length) {
       items.push({
         title: "Floor is under control",
@@ -1221,7 +1167,7 @@ export default function Dashboard({ metrics, onNavigate, role = "admin" }) {
       });
     }
     return items.slice(0, 4);
-  }, [runningTables, foodAttachment, ownerReport]);
+  }, [runningTables, foodAttachment, liveData]);
 
   return (
     <div className="ops-dashboard ops-dashboard-minimal">
@@ -1229,25 +1175,29 @@ export default function Dashboard({ metrics, onNavigate, role = "admin" }) {
         dateRange={dateRange}
         onDateRangeChange={setDateRange}
         ownerTotal={ownerTotal}
-        sessionCount={metrics.sessions}
+        sessionCount={canonicalMetrics.sessions}
         liveTableTotal={liveTableTotal}
         activeCount={runningTables.length}
         occupancyPercent={occupancyPercent}
         foodAttachment={foodAttachment}
-        foodRevenue={metrics.food}
-        yesterday={metrics.yesterday}
+        foodRevenue={canonicalMetrics.food}
+        yesterday={liveData?.yesterday || metrics.yesterday}
+        trends={liveData?.trends || metrics.trends}
       />
 
       <QuickOperations onNavigate={onNavigate} />
 
-      <LiveFloor sessions={sessions} elapsed={elapsed} onNavigate={onNavigate} />
+      {loadError && (
+        <div className="ops-dashboard-error" role="status">
+          <i className="ti ti-alert-circle" aria-hidden="true" />
+          <span>{loadError}</span>
+        </div>
+      )}
+
+      <LiveFloor tables={liveTables} elapsed={elapsed} onNavigate={onNavigate} />
 
       <AttentionPanel
         actions={actionItems}
-        digest={digest}
-        activeCount={runningTables.length}
-        bookings={bookings}
-        waitlist={waitlist}
         onNavigate={onNavigate}
       />
     </div>

@@ -2,8 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import {
   closeTournament,
   createTournament,
-  getActive,
-  getRates,
+  getTableState,
   getTournament,
   getTournaments,
   recordTournamentWinner,
@@ -66,13 +65,14 @@ function StatusPill({ status }) {
   );
 }
 
-function TournamentTableFloor({ gameType, rates, sessionsByTable }) {
+function TournamentTableFloor({ gameType, rates, tableStateById }) {
   const preferredType = recommendedTypeForGame(gameType);
 
   return (
     <div className="tournament-table-grid">
       {HSR_TABLES.map((table) => {
-        const session = sessionsByTable[table.id];
+        const tableState = tableStateById[table.id];
+        const session = tableState?.session;
         const occupied = !!session;
         const recommended = table.type === preferredType;
         const detail = occupied
@@ -86,6 +86,7 @@ function TournamentTableFloor({ gameType, rates, sessionsByTable }) {
             table={table}
             session={session}
             rates={rates}
+            tableState={tableState}
             recommended={recommended}
             recommendedLabel={`Best fit for ${gameType}`}
             detail={detail}
@@ -107,7 +108,7 @@ export default function TournamentTab() {
   const [loading, setLoading] = useState(true);
   const [flash, setFlash] = useState("");
   const [rates, setRates] = useState({ wr: 320, pr: 170, sr: 270 });
-  const [activeSessions, setActiveSessions] = useState([]);
+  const [tableState, setTableState] = useState([]);
   const [activeAction, setActiveAction] = useState("");
 
   useEffect(() => {
@@ -137,9 +138,9 @@ export default function TournamentTab() {
 
   async function fetchTableState() {
     try {
-      const [activeRes, ratesRes] = await Promise.all([getActive(), getRates()]);
-      setActiveSessions(activeRes.data);
-      setRates(ratesRes.data);
+      const res = await getTableState();
+      setTableState(res.data.tables || []);
+      setRates(res.data.rates || { wr: 320, pr: 170, sr: 270 });
     } catch (e) {
       console.error(e);
     }
@@ -228,12 +229,12 @@ export default function TournamentTab() {
     return Object.entries(grouped).sort(([a], [b]) => Number(a) - Number(b));
   }, [selected]);
 
-  const sessionsByTable = useMemo(() => (
-    activeSessions.reduce((acc, session) => {
-      acc[String(session.table_id || "").toLowerCase()] = session;
+  const tableStateById = useMemo(() => (
+    tableState.reduce((acc, row) => {
+      acc[String(row.id || "").toLowerCase()] = row;
       return acc;
     }, {})
-  ), [activeSessions]);
+  ), [tableState]);
 
   if (loading) {
     return (
@@ -347,7 +348,7 @@ export default function TournamentTab() {
           <TournamentTableFloor
             gameType={selected?.game_type || gameType}
             rates={rates}
-            sessionsByTable={sessionsByTable}
+            tableStateById={tableStateById}
           />
         </Panel>
 

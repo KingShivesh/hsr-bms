@@ -5,7 +5,7 @@ import {
   stopSession,
   quoteSession,
   resetSession,
-  getActive,
+  getTableState,
   getRates,
   updateNotes,
   getTableHistory,
@@ -2453,11 +2453,13 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
 
   async function fetchActive() {
     try {
-      const res = await getActive();
+      const res = await getTableState();
       const s = {},
         n = {};
-      res.data.forEach((x) => {
-        const id = tableKey(x.table_id);
+      (res.data.tables || []).forEach((tableState) => {
+        const x = tableState.session;
+        if (!x) return;
+        const id = tableKey(x.table_id || tableState.id);
         const billingMode = x.billing_mode || (x.split ? "lp" : "single");
         const players = x.players?.length
           ? x.players
@@ -2486,6 +2488,8 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
       });
       setSessions(s);
       setNames(n);
+      if (res.data.rates) setRates(res.data.rates);
+      if (res.data.maintenance) setMaintenance(res.data.maintenance);
     } catch (e) {
       console.error(e);
     }

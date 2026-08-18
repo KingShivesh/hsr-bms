@@ -1,9 +1,9 @@
 import { useEffect, useMemo, useState } from "react";
 import {
-  getActive,
   getAuditLogs,
   getBookings,
   getFoodOrders,
+  getTableState,
   getWaitlist,
 } from "../api/index.js";
 import { HSR_TABLES, getTableLabel } from "../config/hsrTables.js";
@@ -27,7 +27,7 @@ export default function CommandBar({ page, setPage, onNewSession, role = "admin"
     async function loadSearchData() {
       setLoadingData(true);
       const results = await Promise.allSettled([
-        getActive(),
+        getTableState(),
         getWaitlist(),
         getBookings(),
         getFoodOrders(),
@@ -35,7 +35,7 @@ export default function CommandBar({ page, setPage, onNewSession, role = "admin"
       ]);
       if (!alive) return;
       setSearchData({
-        sessions: results[0].status === "fulfilled" ? results[0].value.data || [] : [],
+        sessions: results[0].status === "fulfilled" ? results[0].value.data?.active_sessions || [] : [],
         waitlist: results[1].status === "fulfilled" ? results[1].value.data || [] : [],
         bookings: results[2].status === "fulfilled" ? results[2].value.data || [] : [],
         foodOrders: results[3].status === "fulfilled" ? results[3].value.data || [] : [],

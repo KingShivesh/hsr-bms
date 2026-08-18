@@ -92,7 +92,16 @@ export default function App() {
     fetchCurrentUser();
     fetchMetrics();
     const iv = setInterval(fetchMetrics, 20000);
-    return () => clearInterval(iv);
+    const handleStorageChange = (event) => {
+      if (event.key === "hsr:last-data-change") fetchMetrics();
+    };
+    window.addEventListener("hsr:data-changed", fetchMetrics);
+    window.addEventListener("storage", handleStorageChange);
+    return () => {
+      clearInterval(iv);
+      window.removeEventListener("hsr:data-changed", fetchMetrics);
+      window.removeEventListener("storage", handleStorageChange);
+    };
   }, [loggedIn]);
 
   useEffect(() => {

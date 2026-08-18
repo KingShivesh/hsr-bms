@@ -37,9 +37,15 @@ export const TABLE_STATUS = {
 };
 
 export function getTableStatus({ session, booking, maintenance } = {}) {
+  const backendKey = session?.status_key || booking?.status_key || maintenance?.status_key;
+  if (backendKey && TABLE_STATUS[backendKey]) return TABLE_STATUS[backendKey];
   if (maintenance) return TABLE_STATUS.maintenance;
   if (session?.paused) return TABLE_STATUS.paused;
   if (session) return TABLE_STATUS.running;
   if (booking) return TABLE_STATUS.reserved;
   return TABLE_STATUS.available;
+}
+
+export function getTableStatusByKey(key = "available") {
+  return TABLE_STATUS[key] || TABLE_STATUS.available;
 }

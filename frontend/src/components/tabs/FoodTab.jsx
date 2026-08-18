@@ -5,7 +5,7 @@ import {
   updateMenuItem,
   deleteMenuItem,
   setItemAvailability,
-  getActive,
+  getTableState,
   addFood,
   placeFoodOrder,
   getFoodOrders,
@@ -75,7 +75,7 @@ export default function FoodTab() {
         getMenu(),
         getFoodStats(),
         getFoodOrders(),
-        getActive(),
+        getTableState(),
       ];
       const labels = ["menu items", "food stats", "order history", "active tables"];
       const [menuRes, statsRes, ordersRes, activeRes] = await Promise.allSettled(requests);
@@ -87,7 +87,8 @@ export default function FoodTab() {
       if (statsRes.status === "fulfilled") setStats(Array.isArray(statsRes.value.data) ? statsRes.value.data : []);
       if (ordersRes.status === "fulfilled") setOrders(Array.isArray(ordersRes.value.data) ? ordersRes.value.data : []);
       if (activeRes.status === "fulfilled") {
-        setActiveSessions((Array.isArray(activeRes.value.data) ? activeRes.value.data : []).map((session) => ({
+        const sessions = activeRes.value.data?.active_sessions || [];
+        setActiveSessions((Array.isArray(sessions) ? sessions : []).map((session) => ({
           ...session,
           table_id: tableKey(session.table_id),
         })));

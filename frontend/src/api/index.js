@@ -4,6 +4,7 @@ const API_TIMEOUT_MS = Number(import.meta.env.VITE_API_TIMEOUT_MS || 45000);
 const SAFE_RETRY_METHODS = new Set(["get", "head", "options"]);
 const RETRY_DELAYS_MS = [800, 1800];
 let lastBackendEventAt = 0;
+let lastDataChangeAt = 0;
 
 const api = axios.create({
   baseURL: import.meta.env.VITE_API_URL || "http://localhost:8000",
@@ -56,6 +57,22 @@ function notifyBackendFailure(err) {
   );
 }
 
+function notifyDataChanged(res) {
+  const method = String(res.config?.method || "get").toLowerCase();
+  if (SAFE_RETRY_METHODS.has(method)) return;
+  const now = Date.now();
+  if (now - lastDataChangeAt < 250) return;
+  lastDataChangeAt = now;
+  window.dispatchEvent(new CustomEvent("hsr:data-changed", {
+    detail: { path: res.config?.url || "", method },
+  }));
+  try {
+    localStorage.setItem("hsr:last-data-change", String(now));
+  } catch {
+    // Ignore storage failures in private browsing or locked-down clients.
+  }
+}
+
 api.interceptors.request.use((cfg) => {
   cfg.headers = cfg.headers || {};
   const token = localStorage.getItem("token");
@@ -66,7 +83,10 @@ api.interceptors.request.use((cfg) => {
 });
 
 api.interceptors.response.use(
-  (res) => res,
+  (res) => {
+    notifyDataChanged(res);
+    return res;
+  },
   async (err) => {
     if (shouldRetryRequest(err)) {
       err.config.__retryCount = (err.config.__retryCount || 0) + 1;
@@ -197,6 +217,7 @@ export const addReserve = (table_id, name, time) =>
 export const cancelReserve = (table_id) =>
   api.delete(`/sessions/${tableKey(table_id)}/reserve`);
 export const getActive = () => api.get("/sessions/active");
+export const getTableState = () => api.get("/sessions/tables");
 export const transferSession = (table_id, target_table_id) =>
   api.post(`/sessions/transfer/${tableKey(table_id)}`, {
     target_table_id: tableKey(target_table_id),
@@ -217,6 +238,7 @@ export const mergeMembers = (primary_id, duplicate_id) =>
 
 // Reports
 export const getSummary = () => api.get("/reports/summary");
+export const getDashboardLive = () => api.get("/reports/dashboard");
 export const getHistory = () => api.get("/reports/history");
 export const exportCSV = (period = "all") =>
   api.get(`/reports/export?period=${period}`, { responseType: "blob" });

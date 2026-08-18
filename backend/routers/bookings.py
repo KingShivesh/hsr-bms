@@ -4,6 +4,7 @@ import time
 from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel
 from sqlalchemy import func
+from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
 import models
@@ -116,6 +117,7 @@ def create_booking(body: BookingBody, db: Session = Depends(get_db)):
     existing = (
         db.query(models.Booking)
         .filter(models.Booking.status == "booked")
+        .with_for_update()
         .all()
     )
     for b in existing:
@@ -139,7 +141,11 @@ def create_booking(body: BookingBody, db: Session = Depends(get_db)):
         ts=time.time() * 1000,
     )
     db.add(booking)
-    db.commit()
+    try:
+        db.commit()
+    except IntegrityError:
+        db.rollback()
+        raise HTTPException(status_code=409, detail="Booking could not be created. Please retry.")
     db.refresh(booking)
     return _format_booking(booking)
 

@@ -1,16 +1,18 @@
 from fastapi import APIRouter, HTTPException, Depends
 from pydantic import BaseModel, Field
 from sqlalchemy import func, or_
+from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 from database import get_db
 from datetime import datetime, timedelta
 from routers.members import update_member_on_checkout
 import models, time, math, json, uuid
 from typing import Optional
-from audit import get_controls, log_action, require_manager_pin
+from audit import log_action, require_manager_pin
 from pricing import calc_checkout, get_peak_multiplier
 from deps import require_admin
 from hsr_config import format_ist_now, get_ist_now, rate_for_table
+from live_state import build_table_state, serialize_session as serialize_live_session
 
 router = APIRouter()
 MAX_SESSION_DURATION_MINUTES = 12 * 60
@@ -419,7 +421,11 @@ def start_session(body: StartSession, db: Session = Depends(get_db)):
         f"{table_id.upper()} started as {billing_mode} at ₹{rate}/hr",
         table_id=table_id,
     )
-    db.commit()
+    try:
+        db.commit()
+    except IntegrityError:
+        db.rollback()
+        raise HTTPException(status_code=409, detail="Session already running")
     for frame in frames:
         db.refresh(frame)
     return {"ok": True, "frames": [serialize_frame(frame) for frame in frames]}
@@ -826,7 +832,11 @@ def transfer_session(
         f"{source_id.upper()} transferred to {target_id.upper()}",
         table_id=target_id,
     )
-    db.commit()
+    try:
+        db.commit()
+    except IntegrityError:
+        db.rollback()
+        raise HTTPException(status_code=409, detail="Target table already has a running session.")
     db.refresh(sess)
     return {
         "ok": True,
@@ -1038,39 +1048,17 @@ def cancel_reserve(table_id: str, db: Session = Depends(get_db)):
 @router.get("/active")
 def get_active(db: Session = Depends(get_db)):
     sessions = db.query(models.ActiveSession).all()
-    controls = get_controls(db)
-    now_ms = time.time() * 1000
     result = []
     for s in sessions:
         if not s.customer_name:
             continue
-        frames = active_session_frames(db, s)
-        serialized_frames = [serialize_frame(frame) for frame in frames]
-        result.append({
-            "table_id":      normalize_table_id(s.table_id),
-            "customer_name": s.customer_name,
-            "rate":          s.rate,
-            "start_time":    s.start_time,
-            "elapsed_ms":    s.elapsed_ms,
-            "paused":        s.paused,
-            "food_total":    s.food_total,
-            "food_items":    json.loads(s.food_items or "[]"),
-            "reservation":   json.loads(s.reservation) if s.reservation else None,
-            "notes":         s.notes or "",
-            "split":         s.split,
-            "split_name":    s.split_name or "",
-            "billing_mode":  normalize_billing_mode(getattr(s, "billing_mode", "single"), s.split),
-            "players":       json.loads(getattr(s, "players_json", "[]") or "[]") or clean_players(s.customer_name, [], s.split_name or ""),
-            "frames":        serialized_frames,
-            "current_frame": next((frame for frame in serialized_frames if frame["status"] == "open"), None),
-            "leakage_alert":  (
-                controls.alert_unbilled_minutes > 0
-                and not s.paused
-                and s.start_time
-                and ((now_ms - s.start_time) / 1000 / 60) >= controls.alert_unbilled_minutes
-            ),
-        })
+        result.append(serialize_live_session(db, s))
     return result
+
+
+@router.get("/tables")
+def get_table_state(db: Session = Depends(get_db)):
+    return build_table_state(db)
 
 @router.get("/history/{table_id}")
 def table_history(table_id: str, db: Session = Depends(get_db)):

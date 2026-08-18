@@ -1,5 +1,5 @@
 import { getTableLabel, getTableRate } from "../config/hsrTables.js";
-import { getTableStatus } from "../config/tableStatus.js";
+import { getTableStatus, getTableStatusByKey } from "../config/tableStatus.js";
 
 export default function TableStatusCard({
   table,
@@ -10,9 +10,20 @@ export default function TableStatusCard({
   recommended = false,
   recommendedLabel = "",
   detail,
+  tableState,
 }) {
-  const status = getTableStatus({ session, booking, maintenance });
-  const rateLabel = `₹${getTableRate(table, rates)}/hr · ${table.type === "POOL" ? "Pool" : "Snooker"}`;
+  const resolvedSession = tableState?.session || session;
+  const resolvedBooking = tableState?.booking || booking;
+  const resolvedMaintenance = tableState?.maintenance || maintenance;
+  const status = tableState?.status_key
+    ? getTableStatusByKey(tableState.status_key)
+    : getTableStatus({
+        session: resolvedSession,
+        booking: resolvedBooking,
+        maintenance: resolvedMaintenance,
+      });
+  const tableRate = tableState?.rate ?? getTableRate(table, rates);
+  const rateLabel = `₹${tableRate}/hr · ${table.type === "POOL" ? "Pool" : "Snooker"}`;
 
   return (
     <article className={`table-status-card ${status.className} ${recommended ? "recommended" : ""}`}>
@@ -27,7 +38,7 @@ export default function TableStatusCard({
         <span title={rateLabel}>{rateLabel}</span>
       </div>
       <div className="table-status-card-detail">
-        {detail || (recommended ? recommendedLabel : "Backup table")}
+        {detail || tableState?.detail || (recommended ? recommendedLabel : "Backup table")}
       </div>
     </article>
   );
