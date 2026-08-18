@@ -1394,7 +1394,6 @@ function TableFloorTile({
   gstPercent,
 }) {
   const occupied = !!session;
-  const T = THEME[table.type];
   const rate = getTableRate(table, rates);
   const total = runningTotalForSession(session, peakRate, gstPercent);
   const closedFrames = session?.frames?.filter((frame) => frame.status === "closed") || [];
@@ -1410,18 +1409,11 @@ function TableFloorTile({
       className={`table-floor-tile ${selected ? "selected" : ""} ${tone}`}
       onClick={onSelect}
       aria-pressed={selected}
-      style={{ "--table-accent": T.accent, "--table-felt": occupied ? T.felt : T.feltDark }}
     >
-      <div className="table-floor-felt">
-        <div className="table-floor-cushion top" />
-        <div className="table-floor-cushion bottom" />
-        <div className="table-floor-pocket tl" />
-        <div className="table-floor-pocket tr" />
-        <div className="table-floor-pocket bl" />
-        <div className="table-floor-pocket br" />
-        <div className="table-floor-number">{String(table.num).padStart(2, "0")}</div>
-        <div className="table-floor-timer">{fmt(session?.elapsed)}</div>
-        {session?.leakageAlert && <div className="table-floor-alert">Review</div>}
+      <div className="table-floor-index">
+        <strong>T{table.num}</strong>
+        <span>{getTableLabel(table)}</span>
+        {session?.leakageAlert && <em>Review</em>}
       </div>
 
       <div className="table-floor-body">
@@ -1429,14 +1421,22 @@ function TableFloorTile({
           <span className={`table-floor-status ${tone}`}>{status.label}</span>
           <strong>₹{rate}/hr</strong>
         </div>
-        <div className="table-floor-title">
-          T{table.num} · {getTableLabel(table)}
+        <div className="table-floor-summary">
+          <strong>{occupied ? fmt(session.elapsed) : booking ? bookingTime : "--:--"}</strong>
+          <span>
+            {occupied
+              ? `₹${total} running`
+              : maintenance
+                ? maintenance.reason
+                : booking
+                  ? `${booking.customer_name} reserved`
+                  : "Ready to start"}
+          </span>
         </div>
         <div className="table-floor-meta">
           {occupied ? (
             <>
               <span>Started {fmtClock(session.startTime)}</span>
-              <span>₹{total} running</span>
               <span>
                 {openFrame
                   ? `Frame ${openFrame.frame_no} live`
@@ -1446,9 +1446,9 @@ function TableFloorTile({
               </span>
             </>
           ) : maintenance ? (
-            <span>{maintenance.reason}</span>
+            <span>Marked since {maintenance.since || "now"}</span>
           ) : booking ? (
-            <span>{booking.customer_name} · {bookingTime}</span>
+            <span>{booking.customer_name} · {booking.duration_mins || 60} min</span>
           ) : (
             <span>Tap to start or reserve</span>
           )}
