@@ -96,11 +96,18 @@ export default function ClosingTab() {
 
   if (loading) {
     return (
-      <div className="loading-state">
-        <div className="loading-state-icon">
+      <div className="page-skeleton compact" role="status" aria-live="polite" aria-label="Loading closing checklist">
+        <div className="page-skeleton-status">
           <i className="ti ti-loader-2" aria-hidden="true" />
+          <span>Loading closing checklist...</span>
         </div>
-        <div className="loading-state-title">Loading closing checklist...</div>
+        <div className="skeleton-line skeleton-title" />
+        <div className="skeleton-grid">
+          <div className="skeleton-card" />
+          <div className="skeleton-card" />
+          <div className="skeleton-card" />
+        </div>
+        <div className="skeleton-panel" />
       </div>
     );
   }

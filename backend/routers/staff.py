@@ -4,6 +4,7 @@ from sqlalchemy.orm import Session
 
 import models
 from database import get_db
+from deps import require_admin
 
 router = APIRouter()
 
@@ -37,14 +38,14 @@ def _format(role: models.StaffRoleSetting) -> dict:
 
 
 @router.get("/roles")
-def get_roles(db: Session = Depends(get_db)):
+def get_roles(db: Session = Depends(get_db), _: dict = Depends(require_admin)):
     _ensure_defaults(db)
     rows = db.query(models.StaffRoleSetting).order_by(models.StaffRoleSetting.id.asc()).all()
     return [_format(r) for r in rows]
 
 
 @router.post("/roles")
-def save_roles(body: StaffRoleBody, db: Session = Depends(get_db)):
+def save_roles(body: StaffRoleBody, db: Session = Depends(get_db), _: dict = Depends(require_admin)):
     _ensure_defaults(db)
     by_name = {r.role: r for r in db.query(models.StaffRoleSetting).all()}
     for data in body.roles:

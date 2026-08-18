@@ -1997,15 +1997,19 @@ function TableCard({
                 <div className="table-live-dot" style={{ "--table-accent": T.accent }} />
               )}
               <button
+                type="button"
                 onClick={() => setShowHistory(true)}
                 title="History"
+                aria-label={`Open T${table.num} history`}
                 className="table-utility-btn"
               >
                 <i className="ti ti-clock" aria-hidden="true" />
               </button>
               <button
+                type="button"
                 onClick={() => setMaintOpen((p) => !p)}
                 title="Maintenance"
+                aria-label={`Toggle T${table.num} maintenance controls`}
                 className={`table-utility-btn ${maintOpen ? "active" : ""}`}
               >
                 <i className="ti ti-tool" aria-hidden="true" />

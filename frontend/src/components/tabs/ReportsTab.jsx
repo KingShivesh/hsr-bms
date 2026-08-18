@@ -93,11 +93,18 @@ function EmptyState({ icon = "ti-chart-bar", title, detail }) {
 
 function LoadingState({ title = "Loading report..." }) {
   return (
-    <div className="loading-state">
-      <div className="loading-state-icon">
+    <div className="page-skeleton compact" role="status" aria-live="polite" aria-label={title}>
+      <div className="page-skeleton-status">
         <i className="ti ti-loader-2" aria-hidden="true" />
+        <span>{title}</span>
       </div>
-      <div className="loading-state-title">{title}</div>
+      <div className="skeleton-line skeleton-title" />
+      <div className="skeleton-grid">
+        <div className="skeleton-card" />
+        <div className="skeleton-card" />
+        <div className="skeleton-card" />
+      </div>
+      <div className="skeleton-panel" />
     </div>
   );
 }

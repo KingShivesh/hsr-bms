@@ -60,6 +60,24 @@ def today_transactions(db: Session, today: str | None = None):
         db.query(models.Transaction).filter(models.Transaction.date.like(f"{today}%"))
     )
 
+def dated_transactions(db: Session, day: datetime):
+    return report_transactions_from(
+        db.query(models.Transaction).filter(models.Transaction.date.like(f"{day.strftime('%d/%m/%Y')}%"))
+    )
+
+def daily_summary_payload(transactions: list[models.Transaction]) -> dict:
+    total_sale = sum(t.total for t in transactions)
+    total_food = sum(t.food_charge for t in transactions)
+    total_sessions = len(transactions)
+    return {
+        "sale": total_sale,
+        "food": total_food,
+        "sessions": total_sessions,
+        "food_attach": round((total_food / total_sale) * 100) if total_sale else 0,
+        "avg_bill": round(total_sale / total_sessions) if total_sessions else 0,
+        "tables_used": len({(t.table_id or "").lower() for t in transactions if t.table_id}),
+    }
+
 def recent_transactions(db: Session, days: int):
     since_ms = (time.time() - days * 24 * 60 * 60) * 1000
     return report_transactions_from(
@@ -106,6 +124,7 @@ def add_payment_breakdown(payment_breakdown: dict[str, int], method: str, total:
 def get_summary(db: Session = Depends(get_db)):
     today        = get_ist_today_str()
     transactions = today_transactions(db, today)
+    yesterday_transactions = dated_transactions(db, get_ist_now() - timedelta(days=1))
     active = db.query(models.ActiveSession).filter(
         models.ActiveSession.customer_name != ""
     ).count()
@@ -126,7 +145,8 @@ def get_summary(db: Session = Depends(get_db)):
     return {
         "sale": total_sale, "cust": total_cust, "food": total_food,
         "sessions": len(transactions), "avg_time": avg_time,
-        "top_table": top_table, "active_tables": active
+        "top_table": top_table, "active_tables": active,
+        "yesterday": daily_summary_payload(yesterday_transactions),
     }
 
 # ── History ──

@@ -44,12 +44,12 @@
   --border: #e8ebef;
   --text-primary: #111827;
   --text-secondary: #667085;
-  --text-muted: #98a2b3;
+  --text-muted: #6b7280;
   --text-inverse: #ffffff;
   --on-accent: #ffffff;
-  --success: #17805f;
+  --success: #0f6e56;
   --success-bg: #e1f5ee;
-  --warning: #b76e00;
+  --warning: #8a4b00;
   --warning-bg: #fff7e6;
   --danger: #b42318;
   --danger-bg: #fff1ef;
@@ -3958,6 +3958,10 @@ body.dark .table-reservation-cancel {
 }
 
 .data-table thead th {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: var(--surface-muted);
   font-size: var(--text-sm);
   color: var(--muted);
   text-transform: uppercase;
@@ -11480,6 +11484,7 @@ body.dark .cf-table-slot small {
 
 .ops-kpi-grid.four {
   grid-template-columns: repeat(4, minmax(0, 1fr));
+  align-items: stretch;
 }
 
 .ops-control-strip {
@@ -11611,6 +11616,9 @@ body.dark .cf-table-slot small {
 
 .ops-kpi {
   position: relative;
+  display: grid;
+  grid-template-rows: auto auto auto 1fr;
+  align-items: start;
   min-height: 116px;
   padding: var(--space-4);
   border-radius: var(--radius-lg);
@@ -11637,8 +11645,8 @@ body.dark .cf-table-slot small {
 }
 
 .ops-kpi-top i {
-  width: 30px;
-  height: 30px;
+  width: var(--icon-box-sm);
+  height: var(--icon-box-sm);
   display: grid;
   place-items: center;
   border-radius: var(--radius-sm);
@@ -11660,6 +11668,7 @@ body.dark .cf-table-slot small {
   color: var(--text-secondary);
   font-size: var(--text-sm);
   font-weight: var(--weight-heavy);
+  align-self: end;
 }
 
 .ops-kpi p span {
@@ -11689,6 +11698,11 @@ body.dark .cf-table-slot small {
 .ops-kpi-trend.down {
   background: var(--danger-bg);
   color: var(--danger);
+}
+
+.ops-kpi-trend.neutral {
+  background: var(--surface-muted);
+  color: var(--text-secondary);
 }
 
 .ops-main-grid {
@@ -12523,6 +12537,9 @@ body.dark .cf-table-slot small {
 }
 
 .ops-data-table th {
+  position: sticky;
+  top: 0;
+  z-index: 2;
   background: var(--surface-muted);
 }
 
@@ -14322,7 +14339,6 @@ body.dark .metric-card {
 .table-floor-timer,
 .table-session-card [style*="font-variant-numeric"] {
   font-variant-numeric: tabular-nums;
-  animation: luxury-value-rise 0.34s ease both;
 }
 
 @keyframes luxury-value-rise {
@@ -14534,7 +14550,7 @@ body.dark .table-session-card.occupied {
 }
 
 .table-frame-panel.running {
-  animation: luxury-frame-pulse 2.4s ease-in-out infinite;
+  box-shadow: inset 3px 0 0 var(--warning);
 }
 
 @keyframes luxury-frame-pulse {

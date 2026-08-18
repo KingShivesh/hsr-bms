@@ -343,12 +343,18 @@ export default function FoodTab() {
 
   if (loading) {
     return (
-      <div className="loading-state" role="status" aria-live="polite">
-        <div className="loading-state-icon">
+      <div className="page-skeleton compact" role="status" aria-live="polite" aria-label="Loading Food and Cafe POS">
+        <div className="page-skeleton-status">
           <i className="ti ti-loader-2" aria-hidden="true" />
+          <span>Loading Food & Cafe POS...</span>
         </div>
-        <div className="loading-state-title">Loading Food & Cafe POS...</div>
-        <div className="loading-state-detail">Fetching menu items, active tables and order history.</div>
+        <div className="skeleton-line skeleton-title" />
+        <div className="skeleton-grid">
+          <div className="skeleton-card" />
+          <div className="skeleton-card" />
+          <div className="skeleton-card" />
+        </div>
+        <div className="skeleton-panel" />
       </div>
     );
   }
@@ -569,8 +575,10 @@ export default function FoodTab() {
                             ₹{price * i.qty}
                           </span>
                           <button
+                            type="button"
                             onClick={() => removeFromCart(i)}
                             className="icon-danger-btn"
+                            aria-label={`Remove ${i.name || "item"} from cart`}
                           >
                             ×
                           </button>

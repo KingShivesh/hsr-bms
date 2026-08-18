@@ -2,6 +2,7 @@ from fastapi import APIRouter, HTTPException, Depends
 from pydantic import BaseModel
 from sqlalchemy.orm import Session
 from database import get_db
+from deps import require_admin
 from hsr_config import get_ist_today_str
 import models
 from validators import require_full_name
@@ -104,7 +105,7 @@ def search_members(q: str = "", db: Session = Depends(get_db)):
     return [{"id": m.customer_id, "nm": m.name} for m in matches]
 
 @router.get("/")
-def get_members(db: Session = Depends(get_db)):
+def get_members(db: Session = Depends(get_db), _: dict = Depends(require_admin)):
     members = db.query(models.Member).order_by(models.Member.spent.desc()).all()
     return [
         {"id": m.customer_id, "nm": m.name, "vis": m.visits,
@@ -115,7 +116,7 @@ def get_members(db: Session = Depends(get_db)):
     ]
 
 @router.get("/duplicates")
-def find_duplicate_members(db: Session = Depends(get_db)):
+def find_duplicate_members(db: Session = Depends(get_db), _: dict = Depends(require_admin)):
     members = db.query(models.Member).all()
     groups = []
     seen = set()
@@ -147,7 +148,7 @@ def find_duplicate_members(db: Session = Depends(get_db)):
     return groups
 
 @router.post("/")
-def add_member(body: AddMember, db: Session = Depends(get_db)):
+def add_member(body: AddMember, db: Session = Depends(get_db), _: dict = Depends(require_admin)):
     name = require_full_name(body.name, "Member name")
 
     exists = db.query(models.Member).filter(
@@ -170,7 +171,7 @@ def add_member(body: AddMember, db: Session = Depends(get_db)):
     return {"ok": True, "id": customer_id}
 
 @router.post("/merge")
-def merge_members(body: MergeMembers, db: Session = Depends(get_db)):
+def merge_members(body: MergeMembers, db: Session = Depends(get_db), _: dict = Depends(require_admin)):
     if body.primary_id == body.duplicate_id:
         raise HTTPException(status_code=400, detail="Choose two different members")
     primary = db.query(models.Member).filter(models.Member.customer_id == body.primary_id).first()
@@ -200,7 +201,7 @@ def merge_members(body: MergeMembers, db: Session = Depends(get_db)):
     return {"ok": True}
 
 @router.post("/{customer_id}/upgrade")
-def upgrade_member(customer_id: str, db: Session = Depends(get_db)):
+def upgrade_member(customer_id: str, db: Session = Depends(get_db), _: dict = Depends(require_admin)):
     m = db.query(models.Member).filter(models.Member.customer_id == customer_id).first()
     if not m:
         raise HTTPException(status_code=404, detail="Member not found")
@@ -209,7 +210,7 @@ def upgrade_member(customer_id: str, db: Session = Depends(get_db)):
     return {"ok": True, "typ": m.member_type}
 
 @router.delete("/{customer_id}")
-def delete_member(customer_id: str, db: Session = Depends(get_db)):
+def delete_member(customer_id: str, db: Session = Depends(get_db), _: dict = Depends(require_admin)):
     member = db.query(models.Member).filter(models.Member.customer_id == customer_id).first()
     if not member:
         raise HTTPException(status_code=404, detail="Member not found")

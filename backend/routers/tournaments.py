@@ -7,6 +7,7 @@ from sqlalchemy.orm import Session
 
 from audit import log_action
 from database import get_db
+from deps import require_admin
 from hsr_config import format_ist_now
 import models
 
@@ -117,7 +118,7 @@ def _advance_if_round_complete(db: Session, tournament: models.Tournament, round
 
 
 @router.get("/")
-def list_tournaments(db: Session = Depends(get_db)):
+def list_tournaments(db: Session = Depends(get_db), _: dict = Depends(require_admin)):
     rows = db.query(models.Tournament).order_by(models.Tournament.ts.desc()).all()
     return [
         {
@@ -134,7 +135,7 @@ def list_tournaments(db: Session = Depends(get_db)):
 
 
 @router.post("/")
-def create_tournament(body: CreateTournament, db: Session = Depends(get_db)):
+def create_tournament(body: CreateTournament, db: Session = Depends(get_db), _: dict = Depends(require_admin)):
     players = [p.strip() for p in body.players if p.strip()]
     if len(players) < 2:
         raise HTTPException(status_code=400, detail="Add at least 2 players")
@@ -174,7 +175,7 @@ def create_tournament(body: CreateTournament, db: Session = Depends(get_db)):
 
 
 @router.get("/{tournament_id}")
-def get_tournament(tournament_id: int, db: Session = Depends(get_db)):
+def get_tournament(tournament_id: int, db: Session = Depends(get_db), _: dict = Depends(require_admin)):
     t = db.query(models.Tournament).filter(models.Tournament.id == tournament_id).first()
     if not t:
         raise HTTPException(status_code=404, detail="Tournament not found")
@@ -187,6 +188,7 @@ def record_winner(
     match_id: int,
     body: RecordWinner,
     db: Session = Depends(get_db),
+    _: dict = Depends(require_admin),
 ):
     tournament = db.query(models.Tournament).filter(models.Tournament.id == tournament_id).first()
     if not tournament:
@@ -231,7 +233,7 @@ def record_winner(
 
 
 @router.post("/{tournament_id}/close")
-def close_tournament(tournament_id: int, db: Session = Depends(get_db)):
+def close_tournament(tournament_id: int, db: Session = Depends(get_db), _: dict = Depends(require_admin)):
     t = db.query(models.Tournament).filter(models.Tournament.id == tournament_id).first()
     if not t:
         raise HTTPException(status_code=404, detail="Tournament not found")

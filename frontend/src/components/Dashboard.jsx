@@ -56,6 +56,24 @@ function pct(value, total) {
   return Math.max(0, Math.min(100, Math.round((value / total) * 100)));
 }
 
+function trendFromComparison(current, previous, label) {
+  const currentValue = Number(current || 0);
+  const previousValue = Number(previous || 0);
+  if (previousValue <= 0 && currentValue <= 0) {
+    return { tone: "neutral", icon: "ti-minus", label: "same as yesterday" };
+  }
+  if (previousValue <= 0) {
+    return { tone: "up", icon: "ti-arrow-up-right", label: `new ${label} vs yesterday` };
+  }
+  const delta = Math.round(((currentValue - previousValue) / previousValue) * 100);
+  if (delta === 0) return { tone: "neutral", icon: "ti-minus", label: "same as yesterday" };
+  return {
+    tone: delta > 0 ? "up" : "down",
+    icon: delta > 0 ? "ti-arrow-up-right" : "ti-arrow-down-right",
+    label: `${delta > 0 ? "+" : ""}${delta}% vs yesterday`,
+  };
+}
+
 function estimateTableCharge(session, elapsedSecs) {
   if (!session) return 0;
   const minutes = Math.max(1, Math.ceil((elapsedSecs || 0) / 60));
@@ -216,7 +234,7 @@ function QuickOperations({ onNavigate }) {
   );
 }
 
-function KpiCard({ label, value, sub, icon }) {
+function KpiCard({ label, value, sub, icon, trend }) {
   return (
     <article className="ops-kpi">
       <div className="ops-kpi-top">
@@ -224,6 +242,12 @@ function KpiCard({ label, value, sub, icon }) {
         <i className={`ti ${icon}`} aria-hidden="true" />
       </div>
       <strong>{value}</strong>
+      {trend && (
+        <em className={`ops-kpi-trend ${trend.tone || "neutral"}`}>
+          <i className={`ti ${trend.icon || "ti-minus"}`} aria-hidden="true" />
+          {trend.label}
+        </em>
+      )}
       <p>{sub}</p>
     </article>
   );
@@ -239,7 +263,19 @@ function KeyMetricsSection({
   occupancyPercent,
   foodAttachment,
   foodRevenue,
+  yesterday,
 }) {
+  const yesterdayData = yesterday || {};
+  const liveTrend = yesterdayData.avg_bill
+    ? trendFromComparison(liveTableTotal, yesterdayData.avg_bill, "live value")
+    : { tone: "neutral", icon: "ti-minus", label: "live estimate now" };
+  const activeTrend = yesterdayData.tables_used
+    ? {
+      tone: "neutral",
+      icon: activeCount >= yesterdayData.tables_used ? "ti-arrow-up-right" : "ti-arrow-down-right",
+      label: `${activeCount - yesterdayData.tables_used > 0 ? "+" : ""}${activeCount - yesterdayData.tables_used} vs tables used yesterday`,
+    }
+    : { tone: "neutral", icon: "ti-minus", label: `${TOTAL_TABLES - activeCount} idle now` };
   return (
     <section className="ops-metrics-section" aria-label="Key metrics">
       <div className="ops-metrics-head">
@@ -247,29 +283,34 @@ function KeyMetricsSection({
         <DashboardRangeFilter dateRange={dateRange} onDateRangeChange={onDateRangeChange} />
       </div>
       <div className="ops-kpi-grid four">
+        {/* F-pattern rule: Today Revenue stays first/top-left unless the owner deliberately changes priority. */}
         <KpiCard
           label="Today Revenue"
           value={money(ownerTotal)}
           sub={`${sessionCount || 0} sessions closed today`}
           icon="ti-cash"
+          trend={trendFromComparison(ownerTotal, yesterdayData.sale, "revenue")}
         />
         <KpiCard
           label="Live Floor Value"
           value={money(liveTableTotal)}
           sub="Estimated value still running"
           icon="ti-live-view"
+          trend={liveTrend}
         />
         <KpiCard
           label="Active Tables"
           value={`${activeCount}/${TOTAL_TABLES}`}
           sub={`${occupancyPercent}% occupancy right now`}
           icon="ti-layout-grid"
+          trend={activeTrend}
         />
         <KpiCard
           label="Food Attach"
           value={`${foodAttachment}%`}
           sub={`${money(foodRevenue)} food revenue`}
           icon="ti-tools-kitchen-2"
+          trend={trendFromComparison(foodAttachment, yesterdayData.food_attach, "food attach")}
         />
       </div>
     </section>
@@ -1194,6 +1235,7 @@ export default function Dashboard({ metrics, onNavigate, role = "admin" }) {
         occupancyPercent={occupancyPercent}
         foodAttachment={foodAttachment}
         foodRevenue={metrics.food}
+        yesterday={metrics.yesterday}
       />
 
       <QuickOperations onNavigate={onNavigate} />
