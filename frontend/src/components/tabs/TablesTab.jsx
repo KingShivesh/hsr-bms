@@ -988,6 +988,40 @@ function ResetConfirmModal({ tableId, loading, onClose, onConfirm }) {
   );
 }
 
+function CheckoutStepRail({ quote }) {
+  const steps = [
+    ["Review", "Bill frozen"],
+    ["Discount", quote.discountType === "none" ? "Optional" : "Applied"],
+    ["Payment", quote.paymentMethod || "Cash"],
+    ["Confirm", quote.finalizing ? "Closing" : "Ready"],
+  ];
+
+  return (
+    <div className="checkout-step-rail" aria-label="Checkout progress">
+      {steps.map(([label, meta], index) => {
+        const complete =
+          index === 0 ||
+          (index === 1 && quote.discountType !== "none") ||
+          (index === 2 && quote.paymentMethod);
+        const active = quote.finalizing && index === 3;
+
+        return (
+          <div
+            key={label}
+            className={`checkout-step ${complete ? "complete" : ""} ${active ? "active" : ""}`}
+          >
+            <span>{index + 1}</span>
+            <div>
+              <strong>{label}</strong>
+              <em>{meta}</em>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
 function CheckoutQuoteScreen({
   quote,
   onClose,
@@ -1042,6 +1076,8 @@ function CheckoutQuoteScreen({
             Back
           </button>
         </div>
+
+        <CheckoutStepRail quote={quote} />
 
         <div className="checkout-bill-summary">
           <div>

@@ -17,6 +17,7 @@ from live_state import build_table_state, serialize_session as serialize_live_se
 router = APIRouter()
 MAX_SESSION_DURATION_MINUTES = 12 * 60
 PAYMENT_METHODS = {"Cash", "UPI", "Card", "Split"}
+DISCOUNT_TYPES = {"none", "percent_5", "percent_10", "rupee"}
 GENERIC_SESSION_PLAYER_NAMES = {"player one", "player two", "walk in customer"}
 
 class StartSession(BaseModel):
@@ -180,6 +181,24 @@ def parse_payment_split(raw: str | None, total: int, fallback_method: str) -> tu
         raise HTTPException(status_code=400, detail="Split payments must match the final bill")
     stored_method = split_rows[0]["method"] if len(split_rows) == 1 else "Split"
     return stored_method, split_rows
+
+def calculate_discount(raw_total: int, discount_type: str | None, discount_value: int | None) -> tuple[str, int, int]:
+    normalized_type = (discount_type or "none").strip().lower()
+    if normalized_type not in DISCOUNT_TYPES:
+        raise HTTPException(status_code=400, detail="Invalid discount type")
+
+    safe_total = max(0, int(raw_total or 0))
+    safe_value = max(0, int(discount_value or 0))
+    if normalized_type == "percent_5":
+        discount_amount = round(safe_total * 0.05)
+    elif normalized_type == "percent_10":
+        discount_amount = round(safe_total * 0.10)
+    elif normalized_type == "rupee":
+        discount_amount = min(safe_value, 50, safe_total)
+    else:
+        discount_amount = 0
+
+    return normalized_type, discount_amount, max(0, safe_total - discount_amount)
 
 def allocate_by_weight(weights: dict[str, int], amount: int) -> dict[str, int]:
     names = list(weights.keys())
@@ -593,18 +612,11 @@ def quote_session(
     raw_total = checkout["total"]
     if payment_method not in PAYMENT_METHODS:
         payment_method = "Cash"
-
-    discount_type = (discount_type or "none").strip().lower()
-    discount_amount = 0
-    if discount_type == "percent_5":
-        discount_amount = round(raw_total * 0.05)
-    elif discount_type == "percent_10":
-        discount_amount = round(raw_total * 0.10)
-    elif discount_type == "rupee":
-        discount_amount = min(max(discount_value, 0), 50, raw_total)
-    elif discount_type != "none":
-        raise HTTPException(status_code=400, detail="Invalid discount type")
-    total = max(0, raw_total - discount_amount)
+    discount_type, discount_amount, total = calculate_discount(
+        raw_total,
+        discount_type,
+        discount_value,
+    )
 
     food_items = json.loads(sess.food_items or "[]")
     food_str   = ", ".join(f"{x['item']} x{x['qty']}" for x in food_items) or "None"
@@ -723,17 +735,11 @@ def stop_session(
     raw_total       = checkout["total"]
     if payment_method not in PAYMENT_METHODS:
         payment_method = "Cash"
-    discount_type = (discount_type or "none").strip().lower()
-    discount_amount = 0
-    if discount_type == "percent_5":
-        discount_amount = round(raw_total * 0.05)
-    elif discount_type == "percent_10":
-        discount_amount = round(raw_total * 0.10)
-    elif discount_type == "rupee":
-        discount_amount = min(max(discount_value, 0), 50, raw_total)
-    elif discount_type != "none":
-        raise HTTPException(status_code=400, detail="Invalid discount type")
-    total = max(0, raw_total - discount_amount)
+    discount_type, discount_amount, total = calculate_discount(
+        raw_total,
+        discount_type,
+        discount_value,
+    )
     discount_reason = normalize_person_name(discount_reason)
     if discount_amount > 0 and not discount_reason:
         raise HTTPException(status_code=400, detail="Enter a reason for the discount.")
