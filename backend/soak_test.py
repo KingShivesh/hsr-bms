@@ -71,6 +71,7 @@ metrics = {
     "waitlist_entries": 0,
     "bookings": 0,
     "expected_errors": 0,
+    "ledger_checks": 0,
 }
 failures = []
 latencies = []
@@ -194,7 +195,7 @@ def run_sharing_session(table):
 
 def run_lp_session(table):
     players = random.choice(GROUPS[:2])
-    request(
+    started = request(
         "POST",
         "/sessions/start",
         json={
@@ -204,7 +205,7 @@ def run_lp_session(table):
             "billing_mode": "lp",
             "players": players[1:],
         },
-    )
+    ).json()
     request("POST", f"/sessions/pause/{table}")
     request("POST", f"/sessions/pause/{table}")
     add_food_to_table(table)
@@ -219,6 +220,7 @@ def run_lp_session(table):
         f"/sessions/stop/{table}",
         params={"payment_method": random.choice(PAYMENTS), "payer_name": payer},
     ).json()
+    session_key = result.get("session_key") or started.get("session_key") or ""
     payer_breakdown = next(
         (item for item in result.get("player_breakdown", []) if item.get("name") == payer),
         {},
@@ -230,6 +232,20 @@ def run_lp_session(table):
         or payer_breakdown.get("table", 0) <= 0
     ):
         raise SoakFailure(f"Invalid LP close: {result}")
+    report_rows = request("GET", "/reports/history").json()
+    report_row = next((row for row in report_rows if row.get("session_key") == session_key), None)
+    if not report_row or not report_row.get("frames") or not report_row.get("session_ended_at"):
+        raise SoakFailure(f"LP report history missing durable frame/session data: {report_row}")
+    events = request("GET", f"/sessions/events/{table}").json()
+    session_events = [event for event in events if event.get("session_key") == session_key]
+    event_types = {event.get("event_type") for event in session_events}
+    expected_event_types = {"session_started", "frame_started", "frame_closed", "session_closed"}
+    if not expected_event_types.issubset(event_types):
+        raise SoakFailure(
+            f"LP event ledger missing {sorted(expected_event_types - event_types)} "
+            f"for session {session_key}: {event_types}"
+        )
+    metrics["ledger_checks"] += 1
     metrics["sessions_closed"] += 1
 
 
@@ -286,8 +302,8 @@ def run_expected_validation_checks():
         "/sessions/start",
         expected=400,
         json={
-            "table_id": "t1",
-            "customer_name": "Only",
+            "table_id": "",
+            "customer_name": "Missing Table",
             "rate": 0,
             "billing_mode": "single",
         },
@@ -407,6 +423,7 @@ def main():
     print(f"cycles={metrics['cycles']}", flush=True)
     print(f"requests={metrics['requests']}", flush=True)
     print(f"sessions_closed={metrics['sessions_closed']}", flush=True)
+    print(f"ledger_checks={metrics['ledger_checks']}", flush=True)
     print(f"transactions={len(history)}", flush=True)
     print(f"food_orders={len(food_orders)}", flush=True)
     print(f"members={len(members)}", flush=True)

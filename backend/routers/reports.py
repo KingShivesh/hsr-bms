@@ -102,6 +102,75 @@ def parse_food_items(raw_items: str | None):
         return []
     return parsed if isinstance(parsed, list) else []
 
+def parse_players(raw_players: str | None, fallback: str = ""):
+    try:
+        parsed = json.loads(raw_players or "[]")
+    except json.JSONDecodeError:
+        parsed = []
+    players = parsed if isinstance(parsed, list) else []
+    clean_players = [str(player).strip() for player in players if str(player or "").strip()]
+    if not clean_players and fallback:
+        clean_players = [fallback]
+    return clean_players
+
+def serialize_closed_frame(frame: models.ClosedSessionFrame):
+    return {
+        "id": frame.id,
+        "table_id": frame.table_id,
+        "session_key": frame.session_key or "",
+        "frame_no": frame.frame_no,
+        "started_at": frame.started_at or 0,
+        "ended_at": frame.ended_at or 0,
+        "loser_name": frame.loser_name or "",
+        "status": frame.status or "closed",
+    }
+
+def closed_frames_by_transaction(db: Session, transaction_ids: list[int]):
+    if not transaction_ids:
+        return {}
+    frames = db.query(models.ClosedSessionFrame).filter(
+        models.ClosedSessionFrame.transaction_id.in_(transaction_ids)
+    ).order_by(
+        models.ClosedSessionFrame.transaction_id.asc(),
+        models.ClosedSessionFrame.frame_no.asc(),
+    ).all()
+    by_txn = defaultdict(list)
+    for frame in frames:
+        by_txn[frame.transaction_id].append(frame)
+    return by_txn
+
+def transaction_report_row(t: models.Transaction, frames_by_txn: dict[int, list[models.ClosedSessionFrame]] | None = None):
+    frames_by_txn = frames_by_txn or {}
+    payment_split = parse_food_items(getattr(t, "payment_split_json", "[]"))
+    return {
+        "id": t.id,
+        "date": t.date,
+        "ts": t.ts,
+        "tbl": t.table_id,
+        "nm": t.customer_name,
+        "dur": t.duration,
+        "ply": t.play_charge,
+        "famt": t.food_charge,
+        "food": t.food_items,
+        "food_items": parse_food_items(t.food_json),
+        "tot": t.total,
+        "notes": t.notes or "",
+        "billing_mode": getattr(t, "billing_mode", "single") or "single",
+        "players": parse_players(getattr(t, "players_json", "[]"), t.customer_name),
+        "payer_name": getattr(t, "payer_name", "") or "",
+        "split_names": t.split_names or "",
+        "payment_method": t.payment_method or "Cash",
+        "payment_split": payment_split,
+        "discount_reason": getattr(t, "discount_reason", "") or "",
+        "session_key": getattr(t, "session_key", "") or "",
+        "session_started_at": getattr(t, "session_started_at", 0) or 0,
+        "session_ended_at": getattr(t, "session_ended_at", 0) or 0,
+        "frames": [
+            serialize_closed_frame(frame)
+            for frame in frames_by_txn.get(t.id, [])
+        ],
+    }
+
 def add_payment_breakdown(payment_breakdown: dict[str, int], method: str, total: int, split_json: str | None = ""):
     if split_json:
         try:
@@ -142,13 +211,9 @@ def get_dashboard(
 @router.get("/history")
 def get_history(db: Session = Depends(get_db), _: dict = Depends(require_admin)):
     txns = sorted(report_transactions(db), key=lambda t: t.ts or 0, reverse=True)
+    frames_by_txn = closed_frames_by_transaction(db, [t.id for t in txns])
     return [
-        { "date": t.date, "ts": t.ts, "tbl": t.table_id, "nm": t.customer_name,
-          "dur": t.duration, "ply": t.play_charge, "famt": t.food_charge,
-          "food": t.food_items, "tot": t.total,
-          "billing_mode": getattr(t, "billing_mode", "single") or "single",
-          "payer_name": getattr(t, "payer_name", "") or "",
-          "split_names": t.split_names or "" }
+        transaction_report_row(t, frames_by_txn)
         for t in txns
     ]
 
@@ -161,14 +226,24 @@ def export_csv(
 ):
     all_txns     = sorted(report_transactions(db), key=lambda t: t.ts or 0, reverse=True)
     transactions = filter_transactions(all_txns, period)
+    frames_by_txn = closed_frames_by_transaction(db, [t.id for t in transactions])
 
     output = io.StringIO()
-    output.write("Date,Table,Customer,Billing Mode,Payer,Duration,Play,Food,Total,Notes\n")
+    output.write("Date,Table,Customer,Billing Mode,Payer,Duration,Session Start,Session End,Frames,Play,Food,Total,Notes\n")
     for t in transactions:
         notes = (t.notes or "").replace('"', '""')
         mode = getattr(t, "billing_mode", "single") or "single"
         payer = (getattr(t, "payer_name", "") or "").replace('"', '""')
-        output.write(f'"{t.date}",{t.table_id},{t.customer_name},{mode},"{payer}",{t.duration},{t.play_charge},{t.food_charge},{t.total},"{notes}"\n')
+        frames = frames_by_txn.get(t.id, [])
+        frame_summary = "; ".join(
+            f"F{frame.frame_no} lost by {frame.loser_name or 'unrecorded'}"
+            for frame in frames
+        ).replace('"', '""')
+        output.write(
+            f'"{t.date}",{t.table_id},{t.customer_name},{mode},"{payer}",{t.duration},'
+            f'{getattr(t, "session_started_at", 0) or 0},{getattr(t, "session_ended_at", 0) or 0},'
+            f'"{frame_summary}",{t.play_charge},{t.food_charge},{t.total},"{notes}"\n'
+        )
     output.seek(0)
 
     period_label = {"today": "today", "week": "this_week"}.get(period, "all_time")
@@ -293,6 +368,8 @@ def closing_report(db: Session = Depends(get_db)):
             "table_id": s.table_id.upper(),
             "customer_name": s.customer_name,
             "food_total": s.food_total or 0,
+            "session_key": getattr(s, "session_key", "") or "",
+            "session_started_at": s.start_time or 0,
         }
         for s in active_sessions
     ]
@@ -307,6 +384,7 @@ def closing_report(db: Session = Depends(get_db)):
     for t in txns:
         table_breakdown[t.table_id]["sessions"] += 1
         table_breakdown[t.table_id]["revenue"]  += t.total
+    frames_by_txn = closed_frames_by_transaction(db, [t.id for t in txns])
 
     # Food breakdown
     food_counter = defaultdict(int)
@@ -376,11 +454,8 @@ def closing_report(db: Session = Depends(get_db)):
             }
             for row in corrections_today
         ],
-        "transactions":   [
-            { "tbl": t.table_id, "nm": t.customer_name, "dur": t.duration,
-              "ply": t.play_charge, "famt": t.food_charge, "tot": t.total,
-              "payment_method": t.payment_method or "Cash",
-              "payment_split": parse_food_items(getattr(t, "payment_split_json", "[]")) }
+        "transactions": [
+            transaction_report_row(t, frames_by_txn)
             for t in txns
         ]
     }

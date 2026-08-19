@@ -350,14 +350,31 @@ function KeyMetricsSection({
 function LiveFloor({ tables, elapsed, onNavigate }) {
   const activeCount = tables.filter((table) => Boolean(table.session)).length;
   const idleCount = Math.max(TOTAL_TABLES - activeCount, 0);
+  const checkoutBlockers = tables.filter((table) => table.session?.current_frame).length;
+  const pausedCount = tables.filter((table) => table.session?.paused).length;
+  const longRunningCount = tables.filter((table) => (elapsed[table.id] ?? table.elapsed_seconds ?? 0) >= 90 * 60).length;
+  const floorSignal = checkoutBlockers
+    ? `${checkoutBlockers} frame blocker${checkoutBlockers === 1 ? "" : "s"}`
+    : pausedCount
+      ? `${pausedCount} paused`
+      : longRunningCount
+        ? `${longRunningCount} long running`
+        : activeCount
+          ? "Floor active"
+          : "Ready";
   return (
     <section className="ops-panel ops-floor-panel">
       <SectionHead
         title={`Live Floor — ${activeCount ? `${activeCount} running / ${idleCount} idle` : `${idleCount} idle`}`}
         action={
-          <button type="button" className="ops-link-btn" onClick={() => onNavigate("tables")}>
-            Manage tables
-          </button>
+          <div className="ops-floor-actions">
+            <span className={`ops-floor-health-pill ${checkoutBlockers ? "critical" : pausedCount || longRunningCount ? "warning" : "ok"}`}>
+              {floorSignal}
+            </span>
+            <button type="button" className="ops-link-btn" onClick={() => onNavigate("tables")}>
+              Manage tables
+            </button>
+          </div>
         }
       />
       <div className="ops-floor-grid">

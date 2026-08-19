@@ -51,6 +51,7 @@ export default function FoodTab({ onNavigate, role = "admin" }) {
   const [selectedPlayer, setSelectedPlayer] = useState("");
   const [activeTab, setActiveTab] = useState("order");
   const [activeCat, setActiveCat] = useState("All");
+  const [menuSearch, setMenuSearch] = useState("");
   const [placing, setPlacing] = useState(false);
   const [busyAction, setBusyAction] = useState("");
   const [confirmCancelOrderId, setConfirmCancelOrderId] = useState(null);
@@ -251,10 +252,17 @@ export default function FoodTab({ onNavigate, role = "admin" }) {
     }
   }
 
-  const filteredMenu = Object.entries(menu).filter(
-    ([, v]) =>
-      getItemAvail(v) && (activeCat === "All" || getItemCat(v) === activeCat),
-  );
+  const normalizedMenuSearch = menuSearch.trim().toLowerCase();
+  const filteredMenu = Object.entries(menu).filter(([name, v]) => {
+    if (!getItemAvail(v)) return false;
+    const category = getItemCat(v);
+    const matchesCategory = activeCat === "All" || category === activeCat;
+    const matchesSearch =
+      !normalizedMenuSearch ||
+      name.toLowerCase().includes(normalizedMenuSearch) ||
+      category.toLowerCase().includes(normalizedMenuSearch);
+    return matchesCategory && matchesSearch;
+  });
   const selectedSession = activeSessions.find((session) => session.table_id === tableKey(selectedTable));
   const selectedSessionPlayers =
     selectedSession?.players?.length
@@ -370,6 +378,21 @@ export default function FoodTab({ onNavigate, role = "admin" }) {
         <div className="food-order-layout">
           {/* Menu grid */}
           <div>
+            <div className="food-menu-toolbar">
+              <label className="food-menu-search">
+                <i className="ti ti-search" aria-hidden="true" />
+                <input
+                  type="search"
+                  value={menuSearch}
+                  onChange={(event) => setMenuSearch(event.target.value)}
+                  placeholder="Search menu items"
+                  aria-label="Search menu items"
+                />
+              </label>
+              <span className="food-menu-count">
+                {filteredMenu.length} item{filteredMenu.length === 1 ? "" : "s"}
+              </span>
+            </div>
             <div className="segmented-control category-tabs">
               {CATEGORIES.map((cat) => (
                 <button
@@ -412,8 +435,8 @@ export default function FoodTab({ onNavigate, role = "admin" }) {
                 <div style={{ gridColumn: "1/-1" }}>
                   <EmptyState
                     icon="ti-tools-kitchen-2"
-                    title="No items in this category"
-                    detail={role === "admin" ? "Try another category or manage menu items from Inventory & Stocks." : "Try another category or ask an admin to update the menu."}
+                    title={menuSearch.trim() ? "No matching items" : "No items in this category"}
+                    detail={menuSearch.trim() ? "Clear the search or try a shorter item name." : role === "admin" ? "Try another category or manage menu items from Inventory & Stocks." : "Try another category or ask an admin to update the menu."}
                   />
                 </div>
               )}
@@ -446,6 +469,11 @@ export default function FoodTab({ onNavigate, role = "admin" }) {
 
               {orderTarget === "table" ? (
                 <div className="food-table-target">
+                  <div className="food-table-target-note">
+                    {activeSessions.length
+                      ? `${activeSessions.length} running table${activeSessions.length === 1 ? "" : "s"} available for food billing`
+                      : "No running table sessions. Use Counter order or start a table first."}
+                  </div>
                   <select
                     className="input-field"
                     value={selectedTable}

@@ -1004,6 +1004,7 @@ function CheckoutQuoteScreen({
   const rawTotal = rec.raw_total ?? total;
   const discountAmount = rec.discount_amount || 0;
   const frames = Array.isArray(rec.frames) ? rec.frames : [];
+  const frozenAt = rec.session_ended_at || quote.closedAtMs || "";
   const splitRows = quote.paymentSplit || { Cash: "", UPI: "", Card: "" };
   const splitTotal = ["Cash", "UPI", "Card"].reduce(
     (sum, method) => sum + (parseInt(splitRows[method], 10) || 0),
@@ -1025,7 +1026,11 @@ function CheckoutQuoteScreen({
             </div>
             <div className="checkout-session-time">
               <span>Session started {fmtDateTime(rec.session_started_at)}</span>
-              <span>Bill frozen {fmtDateTime(rec.session_ended_at)}</span>
+              <span>Bill frozen {fmtDateTime(frozenAt)}</span>
+              {quote.sessionKey && <span>Session {quote.sessionKey}</span>}
+            </div>
+            <div className="checkout-freeze-note" role="status">
+              Timer stopped for checkout. Payment and discount changes will not add more table time.
             </div>
             {rec.duration_capped && (
               <div className="checkout-cap-warning">
@@ -3015,6 +3020,7 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
           discountValue: "",
           discountReason: "",
           closedAtMs: res.data.session_ended_at,
+          sessionKey: res.data.session_key || "",
           rec: res.data,
           loading: false,
           finalizing: false,
@@ -3075,10 +3081,16 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
       if (checkoutQuoteSeqRef.current !== requestSeq) return;
       setCheckoutQuote((prev) => ({
         ...(prev || nextQuote),
-        rec: res.data,
+        rec: {
+          ...res.data,
+          session_ended_at: checkoutQuote.closedAtMs,
+          session_key: checkoutQuote.sessionKey || res.data.session_key || "",
+        },
         discountType,
         discountValue: nextValue,
         discountReason: discountType === "none" ? "" : discountReason,
+        closedAtMs: checkoutQuote.closedAtMs,
+        sessionKey: checkoutQuote.sessionKey || res.data.session_key || "",
         loading: false,
         error: "",
       }));
@@ -3115,9 +3127,15 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
       if (checkoutQuoteSeqRef.current !== requestSeq) return;
       setCheckoutQuote((prev) => ({
         ...(prev || nextQuote),
-        rec: res.data,
+        rec: {
+          ...res.data,
+          session_ended_at: checkoutQuote.closedAtMs,
+          session_key: checkoutQuote.sessionKey || res.data.session_key || "",
+        },
         paymentMethod,
         paymentSplit: paymentSplit || prev?.paymentSplit || nextQuote.paymentSplit,
+        closedAtMs: checkoutQuote.closedAtMs,
+        sessionKey: checkoutQuote.sessionKey || res.data.session_key || "",
         loading: false,
         error: "",
       }));
