@@ -289,6 +289,8 @@ export const getTableHistory = (table_id) =>
   api.get(`/sessions/history/${tableKey(table_id)}`);
 export const getTableAudit = (table_id) =>
   api.get(`/sessions/audit/${tableKey(table_id)}`);
+export const getTableEvents = (table_id) =>
+  api.get(`/sessions/events/${tableKey(table_id)}`);
 export const getMaintenance = () => api.get("/sessions/maintenance");
 export const setMaintenance = (table_id, reason) =>
   api.post(`/sessions/maintenance/${tableKey(table_id)}`, { reason });

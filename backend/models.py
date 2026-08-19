@@ -52,6 +52,9 @@ class Transaction(Base):
     payment_method = Column(String,  default="Cash")   # Cash / UPI
     payment_split_json = Column(Text, default="[]")
     discount_reason = Column(Text, default="")
+    session_key    = Column(String,  default="", index=True)
+    session_started_at = Column(Float, default=0)
+    session_ended_at   = Column(Float, default=0)
 
 class ActiveSession(Base):
     __tablename__ = "active_sessions"
@@ -82,6 +85,32 @@ class SessionFrame(Base):
     ended_at           = Column(Float, default=0)
     loser_name         = Column(String, default="")
     status             = Column(String, default="open")  # open / closed
+
+class ClosedSessionFrame(Base):
+    __tablename__ = "closed_session_frames"
+    id                 = Column(Integer, primary_key=True, index=True)
+    transaction_id     = Column(Integer, index=True)
+    table_id           = Column(String, index=True)
+    session_key        = Column(String, default="", index=True)
+    session_started_at = Column(Float, default=0)
+    frame_no           = Column(Integer, default=1)
+    started_at         = Column(Float)
+    ended_at           = Column(Float, default=0)
+    loser_name         = Column(String, default="")
+    status             = Column(String, default="closed")
+
+class SessionEvent(Base):
+    __tablename__ = "session_events"
+    id           = Column(Integer, primary_key=True, index=True)
+    date         = Column(String)
+    ts           = Column(Float)
+    table_id     = Column(String, default="", index=True)
+    session_key  = Column(String, default="", index=True)
+    event_type   = Column(String, index=True)
+    actor        = Column(String, default="system")
+    detail       = Column(Text, default="")
+    amount       = Column(Integer, default=0)
+    payload_json = Column(Text, default="{}")
 
 class MenuItem(Base):
     __tablename__ = "menu_items"

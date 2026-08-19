@@ -22,6 +22,8 @@ export default function TableStatusCard({
         booking: resolvedBooking,
         maintenance: resolvedMaintenance,
       });
+  const statusLabel = tableState?.status_label || status.label;
+  const statusTone = tableState?.status_tone || status.tone;
   const tableRate = tableState?.rate ?? getTableRate(table, rates);
   const rateLabel = `₹${tableRate}/hr · ${table.type === "POOL" ? "Pool" : "Snooker"}`;
 
@@ -29,7 +31,7 @@ export default function TableStatusCard({
     <article className={`table-status-card ${status.className} ${recommended ? "recommended" : ""}`}>
       <div className="table-status-card-head">
         <div className="table-status-card-index">T{table.num}</div>
-        <span className={`table-status-badge ${status.tone}`}>{status.label}</span>
+        <span className={`table-status-badge ${statusTone}`}>{statusLabel}</span>
       </div>
       <div className="table-status-card-main">
         <strong title={`T${table.num} · ${getTableLabel(table)}`}>

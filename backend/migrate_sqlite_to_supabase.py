@@ -23,11 +23,20 @@ RUNTIME_COLUMNS = {
     "active_sessions": {
         "billing_mode": "VARCHAR DEFAULT 'single'",
         "players_json": "TEXT DEFAULT '[]'",
+        "session_key": "VARCHAR DEFAULT ''",
+    },
+    "session_frames": {
+        "session_key": "VARCHAR DEFAULT ''",
     },
     "transactions": {
         "billing_mode": "VARCHAR DEFAULT 'single'",
         "players_json": "TEXT DEFAULT '[]'",
         "payer_name": "VARCHAR DEFAULT ''",
+        "payment_split_json": "TEXT DEFAULT '[]'",
+        "discount_reason": "TEXT DEFAULT ''",
+        "session_key": "VARCHAR DEFAULT ''",
+        "session_started_at": "FLOAT DEFAULT 0",
+        "session_ended_at": "FLOAT DEFAULT 0",
     },
     "food_only_orders": {
         "payment_method": "VARCHAR DEFAULT 'Cash'",

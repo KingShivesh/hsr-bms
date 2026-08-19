@@ -319,6 +319,37 @@ def serialize_frame(frame: models.SessionFrame) -> dict:
         "status": frame.status or "open",
     }
 
+def serialize_closed_frame(frame: models.ClosedSessionFrame) -> dict:
+    return {
+        "id": frame.id,
+        "transaction_id": frame.transaction_id,
+        "table_id": normalize_table_id(frame.table_id),
+        "session_key": frame.session_key or "",
+        "frame_no": frame.frame_no,
+        "started_at": frame.started_at,
+        "ended_at": frame.ended_at,
+        "loser_name": frame.loser_name or "",
+        "status": frame.status or "closed",
+    }
+
+def serialize_session_event(event: models.SessionEvent) -> dict:
+    try:
+        payload = json.loads(event.payload_json or "{}")
+    except json.JSONDecodeError:
+        payload = {}
+    return {
+        "id": event.id,
+        "date": event.date,
+        "ts": event.ts,
+        "table_id": normalize_table_id(event.table_id),
+        "session_key": event.session_key or "",
+        "event_type": event.event_type,
+        "actor": event.actor or "system",
+        "detail": event.detail or "",
+        "amount": event.amount or 0,
+        "payload": payload,
+    }
+
 def frame_loss_summary(frames: list[models.SessionFrame]) -> dict[str, list[int]]:
     summary = {}
     for frame in frames:
@@ -365,6 +396,48 @@ def create_frame_for_session(
     )
     db.add(frame)
     return frame
+
+def record_session_event(
+    db: Session,
+    *,
+    event_type: str,
+    table_id: str = "",
+    session_key: str = "",
+    detail: str = "",
+    amount: int = 0,
+    payload: dict | None = None,
+    actor: str = "system",
+) -> None:
+    db.add(models.SessionEvent(
+        date=format_ist_now(),
+        ts=time.time() * 1000,
+        table_id=normalize_table_id(table_id).upper() if table_id else "",
+        session_key=session_key or "",
+        event_type=event_type,
+        actor=actor,
+        detail=detail,
+        amount=amount or 0,
+        payload_json=json.dumps(payload or {}),
+    ))
+
+def archive_closed_frames(
+    db: Session,
+    *,
+    transaction: models.Transaction,
+    frames: list[models.SessionFrame],
+) -> None:
+    for frame in frames:
+        db.add(models.ClosedSessionFrame(
+            transaction_id=transaction.id,
+            table_id=normalize_table_id(frame.table_id).upper(),
+            session_key=frame.session_key or transaction.session_key or "",
+            session_started_at=frame.session_started_at or transaction.session_started_at or 0,
+            frame_no=frame.frame_no,
+            started_at=frame.started_at,
+            ended_at=frame.ended_at,
+            loser_name=frame.loser_name or "",
+            status=frame.status or "closed",
+        ))
 
 @router.post("/start")
 def start_session(body: StartSession, db: Session = Depends(get_db)):
@@ -415,6 +488,28 @@ def start_session(body: StartSession, db: Session = Depends(get_db)):
     if billing_mode == "lp" and len(players) > 1:
         frame = create_frame_for_session(db, sess, 1)
         frames.append(frame)
+    record_session_event(
+        db,
+        event_type="session_started",
+        table_id=table_id,
+        session_key=sess.session_key,
+        detail=f"{table_id.upper()} started as {billing_mode} at ₹{rate}/hr",
+        payload={
+            "billing_mode": billing_mode,
+            "players": players,
+            "rate": rate,
+            "started_at": sess.start_time,
+        },
+    )
+    for frame in frames:
+        record_session_event(
+            db,
+            event_type="frame_started",
+            table_id=table_id,
+            session_key=sess.session_key,
+            detail=f"Frame {frame.frame_no} started automatically",
+            payload={"frame_no": frame.frame_no, "started_at": frame.started_at},
+        )
     log_action(
         db,
         "session_start",
@@ -439,10 +534,24 @@ def pause_session(table_id: str, db: Session = Depends(get_db)):
         sess.elapsed_ms = time.time() * 1000 - sess.start_time
         sess.paused     = True
         action = "session_pause"
+        event_type = "session_paused"
     else:
         sess.start_time = time.time() * 1000 - sess.elapsed_ms
         sess.paused     = False
         action = "session_resume"
+        event_type = "session_resumed"
+    record_session_event(
+        db,
+        event_type=event_type,
+        table_id=sess.table_id,
+        session_key=ensure_session_key(db, sess),
+        detail=f"{normalize_table_id(table_id).upper()} {action.replace('session_', '')}",
+        payload={
+            "paused": sess.paused,
+            "elapsed_ms": sess.elapsed_ms,
+            "start_time": sess.start_time,
+        },
+    )
     log_action(db, action, f"{normalize_table_id(table_id).upper()} {action.replace('session_', '')}", table_id=table_id)
     db.commit()
     return {"ok": True, "paused": sess.paused}
@@ -504,7 +613,7 @@ def quote_session(
     if not players:
         players = clean_players(sess.customer_name, [], sess.split_name or "")
     frames = active_session_frames(db, sess)
-    if billing_mode == "lp" and any(frame.status == "open" for frame in frames):
+    if any(frame.status == "open" for frame in frames):
         raise HTTPException(status_code=400, detail="Close the running frame before closing the table.")
     billable_frames = [frame for frame in frames if frame.status == "closed"]
     losses_by_player = frame_loss_summary(billable_frames)
@@ -561,6 +670,7 @@ def quote_session(
         "peak_label": checkout["peak_label"],
         "payment_method": payment_method,
         "billing_mode": billing_mode,
+        "session_key": ensure_session_key(db, sess),
         "session_started_at": session_started_at,
         "session_ended_at": quoted_at_ms,
         "players": players,
@@ -640,7 +750,7 @@ def stop_session(
     if not players:
         players = clean_players(sess.customer_name, [], sess.split_name or "")
     frames = active_session_frames(db, sess)
-    if billing_mode == "lp" and any(frame.status == "open" for frame in frames):
+    if any(frame.status == "open" for frame in frames):
         raise HTTPException(status_code=400, detail="Close the running frame before closing the table.")
     billable_frames = [frame for frame in frames if frame.status == "closed"]
     losses_by_player = frame_loss_summary(billable_frames)
@@ -734,14 +844,68 @@ def stop_session(
         payment_method = payment_method,
         payment_split_json = json.dumps(payment_split),
         discount_reason = discount_reason,
+        session_key    = ensure_session_key(db, sess),
+        session_started_at = session_started_at,
+        session_ended_at = closed_at_ms,
     )
     db.add(t)
+    db.flush()
     if player_breakdown:
         for item in player_breakdown:
             update_member_on_checkout(item["name"], item["total"], db)
     else:
         update_member_on_checkout(display_customer, total, db)
 
+    archive_closed_frames(db, transaction=t, frames=frames)
+    if discount_amount > 0:
+        record_session_event(
+            db,
+            event_type="discount_applied",
+            table_id=sess.table_id,
+            session_key=t.session_key,
+            detail=f"Discount ₹{discount_amount} applied",
+            amount=discount_amount,
+            payload={
+                "discount_type": discount_type,
+                "discount_value": discount_value,
+                "discount_reason": discount_reason,
+                "raw_total": raw_total,
+                "final_total": total,
+            },
+        )
+    record_session_event(
+        db,
+        event_type="payment_selected",
+        table_id=sess.table_id,
+        session_key=t.session_key,
+        detail=f"Payment selected: {payment_method}",
+        amount=total,
+        payload={
+            "payment_method": payment_method,
+            "payment_split": payment_split,
+        },
+    )
+    record_session_event(
+        db,
+        event_type="session_closed",
+        table_id=sess.table_id,
+        session_key=t.session_key,
+        detail=f"{table_id.upper()} closed for ₹{total} via {payment_method}",
+        amount=total,
+        payload={
+            "transaction_id": t.id,
+            "duration": minutes,
+            "actual_duration": actual_minutes,
+            "play_charge": play,
+            "food_charge": food,
+            "total": total,
+            "session_started_at": session_started_at,
+            "session_ended_at": closed_at_ms,
+            "billing_mode": billing_mode,
+            "players": transaction_players,
+            "frames": serialized_frames,
+        },
+    )
     for frame in frames:
         db.delete(frame)
     db.delete(sess)
@@ -774,6 +938,7 @@ def stop_session(
         "payment_split": payment_split,
         "discount_reason": discount_reason,
         "billing_mode": billing_mode,
+        "session_key": t.session_key,
         "session_started_at": session_started_at,
         "session_ended_at": closed_at_ms,
         "players": transaction_players,
@@ -819,6 +984,20 @@ def transfer_session(
     for frame in frames:
         frame.table_id = target_id
         frame.session_key = new_key
+    record_session_event(
+        db,
+        event_type="session_transferred",
+        table_id=target_id,
+        session_key=new_key,
+        detail=f"{source_id.upper()} transferred to {target_id.upper()}",
+        payload={
+            "from_table": source_id,
+            "to_table": target_id,
+            "previous_session_key": old_key,
+            "previous_rate": old_rate,
+            "new_rate": new_rate,
+        },
+    )
 
     log_action(
         db,
@@ -868,6 +1047,18 @@ def reset_session(
         )
         for frame in active_session_frames(db, sess):
             db.delete(frame)
+        record_session_event(
+            db,
+            event_type="session_reset",
+            table_id=table_id,
+            session_key=ensure_session_key(db, sess),
+            detail=f"{table_id.upper()} reset while assigned to {sess.customer_name}",
+            amount=math.ceil((elapsed_ms / 1000) / 60),
+            payload={
+                "customer_name": sess.customer_name,
+                "elapsed_ms": elapsed_ms,
+            },
+        )
         db.delete(sess)
         db.commit()
     return {"ok": True}
@@ -888,6 +1079,14 @@ def start_frame(table_id: str, db: Session = Depends(get_db)):
         db,
         sess,
         max((existing.frame_no for existing in frames), default=0) + 1,
+    )
+    record_session_event(
+        db,
+        event_type="frame_started",
+        table_id=table_id,
+        session_key=ensure_session_key(db, sess),
+        detail=f"Frame {frame.frame_no} started",
+        payload={"frame_no": frame.frame_no, "started_at": frame.started_at},
     )
     log_action(db, "frame_start", f"Frame {frame.frame_no} started", table_id=table_id)
     db.commit()
@@ -919,6 +1118,20 @@ def close_frame(table_id: str, body: CloseFrameBody, db: Session = Depends(get_d
     open_frame.status = "closed"
     open_frame.ended_at = time.time() * 1000
     open_frame.loser_name = loser_name
+    record_session_event(
+        db,
+        event_type="frame_closed",
+        table_id=table_id,
+        session_key=ensure_session_key(db, sess),
+        detail=f"Frame {open_frame.frame_no} lost by {loser_name}",
+        payload={
+            "frame_no": open_frame.frame_no,
+            "started_at": open_frame.started_at,
+            "ended_at": open_frame.ended_at,
+            "loser_name": loser_name,
+            "players": players,
+        },
+    )
     log_action(db, "frame_close", f"Frame {open_frame.frame_no} lost by {loser_name}", table_id=table_id)
     db.commit()
     frames = active_session_frames(db, sess)
@@ -968,6 +1181,21 @@ def add_food(table_id: str, body: FoodItem, db: Session = Depends(get_db)):
     items.append(line)
     sess.food_items  = json.dumps(items)
     sess.food_total += price
+    record_session_event(
+        db,
+        event_type="food_added",
+        table_id=table_id,
+        session_key=ensure_session_key(db, sess),
+        detail=f"{table_id.upper()} added {line['item']} x{body.qty}",
+        amount=price,
+        payload={
+            "item": line["item"],
+            "qty": body.qty,
+            "price": price,
+            "player_name": player_name,
+            "food_total": sess.food_total,
+        },
+    )
     log_action(
         db,
         "food_add",
@@ -1065,8 +1293,20 @@ def table_history(table_id: str, db: Session = Depends(get_db)):
     txns = db.query(models.Transaction).filter(
         models.Transaction.table_id == normalize_table_id(table_id).upper()
     ).order_by(models.Transaction.ts.desc()).limit(10).all()
+    txn_ids = [txn.id for txn in txns]
+    frames_by_txn: dict[int, list[models.ClosedSessionFrame]] = {}
+    if txn_ids:
+        closed_frames = (
+            db.query(models.ClosedSessionFrame)
+            .filter(models.ClosedSessionFrame.transaction_id.in_(txn_ids))
+            .order_by(models.ClosedSessionFrame.frame_no.asc())
+            .all()
+        )
+        for frame in closed_frames:
+            frames_by_txn.setdefault(frame.transaction_id, []).append(frame)
     return [
         {
+            "id": t.id,
             "date":  t.date, "nm": t.customer_name,
             "dur":   t.duration, "tot": t.total,
             "notes": t.notes or "",
@@ -1074,6 +1314,13 @@ def table_history(table_id: str, db: Session = Depends(get_db)):
             "billing_mode": getattr(t, "billing_mode", "single") or "single",
             "players": json.loads(getattr(t, "players_json", "[]") or "[]"),
             "payer_name": getattr(t, "payer_name", "") or "",
+            "session_key": getattr(t, "session_key", "") or "",
+            "session_started_at": getattr(t, "session_started_at", 0) or 0,
+            "session_ended_at": getattr(t, "session_ended_at", 0) or 0,
+            "frames": [
+                serialize_closed_frame(frame)
+                for frame in frames_by_txn.get(t.id, [])
+            ],
         }
         for t in txns
     ]
@@ -1096,6 +1343,14 @@ def table_audit(table_id: str, limit: int = 30, db: Session = Depends(get_db)):
         }
         for row in rows
     ]
+
+@router.get("/events/{table_id}")
+def table_events(table_id: str, limit: int = 50, db: Session = Depends(get_db)):
+    table_code = normalize_table_id(table_id).upper()
+    rows = db.query(models.SessionEvent).filter(
+        func.upper(models.SessionEvent.table_id) == table_code
+    ).order_by(models.SessionEvent.ts.desc()).limit(max(1, min(limit, 100))).all()
+    return [serialize_session_event(row) for row in rows]
 
 @router.post("/maintenance/{table_id}")
 def set_maintenance(table_id: str, body: MaintenanceBody, db: Session = Depends(get_db)):

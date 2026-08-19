@@ -316,6 +316,7 @@ def build_table_state(db: Session) -> dict:
         })
     return {
         "generated_at": now_ms,
+        "status_definitions": TABLE_STATUS,
         "tables": table_rows,
         "active_sessions": list(sessions_by_table.values()),
         "active_tables": len(sessions_by_table),

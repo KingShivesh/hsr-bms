@@ -54,6 +54,9 @@ def ensure_runtime_columns():
             "payer_name": "VARCHAR(255) DEFAULT ''",
             "payment_split_json": "TEXT DEFAULT '[]'",
             "discount_reason": "TEXT DEFAULT ''",
+            "session_key": "VARCHAR(255) DEFAULT ''",
+            "session_started_at": "FLOAT DEFAULT 0",
+            "session_ended_at": "FLOAT DEFAULT 0",
         },
         "food_only_orders": {
             "payment_method": "VARCHAR(50) DEFAULT 'Cash'",
@@ -99,6 +102,15 @@ def ensure_runtime_indexes(conn, existing_tables: set[str]):
         ],
         "session_frames": [
             ("idx_session_frames_table_key", "table_id, session_key"),
+        ],
+        "closed_session_frames": [
+            ("idx_closed_session_frames_transaction", "transaction_id"),
+            ("idx_closed_session_frames_table_key", "table_id, session_key"),
+        ],
+        "session_events": [
+            ("idx_session_events_table_ts", "table_id, ts"),
+            ("idx_session_events_key_ts", "session_key, ts"),
+            ("idx_session_events_type_ts", "event_type, ts"),
         ],
         "bookings": [
             ("idx_bookings_status_time", "status, booking_time"),
