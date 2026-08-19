@@ -9,21 +9,14 @@ import {
   getCurrentRate,
 } from "../../api/index.js";
 import { useToast } from "../toastContext.js";
+import { useConfirm } from "../confirmContext.js";
 
 function TabBtn({ active, onClick, children }) {
   return (
     <button
+      type="button"
       onClick={onClick}
-      style={{
-        fontSize: "var(--text-sm)",
-        padding: "6px 18px",
-        borderRadius: "var(--radius-sm)",
-        cursor: "pointer",
-        fontWeight: active ? 600 : 400,
-        background: active ? "var(--text-primary)" : "var(--surface)",
-        color: active ? "var(--surface)" : "var(--text-secondary)",
-        border: active ? "1px solid var(--text-primary)" : "1px solid var(--border)",
-      }}
+      className={`ui-tab-btn ${active ? "active" : ""}`}
     >
       {children}
     </button>
@@ -33,18 +26,10 @@ function TabBtn({ active, onClick, children }) {
 function Panel({ title, description, children }) {
   return (
     <div className="settings-panel">
-      <div
-        style={{
-          marginBottom: "16px",
-          paddingBottom: "12px",
-          borderBottom: "1px solid var(--border)",
-        }}
-      >
+      <div className="settings-panel-header">
         <div className="settings-panel-title">{title}</div>
         {description && (
-          <div style={{ fontSize: "var(--text-sm)", color: "var(--text-muted)", marginTop: "3px" }}>
-            {description}
-          </div>
+          <div className="settings-panel-description">{description}</div>
         )}
       </div>
       {children}
@@ -55,6 +40,7 @@ function Panel({ title, description, children }) {
 // ── Peak Hours ──
 function PeakHoursView() {
   const { showToast } = useToast();
+  const { requestConfirm } = useConfirm();
   const [rules, setRules] = useState([]);
   const [currentRate, setCurrentRate] = useState(null);
   const [startHour, setStartHour] = useState(18);
@@ -131,7 +117,13 @@ function PeakHoursView() {
   }
 
   async function handleDelete(id) {
-    if (!confirm("Delete this rule?")) return;
+    const confirmed = await requestConfirm({
+      title: "Delete peak-hour rule?",
+      message: "This stops the rate multiplier from applying during that time window.",
+      confirmLabel: "Delete rule",
+      tone: "danger",
+    });
+    if (!confirmed) return;
     setActiveAction(`peak-delete-${id}`);
     try {
       await deletePeakHour(id);
@@ -245,6 +237,7 @@ function PeakHoursView() {
           />
         </div>
         <button
+          type="button"
           className="btn btn-primary-sm"
           style={{ marginBottom: "1px" }}
           onClick={handleSaveRule}

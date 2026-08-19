@@ -4,6 +4,8 @@ import Sidebar from "./components/Sidebar.jsx";
 import Topbar from "./components/Topbar.jsx";
 import CommandBar from "./components/CommandBar.jsx";
 import { ToastProvider } from "./components/Toast.jsx";
+import { ConfirmProvider } from "./components/ConfirmDialog.jsx";
+import { useConfirm } from "./components/confirmContext.js";
 import { getBackendHealth, getMe, getSummary } from "./api/index.js";
 
 const Dashboard = lazy(() => import("./components/Dashboard.jsx"));
@@ -49,7 +51,8 @@ function PageSkeleton() {
   );
 }
 
-export default function App() {
+function AppInner() {
+  const { requestConfirm } = useConfirm();
   const [loggedIn, setLoggedIn] = useState(!!localStorage.getItem("token"));
   const [role, setRole] = useState(localStorage.getItem("role") || "admin");
   const [username, setUsername] = useState(localStorage.getItem("username") || "");
@@ -161,15 +164,20 @@ export default function App() {
     }
   }
 
-  function handleLogout() {
-    if (confirm("Are you sure you want to logout?")) {
-      localStorage.removeItem("token");
-      localStorage.removeItem("role");
-      localStorage.removeItem("username");
-      setRole("admin");
-      setUsername("");
-      setLoggedIn(false);
-    }
+  async function handleLogout() {
+    const confirmed = await requestConfirm({
+      title: "Log out?",
+      message: "You will return to the HSR BMS login screen.",
+      confirmLabel: "Log out",
+      tone: "warning",
+    });
+    if (!confirmed) return;
+    localStorage.removeItem("token");
+    localStorage.removeItem("role");
+    localStorage.removeItem("username");
+    setRole("admin");
+    setUsername("");
+    setLoggedIn(false);
   }
 
   function openNewSession() {
@@ -247,9 +255,9 @@ export default function App() {
                   newSessionRequest={newSessionRequest}
                 />
               )}
-              {page === "reports" && role === "admin" && <ReportsTab />}
+              {page === "reports" && role === "admin" && <ReportsTab onNavigate={setPage} />}
               {page === "closing" && <ClosingTab />}
-              {page === "food" && <FoodTab />}
+              {page === "food" && <FoodTab onNavigate={setPage} role={role} />}
               {page === "tournaments" && <TournamentTab />}
               {page === "members" && role === "admin" && <MembersTab />}
               {page === "operations" && role === "admin" && <OperationsTab />}
@@ -281,5 +289,13 @@ export default function App() {
         />
       </div>
     </ToastProvider>
+  );
+}
+
+export default function App() {
+  return (
+    <ConfirmProvider>
+      <AppInner />
+    </ConfirmProvider>
   );
 }

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   addMenuItem,
   addWaitlistEntry,
@@ -11,12 +11,9 @@ import {
   getAuditLogs,
   getBookings,
   getFoodOrders,
-  getFoodStats,
   getHistory,
   getMenuFull,
   getTableState,
-  getTableUtilization,
-  getTopCustomers,
   getWaitlist,
   seatWaitlistEntry,
   setItemAvailability,
@@ -26,6 +23,7 @@ import {
 import { HSR_TABLES } from "../../config/hsrTables.js";
 import { getTableStatus } from "../../config/tableStatus.js";
 import { useToast } from "../toastContext.js";
+import { useConfirm } from "../confirmContext.js";
 
 function money(value = 0) {
   return `₹${Number(value || 0).toLocaleString("en-IN")}`;
@@ -87,18 +85,48 @@ function Section({ eyebrow, title, action, children }) {
   );
 }
 
-const WORKSPACE_REQUESTS = [
-  "waitlist",
-  "reservations",
-  "table state",
-  "billing history",
-  "food orders",
-  "food stats",
-  "menu",
-  "audit logs",
-  "top customers",
-  "table utilization",
-];
+function emptyWorkspaceData() {
+  return {
+    waitlist: [],
+    bookings: [],
+    activeSessions: [],
+    tableState: [],
+    history: [],
+    foodOrders: [],
+    menu: [],
+    maintenance: [],
+    auditLogs: [],
+  };
+}
+
+const WORKSPACE_LOADERS = {
+  waitlist: [
+    { label: "waitlist", key: "waitlist", request: getWaitlist },
+    { label: "reservations", key: "bookings", request: getBookings },
+    { label: "table state", key: "tableState", request: getTableState },
+  ],
+  reservations: [
+    { label: "reservations", key: "bookings", request: getBookings },
+    { label: "table state", key: "tableState", request: getTableState },
+  ],
+  billing: [
+    { label: "billing history", key: "history", request: getHistory },
+    { label: "food orders", key: "foodOrders", request: getFoodOrders },
+  ],
+  inventory: [
+    { label: "menu", key: "menu", request: getMenuFull },
+    { label: "table state", key: "tableState", request: getTableState },
+  ],
+  notifications: [
+    { label: "audit logs", key: "auditLogs", request: () => getAuditLogs(50) },
+    { label: "waitlist", key: "waitlist", request: getWaitlist },
+    { label: "reservations", key: "bookings", request: getBookings },
+    { label: "table state", key: "tableState", request: getTableState },
+  ],
+  staff: [
+    { label: "audit logs", key: "auditLogs", request: () => getAuditLogs(50) },
+  ],
+};
 
 function WorkspaceLoading() {
   return (
@@ -143,12 +171,62 @@ function ActionButton({ tone = "default", icon, children, ...props }) {
 }
 
 function Modal({ title, onClose, children }) {
+  const modalRef = useRef(null);
+  const closeRef = useRef(null);
+  const openerRef = useRef(null);
+  const onCloseRef = useRef(onClose);
+  const titleId = `cf-modal-title-${title.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`;
+
+  useEffect(() => {
+    onCloseRef.current = onClose;
+  }, [onClose]);
+
+  useEffect(() => {
+    openerRef.current = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+    window.requestAnimationFrame(() => closeRef.current?.focus());
+    function closeAndRestore() {
+      onCloseRef.current?.();
+      window.setTimeout(() => openerRef.current?.focus?.(), 0);
+    }
+    function onKeyDown(event) {
+      if (event.key === "Escape") {
+        event.preventDefault();
+        closeAndRestore();
+        return;
+      }
+      if (event.key !== "Tab") return;
+      const focusable = Array.from(
+        modalRef.current?.querySelectorAll(
+          'button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])',
+        ) || [],
+      ).filter((node) => node.offsetParent !== null);
+      if (!focusable.length) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    }
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, []);
+
   return (
     <div className="cf-modal-backdrop" role="presentation">
-      <div className="cf-modal" role="dialog" aria-modal="true" aria-label={title}>
+      <div
+        ref={modalRef}
+        className="cf-modal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby={titleId}
+      >
         <div className="cf-modal-head">
-          <h3>{title}</h3>
-          <button type="button" onClick={onClose} aria-label="Close">
+          <h3 id={titleId}>{title}</h3>
+          <button ref={closeRef} type="button" onClick={onClose} aria-label="Close">
             <i className="ti ti-x" aria-hidden="true" />
           </button>
         </div>
@@ -986,20 +1064,8 @@ function StaffView({ auditLogs }) {
 
 export default function ClubSuiteTab({ view }) {
   const { showToast } = useToast();
-  const [data, setData] = useState({
-    waitlist: [],
-    bookings: [],
-    activeSessions: [],
-    tableState: [],
-    history: [],
-    foodOrders: [],
-    foodStats: [],
-    menu: [],
-    maintenance: [],
-    auditLogs: [],
-    topCustomers: [],
-    utilization: [],
-  });
+  const { requestConfirm } = useConfirm();
+  const [data, setData] = useState(() => emptyWorkspaceData());
   const [busy, setBusy] = useState(false);
   const [activeAction, setActiveAction] = useState("");
   const [loading, setLoading] = useState(true);
@@ -1009,37 +1075,26 @@ export default function ClubSuiteTab({ view }) {
     if (showLoading) setLoading(true);
     setLoadError("");
     try {
-      const results = await Promise.allSettled([
-        getWaitlist(),
-        getBookings(),
-        getTableState(),
-        getHistory(),
-        getFoodOrders(),
-        getFoodStats(),
-        getMenuFull(),
-        getAuditLogs(50),
-        getTopCustomers("all"),
-        getTableUtilization(),
-      ]);
+      const loaders = WORKSPACE_LOADERS[view] || WORKSPACE_LOADERS.waitlist;
+      const results = await Promise.allSettled(loaders.map((loader) => loader.request()));
       if (!shouldCommit()) return;
       const failed = results
-        .map((result, index) => (result.status === "rejected" ? WORKSPACE_REQUESTS[index] : ""))
+        .map((result, index) => (result.status === "rejected" ? loaders[index].label : ""))
         .filter(Boolean);
-      const tableStatePayload = results[2].status === "fulfilled" ? results[2].value.data || {} : {};
-      setData({
-        waitlist: results[0].status === "fulfilled" ? asArray(results[0].value.data) : [],
-        bookings: results[1].status === "fulfilled" ? asArray(results[1].value.data) : [],
-        activeSessions: asArray(tableStatePayload.active_sessions),
-        tableState: asArray(tableStatePayload.tables),
-        history: results[3].status === "fulfilled" ? asArray(results[3].value.data) : [],
-        foodOrders: results[4].status === "fulfilled" ? asArray(results[4].value.data) : [],
-        foodStats: results[5].status === "fulfilled" ? asArray(results[5].value.data) : [],
-        menu: results[6].status === "fulfilled" ? asArray(results[6].value.data) : [],
-        maintenance: asMaintenanceRows(tableStatePayload.maintenance),
-        auditLogs: results[7].status === "fulfilled" ? asArray(results[7].value.data) : [],
-        topCustomers: results[8].status === "fulfilled" ? asArray(results[8].value.data) : [],
-        utilization: results[9].status === "fulfilled" ? asArray(results[9].value.data) : [],
+      const nextData = emptyWorkspaceData();
+      results.forEach((result, index) => {
+        if (result.status !== "fulfilled") return;
+        const key = loaders[index].key;
+        const payload = result.value.data || {};
+        if (key === "tableState") {
+          nextData.activeSessions = asArray(payload.active_sessions);
+          nextData.tableState = asArray(payload.tables);
+          nextData.maintenance = asMaintenanceRows(payload.maintenance);
+          return;
+        }
+        nextData[key] = asArray(payload);
       });
+      setData(nextData);
       setLoadError(
         failed.length
           ? `Could not load ${failed.join(", ")}. Retry once the backend responds.`
@@ -1051,7 +1106,7 @@ export default function ClubSuiteTab({ view }) {
     } finally {
       if (shouldCommit()) setLoading(false);
     }
-  }, []);
+  }, [view]);
 
   useEffect(() => {
     let alive = true;
@@ -1066,7 +1121,15 @@ export default function ClubSuiteTab({ view }) {
     actionKey = "action",
     successMessage = "",
   } = {}) => {
-    if (confirmText && !confirm(confirmText)) return false;
+    if (confirmText) {
+      const confirmed = await requestConfirm({
+        title: "Confirm action",
+        message: confirmText,
+        confirmLabel: "Continue",
+        tone: "warning",
+      });
+      if (!confirmed) return false;
+    }
     setBusy(true);
     setActiveAction(actionKey);
     try {
@@ -1081,7 +1144,7 @@ export default function ClubSuiteTab({ view }) {
       setBusy(false);
       setActiveAction("");
     }
-  }, [loadData, showToast]);
+  }, [loadData, requestConfirm, showToast]);
 
   const actions = useMemo(() => ({
     addWaitlist: (body) => runAction(() => addWaitlistEntry(body), {

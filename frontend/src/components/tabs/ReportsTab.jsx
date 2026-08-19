@@ -56,6 +56,7 @@ function billDateKey(row) {
 function TabBtn({ active, onClick, children }) {
   return (
     <button
+      type="button"
       onClick={onClick}
       className={`ui-tab-btn ${active ? "active" : ""}`}
     >
@@ -530,16 +531,14 @@ function UtilizationView() {
 }
 
 // ── Daily Closing Report ──
-function ClosingReportView() {
+function ClosingReportView({ onNavigate }) {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [closedDay, setClosedDay] = useState(false);
 
   useEffect(() => {
     getClosingReport()
       .then((r) => {
         setData(r.data);
-        setClosedDay(localStorage.getItem(`dayClosed:${r.data.date}`) === "true");
         setLoading(false);
       })
       .catch(() => setLoading(false));
@@ -547,12 +546,6 @@ function ClosingReportView() {
 
   function printReport() {
     window.print();
-  }
-
-  function markDayClosed() {
-    if (!confirm("Mark today as closed after reviewing the report summary?")) return;
-    localStorage.setItem(`dayClosed:${data.date}`, "true");
-    setClosedDay(true);
   }
 
   if (loading)
@@ -591,11 +584,10 @@ function ClosingReportView() {
             Print Report
           </button>
           <button
-            className={`btn ${closedDay ? "btn-success-sm" : "btn-warning-sm"}`}
-            onClick={markDayClosed}
-            disabled={closedDay}
+            className="btn btn-primary-sm"
+            onClick={() => onNavigate?.("closing")}
           >
-            {closedDay ? "Day Closed" : "Close Day"}
+            Open Daily Closing
           </button>
         </div>
       </div>
@@ -950,7 +942,7 @@ function AdvancedAnalyticsView() {
 }
 
 // ── Main Reports Tab ──
-export default function ReportsTab() {
+export default function ReportsTab({ onNavigate }) {
   const { showToast } = useToast();
   const [activeTab, setActiveTab] = useState(
     () => {
@@ -1068,7 +1060,7 @@ export default function ReportsTab() {
       )}
       {activeTab === "customers" && <TopCustomersView />}
       {activeTab === "tables" && <UtilizationView />}
-      {activeTab === "closing" && <ClosingReportView />}
+      {activeTab === "closing" && <ClosingReportView onNavigate={onNavigate} />}
       {activeTab === "insights" && <ClosingInsightsView />}
       {activeTab === "advanced" && <AdvancedAnalyticsView />}
       {activeTab === "audit" && <AuditLogView />}

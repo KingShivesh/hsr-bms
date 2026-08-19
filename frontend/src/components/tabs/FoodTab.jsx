@@ -1,10 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import {
   getMenu,
-  addMenuItem,
-  updateMenuItem,
-  deleteMenuItem,
-  setItemAvailability,
   getTableState,
   addFood,
   placeFoodOrder,
@@ -39,7 +35,7 @@ function EmptyState({ icon = "ti-info-circle", title, detail }) {
   );
 }
 
-export default function FoodTab() {
+export default function FoodTab({ onNavigate, role = "admin" }) {
   const { showToast } = useToast();
   const [menu, setMenu] = useState({});
   const [stats, setStats] = useState([]);
@@ -60,12 +56,7 @@ export default function FoodTab() {
   const [confirmCancelOrderId, setConfirmCancelOrderId] = useState(null);
   const busyActionRef = useRef("");
   const [lastOrder, setLastOrder] = useState(null);
-  const [newItem, setNewItem] = useState({
-    name: "",
-    price: "",
-    category: "Veg Snacks",
-  });
-  const [editingItem, setEditingItem] = useState(null);
+  const [cigaretteDraft, setCigaretteDraft] = useState({ name: "", mrp: "" });
 
   const fetchAll = useCallback(async ({ showLoading = false } = {}) => {
     if (showLoading) setLoading(true);
@@ -128,97 +119,7 @@ export default function FoodTab() {
     return getItemPrice(menu[item.item]);
   }
 
-  async function handleAddMenuItem(e) {
-    e.preventDefault();
-    const name = newItem.name.trim();
-    const price = parseInt(newItem.price, 10);
-    if (!name || !price || price <= 0) {
-      showToast("Enter item name and valid price", "error");
-      return;
-    }
-    if (busyActionRef.current) return;
-    busyActionRef.current = "menu-add";
-    setBusyAction("menu-add");
-    try {
-      await addMenuItem(name, price, newItem.category);
-      setNewItem({ name: "", price: "", category: newItem.category });
-      await fetchAll();
-      showToast("Menu item added", "success");
-    } catch (e) {
-      showToast(e.response?.data?.detail || "Failed to add item", "error");
-    } finally {
-      busyActionRef.current = "";
-      setBusyAction("");
-    }
-  }
-
-  async function handleUpdateMenuItem() {
-    if (!editingItem) return;
-    const name = editingItem.newName.trim();
-    const price = parseInt(editingItem.price, 10);
-    if (!name || !price || price <= 0) {
-      showToast("Enter item name and valid price", "error");
-      return;
-    }
-    if (busyActionRef.current) return;
-    busyActionRef.current = `menu-edit-${editingItem.oldName}`;
-    setBusyAction(`menu-edit-${editingItem.oldName}`);
-    try {
-      await updateMenuItem(
-        editingItem.oldName,
-        name,
-        price,
-        editingItem.category,
-      );
-      setEditingItem(null);
-      await fetchAll();
-      showToast("Menu item saved", "success");
-    } catch (e) {
-      showToast(e.response?.data?.detail || "Failed to update item", "error");
-    } finally {
-      busyActionRef.current = "";
-      setBusyAction("");
-    }
-  }
-
-  async function handleDeleteMenuItem(name) {
-    if (!confirm(`Delete ${name}?`)) return;
-    if (busyActionRef.current) return;
-    busyActionRef.current = `menu-delete-${name}`;
-    setBusyAction(`menu-delete-${name}`);
-    try {
-      await deleteMenuItem(name);
-      await fetchAll();
-      showToast("Menu item deleted", "success");
-    } catch (e) {
-      showToast(e.response?.data?.detail || "Failed to delete item", "error");
-    } finally {
-      busyActionRef.current = "";
-      setBusyAction("");
-    }
-  }
-
-  async function handleToggleAvailability(name, value) {
-    if (busyActionRef.current) return;
-    busyActionRef.current = `stock-${name}`;
-    setBusyAction(`stock-${name}`);
-    try {
-      await setItemAvailability(name, value);
-      await fetchAll();
-      showToast(value ? "Item shown in stock" : "Item hidden from menu", "success");
-    } catch (e) {
-      showToast(e.response?.data?.detail || "Failed to update stock", "error");
-    } finally {
-      busyActionRef.current = "";
-      setBusyAction("");
-    }
-  }
-
-  function addToCart(name) {
-    const mrp = isCigarette(name)
-      ? parseInt(prompt("Enter cigarette price:") || "0", 10)
-      : null;
-    if (isCigarette(name) && (!mrp || mrp <= 0)) return;
+  function addCartItem(name, mrp = null) {
     setCart((prev) => {
       const existing = prev.find((i) => i.item === name && i.mrp === mrp);
       if (existing)
@@ -227,6 +128,26 @@ export default function FoodTab() {
         );
       return [...prev, { item: name, qty: 1, mrp }];
     });
+  }
+
+  function addToCart(name) {
+    if (isCigarette(name)) {
+      setCigaretteDraft({ name, mrp: "" });
+      return;
+    }
+    addCartItem(name);
+  }
+
+  function handleCigarettePriceSubmit(event) {
+    event.preventDefault();
+    const mrp = parseInt(cigaretteDraft.mrp, 10);
+    if (!mrp || mrp <= 0) {
+      showToast("Enter the cigarette MRP before adding it.", "error");
+      return;
+    }
+    addCartItem(cigaretteDraft.name, mrp);
+    setCigaretteDraft({ name: "", mrp: "" });
+    showToast(`${cigaretteDraft.name} added at ₹${mrp} MRP + ₹3`, "success");
   }
 
   function removeFromCart(item) {
@@ -362,6 +283,56 @@ export default function FoodTab() {
 
   return (
     <div>
+      {cigaretteDraft.name && (
+        <div className="app-confirm-backdrop" role="presentation">
+          <form
+            className="app-confirm-dialog food-price-dialog"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="food-price-dialog-title"
+            onSubmit={handleCigarettePriceSubmit}
+          >
+            <div className="app-confirm-copy">
+              <h3 id="food-price-dialog-title">
+                Enter cigarette MRP
+              </h3>
+              <p className="app-confirm-message">
+                {cigaretteDraft.name} will be billed at MRP plus ₹3.
+              </p>
+            </div>
+            <label className="food-price-field">
+              <span>MRP</span>
+              <input
+                className="input-field"
+                type="number"
+                min="1"
+                inputMode="numeric"
+                autoFocus
+                value={cigaretteDraft.mrp}
+                onChange={(event) =>
+                  setCigaretteDraft((current) => ({
+                    ...current,
+                    mrp: event.target.value,
+                  }))
+                }
+              />
+            </label>
+            <div className="app-confirm-actions">
+              <button
+                type="button"
+                className="app-confirm-btn secondary"
+                onClick={() => setCigaretteDraft({ name: "", mrp: "" })}
+              >
+                Cancel
+              </button>
+              <button type="submit" className="app-confirm-btn primary">
+                Add item
+              </button>
+            </div>
+          </form>
+        </div>
+      )}
+
       {loadError && (
         <div className="load-error-banner" role="alert">
           <i className="ti ti-alert-circle" aria-hidden="true" />
@@ -376,7 +347,6 @@ export default function FoodTab() {
       <div className="segmented-control page-tabs">
         {[
           ["order", "New Order"],
-          ["menu", "Edit Menu"],
           ["stats", "Food Stats"],
           ["history", "Order History"],
         ].map(([id, label]) => (
@@ -388,6 +358,11 @@ export default function FoodTab() {
             {label}
           </button>
         ))}
+        {role === "admin" && (
+          <button type="button" onClick={() => onNavigate?.("inventory")}>
+            Manage Menu
+          </button>
+        )}
       </div>
 
       {/* ── New Order ── */}
@@ -438,7 +413,7 @@ export default function FoodTab() {
                   <EmptyState
                     icon="ti-tools-kitchen-2"
                     title="No items in this category"
-                    detail="Try another category or add menu items from Settings."
+                    detail={role === "admin" ? "Try another category or manage menu items from Inventory & Stocks." : "Try another category or ask an admin to update the menu."}
                   />
                 </div>
               )}
@@ -579,7 +554,7 @@ export default function FoodTab() {
                             type="button"
                             onClick={() => removeFromCart(i)}
                             className="icon-danger-btn"
-                            aria-label={`Remove ${i.name || "item"} from cart`}
+                            aria-label={`Remove ${i.item || "item"} from cart`}
                           >
                             ×
                           </button>
@@ -634,130 +609,6 @@ export default function FoodTab() {
                 </div>
               )}
             </div>
-          </div>
-        </div>
-      )}
-
-      {/* ── Edit Menu ── */}
-      {activeTab === "menu" && (
-        <div className="history-section">
-          <div className="section-heading">Food Menu</div>
-          <form className="food-menu-edit-form" onSubmit={handleAddMenuItem}>
-            <input
-              className="input-field"
-              placeholder="Item name"
-              value={newItem.name}
-              onChange={(e) => setNewItem((prev) => ({ ...prev, name: e.target.value }))}
-            />
-            <input
-              className="input-field"
-              type="number"
-              min="1"
-              placeholder="Price"
-              value={newItem.price}
-              onChange={(e) => setNewItem((prev) => ({ ...prev, price: e.target.value }))}
-            />
-            <select
-              className="input-field"
-              value={newItem.category}
-              onChange={(e) => setNewItem((prev) => ({ ...prev, category: e.target.value }))}
-            >
-              {CATEGORIES.filter((cat) => cat !== "All").map((cat) => (
-                <option key={cat}>{cat}</option>
-              ))}
-            </select>
-            <button className="primary-action-btn" type="submit" disabled={busyAction === "menu-add"}>
-              {busyAction === "menu-add" ? "Adding..." : "Add item"}
-            </button>
-          </form>
-
-          <div className="food-menu-edit-list">
-            {Object.entries(menu).map(([name, value]) => {
-              const editing = editingItem?.oldName === name;
-              return (
-                <div key={name} className="food-menu-edit-row">
-                  {editing ? (
-                    <>
-                      <input
-                        className="input-field"
-                        value={editingItem.newName}
-                        onChange={(e) =>
-                          setEditingItem((prev) => ({ ...prev, newName: e.target.value }))
-                        }
-                      />
-                      <input
-                        className="input-field"
-                        type="number"
-                        min="1"
-                        value={editingItem.price}
-                        onChange={(e) =>
-                          setEditingItem((prev) => ({ ...prev, price: e.target.value }))
-                        }
-                      />
-                      <select
-                        className="input-field"
-                        value={editingItem.category}
-                        onChange={(e) =>
-                          setEditingItem((prev) => ({ ...prev, category: e.target.value }))
-                        }
-                      >
-                        {CATEGORIES.filter((cat) => cat !== "All").map((cat) => (
-                          <option key={cat}>{cat}</option>
-                        ))}
-                      </select>
-                      <button
-                        className="btn btn-success-sm food-action-save"
-                        type="button"
-                        onClick={handleUpdateMenuItem}
-                        disabled={busyAction === `menu-edit-${name}`}
-                      >
-                        {busyAction === `menu-edit-${name}` ? "Saving..." : "Save"}
-                      </button>
-                      <button className="btn food-action-neutral" type="button" onClick={() => setEditingItem(null)}>
-                        Cancel
-                      </button>
-                    </>
-                  ) : (
-                    <>
-                      <div className="food-menu-edit-main">
-                        <strong>{name}</strong>
-                        <span>{getItemCat(value)} · ₹{getItemPrice(value)}</span>
-                      </div>
-                      <button
-                        className={`btn food-action-stock ${getItemAvail(value) ? "is-visible" : "is-hidden"}`}
-                        type="button"
-	                        onClick={() => handleToggleAvailability(name, !getItemAvail(value))}
-	                        disabled={busyAction === `stock-${name}`}
-	                      >
-	                        {busyAction === `stock-${name}` ? "Saving..." : getItemAvail(value) ? "Hide" : "Show"}
-	                      </button>
-                      <button
-                        className="btn food-action-neutral"
-                        type="button"
-                        onClick={() =>
-                          setEditingItem({
-                            oldName: name,
-                            newName: name,
-                            price: getItemPrice(value),
-                            category: getItemCat(value),
-                          })
-                        }
-                      >
-                        Edit
-                      </button>
-                      <button
-	                        className="btn btn-danger-sm food-action-delete"
-	                        type="button"
-	                        onClick={() => handleDeleteMenuItem(name)}
-	                        disabled={busyAction === `menu-delete-${name}`}
-	                      >
-	                        {busyAction === `menu-delete-${name}` ? "Deleting..." : "Delete"}
-	                      </button>
-                    </>
-                  )}
-                </div>
-              );
-            })}
           </div>
         </div>
       )}

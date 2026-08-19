@@ -47,6 +47,14 @@ function fmtShortDateTime(value) {
   });
 }
 
+function fmtSyncAge(value) {
+  if (!value) return "Not synced yet";
+  const seconds = Math.max(0, Math.round((Date.now() - value) / 1000));
+  if (seconds < 5) return "Just updated";
+  if (seconds < 60) return `Updated ${seconds}s ago`;
+  return `Updated ${Math.floor(seconds / 60)}m ago`;
+}
+
 function pct(value, total) {
   if (!total) return 0;
   return Math.max(0, Math.min(100, Math.round((value / total) * 100)));
@@ -192,6 +200,19 @@ function DashboardRangeFilter({ dateRange, onDateRangeChange }) {
   );
 }
 
+function DashboardSyncStatus({ syncing, lastFetchedAt, loadError }) {
+  const tone = loadError ? "error" : syncing ? "syncing" : "ok";
+  return (
+    <span className={`ops-sync-status ${tone}`} role="status" aria-live="polite">
+      <i
+        className={`ti ${loadError ? "ti-wifi-off" : syncing ? "ti-loader-2" : "ti-refresh"}`}
+        aria-hidden="true"
+      />
+      {loadError ? "Sync issue" : syncing ? "Syncing..." : fmtSyncAge(lastFetchedAt)}
+    </span>
+  );
+}
+
 function QuickOperations({ onNavigate }) {
   const actions = [
     {
@@ -262,6 +283,10 @@ function KpiCard({ label, value, sub, icon, trend }) {
 function KeyMetricsSection({
   dateRange,
   onDateRangeChange,
+  periodLabel,
+  syncing,
+  lastFetchedAt,
+  loadError,
   ownerTotal,
   sessionCount,
   liveTableTotal,
@@ -278,15 +303,21 @@ function KeyMetricsSection({
   return (
     <section className="ops-metrics-section" aria-label="Key metrics">
       <div className="ops-metrics-head">
-        <h3>Key Metrics</h3>
-        <DashboardRangeFilter dateRange={dateRange} onDateRangeChange={onDateRangeChange} />
+        <div>
+          <h3>Key Metrics</h3>
+          <p>{periodLabel || "Today"} register performance</p>
+        </div>
+        <div className="ops-metrics-actions">
+          <DashboardSyncStatus syncing={syncing} lastFetchedAt={lastFetchedAt} loadError={loadError} />
+          <DashboardRangeFilter dateRange={dateRange} onDateRangeChange={onDateRangeChange} />
+        </div>
       </div>
       <div className="ops-kpi-grid four">
         {/* F-pattern rule: Today Revenue stays first/top-left unless the owner deliberately changes priority. */}
         <KpiCard
-          label="Today Revenue"
+          label={dateRange === "today" ? "Today Revenue" : `${periodLabel} Revenue`}
           value={money(ownerTotal)}
-          sub={`${sessionCount || 0} sessions closed today`}
+          sub={`${sessionCount || 0} sessions closed in range`}
           icon="ti-cash"
           trend={normalizeTrend(trends?.today_revenue, trendFromComparison(ownerTotal, yesterdayData.total_revenue ?? yesterdayData.sale, "revenue"))}
         />
@@ -1030,11 +1061,14 @@ export default function Dashboard({ metrics, onNavigate, role = "admin" }) {
   const [liveData, setLiveData] = useState(null);
   const [elapsed, setElapsed] = useState({});
   const [loadError, setLoadError] = useState("");
+  const [lastFetchedAt, setLastFetchedAt] = useState(0);
+  const [syncing, setSyncing] = useState(true);
 
   useEffect(() => {
     async function fetchDashboard() {
+      setSyncing(true);
       try {
-        const res = await getDashboardLive();
+        const res = await getDashboardLive(dateRange);
         const payload = res.data || {};
         const nextElapsed = {};
         (payload.tables || []).forEach((table) => {
@@ -1045,10 +1079,13 @@ export default function Dashboard({ metrics, onNavigate, role = "admin" }) {
         });
         setLiveData(payload);
         setElapsed(nextElapsed);
+        setLastFetchedAt(Date.now());
         setLoadError("");
       } catch (err) {
         console.error(err);
         setLoadError(err.userMessage || "Dashboard data could not load. Retrying...");
+      } finally {
+        setSyncing(false);
       }
     }
 
@@ -1064,7 +1101,7 @@ export default function Dashboard({ metrics, onNavigate, role = "admin" }) {
       window.removeEventListener("hsr:data-changed", fetchDashboard);
       window.removeEventListener("storage", handleStorageChange);
     };
-  }, [role]);
+  }, [role, dateRange]);
 
   useEffect(() => {
     const interval = window.setInterval(() => {
@@ -1174,6 +1211,10 @@ export default function Dashboard({ metrics, onNavigate, role = "admin" }) {
       <KeyMetricsSection
         dateRange={dateRange}
         onDateRangeChange={setDateRange}
+        periodLabel={liveData?.period_label || (dateRange === "week" ? "Last 7 days" : dateRange === "all" ? "All time" : "Today")}
+        syncing={syncing}
+        lastFetchedAt={lastFetchedAt}
+        loadError={loadError}
         ownerTotal={ownerTotal}
         sessionCount={canonicalMetrics.sessions}
         liveTableTotal={liveTableTotal}

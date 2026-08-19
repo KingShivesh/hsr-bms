@@ -238,7 +238,8 @@ export const mergeMembers = (primary_id, duplicate_id) =>
 
 // Reports
 export const getSummary = () => api.get("/reports/summary");
-export const getDashboardLive = () => api.get("/reports/dashboard");
+export const getDashboardLive = (period = "today") =>
+  api.get(`/reports/dashboard?period=${encodeURIComponent(period)}`);
 export const getHistory = () => api.get("/reports/history");
 export const exportCSV = (period = "all") =>
   api.get(`/reports/export?period=${period}`, { responseType: "blob" });

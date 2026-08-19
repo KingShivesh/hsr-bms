@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
   getAuditLogs,
   getBookings,
@@ -12,6 +12,9 @@ export default function CommandBar({ page, setPage, onNewSession, role = "admin"
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
   const [activeIndex, setActiveIndex] = useState(0);
+  const inputRef = useRef(null);
+  const paletteRef = useRef(null);
+  const openerRef = useRef(null);
   const [searchData, setSearchData] = useState({
     sessions: [],
     waitlist: [],
@@ -167,6 +170,18 @@ export default function CommandBar({ page, setPage, onNewSession, role = "admin"
     return `${cmd.label} ${cmd.hint}`.toLowerCase().includes(q);
   });
 
+  function openCommandPalette() {
+    openerRef.current = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+    setOpen(true);
+  }
+
+  function closeCommandPalette({ restoreFocus = true } = {}) {
+    setOpen(false);
+    if (restoreFocus) {
+      window.setTimeout(() => openerRef.current?.focus?.(), 0);
+    }
+  }
+
   useEffect(() => {
     function onKeyDown(e) {
       const target = e.target;
@@ -177,12 +192,12 @@ export default function CommandBar({ page, setPage, onNewSession, role = "admin"
         target?.isContentEditable;
       if ((e.key === "k" && (e.metaKey || e.ctrlKey)) || (e.key === "/" && !typing)) {
         e.preventDefault();
-        setOpen(true);
+        openCommandPalette();
       }
-      if (e.key === "Escape") setOpen(false);
+      if (e.key === "Escape") closeCommandPalette();
     }
     function onOpenCommand() {
-      setOpen(true);
+      openCommandPalette();
     }
     window.addEventListener("keydown", onKeyDown);
     window.addEventListener("command:open", onOpenCommand);
@@ -196,7 +211,37 @@ export default function CommandBar({ page, setPage, onNewSession, role = "admin"
     if (open) {
       setQuery("");
       setActiveIndex(0);
+      window.requestAnimationFrame(() => inputRef.current?.focus());
     }
+  }, [open]);
+
+  useEffect(() => {
+    if (!open) return;
+    function onKeyDown(event) {
+      if (event.key === "Escape") {
+        event.preventDefault();
+        closeCommandPalette();
+        return;
+      }
+      if (event.key !== "Tab") return;
+      const focusable = Array.from(
+        paletteRef.current?.querySelectorAll(
+          'button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])',
+        ) || [],
+      ).filter((node) => node.offsetParent !== null);
+      if (!focusable.length) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    }
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
   }, [open]);
 
   useEffect(() => {
@@ -205,7 +250,7 @@ export default function CommandBar({ page, setPage, onNewSession, role = "admin"
 
   function runCommand(cmd) {
     cmd.action();
-    setOpen(false);
+    closeCommandPalette({ restoreFocus: false });
   }
 
   if (!open) {
@@ -213,11 +258,27 @@ export default function CommandBar({ page, setPage, onNewSession, role = "admin"
   }
 
   return (
-    <div className="command-overlay" onMouseDown={() => setOpen(false)}>
-      <div className="command-palette" onMouseDown={(e) => e.stopPropagation()}>
+    <div className="command-overlay" role="presentation" onMouseDown={() => closeCommandPalette()}>
+      <div
+        ref={paletteRef}
+        className="command-palette"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="command-palette-title"
+        aria-describedby="command-palette-help"
+        onMouseDown={(e) => e.stopPropagation()}
+      >
+        <h2 id="command-palette-title" className="sr-only">Command palette</h2>
+        <p id="command-palette-help" className="sr-only">
+          Search pages, live sessions, waitlist entries and actions. Use arrow keys to move and Enter to open.
+        </p>
         <div className="command-input-wrap">
           <i className="ti ti-search" aria-hidden="true" />
           <input
+            ref={inputRef}
+            aria-label="Search commands"
+            aria-controls="command-results"
+            aria-activedescendant={filtered[activeIndex] ? `command-result-${filtered[activeIndex].id}` : undefined}
             autoFocus
             value={query}
             onChange={(e) => setQuery(e.target.value)}
@@ -239,7 +300,7 @@ export default function CommandBar({ page, setPage, onNewSession, role = "admin"
           />
           <span>Esc</span>
         </div>
-        <div className="command-list">
+        <div id="command-results" className="command-list" role="listbox" aria-label="Command results">
           {loadingData && !query.trim() ? (
             <div className="command-empty">Loading live results...</div>
           ) : filtered.length === 0 ? (
@@ -247,8 +308,11 @@ export default function CommandBar({ page, setPage, onNewSession, role = "admin"
           ) : (
             filtered.map((cmd, index) => (
               <button
+                id={`command-result-${cmd.id}`}
                 key={cmd.id}
                 type="button"
+                role="option"
+                aria-selected={index === activeIndex}
                 className={`${index === activeIndex ? "active" : ""} ${page === cmd.id ? "current" : ""}`}
                 onMouseEnter={() => setActiveIndex(index)}
                 onClick={() => runCommand(cmd)}

@@ -132,8 +132,11 @@ def get_summary(db: Session = Depends(get_db)):
 
 
 @router.get("/dashboard")
-def get_dashboard(db: Session = Depends(get_db)):
-    return dashboard_payload(db)
+def get_dashboard(
+    period: str = Query("today", pattern="^(today|week|all)$"),
+    db: Session = Depends(get_db),
+):
+    return dashboard_payload(db, period=period)
 
 # ── History ──
 @router.get("/history")

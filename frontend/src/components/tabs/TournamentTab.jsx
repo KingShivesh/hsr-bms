@@ -10,6 +10,7 @@ import {
 import { HSR_TABLES } from "../../config/hsrTables.js";
 import TableStatusCard from "../TableStatusCard.jsx";
 import { useToast } from "../toastContext.js";
+import { useConfirm } from "../confirmContext.js";
 
 const GAME_TYPES = ["8 Ball", "9 Ball", "10 Ball", "Snooker", "Straight Pool"];
 
@@ -28,16 +29,7 @@ function recommendedTypeForGame(gameType) {
 function Panel({ title, children, action }) {
   return (
     <div className="settings-panel">
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          marginBottom: "16px",
-          paddingBottom: "12px",
-          borderBottom: "1px solid var(--border)",
-        }}
-      >
+      <div className="settings-panel-header">
         <div className="settings-panel-title">{title}</div>
         {action}
       </div>
@@ -99,6 +91,7 @@ function TournamentTableFloor({ gameType, rates, tableStateById }) {
 
 export default function TournamentTab() {
   const { showToast } = useToast();
+  const { requestConfirm } = useConfirm();
   const [tournaments, setTournaments] = useState([]);
   const [selected, setSelected] = useState(null);
   const [name, setName] = useState("Friday Knockout");
@@ -206,7 +199,14 @@ export default function TournamentTab() {
   }
 
   async function handleClose() {
-    if (!selected || !confirm("Close this tournament?")) return;
+    if (!selected) return;
+    const confirmed = await requestConfirm({
+      title: "Close tournament?",
+      message: `Close "${selected.name || "this tournament"}"? This locks the bracket as completed.`,
+      confirmLabel: "Close tournament",
+      tone: "warning",
+    });
+    if (!confirmed) return;
     setActiveAction("tournament-close");
     try {
       const res = await closeTournament(selected.id);
@@ -297,7 +297,7 @@ export default function TournamentTab() {
             onChange={(e) => setPlayersText(e.target.value)}
             style={{ resize: "vertical" }}
           />
-          <button className="btn btn-primary-sm" onClick={handleCreate} disabled={!!activeAction}>
+          <button type="button" className="btn btn-primary-sm" onClick={handleCreate} disabled={!!activeAction}>
             {activeAction === "tournament-create" ? "Creating..." : "Create Bracket"}
           </button>
         </Panel>
@@ -365,7 +365,7 @@ export default function TournamentTab() {
               <div style={{ display: "flex", gap: "8px", alignItems: "center" }}>
                 <StatusPill status={selected.status} />
                 {selected.status !== "completed" && (
-                  <button className="btn btn-warning-sm" onClick={handleClose} disabled={!!activeAction}>
+                  <button type="button" className="btn btn-warning-sm" onClick={handleClose} disabled={!!activeAction}>
                     {activeAction === "tournament-close" ? "Closing..." : "Close"}
                   </button>
                 )}

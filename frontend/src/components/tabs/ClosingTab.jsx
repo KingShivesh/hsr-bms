@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { closeDay, getClosingInsights, getClosingReport } from "../../api/index.js";
 import { useToast } from "../toastContext.js";
+import { useConfirm } from "../confirmContext.js";
 
 function money(value) {
   return `₹${Number(value || 0).toLocaleString("en-IN")}`;
@@ -32,6 +33,7 @@ function ChecklistRow({ ok, label, detail }) {
 
 export default function ClosingTab() {
   const { showToast } = useToast();
+  const { requestConfirm } = useConfirm();
   const [data, setData] = useState(null);
   const [insights, setInsights] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -69,7 +71,13 @@ export default function ClosingTab() {
       showToast("Close all running tables before closing the day.", "error");
       return;
     }
-    if (!confirm("Mark today as closed after verifying Cash, UPI, and Card totals?")) return;
+    const confirmed = await requestConfirm({
+      title: "Close today?",
+      message: "Mark today as closed after verifying Cash, UPI, and Card totals?",
+      confirmLabel: "Close day",
+      tone: "warning",
+    });
+    if (!confirmed) return;
     setClosingBusy(true);
     try {
       const res = await closeDay(

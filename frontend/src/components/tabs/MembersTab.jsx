@@ -8,6 +8,7 @@ import {
   mergeMembers,
 } from "../../api/index.js";
 import { useToast } from "../toastContext.js";
+import { useConfirm } from "../confirmContext.js";
 
 function isFullName(name) {
   return name.trim().length > 0;
@@ -15,9 +16,11 @@ function isFullName(name) {
 
 export default function MembersTab() {
   const { showToast } = useToast();
+  const { requestConfirm } = useConfirm();
   const [members, setMembers] = useState([]);
   const [duplicates, setDuplicates] = useState([]);
   const [activeAction, setActiveAction] = useState("");
+  const [newMemberName, setNewMemberName] = useState("");
 
   useEffect(() => {
     fetchMembers();
@@ -36,17 +39,18 @@ export default function MembersTab() {
     }
   }
 
-  async function handleAdd() {
-    const name = prompt("Enter member name:");
-    if (!name) return;
+  async function handleAdd(event) {
+    event?.preventDefault();
+    const name = newMemberName.trim();
     if (!isFullName(name)) {
       showToast("Please enter the member name.", "error");
       return;
     }
     setActiveAction("member-add");
     try {
-      await addMember(name.trim());
+      await addMember(name);
       await fetchMembers();
+      setNewMemberName("");
       showToast("Member added", "success");
     } catch (e) {
       showToast(e.response?.data?.detail || "Failed to add member", "error");
@@ -69,7 +73,13 @@ export default function MembersTab() {
   }
 
   async function handleDelete(customerId) {
-    if (!confirm("Delete this member?")) return;
+    const confirmed = await requestConfirm({
+      title: "Delete member?",
+      message: "This removes the customer profile from Club Members.",
+      confirmLabel: "Delete member",
+      tone: "danger",
+    });
+    if (!confirmed) return;
     setActiveAction(`member-delete-${customerId}`);
     try {
       await deleteMember(customerId);
@@ -83,7 +93,13 @@ export default function MembersTab() {
   }
 
   async function handleMerge(primaryId, duplicateId, primaryName, duplicateName) {
-    if (!confirm(`Merge "${duplicateName}" into "${primaryName}"? This combines visits, spend, and transaction history.`)) return;
+    const confirmed = await requestConfirm({
+      title: "Merge duplicate member?",
+      message: `Merge "${duplicateName}" into "${primaryName}"? This combines visits, spend, and transaction history.`,
+      confirmLabel: "Merge profiles",
+      tone: "warning",
+    });
+    if (!confirmed) return;
     setActiveAction(`member-merge-${primaryId}-${duplicateId}`);
     try {
       await mergeMembers(primaryId, duplicateId);
@@ -205,15 +221,26 @@ export default function MembersTab() {
         <div style={{ fontSize: "var(--text-base)", fontWeight: "var(--weight-semibold)", color: "var(--text-primary)" }}>
           All Members
         </div>
-        <button
-          className="member-add-btn"
-          onClick={handleAdd}
-          disabled={!!activeAction}
-          data-testid="add-member-button"
-        >
-          <i className="ti ti-user-plus" aria-hidden="true" />
-          <span>{activeAction === "member-add" ? "Adding..." : "Add member"}</span>
-        </button>
+        <form className="member-add-form" onSubmit={handleAdd}>
+          <input
+            className="input-field"
+            type="text"
+            value={newMemberName}
+            onChange={(event) => setNewMemberName(event.target.value)}
+            placeholder="Member name"
+            aria-label="Member name"
+            disabled={!!activeAction}
+          />
+          <button
+            type="submit"
+            className="member-add-btn"
+            disabled={!!activeAction}
+            data-testid="add-member-button"
+          >
+            <i className="ti ti-user-plus" aria-hidden="true" />
+            <span>{activeAction === "member-add" ? "Adding..." : "Add member"}</span>
+          </button>
+        </form>
       </div>
 
       {members.length === 0 ? (

@@ -16,40 +16,39 @@ export default function Sidebar({ page, setPage, onLogout, activeTables, role = 
       title: "Core operational",
       tone: "core",
       items: [
-        { id: "dashboard", icon: "ti-layout-dashboard", label: "Dashboard", tone: "blue" },
+        { id: "dashboard", icon: "ti-layout-dashboard", label: "Dashboard" },
         {
           id: "tables",
           icon: "ti-layout-grid",
           label: "Table Management",
           badge: activeTables > 0 ? `${activeTables} Active` : "",
           badgeTone: "success",
-          tone: "green",
         },
-        { id: "waitlist", icon: "ti-clock", label: "Waitlist Queue", tone: "amber" },
-        { id: "reservations", icon: "ti-calendar-event", label: "Reservations", tone: "purple" },
-        { id: "food", icon: "ti-tools-kitchen-2", label: "Food & Cafe POS", tone: "orange" },
-        { id: "billing", icon: "ti-receipt", label: "Billing & Invoices", staffHidden: true, tone: "blue" },
+        { id: "waitlist", icon: "ti-clock", label: "Waitlist Queue" },
+        { id: "reservations", icon: "ti-calendar-event", label: "Reservations" },
+        { id: "food", icon: "ti-tools-kitchen-2", label: "Food & Cafe POS" },
+        { id: "billing", icon: "ti-receipt", label: "Billing & Invoices", staffHidden: true },
       ],
     },
     {
       title: "Management",
       tone: "manage",
       items: [
-        { id: "members", icon: "ti-users", label: "Club Members", adminOnly: true, tone: "purple" },
-        { id: "tournaments", icon: "ti-trophy", label: "Tournaments", staffHidden: true, tone: "amber" },
-        { id: "closing", icon: "ti-lock-check", label: "Shift EOD Closing", tone: "red" },
-        { id: "reports", icon: "ti-chart-bar", label: "Analytics & Reports", adminOnly: true, tone: "blue" },
-        { id: "operations", icon: "ti-adjustments", label: "Operations Control", adminOnly: true, tone: "slate" },
-        { id: "staff", icon: "ti-user-check", label: "Activity Log", adminOnly: true, tone: "green" },
-        { id: "inventory", icon: "ti-package", label: "Inventory & Stocks", staffHidden: true, tone: "amber" },
+        { id: "members", icon: "ti-users", label: "Club Members", adminOnly: true },
+        { id: "tournaments", icon: "ti-trophy", label: "Tournaments", staffHidden: true },
+        { id: "closing", icon: "ti-lock-check", label: "Shift EOD Closing" },
+        { id: "reports", icon: "ti-chart-bar", label: "Analytics & Reports", adminOnly: true },
+        { id: "operations", icon: "ti-adjustments", label: "Operations Control", adminOnly: true },
+        { id: "staff", icon: "ti-user-check", label: "Activity Log", adminOnly: true },
+        { id: "inventory", icon: "ti-package", label: "Inventory & Stocks", staffHidden: true },
       ],
     },
     {
       title: "System",
       tone: "system",
       items: [
-        { id: "notifications", icon: "ti-bell", label: "Notifications", staffHidden: true, tone: "red" },
-        { id: "settings", icon: "ti-settings", label: "Club Settings", adminOnly: true, tone: "slate" },
+        { id: "notifications", icon: "ti-bell", label: "Notifications", staffHidden: true },
+        { id: "settings", icon: "ti-settings", label: "Club Settings", adminOnly: true },
       ],
     },
   ].map((group) => ({
@@ -103,6 +102,10 @@ export default function Sidebar({ page, setPage, onLogout, activeTables, role = 
       </div>
 
       <div className="cf-quick-shell">
+        <div className="cf-role-scope">
+          <i className={`ti ${role === "admin" ? "ti-shield-check" : "ti-user-check"}`} aria-hidden="true" />
+          <span>{role === "admin" ? "Admin access" : "Staff access"}</span>
+        </div>
         <button type="button" className="cf-quick-btn" onClick={() => navigate("tables")}>
           <i className="ti ti-bolt" aria-hidden="true" />
           <span>Quick Operations</span>
@@ -118,14 +121,13 @@ export default function Sidebar({ page, setPage, onLogout, activeTables, role = 
                 type="button"
                 key={item.id}
                 className={`sb-item ${page === item.id ? "active" : ""}`}
-                data-tone={item.tone || "blue"}
                 onClick={() => navigate(item.id)}
                 aria-label={item.label}
                 aria-current={page === item.id ? "page" : undefined}
               >
                 <i className={`ti ${item.icon}`} aria-hidden="true" />
                 <span className="sb-label">{item.label}</span>
-                {item.badge && <span className="sb-badge" data-tone={item.badgeTone || item.tone || "blue"}>{item.badge}</span>}
+                {item.badge && <span className="sb-badge" data-tone={item.badgeTone || "success"}>{item.badge}</span>}
               </button>
             ))}
           </div>

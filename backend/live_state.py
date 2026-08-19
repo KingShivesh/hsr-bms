@@ -77,6 +77,15 @@ def food_only_for_day(db: Session, day: str | None = None) -> list[models.FoodOn
     return db.query(models.FoodOnlyOrder).filter(models.FoodOnlyOrder.date.like(f"{day}%")).all()
 
 
+def food_only_recent(db: Session, days: int) -> list[models.FoodOnlyOrder]:
+    since_ms = (time.time() - days * 24 * 60 * 60) * 1000
+    return db.query(models.FoodOnlyOrder).filter(models.FoodOnlyOrder.ts >= since_ms).all()
+
+
+def food_only_all(db: Session) -> list[models.FoodOnlyOrder]:
+    return db.query(models.FoodOnlyOrder).all()
+
+
 def summarize_day(transactions: list[models.Transaction], food_orders: list[models.FoodOnlyOrder] | None = None) -> dict:
     food_orders = food_orders or []
     table_revenue = sum(txn.total or 0 for txn in transactions)
@@ -333,7 +342,8 @@ def delta(current: int | float, previous: int | float, noun: str = "usual") -> d
     }
 
 
-def dashboard_payload(db: Session) -> dict:
+def dashboard_payload(db: Session, period: str = "today") -> dict:
+    period = period if period in {"today", "week", "all"} else "today"
     table_state = build_table_state(db)
     today = get_ist_today_str()
     yesterday_dt = get_ist_now() - timedelta(days=1)
@@ -343,6 +353,22 @@ def dashboard_payload(db: Session) -> dict:
     yesterday_food_orders = food_only_for_day(db, yesterday_dt.strftime("%d/%m/%Y"))
     today_summary = summarize_day(today_txns, today_food_orders)
     yesterday_summary = summarize_day(yesterday_txns, yesterday_food_orders)
+    if period == "week":
+        period_txns = recent_transactions(db, 7)
+        period_food_orders = food_only_recent(db, 7)
+        period_label = "Last 7 days"
+    elif period == "all":
+        period_txns = [
+            txn for txn in db.query(models.Transaction).all()
+            if valid_transaction(txn)
+        ]
+        period_food_orders = food_only_all(db)
+        period_label = "All time"
+    else:
+        period_txns = today_txns
+        period_food_orders = today_food_orders
+        period_label = "Today"
+    period_summary = summarize_day(period_txns, period_food_orders)
     recent = recent_transactions(db, 7)
     by_day = defaultdict(lambda: {"revenue": 0, "sessions": 0})
     for txn in recent:
@@ -403,7 +429,7 @@ def dashboard_payload(db: Session) -> dict:
         })
 
     metrics = {
-        **today_summary,
+        **period_summary,
         "active_tables": active_tables,
         "idle_tables": table_state["idle_tables"],
         "total_tables": total_tables,
@@ -412,26 +438,33 @@ def dashboard_payload(db: Session) -> dict:
         "top_table": "-",
         "recent_average": avg_recent_revenue,
     }
-    if today_txns:
+    if period_txns:
         table_counts = defaultdict(int)
-        for txn in today_txns:
+        for txn in period_txns:
             table_counts[txn.table_id] += 1
         metrics["top_table"] = max(table_counts, key=table_counts.get)
+    revenue_trend = delta(metrics["total_revenue"], yesterday_summary["total_revenue"], "yesterday")
+    food_attach_trend = delta(metrics["food_attach"], yesterday_summary["food_attach"], "yesterday")
+    if period != "today":
+        revenue_trend = {"direction": "flat", "percent": 0, "label": f"{period_label.lower()} selected"}
+        food_attach_trend = {"direction": "flat", "percent": 0, "label": f"{period_label.lower()} selected"}
 
     return {
         "date": today,
+        "period": period,
+        "period_label": period_label,
         "generated_at": table_state["generated_at"],
         "metrics": metrics,
         "yesterday": yesterday_summary,
         "trends": {
-            "today_revenue": delta(metrics["total_revenue"], yesterday_summary["total_revenue"], "yesterday"),
+            "today_revenue": revenue_trend,
             "live_floor_value": {
                 "direction": "flat",
                 "percent": 0,
                 "label": "live estimate now",
             },
             "active_tables": delta(active_tables, yesterday_summary["tables_used"], "tables used yesterday"),
-            "food_attach": delta(metrics["food_attach"], yesterday_summary["food_attach"], "yesterday"),
+            "food_attach": food_attach_trend,
             "sessions": delta(metrics["sessions"], avg_recent_sessions, "7-day average"),
             "revenue_vs_average": delta(metrics["total_revenue"], avg_recent_revenue, "7-day average"),
         },
