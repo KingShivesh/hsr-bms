@@ -35,24 +35,40 @@
   --icon-box-sm: 34px;
   --icon-box-md: 40px;
   --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
-  --accent: #0f6e56;
-  --accent-hover: #0a5845;
-  --accent-bg: #e1f5ee;
-  --accent-text: #085041;
+  --accent: #0b6b57;
+  --accent-hover: #075846;
+  --accent-active: #063f35;
+  --accent-bg: #e8f3ef;
+  --accent-soft: #f2f8f6;
+  --accent-border: #b8d8cf;
+  --accent-text: #06483c;
   --surface: #ffffff;
-  --surface-muted: #f7f8fa;
-  --border: #e8ebef;
-  --text-primary: #111827;
-  --text-secondary: #667085;
-  --text-muted: #6b7280;
+  --surface-raised: #fbfcfb;
+  --surface-muted: #f5f7f6;
+  --border: #dfe6e2;
+  --border-muted: #edf1ef;
+  --border-strong: #c8d5cf;
+  --text-primary: #101828;
+  --text-secondary: #5f6b7a;
+  --text-muted: #8792a2;
   --text-inverse: #ffffff;
   --on-accent: #ffffff;
-  --success: #0f6e56;
-  --success-bg: #e1f5ee;
-  --warning: #8a4b00;
-  --warning-bg: #fff7e6;
+  --success: #16845f;
+  --success-bg: #e9f6ef;
+  --success-text: #0d5f43;
+  --warning: #a16207;
+  --warning-bg: #fff7df;
+  --warning-text: #7a4100;
   --danger: #b42318;
   --danger-bg: #fff1ef;
+  --danger-text: #8f1f17;
+  --sidebar-bg: #111927;
+  --sidebar-bg-2: #182235;
+  --sidebar-border: rgba(255, 255, 255, 0.08);
+  --sidebar-text: #d8dee9;
+  --sidebar-muted: #94a3b8;
+  --sidebar-active: rgba(11, 107, 87, 0.22);
+  --sidebar-active-border: rgba(99, 214, 176, 0.34);
   --luxury-charcoal: var(--text-primary);
   --luxury-black: var(--text-primary);
   --luxury-card: var(--surface);
@@ -65,7 +81,6 @@
   --luxury-shadow-soft: var(--elevation-1);
   --bg: var(--surface-muted);
   --surface-soft: var(--surface-muted);
-  --border-strong: var(--border);
   --text: var(--text-primary);
   --muted: var(--text-secondary);
   --muted-soft: var(--text-muted);
@@ -111,27 +126,46 @@ textarea:focus-visible {
 body.dark {
   background: var(--surface-muted);
   color: var(--text-primary);
-  --accent: #48c094;
-  --accent-hover: #34d399;
-  --accent-bg: rgba(16, 185, 129, 0.14);
-  --accent-text: #a7f3d0;
-  --surface: #111827;
-  --surface-muted: #080d16;
-  --border: rgba(148, 163, 184, 0.16);
-  --text-primary: #f8fafc;
-  --text-secondary: #cbd5e1;
-  --text-muted: #94a3b8;
+  --accent: #5fd3ad;
+  --accent-hover: #7be0bf;
+  --accent-active: #37b48d;
+  --accent-bg: rgba(95, 211, 173, 0.14);
+  --accent-soft: rgba(95, 211, 173, 0.08);
+  --accent-border: rgba(95, 211, 173, 0.32);
+  --accent-text: #b7f3dc;
+  --surface: #111821;
+  --surface-raised: #151e29;
+  --surface-muted: #090f16;
+  --border: rgba(167, 181, 194, 0.16);
+  --border-muted: rgba(167, 181, 194, 0.1);
+  --border-strong: rgba(167, 181, 194, 0.26);
+  --text-primary: #edf3f5;
+  --text-secondary: #a9b6c4;
+  --text-muted: #7f8b99;
   --text-inverse: #ffffff;
-  --on-accent: #07100c;
-  --success: #86efac;
-  --success-bg: rgba(134, 239, 172, 0.14);
-  --warning: #f3c66f;
-  --warning-bg: rgba(243, 198, 111, 0.14);
+  --on-accent: #05110d;
+  --success: #6ee7b7;
+  --success-bg: rgba(110, 231, 183, 0.13);
+  --success-text: #a9f3d3;
+  --warning: #f1b94d;
+  --warning-bg: rgba(241, 185, 77, 0.14);
+  --warning-text: #ffd991;
   --danger: #ff8b7f;
   --danger-bg: rgba(255, 139, 127, 0.14);
+  --danger-text: #ffb5ad;
+  --sidebar-bg: #0c121b;
+  --sidebar-bg-2: #121b28;
+  --sidebar-border: rgba(255, 255, 255, 0.08);
+  --sidebar-text: #e2e8f0;
+  --sidebar-muted: #94a3b8;
+  --sidebar-active: rgba(95, 211, 173, 0.16);
+  --sidebar-active-border: rgba(95, 211, 173, 0.38);
+  --luxury-charcoal: #090f16;
+  --luxury-black: #070b10;
+  --luxury-card: var(--surface);
+  --luxury-card-dark: var(--surface-raised);
   --bg: var(--surface-muted);
   --surface-soft: var(--surface);
-  --border-strong: var(--border);
   --text: var(--text-primary);
   --muted: var(--text-secondary);
   --muted-soft: var(--text-muted);
@@ -10663,11 +10697,12 @@ body.dark .backend-status-banner {
   justify-content: center;
   gap: var(--space-2);
   border-radius: var(--radius-md);
-  background: linear-gradient(135deg, var(--accent), var(--accent-hover));
+  border: 1px solid var(--sidebar-active-border);
+  background: color-mix(in srgb, var(--accent) 72%, #06120f);
   color: var(--text-inverse);
   font-size: var(--text-sm);
   font-weight: var(--weight-black);
-  box-shadow: 0 16px 30px color-mix(in srgb, var(--accent) 22%, transparent);
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.16);
 }
 
 .cf-quick-btn i {
@@ -13363,10 +13398,10 @@ button.sb-item:focus-visible {
 
 /* Final ClubFlow-inspired shell stabilization */
 :root {
-  --cf-rail: var(--text-primary);
-  --cf-rail-2: var(--surface);
+  --cf-rail: var(--sidebar-bg);
+  --cf-rail-2: var(--sidebar-bg-2);
   --cf-blue: var(--accent);
-  --cf-blue-soft: var(--accent-bg);
+  --cf-blue-soft: var(--accent-soft);
   --cf-green: var(--success);
   --cf-green-soft: var(--success-bg);
   --cf-amber: var(--warning);
@@ -14495,16 +14530,14 @@ body.dark .ops-hero p {
 body {
   font-family: var(--font-sans);
   background:
-    radial-gradient(circle at 18% -10%, color-mix(in srgb, var(--accent) 10%, transparent), transparent 34rem),
-    radial-gradient(circle at 88% 8%, color-mix(in srgb, var(--luxury-gold) 10%, transparent), transparent 30rem),
-    linear-gradient(180deg, var(--surface-muted) 0%, var(--surface) 100%);
+    radial-gradient(circle at 18% -10%, color-mix(in srgb, var(--accent) 7%, transparent), transparent 34rem),
+    linear-gradient(180deg, var(--surface-muted) 0%, #fafbf9 100%);
 }
 
 body.dark {
   background:
-    radial-gradient(circle at 20% -10%, rgba(16, 185, 129, 0.18), transparent 34rem),
-    radial-gradient(circle at 85% 4%, rgba(251, 191, 36, 0.12), transparent 30rem),
-    linear-gradient(180deg, var(--luxury-charcoal) 0%, var(--text-primary) 100%);
+    radial-gradient(circle at 20% -10%, color-mix(in srgb, var(--accent) 13%, transparent), transparent 34rem),
+    linear-gradient(180deg, var(--surface-muted) 0%, #0b1119 100%);
 }
 
 .main-content,
@@ -14518,8 +14551,8 @@ body.dark {
   top: 0;
   z-index: 80;
   border-bottom: 1px solid color-mix(in srgb, var(--border) 74%, transparent) !important;
-  background: color-mix(in srgb, var(--surface) 78%, transparent) !important;
-  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.36), 0 18px 44px rgba(15, 23, 42, 0.06) !important;
+  background: color-mix(in srgb, var(--surface) 86%, transparent) !important;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.42), 0 14px 34px rgba(16, 24, 40, 0.05) !important;
   backdrop-filter: blur(18px) saturate(1.25);
   -webkit-backdrop-filter: blur(18px) saturate(1.25);
 }
@@ -14533,44 +14566,44 @@ body.dark .topbar {
 
 .cf-sidebar {
   background:
-    linear-gradient(180deg, rgba(15, 23, 42, 0.96), rgba(17, 24, 39, 0.98)) !important;
-  border-color: rgba(255, 255, 255, 0.08) !important;
-  box-shadow: 20px 0 60px rgba(15, 23, 42, 0.18) !important;
+    linear-gradient(180deg, var(--sidebar-bg), var(--sidebar-bg-2)) !important;
+  border-color: var(--sidebar-border) !important;
+  box-shadow: 16px 0 44px rgba(9, 15, 22, 0.16) !important;
 }
 
 .cf-sidebar .sb-logo-name,
 .cf-sidebar .cf-user-mini b {
-  color: var(--surface-muted) !important;
+  color: var(--sidebar-text) !important;
 }
 
 .cf-sidebar .sb-logo-sub,
 .cf-sidebar .cf-user-mini small,
 .cf-sidebar .sb-section {
-  color: rgba(226, 232, 240, 0.58) !important;
+  color: var(--sidebar-muted) !important;
 }
 
 .cf-sidebar .sb-item,
 .cf-quick-btn {
   border: 1px solid transparent !important;
   border-radius: var(--radius-lg) !important;
-  color: rgba(226, 232, 240, 0.76) !important;
+  color: color-mix(in srgb, var(--sidebar-text) 78%, transparent) !important;
   transition: background var(--motion-fast) var(--ease-out), border-color var(--motion-fast) var(--ease-out), color var(--motion-fast) var(--ease-out), transform var(--motion-fast) var(--ease-out), box-shadow var(--motion-fast) var(--ease-out) !important;
 }
 
 .cf-sidebar .sb-item:hover,
 .cf-quick-btn:hover {
-  background: rgba(255, 255, 255, 0.07) !important;
-  border-color: rgba(255, 255, 255, 0.1) !important;
-  color: var(--text-inverse) !important;
+  background: rgba(255, 255, 255, 0.055) !important;
+  border-color: rgba(255, 255, 255, 0.09) !important;
+  color: var(--sidebar-text) !important;
   transform: translateX(2px);
 }
 
 .cf-sidebar .sb-item.active {
   background:
-    linear-gradient(135deg, color-mix(in srgb, var(--accent) 26%, transparent), color-mix(in srgb, var(--accent) 12%, transparent)) !important;
-  border-color: color-mix(in srgb, var(--accent) 38%, transparent) !important;
-  color: var(--text-inverse) !important;
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05), 0 12px 28px color-mix(in srgb, var(--accent) 14%, transparent) !important;
+    linear-gradient(135deg, var(--sidebar-active), color-mix(in srgb, var(--sidebar-active) 58%, transparent)) !important;
+  border-color: var(--sidebar-active-border) !important;
+  color: var(--sidebar-text) !important;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.045), 0 10px 24px rgba(0, 0, 0, 0.12) !important;
 }
 
 .cf-sidebar .sb-item i,
@@ -14618,9 +14651,9 @@ body.dark .topbar {
 .table-session-card,
 .table-maintenance-card,
 .metric-card {
-  border: 1px solid color-mix(in srgb, var(--border) 80%, transparent) !important;
+  border: 1px solid var(--border) !important;
   border-radius: var(--radius-lg) !important;
-  background: var(--luxury-card) !important;
+  background: var(--surface) !important;
   box-shadow: var(--luxury-shadow-soft) !important;
   height: 100%;
   backdrop-filter: blur(12px) saturate(1.15);
@@ -14637,8 +14670,8 @@ body.dark .topbar {
 .table-session-card:hover,
 .metric-card:hover {
   transform: translateY(-1px);
-  border-color: color-mix(in srgb, var(--accent) 28%, var(--border)) !important;
-  box-shadow: var(--luxury-shadow) !important;
+  border-color: var(--border-strong) !important;
+  box-shadow: var(--elevation-2) !important;
 }
 
 body.dark .ops-panel,
@@ -14776,11 +14809,10 @@ body.dark .metric-card {
 .table-frame-start,
 .table-control-btn.resume,
 .dashboard-open-floor-btn {
-  border-color: color-mix(in srgb, var(--accent) 82%, var(--surface)) !important;
-  background:
-    linear-gradient(135deg, var(--accent), var(--accent-hover)) !important;
+  border-color: var(--accent) !important;
+  background: var(--accent) !important;
   color: var(--text-inverse) !important;
-  box-shadow: var(--elevation-2) !important;
+  box-shadow: 0 8px 18px color-mix(in srgb, var(--accent) 16%, transparent) !important;
 }
 
 .btn-danger-sm,
@@ -14797,9 +14829,9 @@ body.dark .metric-card {
 .btn-warning-sm,
 .cf-action-btn.warning,
 .owner-close-day-btn {
-  border-color: color-mix(in srgb, var(--luxury-gold) 55%, var(--border)) !important;
-  background: color-mix(in srgb, var(--luxury-gold) 14%, var(--surface)) !important;
-  color: color-mix(in srgb, var(--luxury-gold) 55%, var(--text-primary)) !important;
+  border-color: var(--border-strong) !important;
+  background: var(--surface-raised) !important;
+  color: var(--text-primary) !important;
 }
 
 button:disabled,
@@ -14875,12 +14907,12 @@ select:focus {
 
 .table-session-card:not(.occupied) {
   position: relative;
-  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04), 0 0 0 1px color-mix(in srgb, var(--success) 10%, transparent) !important;
+  box-shadow: var(--elevation-1) !important;
 }
 
 .table-session-card:not(.occupied):hover {
-  border-color: color-mix(in srgb, var(--success) 34%, var(--border)) !important;
-  box-shadow: 0 16px 40px color-mix(in srgb, var(--success) 14%, transparent) !important;
+  border-color: var(--accent-border) !important;
+  box-shadow: 0 12px 30px rgba(16, 24, 40, 0.08) !important;
 }
 
 .table-session-card.occupied {
@@ -15007,8 +15039,8 @@ body.dark .table-session-card.occupied {
   border-radius: 14px;
   background:
     radial-gradient(circle at 32% 30%, rgba(255, 255, 255, 0.95), transparent 24%),
-    linear-gradient(135deg, color-mix(in srgb, var(--accent) 18%, var(--surface)), color-mix(in srgb, var(--luxury-gold) 12%, var(--surface)));
-  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 18%, transparent);
+    linear-gradient(135deg, var(--surface-muted), var(--accent-soft));
+  box-shadow: inset 0 0 0 1px var(--accent-border);
 }
 
 .food-menu-card.active::before {
@@ -15038,7 +15070,7 @@ body.dark .table-session-card.occupied {
 .ops-empty-line {
   border-radius: var(--radius-lg);
   background:
-    linear-gradient(135deg, color-mix(in srgb, var(--accent-bg) 46%, var(--surface)), color-mix(in srgb, var(--surface) 88%, transparent));
+    linear-gradient(135deg, var(--surface-muted), color-mix(in srgb, var(--surface) 88%, transparent));
 }
 
 .empty-state,
@@ -15134,6 +15166,135 @@ body.dark .table-session-card.occupied {
     opacity: 0;
     transform: translateX(12px) translateY(-4px) scale(0.98);
   }
+}
+
+/* Final palette enforcement: Obsidian Emerald */
+.cf-command-pill {
+  border-color: var(--accent-border) !important;
+  background: var(--accent-soft) !important;
+  color: var(--accent-text) !important;
+}
+
+.cf-command-pill:hover {
+  border-color: color-mix(in srgb, var(--accent) 38%, var(--border)) !important;
+  background: var(--accent-bg) !important;
+  color: var(--accent-text) !important;
+}
+
+.cf-occupancy-pill,
+.topbar-date,
+.topbar-user-chip {
+  border-color: var(--border) !important;
+  background: var(--surface-raised) !important;
+  color: var(--text-secondary) !important;
+}
+
+.topbar-user-chip strong,
+.topbar-user-chip i {
+  color: var(--text-primary) !important;
+}
+
+.cf-occupancy-pill em {
+  background: var(--accent-soft) !important;
+  color: var(--accent-text) !important;
+}
+
+.cf-occupancy-pill span {
+  background: var(--accent) !important;
+  box-shadow: 0 0 0 5px color-mix(in srgb, var(--accent) 10%, transparent) !important;
+}
+
+.ui-tab-btn.active,
+.settings-chip.active,
+.ops-table-pill.active,
+.table-payment-btn.active {
+  border-color: var(--accent-border) !important;
+  background: var(--accent-soft) !important;
+  color: var(--accent-text) !important;
+}
+
+.primary-action-btn:hover:not(:disabled),
+.btn-primary-sm:hover:not(:disabled),
+.cf-action-btn.primary:hover:not(:disabled),
+.table-frame-start:hover:not(:disabled),
+.table-control-btn.resume:hover:not(:disabled),
+.dashboard-open-floor-btn:hover:not(:disabled) {
+  border-color: var(--accent-hover) !important;
+  background: var(--accent-hover) !important;
+}
+
+.metric-card.green .metric-value,
+.metric-card.blue .metric-value,
+.metric-card.amber .metric-value,
+.food-menu-price,
+.checkout-bill-total strong,
+.checkout-summary-card strong,
+.ops-payment-row em {
+  color: var(--accent-text) !important;
+}
+
+.booking-status-pill,
+.table-floor-status,
+.table-status-badge,
+.cf-table-slot-status,
+.member-badge,
+.sb-badge {
+  border-color: var(--border) !important;
+  background: var(--surface-muted) !important;
+  color: var(--text-secondary) !important;
+}
+
+.booking-status-pill.running,
+.table-floor-status.running,
+.table-status-badge.running,
+.cf-table-slot-status.running,
+.member-badge.active,
+.sb-badge[data-tone="success"] {
+  border-color: var(--accent-border) !important;
+  background: var(--accent-soft) !important;
+  color: var(--accent-text) !important;
+}
+
+.booking-status-pill.warning,
+.table-floor-status.paused,
+.table-floor-status.booked,
+.table-status-badge.paused,
+.table-status-badge.booked,
+.sb-badge[data-tone="amber"] {
+  border-color: color-mix(in srgb, var(--warning) 28%, var(--border)) !important;
+  background: var(--warning-bg) !important;
+  color: var(--warning-text) !important;
+}
+
+.booking-status-pill.danger,
+.table-floor-status.maintenance,
+.table-status-badge.maintenance {
+  border-color: color-mix(in srgb, var(--danger) 28%, var(--border)) !important;
+  background: var(--danger-bg) !important;
+  color: var(--danger-text) !important;
+}
+
+body.dark .cf-command-pill,
+body.dark .ui-tab-btn.active,
+body.dark .settings-chip.active,
+body.dark .ops-table-pill.active,
+body.dark .table-payment-btn.active {
+  border-color: var(--accent-border) !important;
+  background: var(--accent-bg) !important;
+  color: var(--accent-text) !important;
+}
+
+body.dark .cf-occupancy-pill,
+body.dark .topbar-date,
+body.dark .topbar-user-chip,
+body.dark .booking-status-pill,
+body.dark .table-floor-status,
+body.dark .table-status-badge,
+body.dark .cf-table-slot-status,
+body.dark .member-badge {
+  border-color: var(--border) !important;
+  background: var(--surface-raised) !important;
+  color: var(--text-secondary) !important;
 }
 
 ::-webkit-scrollbar {
