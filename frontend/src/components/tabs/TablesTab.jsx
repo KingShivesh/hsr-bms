@@ -1384,6 +1384,7 @@ function CheckoutBillScreen({ bill, onClose }) {
 
 function TableFloorTile({
   table,
+  tableState,
   session,
   booking,
   rates,
@@ -1401,7 +1402,8 @@ function TableFloorTile({
   const bookingTime = booking ? bookingDisplayTime(booking) : "";
 
   const status = getTableStatus({ session, booking, maintenance });
-  const tone = status.tone;
+  const tone = tableState?.status_tone || status.tone;
+  const statusLabel = tableState?.status_label || status.label;
 
   return (
     <button
@@ -1418,7 +1420,7 @@ function TableFloorTile({
 
       <div className="table-floor-body">
         <div className="table-floor-topline">
-          <span className={`table-floor-status ${tone}`}>{status.label}</span>
+          <span className={`table-floor-status ${tone}`}>{statusLabel}</span>
           <strong>₹{rate}/hr</strong>
         </div>
         <div className="table-floor-summary">
@@ -1455,6 +1457,123 @@ function TableFloorTile({
         </div>
       </div>
     </button>
+  );
+}
+
+function LiveFloorCommand({
+  tables,
+  tableStates,
+  sessions,
+  maintenance,
+  bookings,
+  selectedTableId,
+  onSelect,
+  onQuickStart,
+  compact,
+  viewMode,
+  onViewModeChange,
+  peakRate,
+  gstPercent,
+}) {
+  const activeTables = tables.filter((table) => sessions[table.id]);
+  const pausedTables = activeTables.filter((table) => sessions[table.id]?.paused);
+  const reservedTables = tables.filter((table) => bookings[table.id] && !sessions[table.id]);
+  const maintenanceTables = tables.filter((table) => maintenance[table.id]);
+  const liveValue = activeTables.reduce(
+    (sum, table) => sum + runningTotalForSession(sessions[table.id], peakRate, gstPercent),
+    0,
+  );
+  const selectedTable = tables.find((table) => table.id === selectedTableId);
+  const selectedState = tableStates[selectedTableId];
+  const selectedStatus = selectedState?.status_label || (
+    selectedTable
+      ? getTableStatus({
+          session: sessions[selectedTable.id],
+          booking: bookings[selectedTable.id],
+          maintenance: maintenance[selectedTable.id],
+        }).label
+      : "Available"
+  );
+
+  return (
+    <section className="live-floor-command" aria-label="Live floor command">
+      <div className="live-floor-command-main">
+        <div>
+          <div className="tables-view-title">Live Floor Control</div>
+          <div className="tables-view-sub">
+            {activeTables.length
+              ? `${activeTables.length} running · ₹${liveValue} live value`
+              : "All tables idle. Start from the floor or quick session."}
+          </div>
+        </div>
+        <button type="button" className="live-floor-primary" onClick={onQuickStart}>
+          <i className="ti ti-player-play" aria-hidden="true" />
+          Start table
+        </button>
+      </div>
+
+      <div className="live-floor-stats" aria-label="Floor status summary">
+        {[
+          ["Running", activeTables.length],
+          ["Paused", pausedTables.length],
+          ["Reserved", reservedTables.length],
+          ["Maintenance", maintenanceTables.length],
+          ["Idle", Math.max(tables.length - activeTables.length - reservedTables.length - maintenanceTables.length, 0)],
+        ].map(([label, value]) => (
+          <div className="live-floor-stat" key={label}>
+            <span>{label}</span>
+            <strong>{value}</strong>
+          </div>
+        ))}
+      </div>
+
+      <div className="live-floor-session-row">
+        <div className="live-floor-selected">
+          <span>Selected</span>
+          <strong>
+            {selectedTable ? `T${selectedTable.num} · ${getTableLabel(selectedTable)}` : "No table"} · {selectedStatus}
+          </strong>
+        </div>
+        <div className="live-floor-running-list">
+          {activeTables.length === 0 ? (
+            <span className="live-floor-empty-chip">No active sessions</span>
+          ) : (
+            activeTables.map((table) => {
+              const session = sessions[table.id];
+              const currentFrame = session?.frames?.find((frame) => frame.status === "open");
+              return (
+                <button
+                  type="button"
+                  key={table.id}
+                  className={`live-session-chip ${selectedTableId === table.id ? "active" : ""}`}
+                  onClick={() => onSelect(table.id)}
+                >
+                  <strong>T{table.num}</strong>
+                  <span>{fmt(session?.elapsed)} · ₹{runningTotalForSession(session, peakRate, gstPercent)}</span>
+                  <em>{currentFrame ? `F${currentFrame.frame_no} live` : billingModeLabel(session?.billingMode)}</em>
+                </button>
+              );
+            })
+          )}
+        </div>
+        <div className="segmented-control" aria-label="Table card density">
+          {[
+            ["detailed", "Detailed", "ti-layout-grid"],
+            ["compact", "Compact", "ti-layout-list"],
+          ].map(([mode, label, icon]) => (
+            <button
+              key={mode}
+              type="button"
+              className={viewMode === mode ? "active" : ""}
+              onClick={() => onViewModeChange(mode)}
+            >
+              <i className={`ti ${icon}`} aria-hidden="true" />
+              <span>{compact && mode === "detailed" ? "Detail" : label}</span>
+            </button>
+          ))}
+        </div>
+      </div>
+    </section>
   );
 }
 
@@ -2359,6 +2478,7 @@ function TableCard({
 export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
   const { showToast } = useToast();
   const [sessions, setSessions] = useState({});
+  const [tableStates, setTableStates] = useState({});
   const [names, setNames] = useState({});
   const [rates, setRates] = useState({ wr: 320, pr: 170, sr: 270 });
   const [maintenance, setMaintenance] = useState({});
@@ -2456,7 +2576,12 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
       const res = await getTableState();
       const s = {},
         n = {};
+      const nextTableStates = {};
       (res.data.tables || []).forEach((tableState) => {
+        const stateId = tableKey(tableState.id);
+        if (stateId) {
+          nextTableStates[stateId] = tableState;
+        }
         const x = tableState.session;
         if (!x) return;
         const id = tableKey(x.table_id || tableState.id);
@@ -2487,6 +2612,7 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
         n[id] = x.customer_name;
       });
       setSessions(s);
+      setTableStates(nextTableStates);
       setNames(n);
       if (res.data.rates) setRates(res.data.rates);
       if (res.data.maintenance) setMaintenance(res.data.maintenance);
@@ -3222,32 +3348,21 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
         showToast={showToast}
       />
 
-      <div className="tables-view-toolbar">
-        <div>
-          <div className="tables-view-title">Table floor</div>
-          <div className="tables-view-sub">
-            {compact
-              ? "Compact floor scan, tap any table for controls"
-              : "Tap a table to view running total, frames and checkout"}
-          </div>
-        </div>
-        <div className="segmented-control" aria-label="Table card density">
-          {[
-            ["detailed", "Detailed", "ti-layout-grid"],
-            ["compact", "Compact", "ti-layout-list"],
-          ].map(([mode, label, icon]) => (
-            <button
-              key={mode}
-              type="button"
-              className={viewMode === mode ? "active" : ""}
-              onClick={() => changeViewMode(mode)}
-            >
-              <i className={`ti ${icon}`} aria-hidden="true" />
-              <span>{label}</span>
-            </button>
-          ))}
-        </div>
-      </div>
+      <LiveFloorCommand
+        tables={TABLES}
+        tableStates={tableStates}
+        sessions={sessions}
+        maintenance={maintenance}
+        bookings={nextBookingByTable}
+        selectedTableId={selectedTable?.id}
+        onSelect={selectTable}
+        onQuickStart={() => setQuickSessionOpen(true)}
+        compact={compact}
+        viewMode={viewMode}
+        onViewModeChange={changeViewMode}
+        peakRate={peakRate}
+        gstPercent={gstPercent}
+      />
 
       <div className="table-floor-layout">
         <div className={`tables-grid table-floor-grid ${compact ? "compact" : ""}`}>
@@ -3255,6 +3370,7 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
             <TableFloorTile
               key={table.id}
               table={table}
+              tableState={tableStates[table.id]}
               session={sessions[table.id]}
               booking={nextBookingByTable[table.id] || null}
               rates={rates}

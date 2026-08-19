@@ -1128,6 +1128,151 @@ body.dark .topbar-action-btn {
   font-weight: var(--weight-bold);
 }
 
+.live-floor-command {
+  position: sticky;
+  top: 64px;
+  z-index: 40;
+  display: grid;
+  gap: var(--space-4);
+  margin: -6px -4px var(--space-5);
+  padding: var(--space-4);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: color-mix(in srgb, var(--surface) 92%, transparent);
+  box-shadow: var(--elevation-1);
+  backdrop-filter: blur(14px);
+}
+
+.live-floor-command-main,
+.live-floor-session-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.live-floor-primary {
+  min-height: var(--btn-h-lg);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  border: 1px solid var(--accent);
+  border-radius: var(--radius-md);
+  padding: 0 var(--space-5);
+  background: var(--accent);
+  color: var(--text-inverse);
+  font-size: var(--text-base);
+  font-weight: var(--weight-bold);
+  box-shadow: 0 12px 24px color-mix(in srgb, var(--accent) 18%, transparent);
+}
+
+.live-floor-primary:hover {
+  background: var(--accent-hover);
+  border-color: var(--accent-hover);
+}
+
+.live-floor-stats {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: var(--space-2);
+}
+
+.live-floor-stat {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  min-height: var(--btn-h-md);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 0 var(--space-3);
+  background: var(--surface);
+}
+
+.live-floor-stat span,
+.live-floor-selected span {
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-bold);
+  text-transform: uppercase;
+}
+
+.live-floor-stat strong {
+  color: var(--text-primary);
+  font-size: var(--text-lg);
+  font-weight: var(--weight-bold);
+  font-variant-numeric: tabular-nums;
+}
+
+.live-floor-selected {
+  min-width: 180px;
+  display: grid;
+  gap: var(--space-1);
+}
+
+.live-floor-selected strong {
+  color: var(--text-primary);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-bold);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.live-floor-running-list {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  overflow-x: auto;
+  padding-bottom: 2px;
+}
+
+.live-session-chip,
+.live-floor-empty-chip {
+  flex: 0 0 auto;
+  min-height: var(--btn-h-lg);
+  display: inline-grid;
+  grid-template-columns: auto auto auto;
+  align-items: center;
+  gap: var(--space-2);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 0 var(--space-3);
+  background: var(--surface);
+  color: var(--text-secondary);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  white-space: nowrap;
+}
+
+.live-session-chip:hover,
+.live-session-chip.active {
+  border-color: color-mix(in srgb, var(--accent) 34%, var(--border));
+  background: var(--accent-bg);
+  color: var(--accent-text);
+}
+
+.live-session-chip strong {
+  color: var(--text-primary);
+  font-weight: var(--weight-bold);
+}
+
+.live-session-chip em {
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+  font-style: normal;
+  font-weight: var(--weight-bold);
+}
+
+.live-floor-empty-chip {
+  grid-template-columns: 1fr;
+  color: var(--text-muted);
+}
+
 .segmented-control {
   display: inline-flex;
   align-items: center;
@@ -8008,6 +8153,48 @@ body.dark .table-detail-header span {
 
   .table-detail-panel {
     position: static;
+  }
+}
+
+@media (max-width: 760px) {
+  .live-floor-command {
+    position: relative;
+    top: auto;
+    margin: 0 0 var(--space-4);
+    padding: var(--space-3);
+    border-radius: var(--radius-md);
+  }
+
+  .live-floor-command-main,
+  .live-floor-session-row {
+    align-items: stretch;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .live-floor-primary {
+    width: 100%;
+  }
+
+  .live-floor-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .live-floor-stat {
+    min-height: var(--btn-h-lg);
+  }
+
+  .live-floor-selected {
+    min-width: 0;
+  }
+
+  .live-floor-session-row .segmented-control {
+    width: 100%;
+  }
+
+  .live-floor-session-row .segmented-control button {
+    flex: 1;
+    justify-content: center;
   }
 }
 
