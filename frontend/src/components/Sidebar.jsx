@@ -108,15 +108,11 @@ export default function Sidebar({ page, setPage, onLogout, activeTables, role = 
         </button>
       </div>
 
-      <div className="cf-quick-shell">
+      <div className="cf-quick-shell cf-quick-shell-compact">
         <div className="cf-role-scope">
           <i className={`ti ${role === "admin" ? "ti-shield-check" : "ti-user-check"}`} aria-hidden="true" />
           <span>{role === "admin" ? "Admin access" : "Staff access"}</span>
         </div>
-        <button type="button" className="cf-quick-btn" onClick={() => navigate("live-floor")}>
-          <i className="ti ti-bolt" aria-hidden="true" />
-          <span>Quick Operations</span>
-        </button>
       </div>
 
       <nav className="cf-nav" aria-label="Main navigation">

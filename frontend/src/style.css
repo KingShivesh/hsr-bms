@@ -13345,17 +13345,22 @@ body.dark .backend-status-banner {
   padding: var(--space-2) var(--space-3);
 }
 
+.cf-quick-shell-compact {
+  padding-block: var(--space-3);
+}
+
 .cf-role-scope {
   min-height: var(--btn-h-sm);
   display: inline-flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   gap: var(--space-2);
-  border: 1px solid color-mix(in srgb, var(--text-inverse) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--text-inverse) 10%, transparent);
   border-radius: var(--radius-md);
-  color: color-mix(in srgb, var(--text-inverse) 78%, transparent);
+  color: color-mix(in srgb, var(--text-inverse) 68%, transparent);
+  padding: 0 var(--space-3);
   font-size: var(--text-xs);
-  font-weight: var(--weight-heavy);
+  font-weight: var(--weight-bold);
   text-transform: uppercase;
   white-space: nowrap;
 }
@@ -16212,14 +16217,15 @@ body.dark .page {
   align-items: center !important;
   gap: var(--space-3) !important;
   width: 100% !important;
-  min-height: var(--btn-h-lg) !important;
+  min-height: 42px !important;
   justify-content: flex-start !important;
   border: 0 !important;
-  border-left: 3px solid transparent !important;
+  border-left: 2px solid transparent !important;
   border-radius: var(--radius-md) !important;
   background: transparent !important;
   color: var(--text-secondary) !important;
   box-shadow: none !important;
+  padding-block: var(--space-2) !important;
 }
 
 .cf-sidebar.collapsed:not(:hover):not(:focus-within) .sb-item,
@@ -16281,7 +16287,7 @@ body.dark .page {
 }
 
 .cf-topbar {
-  min-height: 68px !important;
+  min-height: 72px !important;
   background: rgba(255, 255, 255, 0.88) !important;
   border-bottom: 1px solid rgba(148, 163, 184, 0.24) !important;
   box-shadow: 0 1px 0 rgba(15, 23, 42, 0.03) !important;
@@ -16298,7 +16304,7 @@ body.dark .page {
 .cf-notification-btn:hover {
   border-color: color-mix(in srgb, var(--accent) 34%, transparent) !important;
   background: var(--accent-bg) !important;
-  color: var(--cf-blue) !important;
+  color: var(--accent-text) !important;
 }
 
 .cf-page {

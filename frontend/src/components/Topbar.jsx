@@ -23,8 +23,6 @@ export default function Topbar({
   title,
   role = "admin",
   username = "",
-  activeTables = 0,
-  totalTables = 5,
   onNavigate,
 }) {
   const [dt, setDt] = useState("");
@@ -35,7 +33,6 @@ export default function Topbar({
   const displayName = username || role;
   const displayLabel =
     displayName.charAt(0).toUpperCase() + displayName.slice(1).toLowerCase();
-  const occupancy = totalTables ? Math.round((activeTables / totalTables) * 100) : 0;
 
   useEffect(() => {
     function tick() {
@@ -88,11 +85,6 @@ export default function Topbar({
         <p>{PAGE_DESCRIPTIONS[title] || "HSR Snooker Cafe management console"}</p>
       </div>
       <div className="topbar-right">
-        <div className="cf-occupancy-pill">
-          <span />
-          <strong>{activeTables}/{totalTables} Tables Active</strong>
-          <em>{occupancy}% occupied</em>
-        </div>
         <button
           type="button"
           className="cf-command-pill"
