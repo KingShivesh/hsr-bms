@@ -1,6 +1,11 @@
 export { default as Badge } from "./Badge.jsx";
 export { default as Button, IconButton } from "./Button.jsx";
 export { default as Card, Panel } from "./Card.jsx";
+export { default as DataTable } from "./DataTable.jsx";
 export { default as EmptyState } from "./EmptyState.jsx";
+export { Alert, SkeletonBlock, SkeletonGrid } from "./Feedback.jsx";
 export { CurrencyAmount, MetricCard, Timer } from "./DataDisplay.jsx";
 export { Field, Input, SearchInput, Select } from "./Field.jsx";
+export { PageHeader, SectionHeader } from "./Layout.jsx";
+export { ConfirmActions, Drawer, Modal } from "./Overlay.jsx";
+export { default as Tabs } from "./Tabs.jsx";
