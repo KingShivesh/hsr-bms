@@ -12497,7 +12497,7 @@ body.dark .cf-table-slot small {
 }
 
 .ops-attention-inline {
-  min-height: 44px;
+  min-height: var(--btn-h-lg);
   display: inline-flex;
   align-items: center;
   justify-self: start;
@@ -12510,6 +12510,33 @@ body.dark .cf-table-slot small {
   cursor: pointer;
   font-size: var(--text-base);
   font-weight: var(--weight-black);
+}
+
+.ops-attention-inline span,
+.ops-attention-row span {
+  min-width: 0;
+  display: grid;
+  gap: 2px;
+}
+
+.ops-attention-inline b,
+.ops-attention-row b {
+  color: inherit;
+  font-size: var(--text-base);
+  font-weight: var(--weight-black);
+  line-height: 1.25;
+}
+
+.ops-attention-inline small,
+.ops-attention-row small {
+  color: var(--text-secondary);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  line-height: 1.35;
+}
+
+.ops-attention-inline i {
+  font-size: var(--icon-sm);
 }
 
 .ops-dashboard-error {
@@ -12565,12 +12592,6 @@ body.dark .cf-table-slot small {
   background: var(--surface);
   color: var(--text-secondary);
   font-size: var(--icon-sm);
-}
-
-.ops-attention-row span {
-  color: var(--text-primary);
-  font-size: var(--text-base);
-  font-weight: var(--weight-black);
 }
 
 .ops-attention-row.warning i {

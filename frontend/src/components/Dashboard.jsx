@@ -431,10 +431,17 @@ function AttentionPanel({ actions, onNavigate }) {
   )).slice(0, 6);
 
   if (!uniqueItems.length || uniqueItems.every((item) => item.tone === "positive")) {
+    const readyItem = uniqueItems[0] || {
+      title: "Everything's on track",
+      detail: "No urgent owner actions right now.",
+    };
     return (
       <button type="button" className="ops-attention-inline" onClick={() => onNavigate("closing")}>
         <i className="ti ti-circle-check" aria-hidden="true" />
-        <span>Everything's on track</span>
+        <span>
+          <b>{readyItem.title}</b>
+          {readyItem.detail && <small>{readyItem.detail}</small>}
+        </span>
       </button>
     );
   }
@@ -451,7 +458,10 @@ function AttentionPanel({ actions, onNavigate }) {
             onClick={() => onNavigate(item.page || "tables")}
           >
             <i className={`ti ${item.icon}`} aria-hidden="true" />
-            <span>{item.title}</span>
+            <span>
+              <b>{item.title}</b>
+              {item.detail && <small>{item.detail}</small>}
+            </span>
           </button>
         ))}
       </div>
@@ -1162,8 +1172,7 @@ export default function Dashboard({ metrics, onNavigate, role = "admin" }) {
   const occupancyPercent = canonicalMetrics.occupancy ?? pct(runningTables.length, TOTAL_TABLES);
 
   const actionItems = useMemo(() => {
-    if (liveData?.attention?.length) {
-      return liveData.attention.map((item) => ({
+    const items = (liveData?.attention || []).map((item) => ({
         title: item.title,
         detail: item.detail,
         tone: item.type || item.tone || "info",
@@ -1174,13 +1183,11 @@ export default function Dashboard({ metrics, onNavigate, role = "admin" }) {
               ? "ti-alert-circle"
               : "ti-info-circle",
         page: item.page || "tables",
-      }));
-    }
-    const items = [];
+    }));
     const paused = runningTables.filter((row) => row.session.paused);
     const longRunning = runningTables.filter((row) => row.elapsedSecs >= 90 * 60);
     const openFrames = runningTables.filter((row) => row.session.current_frame);
-    if (openFrames.length) {
+    if (!liveData?.attention?.length && openFrames.length) {
       items.push({
         title: `${openFrames.length} live frame${openFrames.length > 1 ? "s" : ""} blocking checkout`,
         detail: "End the running frame before closing LP tables so billing stays correct.",
@@ -1188,7 +1195,7 @@ export default function Dashboard({ metrics, onNavigate, role = "admin" }) {
         icon: "ti-alert-triangle",
       });
     }
-    if (paused.length) {
+    if (!liveData?.attention?.length && paused.length) {
       items.push({
         title: `${paused.length} table${paused.length > 1 ? "s" : ""} paused`,
         detail: "Resume or close paused tables before the shift gets confusing.",
@@ -1212,15 +1219,24 @@ export default function Dashboard({ metrics, onNavigate, role = "admin" }) {
         icon: "ti-tools-kitchen-2",
       });
     }
-    if (!items.length) {
+    if (runningTables.length) {
       items.push({
-        title: "Floor is under control",
-        detail: "No stuck tables or urgent owner actions right now.",
+        title: `${runningTables.length} table${runningTables.length > 1 ? "s" : ""} still running`,
+        detail: "Settle active sessions before daily closing.",
+        tone: "info",
+        icon: "ti-lock-check",
+        page: "closing",
+      });
+    } else if (!items.length) {
+      items.push({
+        title: "Shift can be closed",
+        detail: "No active table sessions remain. Verify payments in Daily Closing.",
         tone: "positive",
-        icon: "ti-circle-check",
+        icon: "ti-lock-check",
+        page: "closing",
       });
     }
-    return items.slice(0, 4);
+    return items.slice(0, 5);
   }, [runningTables, foodAttachment, liveData]);
 
   return (
