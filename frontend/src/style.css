@@ -9994,6 +9994,55 @@ body.dark .checkout-bill-screen {
   min-height: 52px;
 }
 
+.checkout-flow-section {
+  display: grid;
+  gap: var(--space-3);
+  padding: var(--space-3);
+  border: 1px solid var(--premium-border);
+  border-radius: var(--radius-sm);
+  background: var(--premium-surface);
+}
+
+.checkout-flow-heading {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+}
+
+.checkout-flow-heading > span {
+  display: inline-grid;
+  flex: 0 0 var(--icon-box-sm);
+  width: var(--icon-box-sm);
+  height: var(--icon-box-sm);
+  place-items: center;
+  border-radius: var(--radius-sm);
+  background: var(--premium-accent-soft);
+  color: var(--premium-accent-hover);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-black);
+  font-variant-numeric: tabular-nums;
+}
+
+.checkout-flow-heading strong,
+.checkout-flow-heading em {
+  display: block;
+}
+
+.checkout-flow-heading strong {
+  color: var(--premium-ink);
+  font-size: var(--text-base);
+  font-weight: var(--weight-black);
+}
+
+.checkout-flow-heading em {
+  margin-top: var(--space-1);
+  color: var(--premium-muted);
+  font-size: var(--text-sm);
+  font-style: normal;
+  font-weight: var(--weight-semibold);
+  line-height: 1.35;
+}
+
 .checkout-discount-box .table-discount-options {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -10077,10 +10126,42 @@ body.dark .checkout-bill-screen {
 
 .checkout-final-actions {
   display: flex;
-  justify-content: flex-end;
+  align-items: center;
+  justify-content: space-between;
   gap: 10px;
+  position: sticky;
+  bottom: 0;
   padding-top: 16px;
   border-top: 1px solid var(--premium-border);
+  background: linear-gradient(180deg, transparent, var(--premium-surface) 18%);
+}
+
+.checkout-final-review {
+  min-width: 0;
+  display: grid;
+  gap: var(--space-1);
+}
+
+.checkout-final-review span,
+.checkout-final-review em {
+  color: var(--premium-muted);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-heavy);
+}
+
+.checkout-final-review strong {
+  color: var(--premium-accent-hover);
+  font-size: var(--text-2xl);
+  font-weight: var(--weight-black);
+  font-variant-numeric: tabular-nums;
+}
+
+.checkout-final-review em {
+  font-style: normal;
+}
+
+.checkout-final-actions .checkout-cancel-btn {
+  margin-left: auto;
 }
 
 .checkout-cancel-btn,
@@ -10124,6 +10205,11 @@ body.dark .checkout-final-total {
 
   .checkout-final-actions {
     flex-direction: column;
+    align-items: stretch;
+  }
+
+  .checkout-final-actions .checkout-cancel-btn {
+    margin-left: 0;
   }
 }
 

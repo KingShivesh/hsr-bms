@@ -1079,146 +1079,37 @@ function CheckoutQuoteScreen({
 
         <CheckoutStepRail quote={quote} />
 
-        <div className="checkout-bill-summary">
-          <div>
-            <span>Table</span>
-            <strong>₹{rec.ply || 0}</strong>
-          </div>
-          <div>
-            <span>Food</span>
-            <strong>₹{rec.famt || 0}</strong>
-          </div>
-          <div>
-            <span>Before discount</span>
-            <strong>₹{rawTotal}</strong>
-          </div>
-          <div>
-            <span>Discount</span>
-            <strong>₹{discountAmount}</strong>
-          </div>
-          <div className="checkout-final-total">
-            <span>Final bill</span>
-            <strong>₹{total}</strong>
-          </div>
-        </div>
-
-        <div className="checkout-bill-section-title">Payment Method</div>
-        <div className="table-payment-grid checkout-payment-grid">
-          {PAYMENT_METHODS.map((method) => (
-            <button
-              key={method}
-              type="button"
-              className={`table-payment-btn ${quote.paymentMethod === method ? "active" : ""}`}
-              onClick={() => onPaymentChange(method)}
-            >
-              <i
-                className={`ti ${
-                  method === "Cash"
-                    ? "ti-cash"
-                    : method === "UPI"
-                      ? "ti-qrcode"
-                      : method === "Card"
-                        ? "ti-credit-card"
-                        : "ti-arrows-split"
-                }`}
-                aria-hidden="true"
-              />
-              <span>{method}</span>
-            </button>
-          ))}
-        </div>
-        {quote.paymentMethod === "Split" && (
-          <div className="checkout-split-payment-box">
-            {["Cash", "UPI", "Card"].map((method) => (
-              <label className="table-field-stack" key={method}>
-                <span>{method}</span>
-                <input
-                  className="table-mini-input"
-                  type="number"
-                  min="0"
-                  inputMode="numeric"
-                  value={splitRows[method] || ""}
-                  onChange={(event) =>
-                    onPaymentChange("Split", {
-                      ...splitRows,
-                      [method]: event.target.value,
-                    })
-                  }
-                />
-              </label>
-            ))}
-            <div className={`checkout-split-payment-total ${splitRemaining === 0 ? "ok" : "warn"}`}>
-              {splitRemaining === 0
-                ? "Split matches final bill"
-                : `Remaining ₹${splitRemaining}`}
+        <section className="checkout-flow-section">
+          <div className="checkout-flow-heading">
+            <span>1</span>
+            <div>
+              <strong>Review frozen bill</strong>
+              <em>Time is locked at checkout open, so the bill will not keep increasing.</em>
             </div>
           </div>
-        )}
-
-        <div className="checkout-bill-section-title">Apply Discount</div>
-        <div className="checkout-discount-box">
-          <div className="table-discount-options">
-            {DISCOUNT_OPTIONS.map((option) => (
-              <button
-                key={option.id}
-                type="button"
-                className={quote.discountType === option.id ? "active" : ""}
-                onClick={() =>
-                  onDiscountChange(
-                    option.id,
-                    option.id === "rupee" ? quote.discountValue : "",
-                    true,
-                  )
-                }
-              >
-                {option.label}
-              </button>
-            ))}
-          </div>
-          {quote.discountType === "rupee" && (
-            <div className="checkout-rupee-discount">
-              <div className="checkout-rupee-discount-row">
-                <input
-                  className="table-mini-input"
-                  type="text"
-                  inputMode="numeric"
-                  pattern="[0-9]*"
-                  value={quote.discountValue}
-                  onChange={(event) =>
-                    onDiscountChange("rupee", sanitizeRupeeDiscount(event.target.value), false)
-                  }
-                  placeholder="Max ₹50"
-                  aria-label="Rupee discount amount"
-                />
-                <button
-                  type="button"
-                  className="checkout-rupee-apply-btn"
-                  disabled={quote.loading || !quote.discountValue}
-                  onClick={() => onDiscountChange("rupee", quote.discountValue, true)}
-                >
-                  Apply
-                </button>
-              </div>
-              <span className="checkout-rupee-hint">Enter the rupee amount, then apply.</span>
+          <div className="checkout-bill-summary">
+            <div>
+              <span>Table</span>
+              <strong>₹{rec.ply || 0}</strong>
             </div>
-          )}
-          {quote.discountType !== "none" && (
-            <label className="table-field-stack checkout-discount-reason">
-              <span>Discount reason</span>
-              <input
-                className="table-mini-input"
-                type="text"
-                value={quote.discountReason || ""}
-                onChange={(event) =>
-                  onDiscountChange(quote.discountType, quote.discountValue, false, event.target.value)
-                }
-                placeholder="Owner approved / service issue"
-              />
-            </label>
-          )}
-          {quote.loading && <span className="checkout-quote-status">Updating bill...</span>}
-          {quote.error && <span className="checkout-quote-error">{quote.error}</span>}
-        </div>
+            <div>
+              <span>Food</span>
+              <strong>₹{rec.famt || 0}</strong>
+            </div>
+            <div>
+              <span>Before discount</span>
+              <strong>₹{rawTotal}</strong>
+            </div>
+            <div>
+              <span>Discount</span>
+              <strong>₹{discountAmount}</strong>
+            </div>
+            <div className="checkout-final-total">
+              <span>Final bill</span>
+              <strong>₹{total}</strong>
+            </div>
+          </div>
+        </section>
 
         {settlement.length > 0 && (
           <>
@@ -1274,7 +1165,146 @@ function CheckoutQuoteScreen({
           </>
         )}
 
+        <section className="checkout-flow-section">
+          <div className="checkout-flow-heading">
+            <span>2</span>
+            <div>
+              <strong>Apply discount</strong>
+              <em>Optional. Discounts need a reason before closing.</em>
+            </div>
+          </div>
+          <div className="checkout-discount-box">
+            <div className="table-discount-options">
+              {DISCOUNT_OPTIONS.map((option) => (
+                <button
+                  key={option.id}
+                  type="button"
+                  className={quote.discountType === option.id ? "active" : ""}
+                  onClick={() =>
+                    onDiscountChange(
+                      option.id,
+                      option.id === "rupee" ? quote.discountValue : "",
+                      true,
+                    )
+                  }
+                >
+                  {option.label}
+                </button>
+              ))}
+            </div>
+            {quote.discountType === "rupee" && (
+              <div className="checkout-rupee-discount">
+                <div className="checkout-rupee-discount-row">
+                  <input
+                    className="table-mini-input"
+                    type="text"
+                    inputMode="numeric"
+                    pattern="[0-9]*"
+                    value={quote.discountValue}
+                    onChange={(event) =>
+                      onDiscountChange("rupee", sanitizeRupeeDiscount(event.target.value), false)
+                    }
+                    placeholder="Max ₹50"
+                    aria-label="Rupee discount amount"
+                  />
+                  <button
+                    type="button"
+                    className="checkout-rupee-apply-btn"
+                    disabled={quote.loading || !quote.discountValue}
+                    onClick={() => onDiscountChange("rupee", quote.discountValue, true)}
+                  >
+                    Apply
+                  </button>
+                </div>
+                <span className="checkout-rupee-hint">Enter the rupee amount, then apply.</span>
+              </div>
+            )}
+            {quote.discountType !== "none" && (
+              <label className="table-field-stack checkout-discount-reason">
+                <span>Discount reason</span>
+                <input
+                  className="table-mini-input"
+                  type="text"
+                  value={quote.discountReason || ""}
+                  onChange={(event) =>
+                    onDiscountChange(quote.discountType, quote.discountValue, false, event.target.value)
+                  }
+                  placeholder="Owner approved / service issue"
+                />
+              </label>
+            )}
+            {quote.loading && <span className="checkout-quote-status">Updating bill...</span>}
+            {quote.error && <span className="checkout-quote-error">{quote.error}</span>}
+          </div>
+        </section>
+
+        <section className="checkout-flow-section">
+          <div className="checkout-flow-heading">
+            <span>3</span>
+            <div>
+              <strong>Select payment method</strong>
+              <em>Choose how the final bill is received.</em>
+            </div>
+          </div>
+          <div className="table-payment-grid checkout-payment-grid">
+            {PAYMENT_METHODS.map((method) => (
+              <button
+                key={method}
+                type="button"
+                className={`table-payment-btn ${quote.paymentMethod === method ? "active" : ""}`}
+                onClick={() => onPaymentChange(method)}
+              >
+                <i
+                  className={`ti ${
+                    method === "Cash"
+                      ? "ti-cash"
+                      : method === "UPI"
+                        ? "ti-qrcode"
+                        : method === "Card"
+                          ? "ti-credit-card"
+                          : "ti-arrows-split"
+                  }`}
+                  aria-hidden="true"
+                />
+                <span>{method}</span>
+              </button>
+            ))}
+          </div>
+          {quote.paymentMethod === "Split" && (
+            <div className="checkout-split-payment-box">
+              {["Cash", "UPI", "Card"].map((method) => (
+                <label className="table-field-stack" key={method}>
+                  <span>{method}</span>
+                  <input
+                    className="table-mini-input"
+                    type="number"
+                    min="0"
+                    inputMode="numeric"
+                    value={splitRows[method] || ""}
+                    onChange={(event) =>
+                      onPaymentChange("Split", {
+                        ...splitRows,
+                        [method]: event.target.value,
+                      })
+                    }
+                  />
+                </label>
+              ))}
+              <div className={`checkout-split-payment-total ${splitRemaining === 0 ? "ok" : "warn"}`}>
+                {splitRemaining === 0
+                  ? "Split matches final bill"
+                  : `Remaining ₹${splitRemaining}`}
+              </div>
+            </div>
+          )}
+        </section>
+
         <div className="checkout-final-actions">
+          <div className="checkout-final-review">
+            <span>Final settlement</span>
+            <strong>₹{total}</strong>
+            <em>{quote.paymentMethod || "Cash"} · {discountAmount ? `₹${discountAmount} discount` : "No discount"}</em>
+          </div>
           <button type="button" className="btn checkout-cancel-btn" onClick={onClose}>
             Keep table open
           </button>
