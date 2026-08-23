@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import {
   getMenu,
-  getTableState,
+  getLiveFloor,
   addFood,
   placeFoodOrder,
   getFoodOrders,
@@ -35,7 +35,7 @@ function EmptyState({ icon = "ti-info-circle", title, detail }) {
   );
 }
 
-export default function FoodTab({ onNavigate, role = "admin" }) {
+export default function FoodTab({ onNavigate, role = "admin", orderContext, onOrderContextHandled }) {
   const { showToast } = useToast();
   const [menu, setMenu] = useState({});
   const [stats, setStats] = useState([]);
@@ -67,7 +67,7 @@ export default function FoodTab({ onNavigate, role = "admin" }) {
         getMenu(),
         getFoodStats(),
         getFoodOrders(),
-        getTableState(),
+        getLiveFloor(),
       ];
       const labels = ["menu items", "food stats", "order history", "active tables"];
       const [menuRes, statsRes, ordersRes, activeRes] = await Promise.allSettled(requests);
@@ -79,7 +79,10 @@ export default function FoodTab({ onNavigate, role = "admin" }) {
       if (statsRes.status === "fulfilled") setStats(Array.isArray(statsRes.value.data) ? statsRes.value.data : []);
       if (ordersRes.status === "fulfilled") setOrders(Array.isArray(ordersRes.value.data) ? ordersRes.value.data : []);
       if (activeRes.status === "fulfilled") {
-        const sessions = activeRes.value.data?.active_sessions || [];
+        const sessions =
+          activeRes.value.data?.floor?.sessions ||
+          activeRes.value.data?.active_sessions ||
+          [];
         setActiveSessions((Array.isArray(sessions) ? sessions : []).map((session) => ({
           ...session,
           table_id: tableKey(session.table_id),
@@ -270,6 +273,28 @@ export default function FoodTab({ onNavigate, role = "admin" }) {
       : [selectedSession?.customer_name, selectedSession?.split_name]
           .filter(Boolean)
           .flatMap((name) => String(name).split(",").map((part) => part.trim()).filter(Boolean));
+
+  useEffect(() => {
+    if (!orderContext?.tableId) return;
+    if (loading) return;
+    const nextTable = tableKey(orderContext.tableId);
+    setActiveTab("order");
+    setOrderTarget("table");
+    setSelectedTable(nextTable);
+
+    const session = activeSessions.find((item) => item.table_id === nextTable);
+    const players = session?.players?.length
+      ? session.players
+      : [session?.customer_name, session?.split_name]
+          .filter(Boolean)
+          .flatMap((name) => String(name).split(",").map((part) => part.trim()).filter(Boolean));
+    const preferredPlayer =
+      orderContext.playerName && players.includes(orderContext.playerName)
+        ? orderContext.playerName
+        : players[0] || "";
+    setSelectedPlayer(preferredPlayer);
+    onOrderContextHandled?.();
+  }, [orderContext, activeSessions, loading, onOrderContextHandled]);
 
   if (loading) {
     return (
@@ -469,6 +494,20 @@ export default function FoodTab({ onNavigate, role = "admin" }) {
 
               {orderTarget === "table" ? (
                 <div className="food-table-target">
+                  {selectedTable && (
+                    <div className="food-session-context">
+                      <div>
+                        <span>Adding to table bill</span>
+                        <strong>
+                          {selectedTable.toUpperCase()}
+                          {selectedPlayer ? ` · ${selectedPlayer}` : ""}
+                        </strong>
+                      </div>
+                      <button type="button" onClick={() => onNavigate?.("tables")}>
+                        Back to table
+                      </button>
+                    </div>
+                  )}
                   <div className="food-table-target-note">
                     {activeSessions.length
                       ? `${activeSessions.length} running table${activeSessions.length === 1 ? "" : "s"} available for food billing`

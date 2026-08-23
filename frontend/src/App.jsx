@@ -58,6 +58,7 @@ function AppInner() {
   const [username, setUsername] = useState(localStorage.getItem("username") || "");
   const [page, setPage] = useState("dashboard");
   const [newSessionRequest, setNewSessionRequest] = useState(0);
+  const [foodOrderContext, setFoodOrderContext] = useState(null);
   const [backendStatus, setBackendStatus] = useState({
     state: "checking",
     message: "Checking backend connection...",
@@ -185,6 +186,15 @@ function AppInner() {
     setNewSessionRequest((request) => request + 1);
   }
 
+  function openFoodOrder(context = {}) {
+    setFoodOrderContext({
+      tableId: context.tableId || "",
+      playerName: context.playerName || "",
+      requestedAt: Date.now(),
+    });
+    setPage("food");
+  }
+
   if (!loggedIn) {
     return (
       <>
@@ -253,11 +263,19 @@ function AppInner() {
                 <TablesTab
                   onSessionEnd={fetchMetrics}
                   newSessionRequest={newSessionRequest}
+                  onOpenFoodOrder={openFoodOrder}
                 />
               )}
               {page === "reports" && role === "admin" && <ReportsTab onNavigate={setPage} />}
               {page === "closing" && <ClosingTab />}
-              {page === "food" && <FoodTab onNavigate={setPage} role={role} />}
+              {page === "food" && (
+                <FoodTab
+                  onNavigate={setPage}
+                  role={role}
+                  orderContext={foodOrderContext}
+                  onOrderContextHandled={() => setFoodOrderContext(null)}
+                />
+              )}
               {page === "tournaments" && <TournamentTab />}
               {page === "members" && role === "admin" && <MembersTab />}
               {page === "operations" && role === "admin" && <OperationsTab />}

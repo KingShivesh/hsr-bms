@@ -1630,6 +1630,7 @@ function SessionWorkspace({
   onPause,
   onStop,
   onStartFrame,
+  onAddFood,
   busyActions = {},
 }) {
   const status = tableState?.status_label || getTableStatus({ session, booking, maintenance }).label;
@@ -1644,6 +1645,7 @@ function SessionWorkspace({
   const pauseBusy = !!busyActions[`pause:${table.id}`];
   const quoteBusy = !!busyActions[`quote:${table.id}`];
   const startFrameBusy = !!busyActions[`start-frame:${table.id}`];
+  const foodPlayer = session?.players?.[0] || session?.customer_name || "";
   const canTrackFrames = session?.billingMode === "lp" && (session?.players || []).length > 1;
   const nextFrameNo = (frames.reduce((max, frame) => Math.max(max, frame.frame_no || 0), 0) || 0) + 1;
   const nextBooking = booking
@@ -1700,6 +1702,17 @@ function SessionWorkspace({
 
       {session && (
         <div className="session-workspace-actions">
+          <button
+            type="button"
+            className="session-action secondary"
+            onClick={() => onAddFood?.({
+              tableId: table.id,
+              playerName: foodPlayer,
+            })}
+          >
+            <i className="ti ti-tools-kitchen-2" aria-hidden="true" />
+            Add food
+          </button>
           <button
             type="button"
             className="session-action secondary"
@@ -2634,7 +2647,7 @@ function TableCard({
   );
 }
 
-export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
+export default function TablesTab({ onSessionEnd, newSessionRequest = 0, onOpenFoodOrder }) {
   const { showToast } = useToast();
   const [sessions, setSessions] = useState({});
   const [tableStates, setTableStates] = useState({});
@@ -3597,6 +3610,7 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
               onPause={handlePause}
               onStop={handleStop}
               onStartFrame={handleStartFrame}
+              onAddFood={onOpenFoodOrder}
               busyActions={busyActions}
             />
 
