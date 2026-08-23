@@ -1,3 +1,5 @@
+import Button from "./ui/Button.jsx";
+
 export default function RetryNotice({
   message = "Something could not load.",
   detail = "Check the backend connection and try again.",
@@ -11,9 +13,9 @@ export default function RetryNotice({
         {detail && <span>{detail}</span>}
       </div>
       {onRetry && (
-        <button type="button" onClick={onRetry}>
+        <Button variant="secondary" size="sm" icon="ti-refresh" onClick={onRetry}>
           Retry
-        </button>
+        </Button>
       )}
     </div>
   );

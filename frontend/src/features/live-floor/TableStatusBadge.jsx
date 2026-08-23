@@ -1,11 +1,11 @@
 import { getTableStatusByKey } from "../../config/tableStatus.js";
+import Badge from "../../components/ui/Badge.jsx";
 
 export default function TableStatusBadge({ statusKey = "available", label = "" }) {
   const status = getTableStatusByKey(statusKey);
   return (
-    <span className={`lf-status-badge lf-status-${status.key}`} title={label || status.label}>
-      <span aria-hidden="true" />
+    <Badge tone={status.key} dot title={label || status.label} className="lf-status-badge">
       {label || status.label}
-    </span>
+    </Badge>
   );
 }

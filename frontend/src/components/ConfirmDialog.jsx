@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { ConfirmContext } from "./confirmContext.js";
+import Button from "./ui/Button.jsx";
 
 const DEFAULT_CONFIRM = {
   title: "Confirm action",
@@ -93,21 +94,19 @@ export function ConfirmProvider({ children }) {
               <p id="app-confirm-message">{dialog.message}</p>
             </div>
             <div className="app-confirm-actions">
-              <button
+              <Button
                 ref={cancelRef}
-                type="button"
-                className="btn"
+                variant="secondary"
                 onClick={() => closeDialog(false)}
               >
                 {dialog.cancelLabel}
-              </button>
-              <button
-                type="button"
-                className={`btn ${dialog.tone === "danger" ? "btn-danger-sm" : "btn-primary-sm"}`}
+              </Button>
+              <Button
+                variant={dialog.tone === "danger" ? "danger" : "primary"}
                 onClick={() => closeDialog(true)}
               >
                 {dialog.confirmLabel}
-              </button>
+              </Button>
             </div>
           </div>
         </div>
