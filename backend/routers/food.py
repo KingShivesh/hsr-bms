@@ -1,5 +1,5 @@
 from fastapi import APIRouter, HTTPException, Depends
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from sqlalchemy.orm import Session
 from database import get_db
 from typing import List
@@ -11,12 +11,12 @@ router = APIRouter()
 PAYMENT_METHODS = {"Cash", "UPI", "Card"}
 
 class FoodOrderItem(BaseModel):
-    item: str
-    qty:  int
-    mrp:  int | None = None
+    item: str = Field(min_length=1, max_length=80)
+    qty:  int = Field(ge=1, le=100)
+    mrp:  int | None = Field(default=None, ge=1, le=100000)
 
 class FoodOnlyOrderBody(BaseModel):
-    customer_name: str
+    customer_name: str = Field(default="", max_length=80)
     items:         List[FoodOrderItem]
     payment_method: str = "Cash"
 
@@ -32,8 +32,6 @@ def place_food_order(body: FoodOnlyOrderBody, db: Session = Depends(get_db)):
     total    = 0
     order    = []
     for fi in body.items:
-        if fi.qty <= 0:
-            raise HTTPException(status_code=400, detail="Item quantity must be greater than 0")
         menu_item = db.query(models.MenuItem).filter(models.MenuItem.name == fi.item).first()
         if not menu_item:
             raise HTTPException(status_code=404, detail=f"{fi.item} not found")

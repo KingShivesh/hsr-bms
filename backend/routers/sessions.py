@@ -10,8 +10,8 @@ import models, time, math, json, uuid
 from typing import Optional
 from audit import log_action, require_manager_pin
 from pricing import calc_checkout, get_peak_multiplier
-from deps import require_admin
-from hsr_config import format_ist_now, get_ist_now, rate_for_table
+from deps import get_current_claims, require_admin
+from hsr_config import TABLE_RATES, format_ist_now, get_ist_now, rate_for_table
 from live_state import build_live_floor_state, build_table_state, serialize_session as serialize_live_session
 
 router = APIRouter()
@@ -31,8 +31,8 @@ class StartSession(BaseModel):
 
 class FoodItem(BaseModel):
     item: str
-    qty:  int
-    mrp:  int | None = None
+    qty:  int = Field(ge=1, le=100)
+    mrp:  int | None = Field(default=None, ge=1, le=100000)
     player_name: str = ""
 
 class Reservation(BaseModel):
@@ -56,6 +56,12 @@ def normalize_person_name(name: str) -> str:
 
 def normalize_table_id(table_id: str) -> str:
     return (table_id or "").strip().lower()
+
+def require_known_table_id(table_id: str) -> str:
+    normalized = normalize_table_id(table_id)
+    if normalized not in TABLE_RATES:
+        raise HTTPException(status_code=400, detail="Unknown table.")
+    return normalized
 
 def active_session_for_table(db: Session, table_id: str):
     normalized = normalize_table_id(table_id)
@@ -200,6 +206,11 @@ def calculate_discount(raw_total: int, discount_type: str | None, discount_value
 
     return normalized_type, discount_amount, max(0, safe_total - discount_amount)
 
+def assert_discount_allowed(discount_type: str, discount_amount: int, user: dict) -> None:
+    requested_discount = discount_type != "none" or discount_amount > 0
+    if requested_discount and (user or {}).get("role") != "admin":
+        raise HTTPException(status_code=403, detail="Admin access required for discounts.")
+
 def allocate_by_weight(weights: dict[str, int], amount: int) -> dict[str, int]:
     names = list(weights.keys())
     if amount <= 0 or not names:
@@ -299,6 +310,90 @@ def build_player_breakdown(
 
 def new_session_key(table_id: str) -> str:
     return f"{table_id}:{uuid.uuid4().hex}"
+
+def transaction_for_session_key(db: Session, session_key: str | None) -> models.Transaction | None:
+    key = (session_key or "").strip()
+    if not key:
+        return None
+    return db.query(models.Transaction).filter(
+        models.Transaction.session_key == key
+    ).order_by(models.Transaction.id.desc()).first()
+
+def safe_json_list(raw: str | None) -> list:
+    try:
+        parsed = json.loads(raw or "[]")
+    except json.JSONDecodeError:
+        return []
+    return parsed if isinstance(parsed, list) else []
+
+def closed_frames_for_transaction(db: Session, transaction_id: int) -> list[models.ClosedSessionFrame]:
+    return db.query(models.ClosedSessionFrame).filter(
+        models.ClosedSessionFrame.transaction_id == transaction_id
+    ).order_by(models.ClosedSessionFrame.frame_no.asc()).all()
+
+def transaction_checkout_response(
+    db: Session,
+    t: models.Transaction,
+    *,
+    idempotent: bool = False,
+    raw_total: int | None = None,
+    discount_amount: int = 0,
+    discount_type: str = "none",
+    checkout: dict | None = None,
+    actual_minutes: int | None = None,
+    duration_capped: bool = False,
+    payment_split: list[dict] | None = None,
+    player_breakdown: list[dict] | None = None,
+    frames: list[dict] | None = None,
+    split_per_head: int | None = None,
+    share_count: int | None = None,
+) -> dict:
+    payment_split = payment_split if payment_split is not None else safe_json_list(t.payment_split_json)
+    frames = frames if frames is not None else [
+        serialize_closed_frame(frame)
+        for frame in closed_frames_for_transaction(db, t.id)
+    ]
+    players = safe_json_list(t.players_json)
+    share_count = share_count if share_count is not None else (len(players) if t.billing_mode == "sharing" else 1)
+    split_per_head = split_per_head if split_per_head is not None else (
+        math.ceil((t.total or 0) / share_count) if share_count > 1 else (t.total or 0)
+    )
+    return {
+        "date": t.date,
+        "ts": t.ts,
+        "tbl": t.table_id,
+        "nm": t.customer_name,
+        "dur": t.duration,
+        "ply": t.play_charge,
+        "actual_dur": actual_minutes if actual_minutes is not None else t.duration,
+        "duration_capped": duration_capped,
+        "famt": t.food_charge,
+        "food": t.food_items,
+        "tot": t.total,
+        "notes": t.notes,
+        "raw_total": raw_total if raw_total is not None else t.total,
+        "discount_amount": discount_amount,
+        "discount_type": discount_type,
+        "subtotal": checkout.get("subtotal", t.play_charge + t.food_charge) if checkout else t.play_charge + t.food_charge,
+        "gst_amt": checkout.get("gst_amt", t.gst_amt) if checkout else t.gst_amt,
+        "gst_percent": checkout.get("gst_percent", 0) if checkout else 0,
+        "peak_surcharge": checkout.get("peak_surcharge", t.peak_surcharge) if checkout else t.peak_surcharge,
+        "peak_label": checkout.get("peak_label", "") if checkout else "",
+        "payment_method": t.payment_method,
+        "payment_split": payment_split,
+        "discount_reason": t.discount_reason,
+        "billing_mode": t.billing_mode,
+        "session_key": t.session_key,
+        "session_started_at": t.session_started_at,
+        "session_ended_at": t.session_ended_at,
+        "players": players,
+        "payer_name": t.payer_name,
+        "split_per_head": split_per_head,
+        "share_count": share_count,
+        "player_breakdown": player_breakdown or [],
+        "frames": frames,
+        "idempotent": idempotent,
+    }
 
 def ensure_session_key(db: Session, sess: models.ActiveSession) -> str:
     key = getattr(sess, "session_key", "") or ""
@@ -460,9 +555,7 @@ def archive_closed_frames(
 
 @router.post("/start")
 def start_session(body: StartSession, db: Session = Depends(get_db)):
-    table_id = normalize_table_id(body.table_id)
-    if not table_id:
-        raise HTTPException(status_code=400, detail="Table is required.")
+    table_id = require_known_table_id(body.table_id)
     billing_mode = normalize_billing_mode(body.billing_mode, body.split)
     fallback_players = default_players_for_mode(billing_mode)
     customer_name = normalize_person_name(body.customer_name) or fallback_players[0]
@@ -582,8 +675,10 @@ def quote_session(
     discount_type:  str = "none",
     discount_value: int = 0,
     closed_at_ms:   float | None = None,
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    user: dict = Depends(get_current_claims),
 ):
+    table_id = require_known_table_id(table_id)
     sess = active_session_for_table(db, table_id)
     if not sess:
         raise HTTPException(status_code=404, detail="No active session")
@@ -617,6 +712,7 @@ def quote_session(
         discount_type,
         discount_value,
     )
+    assert_discount_allowed(discount_type, discount_amount, user)
 
     food_items = json.loads(sess.food_items or "[]")
     food_str   = ", ".join(f"{x['item']} x{x['qty']}" for x in food_items) or "None"
@@ -704,11 +800,28 @@ def stop_session(
     closed_at_ms:   float | None = None,
     discount_reason: str = "",
     payment_split_json: str = "",
-    db: Session = Depends(get_db)
+    session_key: str = "",
+    db: Session = Depends(get_db),
+    user: dict = Depends(get_current_claims),
 ):
+    table_id = require_known_table_id(table_id)
+    expected_session_key = (session_key or "").strip()
     sess = active_session_for_table(db, table_id)
     if not sess:
+        existing_transaction = transaction_for_session_key(db, expected_session_key)
+        if existing_transaction:
+            return transaction_checkout_response(db, existing_transaction, idempotent=True)
         raise HTTPException(status_code=404, detail="No active session")
+    actual_session_key = ensure_session_key(db, sess)
+    if expected_session_key and expected_session_key != actual_session_key:
+        raise HTTPException(status_code=409, detail="This checkout is stale. Refresh the table and try again.")
+    existing_transaction = transaction_for_session_key(db, actual_session_key)
+    if existing_transaction:
+        for frame in active_session_frames(db, sess):
+            db.delete(frame)
+        db.delete(sess)
+        db.commit()
+        return transaction_checkout_response(db, existing_transaction, idempotent=True)
 
     # Minimum session check
     settings   = db.query(models.Settings).first()
@@ -740,6 +853,7 @@ def stop_session(
         discount_type,
         discount_value,
     )
+    assert_discount_allowed(discount_type, discount_amount, user)
     discount_reason = normalize_person_name(discount_reason)
     if discount_amount > 0 and not discount_reason:
         raise HTTPException(status_code=400, detail="Enter a reason for the discount.")
@@ -850,12 +964,25 @@ def stop_session(
         payment_method = payment_method,
         payment_split_json = json.dumps(payment_split),
         discount_reason = discount_reason,
-        session_key    = ensure_session_key(db, sess),
+        session_key    = actual_session_key,
         session_started_at = session_started_at,
         session_ended_at = closed_at_ms,
     )
     db.add(t)
-    db.flush()
+    try:
+        db.flush()
+    except IntegrityError:
+        db.rollback()
+        existing_transaction = transaction_for_session_key(db, actual_session_key)
+        if existing_transaction:
+            stale_session = active_session_for_table(db, table_id)
+            if stale_session:
+                for frame in active_session_frames(db, stale_session):
+                    db.delete(frame)
+                db.delete(stale_session)
+                db.commit()
+            return transaction_checkout_response(db, existing_transaction, idempotent=True)
+        raise HTTPException(status_code=409, detail="Session was already checked out. Refresh the table.")
     if player_breakdown:
         for item in player_breakdown:
             update_member_on_checkout(item["name"], item["total"], db)
@@ -922,38 +1049,31 @@ def stop_session(
         amount=total,
         table_id=table_id,
     )
-    db.commit()
+    try:
+        db.commit()
+    except IntegrityError:
+        db.rollback()
+        existing_transaction = transaction_for_session_key(db, actual_session_key)
+        if existing_transaction:
+            return transaction_checkout_response(db, existing_transaction, idempotent=True)
+        raise HTTPException(status_code=409, detail="Session was already checked out. Refresh the table.")
 
-    return {
-        "date":  t.date,  "ts":    t.ts,
-        "tbl":   t.table_id, "nm": t.customer_name,
-        "dur":   t.duration, "ply": t.play_charge,
-        "actual_dur": actual_minutes,
-        "duration_capped": duration_capped,
-        "famt":  t.food_charge, "food": t.food_items,
-        "tot":   t.total,  "notes": t.notes,
-        "raw_total": raw_total,
-        "discount_amount": discount_amount,
-        "discount_type": discount_type,
-        "subtotal": checkout["subtotal"],
-        "gst_amt": checkout["gst_amt"],
-        "gst_percent": checkout["gst_percent"],
-        "peak_surcharge": checkout["peak_surcharge"],
-        "peak_label": checkout["peak_label"],
-        "payment_method": payment_method,
-        "payment_split": payment_split,
-        "discount_reason": discount_reason,
-        "billing_mode": billing_mode,
-        "session_key": t.session_key,
-        "session_started_at": session_started_at,
-        "session_ended_at": closed_at_ms,
-        "players": transaction_players,
-        "payer_name": payer,
-        "split_per_head": split_per_head,
-        "share_count": share_count,
-        "player_breakdown": player_breakdown,
-        "frames": serialized_frames,
-    }
+    return transaction_checkout_response(
+        db,
+        t,
+        idempotent=False,
+        raw_total=raw_total,
+        discount_amount=discount_amount,
+        discount_type=discount_type,
+        checkout=checkout,
+        actual_minutes=actual_minutes,
+        duration_capped=duration_capped,
+        payment_split=payment_split,
+        player_breakdown=player_breakdown,
+        frames=serialized_frames,
+        split_per_head=split_per_head,
+        share_count=share_count,
+    )
 
 @router.post("/transfer/{table_id}")
 def transfer_session(
@@ -961,10 +1081,8 @@ def transfer_session(
     body: TransferTableBody,
     db: Session = Depends(get_db),
 ):
-    source_id = normalize_table_id(table_id)
-    target_id = normalize_table_id(body.target_table_id)
-    if not source_id or not target_id:
-        raise HTTPException(status_code=400, detail="Choose a source and target table.")
+    source_id = require_known_table_id(table_id)
+    target_id = require_known_table_id(body.target_table_id)
     if source_id == target_id:
         raise HTTPException(status_code=400, detail="Choose a different table.")
 
@@ -1040,6 +1158,7 @@ def reset_session(
     _: dict = Depends(require_admin),
 ):
     require_manager_pin(db, manager_pin)
+    table_id = require_known_table_id(table_id)
     sess = active_session_for_table(db, table_id)
     if sess:
         elapsed_ms = sess.elapsed_ms if sess.paused else time.time() * 1000 - sess.start_time
@@ -1071,6 +1190,7 @@ def reset_session(
 
 @router.post("/{table_id}/frames/start")
 def start_frame(table_id: str, db: Session = Depends(get_db)):
+    table_id = require_known_table_id(table_id)
     sess = active_session_for_table(db, table_id)
     if not sess:
         raise HTTPException(status_code=404, detail="No active session")
@@ -1102,6 +1222,7 @@ def start_frame(table_id: str, db: Session = Depends(get_db)):
 
 @router.post("/{table_id}/frames/close")
 def close_frame(table_id: str, body: CloseFrameBody, db: Session = Depends(get_db)):
+    table_id = require_known_table_id(table_id)
     sess = active_session_for_table(db, table_id)
     if not sess:
         raise HTTPException(status_code=404, detail="No active session")
@@ -1150,8 +1271,7 @@ def close_frame(table_id: str, body: CloseFrameBody, db: Session = Depends(get_d
 
 @router.post("/{table_id}/food")
 def add_food(table_id: str, body: FoodItem, db: Session = Depends(get_db)):
-    if body.qty <= 0:
-        raise HTTPException(status_code=400, detail="Item quantity must be greater than 0")
+    table_id = require_known_table_id(table_id)
     sess = active_session_for_table(db, table_id)
     if not sess:
         raise HTTPException(status_code=404, detail="No active session")
@@ -1214,6 +1334,7 @@ def add_food(table_id: str, body: FoodItem, db: Session = Depends(get_db)):
 
 @router.post("/{table_id}/notes")
 def update_notes(table_id: str, body: UpdateNotes, db: Session = Depends(get_db)):
+    table_id = require_known_table_id(table_id)
     sess = active_session_for_table(db, table_id)
     if not sess:
         raise HTTPException(status_code=404, detail="No active session")
@@ -1223,7 +1344,7 @@ def update_notes(table_id: str, body: UpdateNotes, db: Session = Depends(get_db)
 
 @router.post("/{table_id}/reserve")
 def reserve(table_id: str, body: Reservation, db: Session = Depends(get_db)):
-    table_id = normalize_table_id(table_id)
+    table_id = require_known_table_id(table_id)
     name = normalize_person_name(body.name)
     if not name:
         raise HTTPException(status_code=400, detail="Reservation name is required.")
@@ -1263,6 +1384,7 @@ def reserve(table_id: str, body: Reservation, db: Session = Depends(get_db)):
 
 @router.delete("/{table_id}/reserve")
 def cancel_reserve(table_id: str, db: Session = Depends(get_db)):
+    table_id = require_known_table_id(table_id)
     sess = active_session_for_table(db, table_id)
     table_code = normalize_table_id(table_id).upper()
     booking = (
@@ -1301,6 +1423,7 @@ def get_live_floor_state(db: Session = Depends(get_db)):
 
 @router.get("/history/{table_id}")
 def table_history(table_id: str, db: Session = Depends(get_db)):
+    table_id = require_known_table_id(table_id)
     txns = db.query(models.Transaction).filter(
         models.Transaction.table_id == normalize_table_id(table_id).upper()
     ).order_by(models.Transaction.ts.desc()).limit(10).all()
@@ -1338,6 +1461,7 @@ def table_history(table_id: str, db: Session = Depends(get_db)):
 
 @router.get("/audit/{table_id}")
 def table_audit(table_id: str, limit: int = 30, db: Session = Depends(get_db)):
+    table_id = require_known_table_id(table_id)
     table_code = normalize_table_id(table_id).upper()
     rows = db.query(models.AuditLog).filter(
         func.upper(models.AuditLog.table_id) == table_code
@@ -1357,6 +1481,7 @@ def table_audit(table_id: str, limit: int = 30, db: Session = Depends(get_db)):
 
 @router.get("/events/{table_id}")
 def table_events(table_id: str, limit: int = 50, db: Session = Depends(get_db)):
+    table_id = require_known_table_id(table_id)
     table_code = normalize_table_id(table_id).upper()
     rows = db.query(models.SessionEvent).filter(
         func.upper(models.SessionEvent.table_id) == table_code
@@ -1365,7 +1490,7 @@ def table_events(table_id: str, limit: int = 50, db: Session = Depends(get_db)):
 
 @router.post("/maintenance/{table_id}")
 def set_maintenance(table_id: str, body: MaintenanceBody, db: Session = Depends(get_db)):
-    table_id = normalize_table_id(table_id)
+    table_id = require_known_table_id(table_id)
     existing = maintenance_for_table(db, table_id)
     if existing:
         existing.reason = body.reason
@@ -1381,6 +1506,7 @@ def set_maintenance(table_id: str, body: MaintenanceBody, db: Session = Depends(
 
 @router.delete("/maintenance/{table_id}")
 def clear_maintenance(table_id: str, db: Session = Depends(get_db)):
+    table_id = require_known_table_id(table_id)
     m = maintenance_for_table(db, table_id)
     if m:
         db.delete(m)

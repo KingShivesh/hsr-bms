@@ -3393,6 +3393,7 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0, onOpenF
         closedAtMs,
         discountReason.trim(),
         splitPayload,
+        checkoutQuote.sessionKey || checkoutQuote.rec?.session_key || "",
       );
       const rec = { ...res.data };
       setSessions((prev) => {

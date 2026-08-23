@@ -130,6 +130,12 @@ def ensure_runtime_indexes(conn, existing_tables: set[str]):
             conn.execute(text(
                 f"CREATE INDEX IF NOT EXISTS {index_name} ON {table} ({columns})"
             ))
+    if "transactions" in existing_tables:
+        conn.execute(text(
+            "CREATE UNIQUE INDEX IF NOT EXISTS idx_transactions_session_key_unique "
+            "ON transactions (session_key) "
+            "WHERE session_key IS NOT NULL AND session_key <> ''"
+        ))
 
 def get_db():
     db = SessionLocal()

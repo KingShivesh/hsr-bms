@@ -319,6 +319,116 @@ def run_expected_validation_checks():
         },
     )
     metrics["expected_errors"] += 1
+    request(
+        "POST",
+        "/sessions/start",
+        expected=400,
+        json={
+            "table_id": "t99",
+            "customer_name": "Invalid Table",
+            "rate": 0,
+            "billing_mode": "single",
+        },
+    )
+    metrics["expected_errors"] += 1
+    request(
+        "POST",
+        "/food/order",
+        expected=422,
+        json={
+            "customer_name": "Test Customer",
+            "items": [{"item": "Coffee", "qty": 100000}],
+        },
+    )
+    metrics["expected_errors"] += 1
+
+
+def run_idempotent_checkout_check():
+    table = "t2"
+    request(
+        "POST",
+        "/sessions/start",
+        json={
+            "table_id": table,
+            "customer_name": "Idempotency Tester",
+            "rate": 0,
+            "billing_mode": "single",
+            "players": [],
+        },
+    )
+    quote = request("GET", f"/sessions/quote/{table}").json()
+    session_key = quote.get("session_key") or ""
+    first = request(
+        "POST",
+        f"/sessions/stop/{table}",
+        params={"payment_method": "Cash", "session_key": session_key},
+    ).json()
+    second = request(
+        "POST",
+        f"/sessions/stop/{table}",
+        params={"payment_method": "Cash", "session_key": session_key},
+    ).json()
+    if not second.get("idempotent"):
+        raise SoakFailure(f"Duplicate checkout retry was not marked idempotent: {second}")
+    history = request("GET", "/reports/history").json()
+    matches = [row for row in history if row.get("session_key") == session_key]
+    if len(matches) != 1 or first.get("tot") != second.get("tot"):
+        raise SoakFailure(f"Checkout idempotency failed: matches={len(matches)}, first={first}, second={second}")
+    metrics["ledger_checks"] += 1
+
+
+def run_staff_discount_guard_check():
+    global token
+    admin_token = token
+    staff_login = client.post(
+        "/auth/login",
+        json={"username": "staff", "password": "staff123"},
+    )
+    if staff_login.status_code != 200:
+        raise SoakFailure(f"Staff login failed: {staff_login.status_code} {staff_login.text}")
+    token = staff_login.json()["token"]
+    table = "t4"
+    try:
+        request(
+            "POST",
+            "/sessions/start",
+            json={
+                "table_id": table,
+                "customer_name": "Staff Discount Tester",
+                "rate": 0,
+                "billing_mode": "single",
+                "players": [],
+            },
+        )
+        request(
+            "GET",
+            f"/sessions/quote/{table}",
+            expected=403,
+            params={"discount_type": "percent_5"},
+        )
+        metrics["expected_errors"] += 1
+        request("POST", f"/sessions/stop/{table}", params={"payment_method": "Cash"})
+    finally:
+        token = admin_token
+
+
+def run_final_daily_close_guard():
+    report = request("GET", "/reports/closing-report").json()
+    if not report.get("can_close_day"):
+        raise SoakFailure(f"Daily close guard expected no active tables: {report.get('open_tables')}")
+    expected_cash = report.get("payment_breakdown", {}).get("Cash", 0)
+    request(
+        "POST",
+        "/reports/day-close",
+        json={"opened_float": 0, "counted_cash": expected_cash, "notes": "Soak test close"},
+    )
+    request(
+        "POST",
+        "/reports/day-close",
+        expected=409,
+        json={"opened_float": 0, "counted_cash": expected_cash, "notes": "Duplicate close"},
+    )
+    metrics["expected_errors"] += 1
 
 
 def run_reports():
@@ -368,6 +478,8 @@ def run_maintenance_check():
 
 def run_cycle():
     close_all_active()
+    run_idempotent_checkout_check()
+    run_staff_discount_guard_check()
     run_single_session("t1")
     run_sharing_session("t3")
     run_lp_session("t5")
@@ -408,6 +520,10 @@ def main():
         time.sleep(max(0, args.interval_seconds))
 
     elapsed = time.time() - started
+    active_left = request("GET", "/sessions/active").json()
+    if active_left:
+        close_all_active()
+    run_final_daily_close_guard()
     active_left = request("GET", "/sessions/active").json()
     history = request("GET", "/reports/history").json()
     summary = request("GET", "/reports/summary").json()

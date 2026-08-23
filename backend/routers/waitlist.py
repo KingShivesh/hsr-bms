@@ -1,23 +1,23 @@
 import time
 
 from fastapi import APIRouter, Depends, HTTPException
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from sqlalchemy.orm import Session
 
 import models
 from database import get_db
-from hsr_config import TABLES, get_ist_now
+from hsr_config import TABLES, TABLE_RATES, get_ist_now
 from validators import require_full_name
 
 router = APIRouter()
 
 
 class WaitlistBody(BaseModel):
-    customer_name: str
-    phone: str = ""
-    party_size: int = 1
+    customer_name: str = Field(min_length=1, max_length=80)
+    phone: str = Field(default="", max_length=30)
+    party_size: int = Field(default=1, ge=1, le=20)
     preferred_type: str = "ANY"
-    notes: str = ""
+    notes: str = Field(default="", max_length=500)
 
 
 class SeatBody(BaseModel):
@@ -102,8 +102,11 @@ def seat_waitlist_entry(entry_id: int, body: SeatBody, db: Session = Depends(get
     entry = db.query(models.WaitlistEntry).filter(models.WaitlistEntry.id == entry_id).first()
     if not entry:
         raise HTTPException(status_code=404, detail="Waitlist entry not found")
+    table_id = (body.table_id or "").strip().lower()
+    if table_id not in TABLE_RATES:
+        raise HTTPException(status_code=400, detail="Unknown table.")
     entry.status = "seated"
-    entry.seated_table = (body.table_id or "").lower()
+    entry.seated_table = table_id
     db.commit()
     return {"ok": True}
 

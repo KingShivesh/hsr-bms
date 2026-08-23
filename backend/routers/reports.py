@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException, Query
 from fastapi.responses import StreamingResponse
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from sqlalchemy.orm import Session
 from database import get_db
 from deps import require_admin
@@ -24,8 +24,8 @@ MAX_REPORT_DURATION_MINUTES = 12 * 60
 REPORT_TABLES = [table_id.upper() for table_id in TABLE_RATES]
 
 class DayCloseBody(BaseModel):
-    opened_float: int = 0
-    counted_cash: int = 0
+    opened_float: int = Field(0, ge=0, le=10000000)
+    counted_cash: int = Field(0, ge=0, le=10000000)
     notes: str = ""
 
 # ── helpers ──
@@ -477,7 +477,9 @@ def close_day(
     existing = db.query(models.DayClose).filter(
         models.DayClose.business_date == report["date"]
     ).first()
-    row = existing or models.DayClose(business_date=report["date"])
+    if existing:
+        raise HTTPException(status_code=409, detail="This day is already closed.")
+    row = models.DayClose(business_date=report["date"])
     row.opened_float = opened_float
     row.counted_cash = counted_cash
     row.expected_cash = expected_cash
@@ -487,8 +489,7 @@ def close_day(
     row.notes = (body.notes or "").strip()
     row.closed_at = get_ist_now().strftime("%d/%m/%Y, %H:%M:%S")
     row.closed_by = user.get("username") or "admin"
-    if not existing:
-        db.add(row)
+    db.add(row)
     db.commit()
     return {
         "ok": True,

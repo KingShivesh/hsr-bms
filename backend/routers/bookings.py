@@ -9,7 +9,7 @@ from sqlalchemy.orm import Session
 
 import models
 from database import get_db
-from hsr_config import IST_TZ, get_ist_now
+from hsr_config import IST_TZ, TABLE_RATES, get_ist_now
 from validators import require_full_name
 
 router = APIRouter()
@@ -111,6 +111,10 @@ def create_booking(body: BookingBody, db: Session = Depends(get_db)):
     duration = max(30, min(int(body.duration_mins or 60), 480))
     table_id = (body.table_id or "ANY").upper()
     table_type = (body.table_type or "ANY").upper()
+    if table_id != "ANY" and table_id.lower() not in TABLE_RATES:
+        raise HTTPException(status_code=400, detail="Unknown table.")
+    if table_type not in {"ANY", "POOL", "SNOOKER"}:
+        raise HTTPException(status_code=400, detail="Invalid table type.")
     start = booking_dt
     end = start + timedelta(minutes=duration)
 

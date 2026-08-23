@@ -152,6 +152,7 @@ const sessionCheckoutParams = (
   closed_at_ms = "",
   discount_reason = "",
   payment_split = [],
+  session_key = "",
 ) => {
   const params = new URLSearchParams({
     payment_method,
@@ -166,6 +167,7 @@ const sessionCheckoutParams = (
   if (Array.isArray(payment_split) && payment_split.length) {
     params.set("payment_split_json", JSON.stringify(payment_split));
   }
+  if (session_key) params.set("session_key", session_key);
   return params.toString();
 };
 
@@ -178,6 +180,7 @@ export const stopSession = (
   closed_at_ms = "",
   discount_reason = "",
   payment_split = [],
+  session_key = "",
 ) =>
   api.post(
     `/sessions/stop/${tableKey(table_id)}?${sessionCheckoutParams(
@@ -188,6 +191,7 @@ export const stopSession = (
       closed_at_ms,
       discount_reason,
       payment_split,
+      session_key,
     )}`,
   );
 export const quoteSession = (
