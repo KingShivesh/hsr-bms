@@ -4,11 +4,12 @@ import {
   createBooking,
   getBookings,
   getTableState,
+  startSession,
 } from "../../api/index.js";
 import RetryNotice from "../../components/RetryNotice.jsx";
 import { useConfirm } from "../../components/confirmContext.js";
 import { useToast } from "../../components/toastContext.js";
-import { HSR_TABLES } from "../../config/hsrTables.js";
+import { HSR_TABLES, getTableRate } from "../../config/hsrTables.js";
 import { getTableStatus } from "../../config/tableStatus.js";
 
 function isoLocalNowPlus(minutes = 30) {
@@ -232,6 +233,26 @@ export default function BookingsPage() {
     bookings: booked.filter((booking) => String(booking.table_id || "").toLowerCase() === table.id),
   }));
 
+  function tableAvailability(table, state) {
+    return getTableStatus({
+      session: state?.session,
+      maintenance: state?.maintenance,
+    });
+  }
+
+  function targetForBooking(booking) {
+    const requestedId = String(booking.table_id || "").toLowerCase();
+    const requestedType = String(booking.table_type || "ANY").toUpperCase();
+    const candidates = HSR_TABLES
+      .filter((table) => requestedId && requestedId !== "any" ? table.id === requestedId : true)
+      .filter((table) => requestedType === "ANY" || table.type === requestedType)
+      .map((table) => ({
+        table,
+        state: tableState.find((row) => String(row.id || row.table_id || "").toLowerCase() === table.id),
+      }));
+    return candidates.find(({ table, state }) => tableAvailability(table, state).key === "available") || null;
+  }
+
   async function submitBooking(event) {
     event.preventDefault();
     setBusy("create");
@@ -263,6 +284,32 @@ export default function BookingsPage() {
       await loadBookings();
     } catch (err) {
       showToast(err.response?.data?.detail || "Could not cancel booking", "error");
+    } finally {
+      setBusy("");
+    }
+  }
+
+  async function checkInBooking(booking) {
+    const target = targetForBooking(booking);
+    if (!target) {
+      showToast("No available matching table for this booking.", "error");
+      return;
+    }
+    setBusy(`checkin-${booking.id}`);
+    try {
+      await startSession(
+        target.table.id,
+        booking.customer_name,
+        target.state?.rate || getTableRate(target.table),
+        false,
+        "",
+        "single",
+        [booking.customer_name],
+      );
+      showToast(`${booking.customer_name} checked in to T${target.table.num}`, "success");
+      await loadBookings();
+    } catch (err) {
+      showToast(err.response?.data?.detail || err.userMessage || "Could not check in booking", "error");
     } finally {
       setBusy("");
     }
@@ -349,14 +396,24 @@ export default function BookingsPage() {
                 </div>
                 <time>{shortDate(booking.booking_time)}</time>
                 <em data-status={booking.status}>{booking.status}</em>
-                <button
-                  type="button"
-                  className="lf-danger-button"
-                  disabled={busy === `cancel-${booking.id}` || booking.status !== "booked"}
-                  onClick={() => cancelExistingBooking(booking)}
-                >
-                  {busy === `cancel-${booking.id}` ? "Cancelling..." : "Cancel"}
-                </button>
+                <div className="op2-row-actions">
+                  <button
+                    type="button"
+                    className="lf-primary-button"
+                    disabled={busy === `checkin-${booking.id}` || booking.status !== "booked" || !targetForBooking(booking)}
+                    onClick={() => checkInBooking(booking)}
+                  >
+                    {busy === `checkin-${booking.id}` ? "Checking in..." : "Check in"}
+                  </button>
+                  <button
+                    type="button"
+                    className="lf-danger-button"
+                    disabled={busy === `cancel-${booking.id}` || booking.status !== "booked"}
+                    onClick={() => cancelExistingBooking(booking)}
+                  >
+                    {busy === `cancel-${booking.id}` ? "Cancelling..." : "Cancel"}
+                  </button>
+                </div>
               </article>
             ))}
           </div>

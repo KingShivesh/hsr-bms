@@ -844,7 +844,7 @@ function OwnerIntelligence({ utilization, foodAttachment, longRunningCount, wait
     foodAttachment < 15
       ? {
           title: "Food attach can improve",
-          detail: `Food is ${foodAttachment}% of revenue. Prompt tea, fries, cold drinks, or cigarettes during long frames.`,
+          detail: `Food is ${foodAttachment}% of revenue. Prompt tea, fries, cold drinks, or cigarettes during long sessions.`,
           icon: "ti-tools-kitchen-2",
           tone: "warning",
         }
@@ -857,7 +857,7 @@ function OwnerIntelligence({ utilization, foodAttachment, longRunningCount, wait
     longRunningCount
       ? {
           title: "Review long-running tables",
-          detail: `${longRunningCount} active table(s) have crossed 90 minutes. Confirm frames, pause state, and running total.`,
+          detail: `${longRunningCount} active table(s) have crossed 90 minutes. Confirm pause state, food orders, and running total.`,
           icon: "ti-clock-exclamation",
           tone: "critical",
         }
@@ -1194,7 +1194,7 @@ export default function Dashboard({ metrics, onNavigate, role = "admin" }) {
     if (longRunning.length) {
       items.push({
         title: `${longRunning.length} long session${longRunning.length > 1 ? "s" : ""}`,
-        detail: "Check if players need a frame close, food prompt, or checkout.",
+        detail: "Check if players need a food prompt, pause, transfer, or checkout.",
         tone: "critical",
         icon: "ti-clock-exclamation",
       });

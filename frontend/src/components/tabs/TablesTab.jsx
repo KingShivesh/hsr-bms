@@ -2550,8 +2550,6 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0, onOpenF
           notes: x.notes || "",
           billingMode,
           players,
-          frames: x.frames || [],
-          currentFrame: x.current_frame || null,
           loserPays: billingMode === "lp",
           player1: players[0] || x.customer_name,
           player2: players.slice(1).join(", "),
@@ -2680,8 +2678,7 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0, onOpenF
     const players = [entry.customer_name];
     return runBusyAction(`seat-queue:${entry.id}`, async () => {
       try {
-        const res = await startSession(table.id, entry.customer_name, rate, false, "", "single", players);
-        const frames = res.data.frames || [];
+        await startSession(table.id, entry.customer_name, rate, false, "", "single", players);
         await seatWaitlistEntry(entry.id, table.id);
         setSessions((prev) => ({
           ...prev,
@@ -2696,8 +2693,6 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0, onOpenF
             notes: entry.notes || "",
             billingMode: "single",
             players,
-            frames,
-            currentFrame: frames.find((frame) => frame.status === "open") || null,
             loserPays: false,
             player1: entry.customer_name,
             player2: "",
@@ -2734,7 +2729,7 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0, onOpenF
     const rate = getTableRate(table, rates);
     return runBusyAction(`start:${table.id}`, async () => {
       try {
-        const res = await startSession(
+        await startSession(
           table.id,
           primaryName,
           rate,
@@ -2743,7 +2738,6 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0, onOpenF
           billingMode,
           players,
         );
-        const frames = res.data.frames || [];
         setSessions((prev) => ({
           ...prev,
           [table.id]: {
@@ -2757,8 +2751,6 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0, onOpenF
             notes: "",
             billingMode,
             players,
-            frames,
-            currentFrame: frames.find((frame) => frame.status === "open") || null,
             loserPays: billingMode === "lp",
             player1: players[0],
             player2: players.slice(1).join(", "),
@@ -2799,7 +2791,7 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0, onOpenF
     const rate = getTableRate(table, rates);
     return runBusyAction(`start:${table.id}`, async () => {
       try {
-        const res = await startSession(
+        await startSession(
           table.id,
           primaryName,
           rate,
@@ -2808,7 +2800,6 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0, onOpenF
           billingMode,
           players,
         );
-        const frames = res.data.frames || [];
         setSessions((prev) => ({
           ...prev,
           [table.id]: {
@@ -2822,8 +2813,6 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0, onOpenF
             notes: "",
             billingMode,
             players,
-            frames,
-            currentFrame: frames.find((frame) => frame.status === "open") || null,
             loserPays: billingMode === "lp",
             player1: players[0],
             player2: players.slice(1).join(", "),

@@ -70,7 +70,7 @@ export default function CommandBar({ page, setPage, onNewSession, role = "admin"
       },
       {
         id: "tables",
-        label: "Full table controls",
+        label: "Legacy table controls",
         hint: "Legacy checkout controls",
         icon: "ti-layout-board",
         action: () => setPage("tables"),
@@ -107,9 +107,17 @@ export default function CommandBar({ page, setPage, onNewSession, role = "admin"
       {
         id: "reports",
         label: "Analytics",
-        hint: "Bills and table performance",
+        hint: "Revenue and table performance",
         icon: "ti-chart-bar",
         action: () => setPage("reports"),
+        adminOnly: true,
+      },
+      {
+        id: "sales",
+        label: "Sales",
+        hint: "Transactions and receipts",
+        icon: "ti-receipt",
+        action: () => setPage("billing"),
         adminOnly: true,
       },
       {

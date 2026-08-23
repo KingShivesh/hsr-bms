@@ -958,6 +958,20 @@ textarea:focus-visible {
   min-width: 0;
 }
 
+.op2-register-row .op2-row-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--space-2);
+}
+
+.op2-row-actions .lf-primary-button,
+.op2-row-actions .lf-danger-button {
+  min-height: var(--btn-h-md);
+  padding: 0 var(--space-3);
+  white-space: nowrap;
+}
+
 .op2-register-row strong {
   color: var(--text-primary);
   font-size: var(--text-base);
@@ -991,6 +1005,130 @@ textarea:focus-visible {
 .op2-register-row em[data-status="missed"] {
   background: var(--danger-bg);
   color: var(--danger);
+}
+
+.sales-table-wrap {
+  overflow: auto;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--surface-raised);
+}
+
+.sales-table {
+  width: 100%;
+  min-width: 920px;
+  border-collapse: collapse;
+  color: var(--text-primary);
+}
+
+.sales-table th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: var(--surface-muted);
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-black);
+  letter-spacing: 0.06em;
+  text-align: left;
+  text-transform: uppercase;
+}
+
+.sales-table th,
+.sales-table td {
+  padding: var(--space-4);
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+
+.sales-table td:nth-child(n+5),
+.sales-table th:nth-child(n+5) {
+  text-align: right;
+}
+
+.sales-table tbody tr {
+  cursor: pointer;
+  transition: background 150ms ease-out;
+}
+
+.sales-table tbody tr:hover {
+  background: var(--accent-bg);
+}
+
+.sales-table td {
+  color: var(--text-secondary);
+  font-size: var(--text-base);
+  font-weight: var(--weight-semibold);
+  font-variant-numeric: tabular-nums;
+}
+
+.sales-table td:first-child {
+  display: grid;
+  gap: var(--space-1);
+}
+
+.sales-table strong {
+  color: var(--text-primary);
+  font-weight: var(--weight-black);
+}
+
+.sales-table span {
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+}
+
+.sales-table em {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--btn-h-sm);
+  padding: 0 var(--space-3);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--accent-text);
+  font-style: normal;
+  font-weight: var(--weight-black);
+}
+
+.sales-detail-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-3);
+}
+
+.sales-detail-grid div {
+  display: grid;
+  gap: var(--space-1);
+  padding: var(--space-3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--surface-muted);
+}
+
+.sales-detail-grid dt {
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-black);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.sales-detail-grid dd {
+  margin: 0;
+  color: var(--text-primary);
+  font-size: var(--text-lg);
+  font-weight: var(--weight-black);
+  font-variant-numeric: tabular-nums;
+}
+
+.sales-notes {
+  margin: 0;
+  padding: var(--space-4);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--surface-muted);
+  color: var(--text-secondary);
+  font-size: var(--text-base);
+  font-weight: var(--weight-semibold);
 }
 
 .op2-customer-grid {
@@ -1089,6 +1227,10 @@ textarea:focus-visible {
     grid-template-columns: minmax(0, 1fr);
     align-items: stretch;
   }
+
+  .op2-register-row .op2-row-actions {
+    justify-content: flex-start;
+  }
 }
 
 @media (max-width: 760px) {
@@ -1101,7 +1243,8 @@ textarea:focus-visible {
   .op2-inline-form,
   .op2-controls,
   .op2-card-actions,
-  .op2-modal-actions {
+  .op2-modal-actions,
+  .op2-register-row .op2-row-actions {
     align-items: stretch;
     flex-direction: column;
   }
@@ -1111,7 +1254,8 @@ textarea:focus-visible {
   .op2-controls input,
   .op2-controls button,
   .op2-card-actions button,
-  .op2-modal-actions button {
+  .op2-modal-actions button,
+  .op2-row-actions button {
     width: 100%;
   }
 
@@ -1119,7 +1263,8 @@ textarea:focus-visible {
   .op2-board,
   .op2-customer-grid,
   .op2-customer-stats,
-  .op2-form-grid {
+  .op2-form-grid,
+  .sales-detail-grid {
     grid-template-columns: 1fr;
   }
 }

@@ -40,7 +40,7 @@ export default function MembersTab() {
       setDuplicates(dupRes.data);
     } catch (e) {
       console.error(e);
-      setLoadError(e.userMessage || "Club Members could not load.");
+      setLoadError(e.userMessage || "Customers could not load.");
     } finally {
       setLoading(false);
     }
@@ -82,7 +82,7 @@ export default function MembersTab() {
   async function handleDelete(customerId) {
     const confirmed = await requestConfirm({
       title: "Delete member?",
-      message: "This removes the customer profile from Club Members.",
+      message: "This removes the customer profile from Customers.",
       confirmLabel: "Delete member",
       tone: "danger",
     });

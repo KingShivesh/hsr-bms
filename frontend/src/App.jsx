@@ -12,6 +12,7 @@ const Dashboard = lazy(() => import("./components/Dashboard.jsx"));
 const LiveFloor = lazy(() => import("./features/live-floor/LiveFloor.jsx"));
 const BookingsPage = lazy(() => import("./features/bookings/BookingsPage.jsx"));
 const CustomersPage = lazy(() => import("./features/customers/CustomersPage.jsx"));
+const SalesPage = lazy(() => import("./features/sales/SalesPage.jsx"));
 const TablesTab = lazy(() => import("./components/tabs/TablesTab.jsx"));
 const ReportsTab = lazy(() => import("./components/tabs/ReportsTab.jsx"));
 const ClosingTab = lazy(() => import("./components/tabs/ClosingTab.jsx"));
@@ -219,18 +220,18 @@ function AppInner() {
   const PAGE_TITLES = {
     "live-floor": "Live Floor",
     dashboard: "Executive Overview",
-    tables: "Live Table Floor",
+    tables: "Legacy Table Controls",
     waitlist: "Smart Waitlist",
-    reservations: "Reservations & Slots",
+    reservations: "Bookings",
     food: "Food & Cafe POS",
-    billing: "Billing & Invoices",
-    members: "Club Members",
+    billing: "Sales",
+    members: "Customers",
     tournaments: "Tournament Hub",
     closing: "Daily Closing",
     reports: "Analytics & Reports",
-    operations: "Operations Control",
+    operations: "Pricing & Rules",
     inventory: "Inventory & Stocks",
-    staff: "Activity Log",
+    staff: "Audit Log",
     notifications: "Notification Center",
     settings: "Club Settings",
   };
@@ -294,9 +295,9 @@ function AppInner() {
               {page === "tournaments" && <TournamentTab />}
               {page === "members" && role === "admin" && <CustomersPage />}
               {page === "operations" && role === "admin" && <OperationsTab />}
+              {page === "billing" && role === "admin" && <SalesPage />}
               {[
                 "waitlist",
-                "billing",
                 "inventory",
                 "notifications",
                 "staff",

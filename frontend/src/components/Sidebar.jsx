@@ -43,7 +43,6 @@ export default function Sidebar({ page, setPage, onLogout, activeTables, role = 
       title: "Club",
       tone: "club",
       items: [
-        { id: "members", icon: "ti-users", label: "Members", adminOnly: true },
         { id: "inventory", icon: "ti-package", label: "Inventory & Stocks", staffHidden: true },
         { id: "tournaments", icon: "ti-trophy", label: "Tournaments", staffHidden: true },
       ],
@@ -52,9 +51,9 @@ export default function Sidebar({ page, setPage, onLogout, activeTables, role = 
       title: "Admin",
       tone: "system",
       items: [
-        { id: "staff", icon: "ti-user-check", label: "Staff & Roles", adminOnly: true },
-        { id: "operations", icon: "ti-adjustments", label: "Operations Control", adminOnly: true },
-        { id: "tables", icon: "ti-layout-board", label: "Full Table Controls", staffHidden: true },
+        { id: "staff", icon: "ti-user-check", label: "Audit Log", adminOnly: true },
+        { id: "operations", icon: "ti-adjustments", label: "Pricing & Rules", adminOnly: true },
+        { id: "tables", icon: "ti-layout-board", label: "Legacy Table Controls", staffHidden: true },
         { id: "notifications", icon: "ti-bell", label: "Notifications", staffHidden: true },
         { id: "settings", icon: "ti-settings", label: "Settings", adminOnly: true },
       ],
