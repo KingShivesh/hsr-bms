@@ -29,7 +29,7 @@ export default function Topbar({
   const [dt, setDt] = useState("");
   const [clock, setClock] = useState("");
   const [dark, setDark] = useState(
-    () => localStorage.getItem("darkMode") === "true",
+    () => localStorage.getItem("darkMode") !== "false",
   );
   const displayName = username || role;
   const displayLabel =

@@ -5,6 +5,11 @@ import "./style.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import App from "./App.jsx";
 
+const storedDarkMode = localStorage.getItem("darkMode");
+if (storedDarkMode === null || storedDarkMode === "true") {
+  document.body.classList.add("dark");
+}
+
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <App />
