@@ -11,6 +11,7 @@ import { HSR_TABLES } from "../../config/hsrTables.js";
 import TableStatusCard from "../TableStatusCard.jsx";
 import { useToast } from "../toastContext.js";
 import { useConfirm } from "../confirmContext.js";
+import RetryNotice from "../RetryNotice.jsx";
 
 const GAME_TYPES = ["8 Ball", "9 Ball", "10 Ball", "Snooker", "Straight Pool"];
 
@@ -103,6 +104,8 @@ export default function TournamentTab() {
   const [rates, setRates] = useState({ wr: 320, pr: 170, sr: 270 });
   const [tableState, setTableState] = useState([]);
   const [activeAction, setActiveAction] = useState("");
+  const [loadError, setLoadError] = useState("");
+  const [tableLoadError, setTableLoadError] = useState("");
 
   useEffect(() => {
     fetchAll();
@@ -115,6 +118,7 @@ export default function TournamentTab() {
 
   async function fetchAll(nextSelectedId = null) {
     try {
+      setLoadError("");
       const res = await getTournaments();
       setTournaments(res.data);
       const id = nextSelectedId || selected?.id || res.data[0]?.id;
@@ -124,6 +128,7 @@ export default function TournamentTab() {
       }
     } catch (e) {
       console.error(e);
+      setLoadError(e.userMessage || "Tournaments could not load.");
     } finally {
       setLoading(false);
     }
@@ -131,11 +136,13 @@ export default function TournamentTab() {
 
   async function fetchTableState() {
     try {
+      setTableLoadError("");
       const res = await getTableState();
       setTableState(res.data.tables || []);
       setRates(res.data.rates || { wr: 320, pr: 170, sr: 270 });
     } catch (e) {
       console.error(e);
+      setTableLoadError(e.userMessage || "Live table status could not load.");
     }
   }
 
@@ -238,14 +245,40 @@ export default function TournamentTab() {
 
   if (loading) {
     return (
-      <div style={{ color: "var(--text-muted)", padding: "40px", textAlign: "center" }}>
-        Loading tournaments...
+      <div className="page-skeleton compact" role="status" aria-live="polite" aria-label="Loading tournaments">
+        <div className="page-skeleton-status">
+          <i className="ti ti-loader-2" aria-hidden="true" />
+          <span>Loading tournaments...</span>
+        </div>
+        <div className="skeleton-grid">
+          <div className="skeleton-card" />
+          <div className="skeleton-card" />
+          <div className="skeleton-card" />
+        </div>
+        <div className="skeleton-panel" />
       </div>
     );
   }
 
   return (
     <div className="tournament-layout">
+      {loadError && (
+        <RetryNotice
+          message={loadError}
+          detail="Tournament brackets may be stale until this reloads."
+          onRetry={() => {
+            setLoading(true);
+            fetchAll();
+          }}
+        />
+      )}
+      {tableLoadError && (
+        <RetryNotice
+          message={tableLoadError}
+          detail="Tournament table availability may be stale until this reloads."
+          onRetry={fetchTableState}
+        />
+      )}
       <div>
         {flash && (
           <div

@@ -9,6 +9,7 @@ import {
 } from "../../api/index.js";
 import { useToast } from "../toastContext.js";
 import { useConfirm } from "../confirmContext.js";
+import RetryNotice from "../RetryNotice.jsx";
 
 function isFullName(name) {
   return name.trim().length > 0;
@@ -21,6 +22,8 @@ export default function MembersTab() {
   const [duplicates, setDuplicates] = useState([]);
   const [activeAction, setActiveAction] = useState("");
   const [newMemberName, setNewMemberName] = useState("");
+  const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState("");
 
   useEffect(() => {
     fetchMembers();
@@ -28,6 +31,7 @@ export default function MembersTab() {
 
   async function fetchMembers() {
     try {
+      setLoadError("");
       const [res, dupRes] = await Promise.all([
         getMembers(),
         getMemberDuplicates(),
@@ -36,6 +40,9 @@ export default function MembersTab() {
       setDuplicates(dupRes.data);
     } catch (e) {
       console.error(e);
+      setLoadError(e.userMessage || "Club Members could not load.");
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -117,8 +124,35 @@ export default function MembersTab() {
   const totalRevenue = members.reduce((a, m) => a + m.spt, 0);
   const totalVisits = members.reduce((a, m) => a + m.vis, 0);
 
+  if (loading && !members.length && !loadError) {
+    return (
+      <div className="page-skeleton compact" role="status" aria-live="polite" aria-label="Loading club members">
+        <div className="page-skeleton-status">
+          <i className="ti ti-loader-2" aria-hidden="true" />
+          <span>Loading club members...</span>
+        </div>
+        <div className="skeleton-grid">
+          <div className="skeleton-card" />
+          <div className="skeleton-card" />
+          <div className="skeleton-card" />
+        </div>
+        <div className="skeleton-panel" />
+      </div>
+    );
+  }
+
   return (
     <div>
+      {loadError && (
+        <RetryNotice
+          message={loadError}
+          detail="Member profiles and duplicate suggestions may be stale until this loads."
+          onRetry={() => {
+            setLoading(true);
+            fetchMembers();
+          }}
+        />
+      )}
       {/* Stats bar */}
       <div
         style={{

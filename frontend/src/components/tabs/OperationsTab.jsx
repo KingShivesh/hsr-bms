@@ -10,6 +10,7 @@ import {
 } from "../../api/index.js";
 import { useToast } from "../toastContext.js";
 import { useConfirm } from "../confirmContext.js";
+import RetryNotice from "../RetryNotice.jsx";
 
 function TabBtn({ active, onClick, children }) {
   return (
@@ -49,6 +50,7 @@ function PeakHoursView() {
   const [label, setLabel] = useState("Evening Peak");
   const [editingId, setEditingId] = useState(null);
   const [activeAction, setActiveAction] = useState("");
+  const [loadError, setLoadError] = useState("");
 
   useEffect(() => {
     fetchAll();
@@ -56,6 +58,7 @@ function PeakHoursView() {
 
   async function fetchAll() {
     try {
+      setLoadError("");
       const [rRes, cRes] = await Promise.all([
         getPeakHours(),
         getCurrentRate(),
@@ -64,6 +67,7 @@ function PeakHoursView() {
       setCurrentRate(cRes.data);
     } catch (e) {
       console.error(e);
+      setLoadError(e.userMessage || "Peak-hour settings could not load.");
     }
   }
 
@@ -145,6 +149,13 @@ function PeakHoursView() {
       title="Peak Hour Rates"
       description="Automatically apply a rate multiplier during busy hours"
     >
+      {loadError && (
+        <RetryNotice
+          message={loadError}
+          detail="Peak-hour rates may be stale until this reloads."
+          onRetry={fetchAll}
+        />
+      )}
       {/* Current rate indicator */}
       {currentRate && (
         <div
@@ -318,11 +329,18 @@ function GSTView() {
   const [gst, setGst] = useState(0);
   const [flash, setFlash] = useState("");
   const [saving, setSaving] = useState(false);
+  const [loadError, setLoadError] = useState("");
 
   useEffect(() => {
     getGST()
-      .then((r) => setGst(r.data.gst_percent))
-      .catch(console.error);
+      .then((r) => {
+        setLoadError("");
+        setGst(r.data.gst_percent);
+      })
+      .catch((e) => {
+        console.error(e);
+        setLoadError(e.userMessage || "GST setting could not load.");
+      });
   }, []);
 
   async function handleSave() {
@@ -344,6 +362,18 @@ function GSTView() {
       title="Tax / GST"
       description="Automatically add GST to every bill. Set to 0 to disable."
     >
+      {loadError && (
+        <RetryNotice
+          message={loadError}
+          detail="The saved tax value may be stale until this reloads."
+          onRetry={() => {
+            setLoadError("");
+            getGST()
+              .then((r) => setGst(r.data.gst_percent))
+              .catch((e) => setLoadError(e.userMessage || "GST setting could not load."));
+          }}
+        />
+      )}
       {flash && (
         <div
           style={{

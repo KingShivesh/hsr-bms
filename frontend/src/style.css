@@ -11032,6 +11032,15 @@ body.dark .backend-status-banner {
   .backend-status-banner span {
     flex-basis: calc(100% - 32px);
   }
+
+  .retry-notice {
+    grid-template-columns: var(--icon-box-md) minmax(0, 1fr);
+  }
+
+  .retry-notice button {
+    grid-column: 1 / -1;
+    width: 100%;
+  }
 }
 
 /* ClubFlow-style full product shell */
@@ -14771,6 +14780,71 @@ body.dark .cf-modal-head {
 }
 
 .load-error-banner button:active {
+  transform: scale(0.98);
+}
+
+.retry-notice {
+  display: grid;
+  grid-template-columns: var(--icon-box-md) minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--space-3);
+  width: min(100%, 1120px);
+  margin: 0 0 var(--space-4);
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid color-mix(in srgb, var(--warning) 32%, var(--border));
+  border-radius: var(--radius-md);
+  background: color-mix(in srgb, var(--warning-bg) 70%, var(--surface));
+  color: var(--text-primary);
+}
+
+.retry-notice > i {
+  width: var(--icon-box-md);
+  height: var(--icon-box-md);
+  display: grid;
+  place-items: center;
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  color: var(--warning);
+  font-size: var(--icon-md);
+}
+
+.retry-notice strong,
+.retry-notice span {
+  display: block;
+}
+
+.retry-notice strong {
+  color: var(--text-primary);
+  font-size: var(--text-base);
+  font-weight: var(--weight-black);
+}
+
+.retry-notice span {
+  margin-top: 2px;
+  color: var(--text-secondary);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+}
+
+.retry-notice button {
+  min-height: var(--btn-h-sm);
+  padding: 0 var(--space-3);
+  border: 1px solid color-mix(in srgb, var(--accent) 34%, var(--border));
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  color: var(--accent);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-bold);
+  cursor: pointer;
+  transition: background var(--motion-fast) var(--ease-out), border-color var(--motion-fast) var(--ease-out), transform var(--motion-fast) var(--ease-out);
+}
+
+.retry-notice button:hover {
+  border-color: var(--accent);
+  background: var(--accent-bg);
+}
+
+.retry-notice button:active {
   transform: scale(0.98);
 }
 

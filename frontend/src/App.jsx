@@ -151,7 +151,11 @@ function AppInner() {
       setBackendStatus({
         state: "offline",
         message: e.userMessage || "Backend is unreachable.",
-        requestId: e.config?.headers?.["X-Client-Request-Id"] || "",
+        requestId:
+          e.response?.headers?.["x-request-id"] ||
+          e.response?.data?.request_id ||
+          e.config?.headers?.["X-Client-Request-Id"] ||
+          "",
       });
     }
   }

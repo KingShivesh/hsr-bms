@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { closeDay, getClosingInsights, getClosingReport } from "../../api/index.js";
 import { useToast } from "../toastContext.js";
 import { useConfirm } from "../confirmContext.js";
+import RetryNotice from "../RetryNotice.jsx";
 
 function money(value) {
   return `₹${Number(value || 0).toLocaleString("en-IN")}`;
@@ -76,27 +77,32 @@ export default function ClosingTab() {
   const [countedCash, setCountedCash] = useState("");
   const [closingNotes, setClosingNotes] = useState("");
   const [closingBusy, setClosingBusy] = useState(false);
+  const [loadError, setLoadError] = useState("");
+
+  async function fetchClosing() {
+    setLoading(true);
+    setLoadError("");
+    try {
+      const [reportRes, insightsRes] = await Promise.all([
+        getClosingReport(),
+        getClosingInsights(),
+      ]);
+      setData(reportRes.data);
+      setInsights(insightsRes.data);
+      const closeRecord = reportRes.data.day_close || {};
+      setClosedDay(!!closeRecord.closed);
+      setOpeningFloat(closeRecord.opened_float ? String(closeRecord.opened_float) : "");
+      setCountedCash(closeRecord.counted_cash ? String(closeRecord.counted_cash) : "");
+      setClosingNotes(closeRecord.notes || "");
+    } catch (e) {
+      console.error(e);
+      setLoadError(e.userMessage || "Daily Closing could not load.");
+    } finally {
+      setLoading(false);
+    }
+  }
 
   useEffect(() => {
-    async function fetchClosing() {
-      try {
-        const [reportRes, insightsRes] = await Promise.all([
-          getClosingReport(),
-          getClosingInsights(),
-        ]);
-        setData(reportRes.data);
-        setInsights(insightsRes.data);
-        const closeRecord = reportRes.data.day_close || {};
-        setClosedDay(!!closeRecord.closed);
-        setOpeningFloat(closeRecord.opened_float ? String(closeRecord.opened_float) : "");
-        setCountedCash(closeRecord.counted_cash ? String(closeRecord.counted_cash) : "");
-        setClosingNotes(closeRecord.notes || "");
-      } catch (e) {
-        console.error(e);
-      } finally {
-        setLoading(false);
-      }
-    }
     fetchClosing();
   }, []);
 
@@ -156,13 +162,11 @@ export default function ClosingTab() {
 
   if (!data) {
     return (
-      <div className="empty-state">
-        <div className="empty-state-icon">
-          <i className="ti ti-clipboard-text" aria-hidden="true" />
-        </div>
-        <div className="empty-state-title">Closing report unavailable</div>
-        <div className="empty-state-detail">Try again after the backend is running.</div>
-      </div>
+      <RetryNotice
+        message={loadError || "Closing report unavailable"}
+        detail="Try again after checking the backend connection."
+        onRetry={fetchClosing}
+      />
     );
   }
 
@@ -180,6 +184,13 @@ export default function ClosingTab() {
 
   return (
     <div className="closing-page">
+      {loadError && (
+        <RetryNotice
+          message={loadError}
+          detail="The closing report below may be stale until this reloads."
+          onRetry={fetchClosing}
+        />
+      )}
       <div className="closing-hero">
         <div>
           <div className="closing-eyebrow">Shift end</div>

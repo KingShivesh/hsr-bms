@@ -50,7 +50,11 @@ function notifyBackendFailure(err) {
     new CustomEvent("backend:request-failed", {
       detail: {
         message: backendErrorMessage(err),
-        requestId: err.config?.headers?.["X-Client-Request-Id"] || "",
+        requestId:
+          err.response?.headers?.["x-request-id"] ||
+          err.response?.data?.request_id ||
+          err.config?.headers?.["X-Client-Request-Id"] ||
+          "",
         status: err.response?.status || 0,
       },
     }),

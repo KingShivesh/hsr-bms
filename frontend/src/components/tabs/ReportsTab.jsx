@@ -12,6 +12,7 @@ import {
 } from "../../api/index.js";
 import { CSV_PREFIX } from "../../config/hsrTables.js";
 import { useToast } from "../toastContext.js";
+import RetryNotice from "../RetryNotice.jsx";
 
 const PERIODS = [
   { id: "today", label: "Today" },
@@ -985,12 +986,17 @@ export default function ReportsTab({ onNavigate }) {
   });
   const [history, setHistory] = useState([]);
   const [exporting, setExporting] = useState(false);
+  const [loadError, setLoadError] = useState("");
 
   useEffect(() => {
-    fetchSummary();
-    fetchHistory();
+    refreshReports();
     localStorage.removeItem("reportsDefaultTab");
   }, []);
+
+  async function refreshReports() {
+    setLoadError("");
+    await Promise.all([fetchSummary(), fetchHistory()]);
+  }
 
   async function fetchSummary() {
     try {
@@ -998,6 +1004,7 @@ export default function ReportsTab({ onNavigate }) {
       setSummary(res.data);
     } catch (e) {
       console.error(e);
+      setLoadError(e.userMessage || "Report summary could not load.");
     }
   }
 
@@ -1007,6 +1014,7 @@ export default function ReportsTab({ onNavigate }) {
       setHistory(res.data);
     } catch (e) {
       console.error(e);
+      setLoadError(e.userMessage || "Bill history could not load.");
     }
   }
 
@@ -1030,6 +1038,13 @@ export default function ReportsTab({ onNavigate }) {
 
   return (
     <div>
+      {loadError && (
+        <RetryNotice
+          message={loadError}
+          detail="Reports may be stale until the latest data loads."
+          onRetry={refreshReports}
+        />
+      )}
       {/* Summary cards — always visible */}
       <div
         style={{
