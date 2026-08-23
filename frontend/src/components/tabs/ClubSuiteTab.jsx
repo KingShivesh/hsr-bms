@@ -279,7 +279,7 @@ function RowList({ rows, emptyTitle = "Nothing pending", emptyDetail = "New acti
   return (
     <div className="cf-row-list">
       {rows.map((row) => (
-        <div className="cf-row" key={row.id}>
+        <div className={`cf-row ${row.tone || ""}`} key={row.id}>
           <i className={`ti ${row.icon}`} aria-hidden="true" />
           <div>
             <strong>{row.title}</strong>
@@ -663,14 +663,15 @@ function ReservationsView({ bookings, tableState, actions, busy, activeAction })
 }
 
 function BillingView({ history, foodOrders, actions, busy, activeAction }) {
-  const tableTotal = history.reduce((sum, bill) => sum + Number(bill.total || bill.amount || 0), 0);
+  const tableTotal = history.reduce((sum, bill) => sum + Number(bill.tot ?? bill.total ?? bill.amount ?? 0), 0);
   const foodTotal = foodOrders.reduce((sum, order) => sum + Number(order.total || 0), 0);
   const recentBills = history.slice(0, 12).map((bill) => ({
-    id: `bill-${bill.id || bill.date}-${bill.table_id}`,
+    id: `bill-${bill.id || bill.date}-${bill.tbl || bill.table_id}`,
     icon: "ti-receipt",
-    title: `${bill.table_id || "Table"} · ${bill.customer_name || "Customer"}`,
+    title: `${bill.tbl || bill.table_id || "Table"} · ${bill.payer_name || bill.nm || bill.customer_name || "Walk-in"}`,
     detail: `${bill.payment_method || "Cash"} · ${bill.date || ""}`,
-    amount: money(bill.total || bill.amount || 0),
+    amount: money(bill.tot ?? bill.total ?? bill.amount ?? 0),
+    tone: Number(bill.tot ?? bill.total ?? bill.amount ?? 0) <= 0 ? "warning" : "",
   }));
   const foodRows = foodOrders.slice(0, 6).map((order) => ({
     id: `food-${order.id}`,

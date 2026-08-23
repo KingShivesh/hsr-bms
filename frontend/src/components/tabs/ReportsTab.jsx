@@ -43,6 +43,18 @@ function formatBillDate(row) {
   return row?.date || "-";
 }
 
+function billCustomerName(row) {
+  return row?.payer_name || row?.nm || row?.customer_name || "Walk-in";
+}
+
+function billTotal(row) {
+  return Number(row?.tot ?? row?.total ?? 0);
+}
+
+function isSuspiciousBill(row) {
+  return billTotal(row) <= 0 && Number(row?.dur || 0) > 0;
+}
+
 function billDateKey(row) {
   const ts = Number(row?.ts);
   if (Number.isFinite(ts) && ts > 0) {
@@ -120,9 +132,11 @@ function HistoryView({ history, period, onPeriodChange, selectedDate, onDateChan
   };
 
   const filtered = history.filter((r) => {
+    const customer = billCustomerName(r).toLowerCase();
+    const table = String(r.tbl || r.table_id || "").toLowerCase();
     const matchSearch =
-      r.nm.toLowerCase().includes(search.toLowerCase()) ||
-      r.tbl.toLowerCase().includes(search.toLowerCase());
+      customer.includes(search.toLowerCase()) ||
+      table.includes(search.toLowerCase());
     if (!matchSearch) return false;
     if (period === "date" && selectedDate) {
       return billDateKey(r) === selectedDate;
@@ -138,6 +152,7 @@ function HistoryView({ history, period, onPeriodChange, selectedDate, onDateChan
     }
     return true;
   });
+  const suspiciousCount = filtered.filter(isSuspiciousBill).length;
 
   return (
     <div className="history-section">
@@ -200,6 +215,14 @@ function HistoryView({ history, period, onPeriodChange, selectedDate, onDateChan
         style={{ marginBottom: "12px" }}
         data-testid="search-transactions"
       />
+      {suspiciousCount > 0 && (
+        <div className="report-integrity-banner" role="status">
+          <i className="ti ti-alert-triangle" aria-hidden="true" />
+          <span>
+            {suspiciousCount} table bill{suspiciousCount > 1 ? "s" : ""} need review because the amount is ₹0 despite recorded play time.
+          </span>
+        </div>
+      )}
       <div style={{ overflowX: "auto" }}>
         <table className="data-table">
           <thead>
@@ -230,7 +253,7 @@ function HistoryView({ history, period, onPeriodChange, selectedDate, onDateChan
               </tr>
             ) : (
               filtered.map((r, i) => (
-                <tr key={i}>
+                <tr key={i} className={isSuspiciousBill(r) ? "data-row-warning" : ""}>
                   <td style={{ color: "var(--text-muted)", fontSize: "var(--text-sm)" }}>{formatBillDate(r)}</td>
                   <td>
                     <span
@@ -243,10 +266,10 @@ function HistoryView({ history, period, onPeriodChange, selectedDate, onDateChan
                         fontWeight: "var(--weight-semibold)",
                       }}
                     >
-                      {r.tbl}
+                      {r.tbl || r.table_id}
                     </span>
                   </td>
-                  <td style={{ fontWeight: "var(--weight-medium)" }}>{r.nm}</td>
+                  <td style={{ fontWeight: "var(--weight-medium)" }}>{billCustomerName(r)}</td>
                   <td style={{ color: "var(--text-secondary)", fontSize: "var(--text-sm)", fontWeight: "var(--weight-bold)" }}>
                     {labelBillingMode(r.billing_mode)}
                   </td>
@@ -255,7 +278,7 @@ function HistoryView({ history, period, onPeriodChange, selectedDate, onDateChan
                     ₹{r.ply}
                   </td>
                   <td style={{ color: "var(--warning)" }}>₹{r.famt || 0}</td>
-                  <td style={{ fontWeight: "var(--weight-bold)" }}>₹{r.tot}</td>
+                  <td style={{ fontWeight: "var(--weight-bold)" }}>₹{billTotal(r)}</td>
                 </tr>
               ))
             )}

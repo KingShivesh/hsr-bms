@@ -31,6 +31,40 @@ function ChecklistRow({ ok, label, detail }) {
   );
 }
 
+function PaymentAudit({ cashTotal, upiTotal, cardTotal, openingFloat, countedCash, closedDay, variance }) {
+  const floatValue = parseInt(openingFloat, 10) || 0;
+  const countedValue = parseInt(countedCash, 10) || 0;
+  const expectedCash = Number(cashTotal || 0) + floatValue;
+  const varianceValue = closedDay ? Number(variance || 0) : countedValue - expectedCash;
+  const hasCount = countedCash !== "";
+  const varianceTone = !hasCount && !closedDay ? "pending" : varianceValue === 0 ? "ok" : "warn";
+
+  return (
+    <div className="closing-payment-audit">
+      <div>
+        <span>Cash payments</span>
+        <strong>{money(cashTotal)}</strong>
+      </div>
+      <div>
+        <span>UPI</span>
+        <strong>{money(upiTotal)}</strong>
+      </div>
+      <div>
+        <span>Card</span>
+        <strong>{money(cardTotal)}</strong>
+      </div>
+      <div>
+        <span>Expected cash</span>
+        <strong>{money(expectedCash)}</strong>
+      </div>
+      <div className={varianceTone}>
+        <span>{hasCount || closedDay ? "Variance" : "Count pending"}</span>
+        <strong>{hasCount || closedDay ? money(varianceValue) : "—"}</strong>
+      </div>
+    </div>
+  );
+}
+
 export default function ClosingTab() {
   const { showToast } = useToast();
   const { requestConfirm } = useConfirm();
@@ -140,6 +174,9 @@ export default function ClosingTab() {
   const counterUpi = data.food_only_payment_breakdown?.UPI || 0;
   const counterCard = data.food_only_payment_breakdown?.Card || 0;
   const corrections = data.corrections_today || [];
+  const expectedCash = (data.cash_total || 0) + (parseInt(openingFloat, 10) || 0);
+  const countedValue = parseInt(countedCash, 10) || 0;
+  const variancePreview = countedCash === "" && !closedDay ? null : countedValue - expectedCash;
 
   return (
     <div className="closing-page">
@@ -157,11 +194,12 @@ export default function ClosingTab() {
           <button
             className={`btn ${closedDay ? "btn-success-sm" : "btn-primary-sm"}`}
             type="button"
-            disabled={closedDay || closingBusy}
+            disabled={closedDay || closingBusy || !data.can_close_day}
             onClick={markDayClosed}
+            title={!data.can_close_day ? "Close all running tables first" : undefined}
           >
             <i className={`ti ${closedDay ? "ti-circle-check" : "ti-lock-check"}`} aria-hidden="true" />
-            {closingBusy ? "Closing..." : closedDay ? "Day closed" : "Close day"}
+            {closingBusy ? "Closing..." : closedDay ? "Day closed" : !data.can_close_day ? "Close tables first" : "Close day"}
           </button>
         </div>
       </div>
@@ -224,6 +262,15 @@ export default function ClosingTab() {
 
         <div className="history-section">
           <div className="section-heading">Cash Close</div>
+          <PaymentAudit
+            cashTotal={data.cash_total}
+            upiTotal={data.upi_total}
+            cardTotal={data.card_total || 0}
+            openingFloat={openingFloat}
+            countedCash={countedCash}
+            closedDay={closedDay}
+            variance={data.day_close?.variance || 0}
+          />
           <div className="closing-cash-grid">
             <label className="table-field-stack">
               <span>Opening float</span>
@@ -248,9 +295,9 @@ export default function ClosingTab() {
               />
             </label>
           </div>
-          <div className={`closing-variance ${data.day_close?.variance === 0 ? "ok" : "warn"}`}>
-            Expected cash {money((data.cash_total || 0) + (parseInt(openingFloat, 10) || 0))}
-            {closedDay && ` · Variance ${money(data.day_close?.variance || 0)}`}
+          <div className={`closing-variance ${variancePreview === null || variancePreview === 0 ? "ok" : "warn"}`}>
+            Expected cash {money(expectedCash)}
+            {variancePreview !== null && ` · Variance ${money(variancePreview)}`}
           </div>
           <textarea
             className="table-notes-textarea closing-notes-input"
