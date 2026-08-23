@@ -10,13 +10,14 @@ import { getBackendHealth, getMe, getSummary } from "./api/index.js";
 
 const Dashboard = lazy(() => import("./components/Dashboard.jsx"));
 const LiveFloor = lazy(() => import("./features/live-floor/LiveFloor.jsx"));
+const BookingsPage = lazy(() => import("./features/bookings/BookingsPage.jsx"));
+const CustomersPage = lazy(() => import("./features/customers/CustomersPage.jsx"));
 const TablesTab = lazy(() => import("./components/tabs/TablesTab.jsx"));
 const ReportsTab = lazy(() => import("./components/tabs/ReportsTab.jsx"));
 const ClosingTab = lazy(() => import("./components/tabs/ClosingTab.jsx"));
 const SettingsTab = lazy(() => import("./components/tabs/SettingsTab.jsx"));
 const FoodTab = lazy(() => import("./components/tabs/FoodTab.jsx"));
 const TournamentTab = lazy(() => import("./components/tabs/TournamentTab.jsx"));
-const MembersTab = lazy(() => import("./components/tabs/MembersTab.jsx"));
 const OperationsTab = lazy(() => import("./components/tabs/OperationsTab.jsx"));
 const ClubSuiteTab = lazy(() => import("./components/tabs/ClubSuiteTab.jsx"));
 
@@ -291,16 +292,16 @@ function AppInner() {
                 />
               )}
               {page === "tournaments" && <TournamentTab />}
-              {page === "members" && role === "admin" && <MembersTab />}
+              {page === "members" && role === "admin" && <CustomersPage />}
               {page === "operations" && role === "admin" && <OperationsTab />}
               {[
                 "waitlist",
-                "reservations",
                 "billing",
                 "inventory",
                 "notifications",
                 "staff",
               ].includes(page) && <ClubSuiteTab view={page} />}
+              {page === "reservations" && <BookingsPage />}
               {page === "settings" && (
                 <SettingsTab
                   role={role}

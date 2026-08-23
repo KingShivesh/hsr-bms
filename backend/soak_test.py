@@ -114,13 +114,6 @@ def close_all_active():
         if mode == "lp":
             players = session.get("players") or [session["customer_name"]]
             payer = players[0]
-            current_frame = session.get("current_frame")
-            if current_frame:
-                request(
-                    "POST",
-                    f"/sessions/{table}/frames/close",
-                    json={"loser_name": payer},
-                )
         request(
             "POST",
             f"/sessions/stop/{table}",
@@ -210,36 +203,30 @@ def run_lp_session(table):
     request("POST", f"/sessions/pause/{table}")
     add_food_to_table(table)
     payer = random.choice(players)
-    request(
-        "POST",
-        f"/sessions/{table}/frames/close",
-        json={"loser_name": payer},
-    )
+    quote = request("GET", f"/sessions/quote/{table}", params={"payment_method": random.choice(PAYMENTS)}).json()
+    if quote.get("billing_mode") != "lp" or quote.get("frames"):
+        raise SoakFailure(f"LP quote should work without frames and return no active frame dependency: {quote}")
     result = request(
         "POST",
         f"/sessions/stop/{table}",
         params={"payment_method": random.choice(PAYMENTS), "payer_name": payer},
     ).json()
     session_key = result.get("session_key") or started.get("session_key") or ""
-    payer_breakdown = next(
-        (item for item in result.get("player_breakdown", []) if item.get("name") == payer),
-        {},
-    )
     if (
         result["billing_mode"] != "lp"
-        or not result.get("frames")
-        or 1 not in payer_breakdown.get("lost_frames", [])
-        or payer_breakdown.get("table", 0) <= 0
+        or result.get("frames")
+        or result.get("tot", 0) <= 0
+        or not result.get("session_ended_at")
     ):
-        raise SoakFailure(f"Invalid LP close: {result}")
+        raise SoakFailure(f"Invalid no-frame LP close: {result}")
     report_rows = request("GET", "/reports/history").json()
     report_row = next((row for row in report_rows if row.get("session_key") == session_key), None)
-    if not report_row or not report_row.get("frames") or not report_row.get("session_ended_at"):
-        raise SoakFailure(f"LP report history missing durable frame/session data: {report_row}")
+    if not report_row or not report_row.get("session_ended_at"):
+        raise SoakFailure(f"LP report history missing durable session data: {report_row}")
     events = request("GET", f"/sessions/events/{table}").json()
     session_events = [event for event in events if event.get("session_key") == session_key]
     event_types = {event.get("event_type") for event in session_events}
-    expected_event_types = {"session_started", "frame_started", "frame_closed", "session_closed"}
+    expected_event_types = {"session_started", "session_closed"}
     if not expected_event_types.issubset(event_types):
         raise SoakFailure(
             f"LP event ledger missing {sorted(expected_event_types - event_types)} "
@@ -412,6 +399,55 @@ def run_staff_discount_guard_check():
         token = admin_token
 
 
+def run_transfer_checkout_check():
+    source = "t2"
+    target = "t4"
+    request(
+        "POST",
+        "/sessions/start",
+        json={
+            "table_id": source,
+            "customer_name": "Transfer Tester",
+            "rate": 0,
+            "billing_mode": "single",
+            "players": [],
+        },
+    )
+    quote_before = request("GET", f"/sessions/quote/{source}").json()
+    session_key = quote_before.get("session_key") or ""
+    transfer = request(
+        "POST",
+        f"/sessions/transfer/{source}",
+        json={"target_table_id": target},
+    ).json()
+    if transfer.get("session_key") != session_key or transfer.get("previous_session_key") != session_key:
+        raise SoakFailure(f"Transfer changed session identity: before={session_key}, transfer={transfer}")
+    active = request("GET", "/sessions/active").json()
+    source_active = next((row for row in active if row.get("table_id") == source), None)
+    target_active = next((row for row in active if row.get("table_id") == target), None)
+    if source_active or not target_active:
+        raise SoakFailure(f"Transfer active-state mismatch: source={source_active}, target={target_active}")
+    quote_after = request("GET", f"/sessions/quote/{target}").json()
+    if quote_after.get("session_key") != session_key:
+        raise SoakFailure(f"Transferred quote changed session identity: before={session_key}, after={quote_after}")
+    add_food_to_table(target)
+    result = request(
+        "POST",
+        f"/sessions/stop/{target}",
+        params={"payment_method": "Cash", "session_key": session_key},
+    ).json()
+    if result.get("session_key") != session_key or result.get("tot", 0) <= 0:
+        raise SoakFailure(f"Transferred checkout failed: {result}")
+    retry = request(
+        "POST",
+        f"/sessions/stop/{target}",
+        params={"payment_method": "Cash", "session_key": session_key},
+    ).json()
+    if not retry.get("idempotent"):
+        raise SoakFailure(f"Transferred checkout retry was not idempotent: {retry}")
+    metrics["ledger_checks"] += 1
+
+
 def run_final_daily_close_guard():
     report = request("GET", "/reports/closing-report").json()
     if not report.get("can_close_day"):
@@ -480,6 +516,7 @@ def run_cycle():
     close_all_active()
     run_idempotent_checkout_check()
     run_staff_discount_guard_check()
+    run_transfer_checkout_check()
     run_single_session("t1")
     run_sharing_session("t3")
     run_lp_session("t5")

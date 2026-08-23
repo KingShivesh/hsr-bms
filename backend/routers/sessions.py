@@ -596,10 +596,6 @@ def start_session(body: StartSession, db: Session = Depends(get_db)):
     if not existing:
         db.add(sess)
     complete_matching_booking(db, table_id, customer_name)
-    frames = []
-    if billing_mode == "lp" and len(players) > 1:
-        frame = create_frame_for_session(db, sess, 1)
-        frames.append(frame)
     record_session_event(
         db,
         event_type="session_started",
@@ -613,15 +609,6 @@ def start_session(body: StartSession, db: Session = Depends(get_db)):
             "started_at": sess.start_time,
         },
     )
-    for frame in frames:
-        record_session_event(
-            db,
-            event_type="frame_started",
-            table_id=table_id,
-            session_key=sess.session_key,
-            detail=f"Frame {frame.frame_no} started automatically",
-            payload={"frame_no": frame.frame_no, "started_at": frame.started_at},
-        )
     log_action(
         db,
         "session_start",
@@ -633,9 +620,7 @@ def start_session(body: StartSession, db: Session = Depends(get_db)):
     except IntegrityError:
         db.rollback()
         raise HTTPException(status_code=409, detail="Session already running")
-    for frame in frames:
-        db.refresh(frame)
-    return {"ok": True, "frames": [serialize_frame(frame) for frame in frames]}
+    return {"ok": True, "frames": []}
 
 @router.post("/pause/{table_id}")
 def pause_session(table_id: str, db: Session = Depends(get_db)):
@@ -721,8 +706,6 @@ def quote_session(
     if not players:
         players = clean_players(sess.customer_name, [], sess.split_name or "")
     frames = active_session_frames(db, sess)
-    if any(frame.status == "open" for frame in frames):
-        raise HTTPException(status_code=400, detail="Close the running frame before closing the table.")
     billable_frames = [frame for frame in frames if frame.status == "closed"]
     losses_by_player = frame_loss_summary(billable_frames)
     if billing_mode == "single":
@@ -870,8 +853,6 @@ def stop_session(
     if not players:
         players = clean_players(sess.customer_name, [], sess.split_name or "")
     frames = active_session_frames(db, sess)
-    if any(frame.status == "open" for frame in frames):
-        raise HTTPException(status_code=400, detail="Close the running frame before closing the table.")
     billable_frames = [frame for frame in frames if frame.status == "closed"]
     losses_by_player = frame_loss_summary(billable_frames)
     if billing_mode == "single":
@@ -917,8 +898,8 @@ def stop_session(
     if duration_capped:
         cap_note = f"Duration capped at {minutes} min; actual elapsed {actual_minutes} min"
         notes = f"{notes} | {cap_note}" if notes else cap_note
-    if billing_mode == "lp":
-        lp_note = "LP settled by recorded frame losses"
+    if billing_mode == "lp" and billable_frames:
+        lp_note = "Legacy frame losses recorded for reference"
         notes = f"{notes} | {lp_note}" if notes else lp_note
     elif billing_mode == "sharing":
         share_note = f"Sharing between {share_count} players; approx ₹{split_per_head} each"
@@ -1099,12 +1080,12 @@ def transfer_session(
     old_rate = sess.rate
     new_rate = rate_for_table(target_id, old_rate, settings)
     old_key = ensure_session_key(db, sess)
-    new_key = new_session_key(target_id)
+    new_key = old_key
     frames = active_session_frames(db, sess)
 
     sess.table_id = target_id
     sess.rate = new_rate
-    sess.session_key = new_key
+    sess.session_key = old_key
     for frame in frames:
         frame.table_id = target_id
         frame.session_key = new_key

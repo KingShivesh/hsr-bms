@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { closeFrame, pauseSession, startFrame, transferSession } from "../../api/index.js";
+import { pauseSession, transferSession } from "../../api/index.js";
 import { useToast } from "../../components/toastContext.js";
 import ProductSelector from "../orders/ProductSelector.jsx";
 import TableStatusBadge from "../live-floor/TableStatusBadge.jsx";
@@ -38,12 +38,11 @@ export default function SessionWorkspace({
   const [showOrders, setShowOrders] = useState(false);
   const [busy, setBusy] = useState("");
   const [transferTarget, setTransferTarget] = useState("");
-  const [loserName, setLoserName] = useState("");
   const session = table?.session;
   const elapsed = session && !session.paused ? (session.elapsed_seconds || 0) + tick : session?.elapsed_seconds || 0;
   const players = useMemo(() => sessionPlayers(session), [session]);
   const availableTargets = tables.filter((row) => row.id !== table?.id && row.status_key === "available");
-  const tabs = session ? ["overview", "orders", "frames", "customer", "activity"] : ["overview"];
+  const tabs = session ? ["overview", "orders", "customer", "activity"] : ["overview"];
 
   async function runAction(key, action, success) {
     setBusy(key);
@@ -162,47 +161,6 @@ export default function SessionWorkspace({
                 </div>
               ) : (
                 <p className="lf-muted-copy">No food attached to this session yet.</p>
-              )}
-            </div>
-          )}
-
-          {activeTab === "frames" && (
-            <div className="session-list-panel">
-              <div className="session-list-head">
-                <h3>Frames</h3>
-                <button
-                  type="button"
-                  className="lf-secondary-button"
-                  disabled={busy === "frame-start" || !!session.current_frame}
-                  onClick={() => runAction("frame-start", () => startFrame(table.id), "Frame started")}
-                >
-                  {busy === "frame-start" ? "Starting..." : "Start frame"}
-                </button>
-              </div>
-              {session.current_frame && (
-                <form
-                  className="frame-close-row"
-                  onSubmit={(event) => {
-                    event.preventDefault();
-                    runAction("frame-close", () => closeFrame(table.id, loserName || "Player"), "Frame closed");
-                    setLoserName("");
-                  }}
-                >
-                  <input value={loserName} onChange={(event) => setLoserName(event.target.value)} placeholder="Loser/customer name" />
-                  <button type="submit" disabled={busy === "frame-close"}>{busy === "frame-close" ? "Closing..." : "Close frame"}</button>
-                </form>
-              )}
-              {(session.frames || []).length ? (
-                <div className="session-frame-list">
-                  {session.frames.map((frame) => (
-                    <div key={frame.id || frame.frame_no}>
-                      <span>Frame {frame.frame_no}</span>
-                      <b>{frame.status === "open" ? "Live" : frame.loser_name || "Closed"}</b>
-                    </div>
-                  ))}
-                </div>
-              ) : (
-                <p className="lf-muted-copy">Frame one starts with the table where backend configuration supports it.</p>
               )}
             </div>
           )}

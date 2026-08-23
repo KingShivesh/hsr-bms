@@ -22,8 +22,6 @@ import {
   getBookings,
   createBooking,
   cancelBooking,
-  startFrame,
-  closeFrame,
   transferSession,
 } from "../../api/index.js";
 import { searchMembers } from "../../api/index.js";
@@ -878,61 +876,6 @@ function HistoryModal({ tableId, tableNum, onClose }) {
   );
 }
 
-function FrameLoserModal({ frameNo, loading = false, onChoose, onClose }) {
-  const [customerName, setCustomerName] = useState("");
-
-  function handleSubmit(event) {
-    event.preventDefault();
-    const cleanName = customerName.trim();
-    if (!cleanName || loading) return;
-    onChoose(cleanName);
-  }
-
-  return (
-    <div className="frame-loser-backdrop" role="dialog" aria-modal="true">
-      <form className="frame-loser-modal" onSubmit={handleSubmit}>
-        <div className="frame-loser-head">
-          <div>
-            <div className="quick-session-eyebrow">End frame</div>
-            <div className="frame-loser-title">Frame {frameNo} loser</div>
-            <p className="frame-loser-copy">
-              Enter the customer name who lost this frame.
-            </p>
-          </div>
-          <button
-            type="button"
-            className="quick-session-close"
-            onClick={onClose}
-            aria-label="Close loser prompt"
-            disabled={loading}
-          >
-            <i className="ti ti-x" aria-hidden="true" />
-          </button>
-        </div>
-        <div className="frame-loser-form">
-          <label className="form-label" htmlFor={`frame-loser-${frameNo}`}>
-            Customer name
-          </label>
-          <input
-            id={`frame-loser-${frameNo}`}
-            className="frame-loser-input"
-            value={customerName}
-            onChange={(event) => setCustomerName(event.target.value)}
-            autoFocus
-          />
-          <button
-            type="submit"
-            className="frame-loser-submit"
-            disabled={!customerName.trim() || loading}
-          >
-            {loading ? "Closing..." : "Close frame"}
-          </button>
-        </div>
-      </form>
-    </div>
-  );
-}
-
 function ResetConfirmModal({ tableId, loading, onClose, onConfirm }) {
   const [pin, setPin] = useState("");
 
@@ -1022,6 +965,13 @@ function CheckoutStepRail({ quote }) {
   );
 }
 
+function checkoutSplitMeta(rec, item) {
+  if (rec.billing_mode === "sharing") return "Shared session split";
+  if (rec.billing_mode === "lp") return "LP session settlement";
+  if (item.food) return "Food assigned to player";
+  return "Session payment";
+}
+
 function CheckoutQuoteScreen({
   quote,
   onClose,
@@ -1037,7 +987,6 @@ function CheckoutQuoteScreen({
   const total = rec.tot ?? rec.total ?? 0;
   const rawTotal = rec.raw_total ?? total;
   const discountAmount = rec.discount_amount || 0;
-  const frames = Array.isArray(rec.frames) ? rec.frames : [];
   const frozenAt = rec.session_ended_at || quote.closedAtMs || "";
   const splitRows = quote.paymentSplit || { Cash: "", UPI: "", Card: "" };
   const splitTotal = ["Cash", "UPI", "Card"].reduce(
@@ -1115,49 +1064,20 @@ function CheckoutQuoteScreen({
           <>
             <div className="checkout-bill-section-title">Payment Split</div>
             <div className="checkout-split-list">
-              {settlement.map((item) => {
-                const losses = Array.isArray(item.lost_frames) ? item.lost_frames : [];
-                return (
-                  <div key={item.name} className="checkout-split-card">
-                    <div className="checkout-split-main">
-                      <div>
-                        <div className="checkout-split-name">{item.name}</div>
-                        <div className="checkout-split-meta">
-                          {losses.length
-                            ? `Lost frame ${losses.join(", ")}`
-                            : "No recorded frame loss"}
-                        </div>
+              {settlement.map((item) => (
+                <div key={item.name} className="checkout-split-card">
+                  <div className="checkout-split-main">
+                    <div>
+                      <div className="checkout-split-name">{item.name}</div>
+                      <div className="checkout-split-meta">
+                        {checkoutSplitMeta(rec, item)}
                       </div>
-                      <strong>₹{item.total ?? 0}</strong>
                     </div>
-                    <div className="checkout-split-parts">
-                      <span>Table ₹{item.table ?? item.play ?? 0}</span>
-                      <span>Food ₹{item.food ?? 0}</span>
-                    </div>
+                    <strong>₹{item.total ?? 0}</strong>
                   </div>
-                );
-              })}
-            </div>
-          </>
-        )}
-
-        {frames.length > 0 && (
-          <>
-            <div className="checkout-bill-section-title">Frames</div>
-            <div className="checkout-frame-list">
-              {frames.map((frame) => (
-                <div key={frame.id || frame.frame_no} className="checkout-frame-card">
-                  <div>
-                    <strong>Frame {frame.frame_no}</strong>
-                    <span>{frame.loser_name || "No loser recorded"}</span>
-                  </div>
-                  <div className="checkout-frame-times">
-                    <time dateTime={frame.started_at ? new Date(frame.started_at).toISOString() : undefined}>
-                      Start {fmtClock(frame.started_at)}
-                    </time>
-                    <time dateTime={frame.ended_at ? new Date(frame.ended_at).toISOString() : undefined}>
-                      End {frame.ended_at ? fmtClock(frame.ended_at) : "Running"}
-                    </time>
+                  <div className="checkout-split-parts">
+                    <span>Table ₹{item.table ?? item.play ?? 0}</span>
+                    <span>Food ₹{item.food ?? 0}</span>
                   </div>
                 </div>
               ))}
@@ -1329,7 +1249,6 @@ function CheckoutBillScreen({ bill, onClose }) {
     ? rec.player_breakdown.filter((item) => item && item.name)
     : [];
   const total = rec.tot ?? rec.total ?? 0;
-  const frames = Array.isArray(rec.frames) ? rec.frames : [];
   const sessionStartedAt = rec.session_started_at || null;
   const sessionEndedAt = rec.session_ended_at || rec.ts || null;
   const paymentSplit = Array.isArray(rec.payment_split) ? rec.payment_split : [];
@@ -1401,53 +1320,24 @@ function CheckoutBillScreen({ bill, onClose }) {
 
         <div className="checkout-bill-section-title">Payment Split</div>
         <div className="checkout-split-list">
-          {settlement.map((item) => {
-            const losses = Array.isArray(item.lost_frames) ? item.lost_frames : [];
-            return (
-              <div key={item.name} className="checkout-split-card">
-                <div className="checkout-split-main">
-                  <div>
-                    <div className="checkout-split-name">{item.name}</div>
-                    <div className="checkout-split-meta">
-                      {losses.length
-                        ? `Lost frame ${losses.join(", ")}`
-                        : "No recorded frame loss"}
-                    </div>
+          {settlement.map((item) => (
+            <div key={item.name} className="checkout-split-card">
+              <div className="checkout-split-main">
+                <div>
+                  <div className="checkout-split-name">{item.name}</div>
+                  <div className="checkout-split-meta">
+                    {checkoutSplitMeta(rec, item)}
                   </div>
-                  <strong>₹{item.total ?? 0}</strong>
                 </div>
-                <div className="checkout-split-parts">
-                  <span>Table ₹{item.table ?? item.play ?? 0}</span>
-                  <span>Food ₹{item.food ?? 0}</span>
-                </div>
+                <strong>₹{item.total ?? 0}</strong>
               </div>
-            );
-          })}
-        </div>
-
-        {frames.length > 0 && (
-          <>
-            <div className="checkout-bill-section-title">Frames</div>
-            <div className="checkout-frame-list">
-              {frames.map((frame) => (
-                <div key={frame.id || frame.frame_no} className="checkout-frame-card">
-                  <div>
-                    <strong>Frame {frame.frame_no}</strong>
-                    <span>{frame.loser_name || "No loser recorded"}</span>
-                  </div>
-                  <div className="checkout-frame-times">
-                    <time dateTime={frame.started_at ? new Date(frame.started_at).toISOString() : undefined}>
-                      Start {fmtClock(frame.started_at)}
-                    </time>
-                    <time dateTime={frame.ended_at ? new Date(frame.ended_at).toISOString() : undefined}>
-                      End {frame.ended_at ? fmtClock(frame.ended_at) : "Running"}
-                    </time>
-                  </div>
-                </div>
-              ))}
+              <div className="checkout-split-parts">
+                <span>Table ₹{item.table ?? item.play ?? 0}</span>
+                <span>Food ₹{item.food ?? 0}</span>
+              </div>
             </div>
-          </>
-        )}
+          ))}
+        </div>
       </div>
     </div>
   );
@@ -1468,8 +1358,6 @@ function TableFloorTile({
   const occupied = !!session;
   const rate = getTableRate(table, rates);
   const total = runningTotalForSession(session, peakRate, gstPercent);
-  const closedFrames = session?.frames?.filter((frame) => frame.status === "closed") || [];
-  const openFrame = session?.frames?.find((frame) => frame.status === "open");
   const bookingTime = booking ? bookingDisplayTime(booking) : "";
 
   const status = getTableStatus({ session, booking, maintenance });
@@ -1510,13 +1398,7 @@ function TableFloorTile({
           {occupied ? (
             <>
               <span>Started {fmtClock(session.startTime)}</span>
-              <span>
-                {openFrame
-                  ? `Frame ${openFrame.frame_no} live`
-                  : closedFrames.length
-                    ? `${closedFrames.length} frames`
-                    : billingModeLabel(session.billingMode)}
-              </span>
+              <span>{billingModeLabel(session.billingMode)}</span>
             </>
           ) : maintenance ? (
             <span>Marked since {maintenance.since || "now"}</span>
@@ -1611,7 +1493,6 @@ function LiveFloorCommand({
           ) : (
             activeTables.map((table) => {
               const session = sessions[table.id];
-              const currentFrame = session?.frames?.find((frame) => frame.status === "open");
               return (
                 <button
                   type="button"
@@ -1621,7 +1502,7 @@ function LiveFloorCommand({
                 >
                   <strong>T{table.num}</strong>
                   <span>{fmt(session?.elapsed)} · ₹{runningTotalForSession(session, peakRate, gstPercent)}</span>
-                  <em>{currentFrame ? `F${currentFrame.frame_no} live` : billingModeLabel(session?.billingMode)}</em>
+                  <em>{billingModeLabel(session?.billingMode)}</em>
                 </button>
               );
             })
@@ -1659,7 +1540,6 @@ function SessionWorkspace({
   gstPercent,
   onPause,
   onStop,
-  onStartFrame,
   onAddFood,
   busyActions = {},
 }) {
@@ -1668,16 +1548,10 @@ function SessionWorkspace({
   const rate = tableState?.rate ?? getTableRate(table, rates);
   const total = runningTotalForSession(session, peakRate, gstPercent);
   const players = visiblePlayerNames(session?.players || []);
-  const frames = session?.frames || [];
-  const openFrame = frames.find((frame) => frame.status === "open");
-  const closedFrames = frames.filter((frame) => frame.status === "closed");
   const foodItems = session?.foodItems || [];
   const pauseBusy = !!busyActions[`pause:${table.id}`];
   const quoteBusy = !!busyActions[`quote:${table.id}`];
-  const startFrameBusy = !!busyActions[`start-frame:${table.id}`];
   const foodPlayer = session?.players?.[0] || session?.customer_name || "";
-  const canTrackFrames = session?.billingMode === "lp" && (session?.players || []).length > 1;
-  const nextFrameNo = (frames.reduce((max, frame) => Math.max(max, frame.frame_no || 0), 0) || 0) + 1;
   const nextBooking = booking
     ? `${booking.customer_name} · ${bookingDisplayTime(booking)}`
     : "No upcoming booking";
@@ -1706,11 +1580,6 @@ function SessionWorkspace({
           <span>Players</span>
           <strong>{players.length || "-"}</strong>
           <em>{players.length ? players.join(", ") : "Walk-in names optional"}</em>
-        </div>
-        <div className="session-workspace-stat">
-          <span>Frames</span>
-          <strong>{closedFrames.length}{openFrame ? ` + F${openFrame.frame_no}` : ""}</strong>
-          <em>{openFrame ? "Frame live" : canTrackFrames ? `Next frame ${nextFrameNo}` : "Not tracking frames"}</em>
         </div>
         <div className="session-workspace-stat">
           <span>Food tab</span>
@@ -1752,26 +1621,15 @@ function SessionWorkspace({
             <i className={`ti ${session.paused ? "ti-player-play" : "ti-player-pause"}`} aria-hidden="true" />
             {pauseBusy ? "Saving..." : session.paused ? "Resume" : "Pause"}
           </button>
-          {canTrackFrames && !openFrame && !session.paused && (
-            <button
-              type="button"
-              className="session-action secondary"
-              onClick={() => onStartFrame(table.id)}
-              disabled={startFrameBusy}
-            >
-              <i className="ti ti-player-play" aria-hidden="true" />
-              {startFrameBusy ? "Starting..." : `Start frame ${nextFrameNo}`}
-            </button>
-          )}
           <button
             type="button"
             className="session-action primary"
             onClick={() => onStop(table.id)}
-            disabled={quoteBusy || !!openFrame}
-            title={openFrame ? "Close the live frame before checkout" : "Close table"}
+            disabled={quoteBusy}
+            title="Close table"
           >
             <i className="ti ti-receipt-refund" aria-hidden="true" />
-            {quoteBusy ? "Loading..." : openFrame ? "Frame live" : "Checkout"}
+            {quoteBusy ? "Loading..." : "Checkout"}
           </button>
         </div>
       )}
@@ -1798,8 +1656,6 @@ function TableCard({
   onMaintenance,
   onClearMaintenance,
   onSaveNotes,
-  onStartFrame,
-  onCloseFrame,
   peakRate,
   gstPercent,
   showToast,
@@ -1808,7 +1664,6 @@ function TableCard({
 }) {
   const [billingMode, setBillingMode] = useState(() => defaultBillingModeForTable(table));
   const [otherPlayers, setOtherPlayers] = useState("");
-  const [frameLoserOpen, setFrameLoserOpen] = useState(false);
   const [reserveOpen, setReserveOpen] = useState(false);
   const [notesOpen, setNotesOpen] = useState(false);
   const [transferOpen, setTransferOpen] = useState(false);
@@ -1858,19 +1713,6 @@ function TableCard({
         time: bookingDisplayTime(booking),
       }
     : null);
-  const displayPlayers = visiblePlayerNames(activePlayers);
-  const frames = session?.frames || [];
-  const openFrame = frames.find((frame) => frame.status === "open");
-  const closedFrames = frames.filter((frame) => frame.status === "closed");
-  const recentFrames = closedFrames.slice(-3);
-  const canTrackFrames = activeBillingMode === "lp" && activePlayers.length > 1;
-  const nextFrameNo = (frames.reduce((max, frame) => Math.max(max, frame.frame_no || 0), 0) || 0) + 1;
-  const framePanelState = paused ? "paused" : openFrame ? "running" : "waiting";
-  const frameLossCounts = closedFrames.reduce((acc, frame) => {
-    if (frame.loser_name) acc[frame.loser_name] = (acc[frame.loser_name] || 0) + 1;
-    return acc;
-  }, {});
-  const scorePlayers = Array.from(new Set([...displayPlayers, ...Object.keys(frameLossCounts)]));
   const shareCount = activeBillingMode === "sharing" ? Math.max(1, activePlayers.length) : 1;
   const shareAmount = shareCount > 1 ? Math.ceil(total / shareCount) : total;
   const startBusy = !!busyActions[`start:${table.id}`];
@@ -1879,15 +1721,9 @@ function TableCard({
   const resetBusy = !!busyActions[`reset:${table.id}`];
   const maintenanceBusy = !!busyActions[`maintenance:${table.id}`];
   const notesBusy = !!busyActions[`notes:${table.id}`];
-  const startFrameBusy = !!busyActions[`start-frame:${table.id}`];
-  const closeFrameBusy = !!busyActions[`close-frame:${table.id}`];
   const transferBusy = !!busyActions[`transfer:${table.id}`];
   const reserveBusy = !!busyActions[`reserve:${table.id}`];
   const cancelReserveBusy = !!busyActions[`cancel-reserve:${table.id}`];
-
-  useEffect(() => {
-    if (!session || !openFrame || paused) setFrameLoserOpen(false);
-  }, [session, openFrame, paused]);
 
   const pocketStyle = {
     position: "absolute",
@@ -1968,18 +1804,6 @@ function TableCard({
           tableId={table.id}
           tableNum={table.num}
           onClose={() => setShowHistory(false)}
-        />
-      )}
-
-      {frameLoserOpen && openFrame && (
-        <FrameLoserModal
-          frameNo={openFrame.frame_no}
-          loading={closeFrameBusy}
-          onClose={() => setFrameLoserOpen(false)}
-          onChoose={async (player) => {
-            const success = await onCloseFrame(table.id, player);
-            if (success) setFrameLoserOpen(false);
-          }}
         />
       )}
 
@@ -2249,10 +2073,6 @@ function TableCard({
             {occupied ? (
               <button
                 onClick={() => {
-                  if (openFrame) {
-                    showToast?.("Close the running frame before closing the table.", "error");
-                    return;
-                  }
                   onStop(table.id);
                 }}
                 disabled={quoteBusy}
@@ -2421,84 +2241,7 @@ function TableCard({
               {activeBillingMode === "sharing" && shareCount > 1 && (
                 <strong>₹{shareAmount} each</strong>
               )}
-              {activeBillingMode === "lp" && <strong>frames decide split</strong>}
-            </div>
-          )}
-
-          {occupied && openFrame && (
-            <div className="table-blocker-banner">
-              <i className="ti ti-alert-triangle" aria-hidden="true" />
-              <span>Frame {openFrame.frame_no} is live. End this frame before closing the table.</span>
-            </div>
-          )}
-
-          {occupied && canTrackFrames && (
-            <div className={`table-frame-panel ${framePanelState}`}>
-              <div className="table-frame-head">
-                <span>{openFrame ? `Frame ${openFrame.frame_no} live` : `Next: Frame ${nextFrameNo}`}</span>
-                <strong>{closedFrames.length} done</strong>
-              </div>
-              {paused ? (
-                <div className="table-frame-paused">
-                  Resume table to continue frame play.
-                </div>
-              ) : openFrame ? (
-                <>
-                  <div className="table-frame-running">
-                    Tap End frame when play stops.
-                  </div>
-                  <button
-                    type="button"
-                  className="table-frame-end"
-                  data-testid={`end-frame-${table.id}`}
-                  onClick={() => setFrameLoserOpen(true)}
-                  disabled={closeFrameBusy}
-                >
-                  <i className="ti ti-flag-check" aria-hidden="true" />
-                  {closeFrameBusy ? "Closing..." : "End frame"}
-                </button>
-              </>
-            ) : (
-                <button
-                  type="button"
-                  className="table-frame-start"
-                  data-testid={`start-frame-${table.id}`}
-                  onClick={() => onStartFrame(table.id)}
-                  disabled={startFrameBusy}
-                >
-                  <i className="ti ti-player-play" aria-hidden="true" />
-                  {startFrameBusy ? "Starting..." : `Start frame ${nextFrameNo}`}
-                </button>
-              )}
-              {recentFrames.length > 0 && (
-                <div className="table-frame-history">
-                  {recentFrames.map((frame) => (
-                    <span key={frame.id || frame.frame_no}>
-                      F{frame.frame_no}: {frame.loser_name} · {fmtClock(frame.started_at)}-{fmtClock(frame.ended_at)}
-                    </span>
-                  ))}
-                </div>
-              )}
-              {frames.length > 0 && (
-                <div className="table-frame-timeline">
-                  {frames.map((frame) => (
-                    <div key={frame.id || frame.frame_no} className="table-frame-time-row">
-                      <strong>F{frame.frame_no}</strong>
-                      <span>Start {fmtClock(frame.started_at)}</span>
-                      <span>End {frame.ended_at ? fmtClock(frame.ended_at) : "Running"}</span>
-                    </div>
-                  ))}
-                </div>
-              )}
-              {Object.keys(frameLossCounts).length > 0 && (
-                <div className="table-frame-score">
-                  {scorePlayers.map((player) => (
-                    <span key={player}>
-                      {player.split(" ")[0]} {frameLossCounts[player] || 0}
-                    </span>
-                  ))}
-                </div>
-              )}
+              {activeBillingMode === "lp" && <strong>LP session</strong>}
             </div>
           )}
 
@@ -3156,55 +2899,6 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0, onOpenF
     });
   }
 
-  async function handleStartFrame(id) {
-    if (!sessions[id]) return false;
-    return runBusyAction(`start-frame:${id}`, async () => {
-      try {
-        const res = await startFrame(id);
-        setSessions((prev) => ({
-          ...prev,
-          [id]: {
-            ...prev[id],
-            frames: res.data.frames || [],
-            currentFrame: res.data.frame || null,
-          },
-        }));
-        await fetchActive();
-        showToast(`Frame ${res.data.frame?.frame_no || ""} started`, "success");
-        return true;
-      } catch (e) {
-        showToast(e.response?.data?.detail || "Failed to start frame", "error");
-        return false;
-      }
-    });
-  }
-
-  async function handleCloseFrame(id, loserName) {
-    if (!sessions[id]) return false;
-    return runBusyAction(`close-frame:${id}`, async () => {
-      try {
-        const res = await closeFrame(id, loserName);
-        const frames = res.data.frames || [];
-        const players = res.data.players || sessions[id].players || [];
-        setSessions((prev) => ({
-          ...prev,
-          [id]: {
-            ...prev[id],
-            frames,
-            players,
-            currentFrame: frames.find((frame) => frame.status === "open") || null,
-          },
-        }));
-        await fetchActive();
-        showToast(`Frame ${res.data.frame?.frame_no || ""} closed`, "success");
-        return true;
-      } catch (e) {
-        showToast(e.response?.data?.detail || "Failed to close frame", "error");
-        return false;
-      }
-    });
-  }
-
   async function handleStop(id, paymentMethod = "Cash") {
     if (!sessions[id]) {
       showToast("No active session", "error");
@@ -3640,7 +3334,6 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0, onOpenF
               gstPercent={gstPercent}
               onPause={handlePause}
               onStop={handleStop}
-              onStartFrame={handleStartFrame}
               onAddFood={onOpenFoodOrder}
               busyActions={busyActions}
             />
@@ -3672,8 +3365,6 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0, onOpenF
               onMaintenance={handleSetMaintenance}
               onClearMaintenance={handleClearMaintenance}
               onSaveNotes={handleSaveNotes}
-              onStartFrame={handleStartFrame}
-              onCloseFrame={handleCloseFrame}
               peakRate={peakRate}
               gstPercent={gstPercent}
               showToast={showToast}

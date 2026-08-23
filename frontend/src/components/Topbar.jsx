@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 const PAGE_DESCRIPTIONS = {
   "Executive Overview": "Real-time venue performance, revenue, queue and closing health",
-  "Live Table Floor": "Manage active sessions, frames, reservations and table controls",
+  "Live Table Floor": "Manage active sessions, reservations and table controls",
   "Smart Waitlist": "Walk-in queue, seating pressure and booking conflicts",
   "Reservations & Slots": "Table-wise booking commitments and no-show risk",
   "Food & Cafe POS": "Snacks, beverages, cigarettes and counter billing",

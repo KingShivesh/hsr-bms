@@ -729,6 +729,401 @@ textarea:focus-visible {
   100% { background-position: -200% 0; }
 }
 
+/* ── Sprint 2 operating pages: Bookings + Customers ── */
+.op2-page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  color: var(--text-primary);
+}
+
+.op2-hero,
+.op2-panel,
+.op2-modal,
+.op2-metric-grid > div,
+.op2-table-booking-card,
+.op2-customer-card {
+  border: 1px solid var(--border);
+  background: var(--surface);
+  box-shadow: var(--elevation-1);
+}
+
+.op2-hero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-6);
+  padding: var(--space-6);
+  border-radius: var(--radius-lg);
+}
+
+.op2-hero h1 {
+  margin-top: var(--space-1);
+  font-size: var(--text-3xl);
+  line-height: 1.08;
+  font-weight: var(--weight-black);
+  letter-spacing: 0;
+}
+
+.op2-hero p {
+  max-width: 680px;
+  margin-top: var(--space-2);
+  color: var(--text-secondary);
+  font-size: var(--text-lg);
+  font-weight: var(--weight-semibold);
+  line-height: 1.45;
+}
+
+.op2-inline-form,
+.op2-controls,
+.op2-card-actions,
+.op2-modal-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+
+.op2-inline-form input,
+.op2-controls input {
+  min-height: var(--btn-h-lg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--surface-raised);
+  color: var(--text-primary);
+  padding: 0 var(--space-4);
+  font-size: var(--text-base);
+  font-weight: var(--weight-semibold);
+}
+
+.op2-metric-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-4);
+}
+
+.op2-metric-grid > div {
+  min-height: 132px;
+  display: grid;
+  align-content: center;
+  gap: var(--space-2);
+  padding: var(--space-5);
+  border-radius: var(--radius-lg);
+}
+
+.op2-metric-grid span,
+.op2-panel-head span,
+.op2-customer-stats span {
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-black);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.op2-metric-grid strong {
+  color: var(--text-primary);
+  font-size: var(--text-3xl);
+  font-weight: var(--weight-black);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.op2-metric-grid em {
+  color: var(--text-secondary);
+  font-size: var(--text-sm);
+  font-style: normal;
+  font-weight: var(--weight-semibold);
+}
+
+.op2-board {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: var(--space-4);
+}
+
+.op2-table-booking-card {
+  min-height: 210px;
+  display: grid;
+  align-content: start;
+  gap: var(--space-4);
+  padding: var(--space-5);
+  border-radius: var(--radius-lg);
+}
+
+.op2-table-booking-card > div:first-child,
+.op2-customer-main {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.op2-table-booking-card strong,
+.op2-customer-main strong {
+  color: var(--text-primary);
+  font-size: var(--text-xl);
+  font-weight: var(--weight-black);
+}
+
+.op2-table-booking-card span,
+.op2-customer-main span,
+.op2-register-row span {
+  color: var(--text-secondary);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+}
+
+.op2-table-booking-card p {
+  display: grid;
+  gap: var(--space-1);
+  margin: 0;
+  padding: var(--space-3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--surface-muted);
+}
+
+.op2-table-booking-card p b {
+  color: var(--text-primary);
+  font-size: var(--text-base);
+  font-weight: var(--weight-bold);
+}
+
+.op2-table-booking-card p small {
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+}
+
+.op2-panel {
+  padding: var(--space-6);
+  border-radius: var(--radius-lg);
+}
+
+.op2-panel-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin-bottom: var(--space-5);
+}
+
+.op2-panel-head h2 {
+  color: var(--text-primary);
+  font-size: var(--text-2xl);
+  font-weight: var(--weight-black);
+  letter-spacing: 0;
+}
+
+.op2-controls button {
+  min-height: var(--btn-h-lg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--surface-raised);
+  color: var(--text-secondary);
+  padding: 0 var(--space-4);
+  font-size: var(--text-base);
+  font-weight: var(--weight-bold);
+  text-transform: capitalize;
+  cursor: pointer;
+}
+
+.op2-controls button.active {
+  border-color: var(--accent);
+  background: var(--accent-bg);
+  color: var(--accent-text);
+}
+
+.op2-register-list {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.op2-register-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto auto;
+  align-items: center;
+  gap: var(--space-4);
+  min-height: 76px;
+  padding: var(--space-4);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--surface-raised);
+}
+
+.op2-register-row > div {
+  display: grid;
+  gap: var(--space-1);
+  min-width: 0;
+}
+
+.op2-register-row strong {
+  color: var(--text-primary);
+  font-size: var(--text-base);
+  font-weight: var(--weight-black);
+}
+
+.op2-register-row time,
+.op2-register-row > i {
+  color: var(--text-secondary);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-bold);
+}
+
+.op2-register-row em,
+.op2-customer-main em {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: var(--btn-h-sm);
+  border-radius: 999px;
+  padding: 0 var(--space-3);
+  background: var(--accent-bg);
+  color: var(--accent-text);
+  font-size: var(--text-xs);
+  font-style: normal;
+  font-weight: var(--weight-black);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.op2-register-row em[data-status="missed"] {
+  background: var(--danger-bg);
+  color: var(--danger);
+}
+
+.op2-customer-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-4);
+}
+
+.op2-customer-card {
+  display: grid;
+  gap: var(--space-5);
+  padding: var(--space-5);
+  border-radius: var(--radius-lg);
+}
+
+.op2-customer-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-3);
+}
+
+.op2-customer-stats > div {
+  display: grid;
+  gap: var(--space-1);
+  padding: var(--space-3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--surface-muted);
+}
+
+.op2-customer-stats strong {
+  color: var(--text-primary);
+  font-size: var(--text-lg);
+  font-weight: var(--weight-black);
+  font-variant-numeric: tabular-nums;
+}
+
+.op2-empty {
+  min-height: 220px;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: var(--space-3);
+  border: 1px dashed var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--surface-muted);
+  text-align: center;
+}
+
+.op2-empty i {
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  border-radius: var(--radius-md);
+  background: var(--accent-bg);
+  color: var(--accent-text);
+  font-size: var(--icon-md);
+}
+
+.op2-empty strong {
+  color: var(--text-primary);
+  font-size: var(--text-xl);
+  font-weight: var(--weight-black);
+}
+
+.op2-empty span {
+  color: var(--text-secondary);
+  font-size: var(--text-base);
+  font-weight: var(--weight-semibold);
+}
+
+.op2-modal {
+  width: min(640px, calc(100vw - 32px));
+  max-height: calc(100vh - 32px);
+  overflow: auto;
+  display: grid;
+  gap: var(--space-4);
+  padding: var(--space-6);
+  border-radius: var(--radius-lg);
+}
+
+.op2-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-4);
+}
+
+@media (max-width: 1180px) {
+  .op2-board,
+  .op2-customer-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .op2-register-row {
+    grid-template-columns: minmax(0, 1fr);
+    align-items: stretch;
+  }
+}
+
+@media (max-width: 760px) {
+  .op2-hero,
+  .op2-panel-head {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .op2-inline-form,
+  .op2-controls,
+  .op2-card-actions,
+  .op2-modal-actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .op2-inline-form input,
+  .op2-inline-form button,
+  .op2-controls input,
+  .op2-controls button,
+  .op2-card-actions button,
+  .op2-modal-actions button {
+    width: 100%;
+  }
+
+  .op2-metric-grid,
+  .op2-board,
+  .op2-customer-grid,
+  .op2-customer-stats,
+  .op2-form-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 .lf-field {
   display: grid;
   gap: var(--space-2);

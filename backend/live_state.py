@@ -355,15 +355,6 @@ def build_live_floor_state(db: Session) -> dict:
                 "title": f"{table_code} needs billing review",
                 "detail": "Session crossed the configured unbilled-minute alert.",
             })
-        if session.get("current_frame"):
-            frame = session["current_frame"]
-            attention.append({
-                "type": "open_frame",
-                "tone": "warning",
-                "table_id": table["id"],
-                "title": f"{table_code} has frame {frame.get('frame_no')} live",
-                "detail": "Close the live frame before checkout.",
-            })
         if session.get("paused"):
             attention.append({
                 "type": "paused_session",
@@ -468,13 +459,6 @@ def dashboard_payload(db: Session, period: str = "today") -> dict:
         session = table.get("session")
         if not session:
             continue
-        if session.get("current_frame"):
-            attention.append({
-                "type": "critical",
-                "title": f"{table['id'].upper()} has a live frame",
-                "detail": "End the frame before final checkout.",
-                "page": "tables",
-            })
         if session.get("leakage_alert"):
             attention.append({
                 "type": "critical",

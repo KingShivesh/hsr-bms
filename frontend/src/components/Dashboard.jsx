@@ -350,12 +350,9 @@ function KeyMetricsSection({
 function LiveFloor({ tables, elapsed, onNavigate }) {
   const activeCount = tables.filter((table) => Boolean(table.session)).length;
   const idleCount = Math.max(TOTAL_TABLES - activeCount, 0);
-  const checkoutBlockers = tables.filter((table) => table.session?.current_frame).length;
   const pausedCount = tables.filter((table) => table.session?.paused).length;
   const longRunningCount = tables.filter((table) => (elapsed[table.id] ?? table.elapsed_seconds ?? 0) >= 90 * 60).length;
-  const floorSignal = checkoutBlockers
-    ? `${checkoutBlockers} frame blocker${checkoutBlockers === 1 ? "" : "s"}`
-    : pausedCount
+  const floorSignal = pausedCount
       ? `${pausedCount} paused`
       : longRunningCount
         ? `${longRunningCount} long running`
@@ -368,7 +365,7 @@ function LiveFloor({ tables, elapsed, onNavigate }) {
         title={`Live Floor — ${activeCount ? `${activeCount} running / ${idleCount} idle` : `${idleCount} idle`}`}
         action={
           <div className="ops-floor-actions">
-            <span className={`ops-floor-health-pill ${checkoutBlockers ? "critical" : pausedCount || longRunningCount ? "warning" : "ok"}`}>
+            <span className={`ops-floor-health-pill ${pausedCount || longRunningCount ? "warning" : "ok"}`}>
               {floorSignal}
             </span>
             <button type="button" className="ops-link-btn" onClick={() => onNavigate("tables")}>
@@ -1186,15 +1183,6 @@ export default function Dashboard({ metrics, onNavigate, role = "admin" }) {
     }));
     const paused = runningTables.filter((row) => row.session.paused);
     const longRunning = runningTables.filter((row) => row.elapsedSecs >= 90 * 60);
-    const openFrames = runningTables.filter((row) => row.session.current_frame);
-    if (!liveData?.attention?.length && openFrames.length) {
-      items.push({
-        title: `${openFrames.length} live frame${openFrames.length > 1 ? "s" : ""} blocking checkout`,
-        detail: "End the running frame before closing LP tables so billing stays correct.",
-        tone: "critical",
-        icon: "ti-alert-triangle",
-      });
-    }
     if (!liveData?.attention?.length && paused.length) {
       items.push({
         title: `${paused.length} table${paused.length > 1 ? "s" : ""} paused`,

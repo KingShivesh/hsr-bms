@@ -48,7 +48,7 @@ export default function Login({ onLogin }) {
             <span>Cloud BMS console</span>
             <h2>Run tables, food, bookings and closing from one screen.</h2>
             <p>
-              Built for fast counter operations: live timers, LP frames, cafe POS,
+              Built for fast counter operations: live timers, LP billing, cafe POS,
               reservations, billing audit and owner-ready shift closing.
             </p>
           </div>
