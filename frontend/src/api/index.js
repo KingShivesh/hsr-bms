@@ -218,6 +218,7 @@ export const cancelReserve = (table_id) =>
   api.delete(`/sessions/${tableKey(table_id)}/reserve`);
 export const getActive = () => api.get("/sessions/active");
 export const getTableState = () => api.get("/sessions/tables");
+export const getLiveFloor = () => api.get("/sessions/live-floor");
 export const transferSession = (table_id, target_table_id) =>
   api.post(`/sessions/transfer/${tableKey(table_id)}`, {
     target_table_id: tableKey(target_table_id),

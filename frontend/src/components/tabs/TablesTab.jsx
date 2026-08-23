@@ -5,7 +5,7 @@ import {
   stopSession,
   quoteSession,
   resetSession,
-  getTableState,
+  getLiveFloor,
   getRates,
   updateNotes,
   getTableHistory,
@@ -1618,6 +1618,124 @@ function LiveFloorCommand({
   );
 }
 
+function SessionWorkspace({
+  table,
+  tableState,
+  session,
+  booking,
+  maintenance,
+  rates,
+  peakRate,
+  gstPercent,
+  onPause,
+  onStop,
+  onStartFrame,
+  busyActions = {},
+}) {
+  const status = tableState?.status_label || getTableStatus({ session, booking, maintenance }).label;
+  const statusTone = tableState?.status_tone || getTableStatus({ session, booking, maintenance }).tone;
+  const rate = tableState?.rate ?? getTableRate(table, rates);
+  const total = runningTotalForSession(session, peakRate, gstPercent);
+  const players = visiblePlayerNames(session?.players || []);
+  const frames = session?.frames || [];
+  const openFrame = frames.find((frame) => frame.status === "open");
+  const closedFrames = frames.filter((frame) => frame.status === "closed");
+  const foodItems = session?.foodItems || [];
+  const pauseBusy = !!busyActions[`pause:${table.id}`];
+  const quoteBusy = !!busyActions[`quote:${table.id}`];
+  const startFrameBusy = !!busyActions[`start-frame:${table.id}`];
+  const canTrackFrames = session?.billingMode === "lp" && (session?.players || []).length > 1;
+  const nextFrameNo = (frames.reduce((max, frame) => Math.max(max, frame.frame_no || 0), 0) || 0) + 1;
+  const nextBooking = booking
+    ? `${booking.customer_name} · ${bookingDisplayTime(booking)}`
+    : "No upcoming booking";
+
+  return (
+    <section className={`session-workspace ${session ? "active" : ""}`} aria-label={`T${table.num} session workspace`}>
+      <div className="session-workspace-head">
+        <div>
+          <span className={`session-status-pill ${statusTone}`}>{status}</span>
+          <h3>T{table.num} · {getTableLabel(table)}</h3>
+          <p>₹{rate}/hr · {table.type === "POOL" ? "Pool" : "Snooker"}</p>
+        </div>
+        <div className="session-workspace-total">
+          <span>{session ? "Running total" : "Current total"}</span>
+          <strong>₹{total}</strong>
+        </div>
+      </div>
+
+      <div className="session-workspace-grid">
+        <div className="session-workspace-stat">
+          <span>Timer</span>
+          <strong>{fmt(session?.elapsed)}</strong>
+          <em>{session ? `Started ${fmtClock(session.startTime)}` : "Ready to start"}</em>
+        </div>
+        <div className="session-workspace-stat">
+          <span>Players</span>
+          <strong>{players.length || "-"}</strong>
+          <em>{players.length ? players.join(", ") : "Walk-in names optional"}</em>
+        </div>
+        <div className="session-workspace-stat">
+          <span>Frames</span>
+          <strong>{closedFrames.length}{openFrame ? ` + F${openFrame.frame_no}` : ""}</strong>
+          <em>{openFrame ? "Frame live" : canTrackFrames ? `Next frame ${nextFrameNo}` : "Not tracking frames"}</em>
+        </div>
+        <div className="session-workspace-stat">
+          <span>Food tab</span>
+          <strong>₹{session?.foodTotal || 0}</strong>
+          <em>{foodItems.length ? `${foodItems.length} item${foodItems.length === 1 ? "" : "s"}` : "No food added"}</em>
+        </div>
+      </div>
+
+      <div className="session-workspace-context">
+        <div>
+          <span>Booking</span>
+          <strong>{nextBooking}</strong>
+        </div>
+        <div>
+          <span>Billing mode</span>
+          <strong>{session ? billingModeLabel(session.billingMode) : "Choose below"}</strong>
+        </div>
+      </div>
+
+      {session && (
+        <div className="session-workspace-actions">
+          <button
+            type="button"
+            className="session-action secondary"
+            onClick={() => onPause(table.id)}
+            disabled={pauseBusy}
+          >
+            <i className={`ti ${session.paused ? "ti-player-play" : "ti-player-pause"}`} aria-hidden="true" />
+            {pauseBusy ? "Saving..." : session.paused ? "Resume" : "Pause"}
+          </button>
+          {canTrackFrames && !openFrame && !session.paused && (
+            <button
+              type="button"
+              className="session-action secondary"
+              onClick={() => onStartFrame(table.id)}
+              disabled={startFrameBusy}
+            >
+              <i className="ti ti-player-play" aria-hidden="true" />
+              {startFrameBusy ? "Starting..." : `Start frame ${nextFrameNo}`}
+            </button>
+          )}
+          <button
+            type="button"
+            className="session-action primary"
+            onClick={() => onStop(table.id)}
+            disabled={quoteBusy || !!openFrame}
+            title={openFrame ? "Close the live frame before checkout" : "Close table"}
+          >
+            <i className="ti ti-receipt-refund" aria-hidden="true" />
+            {quoteBusy ? "Loading..." : openFrame ? "Frame live" : "Checkout"}
+          </button>
+        </div>
+      )}
+    </section>
+  );
+}
+
 function TableCard({
   table,
   session,
@@ -2614,11 +2732,14 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
 
   async function fetchActive() {
     try {
-      const res = await getTableState();
+      const res = await getLiveFloor();
+      const floor = res.data.floor || {};
+      const tableRows = floor.tables || res.data.tables || [];
+      const floorResources = floor.resources || {};
       const s = {},
         n = {};
       const nextTableStates = {};
-      (res.data.tables || []).forEach((tableState) => {
+      tableRows.forEach((tableState) => {
         const stateId = tableKey(tableState.id);
         if (stateId) {
           nextTableStates[stateId] = tableState;
@@ -2655,8 +2776,10 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
       setSessions(s);
       setTableStates(nextTableStates);
       setNames(n);
-      if (res.data.rates) setRates(res.data.rates);
-      if (res.data.maintenance) setMaintenance(res.data.maintenance);
+      if (floorResources.rates || res.data.rates) setRates(floorResources.rates || res.data.rates);
+      if (floorResources.maintenance || res.data.maintenance) {
+        setMaintenance(floorResources.maintenance || res.data.maintenance);
+      }
     } catch (e) {
       console.error(e);
     }
@@ -3461,6 +3584,21 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0 }) {
                 </strong>
               </div>
             </div>
+
+            <SessionWorkspace
+              table={selectedTable}
+              tableState={tableStates[selectedTable.id]}
+              session={sessions[selectedTable.id]}
+              booking={nextBookingByTable[selectedTable.id] || null}
+              maintenance={maintenance[selectedTable.id] || null}
+              rates={rates}
+              peakRate={peakRate}
+              gstPercent={gstPercent}
+              onPause={handlePause}
+              onStop={handleStop}
+              onStartFrame={handleStartFrame}
+              busyActions={busyActions}
+            />
 
             <TableCard
               key={selectedTable.id}

@@ -326,6 +326,81 @@ def build_table_state(db: Session) -> dict:
     }
 
 
+def build_live_floor_state(db: Session) -> dict:
+    """Return the staff-facing floor contract with session as the central object.
+
+    This intentionally wraps the existing table state instead of replacing it.
+    Existing screens can keep using the legacy keys while newer UI can read
+    from the clearer floor/session/attention groups.
+    """
+    state = build_table_state(db)
+    tables = state["tables"]
+    active_sessions = state["active_sessions"]
+    reserved_count = sum(1 for table in tables if table["status_key"] == "reserved")
+    paused_count = sum(1 for table in tables if table["status_key"] == "paused")
+    maintenance_count = sum(1 for table in tables if table["status_key"] == "maintenance")
+    running_count = sum(1 for table in tables if table["status_key"] == "running")
+    live_value = sum(table.get("running_total", 0) or 0 for table in tables)
+    attention = []
+    for table in tables:
+        session = table.get("session")
+        if not session:
+            continue
+        table_code = table["id"].upper()
+        if session.get("leakage_alert"):
+            attention.append({
+                "type": "billing_review",
+                "tone": "danger",
+                "table_id": table["id"],
+                "title": f"{table_code} needs billing review",
+                "detail": "Session crossed the configured unbilled-minute alert.",
+            })
+        if session.get("current_frame"):
+            frame = session["current_frame"]
+            attention.append({
+                "type": "open_frame",
+                "tone": "warning",
+                "table_id": table["id"],
+                "title": f"{table_code} has frame {frame.get('frame_no')} live",
+                "detail": "Close the live frame before checkout.",
+            })
+        if session.get("paused"):
+            attention.append({
+                "type": "paused_session",
+                "tone": "warning",
+                "table_id": table["id"],
+                "title": f"{table_code} is paused",
+                "detail": "Resume or close before handover.",
+            })
+
+    floor = {
+        "generated_at": state["generated_at"],
+        "tables": tables,
+        "sessions": active_sessions,
+        "status_definitions": state["status_definitions"],
+        "summary": {
+            "total_tables": len(tables),
+            "active_tables": state["active_tables"],
+            "idle_tables": state["idle_tables"],
+            "running_tables": running_count,
+            "paused_tables": paused_count,
+            "reserved_tables": reserved_count,
+            "maintenance_tables": maintenance_count,
+            "live_value": live_value,
+        },
+        "attention": attention,
+        "resources": {
+            "rates": state["rates"],
+            "maintenance": state["maintenance"],
+        },
+    }
+    return {
+        **state,
+        "contract": "live-floor.v1",
+        "floor": floor,
+    }
+
+
 def delta(current: int | float, previous: int | float, noun: str = "usual") -> dict:
     current = current or 0
     previous = previous or 0

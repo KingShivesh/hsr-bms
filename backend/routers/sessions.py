@@ -12,7 +12,7 @@ from audit import log_action, require_manager_pin
 from pricing import calc_checkout, get_peak_multiplier
 from deps import require_admin
 from hsr_config import format_ist_now, get_ist_now, rate_for_table
-from live_state import build_table_state, serialize_session as serialize_live_session
+from live_state import build_live_floor_state, build_table_state, serialize_session as serialize_live_session
 
 router = APIRouter()
 MAX_SESSION_DURATION_MINUTES = 12 * 60
@@ -1293,6 +1293,11 @@ def get_active(db: Session = Depends(get_db)):
 @router.get("/tables")
 def get_table_state(db: Session = Depends(get_db)):
     return build_table_state(db)
+
+
+@router.get("/live-floor")
+def get_live_floor_state(db: Session = Depends(get_db)):
+    return build_live_floor_state(db)
 
 @router.get("/history/{table_id}")
 def table_history(table_id: str, db: Session = Depends(get_db)):
