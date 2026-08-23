@@ -273,6 +273,20 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
       : [selectedSession?.customer_name, selectedSession?.split_name]
           .filter(Boolean)
           .flatMap((name) => String(name).split(",").map((part) => part.trim()).filter(Boolean));
+  const cartItemCount = cart.reduce((sum, item) => sum + item.qty, 0);
+  const cartTotalValue = cartTotal();
+  const canPlaceOrder =
+    cart.length > 0 &&
+    !placing &&
+    (
+      orderTarget === "standalone"
+        ? !!customerName.trim()
+        : !!selectedTable && !!selectedPlayer
+    );
+  const placeOrderLabel =
+    orderTarget === "table"
+      ? `Add to table bill · ₹${cartTotalValue}`
+      : `Collect ${paymentMethod} · ₹${cartTotalValue}`;
 
   useEffect(() => {
     if (!orderContext?.tableId) return;
@@ -295,6 +309,13 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
     setSelectedPlayer(preferredPlayer);
     onOrderContextHandled?.();
   }, [orderContext, activeSessions, loading, onOrderContextHandled]);
+
+  useEffect(() => {
+    if (orderTarget !== "table" || !selectedTable || selectedPlayer) return;
+    if (selectedSessionPlayers.length) {
+      setSelectedPlayer(selectedSessionPlayers[0]);
+    }
+  }, [orderTarget, selectedTable, selectedPlayer, selectedSessionPlayers]);
 
   if (loading) {
     return (
@@ -471,8 +492,31 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
           {/* Cart */}
           <div>
             <div className="panel food-cart-panel">
-              <div className="section-heading">
-                Order Summary
+              <div className="food-cart-head">
+                <div>
+                  <div className="section-heading">
+                    Order Summary
+                  </div>
+                  <p>
+                    {orderTarget === "table"
+                      ? selectedTable
+                        ? `${selectedTable.toUpperCase()}${selectedPlayer ? ` · ${selectedPlayer}` : " · select player"}`
+                        : "Attach food to a running table"
+                      : customerName.trim()
+                        ? `Counter · ${customerName.trim()}`
+                        : "Counter order"}
+                  </p>
+                </div>
+                {cart.length > 0 && (
+                  <button
+                    type="button"
+                    className="food-clear-cart"
+                    onClick={() => setCart([])}
+                    disabled={placing}
+                  >
+                    Clear cart
+                  </button>
+                )}
               </div>
 
               <div className="food-payment-toggle" aria-label="Order target">
@@ -484,6 +528,7 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
                     key={target}
                     type="button"
                     className={orderTarget === target ? "active" : ""}
+                    disabled={target === "table" && activeSessions.length === 0}
                     onClick={() => setOrderTarget(target)}
                   >
                     <i className={`ti ${target === "table" ? "ti-billiard" : "ti-shopping-bag"}`} aria-hidden="true" />
@@ -630,25 +675,17 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
                     );
                   })}
 
-                  <div
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      padding: "12px 0 8px",
-                      fontWeight: "var(--weight-bold)",
-                      fontSize: "var(--text-base)",
-                    }}
-                  >
-                    <span>Total</span>
-                    <span style={{ color: "var(--success)" }}>₹{cartTotal()}</span>
+                  <div className="food-cart-total">
+                    <span>{cartItemCount} item{cartItemCount === 1 ? "" : "s"}</span>
+                    <strong>₹{cartTotalValue}</strong>
                   </div>
 
                   <button
                     onClick={placeOrder}
-                    disabled={placing}
+                    disabled={!canPlaceOrder}
                     className="primary-action-btn"
                   >
-                    {placing ? "Placing..." : "Place Order"}
+                    {placing ? "Placing..." : placeOrderLabel}
                   </button>
                 </>
               )}

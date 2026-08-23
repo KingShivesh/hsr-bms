@@ -2180,6 +2180,40 @@ body.dark .closing-insight.critical {
   top: 80px;
 }
 
+.food-cart-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding-bottom: var(--space-3);
+  border-bottom: 1px solid var(--venue-line-soft, var(--border));
+}
+
+.food-cart-head .section-heading {
+  margin-bottom: var(--space-1);
+}
+
+.food-cart-head p {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  line-height: 1.35;
+}
+
+.food-clear-cart {
+  min-height: var(--btn-h-sm);
+  flex: 0 0 auto;
+  padding: 0 var(--space-3);
+  border: 1px solid color-mix(in srgb, var(--danger) 24%, var(--border));
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  color: var(--danger);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-bold);
+  cursor: pointer;
+}
+
 .food-menu-edit-form,
 .food-menu-edit-row {
   display: grid;
@@ -2295,6 +2329,12 @@ body.dark .closing-insight.critical {
   color: var(--accent-text);
 }
 
+.food-payment-toggle button:disabled,
+.food-clear-cart:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+
 .food-table-target {
   display: grid;
   gap: var(--space-2);
@@ -2366,6 +2406,25 @@ body.dark .closing-insight.critical {
   color: var(--accent-text);
   font-size: var(--text-base);
   font-weight: var(--weight-heavy);
+}
+
+.food-cart-total {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-3) 0 var(--space-2);
+  border-top: 1px solid var(--venue-line-soft, var(--border));
+  color: var(--text-secondary);
+  font-size: var(--text-base);
+  font-weight: var(--weight-bold);
+}
+
+.food-cart-total strong {
+  color: var(--success);
+  font-size: var(--text-xl);
+  font-weight: var(--weight-black);
+  font-variant-numeric: tabular-nums;
 }
 
 .icon-danger-btn {
