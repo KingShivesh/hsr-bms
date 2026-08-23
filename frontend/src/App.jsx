@@ -9,6 +9,7 @@ import { useConfirm } from "./components/confirmContext.js";
 import { getBackendHealth, getMe, getSummary } from "./api/index.js";
 
 const Dashboard = lazy(() => import("./components/Dashboard.jsx"));
+const LiveFloor = lazy(() => import("./features/live-floor/LiveFloor.jsx"));
 const TablesTab = lazy(() => import("./components/tabs/TablesTab.jsx"));
 const ReportsTab = lazy(() => import("./components/tabs/ReportsTab.jsx"));
 const ClosingTab = lazy(() => import("./components/tabs/ClosingTab.jsx"));
@@ -56,7 +57,7 @@ function AppInner() {
   const [loggedIn, setLoggedIn] = useState(!!localStorage.getItem("token"));
   const [role, setRole] = useState(localStorage.getItem("role") || "admin");
   const [username, setUsername] = useState(localStorage.getItem("username") || "");
-  const [page, setPage] = useState("dashboard");
+  const [page, setPage] = useState("live-floor");
   const [newSessionRequest, setNewSessionRequest] = useState(0);
   const [foodOrderContext, setFoodOrderContext] = useState(null);
   const [backendStatus, setBackendStatus] = useState({
@@ -121,7 +122,7 @@ function AppInner() {
       "tournaments",
     ]);
     if (role === "staff" && adminOnly.has(page)) {
-      setPage("tables");
+      setPage("live-floor");
     }
   }, [role, page]);
 
@@ -186,7 +187,7 @@ function AppInner() {
   }
 
   function openNewSession() {
-    setPage("tables");
+    setPage("live-floor");
     setNewSessionRequest((request) => request + 1);
   }
 
@@ -215,6 +216,7 @@ function AppInner() {
   }
 
   const PAGE_TITLES = {
+    "live-floor": "Live Floor",
     dashboard: "Executive Overview",
     tables: "Live Table Floor",
     waitlist: "Smart Waitlist",
@@ -262,6 +264,14 @@ function AppInner() {
             <div className="page">
               {page === "dashboard" && (
                 <Dashboard metrics={metrics} onNavigate={setPage} role={role} />
+              )}
+              {page === "live-floor" && (
+                <LiveFloor
+                  username={username}
+                  role={role}
+                  onNavigate={setPage}
+                  newSessionRequest={newSessionRequest}
+                />
               )}
               {page === "tables" && (
                 <TablesTab

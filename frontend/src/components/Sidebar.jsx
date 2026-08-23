@@ -13,42 +13,50 @@ export default function Sidebar({ page, setPage, onLogout, activeTables, role = 
 
   const groups = [
     {
-      title: "Core operational",
+      title: "Operate",
       tone: "core",
       items: [
-        { id: "dashboard", icon: "ti-layout-dashboard", label: "Dashboard" },
         {
-          id: "tables",
+          id: "live-floor",
           icon: "ti-layout-grid",
-          label: "Table Management",
+          label: "Live Floor",
           badge: activeTables > 0 ? `${activeTables} Active` : "",
           badgeTone: "success",
         },
-        { id: "waitlist", icon: "ti-clock", label: "Waitlist Queue" },
-        { id: "reservations", icon: "ti-calendar-event", label: "Reservations" },
-        { id: "food", icon: "ti-tools-kitchen-2", label: "Food & Cafe POS" },
-        { id: "billing", icon: "ti-receipt", label: "Billing & Invoices", staffHidden: true },
+        { id: "reservations", icon: "ti-calendar-event", label: "Bookings" },
+        { id: "members", icon: "ti-users", label: "Customers", adminOnly: true },
+        { id: "waitlist", icon: "ti-clock", label: "Waitlist", staffHidden: true },
+        { id: "food", icon: "ti-tools-kitchen-2", label: "Cafe POS" },
       ],
     },
     {
-      title: "Management",
+      title: "Business",
       tone: "manage",
       items: [
-        { id: "members", icon: "ti-users", label: "Club Members", adminOnly: true },
-        { id: "tournaments", icon: "ti-trophy", label: "Tournaments", staffHidden: true },
-        { id: "closing", icon: "ti-lock-check", label: "Shift EOD Closing" },
+        { id: "billing", icon: "ti-receipt", label: "Sales", staffHidden: true },
         { id: "reports", icon: "ti-chart-bar", label: "Analytics & Reports", adminOnly: true },
-        { id: "operations", icon: "ti-adjustments", label: "Operations Control", adminOnly: true },
-        { id: "staff", icon: "ti-user-check", label: "Activity Log", adminOnly: true },
-        { id: "inventory", icon: "ti-package", label: "Inventory & Stocks", staffHidden: true },
+        { id: "closing", icon: "ti-lock-check", label: "Daily Closing" },
+        { id: "dashboard", icon: "ti-layout-dashboard", label: "Executive Overview", adminOnly: true },
       ],
     },
     {
-      title: "System",
+      title: "Club",
+      tone: "club",
+      items: [
+        { id: "members", icon: "ti-users", label: "Members", adminOnly: true },
+        { id: "inventory", icon: "ti-package", label: "Inventory & Stocks", staffHidden: true },
+        { id: "tournaments", icon: "ti-trophy", label: "Tournaments", staffHidden: true },
+      ],
+    },
+    {
+      title: "Admin",
       tone: "system",
       items: [
+        { id: "staff", icon: "ti-user-check", label: "Staff & Roles", adminOnly: true },
+        { id: "operations", icon: "ti-adjustments", label: "Operations Control", adminOnly: true },
+        { id: "tables", icon: "ti-layout-board", label: "Full Table Controls", staffHidden: true },
         { id: "notifications", icon: "ti-bell", label: "Notifications", staffHidden: true },
-        { id: "settings", icon: "ti-settings", label: "Club Settings", adminOnly: true },
+        { id: "settings", icon: "ti-settings", label: "Settings", adminOnly: true },
       ],
     },
   ].map((group) => ({
@@ -106,7 +114,7 @@ export default function Sidebar({ page, setPage, onLogout, activeTables, role = 
           <i className={`ti ${role === "admin" ? "ti-shield-check" : "ti-user-check"}`} aria-hidden="true" />
           <span>{role === "admin" ? "Admin access" : "Staff access"}</span>
         </div>
-        <button type="button" className="cf-quick-btn" onClick={() => navigate("tables")}>
+        <button type="button" className="cf-quick-btn" onClick={() => navigate("live-floor")}>
           <i className="ti ti-bolt" aria-hidden="true" />
           <span>Quick Operations</span>
         </button>
