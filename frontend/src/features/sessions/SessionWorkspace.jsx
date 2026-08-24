@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import { pauseSession, transferSession } from "../../api/index.js";
 import { useToast } from "../../components/toastContext.js";
+import CheckoutPanel from "../checkout/CheckoutPanel.jsx";
 import ProductSelector from "../orders/ProductSelector.jsx";
 import TableStatusBadge from "../live-floor/TableStatusBadge.jsx";
 
@@ -31,11 +32,11 @@ export default function SessionWorkspace({
   onClose,
   onRefresh,
   onStartSession,
-  onCheckout,
 }) {
   const { showToast } = useToast();
   const [activeTab, setActiveTab] = useState("overview");
   const [showOrders, setShowOrders] = useState(false);
+  const [checkoutOpen, setCheckoutOpen] = useState(false);
   const [busy, setBusy] = useState("");
   const [transferTarget, setTransferTarget] = useState("");
   const session = table?.session;
@@ -218,7 +219,8 @@ export default function SessionWorkspace({
                 {busy === "transfer" ? "Moving..." : "Move"}
               </button>
             </label>
-            <button type="button" className="lf-danger-button" onClick={() => onCheckout?.(table.id)}>
+            <button type="button" className="lf-danger-button" onClick={() => setCheckoutOpen(true)}>
+              <i className="ti ti-receipt" aria-hidden="true" />
               Checkout
             </button>
           </div>
@@ -238,6 +240,13 @@ export default function SessionWorkspace({
           />
         </div>
       )}
+
+      <CheckoutPanel
+        table={table}
+        open={checkoutOpen}
+        onClose={() => setCheckoutOpen(false)}
+        onComplete={onRefresh}
+      />
     </aside>
   );
 }
