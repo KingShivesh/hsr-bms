@@ -31,15 +31,16 @@ function LiveFloorSkeleton() {
 
 function NewSessionPanel({ open, tables, initialTableId, onClose, onCreated }) {
   const { showToast } = useToast();
-  const availableTables = tables.filter((table) => table.status_key === "available");
+  const availableTables = useMemo(() => tables.filter((table) => table.status_key === "available"), [tables]);
+  const defaultTableId = initialTableId || availableTables[0]?.id || "";
   const [customer, setCustomer] = useState("");
-  const [tableId, setTableId] = useState(initialTableId || availableTables[0]?.id || "");
+  const [tableId, setTableId] = useState(defaultTableId);
   const [mode, setMode] = useState("single");
   const [saving, setSaving] = useState(false);
 
   useEffect(() => {
-    if (open) setTableId(initialTableId || availableTables[0]?.id || "");
-  }, [open, initialTableId, availableTables[0]?.id]);
+    if (open) setTableId(defaultTableId);
+  }, [open, defaultTableId]);
 
   if (!open) return null;
 
@@ -118,7 +119,7 @@ function NewSessionPanel({ open, tables, initialTableId, onClose, onCreated }) {
   );
 }
 
-export default function LiveFloor({ username = "", role = "admin", onNavigate, newSessionRequest = 0 }) {
+export default function LiveFloor({ role = "admin", onNavigate, newSessionRequest = 0 }) {
   const [floor, setFloor] = useState(null);
   const [selectedTableId, setSelectedTableId] = useState("");
   const [loading, setLoading] = useState(true);
@@ -126,6 +127,11 @@ export default function LiveFloor({ username = "", role = "admin", onNavigate, n
   const [tick, setTick] = useState(0);
   const [newSessionOpen, setNewSessionOpen] = useState(false);
   const [newSessionTableId, setNewSessionTableId] = useState("");
+
+  const openNewSession = useCallback((tableId = "") => {
+    setNewSessionTableId(tableId);
+    setNewSessionOpen(true);
+  }, []);
 
   const loadFloor = useCallback(async ({ showLoading = false } = {}) => {
     if (showLoading) setLoading(true);
@@ -174,9 +180,9 @@ export default function LiveFloor({ username = "", role = "admin", onNavigate, n
 
   useEffect(() => {
     if (newSessionRequest > 0) openNewSession();
-  }, [newSessionRequest]);
+  }, [newSessionRequest, openNewSession]);
 
-  const tables = floor?.tables || [];
+  const tables = useMemo(() => floor?.tables || [], [floor]);
   const summary = floor?.summary || {};
   const selectedTable = useMemo(
     () => tables.find((table) => table.id === selectedTableId) || tables[0],
@@ -186,11 +192,6 @@ export default function LiveFloor({ username = "", role = "admin", onNavigate, n
   const reservedTables = tables.filter((table) => table.status_key === "reserved").length;
   const pausedTables = tables.filter((table) => table.status_key === "paused").length;
   const attentionCount = floor?.attention?.length || 0;
-
-  function openNewSession(tableId = "") {
-    setNewSessionTableId(tableId);
-    setNewSessionOpen(true);
-  }
 
   return (
     <section className="live-floor-page">

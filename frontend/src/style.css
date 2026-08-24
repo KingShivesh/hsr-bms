@@ -2470,8 +2470,34 @@ textarea:focus-visible {
   .op2-customer-grid,
   .op2-customer-stats,
   .op2-form-grid,
-  .sales-detail-grid {
+  .sales-detail-grid,
+  .checkout-summary-grid {
     grid-template-columns: 1fr;
+  }
+
+  .checkout-total-card,
+  .customer-profile-hero {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .checkout-total-card h3,
+  .checkout-success h3 {
+    font-size: var(--text-3xl);
+  }
+
+  .checkout-actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .checkout-inline-form {
+    grid-template-columns: 1fr;
+  }
+
+  .checkout-actions .ui-button,
+  .checkout-inline-form .ui-button {
+    width: 100%;
   }
 }
 

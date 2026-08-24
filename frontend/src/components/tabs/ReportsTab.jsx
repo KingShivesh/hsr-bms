@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import {
   getSummary,
   getHistory,
@@ -988,17 +988,7 @@ export default function ReportsTab({ onNavigate }) {
   const [exporting, setExporting] = useState(false);
   const [loadError, setLoadError] = useState("");
 
-  useEffect(() => {
-    refreshReports();
-    localStorage.removeItem("reportsDefaultTab");
-  }, []);
-
-  async function refreshReports() {
-    setLoadError("");
-    await Promise.all([fetchSummary(), fetchHistory()]);
-  }
-
-  async function fetchSummary() {
+  const fetchSummary = useCallback(async () => {
     try {
       const res = await getSummary();
       setSummary(res.data);
@@ -1006,9 +996,9 @@ export default function ReportsTab({ onNavigate }) {
       console.error(e);
       setLoadError(e.userMessage || "Report summary could not load.");
     }
-  }
+  }, []);
 
-  async function fetchHistory() {
+  const fetchHistory = useCallback(async () => {
     try {
       const res = await getHistory();
       setHistory(res.data);
@@ -1016,7 +1006,17 @@ export default function ReportsTab({ onNavigate }) {
       console.error(e);
       setLoadError(e.userMessage || "Bill history could not load.");
     }
-  }
+  }, []);
+
+  const refreshReports = useCallback(async () => {
+    setLoadError("");
+    await Promise.all([fetchSummary(), fetchHistory()]);
+  }, [fetchHistory, fetchSummary]);
+
+  useEffect(() => {
+    refreshReports();
+    localStorage.removeItem("reportsDefaultTab");
+  }, [refreshReports]);
 
   async function handleExport() {
     setExporting(true);

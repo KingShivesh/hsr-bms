@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { quoteSession, stopSession } from "../../api/index.js";
 import { Alert, Badge, Button, Drawer } from "../../components/ui/index.js";
 import { useToast } from "../../components/toastContext.js";
@@ -63,30 +63,12 @@ export default function CheckoutPanel({ table, open, onClose, onComplete }) {
   const rawTotal = Number(quote?.raw_total ?? finalTotal);
   const splitRows = useMemo(() => splitSummary(quote), [quote]);
 
-  useEffect(() => {
-    if (!open || !tableId) return;
-    setPaymentMethod("Cash");
-    setDiscountType("none");
-    setDiscountValue("");
-    setDiscountReason("");
-    setReceipt(null);
-    setError("");
-    const frozenAt = Date.now();
-    setClosedAtMs(frozenAt);
-    loadQuote({
-      nextPaymentMethod: "Cash",
-      nextDiscountType: "none",
-      nextDiscountValue: 0,
-      nextClosedAtMs: frozenAt,
-    });
-  }, [open, tableId]);
-
-  async function loadQuote({
-    nextPaymentMethod = paymentMethod,
-    nextDiscountType = discountType,
-    nextDiscountValue = discountValue,
-    nextClosedAtMs = closedAtMs,
-  } = {}) {
+  const loadQuote = useCallback(async ({
+    nextPaymentMethod,
+    nextDiscountType,
+    nextDiscountValue,
+    nextClosedAtMs,
+  }) => {
     if (!tableId) return;
     setLoading(true);
     setError("");
@@ -104,11 +86,34 @@ export default function CheckoutPanel({ table, open, onClose, onComplete }) {
     } finally {
       setLoading(false);
     }
-  }
+  }, [tableId]);
+
+  useEffect(() => {
+    if (!open || !tableId) return;
+    setPaymentMethod("Cash");
+    setDiscountType("none");
+    setDiscountValue("");
+    setDiscountReason("");
+    setReceipt(null);
+    setError("");
+    const frozenAt = Date.now();
+    setClosedAtMs(frozenAt);
+    loadQuote({
+      nextPaymentMethod: "Cash",
+      nextDiscountType: "none",
+      nextDiscountValue: 0,
+      nextClosedAtMs: frozenAt,
+    });
+  }, [open, tableId, loadQuote]);
 
   function handlePaymentChange(method) {
     setPaymentMethod(method);
-    loadQuote({ nextPaymentMethod: method });
+    loadQuote({
+      nextPaymentMethod: method,
+      nextDiscountType: discountType,
+      nextDiscountValue: discountValue,
+      nextClosedAtMs: closedAtMs,
+    });
   }
 
   function handleDiscountType(nextType) {
@@ -116,13 +121,23 @@ export default function CheckoutPanel({ table, open, onClose, onComplete }) {
     setDiscountType(nextType);
     if (nextType === "none") setDiscountReason("");
     setDiscountValue(nextValue);
-    loadQuote({ nextDiscountType: nextType, nextDiscountValue: nextValue });
+    loadQuote({
+      nextPaymentMethod: paymentMethod,
+      nextDiscountType: nextType,
+      nextDiscountValue: nextValue,
+      nextClosedAtMs: closedAtMs,
+    });
   }
 
   function handleRupeeApply() {
     const nextValue = sanitizeRupeeDiscount(discountValue);
     setDiscountValue(nextValue);
-    loadQuote({ nextDiscountType: "rupee", nextDiscountValue: nextValue });
+    loadQuote({
+      nextPaymentMethod: paymentMethod,
+      nextDiscountType: "rupee",
+      nextDiscountValue: nextValue,
+      nextClosedAtMs: closedAtMs,
+    });
   }
 
   async function handleFinalize() {

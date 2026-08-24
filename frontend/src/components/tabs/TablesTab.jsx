@@ -1658,7 +1658,6 @@ function TableCard({
   onSaveNotes,
   peakRate,
   gstPercent,
-  showToast,
   busyActions = {},
   compact = false,
 }) {
