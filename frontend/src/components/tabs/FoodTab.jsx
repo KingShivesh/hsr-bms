@@ -9,6 +9,7 @@ import {
   getFoodStats,
 } from "../../api/index.js";
 import { useToast } from "../toastContext.js";
+import { Checkbox } from "../ui/index.js";
 
 const CATEGORIES = [
   "All",
@@ -167,6 +168,15 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
         i.item === item.item && i.mrp === item.mrp ? { ...i, qty } : i,
       ),
     );
+  }
+
+  function adjustCartQty(item, delta) {
+    const nextQty = Number(item.qty || 1) + delta;
+    if (nextQty <= 0) {
+      removeFromCart(item);
+      return;
+    }
+    updateCartQty(item, nextQty);
   }
 
   function cartTotal() {
@@ -336,7 +346,7 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
   }
 
   return (
-    <div>
+    <div className="cafe-pos-page">
       {cigaretteDraft.name && (
         <div className="app-confirm-backdrop" role="presentation">
           <form
@@ -398,7 +408,7 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
       )}
 
       {/* Tab switcher */}
-      <div className="segmented-control page-tabs">
+      <div className="segmented-control page-tabs cafe-pos-tabs">
         {[
           ["order", "New Order"],
           ["stats", "Food Stats"],
@@ -423,7 +433,7 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
       {activeTab === "order" && (
         <div className="food-order-layout">
           {/* Menu grid */}
-          <div>
+          <div className="cafe-products-region">
             <div className="food-menu-toolbar">
               <label className="food-menu-search">
                 <i className="ti ti-search" aria-hidden="true" />
@@ -434,6 +444,16 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
                   placeholder="Search menu items"
                   aria-label="Search menu items"
                 />
+                {menuSearch.trim() && (
+                  <button
+                    type="button"
+                    className="food-search-clear"
+                    onClick={() => setMenuSearch("")}
+                    aria-label="Clear menu search"
+                  >
+                    <i className="ti ti-x" aria-hidden="true" />
+                  </button>
+                )}
               </label>
               <span className="food-menu-count">
                 {filteredMenu.length} item{filteredMenu.length === 1 ? "" : "s"}
@@ -455,11 +475,16 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
               {filteredMenu.map(([name, v]) => {
                 const inCart = cart.find((i) => i.item === name);
                 return (
-                  <div
+                  <button
+                    type="button"
                     key={name}
                     onClick={() => addToCart(name)}
                     className={`food-menu-card ${inCart ? "active" : ""}`}
+                    aria-label={`Add ${name} to order`}
                   >
+                    <span className="food-card-media" aria-hidden="true">
+                      <i className={`ti ${isCigarette(name) ? "ti-smoking" : "ti-tools-kitchen-2"}`} />
+                    </span>
                     <div className="food-menu-name">
                       {name}
                     </div>
@@ -474,7 +499,7 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
                         × {inCart.qty} in cart
                       </div>
                     )}
-                  </div>
+                  </button>
                 );
               })}
               {filteredMenu.length === 0 && (
@@ -490,12 +515,12 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
           </div>
 
           {/* Cart */}
-          <div>
+          <aside className="cafe-order-region" aria-label="Current order">
             <div className="panel food-cart-panel">
               <div className="food-cart-head">
                 <div>
                   <div className="section-heading">
-                    Order Summary
+                    Current Order
                   </div>
                   <p>
                     {orderTarget === "table"
@@ -519,22 +544,24 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
                 )}
               </div>
 
-              <div className="food-payment-toggle" aria-label="Order target">
-                {[
-                  ["standalone", "Counter"],
-                  ["table", "Table"],
-                ].map(([target, label]) => (
-                  <button
-                    key={target}
-                    type="button"
-                    className={orderTarget === target ? "active" : ""}
-                    disabled={target === "table" && activeSessions.length === 0}
-                    onClick={() => setOrderTarget(target)}
-                  >
-                    <i className={`ti ${target === "table" ? "ti-billiard" : "ti-shopping-bag"}`} aria-hidden="true" />
-                    {label}
-                  </button>
-                ))}
+              <div className="cafe-order-mode">
+                <div className="cafe-counter-badge">
+                  <i className={`ti ${orderTarget === "table" ? "ti-billiard" : "ti-shopping-bag"}`} aria-hidden="true" />
+                  <span>{orderTarget === "table" ? "Table / session order" : "Counter order"}</span>
+                </div>
+                <Checkbox
+                  checked={orderTarget === "table"}
+                  disabled={activeSessions.length === 0}
+                  label="Add to running table"
+                  hint={activeSessions.length ? "Food will be added to the selected player/session bill." : "Start a table session before attaching food."}
+                  onChange={(checked) => {
+                    setOrderTarget(checked ? "table" : "standalone");
+                    if (!checked) {
+                      setSelectedTable("");
+                      setSelectedPlayer("");
+                    }
+                  }}
+                />
               </div>
 
               {orderTarget === "table" ? (
@@ -649,16 +676,22 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
                         <div
                           className="cart-line-actions"
                         >
-                          <label className="cart-qty-control">
-                            <span>Qty</span>
+                          <div className="cart-qty-control" aria-label={`Quantity for ${i.item}`}>
+                            <button type="button" onClick={() => adjustCartQty(i, -1)} aria-label={`Decrease ${i.item} quantity`}>
+                              <i className="ti ti-minus" aria-hidden="true" />
+                            </button>
                             <input
                               type="number"
                               min="1"
                               inputMode="numeric"
                               value={i.qty}
                               onChange={(e) => updateCartQty(i, e.target.value)}
+                              aria-label={`${i.item} quantity`}
                             />
-                          </label>
+                            <button type="button" onClick={() => adjustCartQty(i, 1)} aria-label={`Increase ${i.item} quantity`}>
+                              <i className="ti ti-plus" aria-hidden="true" />
+                            </button>
+                          </div>
                           <span className="cart-line-price">
                             ₹{price * i.qty}
                           </span>
@@ -676,7 +709,15 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
                   })}
 
                   <div className="food-cart-total">
-                    <span>{cartItemCount} item{cartItemCount === 1 ? "" : "s"}</span>
+                    <div>
+                      <span>Subtotal</span>
+                      <small>{cartItemCount} item{cartItemCount === 1 ? "" : "s"}</small>
+                    </div>
+                    <strong>₹{cartTotalValue}</strong>
+                  </div>
+
+                  <div className="food-cart-grand-total">
+                    <span>Total</span>
                     <strong>₹{cartTotalValue}</strong>
                   </div>
 
@@ -713,7 +754,7 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
                 </div>
               )}
             </div>
-          </div>
+          </aside>
         </div>
       )}
 
