@@ -5,13 +5,6 @@ import { useToast } from "../../components/toastContext.js";
 import SessionWorkspace from "../sessions/SessionWorkspace.jsx";
 import TableGrid from "./TableGrid.jsx";
 
-function greeting() {
-  const hour = new Date().getHours();
-  if (hour < 12) return "Good morning";
-  if (hour < 17) return "Good afternoon";
-  return "Good evening";
-}
-
 function todayLabel() {
   return new Date().toLocaleDateString("en-IN", {
     weekday: "long",
@@ -190,6 +183,9 @@ export default function LiveFloor({ username = "", role = "admin", onNavigate, n
     [tables, selectedTableId],
   );
   const upcomingBookings = tables.filter((table) => table.booking).length;
+  const reservedTables = tables.filter((table) => table.status_key === "reserved").length;
+  const pausedTables = tables.filter((table) => table.status_key === "paused").length;
+  const attentionCount = floor?.attention?.length || 0;
 
   function openNewSession(tableId = "") {
     setNewSessionTableId(tableId);
@@ -200,9 +196,15 @@ export default function LiveFloor({ username = "", role = "admin", onNavigate, n
     <section className="live-floor-page">
       <div className="lf-hero">
         <div>
-          <span className="lf-date">{todayLabel()}</span>
-          <h1>{greeting()}, {username || (role === "staff" ? "staff" : "admin")}</h1>
-          <p>Live table status, running value, bookings and session actions in one operating view.</p>
+          <span className="lf-date">{todayLabel()} · {role === "staff" ? "Staff console" : "Admin console"}</span>
+          <h1>Live Floor Command Center</h1>
+          <p>Start tables, monitor running value, attach orders and checkout from the same operating view.</p>
+          <div className="lf-state-row" aria-label="Live floor summary">
+            <span><i className="ti ti-player-play" aria-hidden="true" /> {summary.active_tables || 0} active</span>
+            <span><i className="ti ti-circle" aria-hidden="true" /> {summary.idle_tables || 0} available</span>
+            <span><i className="ti ti-calendar-event" aria-hidden="true" /> {reservedTables} reserved</span>
+            <span><i className="ti ti-alert-circle" aria-hidden="true" /> {attentionCount} attention</span>
+          </div>
         </div>
         <div className="lf-hero-actions">
           <button type="button" className="lf-secondary-button" onClick={() => onNavigate?.("reservations")}>
@@ -226,10 +228,10 @@ export default function LiveFloor({ username = "", role = "admin", onNavigate, n
       {!loading && !error && (
         <>
           <div className="lf-metrics">
-            <div><span>Active tables</span><strong>{summary.active_tables || 0}/{summary.total_tables || tables.length}</strong></div>
-            <div><span>Live value</span><strong>{metricValue(summary.live_value, "₹")}</strong></div>
-            <div><span>Available</span><strong>{summary.idle_tables || 0}</strong></div>
-            <div><span>Upcoming bookings</span><strong>{upcomingBookings}</strong></div>
+            <div><span>Running now</span><strong>{summary.active_tables || 0}</strong><small>{pausedTables ? `${pausedTables} paused` : "No paused sessions"}</small></div>
+            <div><span>Live floor value</span><strong>{metricValue(summary.live_value, "₹")}</strong><small>Estimated from open sessions</small></div>
+            <div><span>Open tables</span><strong>{summary.idle_tables || 0}</strong><small>Ready to seat guests</small></div>
+            <div><span>Bookings today</span><strong>{upcomingBookings}</strong><small>{reservedTables} currently reserved</small></div>
           </div>
 
           {!!floor?.attention?.length && (
@@ -247,10 +249,10 @@ export default function LiveFloor({ username = "", role = "admin", onNavigate, n
             <div className="lf-floor-panel">
               <div className="lf-section-head">
                 <div>
-                  <span className="lf-eyebrow">Live floor</span>
-                  <h2>{summary.active_tables ? `${summary.active_tables} active · ${summary.idle_tables} available` : `${summary.idle_tables || tables.length} tables available`}</h2>
+                  <span className="lf-eyebrow">Command board</span>
+                  <h2>{summary.active_tables ? `${summary.active_tables} running · ${summary.idle_tables} ready` : `${summary.idle_tables || tables.length} tables ready`}</h2>
                 </div>
-                <button type="button" className="lf-text-link" onClick={() => onNavigate?.("tables")}>Open legacy controls</button>
+                <button type="button" className="lf-text-link" onClick={() => onNavigate?.("tables")}>Advanced controls</button>
               </div>
               <TableGrid
                 tables={tables}
@@ -268,7 +270,6 @@ export default function LiveFloor({ username = "", role = "admin", onNavigate, n
               onClose={() => setSelectedTableId("")}
               onRefresh={() => loadFloor()}
               onStartSession={openNewSession}
-              onCheckout={() => onNavigate?.("tables")}
             />
           </div>
         </>

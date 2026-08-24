@@ -22,7 +22,9 @@ export default function TableCard({ table, selected, tick = 0, onSelect, onStart
   const elapsed = session && !session.paused ? (session.elapsed_seconds || 0) + tick : table.elapsed_seconds || 0;
   const isAvailable = statusKey === "available";
   const customer = session?.customer_name || table.booking?.customer_name || "";
-  const actionLabel = isAvailable ? "Start session" : statusKey === "reserved" ? "Review booking" : "Open session";
+  const actionLabel = isAvailable ? "Start" : statusKey === "reserved" ? "Review" : "Open session";
+  const runningTotal = Number(session?.running_total || table.running_total || 0);
+  const foodTotal = Number(session?.food_total || 0);
 
   function handleAction(event) {
     event.stopPropagation();
@@ -46,7 +48,7 @@ export default function TableCard({ table, selected, tick = 0, onSelect, onStart
     >
       <div className="lf-table-card-head">
         <div>
-          <span className="lf-table-kicker">Table</span>
+          <span className="lf-table-kicker">{table.type || table.label || "Table"}</span>
           <strong>{String(table.id || "").toUpperCase()}</strong>
         </div>
         <TableStatusBadge statusKey={statusKey} label={table.status_label} />
@@ -54,20 +56,33 @@ export default function TableCard({ table, selected, tick = 0, onSelect, onStart
 
       <div className="lf-table-card-body">
         <div>
-          <span>{table.type || table.label || "Table"}</span>
-          <b>{statusKey === "reserved" ? bookingTime(table.booking) : customer || "Walk-in ready"}</b>
+          <span>{session ? "Customer" : statusKey === "reserved" ? "Booking time" : "Availability"}</span>
+          <b title={statusKey === "reserved" ? bookingTime(table.booking) : customer || "Walk-in ready"}>
+            {statusKey === "reserved" ? bookingTime(table.booking) : customer || "Walk-in ready"}
+          </b>
         </div>
         <div>
           <span>{session ? "Live timer" : statusKey === "reserved" ? "Guest" : "Rate"}</span>
-          <b>{session ? formatTimer(elapsed) : statusKey === "reserved" ? customer || "Reserved guest" : `₹${table.rate || 0}/hr`}</b>
+          <b title={session ? formatTimer(elapsed) : statusKey === "reserved" ? customer || "Reserved guest" : `₹${table.rate || 0}/hr`}>
+            {session ? formatTimer(elapsed) : statusKey === "reserved" ? customer || "Reserved guest" : `₹${table.rate || 0}/hr`}
+          </b>
         </div>
       </div>
 
       {session && (
         <div className="lf-table-money">
-          <span>Current total</span>
-          <strong>₹{Number(session.running_total || table.running_total || 0).toLocaleString("en-IN")}</strong>
-          <small>Food ₹{Number(session.food_total || 0).toLocaleString("en-IN")}</small>
+          <div>
+            <span>Running total</span>
+            <strong>₹{runningTotal.toLocaleString("en-IN")}</strong>
+          </div>
+          <small>Food ₹{foodTotal.toLocaleString("en-IN")}</small>
+        </div>
+      )}
+
+      {!session && isAvailable && (
+        <div className="lf-table-ready">
+          <i className="ti ti-circle-check" aria-hidden="true" />
+          <span>Ready for next session</span>
         </div>
       )}
 
