@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { getFoodOrders, getHistory } from "../../api/index.js";
 import RetryNotice from "../../components/RetryNotice.jsx";
+import { Button, Drawer } from "../../components/ui/index.js";
 
 const BILL_DATE_FORMATTER = new Intl.DateTimeFormat("en-IN", {
   timeZone: "Asia/Kolkata",
@@ -223,18 +224,15 @@ export default function SalesPage() {
         )}
       </div>
 
-      {selected && (
-        <div className="lf-modal-backdrop" role="presentation">
-          <div className="op2-modal sales-detail" role="dialog" aria-modal="true" aria-label="Transaction detail">
-            <div className="order-selector-head">
-              <div>
-                <span className="lf-eyebrow">Receipt #{selected.id || "-"}</span>
-                <h3>{billCustomer(selected)}</h3>
-              </div>
-              <button type="button" className="lf-icon-button" onClick={() => setSelected(null)} aria-label="Close transaction detail">
-                <i className="ti ti-x" aria-hidden="true" />
-              </button>
-            </div>
+      <Drawer
+        open={!!selected}
+        title={selected ? `Receipt #${selected.id || "-"}` : "Receipt"}
+        description={selected ? `${billCustomer(selected)} · ${paymentMethod(selected)}` : ""}
+        onClose={() => setSelected(null)}
+        className="sales-detail-drawer"
+      >
+        {selected && (
+          <div className="sales-detail">
             <dl className="sales-detail-grid">
               <div><dt>Date</dt><dd>{billDate(selected)}</dd></div>
               <div><dt>Table</dt><dd>{String(selected.tbl || "-").toUpperCase()}</dd></div>
@@ -245,18 +243,17 @@ export default function SalesPage() {
               <div><dt>Total</dt><dd>{money(billTotal(selected))}</dd></div>
             </dl>
             {selected.notes && <p className="sales-notes">{selected.notes}</p>}
-            <div className="op2-modal-actions">
-              <button type="button" className="lf-secondary-button" onClick={() => window.print()}>
-                <i className="ti ti-printer" aria-hidden="true" />
+            <div className="checkout-actions">
+              <Button variant="secondary" icon="ti-printer" onClick={() => window.print()}>
                 Print receipt
-              </button>
-              <button type="button" className="lf-primary-button" onClick={() => setSelected(null)}>
+              </Button>
+              <Button variant="primary" onClick={() => setSelected(null)}>
                 Close
-              </button>
+              </Button>
             </div>
           </div>
-        </div>
-      )}
+        )}
+      </Drawer>
     </section>
   );
 }

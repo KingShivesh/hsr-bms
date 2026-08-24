@@ -3,6 +3,7 @@ import { closeDay, getClosingInsights, getClosingReport } from "../../api/index.
 import { useToast } from "../toastContext.js";
 import { useConfirm } from "../confirmContext.js";
 import RetryNotice from "../RetryNotice.jsx";
+import { Button } from "../ui/index.js";
 
 function money(value) {
   return `₹${Number(value || 0).toLocaleString("en-IN")}`;
@@ -198,20 +199,19 @@ export default function ClosingTab() {
           <p>Verify cash, active tables and exceptions before locking the day.</p>
         </div>
         <div className="closing-actions">
-          <button className="btn" type="button" onClick={() => window.print()}>
-            <i className="ti ti-printer" aria-hidden="true" />
+          <Button variant="secondary" icon="ti-printer" onClick={() => window.print()}>
             Print
-          </button>
-          <button
-            className={`btn ${closedDay ? "btn-success-sm" : "btn-primary-sm"}`}
-            type="button"
+          </Button>
+          <Button
+            variant={closedDay ? "secondary" : "primary"}
+            icon={closedDay ? "ti-circle-check" : "ti-lock-check"}
             disabled={closedDay || closingBusy || !data.can_close_day}
+            loading={closingBusy}
             onClick={markDayClosed}
             title={!data.can_close_day ? "Close all running tables first" : undefined}
           >
-            <i className={`ti ${closedDay ? "ti-circle-check" : "ti-lock-check"}`} aria-hidden="true" />
-            {closingBusy ? "Closing..." : closedDay ? "Day closed" : !data.can_close_day ? "Close tables first" : "Close day"}
-          </button>
+            {closedDay ? "Day closed" : !data.can_close_day ? "Close tables first" : "Close day"}
+          </Button>
         </div>
       </div>
 
