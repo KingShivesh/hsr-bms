@@ -388,34 +388,38 @@ export default function BookingsPage() {
 
         {visibleBookings.length ? (
           <div className="op2-register-list">
-            {visibleBookings.map((booking) => (
-              <article key={booking.id} className="op2-register-row">
-                <div>
-                  <strong>{booking.customer_name}</strong>
-                  <span>{booking.phone || "No phone"} · {booking.table_id || "ANY"} · {booking.duration_mins || 60} min</span>
-                </div>
-                <time>{shortDate(booking.booking_time)}</time>
-                <em data-status={booking.status}>{booking.status}</em>
-                <div className="op2-row-actions">
-                  <button
-                    type="button"
-                    className="lf-primary-button"
-                    disabled={busy === `checkin-${booking.id}` || booking.status !== "booked" || !targetForBooking(booking)}
-                    onClick={() => checkInBooking(booking)}
-                  >
-                    {busy === `checkin-${booking.id}` ? "Checking in..." : "Check in"}
-                  </button>
-                  <button
-                    type="button"
-                    className="lf-danger-button"
-                    disabled={busy === `cancel-${booking.id}` || booking.status !== "booked"}
-                    onClick={() => cancelExistingBooking(booking)}
-                  >
-                    {busy === `cancel-${booking.id}` ? "Cancelling..." : "Cancel"}
-                  </button>
-                </div>
-              </article>
-            ))}
+            {visibleBookings.map((booking) => {
+              const target = targetForBooking(booking);
+              return (
+                <article key={booking.id} className="op2-register-row">
+                  <div>
+                    <strong>{booking.customer_name}</strong>
+                    <span>{booking.phone || "No phone"} · {booking.table_id || "ANY"} · {booking.duration_mins || 60} min</span>
+                    <small>{target ? `Can seat at T${target.table.num} now` : "No matching free table right now"}</small>
+                  </div>
+                  <time>{shortDate(booking.booking_time)}</time>
+                  <em data-status={booking.status}>{booking.status}</em>
+                  <div className="op2-row-actions">
+                    <button
+                      type="button"
+                      className="lf-primary-button"
+                      disabled={busy === `checkin-${booking.id}` || booking.status !== "booked" || !target}
+                      onClick={() => checkInBooking(booking)}
+                    >
+                      {busy === `checkin-${booking.id}` ? "Checking in..." : target ? `Check in T${target.table.num}` : "No table"}
+                    </button>
+                    <button
+                      type="button"
+                      className="lf-danger-button"
+                      disabled={busy === `cancel-${booking.id}` || booking.status !== "booked"}
+                      onClick={() => cancelExistingBooking(booking)}
+                    >
+                      {busy === `cancel-${booking.id}` ? "Cancelling..." : "Cancel"}
+                    </button>
+                  </div>
+                </article>
+              );
+            })}
           </div>
         ) : (
           <div className="op2-empty">

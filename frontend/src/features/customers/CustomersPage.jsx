@@ -10,6 +10,7 @@ import {
 import RetryNotice from "../../components/RetryNotice.jsx";
 import { useConfirm } from "../../components/confirmContext.js";
 import { useToast } from "../../components/toastContext.js";
+import { Button, Drawer } from "../../components/ui/index.js";
 
 function memberName(member) {
   return member.nm || member.name || "Customer";
@@ -53,6 +54,7 @@ export default function CustomersPage() {
   const [error, setError] = useState("");
   const [query, setQuery] = useState("");
   const [newName, setNewName] = useState("");
+  const [selectedCustomer, setSelectedCustomer] = useState(null);
   const [busy, setBusy] = useState("");
 
   const loadCustomers = useCallback(async ({ showLoading = false } = {}) => {
@@ -252,7 +254,19 @@ export default function CustomersPage() {
               const tier = memberTier(member);
               const premium = /premium/i.test(tier);
               return (
-                <article className="op2-customer-card" key={id || memberName(member)}>
+                <article
+                  className="op2-customer-card"
+                  key={id || memberName(member)}
+                  role="button"
+                  tabIndex={0}
+                  onClick={() => setSelectedCustomer(member)}
+                  onKeyDown={(event) => {
+                    if (event.key === "Enter" || event.key === " ") {
+                      event.preventDefault();
+                      setSelectedCustomer(member);
+                    }
+                  }}
+                >
                   <div className="op2-customer-main">
                     <div>
                       <strong>{memberName(member)}</strong>
@@ -270,7 +284,10 @@ export default function CustomersPage() {
                       type="button"
                       className="lf-secondary-button"
                       disabled={!!busy}
-                      onClick={() => handleUpgrade(id, tier)}
+                      onClick={(event) => {
+                        event.stopPropagation();
+                        handleUpgrade(id, tier);
+                      }}
                     >
                       <i className={`ti ${premium ? "ti-arrow-down" : "ti-arrow-up"}`} aria-hidden="true" />
                       {busy === `upgrade-${id}` ? "Saving..." : premium ? "Downgrade" : "Upgrade"}
@@ -279,7 +296,10 @@ export default function CustomersPage() {
                       type="button"
                       className="lf-danger-button"
                       disabled={!!busy}
-                      onClick={() => handleDelete(member)}
+                      onClick={(event) => {
+                        event.stopPropagation();
+                        handleDelete(member);
+                      }}
                     >
                       <i className="ti ti-trash" aria-hidden="true" />
                       {busy === `delete-${id}` ? "Deleting..." : "Delete"}
@@ -297,6 +317,55 @@ export default function CustomersPage() {
           </div>
         )}
       </section>
+
+      <Drawer
+        open={!!selectedCustomer}
+        title={selectedCustomer ? memberName(selectedCustomer) : "Customer"}
+        description={selectedCustomer ? `${memberId(selectedCustomer) || "No ID"} · ${memberTier(selectedCustomer)}` : ""}
+        onClose={() => setSelectedCustomer(null)}
+        className="customer-profile-drawer"
+      >
+        {selectedCustomer && (
+          <div className="customer-profile">
+            <div className="customer-profile-hero">
+              <div className="customer-avatar">{memberName(selectedCustomer).slice(0, 2).toUpperCase()}</div>
+              <div>
+                <span className="lf-eyebrow">Customer profile</span>
+                <h3>{memberName(selectedCustomer)}</h3>
+                <p>{memberTier(selectedCustomer)} · Last visit {selectedCustomer.lst || "-"}</p>
+              </div>
+            </div>
+            <div className="checkout-summary-grid">
+              <div><span>Visits</span><strong>{selectedCustomer.vis || 0}</strong></div>
+              <div><span>Spent</span><strong>{money(selectedCustomer.spt)}</strong></div>
+              <div><span>Customer ID</span><strong>{memberId(selectedCustomer) || "-"}</strong></div>
+              <div><span>Tier</span><strong>{memberTier(selectedCustomer)}</strong></div>
+            </div>
+            <div className="customer-profile-note">
+              <i className="ti ti-info-circle" aria-hidden="true" />
+              <span>Spend and visits update automatically when a table checkout is completed.</span>
+            </div>
+            <div className="checkout-actions">
+              <Button
+                variant="secondary"
+                icon={/premium/i.test(memberTier(selectedCustomer)) ? "ti-arrow-down" : "ti-arrow-up"}
+                loading={busy === `upgrade-${memberId(selectedCustomer)}`}
+                onClick={() => handleUpgrade(memberId(selectedCustomer), memberTier(selectedCustomer))}
+              >
+                {/premium/i.test(memberTier(selectedCustomer)) ? "Downgrade" : "Upgrade"}
+              </Button>
+              <Button
+                variant="danger"
+                icon="ti-trash"
+                loading={busy === `delete-${memberId(selectedCustomer)}`}
+                onClick={() => handleDelete(selectedCustomer)}
+              >
+                Delete
+              </Button>
+            </div>
+          </div>
+        )}
+      </Drawer>
     </section>
   );
 }
