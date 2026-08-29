@@ -7,7 +7,6 @@ import {
   startSession,
 } from "../../api/index.js";
 import RetryNotice from "../../components/RetryNotice.jsx";
-import { useConfirm } from "../../components/confirmContext.js";
 import { useToast } from "../../components/toastContext.js";
 import { HSR_TABLES, getTableRate } from "../../config/hsrTables.js";
 import { getTableStatus } from "../../config/tableStatus.js";
@@ -180,7 +179,6 @@ function BookingModal({ form, setForm, saving, onClose, onSubmit }) {
 
 export default function BookingsPage() {
   const { showToast } = useToast();
-  const { requestConfirm } = useConfirm();
   const [bookings, setBookings] = useState([]);
   const [tableState, setTableState] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -270,17 +268,34 @@ export default function BookingsPage() {
   }
 
   async function cancelExistingBooking(booking) {
-    const confirmed = await requestConfirm({
-      title: "Cancel booking?",
-      message: `Cancel booking for ${booking.customer_name}?`,
-      confirmLabel: "Cancel booking",
-      tone: "danger",
-    });
-    if (!confirmed) return;
+    const restorePayload = {
+      customer_name: booking.customer_name,
+      phone: booking.phone || "",
+      table_id: booking.table_id || "ANY",
+      table_type: booking.table_type || "ANY",
+      booking_time: booking.booking_time,
+      duration_mins: booking.duration_mins || 60,
+      notes: booking.notes || "",
+    };
     setBusy(`cancel-${booking.id}`);
     try {
       await cancelBooking(booking.id);
-      showToast("Booking cancelled", "success");
+      showToast(`${booking.customer_name} booking cancelled`, "success", {
+        actionLabel: "Undo",
+        duration: 6000,
+        onAction: async () => {
+          try {
+            setBusy(`undo-cancel-${booking.id}`);
+            await createBooking(restorePayload);
+            showToast("Booking restored", "success");
+            await loadBookings();
+          } catch (err) {
+            showToast(err.response?.data?.detail || err.userMessage || "Could not restore booking", "error");
+          } finally {
+            setBusy("");
+          }
+        },
+      });
       await loadBookings();
     } catch (err) {
       showToast(err.response?.data?.detail || "Could not cancel booking", "error");
