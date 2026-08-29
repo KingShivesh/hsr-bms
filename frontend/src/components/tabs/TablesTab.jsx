@@ -1680,7 +1680,6 @@ function TableCard({
     if (session?.notes !== undefined) setNotes(session.notes || "");
   }, [session?.notes]);
 
-  const isPool = table.type === "POOL";
   const occupied = !!session;
   const paused = session?.paused || false;
   const rate = getTableRate(table, rates);
@@ -1728,9 +1727,9 @@ function TableCard({
     position: "absolute",
     width: "18px",
     height: "18px",
-    background: "var(--text-primary)",
+    background: "var(--surface-emphasis)",
     borderRadius: "50%",
-    border: "2px solid color-mix(in srgb, var(--text-primary) 90%, var(--surface))",
+    border: "2px solid color-mix(in srgb, var(--surface-emphasis) 90%, var(--surface))",
     boxShadow: "inset 0 2px 6px rgba(0,0,0,0.9), 0 0 0 1px var(--border)",
   };
 
@@ -1780,7 +1779,7 @@ function TableCard({
             disabled={clearMaintenanceBusy}
             style={{
               background: "var(--accent)",
-              color: "var(--surface)",
+              color: "var(--text-on-accent)",
               border: "none",
               borderRadius: "var(--radius-sm)",
               padding: "8px 16px",
@@ -1972,7 +1971,7 @@ function TableCard({
                     ? "var(--text-2xl)"
                     : "var(--text-3xl)",
                 fontWeight: "var(--weight-black)",
-                color: "var(--surface)",
+                color: "var(--text-on-accent)",
                 fontVariantNumeric: "tabular-nums",
                 letterSpacing: "0",
                 textShadow: "0 2px 10px rgba(0,0,0,0.68)",
@@ -1989,7 +1988,7 @@ function TableCard({
                   top: "16px",
                   right: "22px",
                   background: "var(--danger)",
-                  color: "var(--surface)",
+                  color: "var(--text-on-accent)",
                   borderRadius: "999px",
                   padding: "3px 9px",
                   fontSize: "var(--text-xs)",
@@ -2035,7 +2034,7 @@ function TableCard({
               <div
                 style={{
                   fontSize: "var(--text-xs)",
-                  color: "rgba(255,255,255,0.86)",
+                  color: "color-mix(in srgb, var(--text-on-accent) 86%, transparent)",
                   letterSpacing: "1px",
                   fontWeight: "var(--weight-heavy)",
                   textShadow: "0 1px 5px rgba(0,0,0,0.45)",
@@ -2048,7 +2047,7 @@ function TableCard({
                   fontSize: "var(--text-xl)",
                   lineHeight: 1.1,
                   fontWeight: "var(--weight-black)",
-                  color: "var(--surface)",
+                  color: "var(--text-on-accent)",
                   textShadow: "0 2px 8px rgba(0,0,0,0.58)",
                 }}
               >
@@ -2058,7 +2057,7 @@ function TableCard({
                 <div
                   style={{
                     marginTop: "2px",
-                    color: "rgba(255,255,255,0.65)",
+                    color: "color-mix(in srgb, var(--text-on-accent) 65%, transparent)",
                     fontSize: "var(--text-xs)",
                     fontWeight: "var(--weight-bold)",
                   }}
@@ -2081,7 +2080,7 @@ function TableCard({
                   left: "50%",
                   transform: "translateX(-50%)",
                   background: "var(--danger)",
-                  color: "var(--surface)",
+                  color: "var(--text-on-accent)",
                   border: "none",
                   borderRadius: "var(--radius-sm)",
                   padding: "6px 28px",
@@ -2106,7 +2105,7 @@ function TableCard({
                   left: "50%",
                   transform: "translateX(-50%)",
                   background: T.accent,
-                  color: isPool ? "var(--surface)" : "var(--text-primary)",
+                  color: "var(--text-on-accent)",
                   border: "none",
                   borderRadius: "var(--radius-sm)",
                   padding: "6px 28px",

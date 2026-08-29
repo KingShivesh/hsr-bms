@@ -21,7 +21,7 @@ import { getTableStatusByKey } from "../config/tableStatus.js";
 
 const TABLES = HSR_TABLES;
 const tableKey = (tableId) => String(tableId || "").trim().toLowerCase();
-const PIE_COLORS = ["var(--accent)", "var(--success)", "var(--warning)"];
+const PIE_COLORS = ["var(--chart-1)", "var(--chart-2)", "var(--chart-3)", "var(--chart-4)"];
 
 function money(value = 0) {
   return `₹${Number(value || 0).toLocaleString("en-IN")}`;
