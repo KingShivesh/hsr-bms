@@ -7679,12 +7679,12 @@ button:disabled,
   .settings-panel {
     padding: 14px;
   }
-  .toast-container {
+  .app-toast-container {
     left: 12px;
     right: 12px;
     top: 12px;
   }
-  .toast {
+  .app-toast {
     min-width: 0;
     max-width: none;
     width: 100%;
@@ -8005,7 +8005,7 @@ body.dark .quick-session-rate.warning {
   }
 }
 
-.toast-container {
+.app-toast-container {
   position: fixed;
   top: 20px;
   right: 20px;
@@ -8016,7 +8016,7 @@ body.dark .quick-session-rate.warning {
   pointer-events: none;
 }
 
-.toast {
+.app-toast {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -8033,11 +8033,11 @@ body.dark .quick-session-rate.warning {
   pointer-events: auto;
 }
 
-.toast span {
+.app-toast span {
   min-width: 0;
 }
 
-.toast-action {
+.app-toast-action {
   flex: 0 0 auto;
   min-height: var(--btn-h-sm);
   border: 1px solid currentColor;
@@ -8051,21 +8051,21 @@ body.dark .quick-session-rate.warning {
   transition: background var(--motion-fast) var(--ease-out), transform var(--motion-fast) var(--ease-out);
 }
 
-.toast-action:hover {
+.app-toast-action:hover {
   background: color-mix(in srgb, currentColor 16%, transparent);
 }
 
-.toast-action:active {
+.app-toast-action:active {
   transform: scale(0.98);
 }
 
-.toast-success {
+.app-toast-success {
   background: var(--success-bg);
   color: var(--success);
   border: 1px solid color-mix(in srgb, var(--success) 28%, var(--border));
 }
 
-.toast-error {
+.app-toast-error {
   background: var(--danger-bg);
   color: var(--danger);
   border: 1px solid color-mix(in srgb, var(--danger) 28%, var(--border));
@@ -8379,7 +8379,7 @@ body {
   color: rgba(248, 250, 252, 0.62);
 }
 
-.toast {
+.app-toast {
   border-radius: var(--radius-sm);
   box-shadow: var(--elevation-2);
 }
@@ -18194,7 +18194,7 @@ body.dark .table-session-card.occupied {
   }
 }
 
-.toast,
+.app-toast,
 .backend-status-banner,
 .settings-flash {
   border-radius: var(--radius-lg) !important;
@@ -18202,11 +18202,11 @@ body.dark .table-session-card.occupied {
   backdrop-filter: blur(14px) saturate(1.2);
 }
 
-.toast {
+.app-toast {
   animation: polished-toast-in var(--motion-med) var(--ease-out) both;
 }
 
-.toast.is-exiting {
+.app-toast.is-exiting {
   animation: polished-toast-out var(--motion-med) var(--ease-out) both;
 }
 

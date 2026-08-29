@@ -4,6 +4,7 @@ import {
   createBooking,
   getBookings,
   getTableState,
+  restoreBooking,
   startSession,
 } from "../../api/index.js";
 import RetryNotice from "../../components/RetryNotice.jsx";
@@ -268,15 +269,6 @@ export default function BookingsPage() {
   }
 
   async function cancelExistingBooking(booking) {
-    const restorePayload = {
-      customer_name: booking.customer_name,
-      phone: booking.phone || "",
-      table_id: booking.table_id || "ANY",
-      table_type: booking.table_type || "ANY",
-      booking_time: booking.booking_time,
-      duration_mins: booking.duration_mins || 60,
-      notes: booking.notes || "",
-    };
     setBusy(`cancel-${booking.id}`);
     try {
       await cancelBooking(booking.id);
@@ -286,7 +278,7 @@ export default function BookingsPage() {
         onAction: async () => {
           try {
             setBusy(`undo-cancel-${booking.id}`);
-            await createBooking(restorePayload);
+            await restoreBooking(booking.id);
             showToast("Booking restored", "success");
             await loadBookings();
           } catch (err) {

@@ -352,6 +352,7 @@ export const cancelWaitlistEntry = (entryId) =>
 export const getBookings = () => api.get("/bookings");
 export const createBooking = (booking) => api.post("/bookings", booking);
 export const cancelBooking = (bookingId) => api.delete(`/bookings/${bookingId}`);
+export const restoreBooking = (bookingId) => api.post(`/bookings/${bookingId}/restore`);
 
 // Challenge board
 export const getChallenges = () => api.get("/challenges");

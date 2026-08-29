@@ -154,6 +154,42 @@ def create_booking(body: BookingBody, db: Session = Depends(get_db)):
     return _format_booking(booking)
 
 
+@router.post("/{booking_id}/restore")
+def restore_booking(booking_id: int, db: Session = Depends(get_db)):
+    booking = db.query(models.Booking).filter(models.Booking.id == booking_id).first()
+    if not booking:
+        raise HTTPException(status_code=404, detail="Booking not found")
+    if booking.status != "cancelled":
+        return _format_booking(booking)
+
+    booking_dt = _parse_time(booking.booking_time)
+    if booking_dt < get_ist_now() - timedelta(minutes=5):
+        raise HTTPException(status_code=400, detail="Booking time cannot be restored in the past")
+
+    table_id = (booking.table_id or "ANY").upper()
+    start = booking_dt
+    end = start + timedelta(minutes=booking.duration_mins or 60)
+    existing = (
+        db.query(models.Booking)
+        .filter(models.Booking.status == "booked", models.Booking.id != booking.id)
+        .with_for_update()
+        .all()
+    )
+    for b in existing:
+        if table_id == "ANY" or b.table_id == "ANY" or b.table_id.upper() != table_id:
+            continue
+        b_start = _parse_time(b.booking_time)
+        b_end = b_start + timedelta(minutes=b.duration_mins)
+        if start < b_end and end > b_start:
+            raise HTTPException(status_code=400, detail=f"Booking conflict on {table_id}")
+
+    booking.status = "booked"
+    booking.released_at = ""
+    db.commit()
+    db.refresh(booking)
+    return _format_booking(booking)
+
+
 @router.delete("/{booking_id}")
 def cancel_booking(booking_id: int, db: Session = Depends(get_db)):
     booking = db.query(models.Booking).filter(models.Booking.id == booking_id).first()
