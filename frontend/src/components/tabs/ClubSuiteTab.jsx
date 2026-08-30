@@ -18,6 +18,7 @@ import {
   seatWaitlistEntry,
   setItemAvailability,
   setMaintenance,
+  restoreFoodOrder,
   updateMenuItem,
 } from "../../api/index.js";
 import { HSR_TABLES } from "../../config/hsrTables.js";
@@ -68,6 +69,17 @@ function isoLocalNowPlus(minutes = 30) {
     pad(date.getMonth() + 1),
     pad(date.getDate()),
   ].join("-") + `T${pad(date.getHours())}:${pad(date.getMinutes())}`;
+}
+
+function foodOrderRestorePayload(order = {}) {
+  return {
+    date: order.date || "",
+    ts: order.ts || null,
+    customer_name: order.customer_name || "",
+    items: Array.isArray(order.items) ? order.items : [],
+    total: Number(order.total || 0),
+    payment_method: order.payment_method || "Cash",
+  };
 }
 
 function Section({ eyebrow, title, action, children }) {
@@ -684,7 +696,7 @@ function BillingView({ history, foodOrders, actions, busy, activeAction }) {
         <ActionButton
           tone="danger"
           icon="ti-receipt-refund"
-          onClick={() => actions.cancelFoodOrder(order.id)}
+          onClick={() => actions.cancelFoodOrder(order)}
           disabled={busy}
         >
           {activeAction === `food-cancel-${order.id}` ? "Cancelling..." : "Cancel"}
@@ -1121,6 +1133,8 @@ export default function ClubSuiteTab({ view }) {
     confirmText = "",
     actionKey = "action",
     successMessage = "",
+    undoLabel = "",
+    onUndo,
   } = {}) => {
     if (confirmText) {
       const confirmed = await requestConfirm({
@@ -1136,7 +1150,28 @@ export default function ClubSuiteTab({ view }) {
     try {
       await action();
       await loadData();
-      if (successMessage) showToast(successMessage, "success");
+      if (successMessage && onUndo) {
+        showToast(successMessage, "success", {
+          actionLabel: undoLabel || "Undo",
+          duration: 6000,
+          onAction: async () => {
+            setBusy(true);
+            setActiveAction(`${actionKey}-undo`);
+            try {
+              await onUndo();
+              await loadData();
+              showToast("Action restored", "success");
+            } catch (error) {
+              showToast(error.response?.data?.detail || "Could not restore action", "error");
+            } finally {
+              setBusy(false);
+              setActiveAction("");
+            }
+          },
+        });
+      } else if (successMessage) {
+        showToast(successMessage, "success");
+      }
       return true;
     } catch (error) {
       showToast(error.response?.data?.detail || "Action failed", "error");
@@ -1176,12 +1211,13 @@ export default function ClubSuiteTab({ view }) {
         successMessage: "Reservation cancelled",
       },
     ),
-    cancelFoodOrder: (orderId) => runAction(
-      () => cancelFoodOrder(orderId),
+    cancelFoodOrder: (order) => runAction(
+      () => cancelFoodOrder(order.id),
       {
-        confirmText: "Cancel this food order?",
-        actionKey: `food-cancel-${orderId}`,
+        actionKey: `food-cancel-${order.id}`,
         successMessage: "Food order cancelled",
+        undoLabel: "Undo",
+        onUndo: () => restoreFoodOrder(order.id, foodOrderRestorePayload(order)),
       },
     ),
     addMenuItem: (name, price, category) => runAction(() => addMenuItem(name, price, category), {

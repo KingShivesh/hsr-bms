@@ -6,6 +6,7 @@ import {
   placeFoodOrder,
   getFoodOrders,
   cancelFoodOrder,
+  restoreFoodOrder,
   getFoodStats,
 } from "../../api/index.js";
 import { useToast } from "../toastContext.js";
@@ -55,7 +56,6 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
   const [menuSearch, setMenuSearch] = useState("");
   const [placing, setPlacing] = useState(false);
   const [busyAction, setBusyAction] = useState("");
-  const [confirmCancelOrderId, setConfirmCancelOrderId] = useState(null);
   const busyActionRef = useRef("");
   const [lastOrder, setLastOrder] = useState(null);
   const [cigaretteDraft, setCigaretteDraft] = useState({ name: "", mrp: "" });
@@ -243,20 +243,39 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
     }
   }
 
-  async function handleCancelFoodOrder(orderId) {
-    if (confirmCancelOrderId !== orderId) {
-      setConfirmCancelOrderId(orderId);
-      showToast("Tap Confirm cancel to remove this food order", "info");
-      return;
-    }
+  async function handleCancelFoodOrder(order) {
+    const orderId = order?.id;
+    if (!orderId) return;
     if (busyActionRef.current) return;
     busyActionRef.current = `order-cancel-${orderId}`;
     setBusyAction(`order-cancel-${orderId}`);
+    const restorePayload = {
+      date: order.date || "",
+      ts: order.ts || null,
+      customer_name: order.customer_name || "",
+      items: Array.isArray(order.items) ? order.items : [],
+      total: Number(order.total || 0),
+      payment_method: order.payment_method || "Cash",
+    };
     try {
       await cancelFoodOrder(orderId);
       await fetchAll();
-      setConfirmCancelOrderId(null);
-      showToast("Food order cancelled", "success");
+      showToast(`${order.customer_name || "Food"} order cancelled`, "success", {
+        actionLabel: "Undo",
+        duration: 6000,
+        onAction: async () => {
+          setBusyAction(`order-restore-${orderId}`);
+          try {
+            await restoreFoodOrder(orderId, restorePayload);
+            await fetchAll();
+            showToast("Food order restored", "success");
+          } catch (e) {
+            showToast(e.response?.data?.detail || "Failed to restore food order", "error");
+          } finally {
+            setBusyAction("");
+          }
+        },
+      });
     } catch (e) {
       showToast(e.response?.data?.detail || "Failed to cancel food order", "error");
     } finally {
@@ -898,14 +917,12 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
                         <button
                           type="button"
                           className="btn btn-danger-sm food-order-cancel"
-	                          onClick={() => handleCancelFoodOrder(o.id)}
+	                          onClick={() => handleCancelFoodOrder(o)}
 	                          disabled={!o.id || busyAction === `order-cancel-${o.id}`}
 	                        >
 	                          {busyAction === `order-cancel-${o.id}`
                               ? "Cancelling..."
-                              : confirmCancelOrderId === o.id
-                                ? "Confirm cancel"
-                                : "Cancel"}
+                              : "Cancel"}
 	                        </button>
                       </td>
                     </tr>

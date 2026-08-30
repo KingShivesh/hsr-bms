@@ -289,6 +289,8 @@ export const placeFoodOrder = (customer_name, items, payment_method = "Cash") =>
   api.post("/food/order", { customer_name, items, payment_method });
 export const getFoodOrders = () => api.get("/food/orders");
 export const cancelFoodOrder = (orderId) => api.delete(`/food/orders/${orderId}`);
+export const restoreFoodOrder = (orderId, order) =>
+  api.post(`/food/orders/${orderId}/restore`, order);
 export const getFoodStats = () => api.get("/food/stats");
 
 // Maintenance & Notes
