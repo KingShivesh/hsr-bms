@@ -13,6 +13,16 @@ MERGE_SCORE_THRESHOLD = 88
 class AddMember(BaseModel):
     name: str
 
+class RestoreMember(BaseModel):
+    name: str
+    phone: str = ""
+    visits: int = 0
+    spent: int = 0
+    loyalty_points: int = 0
+    member_type: str = "Regular"
+    last_visit: str = "-"
+    notes: str = ""
+
 class MergeMembers(BaseModel):
     primary_id: str
     duplicate_id: str
@@ -94,6 +104,18 @@ def _member_tier(spent: int) -> str:
         return "Silver"
     return "Regular"
 
+def _member_payload(member: models.Member):
+    return {
+        "id": member.customer_id,
+        "nm": member.name,
+        "vis": member.visits,
+        "spt": member.spent,
+        "typ": member.member_type,
+        "lst": member.last_visit,
+        "pts": getattr(member, "loyalty_points", 0) or 0,
+        "phone": getattr(member, "phone", "") or "",
+    }
+
 
 @router.get("/search")
 def search_members(q: str = "", db: Session = Depends(get_db)):
@@ -107,13 +129,7 @@ def search_members(q: str = "", db: Session = Depends(get_db)):
 @router.get("/")
 def get_members(db: Session = Depends(get_db), _: dict = Depends(require_admin)):
     members = db.query(models.Member).order_by(models.Member.spent.desc()).all()
-    return [
-        {"id": m.customer_id, "nm": m.name, "vis": m.visits,
-         "spt": m.spent, "typ": m.member_type, "lst": m.last_visit,
-         "pts": getattr(m, "loyalty_points", 0) or 0,
-         "phone": getattr(m, "phone", "") or ""}
-        for m in members
-    ]
+    return [_member_payload(m) for m in members]
 
 @router.get("/duplicates")
 def find_duplicate_members(db: Session = Depends(get_db), _: dict = Depends(require_admin)):
@@ -208,6 +224,32 @@ def upgrade_member(customer_id: str, db: Session = Depends(get_db), _: dict = De
     m.member_type = "Regular" if m.member_type == "Premium" else "Premium"
     db.commit()
     return {"ok": True, "typ": m.member_type}
+
+@router.post("/{customer_id}/restore")
+def restore_member(
+    customer_id: str,
+    body: RestoreMember,
+    db: Session = Depends(get_db),
+    _: dict = Depends(require_admin),
+):
+    name = " ".join((body.name or "").strip().split())
+    if not name:
+        raise HTTPException(status_code=400, detail="Member name is required")
+    member = db.query(models.Member).filter(models.Member.customer_id == customer_id).first()
+    if not member:
+        member = models.Member(customer_id=customer_id)
+        db.add(member)
+    member.name = name
+    member.phone = body.phone or ""
+    member.visits = max(0, int(body.visits or 0))
+    member.spent = max(0, int(body.spent or 0))
+    member.loyalty_points = max(0, int(body.loyalty_points or 0))
+    member.member_type = body.member_type or _member_tier(member.spent)
+    member.last_visit = body.last_visit or "-"
+    member.notes = body.notes or ""
+    db.commit()
+    db.refresh(member)
+    return _member_payload(member)
 
 @router.delete("/{customer_id}")
 def delete_member(customer_id: str, db: Session = Depends(get_db), _: dict = Depends(require_admin)):

@@ -239,6 +239,8 @@ export const upgradeMember = (customerId) =>
   api.post(`/members/${encodeURIComponent(customerId)}/upgrade`);
 export const deleteMember = (customerId) =>
   api.delete(`/members/${encodeURIComponent(customerId)}`);
+export const restoreMember = (customerId, member) =>
+  api.post(`/members/${encodeURIComponent(customerId)}/restore`, member);
 export const searchMembers = (q) =>
   api.get(`/members/search?q=${encodeURIComponent(q)}`);
 export const getMemberDuplicates = () => api.get("/members/duplicates");

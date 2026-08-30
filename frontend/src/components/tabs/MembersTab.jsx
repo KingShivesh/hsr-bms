@@ -4,6 +4,7 @@ import {
   addMember,
   upgradeMember,
   deleteMember,
+  restoreMember,
   getMemberDuplicates,
   mergeMembers,
 } from "../../api/index.js";
@@ -13,6 +14,19 @@ import RetryNotice from "../RetryNotice.jsx";
 
 function isFullName(name) {
   return name.trim().length > 0;
+}
+
+function memberRestorePayload(member = {}) {
+  return {
+    name: member.nm || member.name || "",
+    phone: member.phone || "",
+    visits: Number(member.vis ?? member.visits ?? 0),
+    spent: Number(member.spt ?? member.spent ?? 0),
+    loyalty_points: Number(member.pts ?? member.loyalty_points ?? 0),
+    member_type: member.typ || member.member_type || "Regular",
+    last_visit: member.lst || member.last_visit || "-",
+    notes: member.notes || "",
+  };
 }
 
 export default function MembersTab() {
@@ -79,21 +93,31 @@ export default function MembersTab() {
     }
   }
 
-  async function handleDelete(customerId) {
-    const confirmed = await requestConfirm({
-      title: "Delete member?",
-      message: "This removes the customer profile from Customers.",
-      confirmLabel: "Delete member",
-      tone: "danger",
-    });
-    if (!confirmed) return;
+  async function handleDelete(member) {
+    const customerId = member.id;
+    const restorePayload = memberRestorePayload(member);
     setActiveAction(`member-delete-${customerId}`);
     try {
       await deleteMember(customerId);
       await fetchMembers();
-      showToast("Member deleted", "success");
-    } catch {
-      showToast("Failed to delete member", "error");
+      showToast(`${restorePayload.name || "Member"} deleted`, "success", {
+        actionLabel: "Undo",
+        duration: 6000,
+        onAction: async () => {
+          setActiveAction(`member-restore-${customerId}`);
+          try {
+            await restoreMember(customerId, restorePayload);
+            await fetchMembers();
+            showToast("Member restored", "success");
+          } catch (e) {
+            showToast(e.response?.data?.detail || "Failed to restore member", "error");
+          } finally {
+            setActiveAction("");
+          }
+        },
+      });
+    } catch (e) {
+      showToast(e.response?.data?.detail || "Failed to delete member", "error");
     } finally {
       setActiveAction("");
     }
@@ -340,7 +364,7 @@ export default function MembersTab() {
                 </button>
                 <button
                   className="member-action-btn is-delete"
-                  onClick={() => handleDelete(m.id)}
+                  onClick={() => handleDelete(m)}
                   disabled={!!activeAction}
                 >
                   <i className="ti ti-trash" aria-hidden="true" />

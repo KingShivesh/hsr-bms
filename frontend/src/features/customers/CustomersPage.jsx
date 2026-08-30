@@ -5,6 +5,7 @@ import {
   getMemberDuplicates,
   getMembers,
   mergeMembers,
+  restoreMember,
   upgradeMember,
 } from "../../api/index.js";
 import RetryNotice from "../../components/RetryNotice.jsx";
@@ -22,6 +23,19 @@ function memberId(member) {
 
 function memberTier(member) {
   return String(member.typ || member.type || "Regular");
+}
+
+function memberRestorePayload(member = {}) {
+  return {
+    name: member.nm || member.name || "",
+    phone: member.phone || "",
+    visits: Number(member.vis ?? member.visits ?? 0),
+    spent: Number(member.spt ?? member.spent ?? 0),
+    loyalty_points: Number(member.pts ?? member.loyalty_points ?? 0),
+    member_type: member.typ || member.member_type || member.type || "Regular",
+    last_visit: member.lst || member.last_visit || "-",
+    notes: member.notes || "",
+  };
 }
 
 function money(value = 0) {
@@ -128,17 +142,27 @@ export default function CustomersPage() {
 
   async function handleDelete(customer) {
     const id = memberId(customer);
-    const confirmed = await requestConfirm({
-      title: "Delete customer?",
-      message: `Delete ${memberName(customer)} from customer records?`,
-      confirmLabel: "Delete customer",
-      tone: "danger",
-    });
-    if (!confirmed) return;
+    const restorePayload = memberRestorePayload(customer);
     setBusy(`delete-${id}`);
     try {
       await deleteMember(id);
-      showToast("Customer deleted", "success");
+      setSelectedCustomer((current) => (memberId(current || {}) === id ? null : current));
+      showToast(`${restorePayload.name || "Customer"} deleted`, "success", {
+        actionLabel: "Undo",
+        duration: 6000,
+        onAction: async () => {
+          setBusy(`restore-${id}`);
+          try {
+            await restoreMember(id, restorePayload);
+            showToast("Customer restored", "success");
+            await loadCustomers();
+          } catch (err) {
+            showToast(err.response?.data?.detail || "Could not restore customer", "error");
+          } finally {
+            setBusy("");
+          }
+        },
+      });
       await loadCustomers();
     } catch (err) {
       showToast(err.response?.data?.detail || "Could not delete customer", "error");
