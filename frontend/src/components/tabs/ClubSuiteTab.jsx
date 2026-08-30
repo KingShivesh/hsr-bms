@@ -19,6 +19,7 @@ import {
   setItemAvailability,
   setMaintenance,
   restoreFoodOrder,
+  restoreMenuItem,
   updateMenuItem,
 } from "../../api/index.js";
 import { HSR_TABLES } from "../../config/hsrTables.js";
@@ -79,6 +80,15 @@ function foodOrderRestorePayload(order = {}) {
     items: Array.isArray(order.items) ? order.items : [],
     total: Number(order.total || 0),
     payment_method: order.payment_method || "Cash",
+  };
+}
+
+function menuItemRestorePayload(item = {}) {
+  return {
+    name: item.name || "",
+    price: Number(item.price || 0),
+    category: item.category || "Snacks",
+    available: item.available !== false,
   };
 }
 
@@ -839,7 +849,7 @@ function InventoryView({ menu, maintenance, actions, busy, activeAction, showToa
                   <ActionButton
                     tone="danger"
                     icon="ti-trash"
-                    onClick={() => actions.deleteMenuItem(item.name)}
+                    onClick={() => actions.deleteMenuItem(item)}
                     disabled={busy}
                   >
                     {activeAction === `menu-delete-${item.name}` ? "Deleting..." : "Delete"}
@@ -1231,12 +1241,13 @@ export default function ClubSuiteTab({ view }) {
         successMessage: "Menu item saved",
       },
     ),
-    deleteMenuItem: (name) => runAction(
-      () => deleteMenuItem(name),
+    deleteMenuItem: (item) => runAction(
+      () => deleteMenuItem(item.name),
       {
-        confirmText: `Delete ${name}?`,
-        actionKey: `menu-delete-${name}`,
+        actionKey: `menu-delete-${item.name}`,
         successMessage: "Menu item deleted",
+        undoLabel: "Undo",
+        onUndo: () => restoreMenuItem(menuItemRestorePayload(item)),
       },
     ),
     setItemAvailability: (name, available) => runAction(() => setItemAvailability(name, available), {

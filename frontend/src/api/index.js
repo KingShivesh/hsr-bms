@@ -269,6 +269,7 @@ export const updateMenuItem = (
 ) => api.post("/settings/menu/update", { old_name, new_name, price, category });
 export const deleteMenuItem = (item_name) =>
   api.delete(`/settings/menu/${item_name}`);
+export const restoreMenuItem = (item) => api.post("/settings/menu/restore", item);
 export const setItemAvailability = (name, available) =>
   api.post(`/settings/menu/${encodeURIComponent(name)}/availability`, {
     available,

@@ -6,6 +6,7 @@ import {
   addMenuItem,
   updateMenuItem,
   deleteMenuItem,
+  restoreMenuItem,
   resetDaily,
   clearAll,
   changeAuth,
@@ -17,7 +18,6 @@ import {
   changeStaffAuth,
 } from "../../api/index.js";
 import { useToast } from "../toastContext.js";
-import { useConfirm } from "../confirmContext.js";
 
 const CATEGORIES = ["Drinks", "Snacks", "Meals", "Cigarettes"];
 
@@ -35,7 +35,6 @@ function SettingsCard({ title, description, children }) {
 
 export default function SettingsTab({ role = "admin", onOpenTables }) {
   const { showToast } = useToast();
-  const { requestConfirm } = useConfirm();
   const [wr, setWr] = useState(320);
   const [pr, setPr] = useState(170);
   const [sr, setSr] = useState(270);
@@ -172,17 +171,29 @@ export default function SettingsTab({ role = "admin", onOpenTables }) {
   }
 
   async function handleDeleteItem(name) {
-    const confirmed = await requestConfirm({
-      title: "Delete menu item?",
-      message: `Delete ${name} from the menu?`,
-      confirmLabel: "Delete item",
-      tone: "danger",
-    });
-    if (!confirmed) return;
+    const item = menu[name];
+    const restorePayload = {
+      name,
+      price: Number(typeof item === "object" ? item.price : item || 0),
+      category: typeof item === "object" ? item.category || "Snacks" : "Snacks",
+      available: typeof item === "object" ? item.available !== false : true,
+    };
     try {
       await deleteMenuItem(name);
       fetchAll();
-      showFlash("Item deleted");
+      showToast(`${name} removed from menu`, "success", {
+        actionLabel: "Undo",
+        duration: 6000,
+        onAction: async () => {
+          try {
+            await restoreMenuItem(restorePayload);
+            await fetchAll();
+            showToast("Menu item restored", "success");
+          } catch (e) {
+            showToast(e.response?.data?.detail || "Failed to restore item", "error");
+          }
+        },
+      });
     } catch {
       showToast("Failed to delete item", "error");
     }
