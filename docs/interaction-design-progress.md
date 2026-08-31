@@ -9,3 +9,4 @@
 - A2 outcome-oriented copy has been applied across the reachable app surfaces. Lint/build/diff checks passed; visual overflow spot-check remains OPEN until browser automation is available.
 - A3 follow-up candidate: `frontend/src/components/Header.jsx`, `frontend/src/assets/react.svg`, `frontend/src/assets/vite.svg`, and `frontend/public/icons.svg` appear to be dead/template assets. Keep removal separate from the scoped A3 icon replacement commit.
 - A3 scoped icon replacements passed lint/build/diff checks and source-level handler preservation for the three changed buttons. Real browser click verification remains OPEN until click-capable browser tooling is available.
+- A4 static light/dark regression pass covered Table Floor, Tournament Hub, and Operations/Pricing surfaces. Fixed remaining content-bearing token misuse found by scan; only decorative scrollbar text-token fills remain. Real browser visual spot-check remains OPEN until screenshot tooling is available.

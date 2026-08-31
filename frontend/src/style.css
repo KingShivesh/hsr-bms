@@ -11115,7 +11115,7 @@ body {
 .session-action.primary {
   border: 1px solid var(--accent);
   background: var(--accent);
-  color: var(--surface);
+  color: var(--text-on-accent);
 }
 
 .session-action.secondary {
@@ -16059,13 +16059,13 @@ body.dark .ops-staff-header p {
 
 body.dark .ops-health-ring {
   background:
-    radial-gradient(circle at center, var(--text-primary) 0 58%, transparent 59%),
+    radial-gradient(circle at center, var(--surface-raised) 0 58%, transparent 59%),
     conic-gradient(var(--premium-primary) var(--score), rgba(148, 163, 184, 0.18) 0);
 }
 
 body.dark .ops-health-ring.warning {
   background:
-    radial-gradient(circle at center, var(--text-primary) 0 58%, transparent 59%),
+    radial-gradient(circle at center, var(--surface-raised) 0 58%, transparent 59%),
     conic-gradient(var(--warning) var(--score), rgba(148, 163, 184, 0.18) 0);
 }
 
