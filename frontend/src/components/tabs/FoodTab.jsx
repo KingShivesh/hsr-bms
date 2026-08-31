@@ -720,7 +720,7 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
                             className="icon-danger-btn"
                             aria-label={`Remove ${i.item || "item"} from cart`}
                           >
-                            ×
+                            <i className="ti ti-x" aria-hidden="true" />
                           </button>
                         </div>
                       </div>

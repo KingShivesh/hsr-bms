@@ -421,7 +421,7 @@ function QueuePanel({
                     disabled={!!busyActions[`cancel-queue:${entry.id}`]}
                     aria-label={`Cancel queue entry for ${entry.customer_name}`}
                   >
-                    {busyActions[`cancel-queue:${entry.id}`] ? "..." : "×"}
+                    {busyActions[`cancel-queue:${entry.id}`] ? "..." : <i className="ti ti-x" aria-hidden="true" />}
                   </button>
                 </div>
               </div>
@@ -591,7 +591,7 @@ function BookingPanel({ bookings, onCreate, onCancel, busyActions = {}, showToas
                     disabled={!!busyActions[`cancel-booking:${booking.id}`]}
                     aria-label="Cancel booking"
                   >
-                    {busyActions[`cancel-booking:${booking.id}`] ? "..." : "×"}
+                    {busyActions[`cancel-booking:${booking.id}`] ? "..." : <i className="ti ti-x" aria-hidden="true" />}
                   </button>
                 </div>
               </div>
