@@ -377,7 +377,7 @@ function QueuePanel({
           onChange={(e) => setNotes(e.target.value)}
         />
         <button className="primary-action-btn" type="submit" disabled={!!busyActions["queue-add"]}>
-          {busyActions["queue-add"] ? "Adding..." : "Add to queue"}
+          {busyActions["queue-add"] ? "Adding..." : "Add Walk-in"}
         </button>
       </form>
 
@@ -419,7 +419,7 @@ function QueuePanel({
                     className="icon-danger-btn"
                     onClick={() => onCancel(entry.id)}
                     disabled={!!busyActions[`cancel-queue:${entry.id}`]}
-                    aria-label={`Remove ${entry.customer_name} from queue`}
+                    aria-label={`Cancel queue entry for ${entry.customer_name}`}
                   >
                     {busyActions[`cancel-queue:${entry.id}`] ? "..." : "×"}
                   </button>
@@ -771,14 +771,14 @@ function QuickSessionModal({
 
         <div className="quick-session-actions">
           <button type="button" className="quick-session-secondary" onClick={onClose}>
-            Cancel
+            Discard Session
           </button>
           <button
             type="submit"
             className="primary-action-btn"
             disabled={!selectedTable || startBusy}
           >
-            {startBusy ? "Starting..." : "Start session"}
+            {startBusy ? "Starting..." : "Start Table"}
           </button>
         </div>
       </form>
@@ -923,7 +923,7 @@ function ResetConfirmModal({ tableId, loading, onClose, onConfirm }) {
             className="frame-loser-submit"
             disabled={loading}
           >
-            {loading ? "Resetting..." : "Reset table"}
+            {loading ? "Resetting..." : "Reset Table"}
           </button>
         </div>
       </form>
@@ -936,7 +936,7 @@ function CheckoutStepRail({ quote }) {
     ["Review", "Bill frozen"],
     ["Discount", quote.discountType === "none" ? "Optional" : "Applied"],
     ["Payment", quote.paymentMethod || "Cash"],
-    ["Confirm", quote.finalizing ? "Closing" : "Ready"],
+    ["Collect", quote.finalizing ? "Closing" : "Ready"],
   ];
 
   return (
@@ -1022,7 +1022,7 @@ function CheckoutQuoteScreen({
             )}
           </div>
           <button type="button" className="checkout-bill-close secondary" onClick={onClose}>
-            Back
+            Back to Checkout
           </button>
         </div>
 
@@ -1133,7 +1133,7 @@ function CheckoutQuoteScreen({
                     disabled={quote.loading || !quote.discountValue}
                     onClick={() => onDiscountChange("rupee", quote.discountValue, true)}
                   >
-                    Apply
+                    Apply Discount
                   </button>
                 </div>
                 <span className="checkout-rupee-hint">Enter the rupee amount, then apply.</span>
@@ -1276,7 +1276,7 @@ function CheckoutBillScreen({ bill, onClose }) {
             )}
           </div>
           <button type="button" className="checkout-bill-close" onClick={onClose}>
-            Done
+            Close Receipt
           </button>
         </div>
 
@@ -1461,7 +1461,7 @@ function LiveFloorCommand({
         </div>
         <button type="button" className="live-floor-primary" onClick={onQuickStart}>
           <i className="ti ti-player-play" aria-hidden="true" />
-          Start table
+          Start Table
         </button>
       </div>
 
@@ -1610,7 +1610,7 @@ function SessionWorkspace({
             })}
           >
             <i className="ti ti-tools-kitchen-2" aria-hidden="true" />
-            Add food
+            Add Food
           </button>
           <button
             type="button"
@@ -1619,17 +1619,17 @@ function SessionWorkspace({
             disabled={pauseBusy}
           >
             <i className={`ti ${session.paused ? "ti-player-play" : "ti-player-pause"}`} aria-hidden="true" />
-            {pauseBusy ? "Saving..." : session.paused ? "Resume" : "Pause"}
+            {pauseBusy ? "Saving..." : session.paused ? "Resume Session" : "Pause Session"}
           </button>
           <button
             type="button"
             className="session-action primary"
             onClick={() => onStop(table.id)}
             disabled={quoteBusy}
-            title="Close table"
+            title="Open checkout"
           >
             <i className="ti ti-receipt-refund" aria-hidden="true" />
-            {quoteBusy ? "Loading..." : "Checkout"}
+            {quoteBusy ? "Loading..." : "Open Checkout"}
           </button>
         </div>
       )}
@@ -2261,7 +2261,7 @@ function TableCard({
                 disabled={resetBusy}
               >
                 <i className="ti ti-refresh" aria-hidden="true" />
-                <span>{resetBusy ? "Resetting..." : "Reset"}</span>
+                <span>{resetBusy ? "Resetting..." : "Reset Table"}</span>
               </button>
             </div>
           )}
@@ -2335,7 +2335,7 @@ function TableCard({
                     className="table-notes-save"
                     disabled={notesBusy}
                   >
-                    {notesBusy ? "Saving..." : "Save"}
+                    {notesBusy ? "Saving..." : "Save Notes"}
                   </button>
                 </div>
               )}
@@ -2385,7 +2385,7 @@ function TableCard({
                     className="table-mini-primary reserve"
                     disabled={reserveBusy}
                   >
-                    {reserveBusy ? "Reserving..." : "Confirm Reservation"}
+                    {reserveBusy ? "Reserving..." : "Reserve Table"}
                   </button>
                 </div>
               )}
@@ -2408,7 +2408,7 @@ function TableCard({
                 className="table-reservation-cancel"
                 disabled={cancelReserveBusy}
               >
-                {cancelReserveBusy ? "Cancelling..." : "Cancel"}
+                {cancelReserveBusy ? "Cancelling..." : "Cancel Reservation"}
               </button>
             </div>
           )}

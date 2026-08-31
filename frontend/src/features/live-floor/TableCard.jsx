@@ -22,7 +22,7 @@ export default function TableCard({ table, selected, tick = 0, onSelect, onStart
   const elapsed = session && !session.paused ? (session.elapsed_seconds || 0) + tick : table.elapsed_seconds || 0;
   const isAvailable = statusKey === "available";
   const customer = session?.customer_name || table.booking?.customer_name || "";
-  const actionLabel = isAvailable ? "Start" : statusKey === "reserved" ? "Review" : "Open session";
+  const actionLabel = isAvailable ? "Start Table" : statusKey === "reserved" ? "Review Booking" : "Open Session";
   const runningTotal = Number(session?.running_total || table.running_total || 0);
   const foodTotal = Number(session?.food_total || 0);
 

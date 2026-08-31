@@ -248,7 +248,7 @@ export default function SalesPage() {
                 Print receipt
               </Button>
               <Button variant="primary" onClick={() => setSelected(null)}>
-                Close
+                Close Receipt
               </Button>
             </div>
           </div>

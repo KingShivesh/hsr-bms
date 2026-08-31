@@ -210,7 +210,7 @@ export default function TournamentTab() {
     const confirmed = await requestConfirm({
       title: "Close tournament?",
       message: `Close "${selected.name || "this tournament"}"? This locks the bracket as completed.`,
-      confirmLabel: "Close tournament",
+      confirmLabel: "Close Tournament",
       tone: "warning",
     });
     if (!confirmed) return;
@@ -399,7 +399,7 @@ export default function TournamentTab() {
                 <StatusPill status={selected.status} />
                 {selected.status !== "completed" && (
                   <button type="button" className="btn btn-warning-sm" onClick={handleClose} disabled={!!activeAction}>
-                    {activeAction === "tournament-close" ? "Closing..." : "Close"}
+                    {activeAction === "tournament-close" ? "Closing..." : "Close Tournament"}
                   </button>
                 )}
               </div>

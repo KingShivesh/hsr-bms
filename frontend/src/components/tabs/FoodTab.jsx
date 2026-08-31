@@ -406,10 +406,10 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
                 className="app-confirm-btn secondary"
                 onClick={() => setCigaretteDraft({ name: "", mrp: "" })}
               >
-                Cancel
+                Discard Item
               </button>
               <button type="submit" className="app-confirm-btn primary">
-                Add item
+                Add Cigarette
               </button>
             </div>
           </form>
@@ -558,7 +558,7 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
                     onClick={() => setCart([])}
                     disabled={placing}
                   >
-                    Clear cart
+                    Clear Order
                   </button>
                 )}
               </div>
@@ -922,7 +922,7 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
 	                        >
 	                          {busyAction === `order-cancel-${o.id}`
                               ? "Cancelling..."
-                              : "Cancel"}
+                              : "Cancel Food Order"}
 	                        </button>
                       </td>
                     </tr>

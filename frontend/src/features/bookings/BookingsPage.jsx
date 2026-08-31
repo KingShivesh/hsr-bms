@@ -167,7 +167,7 @@ function BookingModal({ form, setForm, saving, onClose, onSubmit }) {
         </label>
 
         <div className="op2-modal-actions">
-          <button type="button" className="lf-secondary-button" onClick={onClose}>Cancel</button>
+          <button type="button" className="lf-secondary-button" onClick={onClose}>Discard Booking</button>
           <button type="submit" className="lf-primary-button" disabled={saving}>
             <i className="ti ti-calendar-plus" aria-hidden="true" />
             {saving ? "Creating..." : "Create booking"}
@@ -421,7 +421,7 @@ export default function BookingsPage() {
                       disabled={busy === `cancel-${booking.id}` || booking.status !== "booked"}
                       onClick={() => cancelExistingBooking(booking)}
                     >
-                      {busy === `cancel-${booking.id}` ? "Cancelling..." : "Cancel"}
+                      {busy === `cancel-${booking.id}` ? "Cancelling..." : "Cancel Booking"}
                     </button>
                   </div>
                 </article>

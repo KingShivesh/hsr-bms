@@ -394,7 +394,7 @@ function WaitlistView({ waitlist, bookings, activeSessions, maintenance, actions
                     {activeAction === `wait-seat-${entry.id}` ? "Seating..." : "Seat"}
                   </ActionButton>
                   <ActionButton tone="danger" icon="ti-x" onClick={() => actions.cancelWaitlist(entry.id)} disabled={busy}>
-                    {activeAction === `wait-cancel-${entry.id}` ? "Cancelling..." : "Cancel"}
+                    {activeAction === `wait-cancel-${entry.id}` ? "Cancelling..." : "Cancel Queue Entry"}
                   </ActionButton>
                 </div>
               ),
@@ -460,10 +460,10 @@ function WaitlistView({ waitlist, bookings, activeSessions, maintenance, actions
               />
             </FormField>
             <div className="cf-modal-actions">
-              <ActionButton onClick={() => setShowAdd(false)}>Cancel</ActionButton>
+              <ActionButton onClick={() => setShowAdd(false)}>Discard Walk-in</ActionButton>
               <button className="cf-action-btn primary" type="submit" disabled={busy}>
                 <i className="ti ti-user-plus" aria-hidden="true" />
-                <span>{activeAction === "wait-add" ? "Adding..." : "Add to Queue"}</span>
+                <span>{activeAction === "wait-add" ? "Adding..." : "Add Walk-in"}</span>
               </button>
             </div>
           </form>
@@ -587,7 +587,7 @@ function ReservationsView({ bookings, tableState, actions, busy, activeAction })
                   onClick={() => actions.cancelBooking(booking.id)}
                   disabled={busy || booking.status !== "booked"}
                 >
-                  {activeAction === `booking-cancel-${booking.id}` ? "Cancelling..." : "Cancel"}
+                  {activeAction === `booking-cancel-${booking.id}` ? "Cancelling..." : "Cancel Booking"}
                 </ActionButton>
               </div>
             ),
@@ -671,7 +671,7 @@ function ReservationsView({ bookings, tableState, actions, busy, activeAction })
               />
             </FormField>
             <div className="cf-modal-actions">
-              <ActionButton onClick={() => setShowAdd(false)}>Cancel</ActionButton>
+              <ActionButton onClick={() => setShowAdd(false)}>Discard Booking</ActionButton>
               <button className="cf-action-btn primary" type="submit" disabled={busy}>
                 <i className="ti ti-calendar-plus" aria-hidden="true" />
                 <span>{activeAction === "booking-create" ? "Creating..." : "Create Booking"}</span>
@@ -709,7 +709,7 @@ function BillingView({ history, foodOrders, actions, busy, activeAction }) {
           onClick={() => actions.cancelFoodOrder(order)}
           disabled={busy}
         >
-          {activeAction === `food-cancel-${order.id}` ? "Cancelling..." : "Cancel"}
+          {activeAction === `food-cancel-${order.id}` ? "Cancelling..." : "Cancel Food Order"}
         </ActionButton>
       </div>
     ),
@@ -836,7 +836,7 @@ function InventoryView({ menu, maintenance, actions, busy, activeAction, showToa
                       category: item.category || "Veg Snacks",
                     })}
                   >
-                    Edit
+                    Edit Item
                   </ActionButton>
                   <ActionButton
                     tone={item.available === false ? "success" : "warning"}
@@ -844,7 +844,7 @@ function InventoryView({ menu, maintenance, actions, busy, activeAction, showToa
                     onClick={() => actions.setItemAvailability(item.name, item.available === false)}
                     disabled={busy}
                   >
-                    {activeAction === `stock-${item.name}` ? "Saving..." : item.available === false ? "In stock" : "Out"}
+                    {activeAction === `stock-${item.name}` ? "Saving..." : item.available === false ? "In stock" : "Mark Out of Stock"}
                   </ActionButton>
                   <ActionButton
                     tone="danger"
@@ -852,7 +852,7 @@ function InventoryView({ menu, maintenance, actions, busy, activeAction, showToa
                     onClick={() => actions.deleteMenuItem(item)}
                     disabled={busy}
                   >
-                    {activeAction === `menu-delete-${item.name}` ? "Deleting..." : "Delete"}
+                    {activeAction === `menu-delete-${item.name}` ? "Deleting..." : "Delete Item"}
                   </ActionButton>
                 </div>
               </div>
@@ -910,7 +910,7 @@ function InventoryView({ menu, maintenance, actions, busy, activeAction, showToa
                     onClick={() => actions.clearMaintenance(row.table_id)}
                     disabled={busy}
                   >
-                    {activeAction === `maintenance-clear-${row.table_id}` ? "Clearing..." : "Clear"}
+                    {activeAction === `maintenance-clear-${row.table_id}` ? "Clearing..." : "Mark Table Available"}
                   </ActionButton>
                 </div>
               ),
@@ -951,10 +951,10 @@ function InventoryView({ menu, maintenance, actions, busy, activeAction, showToa
               </FormField>
             </div>
             <div className="cf-modal-actions">
-              <ActionButton onClick={() => setShowAdd(false)}>Cancel</ActionButton>
+              <ActionButton onClick={() => setShowAdd(false)}>Discard Menu Item</ActionButton>
               <button className="cf-action-btn primary" type="submit" disabled={busy}>
                 <i className="ti ti-package-plus" aria-hidden="true" />
-                <span>{activeAction === "menu-add" ? "Adding..." : "Add Item"}</span>
+                <span>{activeAction === "menu-add" ? "Adding..." : "Add Menu Item"}</span>
               </button>
             </div>
           </form>
@@ -992,10 +992,10 @@ function InventoryView({ menu, maintenance, actions, busy, activeAction, showToa
               </FormField>
             </div>
             <div className="cf-modal-actions">
-              <ActionButton onClick={() => setEditing(null)}>Cancel</ActionButton>
+              <ActionButton onClick={() => setEditing(null)}>Discard Changes</ActionButton>
               <button className="cf-action-btn primary" type="submit" disabled={busy}>
                 <i className="ti ti-device-floppy" aria-hidden="true" />
-                <span>{activeAction === `menu-edit-${editing.oldName}` ? "Saving..." : "Save Changes"}</span>
+                <span>{activeAction === `menu-edit-${editing.oldName}` ? "Saving..." : "Save Menu Item"}</span>
               </button>
             </div>
           </form>
@@ -1141,6 +1141,8 @@ export default function ClubSuiteTab({ view }) {
 
   const runAction = useCallback(async (action, {
     confirmText = "",
+    confirmTitle = "Review action",
+    confirmLabel = "Confirm Action",
     actionKey = "action",
     successMessage = "",
     undoLabel = "",
@@ -1148,9 +1150,9 @@ export default function ClubSuiteTab({ view }) {
   } = {}) => {
     if (confirmText) {
       const confirmed = await requestConfirm({
-        title: "Confirm action",
+        title: confirmTitle,
         message: confirmText,
-        confirmLabel: "Continue",
+        confirmLabel,
         tone: "warning",
       });
       if (!confirmed) return false;
@@ -1205,6 +1207,8 @@ export default function ClubSuiteTab({ view }) {
       () => cancelWaitlistEntry(entryId),
       {
         confirmText: "Cancel this waitlist entry?",
+        confirmTitle: "Cancel queue entry?",
+        confirmLabel: "Cancel Queue Entry",
         actionKey: `wait-cancel-${entryId}`,
         successMessage: "Waitlist entry cancelled",
       },
@@ -1217,6 +1221,8 @@ export default function ClubSuiteTab({ view }) {
       () => cancelBooking(bookingId),
       {
         confirmText: "Cancel this reservation?",
+        confirmTitle: "Cancel booking?",
+        confirmLabel: "Cancel Booking",
         actionKey: `booking-cancel-${bookingId}`,
         successMessage: "Reservation cancelled",
       },

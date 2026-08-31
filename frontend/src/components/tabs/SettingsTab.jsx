@@ -181,7 +181,7 @@ export default function SettingsTab({ role = "admin", onOpenTables }) {
     try {
       await deleteMenuItem(name);
       fetchAll();
-      showToast(`${name} removed from menu`, "success", {
+      showToast(`${name} deleted from menu`, "success", {
         actionLabel: "Undo",
         duration: 6000,
         onAction: async () => {
@@ -346,7 +346,7 @@ export default function SettingsTab({ role = "admin", onOpenTables }) {
         </div>
         <button className="btn btn-primary-sm" onClick={handleSaveRates}>
           <i className="ti ti-device-floppy" aria-hidden="true" />
-          Save rates
+          Save Table Rates
         </button>
       </SettingsCard>
 
@@ -371,7 +371,7 @@ export default function SettingsTab({ role = "admin", onOpenTables }) {
             onClick={handleSaveMinSession}
           >
             <i className="ti ti-device-floppy" aria-hidden="true" />
-            Save
+            Save Minimum Session
           </button>
         </div>
         {minSession > 0 && (
@@ -402,7 +402,7 @@ export default function SettingsTab({ role = "admin", onOpenTables }) {
             onClick={handleSaveBookingGrace}
           >
             <i className="ti ti-device-floppy" aria-hidden="true" />
-            Save
+            Save Grace Period
           </button>
         </div>
         <div className="settings-inline-note muted">
@@ -466,21 +466,21 @@ export default function SettingsTab({ role = "admin", onOpenTables }) {
                 onClick={() => handleUpdateItem(k)}
               >
                 <i className="ti ti-device-floppy" aria-hidden="true" />
-                Save
+                Save Item
               </button>
               <button
                 onClick={() => handleToggleAvail(k, avail)}
                 className={`btn ${avail ? "btn-success-sm" : "btn-danger-sm"}`}
               >
                 <i className={avail ? "ti ti-check" : "ti ti-x"} aria-hidden="true" />
-                {avail ? "In stock" : "Out"}
+                {avail ? "In stock" : "Mark Out of Stock"}
               </button>
               <button
                 className="btn btn-danger-sm"
                 onClick={() => handleDeleteItem(k)}
               >
                 <i className="ti ti-trash" aria-hidden="true" />
-                Del
+                Delete Item
               </button>
             </div>
           );
@@ -519,7 +519,7 @@ export default function SettingsTab({ role = "admin", onOpenTables }) {
             data-testid="add-menu-item-button"
           >
             <i className="ti ti-plus" aria-hidden="true" />
-            Add
+            Add Menu Item
           </button>
         </div>
       </SettingsCard>

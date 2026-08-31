@@ -175,7 +175,7 @@ export default function CustomersPage() {
     const confirmed = await requestConfirm({
       title: "Merge customers?",
       message: `Merge ${duplicate.name} into ${primary.name}? Visits, spend and history will be combined.`,
-      confirmLabel: "Merge profiles",
+      confirmLabel: "Merge Profiles",
       tone: "warning",
     });
     if (!confirmed) return;
@@ -213,7 +213,7 @@ export default function CustomersPage() {
           />
           <button type="submit" className="lf-primary-button" disabled={!!busy}>
             <i className="ti ti-user-plus" aria-hidden="true" />
-            {busy === "add" ? "Adding..." : "Add customer"}
+            {busy === "add" ? "Adding..." : "Add Customer"}
           </button>
         </form>
       </div>
@@ -251,7 +251,7 @@ export default function CustomersPage() {
                     disabled={!!busy}
                     onClick={() => handleMerge(group.primary, match)}
                   >
-                    {busy === `merge-${group.primary.id}-${match.id}` ? "Merging..." : "Merge"}
+                    {busy === `merge-${group.primary.id}-${match.id}` ? "Merging..." : "Merge Profiles"}
                   </button>
                 </article>
               )),
@@ -314,7 +314,7 @@ export default function CustomersPage() {
                       }}
                     >
                       <i className={`ti ${premium ? "ti-arrow-down" : "ti-arrow-up"}`} aria-hidden="true" />
-                      {busy === `upgrade-${id}` ? "Saving..." : premium ? "Downgrade" : "Upgrade"}
+                      {busy === `upgrade-${id}` ? "Saving..." : premium ? "Downgrade Tier" : "Upgrade Tier"}
                     </button>
                     <button
                       type="button"
@@ -326,7 +326,7 @@ export default function CustomersPage() {
                       }}
                     >
                       <i className="ti ti-trash" aria-hidden="true" />
-                      {busy === `delete-${id}` ? "Deleting..." : "Delete"}
+                      {busy === `delete-${id}` ? "Deleting..." : "Delete Customer"}
                     </button>
                   </div>
                 </article>
@@ -376,7 +376,7 @@ export default function CustomersPage() {
                 loading={busy === `upgrade-${memberId(selectedCustomer)}`}
                 onClick={() => handleUpgrade(memberId(selectedCustomer), memberTier(selectedCustomer))}
               >
-                {/premium/i.test(memberTier(selectedCustomer)) ? "Downgrade" : "Upgrade"}
+                {/premium/i.test(memberTier(selectedCustomer)) ? "Downgrade Tier" : "Upgrade Tier"}
               </Button>
               <Button
                 variant="danger"
@@ -384,7 +384,7 @@ export default function CustomersPage() {
                 loading={busy === `delete-${memberId(selectedCustomer)}`}
                 onClick={() => handleDelete(selectedCustomer)}
               >
-                Delete
+                Delete Customer
               </Button>
             </div>
           </div>

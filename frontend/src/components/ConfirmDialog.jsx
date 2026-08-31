@@ -3,9 +3,9 @@ import { ConfirmContext } from "./confirmContext.js";
 import Button from "./ui/Button.jsx";
 
 const DEFAULT_CONFIRM = {
-  title: "Confirm action",
+  title: "Review action",
   message: "Are you sure you want to continue?",
-  confirmLabel: "Confirm",
+  confirmLabel: "Confirm Action",
   cancelLabel: "Cancel",
   tone: "danger",
 };

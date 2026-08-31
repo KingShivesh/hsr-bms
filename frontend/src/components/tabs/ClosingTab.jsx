@@ -115,7 +115,7 @@ export default function ClosingTab() {
     const confirmed = await requestConfirm({
       title: "Close today?",
       message: "Mark today as closed after verifying Cash, UPI, and Card totals?",
-      confirmLabel: "Close day",
+      confirmLabel: "Close Day",
       tone: "warning",
     });
     if (!confirmed) return;
@@ -210,7 +210,7 @@ export default function ClosingTab() {
             onClick={markDayClosed}
             title={!data.can_close_day ? "Close all running tables first" : undefined}
           >
-            {closedDay ? "Day closed" : !data.can_close_day ? "Close tables first" : "Close day"}
+            {closedDay ? "Day Closed" : !data.can_close_day ? "Close Tables First" : "Close Day"}
           </Button>
         </div>
       </div>

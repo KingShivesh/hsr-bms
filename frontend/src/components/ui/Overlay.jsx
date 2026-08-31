@@ -68,7 +68,7 @@ export function Drawer({
   );
 }
 
-export function ConfirmActions({ cancelLabel = "Cancel", confirmLabel = "Confirm", loading, onCancel, onConfirm, tone = "danger" }) {
+export function ConfirmActions({ cancelLabel = "Cancel", confirmLabel = "Confirm Action", loading, onCancel, onConfirm, tone = "danger" }) {
   return (
     <>
       <Button variant="secondary" onClick={onCancel} disabled={loading}>

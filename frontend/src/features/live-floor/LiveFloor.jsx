@@ -111,8 +111,8 @@ function NewSessionPanel({ open, tables, initialTableId, onClose, onCreated }) {
             </button>
           ))}
         </div>
-        <button type="submit" className="lf-primary-button" disabled={saving || !availableTables.length}>
-          {saving ? "Starting..." : "Start session"}
+          <button type="submit" className="lf-primary-button" disabled={saving || !availableTables.length}>
+          {saving ? "Starting..." : "Start Table"}
         </button>
       </form>
     </div>
@@ -210,15 +210,15 @@ export default function LiveFloor({ role = "admin", onNavigate, newSessionReques
         <div className="lf-hero-actions">
           <button type="button" className="lf-secondary-button" onClick={() => onNavigate?.("reservations")}>
             <i className="ti ti-calendar-plus" aria-hidden="true" />
-            Booking
+            New Booking
           </button>
           <button type="button" className="lf-secondary-button" onClick={() => onNavigate?.("members")}>
             <i className="ti ti-user-plus" aria-hidden="true" />
-            Customer
+            Add Customer
           </button>
           <button type="button" className="lf-primary-button" onClick={() => openNewSession()}>
             <i className="ti ti-plus" aria-hidden="true" />
-            New session
+            Start Table
           </button>
         </div>
       </div>

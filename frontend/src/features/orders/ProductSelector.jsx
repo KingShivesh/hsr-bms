@@ -137,7 +137,7 @@ export default function ProductSelector({ tableId, players = [], onAdded, onClos
               </label>
             )}
             <button type="submit" className="lf-primary-button" disabled={saving || !selectedItem}>
-              {saving ? "Adding..." : "Add to session"}
+              {saving ? "Adding..." : "Add Food to Session"}
             </button>
           </form>
         </>
