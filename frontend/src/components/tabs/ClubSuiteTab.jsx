@@ -24,6 +24,7 @@ import {
 } from "../../api/index.js";
 import { HSR_TABLES } from "../../config/hsrTables.js";
 import { getTableStatus } from "../../config/tableStatus.js";
+import { MetricCard } from "../ui/index.js";
 import { useToast } from "../toastContext.js";
 import { useConfirm } from "../confirmContext.js";
 
@@ -268,14 +269,7 @@ function FormField({ label, children }) {
 }
 
 function Stat({ label, value }) {
-  return (
-    <article className="cf-stat">
-      <div>
-        <span>{label}</span>
-        <strong>{value}</strong>
-      </div>
-    </article>
-  );
+  return <MetricCard label={label} value={value} className="cf-stat" />;
 }
 
 function EmptyState({ icon = "ti-info-circle", title, detail }) {

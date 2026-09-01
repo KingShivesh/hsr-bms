@@ -11,6 +11,7 @@ import {
   getAdvancedAnalytics,
 } from "../../api/index.js";
 import { CSV_PREFIX } from "../../config/hsrTables.js";
+import { MetricCard } from "../ui/index.js";
 import { useToast } from "../toastContext.js";
 import RetryNotice from "../RetryNotice.jsx";
 
@@ -79,17 +80,14 @@ function TabBtn({ active, onClick, children }) {
 }
 
 function StatCard({ label, value, color }) {
-  const statColor = color === "var(--text-primary)" ? "var(--venue-text, var(--text))" : color;
+  const statColor = color === "var(--text-primary)" ? "var(--border-strong)" : color;
   return (
-    <div
-      className="report-stat-card"
-      style={{ "--stat-color": statColor }}
-    >
-      <div className="report-stat-label">
-        {label}
-      </div>
-      <div className="report-stat-value">{value}</div>
-    </div>
+    <MetricCard
+      label={label}
+      value={value}
+      className="report-metric-card"
+      style={{ "--metric-accent": statColor }}
+    />
   );
 }
 

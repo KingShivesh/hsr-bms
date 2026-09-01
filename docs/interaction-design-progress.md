@@ -2,18 +2,17 @@
 
 ## Current Verification Notes
 
-- A1 backend/API/database verification passed for booking cancel, food-order cancel, menu-item deletion, and customer deletion undo paths.
-- A1 UI click verification remains OPEN for food-order cancel, menu-item deletion, and customer deletion undo paths. Run a real browser automation pass when browser tooling is available before marking A1 fully trusted.
+- A1 CLOSED: browser/API/database verification passed for booking cancel, food-order cancel, menu-item deletion, customer deletion, and toast-expiry undo paths. Temporary QA records were cleaned up; only inert cancelled history rows remain.
 - `frontend/src/components/tabs/MembersTab.jsx` is currently dead code: the `members` route renders `CustomersPage`, and `MembersTab` is not imported by the app shell.
 - A2 micro-copy rule: use "Delete" for permanent record deletion and "Discard" only for unsaved modal/form drafts. Reversible business actions keep "Cancel" plus the object name.
-- A2 outcome-oriented copy has been applied across the reachable app surfaces. Lint/build/diff checks passed; visual overflow spot-check remains OPEN until browser automation is available.
+- A2 CLOSED: outcome-oriented copy has been applied across the reachable app surfaces. Browser label-fit scans passed on desktop for Live Floor, Cafe POS, Customers, Settings, Bookings, and Daily Closing, plus narrow viewport checks for Live Floor and Cafe POS.
 - A3 follow-up candidate: `frontend/src/components/Header.jsx`, `frontend/src/assets/react.svg`, `frontend/src/assets/vite.svg`, and `frontend/public/icons.svg` appear to be dead/template assets. Keep removal separate from the scoped A3 icon replacement commit.
-- A3 scoped icon replacements passed lint/build/diff checks and source-level handler preservation for the three changed buttons. Real browser click verification remains OPEN until click-capable browser tooling is available.
-- A4 static light/dark regression pass covered Table Floor, Tournament Hub, and Operations/Pricing surfaces. Fixed remaining content-bearing token misuse found by scan; only decorative scrollbar text-token fills remain. Real browser visual spot-check remains OPEN until screenshot tooling is available.
+- A3 CLOSED: scoped icon replacements passed lint/build/source checks and browser click verification for the waitlist cancel icon, booking cancel icon, and Cafe POS cart-line remove icon.
+- A4 CLOSED: static and browser light/dark regression checks are complete. The Analytics stat-card dark-mode regression was fixed by migrating Reports stats to the shared `ui-metric-card`; browser contrast verification passed in light and dark mode. The live ClubSuite stat helper was also migrated to `ui-metric-card` and verified through Notification Center in both themes.
 
 ## Verification Debt Checklist
 
-Browser automation/screenshot tooling is not currently exposed in this Codex environment, and the frontend does not have a local browser test package installed. Clear this checklist manually in the running app, or with a future browser-capable session, before starting Lane B feature work.
+Lane A verification debt is closed. The checklist below is retained as the browser-verified evidence trail before starting Lane B.
 
 ### A1 Undo Toast Rollout
 

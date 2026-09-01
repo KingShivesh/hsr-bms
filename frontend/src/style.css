@@ -598,6 +598,7 @@ textarea:focus-visible {
 
 .ui-metric-card {
   min-height: 132px;
+  border-top-color: var(--metric-accent, var(--border));
   padding: var(--space-5);
 }
 
@@ -4279,27 +4280,9 @@ body.dark .table-session-card {
   font-weight: var(--weight-heavy);
 }
 
-.report-stat-card {
-  padding: 14px 16px;
-  border: 1px solid var(--venue-line, var(--border));
-  border-top: 2px solid var(--stat-color);
-  border-radius: var(--radius-sm);
-  background: var(--venue-card, var(--surface));
-}
-
-.report-stat-label {
-  margin-bottom: 6px;
-  color: var(--venue-muted, var(--muted));
-  font-size: var(--text-sm);
-  font-weight: var(--weight-heavy);
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-}
-
-.report-stat-value {
-  color: var(--stat-color);
-  font-size: var(--text-2xl);
-  font-weight: var(--weight-heavy);
+.report-metric-card {
+  border-top-width: 2px;
+  min-height: 112px;
 }
 
 .advanced-grid {
@@ -9274,8 +9257,7 @@ body.dark .login-footer {
     gap: 10px;
   }
 
-  .metric-value,
-  .report-stat-value {
+  .metric-value {
     font-size: var(--text-xl);
   }
 
@@ -9614,8 +9596,7 @@ body.dark {
 .history-section,
 .food-panel,
 .reserve-panel,
-.table-session-card,
-.report-stat-card {
+.table-session-card {
   border-color: var(--border);
   border-radius: var(--radius-sm);
   box-shadow: var(--shadow-sm);
@@ -10223,7 +10204,6 @@ body {
 .settings-panel,
 .history-section,
 .table-session-card,
-.report-stat-card,
 .food-menu-card,
 .food-cart-panel,
 .quick-session-modal,
@@ -10268,7 +10248,6 @@ body {
 }
 
 .metric-value,
-.report-stat-value,
 .tables-view-title,
 .queue-title {
   color: var(--club-ink);
@@ -10618,7 +10597,6 @@ body {
 
 .food-menu-name,
 .cart-line-name,
-.report-stat-label,
 .data-table th,
 .data-table td {
   line-height: 1.35;
@@ -11867,7 +11845,6 @@ body.dark .page {
 }
 
 .metric-label,
-.report-stat-label,
 .cf-stat span,
 .ops-kpi-top span,
 .closing-metric span,
@@ -11879,7 +11856,6 @@ body.dark .page {
 }
 
 .metric-value,
-.report-stat-value,
 .cf-stat strong,
 .ops-kpi strong,
 .closing-metric strong,
@@ -18029,7 +18005,6 @@ body.dark .table-session-card.occupied {
 }
 
 .metric-card,
-.report-stat-card,
 .ops-kpi,
 .food-menu-card,
 .member-card,
