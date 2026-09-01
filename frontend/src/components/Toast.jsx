@@ -1,6 +1,11 @@
 import { useCallback, useRef, useState } from "react";
 import { ToastContext } from "./toastContext.js";
 
+const TOAST_ICONS = {
+  success: "ti-circle-check-filled",
+  error: "ti-alert-circle-filled",
+};
+
 export function ToastProvider({ children }) {
   const [toasts, setToasts] = useState([]);
   const timers = useRef(new Map());
@@ -50,7 +55,8 @@ export function ToastProvider({ children }) {
       <div className="app-toast-container" aria-live="polite">
         {toasts.map((t) => (
           <div key={t.id} className={`app-toast app-toast-${t.type} ${t.exiting ? "is-exiting" : ""}`}>
-            <span>{t.message}</span>
+            <i className={`app-toast-icon ti ${TOAST_ICONS[t.type] || "ti-info-circle-filled"}`} aria-hidden="true" />
+            <span className="app-toast-message">{t.message}</span>
             {t.actionLabel && (
               <button type="button" className="app-toast-action" onClick={() => handleAction(t)}>
                 {t.actionLabel}

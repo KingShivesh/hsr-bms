@@ -8002,7 +8002,6 @@ body.dark .quick-session-rate.warning {
 .app-toast {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   gap: var(--space-3);
   min-width: 240px;
   max-width: 360px;
@@ -8016,7 +8015,21 @@ body.dark .quick-session-rate.warning {
   pointer-events: auto;
 }
 
-.app-toast span {
+.app-toast-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  width: 24px;
+  height: 24px;
+  border-radius: 999px;
+  background: color-mix(in srgb, currentColor 14%, transparent);
+  font-size: 18px;
+  line-height: 1;
+}
+
+.app-toast-message {
+  flex: 1 1 auto;
   min-width: 0;
 }
 

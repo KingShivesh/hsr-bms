@@ -9,6 +9,7 @@
 - A3 follow-up candidate: `frontend/src/components/Header.jsx`, `frontend/src/assets/react.svg`, `frontend/src/assets/vite.svg`, and `frontend/public/icons.svg` appear to be dead/template assets. Keep removal separate from the scoped A3 icon replacement commit.
 - A3 CLOSED: scoped icon replacements passed lint/build/source checks and browser click verification for the waitlist cancel icon, booking cancel icon, and Cafe POS cart-line remove icon.
 - A4 CLOSED: static and browser light/dark regression checks are complete. The Analytics stat-card dark-mode regression was fixed by migrating Reports stats to the shared `ui-metric-card`; browser contrast verification passed in light and dark mode. The live ClubSuite stat helper was also migrated to `ui-metric-card` and verified through Notification Center in both themes.
+- B1 CLOSED: notification/toast system audit passed in-browser. Toasts stack with a stable 10px gap, each toast keeps its independent timer, and success/error toasts now include status icons plus distinct persistence/color treatment. The topbar bell is wired to the real Notification Center, which is populated from maintenance, waitlist, missed-booking, and audit-log data, so the original notification-system item is satisfied without additional bell wiring.
 
 ## Verification Debt Checklist
 
@@ -43,3 +44,11 @@ Lane A verification debt is closed. The checklist below is retained as the brows
 - Operations/Pricing in light and dark mode: confirm health-ring/cockpit surfaces render correctly and no text token is being used as an unreadable fill.
 - Dashboard charts in light and dark mode: confirm chart swatches/fills use the theme-aware chart tokens and remain visible against the page background.
 - Global spot-check: toggle light/dark mode from the topbar and scan the current page for invisible, low-contrast, or clipped text before marking A4 closed.
+
+### B1 Notification/Toast System
+
+- Toast stack: trigger multiple toasts quickly and confirm each toast stacks cleanly without overlap.
+- Toast timers: confirm success and error toasts dismiss independently, with success using the shorter routine timer and error persisting longer.
+- Toast distinction: confirm success and error toasts are differentiated by icon, semantic color, border treatment, and persistence.
+- Bell wiring: confirm the topbar bell opens the real Notification Center rather than a decorative placeholder.
+- Notification data: confirm Notification Center content is sourced from operational signals such as maintenance, waitlist, missed bookings, and audit logs.
