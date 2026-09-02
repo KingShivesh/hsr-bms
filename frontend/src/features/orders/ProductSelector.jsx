@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { addFood, getMenu } from "../../api/index.js";
 import RetryNotice from "../../components/RetryNotice.jsx";
+import { useEscapeKey } from "../../components/ui/index.js";
 import { useToast } from "../../components/toastContext.js";
 
 function itemPrice(value) {
@@ -17,6 +18,7 @@ function itemAvailable(value) {
 
 export default function ProductSelector({ tableId, players = [], onAdded, onClose }) {
   const { showToast } = useToast();
+  useEscapeKey(onClose, true);
   const [menu, setMenu] = useState({});
   const [query, setQuery] = useState("");
   const [selectedItem, setSelectedItem] = useState(null);

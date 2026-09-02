@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import { pauseSession, transferSession } from "../../api/index.js";
 import { useToast } from "../../components/toastContext.js";
+import { useEscapeKey } from "../../components/ui/index.js";
 import CheckoutPanel from "../checkout/CheckoutPanel.jsx";
 import ProductSelector from "../orders/ProductSelector.jsx";
 import TableStatusBadge from "../live-floor/TableStatusBadge.jsx";
@@ -39,6 +40,7 @@ export default function SessionWorkspace({
   const [checkoutOpen, setCheckoutOpen] = useState(false);
   const [busy, setBusy] = useState("");
   const [transferTarget, setTransferTarget] = useState("");
+  useEscapeKey(onClose, !!table && !showOrders && !checkoutOpen);
   const session = table?.session;
   const elapsed = session && !session.paused ? (session.elapsed_seconds || 0) + tick : session?.elapsed_seconds || 0;
   const players = useMemo(() => sessionPlayers(session), [session]);

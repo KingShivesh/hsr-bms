@@ -11,6 +11,7 @@
 - A4 CLOSED: static and browser light/dark regression checks are complete. The Analytics stat-card dark-mode regression was fixed by migrating Reports stats to the shared `ui-metric-card`; browser contrast verification passed in light and dark mode. The live ClubSuite stat helper was also migrated to `ui-metric-card` and verified through Notification Center in both themes.
 - B1 CLOSED: notification/toast system audit passed in-browser. Toasts stack with a stable 10px gap, each toast keeps its independent timer, and success/error toasts now include status icons plus distinct persistence/color treatment. The topbar bell is wired to the real Notification Center, which is populated from maintenance, waitlist, missed-booking, and audit-log data, so the original notification-system item is satisfied without additional bell wiring.
 - B2 CLOSED: custom skeleton-first loading state for Food & Cafe POS (`FoodPosSkeleton`) verified in-browser across light and dark modes. Layout matches the live page structure (4 top tabs, search toolbar, 8 category pills, 4-column menu card grid with media/name/price/category lines, and right-hand order panel with cart placeholder). Shimmer animation (`skeleton-pulse`) verified with full contrast against background in both themes. Transition to loaded content occurs seamlessly with no layout shift, and generic `PageSkeleton` was verified on other tabs without regression. API and menu data fetch logic remain intact.
+- B3 CLOSED: keyboard navigation verified in-browser. Escape closes modal/panel surfaces while preserving typed draft values on the first Escape from filled inputs, Enter opens the focused Live Floor table card, arrow keys move focus through the rendered table grid, and tab-order scans passed on Live Floor, Bookings, and Inventory without keyboard traps.
 
 ## Verification Debt Checklist
 
@@ -53,3 +54,19 @@ Lane A verification debt is closed. The checklist below is retained as the brows
 - Toast distinction: confirm success and error toasts are differentiated by icon, semantic color, border treatment, and persistence.
 - Bell wiring: confirm the topbar bell opens the real Notification Center rather than a decorative placeholder.
 - Notification data: confirm Notification Center content is sourced from operational signals such as maintenance, waitlist, missed bookings, and audit logs.
+
+### B2 Food & Cafe POS Skeleton Loading
+
+- Cafe POS loading surface: confirm the loading state uses the same structural layout as the real POS view, including top tabs, toolbar/search area, category rail, menu-card grid, and order panel.
+- Light/dark skeleton contrast: confirm shimmer and placeholder blocks remain visible in both themes.
+- Loaded-state replacement: confirm real menu data replaces the skeleton without layout jump or stale loading UI.
+- Fetch/API constraint: confirm no menu-fetching or order API behavior changed as part of the presentation-only skeleton pass.
+- Generic skeleton regression: spot-check an existing page using the generic skeleton and confirm it still renders normally.
+
+### B3 Keyboard Navigation
+
+- Escape closes surfaces: verify Escape closes the Live Floor start-session panel, Bookings modal, Cafe POS cigarette MRP dialog, Inventory add-menu-item modal, and Live Floor session workspace panel.
+- Input preservation: while a filled text input is focused inside a modal, press Escape once and confirm the modal stays open, the draft value remains intact, and focus leaves the field. Press Escape from the panel/dialog afterward and confirm it closes.
+- Focused-card Enter: tab to a Live Floor table card, confirm the focus treatment is visible, press Enter, and confirm the matching table workspace opens.
+- Table-card arrows: from a focused table card, press right/down/left/up and confirm focus moves according to the rendered grid arrangement. Press Enter after arrow navigation and confirm the focused table opens.
+- Tab-order sanity: tab through Live Floor, Bookings, and Inventory and confirm focus order follows sidebar, topbar, page actions, then page content without traps or newly unreachable controls.

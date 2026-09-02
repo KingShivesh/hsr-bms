@@ -10,7 +10,7 @@ import {
   getFoodStats,
 } from "../../api/index.js";
 import { useToast } from "../toastContext.js";
-import { Checkbox } from "../ui/index.js";
+import { Checkbox, useEscapeKey } from "../ui/index.js";
 
 const CATEGORIES = [
   "All",
@@ -125,6 +125,7 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
   const busyActionRef = useRef("");
   const [lastOrder, setLastOrder] = useState(null);
   const [cigaretteDraft, setCigaretteDraft] = useState({ name: "", mrp: "" });
+  useEscapeKey(() => setCigaretteDraft({ name: "", mrp: "" }), !!cigaretteDraft.name);
 
   const fetchAll = useCallback(async ({ showLoading = false } = {}) => {
     if (showLoading) setLoading(true);

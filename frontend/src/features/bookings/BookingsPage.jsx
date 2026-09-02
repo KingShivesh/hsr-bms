@@ -8,6 +8,7 @@ import {
   startSession,
 } from "../../api/index.js";
 import RetryNotice from "../../components/RetryNotice.jsx";
+import { useEscapeKey } from "../../components/ui/index.js";
 import { useToast } from "../../components/toastContext.js";
 import { HSR_TABLES, getTableRate } from "../../config/hsrTables.js";
 import { getTableStatus } from "../../config/tableStatus.js";
@@ -68,6 +69,8 @@ function BookingSkeleton() {
 }
 
 function BookingModal({ form, setForm, saving, onClose, onSubmit }) {
+  useEscapeKey(onClose, true);
+
   return (
     <div className="lf-modal-backdrop" role="presentation">
       <form className="op2-modal" onSubmit={onSubmit}>

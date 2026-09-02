@@ -1360,6 +1360,18 @@ textarea:focus-visible {
   transform: translateY(-1px);
 }
 
+.lf-table-card:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 32%, transparent), var(--elevation-2);
+  border-color: var(--accent);
+  transform: translateY(-1px);
+}
+
+body.dark .lf-table-card:focus-visible {
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 45%, transparent), var(--elevation-2);
+  border-color: var(--accent-hover);
+}
+
 .lf-table-card.is-running {
   border-color: color-mix(in srgb, var(--accent) 32%, var(--border));
   background: linear-gradient(180deg, color-mix(in srgb, var(--accent-bg) 38%, var(--surface)) 0%, var(--surface) 58%);
@@ -11235,6 +11247,11 @@ body.dark .table-detail-header {
   border-color: var(--border);
 }
 
+body.dark .table-floor-tile:focus-visible {
+  border-color: var(--accent-hover) !important;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 42%, transparent), 0 10px 22px rgba(0, 0, 0, 0.28) !important;
+}
+
 body.dark .table-floor-topline strong,
 body.dark .table-floor-title,
 body.dark .table-detail-header strong {
@@ -17550,6 +17567,13 @@ body.dark .cf-modal-head {
 .table-floor-tile:hover {
   border-color: color-mix(in srgb, var(--accent) 32%, var(--border)) !important;
   box-shadow: 0 10px 22px rgba(15, 23, 42, 0.08) !important;
+}
+
+.table-floor-tile:focus-visible {
+  outline: none;
+  border-color: var(--accent) !important;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 26%, transparent), 0 10px 22px rgba(15, 23, 42, 0.08) !important;
+  transform: translateY(-1px);
 }
 
 .table-floor-tile.selected {

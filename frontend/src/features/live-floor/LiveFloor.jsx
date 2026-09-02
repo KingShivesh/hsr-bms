@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { getLiveFloor, startSession } from "../../api/index.js";
 import RetryNotice from "../../components/RetryNotice.jsx";
+import { useEscapeKey } from "../../components/ui/index.js";
 import { useToast } from "../../components/toastContext.js";
 import SessionWorkspace from "../sessions/SessionWorkspace.jsx";
 import TableGrid from "./TableGrid.jsx";
@@ -31,6 +32,7 @@ function LiveFloorSkeleton() {
 
 function NewSessionPanel({ open, tables, initialTableId, onClose, onCreated }) {
   const { showToast } = useToast();
+  useEscapeKey(onClose, open);
   const availableTables = useMemo(() => tables.filter((table) => table.status_key === "available"), [tables]);
   const defaultTableId = initialTableId || availableTables[0]?.id || "";
   const [customer, setCustomer] = useState("");
@@ -185,7 +187,7 @@ export default function LiveFloor({ role = "admin", onNavigate, newSessionReques
   const tables = useMemo(() => floor?.tables || [], [floor]);
   const summary = floor?.summary || {};
   const selectedTable = useMemo(
-    () => tables.find((table) => table.id === selectedTableId) || tables[0],
+    () => tables.find((table) => table.id === selectedTableId) || null,
     [tables, selectedTableId],
   );
   const upcomingBookings = tables.filter((table) => table.booking).length;

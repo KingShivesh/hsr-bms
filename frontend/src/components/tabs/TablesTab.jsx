@@ -26,6 +26,7 @@ import {
 } from "../../api/index.js";
 import { searchMembers } from "../../api/index.js";
 import { useToast } from "../toastContext.js";
+import { useEscapeKey } from "../ui/index.js";
 import { HSR_TABLES, getTableLabel, getTableRate } from "../../config/hsrTables.js";
 import { getTableStatus } from "../../config/tableStatus.js";
 
@@ -618,6 +619,7 @@ function QuickSessionModal({
   const [player1, setPlayer1] = useState("");
   const [otherPlayers, setOtherPlayers] = useState("");
   const [billingMode, setBillingMode] = useState("single");
+  useEscapeKey(onClose, open);
   const initializedOpen = useRef(false);
   const availableTables = tables.filter(
     (table) => !sessions[table.id] && !maintenance[table.id],
@@ -790,6 +792,7 @@ function HistoryModal({ tableId, tableNum, onClose }) {
   const [history, setHistory] = useState([]);
   const [audit, setAudit] = useState([]);
   const [loading, setLoading] = useState(true);
+  useEscapeKey(onClose, true);
 
   useEffect(() => {
     Promise.allSettled([getTableHistory(tableId), getTableAudit(tableId)])
@@ -878,6 +881,7 @@ function HistoryModal({ tableId, tableNum, onClose }) {
 
 function ResetConfirmModal({ tableId, loading, onClose, onConfirm }) {
   const [pin, setPin] = useState("");
+  useEscapeKey(onClose, true);
 
   return (
     <div className="frame-loser-backdrop" role="dialog" aria-modal="true">
@@ -979,6 +983,8 @@ function CheckoutQuoteScreen({
   onDiscountChange,
   onFinalize,
 }) {
+  useEscapeKey(onClose, !!quote);
+
   if (!quote) return null;
   const rec = quote.rec || {};
   const settlement = Array.isArray(rec.player_breakdown)
@@ -1243,6 +1249,8 @@ function CheckoutQuoteScreen({
 }
 
 function CheckoutBillScreen({ bill, onClose }) {
+  useEscapeKey(onClose, !!bill);
+
   if (!bill) return null;
   const rec = bill.rec || {};
   const settlement = Array.isArray(rec.player_breakdown)
@@ -2443,6 +2451,7 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0, onOpenF
   const [busyActions, setBusyActions] = useState({});
   const busyActionsRef = useRef({});
   const detailPanelRef = useRef(null);
+  const tableGridRef = useRef(null);
   const checkoutQuoteSeqRef = useRef(0);
 
   async function runBusyAction(key, action) {
@@ -3223,6 +3232,62 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0, onOpenF
     localStorage.setItem("tablesViewMode", mode);
   }
 
+  function handleTableGridKeyDown(event) {
+    if (!["ArrowRight", "ArrowLeft", "ArrowDown", "ArrowUp"].includes(event.key)) return;
+
+    const grid = tableGridRef.current;
+    if (!grid) return;
+
+    const tiles = Array.from(grid.querySelectorAll(".table-floor-tile:not(:disabled)"));
+    const activeTile = document.activeElement?.closest?.(".table-floor-tile");
+    const activeIndex = activeTile ? tiles.indexOf(activeTile) : -1;
+    if (activeIndex === -1) return;
+
+    const rows = [];
+    tiles.forEach((tile, index) => {
+      const rect = tile.getBoundingClientRect();
+      const row = rows.find((item) => Math.abs(item.top - rect.top) < 12);
+      if (row) {
+        row.items.push({ index, left: rect.left, center: rect.left + rect.width / 2 });
+      } else {
+        rows.push({ top: rect.top, items: [{ index, left: rect.left, center: rect.left + rect.width / 2 }] });
+      }
+    });
+    rows.sort((a, b) => a.top - b.top);
+    rows.forEach((row) => row.items.sort((a, b) => a.left - b.left));
+
+    const rowIndex = rows.findIndex((row) => row.items.some((item) => item.index === activeIndex));
+    if (rowIndex === -1) return;
+    const columnIndex = rows[rowIndex].items.findIndex((item) => item.index === activeIndex);
+    const activeCenter = rows[rowIndex].items[columnIndex].center;
+    let targetIndex = activeIndex;
+
+    if (event.key === "ArrowRight") {
+      targetIndex = rows[rowIndex].items[columnIndex + 1]?.index ?? rows[rowIndex + 1]?.items[0]?.index ?? activeIndex;
+    } else if (event.key === "ArrowLeft") {
+      targetIndex = rows[rowIndex].items[columnIndex - 1]?.index ?? rows[rowIndex - 1]?.items.at(-1)?.index ?? activeIndex;
+    } else if (event.key === "ArrowDown") {
+      const nextRow = rows[rowIndex + 1]?.items;
+      if (nextRow) {
+        targetIndex = nextRow.reduce((closest, item) => (
+          Math.abs(item.center - activeCenter) < Math.abs(closest.center - activeCenter) ? item : closest
+        ), nextRow[0]).index;
+      }
+    } else if (event.key === "ArrowUp") {
+      const previousRow = rows[rowIndex - 1]?.items;
+      if (previousRow) {
+        targetIndex = previousRow.reduce((closest, item) => (
+          Math.abs(item.center - activeCenter) < Math.abs(closest.center - activeCenter) ? item : closest
+        ), previousRow[0]).index;
+      }
+    }
+
+    if (targetIndex !== activeIndex && tiles[targetIndex]) {
+      event.preventDefault();
+      tiles[targetIndex].focus();
+    }
+  }
+
   return (
     <>
       <CheckoutQuoteScreen
@@ -3267,7 +3332,13 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0, onOpenF
       />
 
       <div className="table-floor-layout">
-        <div className={`tables-grid table-floor-grid ${compact ? "compact" : ""}`}>
+        <div
+          ref={tableGridRef}
+          className={`tables-grid table-floor-grid ${compact ? "compact" : ""}`}
+          role="region"
+          aria-label="Table floor cards"
+          onKeyDown={handleTableGridKeyDown}
+        >
           {TABLES.map((table) => (
             <TableFloorTile
               key={table.id}

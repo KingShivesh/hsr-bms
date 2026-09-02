@@ -213,6 +213,19 @@ function Modal({ title, onClose, children }) {
     }
     function onKeyDown(event) {
       if (event.key === "Escape") {
+        const activeEl = document.activeElement;
+        const isInput =
+          activeEl &&
+          (activeEl.tagName === "INPUT" ||
+            activeEl.tagName === "TEXTAREA" ||
+            activeEl.tagName === "SELECT");
+
+        if (isInput && activeEl.value && String(activeEl.value).trim().length > 0) {
+          activeEl.blur();
+          event.stopPropagation();
+          return;
+        }
+
         event.preventDefault();
         closeAndRestore();
         return;

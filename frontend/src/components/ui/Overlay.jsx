@@ -1,4 +1,5 @@
 import Button, { IconButton } from "./Button.jsx";
+import { useEscapeKey } from "./useEscapeKey.js";
 
 export function Modal({
   open,
@@ -10,10 +11,18 @@ export function Modal({
   className = "",
   size = "md",
 }) {
+  useEscapeKey(onClose, open);
+
   if (!open) return null;
 
   return (
-    <div className="ui-overlay" role="presentation">
+    <div
+      className="ui-overlay"
+      role="presentation"
+      onMouseDown={(e) => {
+        if (e.target === e.currentTarget && onClose) onClose();
+      }}
+    >
       <section
         className={["ui-modal", `ui-modal-${size}`, className].filter(Boolean).join(" ")}
         role="dialog"
@@ -44,10 +53,18 @@ export function Drawer({
   className = "",
   side = "right",
 }) {
+  useEscapeKey(onClose, open);
+
   if (!open) return null;
 
   return (
-    <div className="ui-overlay" role="presentation">
+    <div
+      className="ui-overlay"
+      role="presentation"
+      onMouseDown={(e) => {
+        if (e.target === e.currentTarget && onClose) onClose();
+      }}
+    >
       <aside
         className={["ui-drawer", `ui-drawer-${side}`, className].filter(Boolean).join(" ")}
         role="dialog"
