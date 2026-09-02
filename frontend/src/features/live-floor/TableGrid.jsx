@@ -7,6 +7,8 @@ export default function TableGrid({
   tick = 0,
   onSelectTable,
   onStartSession,
+  onSaveRate,
+  onInvalidRate,
 }) {
   const gridRef = useRef(null);
 
@@ -141,6 +143,8 @@ export default function TableGrid({
           tick={tick}
           onSelect={onSelectTable}
           onStart={onStartSession}
+          onSaveRate={onSaveRate}
+          onInvalidRate={onInvalidRate}
         />
       ))}
     </div>

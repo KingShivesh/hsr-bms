@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from "react";
 import TableStatusBadge from "./TableStatusBadge.jsx";
 
 function formatTimer(seconds = 0) {
@@ -16,7 +17,25 @@ function bookingTime(booking) {
   return parsed.toLocaleTimeString("en-IN", { hour: "2-digit", minute: "2-digit" });
 }
 
-export default function TableCard({ table, selected, tick = 0, onSelect, onStart }) {
+function pairedRateNote(tableId) {
+  const normalized = String(tableId || "").toLowerCase();
+  if (normalized === "t1") return "Also updates T2";
+  if (normalized === "t2") return "Also updates T1";
+  if (normalized === "t3") return "Also updates T4";
+  if (normalized === "t4") return "Also updates T3";
+  if (normalized === "t5") return "Pool table rate";
+  return "Updates this rate group";
+}
+
+export default function TableCard({
+  table,
+  selected,
+  tick = 0,
+  onSelect,
+  onStart,
+  onSaveRate,
+  onInvalidRate,
+}) {
   const statusKey = table.status_key || "available";
   const session = table.session;
   const elapsed = session && !session.paused ? (session.elapsed_seconds || 0) + tick : table.elapsed_seconds || 0;
@@ -25,6 +44,63 @@ export default function TableCard({ table, selected, tick = 0, onSelect, onStart
   const actionLabel = isAvailable ? "Start Table" : statusKey === "reserved" ? "Review Booking" : "Open Session";
   const runningTotal = Number(session?.running_total || table.running_total || 0);
   const foodTotal = Number(session?.food_total || 0);
+  const shownRate = Number(table.rate || 0);
+  const canEditRate = !session && statusKey !== "reserved" && typeof onSaveRate === "function";
+  const [rateEditing, setRateEditing] = useState(false);
+  const [rateDraft, setRateDraft] = useState(String(shownRate || ""));
+  const [rateError, setRateError] = useState("");
+  const [rateSaving, setRateSaving] = useState(false);
+  const skipNextBlur = useRef(false);
+
+  useEffect(() => {
+    if (!rateEditing) setRateDraft(String(shownRate || ""));
+  }, [rateEditing, shownRate]);
+
+  function beginRateEdit(event) {
+    if (!canEditRate) return;
+    event.stopPropagation();
+    setRateDraft(String(shownRate || ""));
+    setRateError("");
+    setRateEditing(true);
+  }
+
+  function cancelRateEdit() {
+    skipNextBlur.current = true;
+    setRateDraft(String(shownRate || ""));
+    setRateError("");
+    setRateEditing(false);
+  }
+
+  async function commitRateEdit() {
+    const trimmed = String(rateDraft || "").trim();
+    const parsed = Number(trimmed);
+    if (!trimmed || !Number.isFinite(parsed) || !Number.isInteger(parsed) || parsed < 1 || parsed > 5000) {
+      skipNextBlur.current = false;
+      const message = "Enter a whole number from 1 to 5000.";
+      setRateError(message);
+      onInvalidRate?.(message);
+      return;
+    }
+    if (parsed === shownRate) {
+      skipNextBlur.current = true;
+      setRateEditing(false);
+      setRateError("");
+      return;
+    }
+
+    setRateSaving(true);
+    setRateError("");
+    const result = await onSaveRate(table, parsed);
+    setRateSaving(false);
+    if (result?.ok) {
+      skipNextBlur.current = true;
+      setRateEditing(false);
+    } else {
+      skipNextBlur.current = true;
+      setRateDraft(String(shownRate || ""));
+      setRateEditing(false);
+    }
+  }
 
   function handleAction(event) {
     event.stopPropagation();
@@ -63,9 +139,58 @@ export default function TableCard({ table, selected, tick = 0, onSelect, onStart
         </div>
         <div>
           <span>{session ? "Live timer" : statusKey === "reserved" ? "Guest" : "Rate"}</span>
-          <b title={session ? formatTimer(elapsed) : statusKey === "reserved" ? customer || "Reserved guest" : `₹${table.rate || 0}/hr`}>
-            {session ? formatTimer(elapsed) : statusKey === "reserved" ? customer || "Reserved guest" : `₹${table.rate || 0}/hr`}
-          </b>
+          {rateEditing ? (
+            <div className="lf-rate-editor" onClick={(event) => event.stopPropagation()}>
+              <label>
+                <span className="sr-only">Hourly rate for {String(table.id || "").toUpperCase()}</span>
+                <input
+                  type="text"
+                  inputMode="numeric"
+                  value={rateDraft}
+                  autoFocus
+                  disabled={rateSaving}
+                  onChange={(event) => {
+                    setRateDraft(event.target.value);
+                    if (rateError) setRateError("");
+                  }}
+                  onKeyDown={(event) => {
+                    event.stopPropagation();
+                    if (event.key === "Enter") {
+                      event.preventDefault();
+                      skipNextBlur.current = true;
+                      commitRateEdit();
+                    } else if (event.key === "Escape") {
+                      event.preventDefault();
+                      cancelRateEdit();
+                    }
+                  }}
+                  onBlur={() => {
+                    if (skipNextBlur.current) {
+                      skipNextBlur.current = false;
+                      return;
+                    }
+                    commitRateEdit();
+                  }}
+                  aria-invalid={rateError ? "true" : "false"}
+                />
+              </label>
+              <small>{rateSaving ? "Saving..." : pairedRateNote(table.id)}</small>
+              {rateError && <em>{rateError}</em>}
+            </div>
+          ) : canEditRate ? (
+            <button
+              type="button"
+              className="lf-inline-rate"
+              onClick={beginRateEdit}
+              title={`Edit ₹${shownRate}/hr`}
+            >
+              ₹{shownRate}/hr
+            </button>
+          ) : (
+            <b title={session ? formatTimer(elapsed) : statusKey === "reserved" ? customer || "Reserved guest" : `₹${shownRate}/hr`}>
+              {session ? formatTimer(elapsed) : statusKey === "reserved" ? customer || "Reserved guest" : `₹${shownRate}/hr`}
+            </b>
+          )}
         </div>
       </div>
 

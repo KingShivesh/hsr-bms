@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { getLiveFloor, startSession } from "../../api/index.js";
+import { getLiveFloor, getRates, saveRates, startSession } from "../../api/index.js";
 import RetryNotice from "../../components/RetryNotice.jsx";
 import { useEscapeKey } from "../../components/ui/index.js";
 import { useToast } from "../../components/toastContext.js";
@@ -16,6 +16,19 @@ function todayLabel() {
 
 function metricValue(value, prefix = "") {
   return `${prefix}${Number(value || 0).toLocaleString("en-IN")}`;
+}
+
+function rateGroupForTable(tableId) {
+  const normalized = String(tableId || "").toLowerCase();
+  if (normalized === "t1" || normalized === "t2") return "wr";
+  if (normalized === "t3" || normalized === "t4") return "sr";
+  if (normalized === "t5") return "pr";
+  return "";
+}
+
+function normalizeRate(value, fallback) {
+  const parsed = Number(value);
+  return Number.isFinite(parsed) ? parsed : fallback;
 }
 
 function LiveFloorSkeleton() {
@@ -122,6 +135,7 @@ function NewSessionPanel({ open, tables, initialTableId, onClose, onCreated }) {
 }
 
 export default function LiveFloor({ role = "admin", onNavigate, newSessionRequest = 0 }) {
+  const { showToast } = useToast();
   const [floor, setFloor] = useState(null);
   const [selectedTableId, setSelectedTableId] = useState("");
   const [loading, setLoading] = useState(true);
@@ -183,6 +197,31 @@ export default function LiveFloor({ role = "admin", onNavigate, newSessionReques
   useEffect(() => {
     if (newSessionRequest > 0) openNewSession();
   }, [newSessionRequest, openNewSession]);
+
+  const saveInlineRate = useCallback(async (table, nextRate) => {
+    const rateGroup = rateGroupForTable(table?.id);
+    if (!rateGroup) {
+      showToast("This table rate group is not editable.", "error");
+      return { ok: false };
+    }
+
+    try {
+      const current = await getRates();
+      const serverRates = {
+        wr: normalizeRate(current.data?.wr, 320),
+        pr: normalizeRate(current.data?.pr, 170),
+        sr: normalizeRate(current.data?.sr, 270),
+      };
+      const mergedRates = { ...serverRates, [rateGroup]: nextRate };
+      await saveRates(mergedRates.wr, mergedRates.pr, mergedRates.sr);
+      showToast(`${String(table.id || "").toUpperCase()} rate saved`, "success");
+      await loadFloor();
+      return { ok: true };
+    } catch (err) {
+      showToast(err.userMessage || err.response?.data?.detail || "Rate could not be saved.", "error");
+      return { ok: false };
+    }
+  }, [loadFloor, showToast]);
 
   const tables = useMemo(() => floor?.tables || [], [floor]);
   const summary = floor?.summary || {};
@@ -263,6 +302,8 @@ export default function LiveFloor({ role = "admin", onNavigate, newSessionReques
                 tick={tick}
                 onSelectTable={(table) => setSelectedTableId(table.id)}
                 onStartSession={openNewSession}
+                onSaveRate={saveInlineRate}
+                onInvalidRate={(message) => showToast(message, "error")}
               />
             </div>
 
