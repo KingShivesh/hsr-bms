@@ -37,6 +37,72 @@ function EmptyState({ icon = "ti-info-circle", title, detail }) {
   );
 }
 
+function FoodPosSkeleton() {
+  const menuCards = Array.from({ length: 10 });
+  const categories = Array.from({ length: 8 });
+
+  return (
+    <div className="cafe-pos-page page-skeleton food-pos-skeleton" role="status" aria-live="polite" aria-label="Loading Food and Cafe POS">
+      <div className="page-skeleton-status">
+        <i className="ti ti-loader-2" aria-hidden="true" />
+        <span>Loading Food & Cafe POS...</span>
+      </div>
+      <div className="segmented-control page-tabs cafe-pos-tabs skeleton-tabs">
+        <span className="skeleton-pill wide" />
+        <span className="skeleton-pill" />
+        <span className="skeleton-pill wide" />
+        <span className="skeleton-pill" />
+      </div>
+      <div className="food-order-layout">
+        <div className="cafe-products-region">
+          <div className="food-menu-toolbar skeleton-toolbar">
+            <span className="skeleton-field skeleton-search-field" />
+            <span className="skeleton-pill compact" />
+          </div>
+          <div className="segmented-control category-tabs skeleton-category-tabs">
+            {categories.map((_, index) => (
+              <span className={`skeleton-pill ${index % 3 === 0 ? "wide" : ""}`} key={index} />
+            ))}
+          </div>
+          <div className="food-menu-grid">
+            {menuCards.map((_, index) => (
+              <div className="food-menu-card skeleton-menu-card" key={index}>
+                <span className="skeleton-media" />
+                <span className="skeleton-line skeleton-menu-name" />
+                <span className="skeleton-line skeleton-menu-price" />
+                <span className="skeleton-line skeleton-menu-category" />
+              </div>
+            ))}
+          </div>
+        </div>
+        <aside className="cafe-order-region" aria-label="Loading current order">
+          <div className="panel food-cart-panel skeleton-order-panel">
+            <div className="food-cart-head">
+              <div className="skeleton-order-heading">
+                <span className="skeleton-line skeleton-title" />
+                <span className="skeleton-line skeleton-subtitle" />
+              </div>
+              <span className="skeleton-pill compact" />
+            </div>
+            <span className="skeleton-pill wide" />
+            <span className="skeleton-field" />
+            <div className="food-payment-toggle skeleton-payment-toggle">
+              <span className="skeleton-pill" />
+              <span className="skeleton-pill" />
+              <span className="skeleton-pill" />
+            </div>
+            <div className="skeleton-cart-empty">
+              <span className="skeleton-media" />
+              <span className="skeleton-line skeleton-menu-name" />
+              <span className="skeleton-line skeleton-subtitle" />
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  );
+}
+
 export default function FoodTab({ onNavigate, role = "admin", orderContext, onOrderContextHandled }) {
   const { showToast } = useToast();
   const [menu, setMenu] = useState({});
@@ -347,21 +413,7 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
   }, [orderTarget, selectedTable, selectedPlayer, selectedSessionPlayers]);
 
   if (loading) {
-    return (
-      <div className="page-skeleton compact" role="status" aria-live="polite" aria-label="Loading Food and Cafe POS">
-        <div className="page-skeleton-status">
-          <i className="ti ti-loader-2" aria-hidden="true" />
-          <span>Loading Food & Cafe POS...</span>
-        </div>
-        <div className="skeleton-line skeleton-title" />
-        <div className="skeleton-grid">
-          <div className="skeleton-card" />
-          <div className="skeleton-card" />
-          <div className="skeleton-card" />
-        </div>
-        <div className="skeleton-panel" />
-      </div>
-    );
+    return <FoodPosSkeleton />;
   }
 
   return (

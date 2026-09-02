@@ -5076,6 +5076,103 @@ body.dark .closing-insight.critical {
   min-width: 0;
 }
 
+.food-pos-skeleton {
+  gap: var(--space-5);
+}
+
+.food-pos-skeleton .page-skeleton-status {
+  width: fit-content;
+}
+
+.food-pos-skeleton .skeleton-tabs {
+  width: fit-content;
+  pointer-events: none;
+}
+
+.skeleton-toolbar {
+  align-items: center;
+}
+
+.skeleton-search-field {
+  flex: 1 1 auto;
+}
+
+.skeleton-category-tabs {
+  flex-wrap: wrap;
+  width: 100%;
+  margin-bottom: var(--space-3);
+  pointer-events: none;
+}
+
+.skeleton-menu-card {
+  min-height: 178px;
+  display: grid;
+  align-content: start;
+  gap: var(--space-2);
+  cursor: wait;
+  pointer-events: none;
+}
+
+.skeleton-menu-name {
+  width: 82%;
+  height: 18px;
+  margin-top: var(--space-1);
+}
+
+.skeleton-menu-price {
+  width: 44%;
+  height: 14px;
+}
+
+.skeleton-menu-category {
+  width: 62%;
+  height: 14px;
+}
+
+.skeleton-order-panel {
+  display: grid;
+  gap: var(--space-3);
+  min-height: 440px;
+  pointer-events: none;
+}
+
+.skeleton-order-heading {
+  display: grid;
+  gap: var(--space-2);
+  min-width: 0;
+  flex: 1 1 auto;
+}
+
+.skeleton-order-heading .skeleton-title {
+  width: min(190px, 100%);
+  height: 18px;
+}
+
+.skeleton-subtitle {
+  width: min(220px, 100%);
+  height: 14px;
+}
+
+.skeleton-payment-toggle .skeleton-pill {
+  width: 100%;
+}
+
+.skeleton-cart-empty {
+  min-height: 210px;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: var(--space-3);
+  border: 1px dashed var(--border);
+  border-radius: var(--radius-md);
+  background: var(--bg-surface-raised);
+}
+
+.skeleton-cart-empty .skeleton-menu-name,
+.skeleton-cart-empty .skeleton-subtitle {
+  margin: 0 auto;
+}
+
 .food-search-clear {
   width: var(--icon-box-sm);
   height: var(--icon-box-sm);
@@ -17101,8 +17198,12 @@ body.dark .cf-modal-head {
 }
 
 .skeleton-line,
+.skeleton-pill,
+.skeleton-field,
+.skeleton-media,
 .skeleton-card,
-.skeleton-panel {
+.skeleton-panel,
+.skeleton-menu-card {
   position: relative;
   overflow: hidden;
   border: 1px solid var(--border);
@@ -17129,6 +17230,36 @@ body.dark .cf-modal-head {
 
 .skeleton-panel {
   min-height: 280px;
+}
+
+.skeleton-pill {
+  display: inline-block;
+  width: 96px;
+  height: var(--btn-h-lg);
+  border-radius: var(--radius-sm);
+}
+
+.skeleton-pill.wide {
+  width: 132px;
+}
+
+.skeleton-pill.compact {
+  width: 78px;
+  height: var(--btn-h-md);
+}
+
+.skeleton-field {
+  display: block;
+  width: 100%;
+  min-height: var(--btn-h-lg);
+  border-radius: var(--radius-sm);
+}
+
+.skeleton-media {
+  display: inline-block;
+  width: var(--icon-box-md);
+  height: var(--icon-box-md);
+  border-radius: var(--radius-md);
 }
 
 @keyframes skeleton-pulse {
