@@ -72,30 +72,29 @@ strength of a compile pass alone.
 ## Current progress — see docs/interaction-design-progress.md
 That file has the full checklist. Summary as of last update:
 
-LANE A (undo-toast rollout, micro-copy, icon consistency, theme audit) 
-— CLOSED. All items browser-verified in both themes.
+All 10 interaction-design items are CLOSED on branch 
+`codex/interaction-design-safety-pass`:
+- Lane A: undo toasts, micro-copy, icon consistency, and light/dark 
+  theme audit are closed and browser-verified.
+- Lane B: notification/toast audit, skeleton-first Cafe POS loading, 
+  and keyboard navigation are closed and browser-verified.
+- Lane C: inline table-rate editing, Inventory bulk actions, command 
+  palette search, and Cafe POS add-to-cart optimistic behavior are 
+  closed and browser/database verified where applicable.
 
-LANE B (notification/toast polish, skeleton loading, keyboard nav) — 
-IN PROGRESS:
-- B1 (toast status icons + bell/notification audit) — DONE, committed 
-  and browser-verified in both themes (commit 59657b1). Bell icon 
-  confirmed to already be genuinely wired to real data (Notification 
-  Center pulling from maintenance/waitlist/missed-bookings/audit 
-  logs) — not a gap, already satisfied.
-- B2 (skeleton-first loading state on Food & Cafe POS) — IN PROGRESS, 
-  UNCOMMITTED as of last session interruption. A custom FoodPosSkeleton 
-  component was built matching the real page layout (tab rail, 
-  toolbar, category row, 5-column menu grid, order panel), with a 
-  dark-mode override extension for the new skeleton pieces. This last 
-  piece (the dark-mode override) was NEVER VERIFIED IN BROWSER before 
-  the session ended — do this first before anything else.
-- B3 (keyboard navigation: Esc/Enter/arrow keys on Table Floor) — NOT 
-  STARTED.
+Important extra fixes found outside the original scope are recorded in 
+`docs/interaction-design-progress.md`, including the toast CSS naming 
+collision, theme-token misuse, duplicate/legacy CSS/component paths, 
+Analytics dark-mode stat-card bug, migration to shared metric cards, 
+and dead/reachable component findings.
 
-LANE C (inline editing, bulk actions, global search, optimistic UI 
-updates) — NOT STARTED. These are flagged as higher-risk and should 
-follow the same rigorous diagnose-fix-verify process as the toast bug, 
-not the faster pace used for Lane A/B.
+## Deferred / Follow-up
+- Bill/transaction search is intentionally out of scope until there is 
+  a real bill-detail, filter, scroll-to, or highlight destination. Do 
+  not add a generic "go to Sales" result and call it bill search.
+- Dead/template asset cleanup remains separate: 
+  `frontend/src/components/Header.jsx`, `frontend/src/assets/react.svg`, 
+  `frontend/src/assets/vite.svg`, and `frontend/public/icons.svg`.
 
 ## Process rules to follow
 1. Work on a dedicated branch (was codex/interaction-design-safety-pass 
