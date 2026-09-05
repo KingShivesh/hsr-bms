@@ -4,6 +4,7 @@ import {
   getBookings,
   getFoodOrders,
   getMembers,
+  getMenu,
   getTableState,
   getWaitlist,
 } from "../api/index.js";
@@ -23,6 +24,7 @@ export default function CommandBar({ page, setPage, onNewSession, role = "admin"
     foodOrders: [],
     auditLogs: [],
     members: [],
+    menuItems: [],
   });
   const [loadingData, setLoadingData] = useState(false);
 
@@ -38,8 +40,10 @@ export default function CommandBar({ page, setPage, onNewSession, role = "admin"
         getFoodOrders(),
         role === "admin" ? getAuditLogs(8) : Promise.resolve({ data: [] }),
         role === "admin" ? getMembers() : Promise.resolve({ data: [] }),
+        role === "admin" ? getMenu() : Promise.resolve({ data: {} }),
       ]);
       if (!alive) return;
+      const menuData = results[6].status === "fulfilled" ? results[6].value.data || {} : {};
       setSearchData({
         sessions: results[0].status === "fulfilled" ? results[0].value.data?.active_sessions || [] : [],
         waitlist: results[1].status === "fulfilled" ? results[1].value.data || [] : [],
@@ -47,6 +51,14 @@ export default function CommandBar({ page, setPage, onNewSession, role = "admin"
         foodOrders: results[3].status === "fulfilled" ? results[3].value.data || [] : [],
         auditLogs: results[4].status === "fulfilled" ? results[4].value.data || [] : [],
         members: results[5].status === "fulfilled" ? results[5].value.data || [] : [],
+        menuItems: Array.isArray(menuData)
+          ? menuData
+          : Object.entries(menuData).map(([name, item]) => ({
+            name,
+            price: item?.price || 0,
+            category: item?.category || "Menu",
+            available: item?.available !== false,
+          })),
       });
       setLoadingData(false);
     }
@@ -196,7 +208,15 @@ export default function CommandBar({ page, setPage, onNewSession, role = "admin"
       action: () => setPage("members"),
       adminOnly: true,
     }));
-    return [...sessionCommands, ...waitlistCommands, ...bookingCommands, ...foodCommands, ...auditCommands, ...memberCommands];
+    const menuCommands = searchData.menuItems.slice(0, 24).map((item) => ({
+      id: `menu-${item.name}`,
+      label: item.name || "Menu item",
+      hint: `${item.category || "Menu"} · ₹${Number(item.price || 0).toLocaleString("en-IN")} · ${item.available === false ? "Out of stock" : "In stock"} · Inventory`,
+      icon: "ti-tools-kitchen-2",
+      action: () => setPage("inventory"),
+      adminOnly: true,
+    }));
+    return [...sessionCommands, ...waitlistCommands, ...bookingCommands, ...foodCommands, ...auditCommands, ...memberCommands, ...menuCommands];
   }, [searchData, setPage]);
 
   const allowedCommands = [...commands, ...dynamicCommands].filter((cmd) => role === "admin" || !cmd.adminOnly);
