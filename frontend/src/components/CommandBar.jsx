@@ -19,6 +19,7 @@ export default function CommandBar({ page, setPage, onNewSession, role = "admin"
   const openerRef = useRef(null);
   const [searchData, setSearchData] = useState({
     sessions: [],
+    tables: [],
     waitlist: [],
     bookings: [],
     foodOrders: [],
@@ -44,8 +45,10 @@ export default function CommandBar({ page, setPage, onNewSession, role = "admin"
       ]);
       if (!alive) return;
       const menuData = results[6].status === "fulfilled" ? results[6].value.data || {} : {};
+      const tableData = results[0].status === "fulfilled" ? results[0].value.data || {} : {};
       setSearchData({
-        sessions: results[0].status === "fulfilled" ? results[0].value.data?.active_sessions || [] : [],
+        sessions: tableData.active_sessions || [],
+        tables: tableData.tables || [],
         waitlist: results[1].status === "fulfilled" ? results[1].value.data || [] : [],
         bookings: results[2].status === "fulfilled" ? results[2].value.data || [] : [],
         foodOrders: results[3].status === "fulfilled" ? results[3].value.data || [] : [],
@@ -171,6 +174,13 @@ export default function CommandBar({ page, setPage, onNewSession, role = "admin"
       icon: "ti-player-play",
       action: () => setPage("live-floor"),
     }));
+    const tableCommands = searchData.tables.map((table) => ({
+      id: `table-${table.id}`,
+      label: `${String(table.id || "").toUpperCase()} · ${table.label || "Table"}`,
+      hint: `${table.status_label || "Available"} · ₹${Number(table.rate || 0).toLocaleString("en-IN")}/hr · Live Floor`,
+      icon: table.status_key === "running" ? "ti-player-play" : "ti-layout-board",
+      action: () => setPage("live-floor"),
+    }));
     const waitlistCommands = searchData.waitlist.slice(0, 8).map((entry) => ({
       id: `wait-${entry.id}`,
       label: entry.customer_name || "Waiting guest",
@@ -216,7 +226,7 @@ export default function CommandBar({ page, setPage, onNewSession, role = "admin"
       action: () => setPage("inventory"),
       adminOnly: true,
     }));
-    return [...sessionCommands, ...waitlistCommands, ...bookingCommands, ...foodCommands, ...auditCommands, ...memberCommands, ...menuCommands];
+    return [...sessionCommands, ...tableCommands, ...waitlistCommands, ...bookingCommands, ...foodCommands, ...auditCommands, ...memberCommands, ...menuCommands];
   }, [searchData, setPage]);
 
   const allowedCommands = [...commands, ...dynamicCommands].filter((cmd) => role === "admin" || !cmd.adminOnly);
