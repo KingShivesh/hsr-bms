@@ -77,6 +77,7 @@ export default function CommandBar({ page, setPage, onNewSession, role = "admin"
         id: "new-session",
         label: "New session",
         hint: "Start from Live Floor",
+        aliases: "start table walk in open table",
         icon: "ti-plus",
         action: () => onNewSession(),
       },
@@ -84,6 +85,7 @@ export default function CommandBar({ page, setPage, onNewSession, role = "admin"
         id: "live-floor",
         label: "Live Floor",
         hint: "Floor status and sessions",
+        aliases: "tables table floor active running timer",
         icon: "ti-circle-dot",
         action: () => setPage("live-floor"),
       },
@@ -98,6 +100,7 @@ export default function CommandBar({ page, setPage, onNewSession, role = "admin"
         id: "bookings",
         label: "Bookings",
         hint: "Reservations and no-shows",
+        aliases: "reservation reserve booking slots slot",
         icon: "ti-calendar-event",
         action: () => setPage("reservations"),
       },
@@ -105,6 +108,7 @@ export default function CommandBar({ page, setPage, onNewSession, role = "admin"
         id: "customers",
         label: "Customers",
         hint: "Members and spend",
+        aliases: "customer member members crm loyalty profiles",
         icon: "ti-users",
         action: () => setPage("members"),
         adminOnly: true,
@@ -113,6 +117,7 @@ export default function CommandBar({ page, setPage, onNewSession, role = "admin"
         id: "food",
         label: "Cafe POS",
         hint: "Menu and cart",
+        aliases: "food cafe pos snacks beverage beverages order counter",
         icon: "ti-tools-kitchen-2",
         action: () => setPage("food"),
       },
@@ -127,6 +132,7 @@ export default function CommandBar({ page, setPage, onNewSession, role = "admin"
         id: "reports",
         label: "Analytics",
         hint: "Revenue and table performance",
+        aliases: "report reports analytics performance revenue",
         icon: "ti-chart-bar",
         action: () => setPage("reports"),
         adminOnly: true,
@@ -135,6 +141,7 @@ export default function CommandBar({ page, setPage, onNewSession, role = "admin"
         id: "sales",
         label: "Sales",
         hint: "Transactions and receipts",
+        aliases: "bill bills billing invoice invoices transaction transactions receipt receipts",
         icon: "ti-receipt",
         action: () => setPage("billing"),
         adminOnly: true,
@@ -143,6 +150,7 @@ export default function CommandBar({ page, setPage, onNewSession, role = "admin"
         id: "closing",
         label: "Daily closing",
         hint: "Cash, UPI and open tables",
+        aliases: "close day eod shift end closing cash tally",
         icon: "ti-clipboard-check",
         action: () => setPage("closing"),
       },
@@ -150,6 +158,7 @@ export default function CommandBar({ page, setPage, onNewSession, role = "admin"
         id: "settings",
         label: "Settings",
         hint: "Pricing and controls",
+        aliases: "inventory stock stocks menu items rates operations controls",
         icon: "ti-settings",
         action: () => setPage("settings"),
         adminOnly: true,
@@ -158,6 +167,7 @@ export default function CommandBar({ page, setPage, onNewSession, role = "admin"
         id: "dashboard",
         label: "Executive overview",
         hint: "Owner dashboard",
+        aliases: "dashboard overview owner home",
         icon: "ti-layout-dashboard",
         action: () => setPage("dashboard"),
         adminOnly: true,
@@ -233,7 +243,7 @@ export default function CommandBar({ page, setPage, onNewSession, role = "admin"
   const filtered = allowedCommands.filter((cmd) => {
     const q = query.trim().toLowerCase();
     if (!q) return true;
-    return `${cmd.label} ${cmd.hint}`.toLowerCase().includes(q);
+    return `${cmd.label} ${cmd.hint} ${cmd.aliases || ""}`.toLowerCase().includes(q);
   });
 
   function openCommandPalette() {
