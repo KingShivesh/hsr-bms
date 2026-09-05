@@ -3,6 +3,7 @@ import {
   getAuditLogs,
   getBookings,
   getFoodOrders,
+  getMembers,
   getTableState,
   getWaitlist,
 } from "../api/index.js";
@@ -21,6 +22,7 @@ export default function CommandBar({ page, setPage, onNewSession, role = "admin"
     bookings: [],
     foodOrders: [],
     auditLogs: [],
+    members: [],
   });
   const [loadingData, setLoadingData] = useState(false);
 
@@ -35,6 +37,7 @@ export default function CommandBar({ page, setPage, onNewSession, role = "admin"
         getBookings(),
         getFoodOrders(),
         role === "admin" ? getAuditLogs(8) : Promise.resolve({ data: [] }),
+        role === "admin" ? getMembers() : Promise.resolve({ data: [] }),
       ]);
       if (!alive) return;
       setSearchData({
@@ -43,6 +46,7 @@ export default function CommandBar({ page, setPage, onNewSession, role = "admin"
         bookings: results[2].status === "fulfilled" ? results[2].value.data || [] : [],
         foodOrders: results[3].status === "fulfilled" ? results[3].value.data || [] : [],
         auditLogs: results[4].status === "fulfilled" ? results[4].value.data || [] : [],
+        members: results[5].status === "fulfilled" ? results[5].value.data || [] : [],
       });
       setLoadingData(false);
     }
@@ -184,7 +188,15 @@ export default function CommandBar({ page, setPage, onNewSession, role = "admin"
       action: () => setPage("reports"),
       adminOnly: true,
     }));
-    return [...sessionCommands, ...waitlistCommands, ...bookingCommands, ...foodCommands, ...auditCommands];
+    const memberCommands = searchData.members.slice(0, 10).map((member) => ({
+      id: `member-${member.id}`,
+      label: member.nm || "Customer",
+      hint: `${member.id || "Customer"} · ${member.typ || "Regular"} · ${Number(member.vis || 0).toLocaleString("en-IN")} visits · ₹${Number(member.spt || 0).toLocaleString("en-IN")} spent`,
+      icon: "ti-user-circle",
+      action: () => setPage("members"),
+      adminOnly: true,
+    }));
+    return [...sessionCommands, ...waitlistCommands, ...bookingCommands, ...foodCommands, ...auditCommands, ...memberCommands];
   }, [searchData, setPage]);
 
   const allowedCommands = [...commands, ...dynamicCommands].filter((cmd) => role === "admin" || !cmd.adminOnly);
