@@ -17028,6 +17028,87 @@ body.dark .cf-table-slot p {
   gap: var(--space-3);
 }
 
+.cf-bulk-bar {
+  display: grid;
+  gap: var(--space-3);
+  margin-bottom: var(--space-3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: var(--space-3);
+  background: var(--surface-muted);
+  color: var(--text-primary);
+}
+
+.cf-bulk-bar.is-active {
+  border-color: color-mix(in srgb, var(--accent) 34%, var(--border));
+  background: var(--accent-bg);
+}
+
+.cf-select-all,
+.cf-row-select {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--text-secondary);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-black);
+}
+
+.cf-select-all input,
+.cf-row-select input {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--accent);
+}
+
+.cf-bulk-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.cf-bulk-result {
+  display: grid;
+  gap: var(--space-1);
+  border-radius: var(--radius-sm);
+  padding: var(--space-2) var(--space-3);
+  background: color-mix(in srgb, var(--success-bg) 72%, var(--surface));
+  color: var(--success);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-heavy);
+}
+
+.cf-bulk-result strong,
+.cf-bulk-result span {
+  color: inherit;
+}
+
+.cf-bulk-failed-list {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+}
+
+.cf-bulk-failed-list b {
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+  border: 1px solid color-mix(in srgb, var(--danger) 34%, transparent);
+  border-radius: 999px;
+  padding: 0 var(--space-2);
+  background: color-mix(in srgb, var(--danger-bg) 82%, var(--surface));
+  color: var(--danger);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-black);
+}
+
+.cf-bulk-result.has-failures {
+  background: var(--danger-bg);
+  color: var(--danger);
+}
+
 .cf-data-row {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
@@ -17036,6 +17117,20 @@ body.dark .cf-table-slot p {
   min-height: 70px;
   border-radius: var(--radius-md);
   padding: var(--space-3);
+}
+
+.cf-inventory-row {
+  grid-template-columns: auto minmax(0, 1fr) auto;
+}
+
+.cf-inventory-row.is-selected {
+  border-color: color-mix(in srgb, var(--accent) 42%, var(--border));
+  background: color-mix(in srgb, var(--accent-bg) 70%, var(--surface));
+}
+
+.cf-inventory-row.has-bulk-error {
+  border-color: color-mix(in srgb, var(--danger) 44%, var(--border));
+  background: color-mix(in srgb, var(--danger-bg) 78%, var(--surface));
 }
 
 .cf-data-row strong,
@@ -17197,6 +17292,22 @@ body.dark .cf-action-btn.warning {
 body.dark .cf-action-btn.danger {
   background: rgba(220, 38, 38, 0.18);
   color: var(--danger);
+}
+
+body.dark .cf-bulk-bar {
+  border-color: rgba(148, 163, 184, 0.16);
+  background: var(--bg-surface);
+}
+
+body.dark .cf-bulk-bar.is-active,
+body.dark .cf-inventory-row.is-selected {
+  border-color: color-mix(in srgb, var(--accent) 44%, var(--border));
+  background: color-mix(in srgb, var(--accent-bg) 52%, var(--bg-surface));
+}
+
+body.dark .cf-inventory-row.has-bulk-error {
+  border-color: color-mix(in srgb, var(--danger) 52%, var(--border));
+  background: color-mix(in srgb, var(--danger-bg) 48%, var(--bg-surface));
 }
 
 body.dark .cf-modal-head {
@@ -18935,6 +19046,26 @@ textarea:focus {
   border-color: color-mix(in srgb, var(--accent) 56%, var(--border)) !important;
   box-shadow: var(--focus-ring) !important;
   outline: none !important;
+}
+
+.cf-inventory-row.is-selected {
+  border-color: color-mix(in srgb, var(--accent) 42%, var(--border)) !important;
+  background: color-mix(in srgb, var(--accent-bg) 70%, var(--surface)) !important;
+}
+
+.cf-inventory-row.has-bulk-error {
+  border-color: color-mix(in srgb, var(--danger) 44%, var(--border)) !important;
+  background: color-mix(in srgb, var(--danger-bg) 78%, var(--surface)) !important;
+}
+
+body.dark .cf-inventory-row.is-selected {
+  border-color: color-mix(in srgb, var(--accent) 44%, var(--border)) !important;
+  background: color-mix(in srgb, var(--accent-bg) 52%, var(--bg-surface)) !important;
+}
+
+body.dark .cf-inventory-row.has-bulk-error {
+  border-color: color-mix(in srgb, var(--danger) 52%, var(--border)) !important;
+  background: color-mix(in srgb, var(--danger-bg) 48%, var(--bg-surface)) !important;
 }
 
 .primary-action-btn,

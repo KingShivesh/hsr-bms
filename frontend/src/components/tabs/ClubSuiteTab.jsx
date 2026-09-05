@@ -757,6 +757,8 @@ function BillingView({ history, foodOrders, actions, busy, activeAction }) {
 function InventoryView({ menu, maintenance, actions, busy, activeAction, showToast }) {
   const [showAdd, setShowAdd] = useState(false);
   const [editing, setEditing] = useState(null);
+  const [selectedItems, setSelectedItems] = useState(() => new Set());
+  const [bulkResult, setBulkResult] = useState(null);
   const [maintenanceForm, setMaintenanceForm] = useState({ table_id: "t1", reason: "Under maintenance" });
   const [menuForm, setMenuForm] = useState({
     name: "",
@@ -774,6 +776,88 @@ function InventoryView({ menu, maintenance, actions, busy, activeAction, showToa
     "Cold Beverages",
     "Cigarettes",
   ];
+  const failedItemNames = useMemo(
+    () => new Set((bulkResult?.failed || []).map((item) => item.name)),
+    [bulkResult],
+  );
+  const visibleMenu = menu;
+  const selectedVisibleItems = visibleMenu.filter((item) => selectedItems.has(item.name));
+  const selectedCount = selectedItems.size;
+  const allVisibleSelected = visibleMenu.length > 0 && visibleMenu.every((item) => selectedItems.has(item.name));
+
+  function toggleItemSelection(name, checked) {
+    setBulkResult(null);
+    setSelectedItems((prev) => {
+      const next = new Set(prev);
+      if (checked) {
+        next.add(name);
+      } else {
+        next.delete(name);
+      }
+      return next;
+    });
+  }
+
+  function toggleAllVisible(checked) {
+    setBulkResult(null);
+    setSelectedItems((prev) => {
+      const next = new Set(prev);
+      visibleMenu.forEach((item) => {
+        if (checked) {
+          next.add(item.name);
+        } else {
+          next.delete(item.name);
+        }
+      });
+      return next;
+    });
+  }
+
+  function clearBulkSelection() {
+    setSelectedItems(new Set());
+    setBulkResult(null);
+  }
+
+  function keepFailedSelected(result) {
+    const failedNames = new Set((result.failed || []).map((entry) => entry.name));
+    setSelectedItems(failedNames);
+    setBulkResult(result);
+  }
+
+  async function runBulkAvailability(available) {
+    if (!selectedVisibleItems.length) {
+      showToast("Select at least one visible menu item.", "error");
+      return;
+    }
+    const result = await actions.bulkSetItemAvailability(selectedVisibleItems, available);
+    keepFailedSelected({
+      ...result,
+      label: available ? "Mark in stock" : "Mark out of stock",
+      failed: result.failed.map((entry) => entry.item || entry),
+    });
+  }
+
+  async function runBulkDelete() {
+    if (!selectedVisibleItems.length) {
+      showToast("Select at least one visible menu item.", "error");
+      return;
+    }
+    const succeeded = [];
+    const failed = [];
+    for (const item of selectedVisibleItems) {
+      const ok = await actions.deleteMenuItem(item);
+      if (ok) {
+        succeeded.push(item);
+      } else {
+        failed.push(item);
+      }
+    }
+    keepFailedSelected({
+      label: "Delete items",
+      succeeded,
+      failed,
+    });
+  }
 
   async function submitMenuItem(event) {
     event.preventDefault();
@@ -826,9 +910,82 @@ function InventoryView({ menu, maintenance, actions, busy, activeAction, showToa
       </div>
       <div className="cf-inventory-grid">
         <Section eyebrow="Menu CRUD" title="Food Menu & Availability">
+          {menu.length > 0 && (
+            <div className={`cf-bulk-bar${selectedCount || bulkResult ? " is-active" : ""}`} aria-live="polite">
+              <label className="cf-select-all">
+                <input
+                  type="checkbox"
+                  checked={allVisibleSelected}
+                  onChange={(event) => toggleAllVisible(event.target.checked)}
+                />
+                <span>{selectedCount ? `${selectedCount} selected` : "Select all items"}</span>
+              </label>
+              {(selectedCount > 0 || bulkResult) && (
+                <>
+                  {selectedCount > 0 && (
+                    <div className="cf-bulk-actions">
+                      <ActionButton
+                        tone="warning"
+                        icon="ti-package-off"
+                        onClick={() => runBulkAvailability(false)}
+                        disabled={busy || !selectedVisibleItems.length}
+                      >
+                        Mark Out of Stock
+                      </ActionButton>
+                      <ActionButton
+                        tone="success"
+                        icon="ti-check"
+                        onClick={() => runBulkAvailability(true)}
+                        disabled={busy || !selectedVisibleItems.length}
+                      >
+                        Mark In Stock
+                      </ActionButton>
+                      <ActionButton
+                        tone="danger"
+                        icon="ti-trash"
+                        onClick={runBulkDelete}
+                        disabled={busy || !selectedVisibleItems.length}
+                      >
+                        Delete Items
+                      </ActionButton>
+                      <ActionButton onClick={clearBulkSelection} disabled={busy}>
+                        Clear Selection
+                      </ActionButton>
+                    </div>
+                  )}
+                  {bulkResult && (
+                    <div className={`cf-bulk-result${bulkResult.failed.length ? " has-failures" : ""}`}>
+                      <strong>
+                        {bulkResult.succeeded.length} succeeded, {bulkResult.failed.length} failed
+                      </strong>
+                      {bulkResult.failed.length > 0 && (
+                        <span className="cf-bulk-failed-list">
+                          Failed:
+                          {bulkResult.failed.map((item) => (
+                            <b key={item.name}>{item.name}</b>
+                          ))}
+                        </span>
+                      )}
+                    </div>
+                  )}
+                </>
+              )}
+            </div>
+          )}
           <div className="cf-data-table">
-            {menu.slice(0, 18).map((item) => (
-              <div className="cf-data-row" key={item.name}>
+            {visibleMenu.map((item) => (
+              <div
+                className={`cf-data-row cf-inventory-row${selectedItems.has(item.name) ? " is-selected" : ""}${failedItemNames.has(item.name) ? " has-bulk-error" : ""}`}
+                key={item.name}
+              >
+                <label className="cf-row-select">
+                  <input
+                    type="checkbox"
+                    checked={selectedItems.has(item.name)}
+                    onChange={(event) => toggleItemSelection(item.name, event.target.checked)}
+                    aria-label={`Select ${item.name}`}
+                  />
+                </label>
                 <div>
                   <strong>{item.name}</strong>
                   <span>{item.category || "Menu"} · {money(item.price)} · {item.available === false ? "Out of stock" : "In stock"}</span>
@@ -1267,6 +1424,32 @@ export default function ClubSuiteTab({ view }) {
       actionKey: `stock-${name}`,
       successMessage: available ? "Item marked in stock" : "Item marked out of stock",
     }),
+    bulkSetItemAvailability: async (items, available) => {
+      setBusy(true);
+      setActiveAction(`bulk-stock-${available ? "in" : "out"}`);
+      const succeeded = [];
+      const failed = [];
+      try {
+        for (const item of items) {
+          try {
+            await setItemAvailability(item.name, available);
+            succeeded.push(item);
+          } catch (error) {
+            failed.push({ item, error });
+          }
+        }
+        await loadData();
+        const actionLabel = available ? "marked in stock" : "marked out of stock";
+        showToast(
+          `${succeeded.length} ${succeeded.length === 1 ? "item" : "items"} ${actionLabel}${failed.length ? `, ${failed.length} failed` : ""}`,
+          failed.length ? "error" : "success",
+        );
+        return { succeeded, failed };
+      } finally {
+        setBusy(false);
+        setActiveAction(null);
+      }
+    },
     setMaintenance: (tableId, reason) => runAction(() => setMaintenance(tableId, reason), {
       actionKey: "maintenance-set",
       successMessage: "Maintenance saved",
@@ -1275,7 +1458,7 @@ export default function ClubSuiteTab({ view }) {
       actionKey: `maintenance-clear-${tableId}`,
       successMessage: "Maintenance cleared",
     }),
-  }), [runAction]);
+  }), [loadData, runAction, showToast]);
 
   const props = useMemo(
     () => ({ ...data, actions, busy, activeAction, showToast }),

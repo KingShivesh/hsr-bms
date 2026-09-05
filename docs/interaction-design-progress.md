@@ -13,6 +13,7 @@
 - B2 CLOSED: custom skeleton-first loading state for Food & Cafe POS (`FoodPosSkeleton`) verified in-browser across light and dark modes. Layout matches the live page structure (4 top tabs, search toolbar, 8 category pills, 4-column menu card grid with media/name/price/category lines, and right-hand order panel with cart placeholder). Shimmer animation (`skeleton-pulse`) verified with full contrast against background in both themes. Transition to loaded content occurs seamlessly with no layout shift, and generic `PageSkeleton` was verified on other tabs without regression. API and menu data fetch logic remain intact.
 - B3 CLOSED: keyboard navigation verified in-browser. Escape closes modal/panel surfaces while preserving typed draft values on the first Escape from filled inputs, Enter opens the focused Live Floor table card, arrow keys move focus through the rendered table grid, and tab-order scans passed on Live Floor, Bookings, and Inventory without keyboard traps.
 - C1 CLOSED: inline editing for Live Floor table hourly rates is implemented and browser-verified. Editing a rate shows the affected grouped-rate note, saves on Enter or blur, cancels with Escape, re-fetches current server rates before merging the edited group, rejects invalid values in-place with inline/toast feedback, rolls back on API failure, and preserves the existing Settings rate form as a fallback. T5 was temporarily changed to ₹171/₹172 during verification and restored to ₹170; the settings database ended clean at wr=320, pr=170, sr=270.
+- C2 CLOSED: Inventory bulk actions are scoped to multi-select menu rows only and are browser/database verified. Selection count updates on select/deselect, bulk stock changes produce summarized success/failure results, partial failures report exact succeeded/failed counts while keeping failed names visible for follow-up, and bulk delete intentionally reuses the existing per-item undo toast behavior. Five simultaneous delete toasts stacked cleanly without overlap, single-row edit/stock/delete actions still worked afterward, and temporary QA menu rows were cleaned up from the database.
 
 ## Verification Debt Checklist
 
@@ -81,3 +82,12 @@ Lane A verification debt is closed. The checklist below is retained as the brows
 - Invalid recovery: submit negative, non-numeric, empty, and above-5000 values. Confirm the editor stays open with the invalid value visible, inline error text appears, an error toast fires, and the database does not change.
 - Escape cancel: type a different valid value, press Escape, and confirm the editor closes without saving.
 - Failure path: with the editor already open, force the rate-save request to fail. Confirm the UI rolls back to the previous displayed rate and shows the backend-unreachable error toast without leaving stale optimistic state.
+
+### C2 Inventory Bulk Actions
+
+- Selection: select three or more Inventory rows, deselect one before applying, and confirm the contextual action bar count updates correctly.
+- Bulk stock success: apply `Mark Out of Stock` to selected temporary QA items, confirm a summary toast/result appears, and directly verify each selected item changed in the database.
+- Bulk stock restore: apply `Mark In Stock` to the same items and directly verify the database returns to the expected available state.
+- Partial failure: with multiple selected rows, force one item operation to fail and confirm the UI reports the exact success/failure count. Failed names must remain selected/visible in the result area so the operator knows which items need attention.
+- Bulk delete: select five temporary QA items and trigger `Delete Items`; confirm five individual undo toasts stack cleanly without overlap, then verify the items are deleted from the database.
+- Regression: after bulk actions, confirm single-row `Edit Item`, stock toggle, and `Delete Item` actions still fire normally.
