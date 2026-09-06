@@ -196,7 +196,7 @@ function HistoryView({ history, period, onPeriodChange, selectedDate, onDateChan
               borderRadius: "var(--radius-sm)",
               cursor: exporting ? "wait" : "pointer",
               background: "var(--success-bg)",
-              color: "var(--success)",
+              color: "var(--success-foreground)",
               border: "1px solid color-mix(in srgb, var(--success) 28%, var(--border))",
               fontWeight: "var(--weight-medium)",
             }}

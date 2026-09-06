@@ -182,7 +182,7 @@ function PeakHoursView() {
             style={{
               fontSize: "var(--text-sm)",
               fontWeight: "var(--weight-medium)",
-              color: currentRate.is_peak ? "var(--warning)" : "var(--success)",
+              color: currentRate.is_peak ? "var(--warning-foreground)" : "var(--success-foreground)",
             }}
           >
             {currentRate.is_peak
@@ -383,7 +383,7 @@ function GSTView() {
             padding: "8px 12px",
             marginBottom: "12px",
             fontSize: "var(--text-sm)",
-            color: "var(--success)",
+            color: "var(--success-foreground)",
             fontWeight: "var(--weight-medium)",
           }}
         >
