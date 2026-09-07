@@ -4,7 +4,6 @@ import { APP_NAME } from "../config/hsrTables.js";
 export default function Sidebar({ page, setPage, onLogout, activeTables, role = "admin" }) {
   const [collapsed, setCollapsed] = useState(() => localStorage.getItem("sidebarCollapsed") === "true");
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [railOpen, setRailOpen] = useState(false);
 
   function setCollapsedPersisted(next) {
     setCollapsed(next);
@@ -68,19 +67,11 @@ export default function Sidebar({ page, setPage, onLogout, activeTables, role = 
     setMobileOpen(false);
   }
 
-  const compact = collapsed && !mobileOpen && !railOpen;
+  const compact = collapsed && !mobileOpen;
 
   return (
     <aside
       className={`sidebar cf-sidebar ${compact ? "collapsed" : ""} ${mobileOpen ? "mobile-open" : ""}`}
-      onMouseEnter={() => setRailOpen(true)}
-      onMouseLeave={() => setRailOpen(false)}
-      onFocusCapture={() => setRailOpen(true)}
-      onBlurCapture={(event) => {
-        if (!event.currentTarget.contains(event.relatedTarget)) {
-          setRailOpen(false);
-        }
-      }}
     >
       <div className="cf-sidebar-head">
         <div className="sb-logo">
