@@ -33,7 +33,12 @@ const ClubSuiteTab = lazy(() => import("./components/tabs/ClubSuiteTab.jsx"));
 const DEFAULT_PAGE = "live-floor";
 const ROUTE_TO_PAGE = {
   "/dashboard": "dashboard",
+  "/live-floor": "live-floor",
+  "/inventory": "inventory",
 };
+const PAGE_TO_ROUTE = Object.fromEntries(
+  Object.entries(ROUTE_TO_PAGE).map(([route, page]) => [page, route]),
+);
 
 const PAGE_TITLES = {
   "live-floor": "Live Floor",
@@ -192,8 +197,9 @@ function AppInner() {
   }, [loggedIn, location.pathname, navigate, page, role]);
 
   function goToPage(nextPage, options = {}) {
-    if (nextPage === "dashboard") {
-      navigate("/dashboard", { replace: options.replace });
+    const route = PAGE_TO_ROUTE[nextPage];
+    if (route) {
+      navigate(route, { replace: options.replace });
       return;
     }
     setLegacyPage(nextPage);
@@ -405,6 +411,8 @@ function AppRoutes() {
       <Route path="/" element={<AppInner />} />
       <Route path="/login" element={<AppInner />} />
       <Route path="/dashboard" element={<AppInner />} />
+      <Route path="/live-floor" element={<AppInner />} />
+      <Route path="/inventory" element={<AppInner />} />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );
