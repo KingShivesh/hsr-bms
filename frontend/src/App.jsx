@@ -39,6 +39,15 @@ const ROUTE_TO_PAGE = {
   "/customers": "members",
   "/sales": "billing",
   "/analytics": "reports",
+  "/cafe-pos": "food",
+  "/waitlist": "waitlist",
+  "/notifications": "notifications",
+  "/legacy-table-controls": "tables",
+  "/tournaments": "tournaments",
+  "/daily-closing": "closing",
+  "/pricing-rules": "operations",
+  "/audit-log": "staff",
+  "/settings": "settings",
 };
 const PAGE_TO_ROUTE = Object.fromEntries(
   Object.entries(ROUTE_TO_PAGE).map(([route, page]) => [page, route]),
@@ -421,6 +430,15 @@ function AppRoutes() {
       <Route path="/customers" element={<AppInner />} />
       <Route path="/sales" element={<AppInner />} />
       <Route path="/analytics" element={<AppInner />} />
+      <Route path="/cafe-pos" element={<AppInner />} />
+      <Route path="/waitlist" element={<AppInner />} />
+      <Route path="/notifications" element={<AppInner />} />
+      <Route path="/legacy-table-controls" element={<AppInner />} />
+      <Route path="/tournaments" element={<AppInner />} />
+      <Route path="/daily-closing" element={<AppInner />} />
+      <Route path="/pricing-rules" element={<AppInner />} />
+      <Route path="/audit-log" element={<AppInner />} />
+      <Route path="/settings" element={<AppInner />} />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );
