@@ -72,8 +72,9 @@ strength of a compile pass alone.
 ## Current progress — see docs/interaction-design-progress.md
 That file has the full checklist. Summary as of last update:
 
-All 10 interaction-design items are CLOSED on branch 
-`codex/interaction-design-safety-pass`:
+All 10 interaction-design items are CLOSED and browser-verified on branch 
+`codex/interaction-design-safety-pass`, which is also contained in the 
+newer routing branch `codex/client-side-routing-pass`:
 - Lane A: undo toasts, micro-copy, icon consistency, and light/dark 
   theme audit are closed and browser-verified.
 - Lane B: notification/toast audit, skeleton-first Cafe POS loading, 
@@ -82,19 +83,39 @@ All 10 interaction-design items are CLOSED on branch
   palette search, and Cafe POS add-to-cart optimistic behavior are 
   closed and browser/database verified where applicable.
 
+The client-side routing project is also CLOSED on 
+`codex/client-side-routing-pass`: every `App.jsx` page state now has a 
+real protected browser route, sidebar navigation updates URL and active 
+state, direct entry/refresh/auth guard/Cmd-K paths were verified, and a 
+six-route browser Back/Forward stress test passed using the browser tab 
+history APIs.
+
 Important extra fixes found outside the original scope are recorded in 
 `docs/interaction-design-progress.md`, including the toast CSS naming 
 collision, theme-token misuse, duplicate/legacy CSS/component paths, 
 Analytics dark-mode stat-card bug, migration to shared metric cards, 
-and dead/reachable component findings.
+dead/reachable component findings, and the full routing migration.
+
+## Deployment / branch state
+- `main` is still at `0203566` locally/remotely and does NOT contain 
+  `codex/interaction-design-safety-pass` (`264836c`) or 
+  `codex/client-side-routing-pass` (`0036402` and later routing commits).
+- `codex/client-side-routing-pass` contains the interaction-design work 
+  plus the routing migration and cleanup commits, but it has not been 
+  merged/deployed.
+- `frontend/vercel.json` only defines SPA rewrites to `index.html`; it 
+  does not declare the connected Vercel production branch. Treat the 
+  live Vercel site as likely still running `main` until the branch is 
+  explicitly merged/deployed and Vercel confirms a successful build.
+- Do not merge or deploy without explicit user approval.
 
 ## Deferred / Follow-up
 - Bill/transaction search is intentionally out of scope until there is 
   a real bill-detail, filter, scroll-to, or highlight destination. Do 
   not add a generic "go to Sales" result and call it bill search.
-- Dead/template asset cleanup remains separate: 
-  `frontend/src/components/Header.jsx`, `frontend/src/assets/react.svg`, 
-  `frontend/src/assets/vite.svg`, and `frontend/public/icons.svg`.
+- Dead/template cleanup is complete on `codex/client-side-routing-pass`: 
+  unused `Header.jsx`, `MembersTab.jsx`, `react.svg`, `vite.svg`, and 
+  `public/icons.svg` were removed and build/lint still pass.
 
 ## Process rules to follow
 1. Work on a dedicated branch (was codex/interaction-design-safety-pass 
