@@ -35,6 +35,8 @@ const ROUTE_TO_PAGE = {
   "/dashboard": "dashboard",
   "/live-floor": "live-floor",
   "/inventory": "inventory",
+  "/bookings": "reservations",
+  "/customers": "members",
 };
 const PAGE_TO_ROUTE = Object.fromEntries(
   Object.entries(ROUTE_TO_PAGE).map(([route, page]) => [page, route]),
@@ -413,6 +415,8 @@ function AppRoutes() {
       <Route path="/dashboard" element={<AppInner />} />
       <Route path="/live-floor" element={<AppInner />} />
       <Route path="/inventory" element={<AppInner />} />
+      <Route path="/bookings" element={<AppInner />} />
+      <Route path="/customers" element={<AppInner />} />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );
