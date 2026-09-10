@@ -140,12 +140,6 @@ const WORKSPACE_LOADERS = {
     { label: "menu", key: "menu", request: getMenuFull },
     { label: "table state", key: "tableState", request: getTableState },
   ],
-  notifications: [
-    { label: "audit logs", key: "auditLogs", request: () => getAuditLogs(50) },
-    { label: "waitlist", key: "waitlist", request: getWaitlist },
-    { label: "reservations", key: "bookings", request: getBookings },
-    { label: "table state", key: "tableState", request: getTableState },
-  ],
   staff: [
     { label: "audit logs", key: "auditLogs", request: () => getAuditLogs(50) },
   ],
@@ -1169,51 +1163,6 @@ function InventoryView({ menu, maintenance, actions, busy, activeAction, showToa
   );
 }
 
-function NotificationsView({ auditLogs, waitlist, bookings, maintenance }) {
-  const notifications = [
-    ...maintenance.map((row) => ({
-      id: `maint-${row.table_id}`,
-      icon: "ti-tool",
-      title: `${String(row.table_id).toUpperCase()} in maintenance`,
-      detail: row.reason || "Needs owner review",
-    })),
-    ...waitlist.map((entry) => ({
-      id: `wait-${entry.id}`,
-      icon: "ti-user-clock",
-      title: `${entry.customer_name} waiting`,
-      detail: `${entry.wait_mins || 0} min in queue`,
-    })),
-    ...bookings.filter((booking) => booking.status === "missed").map((booking) => ({
-      id: `missed-${booking.id}`,
-      icon: "ti-alert-triangle",
-      title: `Missed booking: ${booking.customer_name}`,
-      detail: shortDate(booking.booking_time),
-    })),
-    ...auditLogs.slice(0, 8).map((log) => ({
-      id: `audit-${log.id}`,
-      icon: log.severity === "danger" ? "ti-alert-triangle" : "ti-activity",
-      title: log.action?.replaceAll("_", " ") || "System activity",
-      detail: log.detail || log.date || "",
-    })),
-  ];
-  return (
-    <div className="cf-page cf-page-notifications">
-      <div className="cf-stat-grid">
-        <Stat label="Alerts" value={notifications.length} />
-        <Stat label="Audit Events" value={auditLogs.length} />
-        <Stat label="Maintenance" value={maintenance.length} />
-      </div>
-      <Section eyebrow="Alerts" title="Live Notifications">
-        <RowList
-          emptyTitle="No live notifications"
-          emptyDetail="Waitlist, booking, maintenance and audit alerts will appear here."
-          rows={notifications}
-        />
-      </Section>
-    </div>
-  );
-}
-
 function StaffView({ auditLogs }) {
   const staffMap = auditLogs.reduce((acc, log) => {
     const key = log.staff || "system";
@@ -1473,7 +1422,6 @@ export default function ClubSuiteTab({ view }) {
     view === "reservations" ? <ReservationsView {...props} /> :
     view === "billing" ? <BillingView {...props} /> :
     view === "inventory" ? <InventoryView {...props} /> :
-    view === "notifications" ? <NotificationsView {...props} /> :
     view === "staff" ? <StaffView {...props} /> :
     <WaitlistView {...props} />;
 

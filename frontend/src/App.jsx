@@ -41,7 +41,6 @@ const ROUTE_TO_PAGE = {
   "/analytics": "reports",
   "/cafe-pos": "food",
   "/waitlist": "waitlist",
-  "/notifications": "notifications",
   "/legacy-table-controls": "tables",
   "/tournaments": "tournaments",
   "/daily-closing": "closing",
@@ -68,7 +67,6 @@ const PAGE_TITLES = {
   operations: "Pricing & Rules",
   inventory: "Inventory & Stocks",
   staff: "Audit Log",
-  notifications: "Notification Center",
   settings: "Club Settings",
 };
 
@@ -80,7 +78,6 @@ const ADMIN_ONLY_PAGES = new Set([
   "staff",
   "billing",
   "inventory",
-  "notifications",
   "tournaments",
   "dashboard",
 ]);
@@ -391,7 +388,6 @@ function AppInner() {
               {[
                 "waitlist",
                 "inventory",
-                "notifications",
                 "staff",
               ].includes(page) && <ClubSuiteTab view={page} />}
               {page === "reservations" && <BookingsPage />}
@@ -432,7 +428,6 @@ function AppRoutes() {
       <Route path="/analytics" element={<AppInner />} />
       <Route path="/cafe-pos" element={<AppInner />} />
       <Route path="/waitlist" element={<AppInner />} />
-      <Route path="/notifications" element={<AppInner />} />
       <Route path="/legacy-table-controls" element={<AppInner />} />
       <Route path="/tournaments" element={<AppInner />} />
       <Route path="/daily-closing" element={<AppInner />} />

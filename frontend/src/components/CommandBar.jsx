@@ -172,14 +172,6 @@ export default function CommandBar({ page, setPage, onNewSession, role = "admin"
         adminOnly: true,
       },
       {
-        id: "notifications",
-        label: "Notifications",
-        hint: "Attention feed and operational alerts",
-        aliases: "notification notifications alert alerts bell attention",
-        icon: "ti-bell",
-        action: () => setPage("notifications"),
-      },
-      {
         id: "inventory",
         label: "Inventory & Stocks",
         hint: "Menu items, stock and maintenance",
