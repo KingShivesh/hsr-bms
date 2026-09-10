@@ -394,6 +394,7 @@ function AppInner() {
               {page === "settings" && (
                 <SettingsTab
                   role={role}
+                  onNavigate={goToPage}
                   onOpenTables={() => {
                     goToPage("tables");
                     openNewSession();

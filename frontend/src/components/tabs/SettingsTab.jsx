@@ -2,15 +2,9 @@ import { useState, useEffect } from "react";
 import {
   getRates,
   saveRates,
-  getMenu,
-  addMenuItem,
-  updateMenuItem,
-  deleteMenuItem,
-  restoreMenuItem,
   resetDaily,
   clearAll,
   changeAuth,
-  setItemAvailability,
   saveMinSession,
   getMinSession,
   getBookingGrace,
@@ -18,8 +12,6 @@ import {
   changeStaffAuth,
 } from "../../api/index.js";
 import { useToast } from "../toastContext.js";
-
-const CATEGORIES = ["Drinks", "Snacks", "Meals", "Cigarettes"];
 
 function SettingsCard({ title, description, children }) {
   return (
@@ -33,26 +25,18 @@ function SettingsCard({ title, description, children }) {
   );
 }
 
-export default function SettingsTab({ role = "admin", onOpenTables }) {
+export default function SettingsTab({ role = "admin", onOpenTables, onNavigate }) {
   const { showToast } = useToast();
   const [wr, setWr] = useState(320);
   const [pr, setPr] = useState(170);
   const [sr, setSr] = useState(270);
   const [minSession, setMinSession] = useState(0);
   const [bookingGraceMinutes, setBookingGraceMinutes] = useState(10);
-  const [menu, setMenu] = useState({});
-  const [newItem, setNewItem] = useState("");
-  const [newPrice, setNewPrice] = useState("");
-  const [newCat, setNewCat] = useState("Snacks");
-  const [editName, setEditName] = useState({});
-  const [editPrice, setEditPrice] = useState({});
-  const [editCat, setEditCat] = useState({});
   const [newUser, setNewUser] = useState("");
   const [newPass, setNewPass] = useState("");
   const [newStaffUser, setNewStaffUser] = useState("staff");
   const [newStaffPass, setNewStaffPass] = useState("");
   const [flash, setFlash] = useState("");
-  const [activeCategory, setActiveCategory] = useState("All");
   const [dangerOpen, setDangerOpen] = useState(false);
   const [dangerPin, setDangerPin] = useState("");
   const [dangerConfirm, setDangerConfirm] = useState("");
@@ -64,9 +48,8 @@ export default function SettingsTab({ role = "admin", onOpenTables }) {
 
   async function fetchAll() {
     try {
-      const [rRes, mRes, msRes, graceRes] = await Promise.all([
+      const [rRes, msRes, graceRes] = await Promise.all([
         getRates(),
-        getMenu(),
         getMinSession(),
         getBookingGrace(),
       ]);
@@ -75,19 +58,6 @@ export default function SettingsTab({ role = "admin", onOpenTables }) {
       setSr(rRes.data.sr);
       setMinSession(msRes.data.min_session || 0);
       setBookingGraceMinutes(graceRes.data.booking_grace_minutes || 10);
-      const raw = mRes.data;
-      setMenu(raw);
-      const n = {},
-        p = {},
-        c = {};
-      Object.entries(raw).forEach(([k, v]) => {
-        n[k] = k;
-        p[k] = typeof v === "object" ? v.price : v;
-        c[k] = typeof v === "object" ? v.category || "Snacks" : "Snacks";
-      });
-      setEditName(n);
-      setEditPrice(p);
-      setEditCat(c);
     } catch (e) {
       console.error(e);
     }
@@ -97,13 +67,6 @@ export default function SettingsTab({ role = "admin", onOpenTables }) {
     setFlash(msg);
     showToast(msg, "success");
     setTimeout(() => setFlash(""), 2500);
-  }
-
-  function getItemCat(v) {
-    return typeof v === "object" ? v.category || "Snacks" : "Snacks";
-  }
-  function getItemAvail(v) {
-    return typeof v === "object" ? v.available !== false : true;
   }
 
   async function handleSaveRates() {
@@ -135,77 +98,6 @@ export default function SettingsTab({ role = "admin", onOpenTables }) {
       showFlash("Booking grace period saved");
     } catch {
       showToast("Failed to save booking grace period", "error");
-    }
-  }
-
-  async function handleAddItem() {
-    if (!newItem || !newPrice) {
-      showToast("Enter item name and price", "error");
-      return;
-    }
-    try {
-      await addMenuItem(newItem.trim(), parseInt(newPrice), newCat);
-      setNewItem("");
-      setNewPrice("");
-      setNewCat("Snacks");
-      fetchAll();
-      showFlash("Item added");
-    } catch (e) {
-      showToast(e.response?.data?.detail || "Failed to add item", "error");
-    }
-  }
-
-  async function handleUpdateItem(oldName) {
-    try {
-      await updateMenuItem(
-        oldName,
-        editName[oldName],
-        parseInt(editPrice[oldName]),
-        editCat[oldName],
-      );
-      fetchAll();
-      showFlash("Item updated");
-    } catch {
-      showToast("Failed to update item", "error");
-    }
-  }
-
-  async function handleDeleteItem(name) {
-    const item = menu[name];
-    const restorePayload = {
-      name,
-      price: Number(typeof item === "object" ? item.price : item || 0),
-      category: typeof item === "object" ? item.category || "Snacks" : "Snacks",
-      available: typeof item === "object" ? item.available !== false : true,
-    };
-    try {
-      await deleteMenuItem(name);
-      fetchAll();
-      showToast(`${name} deleted from menu`, "success", {
-        actionLabel: "Undo",
-        duration: 6000,
-        onAction: async () => {
-          try {
-            await restoreMenuItem(restorePayload);
-            await fetchAll();
-            showToast("Menu item restored", "success");
-          } catch (e) {
-            showToast(e.response?.data?.detail || "Failed to restore item", "error");
-          }
-        },
-      });
-    } catch {
-      showToast("Failed to delete item", "error");
-    }
-  }
-
-  async function handleToggleAvail(name, current) {
-    try {
-      await setItemAvailability(name, !current);
-      fetchAll();
-      showFlash(current ? "Item marked out of stock" : "Item marked in stock");
-    } catch {
-      showToast("Failed to update availability", "error");
     }
   }
 
@@ -279,12 +171,6 @@ export default function SettingsTab({ role = "admin", onOpenTables }) {
       setDangerBusy("");
     }
   }
-
-  const menuEntries = Object.entries(menu);
-  const filteredMenu =
-    activeCategory === "All"
-      ? menuEntries
-      : menuEntries.filter(([, v]) => getItemCat(v) === activeCategory);
 
   return (
     <div className="settings-page-shell">
@@ -413,113 +299,20 @@ export default function SettingsTab({ role = "admin", onOpenTables }) {
       {/* Menu */}
       <SettingsCard
         title="Food Menu"
-        description="Manage items, categories and availability"
+        description="Menu stock and availability are managed from Inventory & Stocks."
       >
-        {/* Category filter */}
-        <div className="settings-chip-row">
-          {["All", ...CATEGORIES].map((cat) => (
-            <button
-              key={cat}
-              onClick={() => setActiveCategory(cat)}
-              className={`settings-chip ${activeCategory === cat ? "active" : ""}`}
-            >
-              {cat}
-            </button>
-          ))}
-        </div>
-
-        {filteredMenu.map(([k, v]) => {
-          const avail = getItemAvail(v);
-          return (
-            <div key={k} className={`settings-menu-row ${avail ? "" : "is-disabled"}`}>
-              <input
-                className="input-field"
-                data-size="name"
-                value={editName[k] || ""}
-                onChange={(e) =>
-                  setEditName((p) => ({ ...p, [k]: e.target.value }))
-                }
-              />
-              <input
-                type="number"
-                className="input-field"
-                data-size="price"
-                value={editPrice[k] || ""}
-                onChange={(e) =>
-                  setEditPrice((p) => ({ ...p, [k]: e.target.value }))
-                }
-              />
-              <select
-                className="input-field"
-                data-size="category"
-                value={editCat[k] || "Snacks"}
-                onChange={(e) =>
-                  setEditCat((p) => ({ ...p, [k]: e.target.value }))
-                }
-              >
-                {CATEGORIES.map((c) => (
-                  <option key={c}>{c}</option>
-                ))}
-              </select>
-              <button
-                className="btn btn-primary-sm"
-                onClick={() => handleUpdateItem(k)}
-              >
-                <i className="ti ti-device-floppy" aria-hidden="true" />
-                Save Item
-              </button>
-              <button
-                onClick={() => handleToggleAvail(k, avail)}
-                className={`btn ${avail ? "btn-success-sm" : "btn-danger-sm"}`}
-              >
-                <i className={avail ? "ti ti-check" : "ti ti-x"} aria-hidden="true" />
-                {avail ? "In stock" : "Mark Out of Stock"}
-              </button>
-              <button
-                className="btn btn-danger-sm"
-                onClick={() => handleDeleteItem(k)}
-              >
-                <i className="ti ti-trash" aria-hidden="true" />
-                Delete Item
-              </button>
-            </div>
-          );
-        })}
-
-        {/* Add new item */}
-        <div className="settings-add-menu-row">
-          <input
-            className="input-field"
-            data-size="name"
-            placeholder="Item name"
-            value={newItem}
-            onChange={(e) => setNewItem(e.target.value)}
-          />
-          <input
-            type="number"
-            className="input-field"
-            data-size="price"
-            placeholder="₹ Price"
-            value={newPrice}
-            onChange={(e) => setNewPrice(e.target.value)}
-          />
-          <select
-            className="input-field"
-            data-size="category"
-            value={newCat}
-            onChange={(e) => setNewCat(e.target.value)}
-          >
-            {CATEGORIES.map((c) => (
-              <option key={c}>{c}</option>
-            ))}
-          </select>
+        <div className="settings-action-row">
+          <div>
+            <strong>Use the dedicated inventory workspace</strong>
+            <span>Edit menu items, prices, categories, bulk stock state and table maintenance from one operational screen.</span>
+          </div>
           <button
-            className="btn btn-success-sm"
-            onClick={handleAddItem}
-            data-testid="add-menu-item-button"
+            className="btn btn-primary-sm"
+            type="button"
+            onClick={() => onNavigate?.("inventory")}
           >
-            <i className="ti ti-plus" aria-hidden="true" />
-            Add Menu Item
+            <i className="ti ti-arrow-right" aria-hidden="true" />
+            Manage stock and availability in Inventory & Stocks
           </button>
         </div>
       </SettingsCard>
