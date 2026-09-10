@@ -19287,18 +19287,12 @@ body.dark .cf-inventory-row.has-bulk-error {
 
 .primary-action-btn,
 .btn-primary-sm,
-.btn-success-sm,
 .btn-login,
 .cf-action-btn.primary,
-.cf-action-btn.success,
 .dashboard-open-floor-btn,
 .owner-close-day-btn,
 .table-frame-start,
-.table-control-btn.resume,
 .table-control-btn.close,
-.table-secondary-btn.food,
-.queue-seat-btn,
-.booking-offer-btn,
 .member-add-btn,
 .checkout-bill-close,
 .checkout-rupee-apply-btn {
@@ -19309,18 +19303,12 @@ body.dark .cf-inventory-row.has-bulk-error {
 
 .primary-action-btn > *,
 .btn-primary-sm > *,
-.btn-success-sm > *,
 .btn-login > *,
 .cf-action-btn.primary > *,
-.cf-action-btn.success > *,
 .dashboard-open-floor-btn > *,
 .owner-close-day-btn > *,
 .table-frame-start > *,
-.table-control-btn.resume > *,
 .table-control-btn.close > *,
-.table-secondary-btn.food > *,
-.queue-seat-btn > *,
-.booking-offer-btn > *,
 .member-add-btn > *,
 .checkout-bill-close > *,
 .checkout-rupee-apply-btn > * {
@@ -19329,24 +19317,65 @@ body.dark .cf-inventory-row.has-bulk-error {
 
 .primary-action-btn:hover:not(:disabled),
 .btn-primary-sm:hover:not(:disabled),
-.btn-success-sm:hover:not(:disabled),
 .btn-login:hover:not(:disabled),
 .cf-action-btn.primary:hover:not(:disabled),
-.cf-action-btn.success:hover:not(:disabled),
 .dashboard-open-floor-btn:hover:not(:disabled),
 .owner-close-day-btn:hover:not(:disabled),
 .table-frame-start:hover:not(:disabled),
-.table-control-btn.resume:hover:not(:disabled),
 .table-control-btn.close:hover:not(:disabled),
-.table-secondary-btn.food:hover:not(:disabled),
-.queue-seat-btn:hover:not(:disabled),
-.booking-offer-btn:hover:not(:disabled),
 .member-add-btn:hover:not(:disabled),
 .checkout-bill-close:hover:not(:disabled),
 .checkout-rupee-apply-btn:hover:not(:disabled) {
   background: var(--primary-hover) !important;
   border-color: var(--primary-hover) !important;
   color: var(--primary-foreground) !important;
+}
+
+.btn-success-sm,
+.cf-action-btn.success,
+.table-control-btn.resume,
+.table-secondary-btn.food,
+.queue-seat-btn,
+.booking-offer-btn {
+  background: var(--success-bg) !important;
+  border-color: color-mix(in srgb, var(--success) 32%, var(--border)) !important;
+  color: var(--success-foreground) !important;
+  box-shadow: none !important;
+}
+
+.btn-success-sm > *,
+.cf-action-btn.success > *,
+.table-control-btn.resume > *,
+.table-secondary-btn.food > *,
+.queue-seat-btn > *,
+.booking-offer-btn > * {
+  color: inherit !important;
+}
+
+.btn-success-sm:hover:not(:disabled),
+.cf-action-btn.success:hover:not(:disabled),
+.table-control-btn.resume:hover:not(:disabled),
+.table-secondary-btn.food:hover:not(:disabled),
+.queue-seat-btn:hover:not(:disabled),
+.booking-offer-btn:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--success-bg) 72%, var(--surface-hover-tint)) !important;
+  border-color: color-mix(in srgb, var(--success) 42%, var(--border)) !important;
+  color: var(--success-foreground) !important;
+}
+
+.queue-form .primary-action-btn,
+.booking-form .primary-action-btn {
+  background: var(--accent-soft) !important;
+  border-color: var(--accent-border) !important;
+  color: var(--accent-text) !important;
+  box-shadow: none !important;
+}
+
+.queue-form .primary-action-btn:hover:not(:disabled),
+.booking-form .primary-action-btn:hover:not(:disabled) {
+  background: var(--accent-bg) !important;
+  border-color: color-mix(in srgb, var(--accent) 36%, var(--border)) !important;
+  color: var(--accent-text) !important;
 }
 
 .btn:not(.btn-primary-sm):not(.btn-success-sm):not(.btn-danger-sm):not(.btn-warning-sm),
