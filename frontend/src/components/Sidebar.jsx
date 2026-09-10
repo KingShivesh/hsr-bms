@@ -52,7 +52,7 @@ export default function Sidebar({ page, setPage, onLogout, activeTables, role = 
       items: [
         { id: "staff", icon: "ti-user-check", label: "Audit Log", adminOnly: true },
         { id: "operations", icon: "ti-adjustments", label: "Pricing & Rules", adminOnly: true },
-        { id: "tables", icon: "ti-layout-board", label: "Legacy Table Controls", staffHidden: true },
+        { id: "tables", icon: "ti-layout-board", label: "Advanced Table Controls", staffHidden: true },
         { id: "settings", icon: "ti-settings", label: "Settings", adminOnly: true },
       ],
     },

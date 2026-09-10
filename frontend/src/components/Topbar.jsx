@@ -4,7 +4,7 @@ import { getAuditLogs, getBookings, getTableState, getWaitlist } from "../api/in
 const PAGE_DESCRIPTIONS = {
   "Executive Overview": "Real-time venue performance, revenue, queue and closing health",
   "Live Floor": "Operate active sessions, bookings, customers and checkout",
-  "Legacy Table Controls": "Detailed fallback controls for active sessions and table setup",
+  "Advanced Table Controls": "Detailed controls for active sessions, table setup and exceptions",
   "Smart Waitlist": "Walk-in queue, seating pressure and booking conflicts",
   "Bookings": "Table-wise booking commitments, check-ins and no-show risk",
   "Food & Cafe POS": "Snacks, beverages, cigarettes and counter billing",

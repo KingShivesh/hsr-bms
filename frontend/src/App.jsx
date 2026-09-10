@@ -55,7 +55,7 @@ const PAGE_TO_ROUTE = Object.fromEntries(
 const PAGE_TITLES = {
   "live-floor": "Live Floor",
   dashboard: "Executive Overview",
-  tables: "Legacy Table Controls",
+  tables: "Advanced Table Controls",
   waitlist: "Smart Waitlist",
   reservations: "Bookings",
   food: "Food & Cafe POS",

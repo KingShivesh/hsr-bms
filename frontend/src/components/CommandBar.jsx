@@ -91,8 +91,9 @@ export default function CommandBar({ page, setPage, onNewSession, role = "admin"
       },
       {
         id: "tables",
-        label: "Legacy table controls",
-        hint: "Legacy checkout controls",
+        label: "Advanced table controls",
+        hint: "Detailed checkout, booking and exception controls",
+        aliases: "advanced table controls checkout legacy exceptions",
         icon: "ti-layout-board",
         action: () => setPage("tables"),
       },
