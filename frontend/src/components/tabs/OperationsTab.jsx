@@ -124,7 +124,7 @@ function PeakHoursView() {
     const confirmed = await requestConfirm({
       title: "Delete peak-hour rule?",
       message: "This stops the rate multiplier from applying during that time window.",
-      confirmLabel: "Delete rule",
+      confirmLabel: "Delete Rule",
       tone: "danger",
     });
     if (!confirmed) return;
@@ -182,7 +182,7 @@ function PeakHoursView() {
             style={{
               fontSize: "var(--text-sm)",
               fontWeight: "var(--weight-medium)",
-              color: currentRate.is_peak ? "var(--warning)" : "var(--success)",
+              color: currentRate.is_peak ? "var(--warning-foreground)" : "var(--success-foreground)",
             }}
           >
             {currentRate.is_peak
@@ -259,8 +259,8 @@ function PeakHoursView() {
             : editingId && activeAction === `peak-edit-${editingId}`
               ? "Saving..."
               : editingId
-                ? "Save Rule"
-                : "Add Rule"}
+                ? "Save Peak Rule"
+                : "Add Peak Rule"}
         </button>
         {editingId && (
           <button
@@ -269,7 +269,7 @@ function PeakHoursView() {
             onClick={cancelEdit}
             disabled={!!activeAction}
           >
-            Cancel Edit
+            Discard Rule Edits
           </button>
         )}
       </div>
@@ -303,7 +303,7 @@ function PeakHoursView() {
                     onClick={() => startEdit(rule)}
                     disabled={!!activeAction}
                   >
-                    Edit
+                    Edit Rule
                   </button>
                   <button
                     type="button"
@@ -311,7 +311,7 @@ function PeakHoursView() {
                     onClick={() => handleDelete(rule.id)}
                     disabled={!!activeAction}
                   >
-                    {activeAction === `peak-delete-${rule.id}` ? "Deleting..." : "Delete"}
+                    {activeAction === `peak-delete-${rule.id}` ? "Deleting..." : "Delete Rule"}
                   </button>
                 </div>
               </div>
@@ -383,7 +383,7 @@ function GSTView() {
             padding: "8px 12px",
             marginBottom: "12px",
             fontSize: "var(--text-sm)",
-            color: "var(--success)",
+            color: "var(--success-foreground)",
             fontWeight: "var(--weight-medium)",
           }}
         >
@@ -414,7 +414,7 @@ function GSTView() {
           onClick={handleSave}
           disabled={saving}
         >
-          {saving ? "Saving..." : "Save"}
+          {saving ? "Saving..." : "Save GST"}
         </button>
       </div>
 

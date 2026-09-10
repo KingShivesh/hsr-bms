@@ -4,9 +4,11 @@ import {
   createBooking,
   getBookings,
   getTableState,
+  restoreBooking,
   startSession,
 } from "../../api/index.js";
 import RetryNotice from "../../components/RetryNotice.jsx";
+import { useEscapeKey } from "../../components/ui/index.js";
 import { useToast } from "../../components/toastContext.js";
 import { HSR_TABLES, getTableRate } from "../../config/hsrTables.js";
 import { getTableStatus } from "../../config/tableStatus.js";
@@ -67,6 +69,8 @@ function BookingSkeleton() {
 }
 
 function BookingModal({ form, setForm, saving, onClose, onSubmit }) {
+  useEscapeKey(onClose, true);
+
   return (
     <div className="lf-modal-backdrop" role="presentation">
       <form className="op2-modal" onSubmit={onSubmit}>
@@ -166,7 +170,7 @@ function BookingModal({ form, setForm, saving, onClose, onSubmit }) {
         </label>
 
         <div className="op2-modal-actions">
-          <button type="button" className="lf-secondary-button" onClick={onClose}>Cancel</button>
+          <button type="button" className="lf-secondary-button" onClick={onClose}>Discard Booking</button>
           <button type="submit" className="lf-primary-button" disabled={saving}>
             <i className="ti ti-calendar-plus" aria-hidden="true" />
             {saving ? "Creating..." : "Create booking"}
@@ -268,15 +272,6 @@ export default function BookingsPage() {
   }
 
   async function cancelExistingBooking(booking) {
-    const restorePayload = {
-      customer_name: booking.customer_name,
-      phone: booking.phone || "",
-      table_id: booking.table_id || "ANY",
-      table_type: booking.table_type || "ANY",
-      booking_time: booking.booking_time,
-      duration_mins: booking.duration_mins || 60,
-      notes: booking.notes || "",
-    };
     setBusy(`cancel-${booking.id}`);
     try {
       await cancelBooking(booking.id);
@@ -286,7 +281,7 @@ export default function BookingsPage() {
         onAction: async () => {
           try {
             setBusy(`undo-cancel-${booking.id}`);
-            await createBooking(restorePayload);
+            await restoreBooking(booking.id);
             showToast("Booking restored", "success");
             await loadBookings();
           } catch (err) {
@@ -429,7 +424,7 @@ export default function BookingsPage() {
                       disabled={busy === `cancel-${booking.id}` || booking.status !== "booked"}
                       onClick={() => cancelExistingBooking(booking)}
                     >
-                      {busy === `cancel-${booking.id}` ? "Cancelling..." : "Cancel"}
+                      {busy === `cancel-${booking.id}` ? "Cancelling..." : "Cancel Booking"}
                     </button>
                   </div>
                 </article>

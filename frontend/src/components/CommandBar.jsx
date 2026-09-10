@@ -3,6 +3,8 @@ import {
   getAuditLogs,
   getBookings,
   getFoodOrders,
+  getMembers,
+  getMenu,
   getTableState,
   getWaitlist,
 } from "../api/index.js";
@@ -17,10 +19,13 @@ export default function CommandBar({ page, setPage, onNewSession, role = "admin"
   const openerRef = useRef(null);
   const [searchData, setSearchData] = useState({
     sessions: [],
+    tables: [],
     waitlist: [],
     bookings: [],
     foodOrders: [],
     auditLogs: [],
+    members: [],
+    menuItems: [],
   });
   const [loadingData, setLoadingData] = useState(false);
 
@@ -35,14 +40,28 @@ export default function CommandBar({ page, setPage, onNewSession, role = "admin"
         getBookings(),
         getFoodOrders(),
         role === "admin" ? getAuditLogs(8) : Promise.resolve({ data: [] }),
+        role === "admin" ? getMembers() : Promise.resolve({ data: [] }),
+        role === "admin" ? getMenu() : Promise.resolve({ data: {} }),
       ]);
       if (!alive) return;
+      const menuData = results[6].status === "fulfilled" ? results[6].value.data || {} : {};
+      const tableData = results[0].status === "fulfilled" ? results[0].value.data || {} : {};
       setSearchData({
-        sessions: results[0].status === "fulfilled" ? results[0].value.data?.active_sessions || [] : [],
+        sessions: tableData.active_sessions || [],
+        tables: tableData.tables || [],
         waitlist: results[1].status === "fulfilled" ? results[1].value.data || [] : [],
         bookings: results[2].status === "fulfilled" ? results[2].value.data || [] : [],
         foodOrders: results[3].status === "fulfilled" ? results[3].value.data || [] : [],
         auditLogs: results[4].status === "fulfilled" ? results[4].value.data || [] : [],
+        members: results[5].status === "fulfilled" ? results[5].value.data || [] : [],
+        menuItems: Array.isArray(menuData)
+          ? menuData
+          : Object.entries(menuData).map(([name, item]) => ({
+            name,
+            price: item?.price || 0,
+            category: item?.category || "Menu",
+            available: item?.available !== false,
+          })),
       });
       setLoadingData(false);
     }
@@ -58,6 +77,7 @@ export default function CommandBar({ page, setPage, onNewSession, role = "admin"
         id: "new-session",
         label: "New session",
         hint: "Start from Live Floor",
+        aliases: "start table walk in open table",
         icon: "ti-plus",
         action: () => onNewSession(),
       },
@@ -65,6 +85,7 @@ export default function CommandBar({ page, setPage, onNewSession, role = "admin"
         id: "live-floor",
         label: "Live Floor",
         hint: "Floor status and sessions",
+        aliases: "tables table floor active running timer",
         icon: "ti-circle-dot",
         action: () => setPage("live-floor"),
       },
@@ -79,6 +100,7 @@ export default function CommandBar({ page, setPage, onNewSession, role = "admin"
         id: "bookings",
         label: "Bookings",
         hint: "Reservations and no-shows",
+        aliases: "reservation reserve booking slots slot",
         icon: "ti-calendar-event",
         action: () => setPage("reservations"),
       },
@@ -86,6 +108,7 @@ export default function CommandBar({ page, setPage, onNewSession, role = "admin"
         id: "customers",
         label: "Customers",
         hint: "Members and spend",
+        aliases: "customer member members crm loyalty profiles",
         icon: "ti-users",
         action: () => setPage("members"),
         adminOnly: true,
@@ -94,6 +117,7 @@ export default function CommandBar({ page, setPage, onNewSession, role = "admin"
         id: "food",
         label: "Cafe POS",
         hint: "Menu and cart",
+        aliases: "food cafe pos snacks beverage beverages order counter",
         icon: "ti-tools-kitchen-2",
         action: () => setPage("food"),
       },
@@ -105,9 +129,18 @@ export default function CommandBar({ page, setPage, onNewSession, role = "admin"
         action: () => setPage("tournaments"),
       },
       {
+        id: "waitlist",
+        label: "Waitlist",
+        hint: "Walk-in queue and seating pressure",
+        aliases: "queue wait waiting walk in walk-in guest guests",
+        icon: "ti-clock",
+        action: () => setPage("waitlist"),
+      },
+      {
         id: "reports",
         label: "Analytics",
         hint: "Revenue and table performance",
+        aliases: "report reports analytics performance revenue",
         icon: "ti-chart-bar",
         action: () => setPage("reports"),
         adminOnly: true,
@@ -116,6 +149,7 @@ export default function CommandBar({ page, setPage, onNewSession, role = "admin"
         id: "sales",
         label: "Sales",
         hint: "Transactions and receipts",
+        aliases: "bill bills billing invoice invoices transaction transactions receipt receipts",
         icon: "ti-receipt",
         action: () => setPage("billing"),
         adminOnly: true,
@@ -124,21 +158,59 @@ export default function CommandBar({ page, setPage, onNewSession, role = "admin"
         id: "closing",
         label: "Daily closing",
         hint: "Cash, UPI and open tables",
+        aliases: "close day eod shift end closing cash tally",
         icon: "ti-clipboard-check",
         action: () => setPage("closing"),
       },
       {
         id: "settings",
         label: "Settings",
-        hint: "Pricing and controls",
+        hint: "Club configuration and staff credentials",
+        aliases: "configuration credentials auth login staff admin controls",
         icon: "ti-settings",
         action: () => setPage("settings"),
+        adminOnly: true,
+      },
+      {
+        id: "notifications",
+        label: "Notifications",
+        hint: "Attention feed and operational alerts",
+        aliases: "notification notifications alert alerts bell attention",
+        icon: "ti-bell",
+        action: () => setPage("notifications"),
+      },
+      {
+        id: "inventory",
+        label: "Inventory & Stocks",
+        hint: "Menu items, stock and maintenance",
+        aliases: "inventory stock stocks menu items item availability out of stock maintenance",
+        icon: "ti-package",
+        action: () => setPage("inventory"),
+        adminOnly: true,
+      },
+      {
+        id: "operations",
+        label: "Pricing & Rules",
+        hint: "Peak-hour rates, tax and operational controls",
+        aliases: "pricing price rates rate rules gst tax operations controls peak hour",
+        icon: "ti-adjustments",
+        action: () => setPage("operations"),
+        adminOnly: true,
+      },
+      {
+        id: "audit-log",
+        label: "Audit Log",
+        hint: "Staff and system activity history",
+        aliases: "audit log staff activity system history events",
+        icon: "ti-user-check",
+        action: () => setPage("staff"),
         adminOnly: true,
       },
       {
         id: "dashboard",
         label: "Executive overview",
         hint: "Owner dashboard",
+        aliases: "dashboard overview owner home",
         icon: "ti-layout-dashboard",
         action: () => setPage("dashboard"),
         adminOnly: true,
@@ -153,6 +225,13 @@ export default function CommandBar({ page, setPage, onNewSession, role = "admin"
       label: `${String(session.table_id || "").toUpperCase()} running table`,
       hint: `${session.customer_name || "Player"} · ${getTableLabel(HSR_TABLES.find((table) => table.id === String(session.table_id || "").toLowerCase())) || "Table"} · open workspace`,
       icon: "ti-player-play",
+      action: () => setPage("live-floor"),
+    }));
+    const tableCommands = searchData.tables.map((table) => ({
+      id: `table-${table.id}`,
+      label: `${String(table.id || "").toUpperCase()} · ${table.label || "Table"}`,
+      hint: `${table.status_label || "Available"} · ₹${Number(table.rate || 0).toLocaleString("en-IN")}/hr · Live Floor`,
+      icon: table.status_key === "running" ? "ti-player-play" : "ti-layout-board",
       action: () => setPage("live-floor"),
     }));
     const waitlistCommands = searchData.waitlist.slice(0, 8).map((entry) => ({
@@ -184,14 +263,30 @@ export default function CommandBar({ page, setPage, onNewSession, role = "admin"
       action: () => setPage("reports"),
       adminOnly: true,
     }));
-    return [...sessionCommands, ...waitlistCommands, ...bookingCommands, ...foodCommands, ...auditCommands];
+    const memberCommands = searchData.members.slice(0, 10).map((member) => ({
+      id: `member-${member.id}`,
+      label: member.nm || "Customer",
+      hint: `${member.id || "Customer"} · ${member.typ || "Regular"} · ${Number(member.vis || 0).toLocaleString("en-IN")} visits · ₹${Number(member.spt || 0).toLocaleString("en-IN")} spent`,
+      icon: "ti-user-circle",
+      action: () => setPage("members"),
+      adminOnly: true,
+    }));
+    const menuCommands = searchData.menuItems.slice(0, 24).map((item) => ({
+      id: `menu-${item.name}`,
+      label: item.name || "Menu item",
+      hint: `${item.category || "Menu"} · ₹${Number(item.price || 0).toLocaleString("en-IN")} · ${item.available === false ? "Out of stock" : "In stock"} · Inventory`,
+      icon: "ti-tools-kitchen-2",
+      action: () => setPage("inventory"),
+      adminOnly: true,
+    }));
+    return [...sessionCommands, ...tableCommands, ...waitlistCommands, ...bookingCommands, ...foodCommands, ...auditCommands, ...memberCommands, ...menuCommands];
   }, [searchData, setPage]);
 
   const allowedCommands = [...commands, ...dynamicCommands].filter((cmd) => role === "admin" || !cmd.adminOnly);
   const filtered = allowedCommands.filter((cmd) => {
     const q = query.trim().toLowerCase();
     if (!q) return true;
-    return `${cmd.label} ${cmd.hint}`.toLowerCase().includes(q);
+    return `${cmd.label} ${cmd.hint} ${cmd.aliases || ""}`.toLowerCase().includes(q);
   });
 
   function openCommandPalette() {

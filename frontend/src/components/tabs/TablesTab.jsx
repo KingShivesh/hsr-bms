@@ -26,6 +26,7 @@ import {
 } from "../../api/index.js";
 import { searchMembers } from "../../api/index.js";
 import { useToast } from "../toastContext.js";
+import { useEscapeKey } from "../ui/index.js";
 import { HSR_TABLES, getTableLabel, getTableRate } from "../../config/hsrTables.js";
 import { getTableStatus } from "../../config/tableStatus.js";
 
@@ -377,7 +378,7 @@ function QueuePanel({
           onChange={(e) => setNotes(e.target.value)}
         />
         <button className="primary-action-btn" type="submit" disabled={!!busyActions["queue-add"]}>
-          {busyActions["queue-add"] ? "Adding..." : "Add to queue"}
+          {busyActions["queue-add"] ? "Adding..." : "Add Walk-in"}
         </button>
       </form>
 
@@ -419,9 +420,9 @@ function QueuePanel({
                     className="icon-danger-btn"
                     onClick={() => onCancel(entry.id)}
                     disabled={!!busyActions[`cancel-queue:${entry.id}`]}
-                    aria-label={`Remove ${entry.customer_name} from queue`}
+                    aria-label={`Cancel queue entry for ${entry.customer_name}`}
                   >
-                    {busyActions[`cancel-queue:${entry.id}`] ? "..." : "×"}
+                    {busyActions[`cancel-queue:${entry.id}`] ? "..." : <i className="ti ti-x" aria-hidden="true" />}
                   </button>
                 </div>
               </div>
@@ -591,7 +592,7 @@ function BookingPanel({ bookings, onCreate, onCancel, busyActions = {}, showToas
                     disabled={!!busyActions[`cancel-booking:${booking.id}`]}
                     aria-label="Cancel booking"
                   >
-                    {busyActions[`cancel-booking:${booking.id}`] ? "..." : "×"}
+                    {busyActions[`cancel-booking:${booking.id}`] ? "..." : <i className="ti ti-x" aria-hidden="true" />}
                   </button>
                 </div>
               </div>
@@ -618,6 +619,7 @@ function QuickSessionModal({
   const [player1, setPlayer1] = useState("");
   const [otherPlayers, setOtherPlayers] = useState("");
   const [billingMode, setBillingMode] = useState("single");
+  useEscapeKey(onClose, open);
   const initializedOpen = useRef(false);
   const availableTables = tables.filter(
     (table) => !sessions[table.id] && !maintenance[table.id],
@@ -771,14 +773,14 @@ function QuickSessionModal({
 
         <div className="quick-session-actions">
           <button type="button" className="quick-session-secondary" onClick={onClose}>
-            Cancel
+            Discard Session
           </button>
           <button
             type="submit"
             className="primary-action-btn"
             disabled={!selectedTable || startBusy}
           >
-            {startBusy ? "Starting..." : "Start session"}
+            {startBusy ? "Starting..." : "Start Table"}
           </button>
         </div>
       </form>
@@ -790,6 +792,7 @@ function HistoryModal({ tableId, tableNum, onClose }) {
   const [history, setHistory] = useState([]);
   const [audit, setAudit] = useState([]);
   const [loading, setLoading] = useState(true);
+  useEscapeKey(onClose, true);
 
   useEffect(() => {
     Promise.allSettled([getTableHistory(tableId), getTableAudit(tableId)])
@@ -878,6 +881,7 @@ function HistoryModal({ tableId, tableNum, onClose }) {
 
 function ResetConfirmModal({ tableId, loading, onClose, onConfirm }) {
   const [pin, setPin] = useState("");
+  useEscapeKey(onClose, true);
 
   return (
     <div className="frame-loser-backdrop" role="dialog" aria-modal="true">
@@ -923,7 +927,7 @@ function ResetConfirmModal({ tableId, loading, onClose, onConfirm }) {
             className="frame-loser-submit"
             disabled={loading}
           >
-            {loading ? "Resetting..." : "Reset table"}
+            {loading ? "Resetting..." : "Reset Table"}
           </button>
         </div>
       </form>
@@ -936,7 +940,7 @@ function CheckoutStepRail({ quote }) {
     ["Review", "Bill frozen"],
     ["Discount", quote.discountType === "none" ? "Optional" : "Applied"],
     ["Payment", quote.paymentMethod || "Cash"],
-    ["Confirm", quote.finalizing ? "Closing" : "Ready"],
+    ["Collect", quote.finalizing ? "Closing" : "Ready"],
   ];
 
   return (
@@ -979,6 +983,8 @@ function CheckoutQuoteScreen({
   onDiscountChange,
   onFinalize,
 }) {
+  useEscapeKey(onClose, !!quote);
+
   if (!quote) return null;
   const rec = quote.rec || {};
   const settlement = Array.isArray(rec.player_breakdown)
@@ -1022,7 +1028,7 @@ function CheckoutQuoteScreen({
             )}
           </div>
           <button type="button" className="checkout-bill-close secondary" onClick={onClose}>
-            Back
+            Back to Checkout
           </button>
         </div>
 
@@ -1133,7 +1139,7 @@ function CheckoutQuoteScreen({
                     disabled={quote.loading || !quote.discountValue}
                     onClick={() => onDiscountChange("rupee", quote.discountValue, true)}
                   >
-                    Apply
+                    Apply Discount
                   </button>
                 </div>
                 <span className="checkout-rupee-hint">Enter the rupee amount, then apply.</span>
@@ -1243,6 +1249,8 @@ function CheckoutQuoteScreen({
 }
 
 function CheckoutBillScreen({ bill, onClose }) {
+  useEscapeKey(onClose, !!bill);
+
   if (!bill) return null;
   const rec = bill.rec || {};
   const settlement = Array.isArray(rec.player_breakdown)
@@ -1276,7 +1284,7 @@ function CheckoutBillScreen({ bill, onClose }) {
             )}
           </div>
           <button type="button" className="checkout-bill-close" onClick={onClose}>
-            Done
+            Close Receipt
           </button>
         </div>
 
@@ -1461,7 +1469,7 @@ function LiveFloorCommand({
         </div>
         <button type="button" className="live-floor-primary" onClick={onQuickStart}>
           <i className="ti ti-player-play" aria-hidden="true" />
-          Start table
+          Start Table
         </button>
       </div>
 
@@ -1610,7 +1618,7 @@ function SessionWorkspace({
             })}
           >
             <i className="ti ti-tools-kitchen-2" aria-hidden="true" />
-            Add food
+            Add Food
           </button>
           <button
             type="button"
@@ -1619,17 +1627,17 @@ function SessionWorkspace({
             disabled={pauseBusy}
           >
             <i className={`ti ${session.paused ? "ti-player-play" : "ti-player-pause"}`} aria-hidden="true" />
-            {pauseBusy ? "Saving..." : session.paused ? "Resume" : "Pause"}
+            {pauseBusy ? "Saving..." : session.paused ? "Resume Session" : "Pause Session"}
           </button>
           <button
             type="button"
             className="session-action primary"
             onClick={() => onStop(table.id)}
             disabled={quoteBusy}
-            title="Close table"
+            title="Open checkout"
           >
             <i className="ti ti-receipt-refund" aria-hidden="true" />
-            {quoteBusy ? "Loading..." : "Checkout"}
+            {quoteBusy ? "Loading..." : "Open Checkout"}
           </button>
         </div>
       )}
@@ -2261,7 +2269,7 @@ function TableCard({
                 disabled={resetBusy}
               >
                 <i className="ti ti-refresh" aria-hidden="true" />
-                <span>{resetBusy ? "Resetting..." : "Reset"}</span>
+                <span>{resetBusy ? "Resetting..." : "Reset Table"}</span>
               </button>
             </div>
           )}
@@ -2335,7 +2343,7 @@ function TableCard({
                     className="table-notes-save"
                     disabled={notesBusy}
                   >
-                    {notesBusy ? "Saving..." : "Save"}
+                    {notesBusy ? "Saving..." : "Save Notes"}
                   </button>
                 </div>
               )}
@@ -2385,7 +2393,7 @@ function TableCard({
                     className="table-mini-primary reserve"
                     disabled={reserveBusy}
                   >
-                    {reserveBusy ? "Reserving..." : "Confirm Reservation"}
+                    {reserveBusy ? "Reserving..." : "Reserve Table"}
                   </button>
                 </div>
               )}
@@ -2408,7 +2416,7 @@ function TableCard({
                 className="table-reservation-cancel"
                 disabled={cancelReserveBusy}
               >
-                {cancelReserveBusy ? "Cancelling..." : "Cancel"}
+                {cancelReserveBusy ? "Cancelling..." : "Cancel Reservation"}
               </button>
             </div>
           )}
@@ -2443,6 +2451,7 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0, onOpenF
   const [busyActions, setBusyActions] = useState({});
   const busyActionsRef = useRef({});
   const detailPanelRef = useRef(null);
+  const tableGridRef = useRef(null);
   const checkoutQuoteSeqRef = useRef(0);
 
   async function runBusyAction(key, action) {
@@ -3223,6 +3232,62 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0, onOpenF
     localStorage.setItem("tablesViewMode", mode);
   }
 
+  function handleTableGridKeyDown(event) {
+    if (!["ArrowRight", "ArrowLeft", "ArrowDown", "ArrowUp"].includes(event.key)) return;
+
+    const grid = tableGridRef.current;
+    if (!grid) return;
+
+    const tiles = Array.from(grid.querySelectorAll(".table-floor-tile:not(:disabled)"));
+    const activeTile = document.activeElement?.closest?.(".table-floor-tile");
+    const activeIndex = activeTile ? tiles.indexOf(activeTile) : -1;
+    if (activeIndex === -1) return;
+
+    const rows = [];
+    tiles.forEach((tile, index) => {
+      const rect = tile.getBoundingClientRect();
+      const row = rows.find((item) => Math.abs(item.top - rect.top) < 12);
+      if (row) {
+        row.items.push({ index, left: rect.left, center: rect.left + rect.width / 2 });
+      } else {
+        rows.push({ top: rect.top, items: [{ index, left: rect.left, center: rect.left + rect.width / 2 }] });
+      }
+    });
+    rows.sort((a, b) => a.top - b.top);
+    rows.forEach((row) => row.items.sort((a, b) => a.left - b.left));
+
+    const rowIndex = rows.findIndex((row) => row.items.some((item) => item.index === activeIndex));
+    if (rowIndex === -1) return;
+    const columnIndex = rows[rowIndex].items.findIndex((item) => item.index === activeIndex);
+    const activeCenter = rows[rowIndex].items[columnIndex].center;
+    let targetIndex = activeIndex;
+
+    if (event.key === "ArrowRight") {
+      targetIndex = rows[rowIndex].items[columnIndex + 1]?.index ?? rows[rowIndex + 1]?.items[0]?.index ?? activeIndex;
+    } else if (event.key === "ArrowLeft") {
+      targetIndex = rows[rowIndex].items[columnIndex - 1]?.index ?? rows[rowIndex - 1]?.items.at(-1)?.index ?? activeIndex;
+    } else if (event.key === "ArrowDown") {
+      const nextRow = rows[rowIndex + 1]?.items;
+      if (nextRow) {
+        targetIndex = nextRow.reduce((closest, item) => (
+          Math.abs(item.center - activeCenter) < Math.abs(closest.center - activeCenter) ? item : closest
+        ), nextRow[0]).index;
+      }
+    } else if (event.key === "ArrowUp") {
+      const previousRow = rows[rowIndex - 1]?.items;
+      if (previousRow) {
+        targetIndex = previousRow.reduce((closest, item) => (
+          Math.abs(item.center - activeCenter) < Math.abs(closest.center - activeCenter) ? item : closest
+        ), previousRow[0]).index;
+      }
+    }
+
+    if (targetIndex !== activeIndex && tiles[targetIndex]) {
+      event.preventDefault();
+      tiles[targetIndex].focus();
+    }
+  }
+
   return (
     <>
       <CheckoutQuoteScreen
@@ -3267,7 +3332,13 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0, onOpenF
       />
 
       <div className="table-floor-layout">
-        <div className={`tables-grid table-floor-grid ${compact ? "compact" : ""}`}>
+        <div
+          ref={tableGridRef}
+          className={`tables-grid table-floor-grid ${compact ? "compact" : ""}`}
+          role="region"
+          aria-label="Table floor cards"
+          onKeyDown={handleTableGridKeyDown}
+        >
           {TABLES.map((table) => (
             <TableFloorTile
               key={table.id}

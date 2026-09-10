@@ -210,7 +210,7 @@ export default function TournamentTab() {
     const confirmed = await requestConfirm({
       title: "Close tournament?",
       message: `Close "${selected.name || "this tournament"}"? This locks the bracket as completed.`,
-      confirmLabel: "Close tournament",
+      confirmLabel: "Close Tournament",
       tone: "warning",
     });
     if (!confirmed) return;
@@ -349,9 +349,9 @@ export default function TournamentTab() {
                 style={{
                   width: "100%",
                   textAlign: "left",
-                  background: selected?.id === t.id ? "var(--text-primary)" : "var(--surface)",
-                  color: selected?.id === t.id ? "var(--surface)" : "var(--text-primary)",
-                  border: "1px solid var(--border)",
+                  background: selected?.id === t.id ? "var(--accent)" : "var(--surface)",
+                  color: selected?.id === t.id ? "var(--text-on-accent)" : "var(--text-primary)",
+                  border: selected?.id === t.id ? "1px solid var(--accent-border)" : "1px solid var(--border)",
                   borderRadius: "var(--radius-sm)",
                   padding: "10px 12px",
                   marginBottom: "8px",
@@ -399,7 +399,7 @@ export default function TournamentTab() {
                 <StatusPill status={selected.status} />
                 {selected.status !== "completed" && (
                   <button type="button" className="btn btn-warning-sm" onClick={handleClose} disabled={!!activeAction}>
-                    {activeAction === "tournament-close" ? "Closing..." : "Close"}
+                    {activeAction === "tournament-close" ? "Closing..." : "Close Tournament"}
                   </button>
                 )}
               </div>

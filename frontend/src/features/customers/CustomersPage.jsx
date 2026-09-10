@@ -5,6 +5,7 @@ import {
   getMemberDuplicates,
   getMembers,
   mergeMembers,
+  restoreMember,
   upgradeMember,
 } from "../../api/index.js";
 import RetryNotice from "../../components/RetryNotice.jsx";
@@ -22,6 +23,19 @@ function memberId(member) {
 
 function memberTier(member) {
   return String(member.typ || member.type || "Regular");
+}
+
+function memberRestorePayload(member = {}) {
+  return {
+    name: member.nm || member.name || "",
+    phone: member.phone || "",
+    visits: Number(member.vis ?? member.visits ?? 0),
+    spent: Number(member.spt ?? member.spent ?? 0),
+    loyalty_points: Number(member.pts ?? member.loyalty_points ?? 0),
+    member_type: member.typ || member.member_type || member.type || "Regular",
+    last_visit: member.lst || member.last_visit || "-",
+    notes: member.notes || "",
+  };
 }
 
 function money(value = 0) {
@@ -128,17 +142,27 @@ export default function CustomersPage() {
 
   async function handleDelete(customer) {
     const id = memberId(customer);
-    const confirmed = await requestConfirm({
-      title: "Delete customer?",
-      message: `Delete ${memberName(customer)} from customer records?`,
-      confirmLabel: "Delete customer",
-      tone: "danger",
-    });
-    if (!confirmed) return;
+    const restorePayload = memberRestorePayload(customer);
     setBusy(`delete-${id}`);
     try {
       await deleteMember(id);
-      showToast("Customer deleted", "success");
+      setSelectedCustomer((current) => (memberId(current || {}) === id ? null : current));
+      showToast(`${restorePayload.name || "Customer"} deleted`, "success", {
+        actionLabel: "Undo",
+        duration: 6000,
+        onAction: async () => {
+          setBusy(`restore-${id}`);
+          try {
+            await restoreMember(id, restorePayload);
+            showToast("Customer restored", "success");
+            await loadCustomers();
+          } catch (err) {
+            showToast(err.response?.data?.detail || "Could not restore customer", "error");
+          } finally {
+            setBusy("");
+          }
+        },
+      });
       await loadCustomers();
     } catch (err) {
       showToast(err.response?.data?.detail || "Could not delete customer", "error");
@@ -151,7 +175,7 @@ export default function CustomersPage() {
     const confirmed = await requestConfirm({
       title: "Merge customers?",
       message: `Merge ${duplicate.name} into ${primary.name}? Visits, spend and history will be combined.`,
-      confirmLabel: "Merge profiles",
+      confirmLabel: "Merge Profiles",
       tone: "warning",
     });
     if (!confirmed) return;
@@ -189,7 +213,7 @@ export default function CustomersPage() {
           />
           <button type="submit" className="lf-primary-button" disabled={!!busy}>
             <i className="ti ti-user-plus" aria-hidden="true" />
-            {busy === "add" ? "Adding..." : "Add customer"}
+            {busy === "add" ? "Adding..." : "Add Customer"}
           </button>
         </form>
       </div>
@@ -227,7 +251,7 @@ export default function CustomersPage() {
                     disabled={!!busy}
                     onClick={() => handleMerge(group.primary, match)}
                   >
-                    {busy === `merge-${group.primary.id}-${match.id}` ? "Merging..." : "Merge"}
+                    {busy === `merge-${group.primary.id}-${match.id}` ? "Merging..." : "Merge Profiles"}
                   </button>
                 </article>
               )),
@@ -290,7 +314,7 @@ export default function CustomersPage() {
                       }}
                     >
                       <i className={`ti ${premium ? "ti-arrow-down" : "ti-arrow-up"}`} aria-hidden="true" />
-                      {busy === `upgrade-${id}` ? "Saving..." : premium ? "Downgrade" : "Upgrade"}
+                      {busy === `upgrade-${id}` ? "Saving..." : premium ? "Downgrade Tier" : "Upgrade Tier"}
                     </button>
                     <button
                       type="button"
@@ -302,7 +326,7 @@ export default function CustomersPage() {
                       }}
                     >
                       <i className="ti ti-trash" aria-hidden="true" />
-                      {busy === `delete-${id}` ? "Deleting..." : "Delete"}
+                      {busy === `delete-${id}` ? "Deleting..." : "Delete Customer"}
                     </button>
                   </div>
                 </article>
@@ -352,7 +376,7 @@ export default function CustomersPage() {
                 loading={busy === `upgrade-${memberId(selectedCustomer)}`}
                 onClick={() => handleUpgrade(memberId(selectedCustomer), memberTier(selectedCustomer))}
               >
-                {/premium/i.test(memberTier(selectedCustomer)) ? "Downgrade" : "Upgrade"}
+                {/premium/i.test(memberTier(selectedCustomer)) ? "Downgrade Tier" : "Upgrade Tier"}
               </Button>
               <Button
                 variant="danger"
@@ -360,7 +384,7 @@ export default function CustomersPage() {
                 loading={busy === `delete-${memberId(selectedCustomer)}`}
                 onClick={() => handleDelete(selectedCustomer)}
               >
-                Delete
+                Delete Customer
               </Button>
             </div>
           </div>

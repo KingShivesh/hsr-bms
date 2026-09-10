@@ -20,8 +20,27 @@ class FoodOnlyOrderBody(BaseModel):
     items:         List[FoodOrderItem]
     payment_method: str = "Cash"
 
+class RestoreFoodOrderBody(BaseModel):
+    date: str = Field(default="", max_length=80)
+    ts: float | None = None
+    customer_name: str = Field(default="", max_length=80)
+    items: list[dict] = Field(default_factory=list)
+    total: int = Field(default=0, ge=0, le=1000000)
+    payment_method: str = "Cash"
+
 def is_cigarette_item(name: str) -> bool:
     return "cigarette" in (name or "").lower() or "cigg" in (name or "").lower()
+
+def _food_order_payload(order: models.FoodOnlyOrder):
+    return {
+        "id":             order.id,
+        "date":           order.date,
+        "ts":             order.ts,
+        "customer_name":  order.customer_name,
+        "items":          json.loads(order.items or "[]"),
+        "total":          order.total,
+        "payment_method": order.payment_method or "Cash",
+    }
 
 @router.post("/order")
 def place_food_order(body: FoodOnlyOrderBody, db: Session = Depends(get_db)):
@@ -63,17 +82,7 @@ def place_food_order(body: FoodOnlyOrderBody, db: Session = Depends(get_db)):
 @router.get("/orders")
 def get_food_orders(db: Session = Depends(get_db)):
     orders = db.query(models.FoodOnlyOrder).order_by(models.FoodOnlyOrder.ts.desc()).all()
-    return [
-        {
-            "id":            o.id,
-            "date":          o.date,
-            "customer_name": o.customer_name,
-            "items":         json.loads(o.items),
-            "total":         o.total,
-            "payment_method": o.payment_method or "Cash",
-        }
-        for o in orders
-    ]
+    return [_food_order_payload(o) for o in orders]
 
 @router.delete("/orders/{order_id}")
 def cancel_food_order(order_id: int, db: Session = Depends(get_db)):
@@ -83,6 +92,31 @@ def cancel_food_order(order_id: int, db: Session = Depends(get_db)):
     db.delete(order)
     db.commit()
     return {"ok": True}
+
+@router.post("/orders/{order_id}/restore")
+def restore_food_order(
+    order_id: int,
+    body: RestoreFoodOrderBody,
+    db: Session = Depends(get_db),
+):
+    existing = db.query(models.FoodOnlyOrder).filter(models.FoodOnlyOrder.id == order_id).first()
+    if existing:
+        return _food_order_payload(existing)
+
+    payment_method = body.payment_method if body.payment_method in PAYMENT_METHODS else "Cash"
+    order = models.FoodOnlyOrder(
+        id=order_id,
+        date=body.date or format_ist_now(),
+        ts=body.ts or time.time() * 1000,
+        customer_name=body.customer_name,
+        items=json.dumps(body.items),
+        total=body.total,
+        payment_method=payment_method,
+    )
+    db.add(order)
+    db.commit()
+    db.refresh(order)
+    return _food_order_payload(order)
 
 @router.get("/stats")
 def get_food_stats(db: Session = Depends(get_db)):

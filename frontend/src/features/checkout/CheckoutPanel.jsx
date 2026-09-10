@@ -208,7 +208,7 @@ export default function CheckoutPanel({ table, open, onClose, onComplete }) {
               Print
             </Button>
             <Button variant="primary" onClick={handleDone}>
-              Done
+              Close Receipt
             </Button>
           </div>
         </div>
@@ -287,7 +287,7 @@ export default function CheckoutPanel({ table, open, onClose, onComplete }) {
                       placeholder="Max ₹50"
                     />
                     <Button variant="secondary" loading={loading} onClick={handleRupeeApply} disabled={!discountValue}>
-                      Apply
+                      Apply Discount
                     </Button>
                   </div>
                 )}
@@ -325,7 +325,7 @@ export default function CheckoutPanel({ table, open, onClose, onComplete }) {
 
               <div className="checkout-actions checkout-actions-sticky">
                 <Button variant="secondary" onClick={onClose} disabled={finalizing}>
-                  Keep open
+                  Keep Table Open
                 </Button>
                 <Button variant="primary" loading={finalizing || loading} onClick={handleFinalize}>
                   Close table · {money(finalTotal)}

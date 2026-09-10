@@ -10,3 +10,4 @@ export { Field, Input, SearchInput, Select } from "./Field.jsx";
 export { PageHeader, SectionHeader } from "./Layout.jsx";
 export { ConfirmActions, Drawer, Modal } from "./Overlay.jsx";
 export { default as Tabs } from "./Tabs.jsx";
+export { useEscapeKey } from "./useEscapeKey.js";

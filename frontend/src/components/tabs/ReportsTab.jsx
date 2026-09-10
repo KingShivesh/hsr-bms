@@ -11,6 +11,7 @@ import {
   getAdvancedAnalytics,
 } from "../../api/index.js";
 import { CSV_PREFIX } from "../../config/hsrTables.js";
+import { MetricCard } from "../ui/index.js";
 import { useToast } from "../toastContext.js";
 import RetryNotice from "../RetryNotice.jsx";
 
@@ -79,17 +80,14 @@ function TabBtn({ active, onClick, children }) {
 }
 
 function StatCard({ label, value, color }) {
-  const statColor = color === "var(--text-primary)" ? "var(--venue-text, var(--text))" : color;
+  const statColor = color === "var(--text-primary)" ? "var(--border-strong)" : color;
   return (
-    <div
-      className="report-stat-card"
-      style={{ "--stat-color": statColor }}
-    >
-      <div className="report-stat-label">
-        {label}
-      </div>
-      <div className="report-stat-value">{value}</div>
-    </div>
+    <MetricCard
+      label={label}
+      value={value}
+      className="report-metric-card"
+      style={{ "--metric-accent": statColor }}
+    />
   );
 }
 
@@ -198,7 +196,7 @@ function HistoryView({ history, period, onPeriodChange, selectedDate, onDateChan
               borderRadius: "var(--radius-sm)",
               cursor: exporting ? "wait" : "pointer",
               background: "var(--success-bg)",
-              color: "var(--success)",
+              color: "var(--success-foreground)",
               border: "1px solid color-mix(in srgb, var(--success) 28%, var(--border))",
               fontWeight: "var(--weight-medium)",
             }}

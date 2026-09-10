@@ -1,4 +1,12 @@
 import { lazy, Suspense, useState, useEffect } from "react";
+import {
+  BrowserRouter,
+  Navigate,
+  Route,
+  Routes,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
 import Login from "./components/Login.jsx";
 import Sidebar from "./components/Sidebar.jsx";
 import Topbar from "./components/Topbar.jsx";
@@ -21,6 +29,73 @@ const FoodTab = lazy(() => import("./components/tabs/FoodTab.jsx"));
 const TournamentTab = lazy(() => import("./components/tabs/TournamentTab.jsx"));
 const OperationsTab = lazy(() => import("./components/tabs/OperationsTab.jsx"));
 const ClubSuiteTab = lazy(() => import("./components/tabs/ClubSuiteTab.jsx"));
+
+const DEFAULT_PAGE = "live-floor";
+const ROUTE_TO_PAGE = {
+  "/dashboard": "dashboard",
+  "/live-floor": "live-floor",
+  "/inventory": "inventory",
+  "/bookings": "reservations",
+  "/customers": "members",
+  "/sales": "billing",
+  "/analytics": "reports",
+  "/cafe-pos": "food",
+  "/waitlist": "waitlist",
+  "/notifications": "notifications",
+  "/legacy-table-controls": "tables",
+  "/tournaments": "tournaments",
+  "/daily-closing": "closing",
+  "/pricing-rules": "operations",
+  "/audit-log": "staff",
+  "/settings": "settings",
+};
+const PAGE_TO_ROUTE = Object.fromEntries(
+  Object.entries(ROUTE_TO_PAGE).map(([route, page]) => [page, route]),
+);
+
+const PAGE_TITLES = {
+  "live-floor": "Live Floor",
+  dashboard: "Executive Overview",
+  tables: "Legacy Table Controls",
+  waitlist: "Smart Waitlist",
+  reservations: "Bookings",
+  food: "Food & Cafe POS",
+  billing: "Sales",
+  members: "Customers",
+  tournaments: "Tournament Hub",
+  closing: "Daily Closing",
+  reports: "Analytics & Reports",
+  operations: "Pricing & Rules",
+  inventory: "Inventory & Stocks",
+  staff: "Audit Log",
+  notifications: "Notification Center",
+  settings: "Club Settings",
+};
+
+const ADMIN_ONLY_PAGES = new Set([
+  "reports",
+  "settings",
+  "operations",
+  "members",
+  "staff",
+  "billing",
+  "inventory",
+  "notifications",
+  "tournaments",
+  "dashboard",
+]);
+
+function routeForLoginRedirect(pathname) {
+  if (ROUTE_TO_PAGE[pathname]) {
+    return `/login?from=${encodeURIComponent(pathname)}`;
+  }
+  return "/login";
+}
+
+function safeRouteFromSearch(search) {
+  const from = new URLSearchParams(search).get("from");
+  return from && ROUTE_TO_PAGE[from] ? from : "";
+}
 
 function BackendStatusBanner({ backendStatus, onRetry }) {
   if (backendStatus.state !== "offline") return null;
@@ -56,10 +131,12 @@ function PageSkeleton() {
 
 function AppInner() {
   const { requestConfirm } = useConfirm();
+  const location = useLocation();
+  const navigate = useNavigate();
   const [loggedIn, setLoggedIn] = useState(!!localStorage.getItem("token"));
   const [role, setRole] = useState(localStorage.getItem("role") || "admin");
   const [username, setUsername] = useState(localStorage.getItem("username") || "");
-  const [page, setPage] = useState("live-floor");
+  const [legacyPage, setLegacyPage] = useState(DEFAULT_PAGE);
   const [newSessionRequest, setNewSessionRequest] = useState(0);
   const [foodOrderContext, setFoodOrderContext] = useState(null);
   const [backendStatus, setBackendStatus] = useState({
@@ -111,22 +188,41 @@ function AppInner() {
     };
   }, [loggedIn]);
 
+  const routedPage = ROUTE_TO_PAGE[location.pathname] || null;
+  const page = routedPage || legacyPage;
+
   useEffect(() => {
-    const adminOnly = new Set([
-      "reports",
-      "settings",
-      "operations",
-      "members",
-      "staff",
-      "billing",
-      "inventory",
-      "notifications",
-      "tournaments",
-    ]);
-    if (role === "staff" && adminOnly.has(page)) {
-      setPage("live-floor");
+    if (location.pathname !== "/") return;
+    const statePage = location.state?.page;
+    if (statePage && PAGE_TITLES[statePage]) {
+      setLegacyPage(statePage);
     }
-  }, [role, page]);
+  }, [location.pathname, location.state]);
+
+  useEffect(() => {
+    if (!loggedIn) return;
+    if (role === "staff" && ADMIN_ONLY_PAGES.has(page)) {
+      setLegacyPage(DEFAULT_PAGE);
+      if (location.pathname !== "/") {
+        navigate("/", { replace: true, state: { page: DEFAULT_PAGE } });
+      }
+    }
+  }, [loggedIn, location.pathname, navigate, page, role]);
+
+  function goToPage(nextPage, options = {}) {
+    const route = PAGE_TO_ROUTE[nextPage];
+    if (route) {
+      navigate(route, { replace: options.replace });
+      return;
+    }
+    setLegacyPage(nextPage);
+    if (location.pathname !== "/" || location.state?.page !== nextPage) {
+      navigate("/", {
+        replace: options.replace,
+        state: { page: nextPage },
+      });
+    }
+  }
 
   async function fetchCurrentUser() {
     try {
@@ -186,10 +282,12 @@ function AppInner() {
     setRole("admin");
     setUsername("");
     setLoggedIn(false);
+    setLegacyPage(DEFAULT_PAGE);
+    navigate("/login", { replace: true });
   }
 
   function openNewSession() {
-    setPage("live-floor");
+    goToPage("live-floor");
     setNewSessionRequest((request) => request + 1);
   }
 
@@ -199,10 +297,13 @@ function AppInner() {
       playerName: context.playerName || "",
       requestedAt: Date.now(),
     });
-    setPage("food");
+    goToPage("food");
   }
 
   if (!loggedIn) {
+    if (location.pathname !== "/login") {
+      return <Navigate to={routeForLoginRedirect(location.pathname)} replace />;
+    }
     return (
       <>
         <BackendStatusBanner backendStatus={backendStatus} onRetry={checkBackend} />
@@ -211,37 +312,28 @@ function AppInner() {
             setRole(nextRole || "admin");
             setUsername(nextUsername || "");
             setLoggedIn(true);
+            const from = safeRouteFromSearch(location.search);
+            navigate(from || "/", {
+              replace: true,
+              state: from ? undefined : { page: DEFAULT_PAGE },
+            });
           }}
         />
       </>
     );
   }
 
-  const PAGE_TITLES = {
-    "live-floor": "Live Floor",
-    dashboard: "Executive Overview",
-    tables: "Legacy Table Controls",
-    waitlist: "Smart Waitlist",
-    reservations: "Bookings",
-    food: "Food & Cafe POS",
-    billing: "Sales",
-    members: "Customers",
-    tournaments: "Tournament Hub",
-    closing: "Daily Closing",
-    reports: "Analytics & Reports",
-    operations: "Pricing & Rules",
-    inventory: "Inventory & Stocks",
-    staff: "Audit Log",
-    notifications: "Notification Center",
-    settings: "Club Settings",
-  };
+  if (location.pathname === "/login") {
+    const from = safeRouteFromSearch(location.search);
+    return <Navigate to={from || "/"} replace state={from ? undefined : { page: legacyPage }} />;
+  }
 
   return (
     <ToastProvider>
       <div className="shell">
         <Sidebar
           page={page}
-          setPage={setPage}
+          setPage={goToPage}
           onLogout={handleLogout}
           activeTables={metrics.active_tables}
           role={role}
@@ -253,7 +345,7 @@ function AppInner() {
             username={username}
             activeTables={metrics.active_tables}
             totalTables={5}
-            onNavigate={setPage}
+            onNavigate={goToPage}
           />
           <BackendStatusBanner backendStatus={backendStatus} onRetry={checkBackend} />
           <Suspense
@@ -265,13 +357,13 @@ function AppInner() {
           >
             <div className="page">
               {page === "dashboard" && (
-                <Dashboard metrics={metrics} onNavigate={setPage} role={role} />
+                <Dashboard metrics={metrics} onNavigate={goToPage} role={role} />
               )}
               {page === "live-floor" && (
                 <LiveFloor
                   username={username}
                   role={role}
-                  onNavigate={setPage}
+                  onNavigate={goToPage}
                   newSessionRequest={newSessionRequest}
                 />
               )}
@@ -282,11 +374,11 @@ function AppInner() {
                   onOpenFoodOrder={openFoodOrder}
                 />
               )}
-              {page === "reports" && role === "admin" && <ReportsTab onNavigate={setPage} />}
+              {page === "reports" && role === "admin" && <ReportsTab onNavigate={goToPage} />}
               {page === "closing" && <ClosingTab />}
               {page === "food" && (
                 <FoodTab
-                  onNavigate={setPage}
+                  onNavigate={goToPage}
                   role={role}
                   orderContext={foodOrderContext}
                   onOrderContextHandled={() => setFoodOrderContext(null)}
@@ -307,7 +399,7 @@ function AppInner() {
                 <SettingsTab
                   role={role}
                   onOpenTables={() => {
-                    setPage("tables");
+                    goToPage("tables");
                     openNewSession();
                   }}
                 />
@@ -317,7 +409,7 @@ function AppInner() {
         </div>
         <CommandBar
           page={page}
-          setPage={setPage}
+          setPage={goToPage}
           onNewSession={openNewSession}
           role={role}
         />
@@ -326,10 +418,38 @@ function AppInner() {
   );
 }
 
+function AppRoutes() {
+  return (
+    <Routes>
+      <Route path="/" element={<AppInner />} />
+      <Route path="/login" element={<AppInner />} />
+      <Route path="/dashboard" element={<AppInner />} />
+      <Route path="/live-floor" element={<AppInner />} />
+      <Route path="/inventory" element={<AppInner />} />
+      <Route path="/bookings" element={<AppInner />} />
+      <Route path="/customers" element={<AppInner />} />
+      <Route path="/sales" element={<AppInner />} />
+      <Route path="/analytics" element={<AppInner />} />
+      <Route path="/cafe-pos" element={<AppInner />} />
+      <Route path="/waitlist" element={<AppInner />} />
+      <Route path="/notifications" element={<AppInner />} />
+      <Route path="/legacy-table-controls" element={<AppInner />} />
+      <Route path="/tournaments" element={<AppInner />} />
+      <Route path="/daily-closing" element={<AppInner />} />
+      <Route path="/pricing-rules" element={<AppInner />} />
+      <Route path="/audit-log" element={<AppInner />} />
+      <Route path="/settings" element={<AppInner />} />
+      <Route path="*" element={<Navigate to="/" replace />} />
+    </Routes>
+  );
+}
+
 export default function App() {
   return (
-    <ConfirmProvider>
-      <AppInner />
-    </ConfirmProvider>
+    <BrowserRouter>
+      <ConfirmProvider>
+        <AppRoutes />
+      </ConfirmProvider>
+    </BrowserRouter>
   );
 }

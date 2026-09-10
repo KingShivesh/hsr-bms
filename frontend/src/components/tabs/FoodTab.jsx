@@ -6,10 +6,11 @@ import {
   placeFoodOrder,
   getFoodOrders,
   cancelFoodOrder,
+  restoreFoodOrder,
   getFoodStats,
 } from "../../api/index.js";
 import { useToast } from "../toastContext.js";
-import { Checkbox } from "../ui/index.js";
+import { Checkbox, useEscapeKey } from "../ui/index.js";
 
 const CATEGORIES = [
   "All",
@@ -36,6 +37,72 @@ function EmptyState({ icon = "ti-info-circle", title, detail }) {
   );
 }
 
+function FoodPosSkeleton() {
+  const menuCards = Array.from({ length: 10 });
+  const categories = Array.from({ length: 8 });
+
+  return (
+    <div className="cafe-pos-page page-skeleton food-pos-skeleton" role="status" aria-live="polite" aria-label="Loading Food and Cafe POS">
+      <div className="page-skeleton-status">
+        <i className="ti ti-loader-2" aria-hidden="true" />
+        <span>Loading Food & Cafe POS...</span>
+      </div>
+      <div className="segmented-control page-tabs cafe-pos-tabs skeleton-tabs">
+        <span className="skeleton-pill wide" />
+        <span className="skeleton-pill" />
+        <span className="skeleton-pill wide" />
+        <span className="skeleton-pill" />
+      </div>
+      <div className="food-order-layout">
+        <div className="cafe-products-region">
+          <div className="food-menu-toolbar skeleton-toolbar">
+            <span className="skeleton-field skeleton-search-field" />
+            <span className="skeleton-pill compact" />
+          </div>
+          <div className="segmented-control category-tabs skeleton-category-tabs">
+            {categories.map((_, index) => (
+              <span className={`skeleton-pill ${index % 3 === 0 ? "wide" : ""}`} key={index} />
+            ))}
+          </div>
+          <div className="food-menu-grid">
+            {menuCards.map((_, index) => (
+              <div className="food-menu-card skeleton-menu-card" key={index}>
+                <span className="skeleton-media" />
+                <span className="skeleton-line skeleton-menu-name" />
+                <span className="skeleton-line skeleton-menu-price" />
+                <span className="skeleton-line skeleton-menu-category" />
+              </div>
+            ))}
+          </div>
+        </div>
+        <aside className="cafe-order-region" aria-label="Loading current order">
+          <div className="panel food-cart-panel skeleton-order-panel">
+            <div className="food-cart-head">
+              <div className="skeleton-order-heading">
+                <span className="skeleton-line skeleton-title" />
+                <span className="skeleton-line skeleton-subtitle" />
+              </div>
+              <span className="skeleton-pill compact" />
+            </div>
+            <span className="skeleton-pill wide" />
+            <span className="skeleton-field" />
+            <div className="food-payment-toggle skeleton-payment-toggle">
+              <span className="skeleton-pill" />
+              <span className="skeleton-pill" />
+              <span className="skeleton-pill" />
+            </div>
+            <div className="skeleton-cart-empty">
+              <span className="skeleton-media" />
+              <span className="skeleton-line skeleton-menu-name" />
+              <span className="skeleton-line skeleton-subtitle" />
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  );
+}
+
 export default function FoodTab({ onNavigate, role = "admin", orderContext, onOrderContextHandled }) {
   const { showToast } = useToast();
   const [menu, setMenu] = useState({});
@@ -55,10 +122,10 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
   const [menuSearch, setMenuSearch] = useState("");
   const [placing, setPlacing] = useState(false);
   const [busyAction, setBusyAction] = useState("");
-  const [confirmCancelOrderId, setConfirmCancelOrderId] = useState(null);
   const busyActionRef = useRef("");
   const [lastOrder, setLastOrder] = useState(null);
   const [cigaretteDraft, setCigaretteDraft] = useState({ name: "", mrp: "" });
+  useEscapeKey(() => setCigaretteDraft({ name: "", mrp: "" }), !!cigaretteDraft.name);
 
   const fetchAll = useCallback(async ({ showLoading = false } = {}) => {
     if (showLoading) setLoading(true);
@@ -243,20 +310,39 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
     }
   }
 
-  async function handleCancelFoodOrder(orderId) {
-    if (confirmCancelOrderId !== orderId) {
-      setConfirmCancelOrderId(orderId);
-      showToast("Tap Confirm cancel to remove this food order", "info");
-      return;
-    }
+  async function handleCancelFoodOrder(order) {
+    const orderId = order?.id;
+    if (!orderId) return;
     if (busyActionRef.current) return;
     busyActionRef.current = `order-cancel-${orderId}`;
     setBusyAction(`order-cancel-${orderId}`);
+    const restorePayload = {
+      date: order.date || "",
+      ts: order.ts || null,
+      customer_name: order.customer_name || "",
+      items: Array.isArray(order.items) ? order.items : [],
+      total: Number(order.total || 0),
+      payment_method: order.payment_method || "Cash",
+    };
     try {
       await cancelFoodOrder(orderId);
       await fetchAll();
-      setConfirmCancelOrderId(null);
-      showToast("Food order cancelled", "success");
+      showToast(`${order.customer_name || "Food"} order cancelled`, "success", {
+        actionLabel: "Undo",
+        duration: 6000,
+        onAction: async () => {
+          setBusyAction(`order-restore-${orderId}`);
+          try {
+            await restoreFoodOrder(orderId, restorePayload);
+            await fetchAll();
+            showToast("Food order restored", "success");
+          } catch (e) {
+            showToast(e.response?.data?.detail || "Failed to restore food order", "error");
+          } finally {
+            setBusyAction("");
+          }
+        },
+      });
     } catch (e) {
       showToast(e.response?.data?.detail || "Failed to cancel food order", "error");
     } finally {
@@ -328,21 +414,7 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
   }, [orderTarget, selectedTable, selectedPlayer, selectedSessionPlayers]);
 
   if (loading) {
-    return (
-      <div className="page-skeleton compact" role="status" aria-live="polite" aria-label="Loading Food and Cafe POS">
-        <div className="page-skeleton-status">
-          <i className="ti ti-loader-2" aria-hidden="true" />
-          <span>Loading Food & Cafe POS...</span>
-        </div>
-        <div className="skeleton-line skeleton-title" />
-        <div className="skeleton-grid">
-          <div className="skeleton-card" />
-          <div className="skeleton-card" />
-          <div className="skeleton-card" />
-        </div>
-        <div className="skeleton-panel" />
-      </div>
-    );
+    return <FoodPosSkeleton />;
   }
 
   return (
@@ -387,10 +459,10 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
                 className="app-confirm-btn secondary"
                 onClick={() => setCigaretteDraft({ name: "", mrp: "" })}
               >
-                Cancel
+                Discard Item
               </button>
               <button type="submit" className="app-confirm-btn primary">
-                Add item
+                Add Cigarette
               </button>
             </div>
           </form>
@@ -539,7 +611,7 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
                     onClick={() => setCart([])}
                     disabled={placing}
                   >
-                    Clear cart
+                    Clear Order
                   </button>
                 )}
               </div>
@@ -701,7 +773,7 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
                             className="icon-danger-btn"
                             aria-label={`Remove ${i.item || "item"} from cart`}
                           >
-                            ×
+                            <i className="ti ti-x" aria-hidden="true" />
                           </button>
                         </div>
                       </div>
@@ -898,14 +970,12 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
                         <button
                           type="button"
                           className="btn btn-danger-sm food-order-cancel"
-	                          onClick={() => handleCancelFoodOrder(o.id)}
+	                          onClick={() => handleCancelFoodOrder(o)}
 	                          disabled={!o.id || busyAction === `order-cancel-${o.id}`}
 	                        >
 	                          {busyAction === `order-cancel-${o.id}`
                               ? "Cancelling..."
-                              : confirmCancelOrderId === o.id
-                                ? "Confirm cancel"
-                                : "Cancel"}
+                              : "Cancel Food Order"}
 	                        </button>
                       </td>
                     </tr>

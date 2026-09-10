@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { getLiveFloor, startSession } from "../../api/index.js";
+import { getLiveFloor, getRates, saveRates, startSession } from "../../api/index.js";
 import RetryNotice from "../../components/RetryNotice.jsx";
+import { useEscapeKey } from "../../components/ui/index.js";
 import { useToast } from "../../components/toastContext.js";
 import SessionWorkspace from "../sessions/SessionWorkspace.jsx";
 import TableGrid from "./TableGrid.jsx";
@@ -17,6 +18,19 @@ function metricValue(value, prefix = "") {
   return `${prefix}${Number(value || 0).toLocaleString("en-IN")}`;
 }
 
+function rateGroupForTable(tableId) {
+  const normalized = String(tableId || "").toLowerCase();
+  if (normalized === "t1" || normalized === "t2") return "wr";
+  if (normalized === "t3" || normalized === "t4") return "sr";
+  if (normalized === "t5") return "pr";
+  return "";
+}
+
+function normalizeRate(value, fallback) {
+  const parsed = Number(value);
+  return Number.isFinite(parsed) ? parsed : fallback;
+}
+
 function LiveFloorSkeleton() {
   return (
     <div className="lf-skeleton" role="status" aria-label="Loading live floor">
@@ -31,6 +45,7 @@ function LiveFloorSkeleton() {
 
 function NewSessionPanel({ open, tables, initialTableId, onClose, onCreated }) {
   const { showToast } = useToast();
+  useEscapeKey(onClose, open);
   const availableTables = useMemo(() => tables.filter((table) => table.status_key === "available"), [tables]);
   const defaultTableId = initialTableId || availableTables[0]?.id || "";
   const [customer, setCustomer] = useState("");
@@ -111,8 +126,8 @@ function NewSessionPanel({ open, tables, initialTableId, onClose, onCreated }) {
             </button>
           ))}
         </div>
-        <button type="submit" className="lf-primary-button" disabled={saving || !availableTables.length}>
-          {saving ? "Starting..." : "Start session"}
+          <button type="submit" className="lf-primary-button" disabled={saving || !availableTables.length}>
+          {saving ? "Starting..." : "Start Table"}
         </button>
       </form>
     </div>
@@ -120,6 +135,7 @@ function NewSessionPanel({ open, tables, initialTableId, onClose, onCreated }) {
 }
 
 export default function LiveFloor({ role = "admin", onNavigate, newSessionRequest = 0 }) {
+  const { showToast } = useToast();
   const [floor, setFloor] = useState(null);
   const [selectedTableId, setSelectedTableId] = useState("");
   const [loading, setLoading] = useState(true);
@@ -182,10 +198,35 @@ export default function LiveFloor({ role = "admin", onNavigate, newSessionReques
     if (newSessionRequest > 0) openNewSession();
   }, [newSessionRequest, openNewSession]);
 
+  const saveInlineRate = useCallback(async (table, nextRate) => {
+    const rateGroup = rateGroupForTable(table?.id);
+    if (!rateGroup) {
+      showToast("This table rate group is not editable.", "error");
+      return { ok: false };
+    }
+
+    try {
+      const current = await getRates();
+      const serverRates = {
+        wr: normalizeRate(current.data?.wr, 320),
+        pr: normalizeRate(current.data?.pr, 170),
+        sr: normalizeRate(current.data?.sr, 270),
+      };
+      const mergedRates = { ...serverRates, [rateGroup]: nextRate };
+      await saveRates(mergedRates.wr, mergedRates.pr, mergedRates.sr);
+      showToast(`${String(table.id || "").toUpperCase()} rate saved`, "success");
+      await loadFloor();
+      return { ok: true };
+    } catch (err) {
+      showToast(err.userMessage || err.response?.data?.detail || "Rate could not be saved.", "error");
+      return { ok: false };
+    }
+  }, [loadFloor, showToast]);
+
   const tables = useMemo(() => floor?.tables || [], [floor]);
   const summary = floor?.summary || {};
   const selectedTable = useMemo(
-    () => tables.find((table) => table.id === selectedTableId) || tables[0],
+    () => tables.find((table) => table.id === selectedTableId) || null,
     [tables, selectedTableId],
   );
   const upcomingBookings = tables.filter((table) => table.booking).length;
@@ -210,15 +251,15 @@ export default function LiveFloor({ role = "admin", onNavigate, newSessionReques
         <div className="lf-hero-actions">
           <button type="button" className="lf-secondary-button" onClick={() => onNavigate?.("reservations")}>
             <i className="ti ti-calendar-plus" aria-hidden="true" />
-            Booking
+            New Booking
           </button>
           <button type="button" className="lf-secondary-button" onClick={() => onNavigate?.("members")}>
             <i className="ti ti-user-plus" aria-hidden="true" />
-            Customer
+            Add Customer
           </button>
           <button type="button" className="lf-primary-button" onClick={() => openNewSession()}>
             <i className="ti ti-plus" aria-hidden="true" />
-            New session
+            Start Table
           </button>
         </div>
       </div>
@@ -261,6 +302,8 @@ export default function LiveFloor({ role = "admin", onNavigate, newSessionReques
                 tick={tick}
                 onSelectTable={(table) => setSelectedTableId(table.id)}
                 onStartSession={openNewSession}
+                onSaveRate={saveInlineRate}
+                onInvalidRate={(message) => showToast(message, "error")}
               />
             </div>
 

@@ -239,6 +239,8 @@ export const upgradeMember = (customerId) =>
   api.post(`/members/${encodeURIComponent(customerId)}/upgrade`);
 export const deleteMember = (customerId) =>
   api.delete(`/members/${encodeURIComponent(customerId)}`);
+export const restoreMember = (customerId, member) =>
+  api.post(`/members/${encodeURIComponent(customerId)}/restore`, member);
 export const searchMembers = (q) =>
   api.get(`/members/search?q=${encodeURIComponent(q)}`);
 export const getMemberDuplicates = () => api.get("/members/duplicates");
@@ -269,6 +271,7 @@ export const updateMenuItem = (
 ) => api.post("/settings/menu/update", { old_name, new_name, price, category });
 export const deleteMenuItem = (item_name) =>
   api.delete(`/settings/menu/${item_name}`);
+export const restoreMenuItem = (item) => api.post("/settings/menu/restore", item);
 export const setItemAvailability = (name, available) =>
   api.post(`/settings/menu/${encodeURIComponent(name)}/availability`, {
     available,
@@ -289,6 +292,8 @@ export const placeFoodOrder = (customer_name, items, payment_method = "Cash") =>
   api.post("/food/order", { customer_name, items, payment_method });
 export const getFoodOrders = () => api.get("/food/orders");
 export const cancelFoodOrder = (orderId) => api.delete(`/food/orders/${orderId}`);
+export const restoreFoodOrder = (orderId, order) =>
+  api.post(`/food/orders/${orderId}/restore`, order);
 export const getFoodStats = () => api.get("/food/stats");
 
 // Maintenance & Notes
@@ -352,6 +357,7 @@ export const cancelWaitlistEntry = (entryId) =>
 export const getBookings = () => api.get("/bookings");
 export const createBooking = (booking) => api.post("/bookings", booking);
 export const cancelBooking = (bookingId) => api.delete(`/bookings/${bookingId}`);
+export const restoreBooking = (bookingId) => api.post(`/bookings/${bookingId}/restore`);
 
 // Challenge board
 export const getChallenges = () => api.get("/challenges");

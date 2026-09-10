@@ -30,6 +30,9 @@ class MenuItemBody(BaseModel):
     price:    int = Field(ge=0, le=100000)
     category: str = Field(default="Snacks", max_length=50)
 
+class RestoreMenuItemBody(MenuItemBody):
+    available: bool = True
+
 class RenameItem(BaseModel):
     old_name: str = Field(min_length=1, max_length=80)
     new_name: str = Field(min_length=1, max_length=80)
@@ -135,6 +138,29 @@ def update_menu_item(
     item.name     = " ".join(body.new_name.strip().split())
     item.price    = body.price
     item.category = " ".join((body.category or "Snacks").strip().split()) or "Snacks"
+    db.commit()
+    return {"ok": True}
+
+@router.post("/menu/restore")
+def restore_menu_item(
+    body: RestoreMenuItemBody,
+    db: Session = Depends(get_db),
+    _: dict = Depends(require_admin),
+):
+    name = " ".join(body.name.strip().split())
+    category = " ".join((body.category or "Snacks").strip().split()) or "Snacks"
+    existing = db.query(models.MenuItem).filter(models.MenuItem.name == name).first()
+    if existing:
+        existing.price = body.price
+        existing.category = category
+        existing.available = body.available
+    else:
+        db.add(models.MenuItem(
+            name=name,
+            price=body.price,
+            category=category,
+            available=body.available,
+        ))
     db.commit()
     return {"ok": True}
 

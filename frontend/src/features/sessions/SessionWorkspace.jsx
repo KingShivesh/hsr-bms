@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import { pauseSession, transferSession } from "../../api/index.js";
 import { useToast } from "../../components/toastContext.js";
+import { useEscapeKey } from "../../components/ui/index.js";
 import CheckoutPanel from "../checkout/CheckoutPanel.jsx";
 import ProductSelector from "../orders/ProductSelector.jsx";
 import TableStatusBadge from "../live-floor/TableStatusBadge.jsx";
@@ -39,6 +40,7 @@ export default function SessionWorkspace({
   const [checkoutOpen, setCheckoutOpen] = useState(false);
   const [busy, setBusy] = useState("");
   const [transferTarget, setTransferTarget] = useState("");
+  useEscapeKey(onClose, !!table && !showOrders && !checkoutOpen);
   const session = table?.session;
   const elapsed = session && !session.paused ? (session.elapsed_seconds || 0) + tick : session?.elapsed_seconds || 0;
   const players = useMemo(() => sessionPlayers(session), [session]);
@@ -95,7 +97,7 @@ export default function SessionWorkspace({
             onClick={() => onStartSession?.(table.id)}
             disabled={table.status_key !== "available"}
           >
-            Start session
+            Start Table
           </button>
         </div>
       )}
@@ -148,7 +150,7 @@ export default function SessionWorkspace({
                 <h3>Session orders</h3>
                 <button type="button" className="lf-secondary-button" onClick={() => setShowOrders(true)}>
                   <i className="ti ti-plus" aria-hidden="true" />
-                  Add order
+                  Add Food
                 </button>
               </div>
               {(session.food_items || []).length ? (
@@ -193,7 +195,7 @@ export default function SessionWorkspace({
           <div className="session-action-bar">
             <button type="button" className="lf-primary-button" onClick={() => setShowOrders(true)}>
               <i className="ti ti-tools-kitchen-2" aria-hidden="true" />
-              Add order
+              Add Food
             </button>
             <button
               type="button"
@@ -216,12 +218,12 @@ export default function SessionWorkspace({
                 disabled={!transferTarget || busy === "transfer"}
                 onClick={() => runAction("transfer", () => transferSession(table.id, transferTarget), "Session transferred")}
               >
-                {busy === "transfer" ? "Moving..." : "Move"}
+                {busy === "transfer" ? "Moving..." : "Move Session"}
               </button>
             </label>
             <button type="button" className="lf-danger-button" onClick={() => setCheckoutOpen(true)}>
               <i className="ti ti-receipt" aria-hidden="true" />
-              Checkout
+              Open Checkout
             </button>
           </div>
         </>
