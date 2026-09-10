@@ -3315,142 +3315,144 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0, onOpenF
         showToast={showToast}
       />
 
-      <LiveFloorCommand
-        tables={TABLES}
-        tableStates={tableStates}
-        sessions={sessions}
-        maintenance={maintenance}
-        bookings={nextBookingByTable}
-        selectedTableId={selectedTable?.id}
-        onSelect={selectTable}
-        onQuickStart={() => setQuickSessionOpen(true)}
-        compact={compact}
-        viewMode={viewMode}
-        onViewModeChange={changeViewMode}
-        peakRate={peakRate}
-        gstPercent={gstPercent}
-      />
+      <div className="advanced-table-controls-page">
+        <LiveFloorCommand
+          tables={TABLES}
+          tableStates={tableStates}
+          sessions={sessions}
+          maintenance={maintenance}
+          bookings={nextBookingByTable}
+          selectedTableId={selectedTable?.id}
+          onSelect={selectTable}
+          onQuickStart={() => setQuickSessionOpen(true)}
+          compact={compact}
+          viewMode={viewMode}
+          onViewModeChange={changeViewMode}
+          peakRate={peakRate}
+          gstPercent={gstPercent}
+        />
 
-      <div className="table-floor-layout">
-        <div
-          ref={tableGridRef}
-          className={`tables-grid table-floor-grid ${compact ? "compact" : ""}`}
-          role="region"
-          aria-label="Table floor cards"
-          onKeyDown={handleTableGridKeyDown}
-        >
-          {TABLES.map((table) => (
-            <TableFloorTile
-              key={table.id}
-              table={table}
-              tableState={tableStates[table.id]}
-              session={sessions[table.id]}
-              booking={nextBookingByTable[table.id] || null}
-              rates={rates}
-              maintenance={maintenance[table.id] || null}
-              selected={selectedTable?.id === table.id}
-              onSelect={() => selectTable(table.id)}
-              peakRate={peakRate}
-              gstPercent={gstPercent}
-            />
-          ))}
+        <div className="table-floor-layout">
+          <div
+            ref={tableGridRef}
+            className={`tables-grid table-floor-grid ${compact ? "compact" : ""}`}
+            role="region"
+            aria-label="Table floor cards"
+            onKeyDown={handleTableGridKeyDown}
+          >
+            {TABLES.map((table) => (
+              <TableFloorTile
+                key={table.id}
+                table={table}
+                tableState={tableStates[table.id]}
+                session={sessions[table.id]}
+                booking={nextBookingByTable[table.id] || null}
+                rates={rates}
+                maintenance={maintenance[table.id] || null}
+                selected={selectedTable?.id === table.id}
+                onSelect={() => selectTable(table.id)}
+                peakRate={peakRate}
+                gstPercent={gstPercent}
+              />
+            ))}
+          </div>
+
+          {selectedTable && (
+            <aside
+              ref={detailPanelRef}
+              className="table-detail-panel"
+              aria-label={`T${selectedTable.num} details`}
+            >
+              <div className="table-detail-header">
+                <div>
+                  <span>Selected table</span>
+                  <strong>
+                    T{selectedTable.num} · {getTableLabel(selectedTable)}
+                  </strong>
+                </div>
+                <div className="table-detail-total">
+                  <span>Running</span>
+                  <strong>
+                    ₹{runningTotalForSession(
+                      sessions[selectedTable.id],
+                      peakRate,
+                      gstPercent,
+                    )}
+                  </strong>
+                </div>
+              </div>
+
+              <SessionWorkspace
+                table={selectedTable}
+                tableState={tableStates[selectedTable.id]}
+                session={sessions[selectedTable.id]}
+                booking={nextBookingByTable[selectedTable.id] || null}
+                maintenance={maintenance[selectedTable.id] || null}
+                rates={rates}
+                peakRate={peakRate}
+                gstPercent={gstPercent}
+                onPause={handlePause}
+                onStop={handleStop}
+                onAddFood={onOpenFoodOrder}
+                busyActions={busyActions}
+              />
+
+              <TableCard
+                key={selectedTable.id}
+                table={selectedTable}
+                session={sessions[selectedTable.id]}
+                booking={nextBookingByTable[selectedTable.id] || null}
+                name={names[selectedTable.id]}
+                onNameChange={(val) =>
+                  setNames((prev) => ({ ...prev, [selectedTable.id]: val }))
+                }
+                onStart={handleStart}
+                onPause={handlePause}
+                onReset={handleReset}
+                onStop={handleStop}
+                onTransfer={handleTransfer}
+                transferTargets={TABLES.filter(
+                  (table) =>
+                    table.id !== selectedTable.id &&
+                    !sessions[table.id] &&
+                    !maintenance[table.id],
+                )}
+                onReserve={handleReserve}
+                onCancelReserve={handleCancelReserve}
+                rates={rates}
+                maintenance={maintenance[selectedTable.id] || null}
+                onMaintenance={handleSetMaintenance}
+                onClearMaintenance={handleClearMaintenance}
+                onSaveNotes={handleSaveNotes}
+                peakRate={peakRate}
+                gstPercent={gstPercent}
+                showToast={showToast}
+                busyActions={busyActions}
+                compact={false}
+              />
+            </aside>
+          )}
         </div>
 
-        {selectedTable && (
-          <aside
-            ref={detailPanelRef}
-            className="table-detail-panel"
-            aria-label={`T${selectedTable.num} details`}
-          >
-            <div className="table-detail-header">
-              <div>
-                <span>Selected table</span>
-                <strong>
-                  T{selectedTable.num} · {getTableLabel(selectedTable)}
-                </strong>
-              </div>
-              <div className="table-detail-total">
-                <span>Running</span>
-                <strong>
-                  ₹{runningTotalForSession(
-                    sessions[selectedTable.id],
-                    peakRate,
-                    gstPercent,
-                  )}
-                </strong>
-              </div>
-            </div>
+        <div className="tables-support-tools">
+          <QueuePanel
+            queue={queue}
+            activeCount={Object.keys(sessions).length}
+            onAdd={handleAddToQueue}
+            onSeat={handleSeatQueue}
+            onCancel={handleCancelQueue}
+            busyActions={busyActions}
+            showToast={showToast}
+          />
 
-            <SessionWorkspace
-              table={selectedTable}
-              tableState={tableStates[selectedTable.id]}
-              session={sessions[selectedTable.id]}
-              booking={nextBookingByTable[selectedTable.id] || null}
-              maintenance={maintenance[selectedTable.id] || null}
-              rates={rates}
-              peakRate={peakRate}
-              gstPercent={gstPercent}
-              onPause={handlePause}
-              onStop={handleStop}
-              onAddFood={onOpenFoodOrder}
-              busyActions={busyActions}
-            />
-
-            <TableCard
-              key={selectedTable.id}
-              table={selectedTable}
-              session={sessions[selectedTable.id]}
-              booking={nextBookingByTable[selectedTable.id] || null}
-              name={names[selectedTable.id]}
-              onNameChange={(val) =>
-                setNames((prev) => ({ ...prev, [selectedTable.id]: val }))
-              }
-              onStart={handleStart}
-              onPause={handlePause}
-              onReset={handleReset}
-              onStop={handleStop}
-              onTransfer={handleTransfer}
-              transferTargets={TABLES.filter(
-                (table) =>
-                  table.id !== selectedTable.id &&
-                  !sessions[table.id] &&
-                  !maintenance[table.id],
-              )}
-              onReserve={handleReserve}
-              onCancelReserve={handleCancelReserve}
-              rates={rates}
-              maintenance={maintenance[selectedTable.id] || null}
-              onMaintenance={handleSetMaintenance}
-              onClearMaintenance={handleClearMaintenance}
-              onSaveNotes={handleSaveNotes}
-              peakRate={peakRate}
-              gstPercent={gstPercent}
-              showToast={showToast}
-              busyActions={busyActions}
-              compact={false}
-            />
-          </aside>
-        )}
-      </div>
-
-      <div className="tables-support-tools">
-        <QueuePanel
-          queue={queue}
-          activeCount={Object.keys(sessions).length}
-          onAdd={handleAddToQueue}
-          onSeat={handleSeatQueue}
-          onCancel={handleCancelQueue}
-          busyActions={busyActions}
-          showToast={showToast}
-        />
-
-        <BookingPanel
-          bookings={bookings}
-          onCreate={handleCreateBooking}
-          onCancel={handleCancelBooking}
-          busyActions={busyActions}
-          showToast={showToast}
-        />
+          <BookingPanel
+            bookings={bookings}
+            onCreate={handleCreateBooking}
+            onCancel={handleCancelBooking}
+            busyActions={busyActions}
+            showToast={showToast}
+          />
+        </div>
       </div>
     </>
   );

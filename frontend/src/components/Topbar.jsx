@@ -2,17 +2,17 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { getAuditLogs, getBookings, getTableState, getWaitlist } from "../api/index.js";
 
 const PAGE_DESCRIPTIONS = {
-  "Executive Overview": "Real-time venue performance, revenue, queue and closing health",
-  "Live Floor": "Operate active sessions, bookings, customers and checkout",
-  "Advanced Table Controls": "Detailed controls for active sessions, table setup and exceptions",
+  "Executive Overview": "Owner snapshot for revenue, floor pressure and actions needing attention",
+  "Live Floor": "Staff workspace for starting tables, managing sessions and checkout",
+  "Advanced Table Controls": "Manager tools for table exceptions, queue handling and detailed controls",
   "Smart Waitlist": "Walk-in queue, seating pressure and booking conflicts",
   "Bookings": "Table-wise booking commitments, check-ins and no-show risk",
   "Food & Cafe POS": "Snacks, beverages, cigarettes and counter billing",
-  "Sales": "Completed transactions, payment mix and printable receipts",
+  "Sales": "Cashier register for settling bills and reviewing today's transactions",
   "Customers": "Customer profiles, visits, spend and merge tools",
   "Tournament Hub": "Knockouts, entries and prize tracking",
   "Daily Closing": "End-of-day audit, cash tally and shift lock",
-  "Analytics & Reports": "Revenue, history and operational reporting",
+  "Analytics & Reports": "Owner reporting for performance trends, exports and deeper analysis",
   "Pricing & Rules": "Peak rates, GST and operational rules",
   "Inventory & Stocks": "Menu availability, stock risk and table maintenance",
   "Audit Log": "Staff and system actions from audit logs",

@@ -19542,6 +19542,34 @@ button:disabled,
   color: var(--text-secondary) !important;
 }
 
+.reports-tabs .ui-tab-btn.active,
+.advanced-table-controls-page .segmented-control button.active,
+.advanced-table-controls-page .billing-mode-control button.active {
+  background: color-mix(in srgb, var(--accent) 18%, transparent) !important;
+  border-color: color-mix(in srgb, var(--accent) 34%, var(--border)) !important;
+  color: var(--accent-text) !important;
+  box-shadow: none !important;
+}
+
+.advanced-table-controls-page .billing-mode-control button.active strong,
+.advanced-table-controls-page .billing-mode-control button.active span {
+  color: var(--accent-text) !important;
+}
+
+body.dark .reports-tabs .ui-tab-btn.active,
+body.dark .advanced-table-controls-page .segmented-control button.active,
+body.dark .advanced-table-controls-page .billing-mode-control button.active {
+  background: rgba(15, 127, 100, 0.18) !important;
+  border-color: rgba(44, 168, 132, 0.34) !important;
+  color: var(--accent-text) !important;
+  box-shadow: none !important;
+}
+
+body.dark .advanced-table-controls-page .billing-mode-control button.active strong,
+body.dark .advanced-table-controls-page .billing-mode-control button.active span {
+  color: var(--accent-text) !important;
+}
+
 ::-webkit-scrollbar {
   width: 10px;
   height: 10px;

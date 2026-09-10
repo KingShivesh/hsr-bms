@@ -306,7 +306,7 @@ function TopCustomersView() {
   }, [period]);
 
   return (
-    <div>
+    <div className="reports-page-shell">
       <div
         style={{
           display: "flex",
@@ -1071,7 +1071,7 @@ export default function ReportsTab({ onNavigate }) {
       </div>
 
       {/* Sub-tab navigation */}
-      <div className="segmented-control page-tabs">
+      <div className="segmented-control page-tabs reports-tabs">
         {REPORT_TABS.map((t) => (
           <TabBtn
             key={t.id}
