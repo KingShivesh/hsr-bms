@@ -1,4 +1,4 @@
-import { lazy, Suspense, useState, useEffect } from "react";
+import { lazy, Suspense, useState, useEffect, useRef } from "react";
 import {
   BrowserRouter,
   Navigate,
@@ -95,15 +95,18 @@ function safeRouteFromSearch(search) {
 }
 
 function BackendStatusBanner({ backendStatus, onRetry }) {
-  if (backendStatus.state !== "offline") return null;
+  const connecting = backendStatus.state === "checking" && backendStatus.showWakeMessage;
+  if (backendStatus.state !== "offline" && !connecting) return null;
   return (
-    <div className="backend-status-banner" role="status">
-      <i className="ti ti-alert-triangle" aria-hidden="true" />
+    <div className={`backend-status-banner ${connecting ? "is-connecting" : "is-offline"}`} role="status">
+      <i className={`ti ${connecting ? "ti-loader-2" : "ti-alert-triangle"}`} aria-hidden="true" />
       <span>{backendStatus.message}</span>
       {backendStatus.requestId && <code>{backendStatus.requestId}</code>}
-      <button type="button" onClick={onRetry}>
-        Retry
-      </button>
+      {!connecting && (
+        <button type="button" onClick={onRetry}>
+          Retry
+        </button>
+      )}
     </div>
   );
 }
@@ -130,6 +133,7 @@ function AppInner() {
   const { requestConfirm } = useConfirm();
   const location = useLocation();
   const navigate = useNavigate();
+  const backendWakeTimerRef = useRef(null);
   const [loggedIn, setLoggedIn] = useState(!!localStorage.getItem("token"));
   const [role, setRole] = useState(localStorage.getItem("role") || "admin");
   const [username, setUsername] = useState(localStorage.getItem("username") || "");
@@ -140,6 +144,7 @@ function AppInner() {
     state: "checking",
     message: "Checking backend connection...",
     requestId: "",
+    showWakeMessage: false,
   });
   const [metrics, setMetrics] = useState({
     sale: 0,
@@ -152,18 +157,22 @@ function AppInner() {
   });
 
   useEffect(() => {
-    checkBackend();
+    checkBackend({ showWakeDelay: true });
     const healthIv = setInterval(checkBackend, 60000);
     const handleBackendFailure = (event) => {
       setBackendStatus({
         state: "offline",
         message: event.detail?.message || "Backend is unreachable.",
         requestId: event.detail?.requestId || "",
+        showWakeMessage: false,
       });
     };
     window.addEventListener("backend:request-failed", handleBackendFailure);
     return () => {
       clearInterval(healthIv);
+      if (backendWakeTimerRef.current) {
+        clearTimeout(backendWakeTimerRef.current);
+      }
       window.removeEventListener("backend:request-failed", handleBackendFailure);
     };
   }, []);
@@ -235,13 +244,37 @@ function AppInner() {
     }
   }
 
-  async function checkBackend() {
+  async function checkBackend({ showWakeDelay = false } = {}) {
+    if (backendWakeTimerRef.current) {
+      clearTimeout(backendWakeTimerRef.current);
+      backendWakeTimerRef.current = null;
+    }
+    if (showWakeDelay) {
+      setBackendStatus({
+        state: "checking",
+        message: "Checking backend connection...",
+        requestId: "",
+        showWakeMessage: false,
+      });
+      backendWakeTimerRef.current = setTimeout(() => {
+        setBackendStatus((current) => {
+          if (current.state !== "checking") return current;
+          return {
+            state: "checking",
+            message: "Connecting to server... this can take up to a minute on the free Render tier.",
+            requestId: "",
+            showWakeMessage: true,
+          };
+        });
+      }, 2500);
+    }
     try {
       await getBackendHealth();
       setBackendStatus({
         state: "online",
         message: "",
         requestId: "",
+        showWakeMessage: false,
       });
     } catch (e) {
       setBackendStatus({
@@ -252,7 +285,13 @@ function AppInner() {
           e.response?.data?.request_id ||
           e.config?.headers?.["X-Client-Request-Id"] ||
           "",
+        showWakeMessage: false,
       });
+    } finally {
+      if (backendWakeTimerRef.current) {
+        clearTimeout(backendWakeTimerRef.current);
+        backendWakeTimerRef.current = null;
+      }
     }
   }
 
@@ -303,7 +342,7 @@ function AppInner() {
     }
     return (
       <>
-        <BackendStatusBanner backendStatus={backendStatus} onRetry={checkBackend} />
+        <BackendStatusBanner backendStatus={backendStatus} onRetry={() => checkBackend({ showWakeDelay: true })} />
         <Login
           onLogin={(nextRole, nextUsername) => {
             setRole(nextRole || "admin");
@@ -344,7 +383,7 @@ function AppInner() {
             totalTables={5}
             onNavigate={goToPage}
           />
-          <BackendStatusBanner backendStatus={backendStatus} onRetry={checkBackend} />
+          <BackendStatusBanner backendStatus={backendStatus} onRetry={() => checkBackend({ showWakeDelay: true })} />
           <Suspense
             fallback={
               <div className="page">

@@ -1,6 +1,9 @@
 import axios from "axios";
 
 const API_TIMEOUT_MS = Number(import.meta.env.VITE_API_TIMEOUT_MS || 45000);
+const DEV_BACKEND_WAKE_DELAY_MS = import.meta.env.DEV
+  ? Number(import.meta.env.VITE_SIMULATE_BACKEND_WAKE_MS || 0)
+  : 0;
 const SAFE_RETRY_METHODS = new Set(["get", "head", "options"]);
 const RETRY_DELAYS_MS = [800, 1800];
 let lastBackendEventAt = 0;
@@ -110,7 +113,12 @@ api.interceptors.response.use(
   },
 );
 
-export const getBackendHealth = () => api.get("/ready", { noRetry: false });
+export const getBackendHealth = async () => {
+  if (DEV_BACKEND_WAKE_DELAY_MS > 0) {
+    await sleep(DEV_BACKEND_WAKE_DELAY_MS);
+  }
+  return api.get("/ready", { noRetry: false });
+};
 
 // Auth
 export const login = (username, password) =>

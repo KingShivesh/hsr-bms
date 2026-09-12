@@ -13418,6 +13418,16 @@ body.dark .table-floor-tile.paused .table-floor-body {
   font-size: var(--text-xl);
 }
 
+.backend-status-banner.is-connecting {
+  border-color: color-mix(in srgb, var(--premium-accent) 36%, var(--premium-border));
+  background: color-mix(in srgb, var(--premium-accent) 10%, var(--premium-surface));
+}
+
+.backend-status-banner.is-connecting i {
+  animation: app-spin 0.9s linear infinite;
+  color: var(--premium-accent);
+}
+
 .backend-status-banner span {
   flex: 1;
   min-width: 0;
@@ -13449,6 +13459,10 @@ body.dark .table-floor-tile.paused .table-floor-body {
 
 body.dark .backend-status-banner {
   background: color-mix(in srgb, var(--premium-warning) 16%, var(--premium-surface));
+}
+
+body.dark .backend-status-banner.is-connecting {
+  background: color-mix(in srgb, var(--premium-accent) 14%, var(--premium-surface));
 }
 
 .modal-backdrop.plain {
