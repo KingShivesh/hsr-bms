@@ -198,6 +198,14 @@ export default function LiveFloor({ role = "admin", onNavigate, newSessionReques
     if (newSessionRequest > 0) openNewSession();
   }, [newSessionRequest, openNewSession]);
 
+  useEffect(() => {
+    function handleNewSessionRequest() {
+      openNewSession();
+    }
+    window.addEventListener("live-floor:new-session", handleNewSessionRequest);
+    return () => window.removeEventListener("live-floor:new-session", handleNewSessionRequest);
+  }, [openNewSession]);
+
   const saveInlineRate = useCallback(async (table, nextRate) => {
     const rateGroup = rateGroupForTable(table?.id);
     if (!rateGroup) {

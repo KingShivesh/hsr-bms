@@ -25,7 +25,7 @@ const CATEGORIES = [
 
 const tableKey = (tableId) => String(tableId || "").trim().toLowerCase();
 
-function EmptyState({ icon = "ti-info-circle", title, detail }) {
+function EmptyState({ icon = "ti-info-circle", title, detail, action }) {
   return (
     <div className="empty-state">
       <div className="empty-state-icon">
@@ -33,6 +33,7 @@ function EmptyState({ icon = "ti-info-circle", title, detail }) {
       </div>
       <div className="empty-state-title">{title}</div>
       {detail && <div className="empty-state-detail">{detail}</div>}
+      {action}
     </div>
   );
 }
@@ -580,6 +581,17 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
                     icon="ti-tools-kitchen-2"
                     title={menuSearch.trim() ? "No matching items" : "No items in this category"}
                     detail={menuSearch.trim() ? "Clear the search or try a shorter item name." : role === "admin" ? "Try another category or manage menu items from Inventory & Stocks." : "Try another category or ask an admin to update the menu."}
+                    action={menuSearch.trim() ? (
+                      <button type="button" className="lf-secondary-button empty-action-button" onClick={() => setMenuSearch("")}>
+                        <i className="ti ti-x" aria-hidden="true" />
+                        Clear Search
+                      </button>
+                    ) : role === "admin" ? (
+                      <button type="button" className="lf-secondary-button empty-action-button" onClick={() => onNavigate?.("inventory")}>
+                        <i className="ti ti-package" aria-hidden="true" />
+                        Manage Inventory
+                      </button>
+                    ) : null}
                   />
                 </div>
               )}
@@ -725,6 +737,12 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
                   icon="ti-shopping-cart-plus"
                   title="Cart is empty"
                   detail="Click menu items to add them to this order."
+                  action={filteredMenu.length > 0 ? (
+                    <button type="button" className="lf-secondary-button empty-action-button" onClick={() => document.querySelector(".food-menu-card")?.focus()}>
+                      <i className="ti ti-arrow-left" aria-hidden="true" />
+                      Choose Items
+                    </button>
+                  ) : null}
                 />
               ) : (
                 <>

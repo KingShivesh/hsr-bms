@@ -211,6 +211,14 @@ export default function BookingsPage() {
     loadBookings({ showLoading: true });
   }, [loadBookings]);
 
+  useEffect(() => {
+    function handleNewBookingRequest() {
+      setShowModal(true);
+    }
+    window.addEventListener("bookings:new", handleNewBookingRequest);
+    return () => window.removeEventListener("bookings:new", handleNewBookingRequest);
+  }, []);
+
   const booked = bookings.filter((booking) => booking.status === "booked");
   const missed = bookings.filter((booking) => booking.status === "missed");
   const nextHour = booked.filter((booking) => {
@@ -436,6 +444,10 @@ export default function BookingsPage() {
             <i className="ti ti-calendar-check" aria-hidden="true" />
             <strong>No bookings found</strong>
             <span>Create a reservation or adjust the filter.</span>
+            <button type="button" className="lf-primary-button empty-action-button" onClick={() => setShowModal(true)}>
+              <i className="ti ti-calendar-plus" aria-hidden="true" />
+              New Booking
+            </button>
           </div>
         )}
       </section>

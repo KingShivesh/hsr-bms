@@ -100,13 +100,19 @@ function BackendStatusBanner({ backendStatus, onRetry }) {
   return (
     <div className={`backend-status-banner ${connecting ? "is-connecting" : "is-offline"}`} role="status">
       <i className={`ti ${connecting ? "ti-loader-2" : "ti-alert-triangle"}`} aria-hidden="true" />
-      <span>{backendStatus.message}</span>
-      {backendStatus.requestId && <code>{backendStatus.requestId}</code>}
+      <div className="backend-status-copy">
+        <span>{backendStatus.message}</span>
+        {connecting && (
+          <small>Render free-tier services can wake slowly after inactivity. Keep this tab open.</small>
+        )}
+        {backendStatus.requestId && <code>{backendStatus.requestId}</code>}
+      </div>
       {!connecting && (
         <button type="button" onClick={onRetry}>
           Retry
         </button>
       )}
+      {connecting && <div className="backend-status-progress" aria-hidden="true" />}
     </div>
   );
 }
@@ -261,12 +267,12 @@ function AppInner() {
           if (current.state !== "checking") return current;
           return {
             state: "checking",
-            message: "Connecting to server... this can take up to a minute on the free Render tier.",
+            message: "Connecting to server... this can take up to a minute.",
             requestId: "",
             showWakeMessage: true,
           };
         });
-      }, 2500);
+      }, 1400);
     }
     try {
       await getBackendHealth();

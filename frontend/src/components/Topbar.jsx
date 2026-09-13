@@ -2,21 +2,39 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { getAuditLogs, getBookings, getTableState, getWaitlist } from "../api/index.js";
 
 const PAGE_DESCRIPTIONS = {
-  "Executive Overview": "Owner snapshot for revenue, floor pressure and actions needing attention",
-  "Live Floor": "Staff workspace for starting tables, managing sessions and checkout",
-  "Advanced Table Controls": "Manager tools for table exceptions, queue handling and detailed controls",
-  "Smart Waitlist": "Walk-in queue, seating pressure and booking conflicts",
-  "Bookings": "Table-wise booking commitments, check-ins and no-show risk",
-  "Food & Cafe POS": "Snacks, beverages, cigarettes and counter billing",
-  "Sales": "Cashier register for settling bills and reviewing today's transactions",
-  "Customers": "Customer profiles, visits, spend and merge tools",
-  "Tournament Hub": "Knockouts, entries and prize tracking",
-  "Daily Closing": "End-of-day audit, cash tally and shift lock",
-  "Analytics & Reports": "Owner reporting for performance trends, exports and deeper analysis",
-  "Pricing & Rules": "Peak rates, GST and operational rules",
-  "Inventory & Stocks": "Menu availability, stock risk and table maintenance",
-  "Audit Log": "Staff and system actions from audit logs",
-  "Club Settings": "Rates, credentials and system configuration",
+  "Executive Overview": "For owners: see today's revenue, floor pressure and what needs attention first.",
+  "Live Floor": "For counter staff: start tables, manage running sessions and move guests through checkout.",
+  "Advanced Table Controls": "For managers: handle table exceptions, queue pressure and detailed operating controls.",
+  "Smart Waitlist": "For the front desk: manage walk-ins, seating pressure and booking conflicts.",
+  "Bookings": "For reservations: create table commitments, check guests in and catch no-shows early.",
+  "Food & Cafe POS": "For cafe staff: build orders, attach food to tables and collect counter payments.",
+  "Sales": "For cashiers: settle bills and review today's completed transactions.",
+  "Customers": "For relationship tracking: manage profiles, visits, spend and duplicate customer records.",
+  "Tournament Hub": "For events: build knockouts, manage entries and track prize flow.",
+  "Daily Closing": "For shift leads: verify cash, exceptions and table closure before locking the day.",
+  "Analytics & Reports": "For owners: analyze performance trends and export reporting data.",
+  "Pricing & Rules": "For admins: adjust peak rates, GST rules and operating guardrails.",
+  "Inventory & Stocks": "For stock control: update menu availability, bulk stock state and table maintenance.",
+  "Audit Log": "For accountability: review staff and system activity from the audit trail.",
+  "Club Settings": "For admins: maintain rates, credentials and protected system configuration.",
+};
+
+const PAGE_PRIMARY_ACTIONS = {
+  "Executive Overview": { label: "Open Live Floor", icon: "ti-layout-grid", page: "live-floor" },
+  "Live Floor": { label: "Start Table", icon: "ti-player-play", event: "live-floor:new-session" },
+  "Advanced Table Controls": { label: "Start Table", icon: "ti-player-play", page: "tables" },
+  "Smart Waitlist": { label: "Open Bookings", icon: "ti-calendar-plus", page: "reservations" },
+  "Bookings": { label: "New Booking", icon: "ti-calendar-plus", event: "bookings:new" },
+  "Food & Cafe POS": { label: "Place Order", icon: "ti-tools-kitchen-2", page: "food" },
+  "Sales": { label: "Print Register", icon: "ti-printer", action: "print" },
+  "Customers": { label: "Add Customer", icon: "ti-user-plus", event: "customers:add-focus" },
+  "Tournament Hub": { label: "Create Bracket", icon: "ti-trophy", page: "tournaments" },
+  "Daily Closing": { label: "Review Close", icon: "ti-lock-check", page: "closing" },
+  "Analytics & Reports": { label: "Export Reports", icon: "ti-download", page: "reports" },
+  "Pricing & Rules": { label: "Add Rate Rule", icon: "ti-plus", page: "operations" },
+  "Inventory & Stocks": { label: "Add Item", icon: "ti-package", page: "inventory" },
+  "Audit Log": { label: "Refresh Audit", icon: "ti-refresh", page: "staff" },
+  "Club Settings": { label: "Save Settings", icon: "ti-device-floppy", page: "settings" },
 };
 
 function asArray(value) {
@@ -53,6 +71,7 @@ function buildNotificationRows({ auditLogs = [], waitlist = [], bookings = [], m
       title: `${String(row.table_id || "Table").toUpperCase()} in maintenance`,
       detail: row.reason || "Needs owner review",
       tone: "warning",
+      page: "inventory",
     })),
     ...waitlist.map((entry) => ({
       id: `wait-${entry.id}`,
@@ -60,6 +79,7 @@ function buildNotificationRows({ auditLogs = [], waitlist = [], bookings = [], m
       title: `${entry.customer_name || "Guest"} waiting`,
       detail: `${entry.wait_mins || 0} min in queue`,
       tone: "info",
+      page: "waitlist",
     })),
     ...bookings.filter((booking) => booking.status === "missed").map((booking) => ({
       id: `missed-${booking.id}`,
@@ -67,6 +87,7 @@ function buildNotificationRows({ auditLogs = [], waitlist = [], bookings = [], m
       title: `Missed booking: ${booking.customer_name || "Guest"}`,
       detail: shortDate(booking.booking_time),
       tone: "danger",
+      page: "reservations",
     })),
     ...auditLogs.slice(0, 8).map((log) => ({
       id: `audit-${log.id}`,
@@ -74,6 +95,7 @@ function buildNotificationRows({ auditLogs = [], waitlist = [], bookings = [], m
       title: log.action?.replaceAll("_", " ") || "System activity",
       detail: log.detail || log.date || "",
       tone: log.severity === "danger" || log.severity === "critical" ? "danger" : "info",
+      page: "staff",
     })),
   ];
 }
@@ -137,6 +159,22 @@ export default function Topbar({
   }, [dark]);
 
   const notificationRows = useMemo(() => buildNotificationRows(notificationData), [notificationData]);
+  const primaryAction = PAGE_PRIMARY_ACTIONS[title];
+
+  function runPrimaryAction() {
+    if (!primaryAction) return;
+    if (primaryAction.action === "print") {
+      window.print();
+      return;
+    }
+    if (primaryAction.event) {
+      window.dispatchEvent(new Event(primaryAction.event));
+      return;
+    }
+    if (primaryAction.page) {
+      onNavigate?.(primaryAction.page);
+    }
+  }
 
   async function loadNotifications() {
     setNotificationsLoading(true);
@@ -208,6 +246,16 @@ export default function Topbar({
         <p>{PAGE_DESCRIPTIONS[title] || "HSR Snooker Cafe management console"}</p>
       </div>
       <div className="topbar-right">
+        {primaryAction && (
+          <button
+            type="button"
+            className="cf-page-primary-action"
+            onClick={runPrimaryAction}
+          >
+            <i className={`ti ${primaryAction.icon}`} aria-hidden="true" />
+            <span>{primaryAction.label}</span>
+          </button>
+        )}
         <button
           type="button"
           className="cf-command-pill"
@@ -261,13 +309,21 @@ export default function Topbar({
               {!notificationsLoading && !notificationsError && (
                 <div className="cf-notification-list">
                   {notificationRows.length ? notificationRows.map((item) => (
-                    <div className={`cf-notification-row ${item.tone}`} key={item.id}>
+                    <button
+                      type="button"
+                      className={`cf-notification-row ${item.tone}`}
+                      key={item.id}
+                      onClick={() => {
+                        setNotificationsOpen(false);
+                        onNavigate?.(item.page);
+                      }}
+                    >
                       <i className={`ti ${item.icon}`} aria-hidden="true" />
                       <div>
                         <strong>{item.title}</strong>
                         <span>{item.detail || "No detail"}</span>
                       </div>
-                    </div>
+                    </button>
                   )) : (
                     <div className="cf-notification-empty">
                       <i className="ti ti-shield-check" aria-hidden="true" />

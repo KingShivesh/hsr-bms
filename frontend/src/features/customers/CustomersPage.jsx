@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   addMember,
   deleteMember,
@@ -70,6 +70,7 @@ export default function CustomersPage() {
   const [newName, setNewName] = useState("");
   const [selectedCustomer, setSelectedCustomer] = useState(null);
   const [busy, setBusy] = useState("");
+  const newCustomerInputRef = useRef(null);
 
   const loadCustomers = useCallback(async ({ showLoading = false } = {}) => {
     if (showLoading) setLoading(true);
@@ -88,6 +89,14 @@ export default function CustomersPage() {
   useEffect(() => {
     loadCustomers({ showLoading: true });
   }, [loadCustomers]);
+
+  useEffect(() => {
+    function handleAddCustomerFocus() {
+      newCustomerInputRef.current?.focus();
+    }
+    window.addEventListener("customers:add-focus", handleAddCustomerFocus);
+    return () => window.removeEventListener("customers:add-focus", handleAddCustomerFocus);
+  }, []);
 
   const totals = useMemo(() => {
     const totalSpend = members.reduce((sum, member) => sum + Number(member.spt || member.spent || 0), 0);
@@ -205,6 +214,7 @@ export default function CustomersPage() {
         </div>
         <form className="op2-inline-form" onSubmit={handleAdd}>
           <input
+            ref={newCustomerInputRef}
             value={newName}
             onChange={(event) => setNewName(event.target.value)}
             placeholder="Customer name"
@@ -338,6 +348,10 @@ export default function CustomersPage() {
             <i className="ti ti-users" aria-hidden="true" />
             <strong>No customers found</strong>
             <span>Add a customer or change the search query.</span>
+            <button type="button" className="lf-primary-button empty-action-button" onClick={() => newCustomerInputRef.current?.focus()}>
+              <i className="ti ti-user-plus" aria-hidden="true" />
+              Add Customer
+            </button>
           </div>
         )}
       </section>
