@@ -31,6 +31,10 @@ main.jsx, toggled from Topbar.jsx):
 - Full type scale, spacing scale (4/8/12/16/20/24px), and button/icon 
   size tiers also defined — check style.css :root before introducing 
   any new value
+- Theme guardrail: run `npm run check:theme` inside `frontend/` before
+  shipping CSS/theme work. It fails on undefined CSS custom properties
+  and the recurring bad pattern where text tokens are used as fills, or
+  surface/background tokens are used as text colors.
 
 ## Shared components (use these, don't reimplement)
 - MetricCard / ui-metric-card — the canonical stat card. Multiple 
@@ -61,13 +65,19 @@ but are invisible until actually rendered and clicked in a browser:
    as duplicate/legacy versions alongside a newer correct version — 
    dark mode fixes were applied to the new version while the old dead-
    or-still-rendering version kept the bug.
+4. Legacy aliases such as `--premium-ink` and `--premium-soft-surface`
+   were still used by checkout/history CSS after the final theme
+   contract stopped defining them. Undefined `var(...)` declarations are
+   silently dropped by CSS, so text can inherit the wrong color and
+   become washed out in either theme. Keep legacy aliases mapped in the
+   canonical theme contract until all old CSS is removed.
 
-RULE: any CSS/theme change must be verified by actually rendering it 
-in a browser in BOTH light and dark mode — "the build passed" is not 
-sufficient evidence a UI change works. If browser tooling isn't 
-available in a session, log the item as OPEN/unverified explicitly 
-rather than assuming it's fine — don't mark anything "done" on the 
-strength of a compile pass alone.
+RULE: any CSS/theme change must pass `npm run check:theme` and be
+verified by actually rendering it in a browser in BOTH light and dark
+mode — "the build passed" is not sufficient evidence a UI change works.
+If browser tooling isn't available in a session, log the item as
+OPEN/unverified explicitly rather than assuming it's fine — don't mark
+anything "done" on the strength of a compile pass alone.
 
 ## Current progress — see docs/interaction-design-progress.md
 That file has the full checklist. Summary as of last update:

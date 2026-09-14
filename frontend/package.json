@@ -7,6 +7,7 @@
     "dev": "node ./node_modules/vite/bin/vite.js",
     "build": "node ./node_modules/vite/bin/vite.js build",
     "lint": "node ./node_modules/eslint/bin/eslint.js .",
+    "check:theme": "node ./scripts/check-theme-contrast.mjs",
     "preview": "node ./node_modules/vite/bin/vite.js preview"
   },
   "dependencies": {

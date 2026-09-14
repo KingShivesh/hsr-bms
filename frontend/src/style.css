@@ -19076,8 +19076,10 @@ body.dark {
   --premium-surface: var(--bg-surface);
   --premium-surface-2: var(--bg-surface-raised);
   --premium-soft: var(--bg-surface-hover);
+  --premium-soft-surface: var(--bg-surface-hover);
   --premium-border: var(--border);
   --premium-border-strong: var(--border-strong);
+  --premium-ink: var(--text-primary);
   --premium-text: var(--text-primary);
   --premium-heading: var(--text-primary);
   --premium-muted: var(--text-secondary);
@@ -19094,6 +19096,7 @@ body.dark {
   --premium-danger-soft: var(--danger-bg);
   --premium-shadow: var(--elevation-2);
   --premium-shadow-soft: var(--elevation-1);
+  --metric-accent: var(--accent);
 
   --venue-card: var(--bg-surface);
   --venue-line: var(--border);
@@ -19116,6 +19119,12 @@ body.dark {
   --table-control-muted: var(--text-secondary);
   --table-control-text: var(--text-primary);
   --table-control-soft: var(--bg-surface-hover);
+  --table-accent: var(--accent);
+  --occupied-accent: var(--accent);
+  --occupied-card-bg: var(--bg-surface);
+  --occupied-control-bg: var(--bg-surface-raised);
+  --occupied-control-border: var(--border);
+  --occupied-control-surface: var(--bg-surface-raised);
 }
 
 body.dark {
@@ -19715,6 +19724,67 @@ body.dark .advanced-table-controls-page .billing-mode-control button.active {
 body.dark .advanced-table-controls-page .billing-mode-control button.active strong,
 body.dark .advanced-table-controls-page .billing-mode-control button.active span {
   color: var(--accent-text) !important;
+}
+
+/* Theme contrast guardrail:
+   Legacy page sections still exist, so this final layer maps every old
+   content token back to semantic light/dark pairs and protects text on
+   filled primary/accent controls. Keep new UI on the semantic tokens
+   above; this block exists to stop old aliases from silently falling
+   through and making text unreadable. */
+.table-history-modal,
+.table-history-head strong,
+.table-history-title,
+.checkout-applied-note,
+.checkout-payment-received span {
+  color: var(--text-primary) !important;
+}
+
+.table-history-head span,
+.table-history-empty,
+.checkout-quote-status,
+.checkout-rupee-hint,
+.checkout-final-review span,
+.checkout-final-review em {
+  color: var(--text-secondary) !important;
+}
+
+.checkout-flow-section,
+.checkout-split-payment-box,
+.closing-cash-grid,
+.checkout-payment-received span {
+  background: var(--bg-surface) !important;
+  border-color: var(--border) !important;
+}
+
+.checkout-rupee-apply-btn,
+.backend-status-banner button {
+  background: var(--bg-surface-raised) !important;
+  border-color: var(--border) !important;
+  color: var(--accent-text) !important;
+}
+
+.checkout-rupee-apply-btn:hover:not(:disabled),
+.backend-status-banner button:hover:not(:disabled) {
+  background: var(--bg-surface-active) !important;
+  border-color: color-mix(in srgb, var(--accent) 36%, var(--border)) !important;
+  color: var(--accent-text) !important;
+}
+
+.dashboard-panel-action:hover,
+.owner-close-day-btn:hover,
+body.dark .dashboard-panel-action:hover,
+body.dark .owner-close-day-btn:hover,
+body.dark .dashboard-home .dashboard-open-floor-btn,
+body.dark .dashboard-home .dashboard-close-day-btn {
+  color: var(--text-on-accent) !important;
+}
+
+.dashboard-panel-action:hover *,
+.owner-close-day-btn:hover *,
+body.dark .dashboard-home .dashboard-open-floor-btn *,
+body.dark .dashboard-home .dashboard-close-day-btn * {
+  color: inherit !important;
 }
 
 ::-webkit-scrollbar {
