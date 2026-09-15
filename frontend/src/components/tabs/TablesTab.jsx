@@ -2011,6 +2011,7 @@ function TableCard({
 
             {/* Bill display */}
             <div
+              className="table-felt-bill"
               style={{
                 position: "absolute",
                 bottom: compact ? "42px" : "52px",
@@ -2051,6 +2052,7 @@ function TableCard({
                 RUNNING TOTAL{gstPercent > 0 ? " (incl. GST est.)" : ""}
               </div>
               <div
+                className="table-felt-bill-total"
                 style={{
                   fontSize: "var(--text-xl)",
                   lineHeight: 1.1,

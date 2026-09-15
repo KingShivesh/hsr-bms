@@ -19726,6 +19726,55 @@ body.dark .advanced-table-controls-page .billing-mode-control button.active span
   color: var(--accent-text) !important;
 }
 
+.tables-view-title,
+.queue-title {
+  color: var(--text-primary) !important;
+}
+
+.tables-view-sub,
+.queue-sub {
+  color: var(--text-secondary) !important;
+}
+
+.settings-inline-note.info,
+.table-secondary-btn.reserve {
+  color: var(--accent-text) !important;
+}
+
+.settings-inline-note.info *,
+.table-secondary-btn.reserve * {
+  color: inherit !important;
+}
+
+body.dark .settings-inline-note.info,
+body.dark .table-secondary-btn.reserve {
+  color: var(--accent-text) !important;
+}
+
+body.dark .table-session-card > div:first-of-type button {
+  background: var(--primary) !important;
+  border-color: var(--primary) !important;
+  color: var(--primary-foreground) !important;
+}
+
+body.dark .table-session-card > div:first-of-type button:hover:not(:disabled) {
+  background: var(--primary-active) !important;
+  border-color: var(--primary-active) !important;
+}
+
+body.dark .table-session-card > div:first-of-type button * {
+  color: inherit !important;
+}
+
+body.dark .table-felt-bill {
+  background: var(--surface-emphasis) !important;
+  border: 1px solid var(--border) !important;
+}
+
+body.dark .table-felt-bill-total {
+  color: var(--text-primary) !important;
+}
+
 /* Theme contrast guardrail:
    Legacy page sections still exist, so this final layer maps every old
    content token back to semantic light/dark pairs and protects text on
