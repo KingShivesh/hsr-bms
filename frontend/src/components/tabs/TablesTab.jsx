@@ -1391,7 +1391,7 @@ function TableFloorTile({
           <strong>₹{rate}/hr</strong>
         </div>
         <div className="table-floor-summary">
-          <strong>{occupied ? fmt(session.elapsed) : booking ? bookingTime : "--:--"}</strong>
+          <strong>{occupied ? fmt(session.elapsed) : booking ? bookingTime : "Ready"}</strong>
           <span>
             {occupied
               ? `₹${total} running`

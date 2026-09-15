@@ -398,8 +398,8 @@ function LiveFloor({ tables, elapsed, onNavigate }) {
                 {status.label}
               </div>
               <div className="ops-table-main">
-                <span>{active ? fmtTime(elapsedSecs) : "--:--"}</span>
-                <strong>{money(runningTotal)}</strong>
+                <span>{active ? fmtTime(elapsedSecs) : "Ready"}</span>
+                <strong>{active ? money(runningTotal) : "—"}</strong>
               </div>
               <div className="ops-table-meta">
                 {active ? (

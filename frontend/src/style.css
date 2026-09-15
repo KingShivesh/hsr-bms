@@ -4366,15 +4366,43 @@ body.dark .table-session-card {
   box-shadow: 0 8px 18px rgba(31, 122, 79, 0.16);
 }
 
-.reports-date-filter {
+.reports-date-picker {
   min-height: var(--btn-h-sm);
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
   border: 1px solid var(--venue-line, var(--border));
   border-radius: var(--radius-sm);
-  padding: 7px 10px;
+  padding: 7px 12px;
   background: var(--venue-card, var(--surface));
   color: var(--venue-text, var(--text));
+  cursor: pointer;
   font-size: var(--text-sm);
-  font-weight: var(--weight-heavy);
+  font-weight: var(--weight-semibold);
+  white-space: nowrap;
+}
+
+.reports-date-picker.has-value {
+  border-color: color-mix(in srgb, var(--accent) 30%, var(--border));
+  background: var(--accent-soft);
+  color: var(--accent-text);
+}
+
+.reports-date-picker i,
+.reports-date-picker span {
+  pointer-events: none;
+}
+
+.reports-date-filter {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  padding: 0;
+  opacity: 0;
+  cursor: pointer;
 }
 
 .report-metric-card {
@@ -13876,9 +13904,16 @@ body.dark .backend-status-banner.is-connecting {
   height: var(--btn-h-sm);
   display: grid;
   place-items: center;
+  border: 1px solid var(--sidebar-border);
   border-radius: var(--radius-sm);
-  background: color-mix(in srgb, var(--border) 42%, transparent);
-  color: var(--text-muted);
+  background: color-mix(in srgb, var(--sidebar-text) 8%, transparent);
+  color: var(--sidebar-text);
+  box-shadow: none;
+}
+
+.cf-collapse-btn i {
+  color: inherit;
+  font-size: var(--text-lg);
 }
 
 .cf-collapse-btn:hover {

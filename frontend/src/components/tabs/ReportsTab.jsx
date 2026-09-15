@@ -36,6 +36,12 @@ const BILL_DATE_FORMATTER = new Intl.DateTimeFormat("en-IN", {
   second: "2-digit",
   hourCycle: "h23",
 });
+const DATE_PICKER_FORMATTER = new Intl.DateTimeFormat("en-IN", {
+  timeZone: "Asia/Kolkata",
+  day: "2-digit",
+  month: "short",
+  year: "numeric",
+});
 
 function formatBillDate(row) {
   const ts = Number(row?.ts);
@@ -65,6 +71,13 @@ function billDateKey(row) {
   }
   const match = String(row?.date || "").match(/^(\d{2})\/(\d{2})\/(\d{4})/);
   return match ? `${match[3]}-${match[2]}-${match[1]}` : "";
+}
+
+function formatDatePickerLabel(value) {
+  if (!value) return "Pick date";
+  const date = new Date(`${value}T00:00:00`);
+  if (Number.isNaN(date.getTime())) return "Pick date";
+  return DATE_PICKER_FORMATTER.format(date);
 }
 
 function TabBtn({ active, onClick, children }) {
@@ -178,15 +191,20 @@ function HistoryView({ history, period, onPeriodChange, selectedDate, onDateChan
               {p.label}
             </TabBtn>
           ))}
-          <input
-            className="reports-date-filter"
-            type="date"
-            value={selectedDate}
-            onChange={(e) => {
-              onDateChange(e.target.value);
-              onPeriodChange(e.target.value ? "date" : "today");
-            }}
-          />
+          <label className={`reports-date-picker ${selectedDate ? "has-value" : ""}`}>
+            <i className="ti ti-calendar" aria-hidden="true" />
+            <span>{formatDatePickerLabel(selectedDate)}</span>
+            <input
+              className="reports-date-filter"
+              type="date"
+              value={selectedDate}
+              aria-label="Choose report date"
+              onChange={(e) => {
+                onDateChange(e.target.value);
+                onPeriodChange(e.target.value ? "date" : "today");
+              }}
+            />
+          </label>
           <button
             onClick={onExport}
             disabled={exporting}
