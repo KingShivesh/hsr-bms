@@ -261,9 +261,9 @@ function QuickOperations({ onNavigate }) {
   );
 }
 
-function KpiCard({ label, value, sub, icon, trend }) {
+function KpiCard({ label, value, sub, icon, trend, empty = false }) {
   return (
-    <article className="ops-kpi">
+    <article className={`ops-kpi ${empty ? "is-empty" : ""}`}>
       <div className="ops-kpi-top">
         <span>{label}</span>
         <i className={`ti ${icon}`} aria-hidden="true" />
@@ -298,8 +298,22 @@ function KeyMetricsSection({
   trends,
 }) {
   const yesterdayData = yesterday || {};
-  const liveTrend = normalizeTrend(trends?.live_floor_value, { tone: "neutral", icon: "ti-minus", label: "live estimate now" });
-  const activeTrend = normalizeTrend(trends?.active_tables, { tone: "neutral", icon: "ti-minus", label: `${TOTAL_TABLES - activeCount} idle now` });
+  const hasClosedSessions = Number(sessionCount || 0) > 0;
+  const hasLiveValue = Number(liveTableTotal || 0) > 0;
+  const hasActiveTables = Number(activeCount || 0) > 0;
+  const hasFoodRevenue = Number(foodRevenue || 0) > 0;
+  const revenueTrend = hasClosedSessions
+    ? normalizeTrend(trends?.today_revenue, trendFromComparison(ownerTotal, yesterdayData.total_revenue ?? yesterdayData.sale, "revenue"))
+    : { tone: "neutral", icon: "ti-circle-dotted", label: "awaiting first checkout" };
+  const liveTrend = hasLiveValue
+    ? normalizeTrend(trends?.live_floor_value, { tone: "neutral", icon: "ti-minus", label: "live estimate now" })
+    : { tone: "neutral", icon: "ti-circle-dotted", label: "no running bill value" };
+  const activeTrend = hasActiveTables
+    ? normalizeTrend(trends?.active_tables, { tone: "neutral", icon: "ti-minus", label: `${TOTAL_TABLES - activeCount} idle now` })
+    : { tone: "neutral", icon: "ti-circle-dotted", label: "all tables ready" };
+  const foodTrend = hasFoodRevenue
+    ? normalizeTrend(trends?.food_attach, trendFromComparison(foodAttachment, yesterdayData.food_attach, "food attach"))
+    : { tone: "neutral", icon: "ti-circle-dotted", label: "no cafe orders yet" };
   return (
     <section className="ops-metrics-section" aria-label="Key metrics">
       <div className="ops-metrics-head">
@@ -317,30 +331,34 @@ function KeyMetricsSection({
         <KpiCard
           label={dateRange === "today" ? "Today Revenue" : `${periodLabel} Revenue`}
           value={money(ownerTotal)}
-          sub={`${sessionCount || 0} sessions closed in range`}
+          sub={hasClosedSessions ? `${sessionCount} sessions closed in range` : "No closed sessions in range"}
           icon="ti-cash"
-          trend={normalizeTrend(trends?.today_revenue, trendFromComparison(ownerTotal, yesterdayData.total_revenue ?? yesterdayData.sale, "revenue"))}
+          trend={revenueTrend}
+          empty={!hasClosedSessions}
         />
         <KpiCard
           label="Live Floor Value"
           value={money(liveTableTotal)}
-          sub="Estimated value still running"
+          sub={hasLiveValue ? "Estimated value still running" : "No tables are billing right now"}
           icon="ti-live-view"
           trend={liveTrend}
+          empty={!hasLiveValue}
         />
         <KpiCard
           label="Active Tables"
           value={`${activeCount}/${TOTAL_TABLES}`}
-          sub={`${occupancyPercent}% occupancy right now`}
+          sub={hasActiveTables ? `${occupancyPercent}% occupancy right now` : "Floor is fully ready to seat"}
           icon="ti-layout-grid"
           trend={activeTrend}
+          empty={!hasActiveTables}
         />
         <KpiCard
           label="Food Attach"
           value={`${foodAttachment}%`}
-          sub={`${money(foodRevenue)} food revenue`}
+          sub={hasFoodRevenue ? `${money(foodRevenue)} food revenue` : "No cafe orders in range"}
           icon="ti-tools-kitchen-2"
-          trend={normalizeTrend(trends?.food_attach, trendFromComparison(foodAttachment, yesterdayData.food_attach, "food attach"))}
+          trend={foodTrend}
+          empty={!hasFoodRevenue}
         />
       </div>
     </section>

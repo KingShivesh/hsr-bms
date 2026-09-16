@@ -24,6 +24,7 @@ const REPORT_TABS = [
   { id: "history", label: "Bills" },
   { id: "tables", label: "Table Performance" },
   { id: "customers", label: "Regular Customers" },
+  { id: "advanced", label: "Analytics" },
 ];
 const DEFAULT_REPORT_TAB = "history";
 const BILL_DATE_FORMATTER = new Intl.DateTimeFormat("en-IN", {
@@ -92,13 +93,14 @@ function TabBtn({ active, onClick, children }) {
   );
 }
 
-function StatCard({ label, value, color }) {
+function StatCard({ label, value, color, context, empty = false }) {
   const statColor = color === "var(--text-primary)" ? "var(--border-strong)" : color;
   return (
     <MetricCard
       label={label}
       value={value}
-      className="report-metric-card"
+      context={context}
+      className={`report-metric-card ${empty ? "is-empty" : ""}`}
       style={{ "--metric-accent": statColor }}
     />
   );
@@ -130,6 +132,58 @@ function LoadingState({ title = "Loading report..." }) {
         <div className="skeleton-card" />
       </div>
       <div className="skeleton-panel" />
+    </div>
+  );
+}
+
+function ReportEmptyTable({ title, detail, columns, rows = 4 }) {
+  return (
+    <div className="report-empty-panel" role="status">
+      <div className="report-empty-head">
+        <div>
+          <span>No data in range</span>
+          <strong>{title}</strong>
+        </div>
+        <i className="ti ti-chart-dots" aria-hidden="true" />
+      </div>
+      <p>{detail}</p>
+      <div className="report-empty-table" aria-hidden="true">
+        <div className="report-empty-row report-empty-row-head">
+          {columns.map((column) => (
+            <span key={column}>{column}</span>
+          ))}
+        </div>
+        {Array.from({ length: rows }).map((_, index) => (
+          <div className="report-empty-row" key={index}>
+            {columns.map((column, columnIndex) => (
+              <span key={`${column}-${index}`} className={columnIndex === 0 ? "label" : ""} />
+            ))}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function ReportEmptyList({ title, detail, rows }) {
+  return (
+    <div className="report-empty-panel compact" role="status">
+      <div className="report-empty-head">
+        <div>
+          <span>No traffic pattern yet</span>
+          <strong>{title}</strong>
+        </div>
+        <i className="ti ti-clock-hour-4" aria-hidden="true" />
+      </div>
+      <p>{detail}</p>
+      <div className="report-empty-list" aria-hidden="true">
+        {rows.map((row) => (
+          <div className="report-empty-list-row" key={row}>
+            <span>{row}</span>
+            <em>No sessions</em>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
@@ -924,20 +978,56 @@ function AdvancedAnalyticsView() {
 
   if (!data) return <LoadingState title="Loading advanced analytics..." />;
 
+  const tableProfitability = Array.isArray(data.table_profitability) ? data.table_profitability : [];
+  const quietHours = Array.isArray(data.quiet_hours) ? data.quiet_hours : [];
+  const hasQuietHourSignals = quietHours.some((row) => Number(row.sessions || 0) > 0);
+  const hasCustomerData = Number(data.total_customers || 0) > 0;
+  const hasSpendData = Number(data.avg_spend_per_customer || 0) > 0;
+  const hasFoodAttachData = Number(data.food_attachment_rate || 0) > 0;
+
   return (
     <div>
       <div className="advanced-grid">
-        <StatCard label="Retention" value={`${data.retention_rate}%`} color="var(--accent)" />
-        <StatCard label="Repeat Customers" value={`${data.repeat_customers}/${data.total_customers}`} color="var(--success)" />
-        <StatCard label="Food Attachment" value={`${data.food_attachment_rate}%`} color="var(--warning)" />
-        <StatCard label="Avg Spend / Customer" value={`₹${data.avg_spend_per_customer.toLocaleString("en-IN")}`} color="var(--text-primary)" />
+        <StatCard
+          label="Retention"
+          value={`${data.retention_rate}%`}
+          color="var(--accent)"
+          context={hasCustomerData ? "Returning customer share" : "Awaiting customer history"}
+          empty={!hasCustomerData}
+        />
+        <StatCard
+          label="Repeat Customers"
+          value={`${data.repeat_customers}/${data.total_customers}`}
+          color="var(--success)"
+          context={hasCustomerData ? "Customers with repeat visits" : "No customer visits in range"}
+          empty={!hasCustomerData}
+        />
+        <StatCard
+          label="Food Attachment"
+          value={`${data.food_attachment_rate}%`}
+          color="var(--warning)"
+          context={hasFoodAttachData ? "Orders attached to sessions" : "No food orders attached yet"}
+          empty={!hasFoodAttachData}
+        />
+        <StatCard
+          label="Avg Spend / Customer"
+          value={`₹${data.avg_spend_per_customer.toLocaleString("en-IN")}`}
+          color="var(--text-primary)"
+          context={hasSpendData ? "Closed spend per customer" : "Awaiting closed bills"}
+          empty={!hasSpendData}
+        />
       </div>
 
       <div className="analytics-panels">
         <div className="history-section">
           <div className="section-heading">Table profitability</div>
-          {data.table_profitability.length === 0 ? (
-            <EmptyState title="No table profitability yet" detail="Completed sessions will populate this table." />
+          {tableProfitability.length === 0 ? (
+            <ReportEmptyTable
+              title="Table profitability is ready"
+              detail="Close table sessions in this range and the report will fill the same columns instead of showing a blank gap."
+              columns={["Table", "Sessions", "Revenue", "Avg Duration", "Revenue / Session"]}
+              rows={5}
+            />
           ) : (
             <table className="data-table">
               <thead>
@@ -950,7 +1040,7 @@ function AdvancedAnalyticsView() {
                 </tr>
               </thead>
               <tbody>
-                {data.table_profitability.map((row) => (
+                {tableProfitability.map((row) => (
                   <tr key={row.table}>
                     <td style={{ fontWeight: "var(--weight-bold)" }}>{row.table}</td>
                     <td>{row.sessions}</td>
@@ -966,15 +1056,25 @@ function AdvancedAnalyticsView() {
 
         <div className="history-section">
           <div className="section-heading">Quiet hours</div>
-          {data.quiet_hours.map((row) => (
-            <div key={row.hour} className="risk-row">
-              <span>{row.hour}:00 - {row.hour + 1}:00</span>
-              <strong>{row.sessions} sessions</strong>
-            </div>
-          ))}
-          <div className="empty-state-detail" style={{ marginTop: "10px" }}>
-            These are lower-traffic slots based on recent checkout history.
-          </div>
+          {!hasQuietHourSignals ? (
+            <ReportEmptyList
+              title="Quiet-hour analysis is waiting"
+              detail="Once checkout history exists, this panel ranks the lower-traffic slots instead of leaving the card visually empty."
+              rows={["Opening block", "Midday block", "Closing block"]}
+            />
+          ) : (
+            <>
+              {quietHours.map((row) => (
+                <div key={row.hour} className="risk-row">
+                  <span>{row.hour}:00 - {row.hour + 1}:00</span>
+                  <strong>{row.sessions} sessions</strong>
+                </div>
+              ))}
+              <div className="empty-state-detail" style={{ marginTop: "10px" }}>
+                These are lower-traffic slots based on recent checkout history.
+              </div>
+            </>
+          )}
         </div>
       </div>
     </div>
