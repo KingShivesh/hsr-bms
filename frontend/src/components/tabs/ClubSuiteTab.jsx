@@ -178,9 +178,9 @@ function LoadErrorBanner({ message, onRetry }) {
   );
 }
 
-function ActionButton({ tone = "default", icon, children, ...props }) {
+function ActionButton({ tone = "default", icon, children, className = "", ...props }) {
   return (
-    <button type="button" className={`cf-action-btn ${tone}`} {...props}>
+    <button type="button" className={["cf-action-btn", tone, className].filter(Boolean).join(" ")} {...props}>
       {icon && <i className={`ti ${icon}`} aria-hidden="true" />}
       <span>{children}</span>
     </button>
@@ -986,7 +986,10 @@ function InventoryView({ menu, maintenance, actions, busy, activeAction, showToa
                 </div>
                 <div className="cf-row-actions">
                   <ActionButton
+                    className="cf-icon-action"
                     icon="ti-pencil"
+                    aria-label={`Edit ${item.name}`}
+                    title="Edit item"
                     onClick={() => setEditing({
                       oldName: item.name,
                       newName: item.name,
@@ -994,23 +997,29 @@ function InventoryView({ menu, maintenance, actions, busy, activeAction, showToa
                       category: item.category || "Veg Snacks",
                     })}
                   >
-                    Edit Item
+                    Edit
                   </ActionButton>
                   <ActionButton
+                    className="cf-icon-action"
                     tone={item.available === false ? "success" : "warning"}
-                    icon={item.available === false ? "ti-check" : "ti-package-off"}
+                    icon={activeAction === `stock-${item.name}` ? "ti-loader-2" : item.available === false ? "ti-check" : "ti-package-off"}
+                    aria-label={activeAction === `stock-${item.name}` ? `Saving ${item.name}` : item.available === false ? `Mark ${item.name} in stock` : `Mark ${item.name} out of stock`}
+                    title={item.available === false ? "Mark in stock" : "Mark out of stock"}
                     onClick={() => actions.setItemAvailability(item.name, item.available === false)}
                     disabled={busy}
                   >
-                    {activeAction === `stock-${item.name}` ? "Saving..." : item.available === false ? "In stock" : "Mark Out of Stock"}
+                    {activeAction === `stock-${item.name}` ? "Saving" : item.available === false ? "In stock" : "Out of stock"}
                   </ActionButton>
                   <ActionButton
+                    className="cf-icon-action"
                     tone="danger"
-                    icon="ti-trash"
+                    icon={activeAction === `menu-delete-${item.name}` ? "ti-loader-2" : "ti-trash"}
+                    aria-label={activeAction === `menu-delete-${item.name}` ? `Deleting ${item.name}` : `Delete ${item.name}`}
+                    title="Delete item"
                     onClick={() => actions.deleteMenuItem(item)}
                     disabled={busy}
                   >
-                    {activeAction === `menu-delete-${item.name}` ? "Deleting..." : "Delete Item"}
+                    {activeAction === `menu-delete-${item.name}` ? "Deleting" : "Delete"}
                   </ActionButton>
                 </div>
               </div>

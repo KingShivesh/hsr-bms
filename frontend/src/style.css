@@ -17338,6 +17338,34 @@ body.dark .cf-table-slot p {
   grid-template-columns: auto minmax(0, 1fr) auto;
 }
 
+.cf-inventory-row .cf-row-actions {
+  flex-wrap: nowrap;
+  justify-content: flex-end;
+}
+
+.cf-icon-action {
+  width: var(--btn-h-md);
+  min-width: var(--btn-h-md);
+  padding: 0 !important;
+  gap: 0;
+}
+
+.cf-icon-action span {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.cf-icon-action i {
+  font-size: var(--icon-sm);
+}
+
 .cf-inventory-row.is-selected {
   border-color: color-mix(in srgb, var(--accent) 42%, var(--border));
   background: color-mix(in srgb, var(--accent-bg) 70%, var(--surface));
@@ -17565,6 +17593,16 @@ body.dark .cf-modal-head {
 
   .cf-row-actions {
     grid-column: 1 / -1;
+  }
+
+  .cf-inventory-row .cf-row-actions {
+    align-items: center;
+    justify-content: flex-end;
+    width: auto;
+  }
+
+  .cf-row-actions > .cf-icon-action {
+    flex: 0 0 var(--btn-h-md);
   }
 
   .cf-form-grid {
