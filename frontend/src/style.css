@@ -19900,6 +19900,176 @@ body.dark .dashboard-home .dashboard-close-day-btn * {
   color: inherit !important;
 }
 
+/* Identity pass Step 4: compress dashboard preambles so operational data starts earlier. */
+.ops-dashboard {
+  gap: var(--space-5);
+}
+
+.ops-quick-section {
+  height: auto !important;
+  padding: var(--space-2) var(--space-3) !important;
+  border-radius: var(--radius-md) !important;
+}
+
+.ops-quick-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.ops-quick-action {
+  min-height: 44px;
+  flex: 1 1 0;
+  flex-direction: row;
+  gap: var(--space-2);
+  justify-content: center;
+  padding: 0 var(--space-3);
+  border-radius: var(--radius-sm);
+}
+
+.ops-quick-action i {
+  width: var(--icon-md);
+  height: var(--icon-md);
+  border-radius: var(--radius-sm);
+  font-size: var(--icon-sm);
+}
+
+.ops-quick-action > span {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  white-space: nowrap;
+}
+
+.live-floor-page {
+  gap: var(--space-4);
+}
+
+.lf-hero {
+  align-items: center;
+  min-height: 0;
+  padding: var(--space-4) var(--space-5);
+  gap: var(--space-4);
+  border-radius: var(--radius-md);
+}
+
+.lf-date {
+  font-size: var(--text-xs);
+  letter-spacing: 0.06em;
+}
+
+.lf-hero h1 {
+  margin-top: 2px;
+  font-size: var(--text-2xl);
+  line-height: 1.1;
+}
+
+.lf-hero p {
+  max-width: 680px;
+  margin-top: 4px;
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  line-height: 1.35;
+  display: none;
+}
+
+.lf-state-row {
+  margin-top: var(--space-3);
+  gap: var(--space-2);
+}
+
+.lf-state-row span {
+  min-height: 24px;
+  padding: 0 var(--space-2);
+  font-size: var(--text-xs);
+}
+
+.lf-state-row i {
+  font-size: var(--text-xs);
+}
+
+.lf-hero-actions {
+  justify-content: flex-end;
+  flex-wrap: nowrap;
+  gap: var(--space-2);
+}
+
+.lf-primary-button,
+.lf-secondary-button {
+  min-height: var(--btn-h-md);
+  padding: 0 var(--space-3);
+  border-radius: var(--radius-sm);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  white-space: nowrap;
+}
+
+.lf-metrics {
+  gap: var(--space-2);
+  padding: var(--space-2);
+  border-radius: var(--radius-md);
+}
+
+.lf-metrics > div {
+  min-height: 68px;
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-sm);
+}
+
+.lf-metrics span,
+.lf-metrics small {
+  font-size: var(--text-xs);
+}
+
+.lf-metrics strong {
+  margin-top: 4px;
+  font-size: var(--text-xl);
+}
+
+.lf-metrics small {
+  margin-top: 4px;
+}
+
+.lf-workbench {
+  padding: var(--space-4);
+  gap: var(--space-4);
+  border-radius: var(--radius-md);
+}
+
+@media (max-width: 1320px) {
+  .ops-quick-actions {
+    display: flex;
+  }
+}
+
+@media (max-width: 980px) {
+  .ops-quick-actions {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .lf-hero-actions {
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 760px) {
+  .ops-quick-actions {
+    grid-template-columns: 1fr;
+  }
+
+  .ops-quick-action {
+    justify-content: flex-start;
+  }
+
+  .lf-hero {
+    padding: var(--space-4);
+  }
+
+  .lf-hero-actions {
+    width: 100%;
+  }
+}
+
 ::-webkit-scrollbar {
   width: 10px;
   height: 10px;
