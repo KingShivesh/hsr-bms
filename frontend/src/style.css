@@ -19806,6 +19806,39 @@ body.dark .table-felt-bill-total {
   color: var(--text-primary) !important;
 }
 
+.sb-label,
+.sb-section,
+.cf-role-scope,
+.metric-label,
+.tables-view-sub,
+.dashboard-panel-sub,
+.queue-sub,
+.form-label,
+.table-field-stack > span,
+.table-rate-line,
+.checkout-split-meta,
+.checkout-split-parts,
+.checkout-frame-card span,
+.checkout-frame-card time,
+.lf-date,
+.lf-eyebrow,
+.lf-state-row span,
+.lf-metrics span,
+.lf-metrics small,
+.food-item-meta,
+.settings-inline-note {
+  font-weight: var(--weight-medium) !important;
+}
+
+.metric-card .metric-label,
+.report-metric-card .metric-label,
+.ui-metric-card .metric-label,
+.data-table thead th,
+.ops-data-table th,
+.cf-data-table th {
+  font-weight: var(--weight-semibold) !important;
+}
+
 /* Theme contrast guardrail:
    Legacy page sections still exist, so this final layer maps every old
    content token back to semantic light/dark pairs and protects text on

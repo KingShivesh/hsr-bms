@@ -247,7 +247,7 @@ export default function LiveFloor({ role = "admin", onNavigate, newSessionReques
       <div className="lf-hero">
         <div>
           <span className="lf-date">{todayLabel()} · {role === "staff" ? "Staff console" : "Admin console"}</span>
-          <h1>Live Floor Command Center</h1>
+          <h1>Command Center</h1>
           <p>Start tables, monitor running value, attach orders and checkout from the same operating view.</p>
           <div className="lf-state-row" aria-label="Live floor summary">
             <span><i className="ti ti-player-play" aria-hidden="true" /> {summary.active_tables || 0} active</span>
