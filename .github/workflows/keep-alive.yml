@@ -1,6 +1,11 @@
 name: Keep Render backend awake
 
 on:
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/keep-alive.yml"
   schedule:
     # Offset from the top of the hour to reduce GitHub Actions peak-load delays.
     - cron: "7,17,27,37,47,57 * * * *"
