@@ -20196,6 +20196,32 @@ body.dark .dashboard-home .dashboard-close-day-btn * {
   }
 }
 
+/* SNOOK-derived numeric hierarchy: primary values lead, labels recede. */
+.ops-kpi-top span,
+.reports-summary-grid .ui-metric-head {
+  font-size: var(--text-xs) !important;
+  font-weight: var(--weight-semibold) !important;
+}
+
+.ops-kpi strong,
+.reports-summary-grid .report-metric-card strong {
+  font-size: var(--text-3xl) !important;
+  font-weight: var(--weight-black) !important;
+}
+
+.lf-table-money span,
+.session-money-card.is-total span {
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semibold);
+}
+
+.lf-table-money strong,
+.session-money-card.is-total strong {
+  font-size: var(--text-2xl);
+  font-weight: var(--weight-black);
+  line-height: 1.1;
+}
+
 .lf-hero {
   align-items: center;
   min-height: 0;
