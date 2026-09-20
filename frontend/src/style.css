@@ -20109,6 +20109,93 @@ body.dark .dashboard-home .dashboard-close-day-btn * {
   gap: var(--space-4);
 }
 
+/* Identity pass closeout: keep page chrome and report preambles compact. */
+.cf-title-block {
+  flex: 1 1 auto;
+  overflow: hidden;
+}
+
+.cf-title-block p {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.topbar-right {
+  flex: 0 0 auto;
+}
+
+.ops-dashboard {
+  gap: var(--space-3);
+}
+
+.ops-metrics-section {
+  gap: var(--space-3);
+}
+
+.ops-quick-section {
+  padding-block: var(--space-1) !important;
+}
+
+.reports-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--space-3);
+  margin-bottom: var(--space-3);
+}
+
+.reports-summary-grid .report-metric-card {
+  min-height: 96px;
+  padding: var(--space-3);
+}
+
+.reports-summary-grid .report-metric-card strong,
+.advanced-grid .report-metric-card strong {
+  margin-top: var(--space-2);
+}
+
+.advanced-grid .report-metric-card p {
+  margin-top: var(--space-2);
+}
+
+.reports-tabs {
+  min-height: 40px;
+  margin-bottom: var(--space-2);
+  padding: 3px;
+}
+
+.reports-tabs .ui-tab-btn {
+  min-height: 36px;
+  padding-block: var(--space-2);
+}
+
+.advanced-grid {
+  margin-bottom: var(--space-3);
+}
+
+.advanced-grid .report-metric-card {
+  min-height: 120px;
+  padding: var(--space-3);
+}
+
+@media (min-width: 1180px) {
+  .ops-kpi-grid.four {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 761px) and (max-width: 1320px) {
+  .topbar-date {
+    display: none;
+  }
+}
+
+@media (max-width: 760px) {
+  .reports-summary-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
 .lf-hero {
   align-items: center;
   min-height: 0;

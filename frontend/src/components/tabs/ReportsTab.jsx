@@ -1162,14 +1162,7 @@ export default function ReportsTab({ onNavigate }) {
         />
       )}
       {/* Summary cards — always visible */}
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(4,1fr)",
-          gap: "12px",
-          marginBottom: "20px",
-        }}
-      >
+      <div className="reports-summary-grid">
         <StatCard
           label="Today's Revenue"
           value={`₹${summary.sale.toLocaleString("en-IN")}`}
