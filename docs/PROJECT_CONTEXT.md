@@ -107,17 +107,15 @@ Analytics dark-mode stat-card bug, migration to shared metric cards,
 dead/reachable component findings, and the full routing migration.
 
 ## Deployment / branch state
-- `main` is still at `0203566` locally/remotely and does NOT contain 
-  `codex/interaction-design-safety-pass` (`264836c`) or 
-  `codex/client-side-routing-pass` (`0036402` and later routing commits).
-- `codex/client-side-routing-pass` contains the interaction-design work 
-  plus the routing migration and cleanup commits, but it has not been 
-  merged/deployed.
-- `frontend/vercel.json` only defines SPA rewrites to `index.html`; it 
-  does not declare the connected Vercel production branch. Treat the 
-  live Vercel site as likely still running `main` until the branch is 
-  explicitly merged/deployed and Vercel confirms a successful build.
-- Do not merge or deploy without explicit user approval.
+- `main` contains the interaction-design, routing, post-deploy UX,
+  operational UX, and identity/polish passes through `212400d`.
+- `frontend/vercel.json` defines SPA rewrites to `index.html`; after pushing
+  `main`, verify the live Vercel bundle hash and deployed labels instead of
+  treating a successful Git push as deployment proof.
+- The Render backend remains on the Free plan. A best-effort GitHub Actions
+  keep-alive and its limitations are documented in `docs/KEEP_ALIVE.md`.
+- Completed branches should be merged and deployment-verified in the same
+  session after their checks pass; do not leave verified work unshipped.
 
 ## Deferred / Follow-up
 - Bill/transaction search is intentionally out of scope until there is 

@@ -103,7 +103,7 @@ function BackendStatusBanner({ backendStatus, onRetry }) {
       <div className="backend-status-copy">
         <span>{backendStatus.message}</span>
         {connecting && (
-          <small>Render free-tier services can wake slowly after inactivity. Keep this tab open.</small>
+          <small>The free-tier keep-alive can occasionally miss a scheduled run. The server may still need a moment to wake.</small>
         )}
         {backendStatus.requestId && <code>{backendStatus.requestId}</code>}
       </div>
