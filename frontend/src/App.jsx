@@ -397,7 +397,7 @@ function AppInner() {
               </div>
             }
           >
-            <div className="page">
+            <div className="page route-page" key={`${location.pathname}:${page}`}>
               {page === "dashboard" && (
                 <Dashboard metrics={metrics} onNavigate={goToPage} role={role} />
               )}
