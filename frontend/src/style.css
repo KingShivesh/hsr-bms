@@ -20229,11 +20229,9 @@ body.dark .dashboard-home .dashboard-close-day-btn * {
 @keyframes route-page-enter {
   from {
     opacity: 0;
-    transform: translateY(2px);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
   }
 }
 
@@ -20420,5 +20418,77 @@ body.dark .dashboard-home .dashboard-close-day-btn * {
   .table-notes-btn,
   .ui-tab-btn {
     min-height: var(--btn-h-lg) !important;
+  }
+
+  .cf-sidebar .sb-mobile-toggle,
+  .cf-sidebar .sb-item,
+  .topbar-icon-btn,
+  .cf-page-primary-action,
+  .lf-icon-button,
+  .cf-modal-head button,
+  .food-search-clear {
+    min-width: var(--btn-h-lg) !important;
+    width: var(--btn-h-lg);
+    min-height: var(--btn-h-lg) !important;
+    height: var(--btn-h-lg);
+  }
+
+  .cf-sidebar .sb-item {
+    align-self: center;
+    margin-inline: auto;
+  }
+
+  .cf-sidebar.mobile-open .sb-item {
+    align-self: stretch;
+    width: auto;
+    margin-inline: var(--space-2);
+  }
+
+  .lf-primary-button,
+  .lf-secondary-button,
+  .op2-modal-actions button,
+  .cf-modal-actions button,
+  .cf-form-field input,
+  .cf-form-field select,
+  .lf-field input,
+  .lf-field select,
+  .food-menu-search {
+    min-height: var(--btn-h-lg) !important;
+  }
+
+  .lf-modal-backdrop,
+  .cf-modal-backdrop,
+  .app-confirm-backdrop {
+    padding: var(--space-2);
+  }
+
+  .lf-new-session,
+  .op2-modal,
+  .cf-modal,
+  .app-confirm-dialog {
+    max-height: calc(100dvh - (2 * var(--space-2)));
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+
+  .cafe-order-region {
+    order: -1;
+  }
+}
+
+@media (max-width: 480px) {
+  .cf-page-primary-action {
+    order: 0;
+    flex: 0 0 var(--btn-h-lg);
+    padding: 0;
+  }
+
+  .cf-page-primary-action span {
+    display: none;
+  }
+
+  .topbar-breadcrumb span,
+  .topbar-breadcrumb i {
+    display: none;
   }
 }
