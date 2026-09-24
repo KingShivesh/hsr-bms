@@ -67,6 +67,7 @@ def get_current_claims(
         return {
             "username": username,
             "role": role,
+            "expires_at": payload.get("exp"),
         }
     except JWTError:
         raise HTTPException(

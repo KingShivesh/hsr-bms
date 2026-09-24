@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta
 import time
 
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException
 from pydantic import BaseModel
 from sqlalchemy import func
 from sqlalchemy.exc import IntegrityError
@@ -11,6 +11,7 @@ import models
 from database import get_db
 from hsr_config import IST_TZ, TABLE_RATES, get_ist_now
 from validators import require_full_name
+from realtime import queue_realtime_event
 
 router = APIRouter()
 
@@ -102,7 +103,11 @@ def list_bookings(db: Session = Depends(get_db)):
 
 
 @router.post("")
-def create_booking(body: BookingBody, db: Session = Depends(get_db)):
+def create_booking(
+    body: BookingBody,
+    background_tasks: BackgroundTasks,
+    db: Session = Depends(get_db),
+):
     name = require_full_name(body.customer_name, "Booking customer name")
     booking_dt = _parse_time(body.booking_time)
     if booking_dt < get_ist_now() - timedelta(minutes=5):
@@ -151,11 +156,17 @@ def create_booking(body: BookingBody, db: Session = Depends(get_db)):
         db.rollback()
         raise HTTPException(status_code=409, detail="Booking could not be created. Please retry.")
     db.refresh(booking)
+    queue_realtime_event(background_tasks, "reservation.changed", "reservations", "bookings")
+    queue_realtime_event(background_tasks, "table.updated", "floor", "live-floor")
     return _format_booking(booking)
 
 
 @router.post("/{booking_id}/restore")
-def restore_booking(booking_id: int, db: Session = Depends(get_db)):
+def restore_booking(
+    booking_id: int,
+    background_tasks: BackgroundTasks,
+    db: Session = Depends(get_db),
+):
     booking = db.query(models.Booking).filter(models.Booking.id == booking_id).first()
     if not booking:
         raise HTTPException(status_code=404, detail="Booking not found")
@@ -187,13 +198,21 @@ def restore_booking(booking_id: int, db: Session = Depends(get_db)):
     booking.released_at = ""
     db.commit()
     db.refresh(booking)
+    queue_realtime_event(background_tasks, "reservation.changed", "reservations", "bookings")
+    queue_realtime_event(background_tasks, "table.updated", "floor", "live-floor")
     return _format_booking(booking)
 
 
 @router.delete("/{booking_id}")
-def cancel_booking(booking_id: int, db: Session = Depends(get_db)):
+def cancel_booking(
+    booking_id: int,
+    background_tasks: BackgroundTasks,
+    db: Session = Depends(get_db),
+):
     booking = db.query(models.Booking).filter(models.Booking.id == booking_id).first()
     if booking:
         booking.status = "cancelled"
         db.commit()
+        queue_realtime_event(background_tasks, "reservation.changed", "reservations", "bookings")
+        queue_realtime_event(background_tasks, "table.updated", "floor", "live-floor")
     return {"ok": True}

@@ -1,6 +1,6 @@
 import time
 
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException
 from pydantic import BaseModel, Field
 from sqlalchemy.orm import Session
 
@@ -8,6 +8,7 @@ import models
 from database import get_db
 from hsr_config import TABLES, TABLE_RATES, get_ist_now
 from validators import require_full_name
+from realtime import queue_realtime_event
 
 router = APIRouter()
 
@@ -75,7 +76,11 @@ def list_waitlist(db: Session = Depends(get_db)):
 
 
 @router.post("")
-def add_waitlist_entry(body: WaitlistBody, db: Session = Depends(get_db)):
+def add_waitlist_entry(
+    body: WaitlistBody,
+    background_tasks: BackgroundTasks,
+    db: Session = Depends(get_db),
+):
     name = require_full_name(body.customer_name, "Queue customer name")
     preferred_type = (body.preferred_type or "ANY").upper()
     if preferred_type not in ["ANY", "POOL", "SNOOKER"]:
@@ -94,11 +99,17 @@ def add_waitlist_entry(body: WaitlistBody, db: Session = Depends(get_db)):
     db.add(entry)
     db.commit()
     db.refresh(entry)
+    queue_realtime_event(background_tasks, "waitlist.changed", "waitlist", "waitlist")
     return _format_entry(entry, db, 1)
 
 
 @router.post("/{entry_id}/seat")
-def seat_waitlist_entry(entry_id: int, body: SeatBody, db: Session = Depends(get_db)):
+def seat_waitlist_entry(
+    entry_id: int,
+    body: SeatBody,
+    background_tasks: BackgroundTasks,
+    db: Session = Depends(get_db),
+):
     entry = db.query(models.WaitlistEntry).filter(models.WaitlistEntry.id == entry_id).first()
     if not entry:
         raise HTTPException(status_code=404, detail="Waitlist entry not found")
@@ -108,13 +119,19 @@ def seat_waitlist_entry(entry_id: int, body: SeatBody, db: Session = Depends(get
     entry.status = "seated"
     entry.seated_table = table_id
     db.commit()
+    queue_realtime_event(background_tasks, "waitlist.changed", "waitlist", "waitlist")
     return {"ok": True}
 
 
 @router.delete("/{entry_id}")
-def cancel_waitlist_entry(entry_id: int, db: Session = Depends(get_db)):
+def cancel_waitlist_entry(
+    entry_id: int,
+    background_tasks: BackgroundTasks,
+    db: Session = Depends(get_db),
+):
     entry = db.query(models.WaitlistEntry).filter(models.WaitlistEntry.id == entry_id).first()
     if entry:
         entry.status = "cancelled"
         db.commit()
+        queue_realtime_event(background_tasks, "waitlist.changed", "waitlist", "waitlist")
     return {"ok": True}

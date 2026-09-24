@@ -13,7 +13,7 @@ import models
 from database import Base, engine, ensure_runtime_columns
 from deps import get_current_user
 from hsr_config import APP_NAME, is_production_env, validate_runtime_config
-from routers import auth, bookings, challenges, food, members, operations, reports, sessions, settings, staff, tournaments, waitlist
+from routers import auth, bookings, challenges, events, food, members, operations, reports, sessions, settings, staff, tournaments, waitlist
 
 validate_runtime_config()
 MAX_REQUEST_BYTES = int(os.getenv("MAX_REQUEST_BYTES", str(1024 * 1024)))
@@ -122,6 +122,7 @@ async def add_security_headers(request: Request, call_next):
 protected = [Depends(get_current_user)]
 
 app.include_router(auth.router, prefix="/auth")
+app.include_router(events.router, prefix="/events")
 app.include_router(sessions.router, prefix="/sessions", dependencies=protected)
 app.include_router(members.router, prefix="/members", dependencies=protected)
 app.include_router(reports.router, prefix="/reports", dependencies=protected)

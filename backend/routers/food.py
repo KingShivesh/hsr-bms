@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException, Depends
+from fastapi import APIRouter, BackgroundTasks, HTTPException, Depends
 from pydantic import BaseModel, Field
 from sqlalchemy.orm import Session
 from database import get_db
@@ -6,6 +6,7 @@ from typing import List
 import models, json, time
 from collections import Counter, defaultdict
 from hsr_config import format_ist_now
+from realtime import queue_realtime_event
 
 router = APIRouter()
 PAYMENT_METHODS = {"Cash", "UPI", "Card"}
@@ -43,7 +44,11 @@ def _food_order_payload(order: models.FoodOnlyOrder):
     }
 
 @router.post("/order")
-def place_food_order(body: FoodOnlyOrderBody, db: Session = Depends(get_db)):
+def place_food_order(
+    body: FoodOnlyOrderBody,
+    background_tasks: BackgroundTasks,
+    db: Session = Depends(get_db),
+):
     if not body.items:
         raise HTTPException(status_code=400, detail="No items in order")
     payment_method = body.payment_method if body.payment_method in PAYMENT_METHODS else "Cash"
@@ -77,6 +82,7 @@ def place_food_order(body: FoodOnlyOrderBody, db: Session = Depends(get_db)):
         payment_method = payment_method,
     ))
     db.commit()
+    queue_realtime_event(background_tasks, "order.placed", "orders", "orders", "food-stats")
     return {"ok": True, "total": total, "items": order, "payment_method": payment_method}
 
 @router.get("/orders")
@@ -85,18 +91,24 @@ def get_food_orders(db: Session = Depends(get_db)):
     return [_food_order_payload(o) for o in orders]
 
 @router.delete("/orders/{order_id}")
-def cancel_food_order(order_id: int, db: Session = Depends(get_db)):
+def cancel_food_order(
+    order_id: int,
+    background_tasks: BackgroundTasks,
+    db: Session = Depends(get_db),
+):
     order = db.query(models.FoodOnlyOrder).filter(models.FoodOnlyOrder.id == order_id).first()
     if not order:
         raise HTTPException(status_code=404, detail="Food order not found")
     db.delete(order)
     db.commit()
+    queue_realtime_event(background_tasks, "order.cancelled", "orders", "orders", "food-stats")
     return {"ok": True}
 
 @router.post("/orders/{order_id}/restore")
 def restore_food_order(
     order_id: int,
     body: RestoreFoodOrderBody,
+    background_tasks: BackgroundTasks,
     db: Session = Depends(get_db),
 ):
     existing = db.query(models.FoodOnlyOrder).filter(models.FoodOnlyOrder.id == order_id).first()
@@ -116,6 +128,7 @@ def restore_food_order(
     db.add(order)
     db.commit()
     db.refresh(order)
+    queue_realtime_event(background_tasks, "order.restored", "orders", "orders", "food-stats")
     return _food_order_payload(order)
 
 @router.get("/stats")

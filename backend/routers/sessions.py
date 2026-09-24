@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException, Depends
+from fastapi import APIRouter, BackgroundTasks, HTTPException, Depends
 from pydantic import BaseModel, Field
 from sqlalchemy import func, or_
 from sqlalchemy.exc import IntegrityError
@@ -13,6 +13,7 @@ from pricing import calc_checkout, get_peak_multiplier
 from deps import get_current_claims, require_admin
 from hsr_config import TABLE_RATES, format_ist_now, get_ist_now, rate_for_table
 from live_state import build_live_floor_state, build_table_state, serialize_session as serialize_live_session
+from realtime import queue_realtime_event
 
 router = APIRouter()
 MAX_SESSION_DURATION_MINUTES = 12 * 60
@@ -554,7 +555,11 @@ def archive_closed_frames(
         ))
 
 @router.post("/start")
-def start_session(body: StartSession, db: Session = Depends(get_db)):
+def start_session(
+    body: StartSession,
+    background_tasks: BackgroundTasks,
+    db: Session = Depends(get_db),
+):
     table_id = require_known_table_id(body.table_id)
     billing_mode = normalize_billing_mode(body.billing_mode, body.split)
     fallback_players = default_players_for_mode(billing_mode)
@@ -620,10 +625,15 @@ def start_session(body: StartSession, db: Session = Depends(get_db)):
     except IntegrityError:
         db.rollback()
         raise HTTPException(status_code=409, detail="Session already running")
+    queue_realtime_event(background_tasks, "table.updated", "floor", "live-floor")
     return {"ok": True, "frames": []}
 
 @router.post("/pause/{table_id}")
-def pause_session(table_id: str, db: Session = Depends(get_db)):
+def pause_session(
+    table_id: str,
+    background_tasks: BackgroundTasks,
+    db: Session = Depends(get_db),
+):
     sess = active_session_for_table(db, table_id)
     if not sess:
         raise HTTPException(status_code=404, detail="No active session")
@@ -651,6 +661,7 @@ def pause_session(table_id: str, db: Session = Depends(get_db)):
     )
     log_action(db, action, f"{normalize_table_id(table_id).upper()} {action.replace('session_', '')}", table_id=table_id)
     db.commit()
+    queue_realtime_event(background_tasks, "table.updated", "floor", "live-floor")
     return {"ok": True, "paused": sess.paused}
 
 @router.get("/quote/{table_id}")
@@ -776,6 +787,7 @@ def quote_session(
 @router.post("/stop/{table_id}")
 def stop_session(
     table_id:       str,
+    background_tasks: BackgroundTasks,
     payment_method: str = "Cash",   # Cash / UPI
     payer_name:     str = "",
     discount_type:  str = "none",
@@ -804,6 +816,7 @@ def stop_session(
             db.delete(frame)
         db.delete(sess)
         db.commit()
+        queue_realtime_event(background_tasks, "table.updated", "floor", "live-floor")
         return transaction_checkout_response(db, existing_transaction, idempotent=True)
 
     # Minimum session check
@@ -962,6 +975,7 @@ def stop_session(
                     db.delete(frame)
                 db.delete(stale_session)
                 db.commit()
+                queue_realtime_event(background_tasks, "table.updated", "floor", "live-floor")
             return transaction_checkout_response(db, existing_transaction, idempotent=True)
         raise HTTPException(status_code=409, detail="Session was already checked out. Refresh the table.")
     if player_breakdown:
@@ -1039,6 +1053,8 @@ def stop_session(
             return transaction_checkout_response(db, existing_transaction, idempotent=True)
         raise HTTPException(status_code=409, detail="Session was already checked out. Refresh the table.")
 
+    queue_realtime_event(background_tasks, "table.updated", "floor", "live-floor")
+
     return transaction_checkout_response(
         db,
         t,
@@ -1060,6 +1076,7 @@ def stop_session(
 def transfer_session(
     table_id: str,
     body: TransferTableBody,
+    background_tasks: BackgroundTasks,
     db: Session = Depends(get_db),
 ):
     source_id = require_known_table_id(table_id)
@@ -1121,6 +1138,7 @@ def transfer_session(
     except IntegrityError:
         db.rollback()
         raise HTTPException(status_code=409, detail="Target table already has a running session.")
+    queue_realtime_event(background_tasks, "table.updated", "floor", "live-floor")
     db.refresh(sess)
     return {
         "ok": True,
@@ -1134,6 +1152,7 @@ def transfer_session(
 @router.post("/reset/{table_id}")
 def reset_session(
     table_id: str,
+    background_tasks: BackgroundTasks,
     manager_pin: str = "",
     db: Session = Depends(get_db),
     _: dict = Depends(require_admin),
@@ -1167,10 +1186,15 @@ def reset_session(
         )
         db.delete(sess)
         db.commit()
+        queue_realtime_event(background_tasks, "table.updated", "floor", "live-floor")
     return {"ok": True}
 
 @router.post("/{table_id}/frames/start")
-def start_frame(table_id: str, db: Session = Depends(get_db)):
+def start_frame(
+    table_id: str,
+    background_tasks: BackgroundTasks,
+    db: Session = Depends(get_db),
+):
     table_id = require_known_table_id(table_id)
     sess = active_session_for_table(db, table_id)
     if not sess:
@@ -1197,12 +1221,18 @@ def start_frame(table_id: str, db: Session = Depends(get_db)):
     )
     log_action(db, "frame_start", f"Frame {frame.frame_no} started", table_id=table_id)
     db.commit()
+    queue_realtime_event(background_tasks, "table.updated", "floor", "live-floor")
     db.refresh(frame)
     frames = active_session_frames(db, sess)
     return {"ok": True, "frame": serialize_frame(frame), "frames": [serialize_frame(item) for item in frames]}
 
 @router.post("/{table_id}/frames/close")
-def close_frame(table_id: str, body: CloseFrameBody, db: Session = Depends(get_db)):
+def close_frame(
+    table_id: str,
+    body: CloseFrameBody,
+    background_tasks: BackgroundTasks,
+    db: Session = Depends(get_db),
+):
     table_id = require_known_table_id(table_id)
     sess = active_session_for_table(db, table_id)
     if not sess:
@@ -1242,6 +1272,7 @@ def close_frame(table_id: str, body: CloseFrameBody, db: Session = Depends(get_d
     )
     log_action(db, "frame_close", f"Frame {open_frame.frame_no} lost by {loser_name}", table_id=table_id)
     db.commit()
+    queue_realtime_event(background_tasks, "table.updated", "floor", "live-floor")
     frames = active_session_frames(db, sess)
     return {
         "ok": True,
@@ -1251,7 +1282,12 @@ def close_frame(table_id: str, body: CloseFrameBody, db: Session = Depends(get_d
     }
 
 @router.post("/{table_id}/food")
-def add_food(table_id: str, body: FoodItem, db: Session = Depends(get_db)):
+def add_food(
+    table_id: str,
+    body: FoodItem,
+    background_tasks: BackgroundTasks,
+    db: Session = Depends(get_db),
+):
     table_id = require_known_table_id(table_id)
     sess = active_session_for_table(db, table_id)
     if not sess:
@@ -1311,20 +1347,32 @@ def add_food(table_id: str, body: FoodItem, db: Session = Depends(get_db)):
         table_id=table_id,
     )
     db.commit()
+    queue_realtime_event(background_tasks, "table.updated", "floor", "live-floor")
     return {"ok": True, "food_total": sess.food_total}
 
 @router.post("/{table_id}/notes")
-def update_notes(table_id: str, body: UpdateNotes, db: Session = Depends(get_db)):
+def update_notes(
+    table_id: str,
+    body: UpdateNotes,
+    background_tasks: BackgroundTasks,
+    db: Session = Depends(get_db),
+):
     table_id = require_known_table_id(table_id)
     sess = active_session_for_table(db, table_id)
     if not sess:
         raise HTTPException(status_code=404, detail="No active session")
     sess.notes = body.notes
     db.commit()
+    queue_realtime_event(background_tasks, "table.updated", "floor", "live-floor")
     return {"ok": True}
 
 @router.post("/{table_id}/reserve")
-def reserve(table_id: str, body: Reservation, db: Session = Depends(get_db)):
+def reserve(
+    table_id: str,
+    body: Reservation,
+    background_tasks: BackgroundTasks,
+    db: Session = Depends(get_db),
+):
     table_id = require_known_table_id(table_id)
     name = normalize_person_name(body.name)
     if not name:
@@ -1361,10 +1409,16 @@ def reserve(table_id: str, body: Reservation, db: Session = Depends(get_db)):
         db.delete(sess)
     db.commit()
     db.refresh(booking)
+    queue_realtime_event(background_tasks, "reservation.changed", "reservations", "bookings")
+    queue_realtime_event(background_tasks, "table.updated", "floor", "live-floor")
     return {"ok": True, "booking_id": booking.id}
 
 @router.delete("/{table_id}/reserve")
-def cancel_reserve(table_id: str, db: Session = Depends(get_db)):
+def cancel_reserve(
+    table_id: str,
+    background_tasks: BackgroundTasks,
+    db: Session = Depends(get_db),
+):
     table_id = require_known_table_id(table_id)
     sess = active_session_for_table(db, table_id)
     table_code = normalize_table_id(table_id).upper()
@@ -1380,6 +1434,8 @@ def cancel_reserve(table_id: str, db: Session = Depends(get_db)):
         db.delete(sess)
     if booking or sess:
         db.commit()
+        queue_realtime_event(background_tasks, "reservation.changed", "reservations", "bookings")
+        queue_realtime_event(background_tasks, "table.updated", "floor", "live-floor")
     return {"ok": True}
 
 @router.get("/active")
@@ -1470,7 +1526,12 @@ def table_events(table_id: str, limit: int = 50, db: Session = Depends(get_db)):
     return [serialize_session_event(row) for row in rows]
 
 @router.post("/maintenance/{table_id}")
-def set_maintenance(table_id: str, body: MaintenanceBody, db: Session = Depends(get_db)):
+def set_maintenance(
+    table_id: str,
+    body: MaintenanceBody,
+    background_tasks: BackgroundTasks,
+    db: Session = Depends(get_db),
+):
     table_id = require_known_table_id(table_id)
     existing = maintenance_for_table(db, table_id)
     if existing:
@@ -1483,15 +1544,23 @@ def set_maintenance(table_id: str, body: MaintenanceBody, db: Session = Depends(
             since    = get_ist_now().strftime("%d/%m/%Y, %H:%M"),
         ))
     db.commit()
+    queue_realtime_event(background_tasks, "table.maintenance_changed", "floor", "live-floor")
+    queue_realtime_event(background_tasks, "inventory.updated", "inventory", "maintenance")
     return {"ok": True}
 
 @router.delete("/maintenance/{table_id}")
-def clear_maintenance(table_id: str, db: Session = Depends(get_db)):
+def clear_maintenance(
+    table_id: str,
+    background_tasks: BackgroundTasks,
+    db: Session = Depends(get_db),
+):
     table_id = require_known_table_id(table_id)
     m = maintenance_for_table(db, table_id)
     if m:
         db.delete(m)
         db.commit()
+        queue_realtime_event(background_tasks, "table.maintenance_changed", "floor", "live-floor")
+        queue_realtime_event(background_tasks, "inventory.updated", "inventory", "maintenance")
     return {"ok": True}
 
 @router.get("/maintenance")

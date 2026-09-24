@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException, Depends
+from fastapi import APIRouter, BackgroundTasks, HTTPException, Depends
 from pydantic import BaseModel, Field
 from sqlalchemy.orm import Session
 from database import get_db
@@ -7,6 +7,7 @@ import models
 from audit import log_action, require_manager_pin
 from deps import require_admin
 from hsr_config import get_ist_today_str
+from realtime import queue_realtime_event
 
 router = APIRouter()
 
@@ -114,6 +115,7 @@ def get_menu(db: Session = Depends(get_db)):
 @router.post("/menu")
 def add_menu_item(
     body: MenuItemBody,
+    background_tasks: BackgroundTasks,
     db: Session = Depends(get_db),
     _: dict = Depends(require_admin),
 ):
@@ -124,11 +126,13 @@ def add_menu_item(
         raise HTTPException(status_code=400, detail="Item already exists")
     db.add(models.MenuItem(name=name, price=body.price, category=category, available=True))
     db.commit()
+    queue_realtime_event(background_tasks, "inventory.updated", "inventory", "menu")
     return {"ok": True}
 
 @router.post("/menu/update")
 def update_menu_item(
     body: RenameItem,
+    background_tasks: BackgroundTasks,
     db: Session = Depends(get_db),
     _: dict = Depends(require_admin),
 ):
@@ -139,11 +143,13 @@ def update_menu_item(
     item.price    = body.price
     item.category = " ".join((body.category or "Snacks").strip().split()) or "Snacks"
     db.commit()
+    queue_realtime_event(background_tasks, "inventory.updated", "inventory", "menu")
     return {"ok": True}
 
 @router.post("/menu/restore")
 def restore_menu_item(
     body: RestoreMenuItemBody,
+    background_tasks: BackgroundTasks,
     db: Session = Depends(get_db),
     _: dict = Depends(require_admin),
 ):
@@ -162,12 +168,14 @@ def restore_menu_item(
             available=body.available,
         ))
     db.commit()
+    queue_realtime_event(background_tasks, "inventory.updated", "inventory", "menu")
     return {"ok": True}
 
 @router.post("/menu/{item_name}/availability")
 def set_availability(
     item_name: str,
     body: AvailabilityBody,
+    background_tasks: BackgroundTasks,
     db: Session = Depends(get_db),
     _: dict = Depends(require_admin),
 ):
@@ -176,11 +184,13 @@ def set_availability(
         raise HTTPException(status_code=404, detail="Item not found")
     item.available = body.available
     db.commit()
+    queue_realtime_event(background_tasks, "inventory.updated", "inventory", "menu")
     return {"ok": True}
 
 @router.delete("/menu/{item_name}")
 def delete_menu_item(
     item_name: str,
+    background_tasks: BackgroundTasks,
     db: Session = Depends(get_db),
     _: dict = Depends(require_admin),
 ):
@@ -189,6 +199,7 @@ def delete_menu_item(
         raise HTTPException(status_code=404, detail="Item not found")
     db.delete(item)
     db.commit()
+    queue_realtime_event(background_tasks, "inventory.updated", "inventory", "menu")
     return {"ok": True}
 
 @router.post("/reset-daily")
