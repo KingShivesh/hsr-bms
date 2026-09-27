@@ -11,6 +11,7 @@ import {
 } from "../../api/index.js";
 import { useToast } from "../toastContext.js";
 import { Checkbox, useEscapeKey } from "../ui/index.js";
+import { useRealtimeSubscription } from "../../realtime/useRealtimeSubscription.js";
 
 const CATEGORIES = [
   "All",
@@ -124,6 +125,7 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
   const [placing, setPlacing] = useState(false);
   const [busyAction, setBusyAction] = useState("");
   const busyActionRef = useRef("");
+  const menuRefreshTimerRef = useRef(null);
   const [lastOrder, setLastOrder] = useState(null);
   const [cigaretteDraft, setCigaretteDraft] = useState({ name: "", mrp: "" });
   useEscapeKey(() => setCigaretteDraft({ name: "", mrp: "" }), !!cigaretteDraft.name);
@@ -174,6 +176,33 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
   useEffect(() => {
     fetchAll({ showLoading: true });
   }, [fetchAll]);
+
+  const refreshMenu = useCallback(async () => {
+    try {
+      const response = await getMenu();
+      setMenu(response.data || {});
+    } catch {
+      // The realtime hook keeps polling while disconnected; the global API banner handles failures.
+    }
+  }, []);
+
+  const scheduleMenuRefresh = useCallback(() => {
+    window.clearTimeout(menuRefreshTimerRef.current);
+    menuRefreshTimerRef.current = window.setTimeout(refreshMenu, 100);
+  }, [refreshMenu]);
+
+  const realtimeState = useRealtimeSubscription({
+    topics: ["inventory"],
+    onEvent: (event) => {
+      if (event.type === "inventory.updated" || event.type === "system.sync_required") {
+        scheduleMenuRefresh();
+      }
+    },
+    onFallbackPoll: refreshMenu,
+    fallbackPollMs: 15000,
+  });
+
+  useEffect(() => () => window.clearTimeout(menuRefreshTimerRef.current), []);
 
   function getItemPrice(v) {
     return typeof v === "object" ? v.price : v;
@@ -419,7 +448,7 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
   }
 
   return (
-    <div className="cafe-pos-page">
+    <div className="cafe-pos-page" data-realtime-state={realtimeState}>
       {cigaretteDraft.name && (
         <div className="app-confirm-backdrop" role="presentation">
           <form
