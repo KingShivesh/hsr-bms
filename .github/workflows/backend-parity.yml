@@ -53,9 +53,24 @@ jobs:
         working-directory: backend
         run: python -c "from main import app; print(app.title)"
       - name: Run one full Postgres soak cycle
+        id: postgres-soak
+        continue-on-error: true
         working-directory: backend
-        run: >-
-          python soak_test.py
-          --database-url "$DATABASE_URL"
-          --duration-seconds 1
-          --interval-seconds 0
+        run: |
+          set -o pipefail
+          python soak_test.py \
+            --database-url "$DATABASE_URL" \
+            --duration-seconds 1 \
+            --interval-seconds 0 2>&1 | tee /tmp/postgres-soak.log
+      - name: Publish Postgres soak diagnostics
+        if: always()
+        run: |
+          {
+            echo '### PostgreSQL soak output'
+            echo '```text'
+            tail -n 160 /tmp/postgres-soak.log
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+      - name: Enforce Postgres soak result
+        if: steps.postgres-soak.outcome == 'failure'
+        run: exit 1
