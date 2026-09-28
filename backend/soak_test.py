@@ -31,7 +31,10 @@ else:
     )
     os.environ["DATABASE_URL"] = f"sqlite:///{db_path}"
     database_label = db_path
-os.environ["SECRET_KEY"] = "soak-test-secret"
+os.environ.setdefault(
+    "SECRET_KEY",
+    "soak-test-secret-key-with-at-least-32-characters",
+)
 os.environ["ALLOWED_ORIGINS"] = "http://localhost:5173"
 
 import seed  # noqa: E402,F401 - intentionally seeds the temp database
