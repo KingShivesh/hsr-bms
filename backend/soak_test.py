@@ -39,6 +39,7 @@ os.environ["ALLOWED_ORIGINS"] = "http://localhost:5173"
 
 import seed  # noqa: E402,F401 - intentionally seeds the temp database
 from fastapi.testclient import TestClient  # noqa: E402
+from hsr_config import get_ist_now  # noqa: E402
 from main import app  # noqa: E402
 
 
@@ -274,7 +275,7 @@ def run_queue_and_booking():
     metrics["waitlist_entries"] += 1
     request("POST", f"/waitlist/{queued['id']}/seat", json={"table_id": random.choice(TABLES)})
 
-    booking_time = (datetime.now() + timedelta(minutes=30)).isoformat(timespec="minutes")
+    booking_time = (get_ist_now() + timedelta(minutes=30)).isoformat(timespec="minutes")
     booking = request(
         "POST",
         "/bookings",
