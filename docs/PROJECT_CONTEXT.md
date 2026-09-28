@@ -139,3 +139,27 @@ dead/reachable component findings, and the full routing migration.
 6. Update docs/interaction-design-progress.md as items close.
 7. This is a real production tool for a real café — prioritize not 
    breaking existing functionality over adding new features.
+
+## Backend environment-parity gate
+Render uses PostgreSQL through SQLAlchemy's `postgresql+psycopg` dialect,
+while local development defaults to SQLite. SQLite-only checks do not exercise
+the production DBAPI import, PostgreSQL DDL, or PostgreSQL transaction behavior.
+
+Before merging any backend, dependency, or deployment-config change:
+
+1. Run the `Backend production parity` workflow on the branch and require it to
+   pass. Its clean GitHub runner installs only `backend/requirements.txt`, starts
+   a disposable PostgreSQL 16 service, imports `main` with a production-shaped
+   `DATABASE_URL`, and runs one complete soak cycle against that database.
+2. Do not treat an existing developer virtualenv as dependency evidence. The
+   fresh workflow install is the dependency-contract check.
+3. When Docker is available locally, the same check may be run against a
+   throwaway `postgres:16` container before pushing. Never point the soak test at
+   production; it creates and mutates extensive QA data.
+4. After deployment, verify `/health` and `/ready`, then inspect Render's last
+   successfully deployed commit. A successful push is not deployment proof.
+
+This gate was added after commit `a4ed36c` failed to start on Render because its
+production dialect imported psycopg v3 while `requirements.txt` only declared
+the older psycopg2 package. The previous SQLite checks could not detect that
+dependency mismatch.

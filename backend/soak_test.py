@@ -15,16 +15,22 @@ def parse_args():
     parser.add_argument("--duration-seconds", type=int, default=3600)
     parser.add_argument("--interval-seconds", type=float, default=5)
     parser.add_argument("--db-path", default="")
+    parser.add_argument("--database-url", default="")
     return parser.parse_args()
 
 
 args = parse_args()
-db_path = args.db_path or os.path.join(
-    tempfile.gettempdir(),
-    f"hsr_bms_soak_{datetime.now().strftime('%Y%m%d_%H%M%S')}.db",
-)
-
-os.environ["DATABASE_URL"] = f"sqlite:///{db_path}"
+db_path = ""
+if args.database_url:
+    os.environ["DATABASE_URL"] = args.database_url
+    database_label = "postgres"
+else:
+    db_path = args.db_path or os.path.join(
+        tempfile.gettempdir(),
+        f"hsr_bms_soak_{datetime.now().strftime('%Y%m%d_%H%M%S')}.db",
+    )
+    os.environ["DATABASE_URL"] = f"sqlite:///{db_path}"
+    database_label = db_path
 os.environ["SECRET_KEY"] = "soak-test-secret"
 os.environ["ALLOWED_ORIGINS"] = "http://localhost:5173"
 
@@ -532,7 +538,7 @@ def run_cycle():
 def main():
     started = time.time()
     deadline = started + max(1, args.duration_seconds)
-    print(f"SOAK_TEST_DB={db_path}", flush=True)
+    print(f"SOAK_TEST_DATABASE={database_label}", flush=True)
     login()
     seed_sample_members()
 

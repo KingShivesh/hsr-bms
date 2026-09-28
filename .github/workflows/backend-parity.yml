@@ -1,0 +1,61 @@
+name: Backend production parity
+
+on:
+  pull_request:
+    paths:
+      - "backend/**"
+      - "render.yaml"
+      - ".github/workflows/backend-parity.yml"
+  push:
+    branches:
+      - main
+      - "codex/**"
+    paths:
+      - "backend/**"
+      - "render.yaml"
+      - ".github/workflows/backend-parity.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  postgres-parity:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_DB: hsr_parity
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres -d hsr_parity"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      APP_ENV: production
+      DATABASE_URL: postgresql+psycopg://postgres:postgres@127.0.0.1:5432/hsr_parity
+      SECRET_KEY: backend-parity-check-secret-key-with-at-least-32-characters
+      ALLOWED_ORIGINS: http://localhost:5173
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11.9"
+      - name: Install backend requirements in fresh environment
+        run: python -m pip install --disable-pip-version-check -r backend/requirements.txt
+      - name: Import production-shaped application
+        working-directory: backend
+        run: python -c "from main import app; print(app.title)"
+      - name: Run one full Postgres soak cycle
+        working-directory: backend
+        run: >-
+          python soak_test.py
+          --database-url "$DATABASE_URL"
+          --duration-seconds 1
+          --interval-seconds 0
