@@ -25,6 +25,18 @@ function SettingsCard({ title, description, children }) {
   );
 }
 
+function credentialErrorMessage(error, fallback) {
+  const detail = error.response?.data?.detail;
+  if (typeof detail === "string") return detail;
+  if (Array.isArray(detail)) {
+    const messages = detail
+      .map((item) => (typeof item?.msg === "string" ? item.msg : ""))
+      .filter(Boolean);
+    if (messages.length) return messages.join(". ");
+  }
+  return typeof error.userMessage === "string" ? error.userMessage : fallback;
+}
+
 export default function SettingsTab({ role = "admin", onOpenTables, onNavigate }) {
   const { showToast } = useToast();
   const [wr, setWr] = useState(320);
@@ -106,8 +118,8 @@ export default function SettingsTab({ role = "admin", onOpenTables, onNavigate }
       showToast("Enter both username and password", "error");
       return;
     }
-    if (newPass.length < 6) {
-      showToast("Password must be at least 6 characters", "error");
+    if (newPass.length < 8) {
+      showToast("Password must be at least 8 characters", "error");
       return;
     }
     try {
@@ -115,8 +127,8 @@ export default function SettingsTab({ role = "admin", onOpenTables, onNavigate }
       showToast("Credentials updated. Please login again.", "success");
       localStorage.removeItem("token");
       setTimeout(() => window.location.reload(), 700);
-    } catch {
-      showToast("Failed to update credentials", "error");
+    } catch (error) {
+      showToast(credentialErrorMessage(error, "Failed to update credentials"), "error");
     }
   }
 
@@ -125,16 +137,16 @@ export default function SettingsTab({ role = "admin", onOpenTables, onNavigate }
       showToast("Enter both staff username and password", "error");
       return;
     }
-    if (newStaffPass.length < 6) {
-      showToast("Password must be at least 6 characters", "error");
+    if (newStaffPass.length < 8) {
+      showToast("Password must be at least 8 characters", "error");
       return;
     }
     try {
       await changeStaffAuth(newStaffUser, newStaffPass);
       setNewStaffPass("");
       showFlash("Staff credentials updated");
-    } catch (e) {
-      showToast(e.response?.data?.detail || "Failed to update staff credentials", "error");
+    } catch (error) {
+      showToast(credentialErrorMessage(error, "Failed to update staff credentials"), "error");
     }
   }
 
@@ -340,7 +352,8 @@ export default function SettingsTab({ role = "admin", onOpenTables, onNavigate }
                 <input
                   type="password"
                   className="input-field"
-                  placeholder="Min 6 characters"
+                  placeholder="Min 8 characters"
+                  minLength={8}
                   value={newPass}
                   onChange={(e) => setNewPass(e.target.value)}
                 />
@@ -375,7 +388,8 @@ export default function SettingsTab({ role = "admin", onOpenTables, onNavigate }
                 <input
                   type="password"
                   className="input-field"
-                  placeholder="Min 6 characters"
+                  placeholder="Min 8 characters"
+                  minLength={8}
                   value={newStaffPass}
                   onChange={(e) => setNewStaffPass(e.target.value)}
                 />
