@@ -1,8 +1,9 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { getLiveFloor, getRates, saveRates, startSession } from "../../api/index.js";
 import RetryNotice from "../../components/RetryNotice.jsx";
 import { useEscapeKey } from "../../components/ui/index.js";
 import { useToast } from "../../components/toastContext.js";
+import { useRealtimeSubscription } from "../../realtime/useRealtimeSubscription.js";
 import SessionWorkspace from "../sessions/SessionWorkspace.jsx";
 import TableGrid from "./TableGrid.jsx";
 
@@ -143,6 +144,7 @@ export default function LiveFloor({ role = "admin", onNavigate, newSessionReques
   const [tick, setTick] = useState(0);
   const [newSessionOpen, setNewSessionOpen] = useState(false);
   const [newSessionTableId, setNewSessionTableId] = useState("");
+  const floorRefreshTimerRef = useRef(null);
 
   const openNewSession = useCallback((tableId = "") => {
     setNewSessionTableId(tableId);
@@ -178,16 +180,42 @@ export default function LiveFloor({ role = "admin", onNavigate, newSessionReques
     }
   }, []);
 
+  const scheduleFloorRefresh = useCallback(() => {
+    window.clearTimeout(floorRefreshTimerRef.current);
+    floorRefreshTimerRef.current = window.setTimeout(loadFloor, 150);
+  }, [loadFloor]);
+
+  const realtimeState = useRealtimeSubscription({
+    topics: ["floor"],
+    onEvent: (event) => {
+      if (
+        event.type === "table.updated" ||
+        event.type === "table.maintenance_changed" ||
+        event.type === "system.sync_required"
+      ) {
+        scheduleFloorRefresh();
+      }
+    },
+    onFallbackPoll: loadFloor,
+    fallbackPollMs: 15000,
+  });
+
   useEffect(() => {
     loadFloor({ showLoading: true });
-    const refresh = setInterval(() => loadFloor(), 15000);
-    const onDataChanged = () => loadFloor();
+    const onDataChanged = () => scheduleFloorRefresh();
     window.addEventListener("hsr:data-changed", onDataChanged);
     return () => {
-      clearInterval(refresh);
       window.removeEventListener("hsr:data-changed", onDataChanged);
     };
-  }, [loadFloor]);
+  }, [loadFloor, scheduleFloorRefresh]);
+
+  useEffect(() => {
+    if (realtimeState !== "connected") return undefined;
+    const safetyPoll = window.setInterval(loadFloor, 60000);
+    return () => window.clearInterval(safetyPoll);
+  }, [loadFloor, realtimeState]);
+
+  useEffect(() => () => window.clearTimeout(floorRefreshTimerRef.current), []);
 
   useEffect(() => {
     const timer = setInterval(() => setTick((value) => value + 1), 1000);
@@ -243,7 +271,7 @@ export default function LiveFloor({ role = "admin", onNavigate, newSessionReques
   const attentionCount = floor?.attention?.length || 0;
 
   return (
-    <section className="live-floor-page">
+    <section className="live-floor-page" data-realtime-state={realtimeState}>
       <div className="lf-hero">
         <div>
           <span className="lf-date">{todayLabel()} · {role === "staff" ? "Staff console" : "Admin console"}</span>

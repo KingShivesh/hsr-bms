@@ -27,6 +27,7 @@ import { getTableStatus } from "../../config/tableStatus.js";
 import { MetricCard } from "../ui/index.js";
 import { useToast } from "../toastContext.js";
 import { useConfirm } from "../confirmContext.js";
+import { useRealtimeSubscription } from "../../realtime/useRealtimeSubscription.js";
 
 function money(value = 0) {
   return `₹${Number(value || 0).toLocaleString("en-IN")}`;
@@ -1215,6 +1216,7 @@ export default function ClubSuiteTab({ view }) {
   const [activeAction, setActiveAction] = useState("");
   const [loading, setLoading] = useState(true);
   const [loadError, setLoadError] = useState("");
+  const realtimeRefreshTimerRef = useRef(null);
 
   const loadData = useCallback(async (shouldCommit = () => true, { showLoading = false } = {}) => {
     if (showLoading) setLoading(true);
@@ -1253,6 +1255,23 @@ export default function ClubSuiteTab({ view }) {
     }
   }, [view]);
 
+  const scheduleRealtimeRefresh = useCallback(() => {
+    window.clearTimeout(realtimeRefreshTimerRef.current);
+    realtimeRefreshTimerRef.current = window.setTimeout(loadData, 150);
+  }, [loadData]);
+
+  const realtimeState = useRealtimeSubscription({
+    topics: ["waitlist"],
+    enabled: view === "waitlist",
+    onEvent: (event) => {
+      if (event.type === "waitlist.changed" || event.type === "system.sync_required") {
+        scheduleRealtimeRefresh();
+      }
+    },
+    onFallbackPoll: loadData,
+    fallbackPollMs: 15000,
+  });
+
   useEffect(() => {
     let alive = true;
     loadData(() => alive, { showLoading: true });
@@ -1260,6 +1279,14 @@ export default function ClubSuiteTab({ view }) {
       alive = false;
     };
   }, [view, loadData]);
+
+  useEffect(() => {
+    if (view !== "waitlist" || realtimeState !== "connected") return undefined;
+    const safetyPoll = window.setInterval(loadData, 60000);
+    return () => window.clearInterval(safetyPoll);
+  }, [loadData, realtimeState, view]);
+
+  useEffect(() => () => window.clearTimeout(realtimeRefreshTimerRef.current), []);
 
   const runAction = useCallback(async (action, {
     confirmText = "",
@@ -1424,7 +1451,7 @@ export default function ClubSuiteTab({ view }) {
   );
 
   if (loading) {
-    return <WorkspaceLoading />;
+    return <div data-realtime-state={realtimeState}><WorkspaceLoading /></div>;
   }
 
   const content =
@@ -1435,9 +1462,9 @@ export default function ClubSuiteTab({ view }) {
     <WaitlistView {...props} />;
 
   return (
-    <>
+    <div data-realtime-state={realtimeState}>
       <LoadErrorBanner message={loadError} onRetry={() => loadData(() => true, { showLoading: true })} />
       {content}
-    </>
+    </div>
   );
 }
