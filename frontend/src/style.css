@@ -2877,6 +2877,10 @@ body.dark .lf-table-card:focus-visible {
     padding: var(--space-4);
   }
 
+  .session-workspace {
+    left: 64px;
+  }
+
   .lf-table-grid,
   .session-panel-grid,
   .session-facts,
