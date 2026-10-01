@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   cancelBooking,
   createBooking,
@@ -12,6 +12,7 @@ import { useEscapeKey } from "../../components/ui/index.js";
 import { useToast } from "../../components/toastContext.js";
 import { HSR_TABLES, getTableRate } from "../../config/hsrTables.js";
 import { getTableStatus } from "../../config/tableStatus.js";
+import { useRealtimeSubscription } from "../../realtime/useRealtimeSubscription.js";
 
 function isoLocalNowPlus(minutes = 30) {
   const date = new Date(Date.now() + minutes * 60 * 1000);
@@ -192,6 +193,7 @@ export default function BookingsPage() {
   const [showModal, setShowModal] = useState(false);
   const [form, setForm] = useState(defaultForm);
   const [busy, setBusy] = useState("");
+  const bookingRefreshTimerRef = useRef(null);
 
   const loadBookings = useCallback(async ({ showLoading = false } = {}) => {
     if (showLoading) setLoading(true);
@@ -210,6 +212,30 @@ export default function BookingsPage() {
   useEffect(() => {
     loadBookings({ showLoading: true });
   }, [loadBookings]);
+
+  const scheduleBookingRefresh = useCallback(() => {
+    window.clearTimeout(bookingRefreshTimerRef.current);
+    bookingRefreshTimerRef.current = window.setTimeout(loadBookings, 150);
+  }, [loadBookings]);
+
+  const realtimeState = useRealtimeSubscription({
+    topics: ["reservations"],
+    onEvent: (event) => {
+      if (event.type === "reservation.changed" || event.type === "system.sync_required") {
+        scheduleBookingRefresh();
+      }
+    },
+    onFallbackPoll: loadBookings,
+    fallbackPollMs: 15000,
+  });
+
+  useEffect(() => {
+    if (realtimeState !== "connected") return undefined;
+    const safetyPoll = window.setInterval(loadBookings, 60000);
+    return () => window.clearInterval(safetyPoll);
+  }, [loadBookings, realtimeState]);
+
+  useEffect(() => () => window.clearTimeout(bookingRefreshTimerRef.current), []);
 
   useEffect(() => {
     function handleNewBookingRequest() {
@@ -333,10 +359,10 @@ export default function BookingsPage() {
     }
   }
 
-  if (loading) return <BookingSkeleton />;
+  if (loading) return <div data-realtime-state={realtimeState}><BookingSkeleton /></div>;
 
   return (
-    <section className="op2-page">
+    <section className="op2-page" data-realtime-state={realtimeState}>
       {error && <RetryNotice message={error} detail="Booking data may be stale until this loads." onRetry={() => loadBookings({ showLoading: true })} />}
 
       <div className="op2-hero">

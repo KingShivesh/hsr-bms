@@ -126,6 +126,7 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
   const [busyAction, setBusyAction] = useState("");
   const busyActionRef = useRef("");
   const menuRefreshTimerRef = useRef(null);
+  const orderRefreshTimerRef = useRef(null);
   const [lastOrder, setLastOrder] = useState(null);
   const [cigaretteDraft, setCigaretteDraft] = useState({ name: "", mrp: "" });
   useEscapeKey(() => setCigaretteDraft({ name: "", mrp: "" }), !!cigaretteDraft.name);
@@ -186,23 +187,61 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
     }
   }, []);
 
+  const refreshOrders = useCallback(async () => {
+    try {
+      const [ordersRes, statsRes] = await Promise.all([getFoodOrders(), getFoodStats()]);
+      setOrders(Array.isArray(ordersRes.data) ? ordersRes.data : []);
+      setStats(Array.isArray(statsRes.data) ? statsRes.data : []);
+    } catch {
+      // The realtime hook keeps polling while disconnected; the global API banner handles failures.
+    }
+  }, []);
+
   const scheduleMenuRefresh = useCallback(() => {
     window.clearTimeout(menuRefreshTimerRef.current);
     menuRefreshTimerRef.current = window.setTimeout(refreshMenu, 100);
   }, [refreshMenu]);
 
+  const scheduleOrderRefresh = useCallback(() => {
+    window.clearTimeout(orderRefreshTimerRef.current);
+    orderRefreshTimerRef.current = window.setTimeout(refreshOrders, 150);
+  }, [refreshOrders]);
+
+  const refreshRealtimeData = useCallback(() => {
+    refreshMenu();
+    refreshOrders();
+  }, [refreshMenu, refreshOrders]);
+
   const realtimeState = useRealtimeSubscription({
-    topics: ["inventory"],
+    topics: ["inventory", "orders"],
     onEvent: (event) => {
-      if (event.type === "inventory.updated" || event.type === "system.sync_required") {
+      if (event.type === "system.sync_required") {
         scheduleMenuRefresh();
+        scheduleOrderRefresh();
+      } else if (event.type === "inventory.updated") {
+        scheduleMenuRefresh();
+      } else if (
+        event.type === "order.placed" ||
+        event.type === "order.cancelled" ||
+        event.type === "order.restored"
+      ) {
+        scheduleOrderRefresh();
       }
     },
-    onFallbackPoll: refreshMenu,
+    onFallbackPoll: refreshRealtimeData,
     fallbackPollMs: 15000,
   });
 
-  useEffect(() => () => window.clearTimeout(menuRefreshTimerRef.current), []);
+  useEffect(() => {
+    if (realtimeState !== "connected") return undefined;
+    const safetyPoll = window.setInterval(refreshRealtimeData, 60000);
+    return () => window.clearInterval(safetyPoll);
+  }, [realtimeState, refreshRealtimeData]);
+
+  useEffect(() => () => {
+    window.clearTimeout(menuRefreshTimerRef.current);
+    window.clearTimeout(orderRefreshTimerRef.current);
+  }, []);
 
   function getItemPrice(v) {
     return typeof v === "object" ? v.price : v;

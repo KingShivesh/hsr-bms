@@ -1,7 +1,8 @@
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { getFoodOrders, getHistory } from "../../api/index.js";
 import RetryNotice from "../../components/RetryNotice.jsx";
 import { Button, Drawer } from "../../components/ui/index.js";
+import { useRealtimeSubscription } from "../../realtime/useRealtimeSubscription.js";
 
 const BILL_DATE_FORMATTER = new Intl.DateTimeFormat("en-IN", {
   timeZone: "Asia/Kolkata",
@@ -72,8 +73,9 @@ export default function SalesPage() {
   const [error, setError] = useState("");
   const [query, setQuery] = useState("");
   const [selected, setSelected] = useState(null);
+  const salesRefreshTimerRef = useRef(null);
 
-  async function loadSales({ showLoading = false } = {}) {
+  const loadSales = useCallback(async ({ showLoading = false } = {}) => {
     if (showLoading) setLoading(true);
     setError("");
     try {
@@ -85,14 +87,45 @@ export default function SalesPage() {
     } finally {
       setLoading(false);
     }
-  }
+  }, []);
+
+  const scheduleSalesRefresh = useCallback(() => {
+    window.clearTimeout(salesRefreshTimerRef.current);
+    salesRefreshTimerRef.current = window.setTimeout(loadSales, 150);
+  }, [loadSales]);
+
+  const realtimeState = useRealtimeSubscription({
+    topics: ["orders"],
+    onEvent: (event) => {
+      if (
+        event.type === "order.placed" ||
+        event.type === "order.cancelled" ||
+        event.type === "order.restored" ||
+        event.type === "system.sync_required"
+      ) {
+        scheduleSalesRefresh();
+      }
+    },
+    onFallbackPoll: loadSales,
+    fallbackPollMs: 15000,
+  });
 
   useEffect(() => {
     loadSales({ showLoading: true });
-    const onDataChanged = () => loadSales();
+    const onDataChanged = () => scheduleSalesRefresh();
     window.addEventListener("hsr:data-changed", onDataChanged);
-    return () => window.removeEventListener("hsr:data-changed", onDataChanged);
-  }, []);
+    return () => {
+      window.removeEventListener("hsr:data-changed", onDataChanged);
+    };
+  }, [loadSales, scheduleSalesRefresh]);
+
+  useEffect(() => {
+    if (realtimeState !== "connected") return undefined;
+    const safetyPoll = window.setInterval(loadSales, 60000);
+    return () => window.clearInterval(safetyPoll);
+  }, [loadSales, realtimeState]);
+
+  useEffect(() => () => window.clearTimeout(salesRefreshTimerRef.current), []);
 
   const summary = useMemo(() => {
     const tableRevenue = history.reduce((sum, row) => sum + billTableCharge(row), 0);
@@ -133,10 +166,12 @@ export default function SalesPage() {
       .slice(0, 80);
   }, [history, query]);
 
-  if (loading && !history.length && !foodOrders.length && !error) return <SalesSkeleton />;
+  if (loading && !history.length && !foodOrders.length && !error) {
+    return <div data-realtime-state={realtimeState}><SalesSkeleton /></div>;
+  }
 
   return (
-    <section className="op2-page sales-page">
+    <section className="op2-page sales-page" data-realtime-state={realtimeState}>
       <div className="op2-hero">
         <div>
           <span className="lf-eyebrow">Business</span>
