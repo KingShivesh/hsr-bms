@@ -1260,11 +1260,17 @@ export default function ClubSuiteTab({ view }) {
     realtimeRefreshTimerRef.current = window.setTimeout(loadData, 150);
   }, [loadData]);
 
+  const realtimeTopic = view === "waitlist" ? "waitlist" : view === "inventory" ? "inventory" : "";
+
   const realtimeState = useRealtimeSubscription({
-    topics: ["waitlist"],
-    enabled: view === "waitlist",
+    topics: realtimeTopic ? [realtimeTopic] : [],
+    enabled: Boolean(realtimeTopic),
     onEvent: (event) => {
-      if (event.type === "waitlist.changed" || event.type === "system.sync_required") {
+      if (
+        event.type === "system.sync_required" ||
+        (view === "waitlist" && event.type === "waitlist.changed") ||
+        (view === "inventory" && event.type === "inventory.updated")
+      ) {
         scheduleRealtimeRefresh();
       }
     },
@@ -1281,10 +1287,10 @@ export default function ClubSuiteTab({ view }) {
   }, [view, loadData]);
 
   useEffect(() => {
-    if (view !== "waitlist" || realtimeState !== "connected") return undefined;
+    if (!realtimeTopic || realtimeState !== "connected") return undefined;
     const safetyPoll = window.setInterval(loadData, 60000);
     return () => window.clearInterval(safetyPoll);
-  }, [loadData, realtimeState, view]);
+  }, [loadData, realtimeState, realtimeTopic]);
 
   useEffect(() => () => window.clearTimeout(realtimeRefreshTimerRef.current), []);
 

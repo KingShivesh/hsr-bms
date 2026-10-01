@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   Area,
   AreaChart,
@@ -18,6 +18,7 @@ import {
 } from "../api/index.js";
 import { HSR_TABLES, TOTAL_TABLES, getTableLabel } from "../config/hsrTables.js";
 import { getTableStatusByKey } from "../config/tableStatus.js";
+import { useRealtimeSubscription } from "../realtime/useRealtimeSubscription.js";
 
 const TABLES = HSR_TABLES;
 const tableKey = (tableId) => String(tableId || "").trim().toLowerCase();
@@ -1105,45 +1106,77 @@ export default function Dashboard({ metrics, onNavigate, role = "admin" }) {
   const [loadError, setLoadError] = useState("");
   const [lastFetchedAt, setLastFetchedAt] = useState(0);
   const [syncing, setSyncing] = useState(true);
+  const dashboardRefreshTimerRef = useRef(null);
+
+  const fetchDashboard = useCallback(async () => {
+    setSyncing(true);
+    try {
+      const res = await getDashboardLive(dateRange);
+      const payload = res.data || {};
+      const nextElapsed = {};
+      (payload.tables || []).forEach((table) => {
+        const id = tableKey(table.id);
+        if (table.session) {
+          nextElapsed[id] = Number(table.session.elapsed_seconds || table.elapsed_seconds || 0);
+        }
+      });
+      setLiveData(payload);
+      setElapsed(nextElapsed);
+      setLastFetchedAt(Date.now());
+      setLoadError("");
+    } catch (err) {
+      console.error(err);
+      setLoadError(err.userMessage || "Dashboard data could not load. Retrying...");
+    } finally {
+      setSyncing(false);
+    }
+  }, [dateRange]);
+
+  const scheduleDashboardRefresh = useCallback(() => {
+    window.clearTimeout(dashboardRefreshTimerRef.current);
+    dashboardRefreshTimerRef.current = window.setTimeout(fetchDashboard, 150);
+  }, [fetchDashboard]);
+
+  const realtimeState = useRealtimeSubscription({
+    topics: ["floor", "orders", "reservations", "waitlist"],
+    onEvent: (event) => {
+      if (
+        event.type === "table.updated" ||
+        event.type === "table.maintenance_changed" ||
+        event.type === "order.placed" ||
+        event.type === "order.cancelled" ||
+        event.type === "order.restored" ||
+        event.type === "reservation.changed" ||
+        event.type === "waitlist.changed" ||
+        event.type === "system.sync_required"
+      ) {
+        scheduleDashboardRefresh();
+      }
+    },
+    onFallbackPoll: fetchDashboard,
+    fallbackPollMs: 15000,
+  });
 
   useEffect(() => {
-    async function fetchDashboard() {
-      setSyncing(true);
-      try {
-        const res = await getDashboardLive(dateRange);
-        const payload = res.data || {};
-        const nextElapsed = {};
-        (payload.tables || []).forEach((table) => {
-          const id = tableKey(table.id);
-          if (table.session) {
-            nextElapsed[id] = Number(table.session.elapsed_seconds || table.elapsed_seconds || 0);
-          }
-        });
-        setLiveData(payload);
-        setElapsed(nextElapsed);
-        setLastFetchedAt(Date.now());
-        setLoadError("");
-      } catch (err) {
-        console.error(err);
-        setLoadError(err.userMessage || "Dashboard data could not load. Retrying...");
-      } finally {
-        setSyncing(false);
-      }
-    }
-
     fetchDashboard();
-    const activeInterval = window.setInterval(fetchDashboard, 15000);
     const handleStorageChange = (event) => {
-      if (event.key === "hsr:last-data-change") fetchDashboard();
+      if (event.key === "hsr:last-data-change") scheduleDashboardRefresh();
     };
-    window.addEventListener("hsr:data-changed", fetchDashboard);
+    window.addEventListener("hsr:data-changed", scheduleDashboardRefresh);
     window.addEventListener("storage", handleStorageChange);
     return () => {
-      window.clearInterval(activeInterval);
-      window.removeEventListener("hsr:data-changed", fetchDashboard);
+      window.removeEventListener("hsr:data-changed", scheduleDashboardRefresh);
       window.removeEventListener("storage", handleStorageChange);
     };
-  }, [role, dateRange]);
+  }, [fetchDashboard, role, scheduleDashboardRefresh]);
+
+  useEffect(() => {
+    if (realtimeState !== "connected") return undefined;
+    const safetyPoll = window.setInterval(fetchDashboard, 60000);
+    return () => window.clearInterval(safetyPoll);
+  }, [fetchDashboard, realtimeState]);
+
+  useEffect(() => () => window.clearTimeout(dashboardRefreshTimerRef.current), []);
 
   useEffect(() => {
     const interval = window.setInterval(() => {
@@ -1246,7 +1279,7 @@ export default function Dashboard({ metrics, onNavigate, role = "admin" }) {
   }, [runningTables, foodAttachment, liveData]);
 
   return (
-    <div className="ops-dashboard ops-dashboard-minimal">
+    <div className="ops-dashboard ops-dashboard-minimal" data-realtime-state={realtimeState}>
       <KeyMetricsSection
         dateRange={dateRange}
         onDateRangeChange={setDateRange}
