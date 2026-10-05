@@ -1526,6 +1526,7 @@ function LiveFloorCommand({
               type="button"
               className={viewMode === mode ? "active" : ""}
               onClick={() => onViewModeChange(mode)}
+              aria-pressed={viewMode === mode}
             >
               <i className={`ti ${icon}`} aria-hidden="true" />
               <span>{compact && mode === "detailed" ? "Detail" : label}</span>

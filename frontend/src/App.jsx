@@ -380,7 +380,7 @@ function AppInner() {
           activeTables={metrics.active_tables}
           role={role}
         />
-        <div className="main-content">
+        <div className={`main-content page-${page}`}>
           <Topbar
             title={PAGE_TITLES[page]}
             role={role}

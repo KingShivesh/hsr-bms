@@ -327,24 +327,33 @@ function KeyMetricsSection({
           <DashboardRangeFilter dateRange={dateRange} onDateRangeChange={onDateRangeChange} />
         </div>
       </div>
-      <div className="ops-kpi-grid four">
-        {/* F-pattern rule: Today Revenue stays first/top-left unless the owner deliberately changes priority. */}
-        <KpiCard
-          label={dateRange === "today" ? "Today Revenue" : `${periodLabel} Revenue`}
-          value={money(ownerTotal)}
-          sub={hasClosedSessions ? `${sessionCount} sessions closed in range` : "No closed sessions in range"}
-          icon="ti-cash"
-          trend={revenueTrend}
-          empty={!hasClosedSessions}
-        />
-        <KpiCard
-          label="Live Floor Value"
-          value={money(liveTableTotal)}
-          sub={hasLiveValue ? "Estimated value still running" : "No tables are billing right now"}
-          icon="ti-live-view"
-          trend={liveTrend}
-          empty={!hasLiveValue}
-        />
+      <div className="ops-reference-grid">
+        <article className={`ops-kpi ops-kpi-lead ${!hasClosedSessions ? "is-empty" : ""}`}>
+          <div className="ops-kpi-top">
+            <span>{dateRange === "today" ? "Today Revenue" : `${periodLabel} Revenue`}</span>
+            <i className="ti ti-cash" aria-hidden="true" />
+          </div>
+          <div className="ops-kpi-lead-value">
+            <strong>{money(ownerTotal)}</strong>
+            <em className={`ops-kpi-trend ${revenueTrend.tone || "neutral"}`}>
+              <i className={`ti ${revenueTrend.icon || "ti-minus"}`} aria-hidden="true" />
+              {revenueTrend.label}
+            </em>
+          </div>
+          <p>{hasClosedSessions ? `${sessionCount} sessions closed in range` : "No closed sessions in range"}</p>
+          <div className="ops-kpi-support">
+            <div>
+              <span>Live floor value</span>
+              <b>{money(liveTableTotal)}</b>
+              <small>{liveTrend.label}</small>
+            </div>
+            <div>
+              <span>Closed sessions</span>
+              <b>{sessionCount}</b>
+              <small>{periodLabel || "Today"} register</small>
+            </div>
+          </div>
+        </article>
         <KpiCard
           label="Active Tables"
           value={`${activeCount}/${TOTAL_TABLES}`}
@@ -1307,12 +1316,13 @@ export default function Dashboard({ metrics, onNavigate, role = "admin" }) {
         </div>
       )}
 
-      <LiveFloor tables={liveTables} elapsed={elapsed} onNavigate={onNavigate} />
-
-      <AttentionPanel
-        actions={actionItems}
-        onNavigate={onNavigate}
-      />
+      <div className="ops-dashboard-workspace">
+        <LiveFloor tables={liveTables} elapsed={elapsed} onNavigate={onNavigate} />
+        <AttentionPanel
+          actions={actionItems}
+          onNavigate={onNavigate}
+        />
+      </div>
     </div>
   );
 }

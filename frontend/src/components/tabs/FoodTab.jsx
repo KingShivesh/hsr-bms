@@ -606,6 +606,7 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
                   key={cat}
                   onClick={() => setActiveCat(cat)}
                   className={activeCat === cat ? "active" : ""}
+                  aria-pressed={activeCat === cat}
                 >
                   {cat}
                 </button>

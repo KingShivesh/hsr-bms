@@ -12392,6 +12392,14 @@ textarea:focus {
   border-color: var(--premium-info) !important;
 }
 
+.segmented-control button:active:not(:disabled),
+.category-tabs button:active:not(:disabled),
+.page-tabs button:active:not(:disabled),
+.table-floor-tile:active:not(:disabled) {
+  transform: translateY(1px) scale(0.985);
+  filter: brightness(0.94);
+}
+
 .table-floor-layout {
   gap: 28px !important;
 }
@@ -20494,5 +20502,189 @@ body.dark .dashboard-home .dashboard-close-day-btn * {
   .topbar-breadcrumb span,
   .topbar-breadcrumb i {
     display: none;
+  }
+}
+
+/* Dashboard reference grid: Tabler's wide lead card, compact strip, and paired work area. */
+.ops-dashboard-minimal {
+  gap: 14px;
+}
+
+.ops-reference-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.ops-reference-grid > .ops-kpi {
+  min-height: 184px;
+}
+
+.ops-kpi-lead {
+  grid-template-rows: auto auto auto 1fr;
+}
+
+.ops-kpi-lead-value {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+
+.ops-kpi-lead-value > strong {
+  font-size: 42px;
+}
+
+.ops-kpi-support {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-3);
+  align-self: end;
+  margin-top: var(--space-4);
+}
+
+.ops-kpi-support > div {
+  min-width: 0;
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--border);
+}
+
+.ops-kpi-support span,
+.ops-kpi-support small {
+  display: block;
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semibold);
+}
+
+.ops-kpi-support span {
+  text-transform: uppercase;
+}
+
+.ops-kpi-support b {
+  display: block;
+  margin: 4px 0 2px;
+  color: var(--text-primary);
+  font-size: var(--text-xl);
+  font-weight: var(--weight-black);
+}
+
+.ops-dashboard-minimal .ops-quick-section {
+  padding: 0;
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none;
+}
+
+.ops-dashboard-minimal .ops-quick-actions {
+  gap: 14px;
+}
+
+.ops-dashboard-minimal .ops-quick-action {
+  min-height: 58px;
+  flex-direction: row;
+  justify-content: flex-start;
+  padding: var(--space-3);
+  text-align: left;
+}
+
+.ops-dashboard-minimal .ops-quick-action i {
+  width: 32px;
+  height: 32px;
+}
+
+.ops-dashboard-workspace {
+  display: grid;
+  grid-template-columns: minmax(0, 3fr) minmax(240px, 1fr);
+  align-items: stretch;
+  gap: 14px;
+}
+
+.ops-dashboard-workspace > .ops-panel,
+.ops-dashboard-workspace > .ops-attention-inline {
+  min-width: 0;
+  height: 100%;
+}
+
+.ops-dashboard-workspace .ops-floor-grid {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: var(--space-2);
+}
+
+.ops-dashboard-workspace .ops-table-card {
+  min-height: 164px;
+  gap: var(--space-2);
+  padding: var(--space-3);
+}
+
+.ops-dashboard-workspace .ops-attention-inline {
+  width: 100%;
+  min-height: 100%;
+  align-items: flex-start;
+  align-content: center;
+  padding: var(--space-5);
+  text-align: left;
+}
+
+@media (max-width: 1260px) {
+  .ops-reference-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .ops-kpi-lead {
+    grid-column: 1 / -1;
+  }
+
+  .ops-dashboard-workspace {
+    grid-template-columns: 1fr;
+  }
+
+  .ops-dashboard-workspace .ops-floor-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 760px) {
+  .main-content.page-dashboard {
+    width: calc(100% - 64px);
+    max-width: calc(100% - 64px);
+    flex: 0 0 calc(100% - 64px);
+    overflow-x: hidden;
+  }
+
+  .page-dashboard .ops-metrics-head {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .page-dashboard .ops-metrics-actions {
+    display: grid;
+    grid-template-columns: 1fr;
+    width: 100%;
+  }
+
+  .page-dashboard .ops-sync-status,
+  .page-dashboard .ops-range-filter {
+    width: 100%;
+  }
+
+  .page-dashboard .ops-kpi-lead-value {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .page-dashboard .ops-kpi-trend {
+    max-width: 100%;
+    white-space: normal;
+  }
+
+  .ops-reference-grid,
+  .ops-kpi-support {
+    grid-template-columns: 1fr;
+  }
+
+  .ops-dashboard-minimal .ops-quick-actions,
+  .ops-dashboard-workspace .ops-floor-grid {
+    grid-template-columns: 1fr;
   }
 }
