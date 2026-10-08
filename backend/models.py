@@ -73,6 +73,11 @@ class ActiveSession(Base):
     billing_mode  = Column(String,  default="single")  # single / sharing / lp
     players_json  = Column(Text,    default="[]")
     session_key   = Column(String,  default="")
+    started_at    = Column(Float, nullable=True)
+    paused_at     = Column(Float, nullable=True)
+    total_paused_ms = Column(Float, nullable=True)
+    rate_multiplier = Column(Float, nullable=True)
+    rate_label    = Column(String, nullable=True)
 
 class SessionFrame(Base):
     __tablename__ = "session_frames"

@@ -124,6 +124,13 @@ dead/reachable component findings, and the full routing migration.
   session after their checks pass; do not leave verified work unshipped.
 
 ## Deferred / Follow-up
+- Functional build scope and exclusions: `docs/FUNCTIONAL_ROADMAP.md`.
+  Preserve the SNOOK color/font contract. Existing single/sharing/LP describe
+  payer allocation; do not confuse them with upcoming hourly/frame/package tariffs.
+- Session timing/pricing: new sessions preserve `started_at` and snapshot the
+  peak multiplier/label. Nullable snapshots intentionally retain the old pricing
+  policy for sessions already open during deployment. `start_time` is still the
+  effective timer origin for old clients. See `docs/session-engine-audit/README.md`.
 - Bill/transaction search is intentionally out of scope until there is 
   a real bill-detail, filter, scroll-to, or highlight destination. Do 
   not add a generic "go to Sales" result and call it bill search.

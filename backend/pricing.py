@@ -24,9 +24,15 @@ def calc_checkout(
     minutes: int,
     hourly_rate: int,
     food_total: int,
+    peak_multiplier: float | None = None,
+    peak_label: str | None = None,
 ) -> dict:
     base_play = round((minutes / 60) * hourly_rate)
-    multiplier, peak_label = get_peak_multiplier(db)
+    if peak_multiplier is None:
+        multiplier, peak_label = get_peak_multiplier(db)
+    else:
+        multiplier = peak_multiplier
+        peak_label = peak_label or "Standard"
     play = round(base_play * multiplier)
     peak_surcharge = play - base_play
 

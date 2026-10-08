@@ -12,7 +12,7 @@ from audit import log_action, require_manager_pin
 from pricing import calc_checkout, get_peak_multiplier
 from deps import get_current_claims, require_admin
 from hsr_config import TABLE_RATES, format_ist_now, get_ist_now, rate_for_table
-from live_state import build_live_floor_state, build_table_state, serialize_session as serialize_live_session
+from live_state import build_live_floor_state, build_table_state, serialize_session as serialize_live_session, session_elapsed_ms, session_started_at
 from realtime import queue_realtime_event
 
 router = APIRouter()
@@ -488,11 +488,17 @@ def billable_minutes(elapsed_ms: float, min_mins: int = 0) -> int:
 
 def checkout_clock_ms(sess: models.ActiveSession, requested_ms: float | None = None) -> float:
     now_ms = time.time() * 1000
-    if sess.paused:
-        return requested_ms or now_ms
     if requested_ms:
-        return min(max(requested_ms, sess.start_time), now_ms)
+        return min(max(requested_ms, sess.started_at or sess.start_time), now_ms)
     return now_ms
+
+def initialize_session_timing(db: Session, sess: models.ActiveSession) -> None:
+    if sess.started_at is None:
+        sess.started_at = session_started_at(db, sess)
+    if sess.total_paused_ms is None:
+        sess.total_paused_ms = max(0, (sess.start_time or sess.started_at) - sess.started_at)
+    if sess.paused_at is None:
+        sess.paused_at = (sess.start_time + (sess.elapsed_ms or 0)) if sess.paused else 0
 
 def create_frame_for_session(
     db: Session,
@@ -502,7 +508,7 @@ def create_frame_for_session(
     frame = models.SessionFrame(
         table_id=sess.table_id,
         session_key=ensure_session_key(db, sess),
-        session_started_at=sess.start_time,
+        session_started_at=session_started_at(db, sess),
         frame_no=frame_no,
         started_at=time.time() * 1000,
         ended_at=0,
@@ -585,6 +591,10 @@ def start_session(
     sess = existing or models.ActiveSession(table_id=table_id)
     sess.table_id      = table_id
     sess.start_time    = time.time() * 1000
+    sess.started_at    = sess.start_time
+    sess.paused_at     = 0
+    sess.total_paused_ms = 0
+    sess.rate_multiplier, sess.rate_label = get_peak_multiplier(db)
     sess.customer_name = customer_name
     sess.rate          = rate
     sess.food_total    = 0
@@ -611,6 +621,8 @@ def start_session(
             "billing_mode": billing_mode,
             "players": players,
             "rate": rate,
+            "rate_multiplier": sess.rate_multiplier,
+            "rate_label": sess.rate_label,
             "started_at": sess.start_time,
         },
     )
@@ -637,13 +649,18 @@ def pause_session(
     sess = active_session_for_table(db, table_id)
     if not sess:
         raise HTTPException(status_code=404, detail="No active session")
+    initialize_session_timing(db, sess)
+    now_ms = time.time() * 1000
     if not sess.paused:
-        sess.elapsed_ms = time.time() * 1000 - sess.start_time
+        sess.elapsed_ms = session_elapsed_ms(sess, now_ms)
+        sess.paused_at = now_ms
         sess.paused     = True
         action = "session_pause"
         event_type = "session_paused"
     else:
-        sess.start_time = time.time() * 1000 - sess.elapsed_ms
+        sess.total_paused_ms += max(0, now_ms - sess.paused_at)
+        sess.paused_at = 0
+        sess.start_time = now_ms - sess.elapsed_ms
         sess.paused     = False
         action = "session_resume"
         event_type = "session_resumed"
@@ -657,6 +674,9 @@ def pause_session(
             "paused": sess.paused,
             "elapsed_ms": sess.elapsed_ms,
             "start_time": sess.start_time,
+            "session_started_at": sess.started_at,
+            "paused_at": sess.paused_at,
+            "total_paused_ms": sess.total_paused_ms,
         },
     )
     log_action(db, action, f"{normalize_table_id(table_id).upper()} {action.replace('session_', '')}", table_id=table_id)
@@ -682,8 +702,8 @@ def quote_session(
     settings   = db.query(models.Settings).first()
     min_mins   = settings.min_session if settings else 0
     quoted_at_ms = checkout_clock_ms(sess, closed_at_ms)
-    session_started_at = sess.start_time
-    elapsed_ms = sess.elapsed_ms if sess.paused else quoted_at_ms - sess.start_time
+    started_at = session_started_at(db, sess)
+    elapsed_ms = session_elapsed_ms(sess, quoted_at_ms)
     elapsed_ms = max(0, elapsed_ms)
 
     minutes = billable_minutes(elapsed_ms, min_mins)
@@ -697,6 +717,8 @@ def quote_session(
         minutes=minutes,
         hourly_rate=sess.rate,
         food_total=sess.food_total,
+        peak_multiplier=sess.rate_multiplier,
+        peak_label=sess.rate_label,
     )
     play      = checkout["play"]
     food      = checkout["food"]
@@ -773,7 +795,7 @@ def quote_session(
         "payment_method": payment_method,
         "billing_mode": billing_mode,
         "session_key": ensure_session_key(db, sess),
-        "session_started_at": session_started_at,
+        "session_started_at": started_at,
         "session_ended_at": quoted_at_ms,
         "players": players,
         "payer_name": payer,
@@ -823,8 +845,8 @@ def stop_session(
     settings   = db.query(models.Settings).first()
     min_mins   = settings.min_session if settings else 0
     closed_at_ms = checkout_clock_ms(sess, closed_at_ms)
-    session_started_at = sess.start_time
-    elapsed_ms = sess.elapsed_ms if sess.paused else closed_at_ms - sess.start_time
+    started_at = session_started_at(db, sess)
+    elapsed_ms = session_elapsed_ms(sess, closed_at_ms)
     elapsed_ms = max(0, elapsed_ms)
 
     minutes = billable_minutes(elapsed_ms, min_mins)
@@ -837,6 +859,8 @@ def stop_session(
         minutes=minutes,
         hourly_rate=sess.rate,
         food_total=sess.food_total,
+        peak_multiplier=sess.rate_multiplier,
+        peak_label=sess.rate_label,
     )
 
     play            = checkout["play"]
@@ -959,7 +983,7 @@ def stop_session(
         payment_split_json = json.dumps(payment_split),
         discount_reason = discount_reason,
         session_key    = actual_session_key,
-        session_started_at = session_started_at,
+        session_started_at = started_at,
         session_ended_at = closed_at_ms,
     )
     db.add(t)
@@ -1027,7 +1051,7 @@ def stop_session(
             "play_charge": play,
             "food_charge": food,
             "total": total,
-            "session_started_at": session_started_at,
+            "session_started_at": started_at,
             "session_ended_at": closed_at_ms,
             "billing_mode": billing_mode,
             "players": transaction_players,

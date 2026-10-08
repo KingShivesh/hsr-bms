@@ -159,6 +159,22 @@ def session_elapsed_ms(session: models.ActiveSession, now_ms: float | None = Non
     return max(0, now_ms - float(session.start_time or now_ms))
 
 
+def session_started_at(db: Session, session: models.ActiveSession) -> float:
+    if session.started_at is not None:
+        return session.started_at
+    # Older clients use a synthetic start_time for elapsed time after resume.
+    if session.session_key:
+        event = db.query(models.SessionEvent).filter(
+            models.SessionEvent.session_key == session.session_key,
+            models.SessionEvent.event_type == "session_started",
+        ).order_by(models.SessionEvent.ts.asc()).first()
+        if event:
+            payload = safe_json(event.payload_json, {})
+            if isinstance(payload, dict) and isinstance(payload.get("started_at"), (int, float)):
+                return payload["started_at"]
+    return float(session.start_time or 0)
+
+
 def billable_minutes(elapsed_ms: float, min_mins: int = 0) -> int:
     minutes = max(1, int(math.ceil(max(0, elapsed_ms) / 1000 / 60)))
     return max(minutes, int(min_mins or 0))
@@ -171,6 +187,8 @@ def live_charge(db: Session, session: models.ActiveSession, elapsed_ms: float, s
         minutes=minutes,
         hourly_rate=session.rate or 0,
         food_total=session.food_total or 0,
+        peak_multiplier=session.rate_multiplier,
+        peak_label=session.rate_label,
     )
     return {
         "minutes": minutes,
@@ -198,6 +216,11 @@ def serialize_session(db: Session, session: models.ActiveSession, *, now_ms: flo
         "customer_name": session.customer_name,
         "rate": session.rate or 0,
         "start_time": session.start_time,
+        "session_started_at": session_started_at(db, session),
+        "paused_at": session.paused_at,
+        "total_paused_ms": session.total_paused_ms,
+        "rate_multiplier": session.rate_multiplier,
+        "rate_label": session.rate_label,
         "elapsed_ms": session.elapsed_ms or 0,
         "elapsed_ms_current": elapsed_ms,
         "elapsed_seconds": int(elapsed_ms / 1000),

@@ -143,7 +143,7 @@ def root():
 
 @app.get("/health")
 def health():
-    return {"status": "ok", "service": APP_NAME}
+    return {"status": "ok", "service": APP_NAME, "revision": os.getenv("RENDER_GIT_COMMIT", "")}
 
 
 @app.get("/ready")

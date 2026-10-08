@@ -44,6 +44,11 @@ def ensure_runtime_columns():
             "billing_mode": "VARCHAR(50) DEFAULT 'single'",
             "players_json": "TEXT DEFAULT '[]'",
             "session_key": "VARCHAR(255) DEFAULT ''",
+            "started_at": "FLOAT",
+            "paused_at": "FLOAT",
+            "total_paused_ms": "FLOAT",
+            "rate_multiplier": "FLOAT",
+            "rate_label": "VARCHAR(255)",
         },
         "session_frames": {
             "session_key": "VARCHAR(255) DEFAULT ''",
@@ -70,10 +75,9 @@ def ensure_runtime_columns():
             "table_id": "VARCHAR(50) DEFAULT ''",
         },
     }
-    inspector = inspect(engine)
-    existing_tables = set(inspector.get_table_names())
-
     with engine.begin() as conn:
+        inspector = inspect(conn)
+        existing_tables = set(inspector.get_table_names())
         for table, required in columns.items():
             if table not in existing_tables:
                 continue
