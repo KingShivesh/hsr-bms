@@ -224,7 +224,10 @@ function AppInner() {
   function goToPage(nextPage, options = {}) {
     const route = PAGE_TO_ROUTE[nextPage];
     if (route) {
-      navigate(route, { replace: options.replace });
+      const query = new URLSearchParams();
+      if (options.tableId) query.set("table", options.tableId);
+      if (options.tableAction) query.set("action", options.tableAction);
+      navigate(query.size ? `${route}?${query}` : route, { replace: options.replace });
       return;
     }
     setLegacyPage(nextPage);
@@ -411,6 +414,7 @@ function AppInner() {
               )}
               {page === "tables" && (
                 <TablesTab
+                  onNavigate={goToPage}
                   onSessionEnd={fetchMetrics}
                   newSessionRequest={newSessionRequest}
                   onOpenFoodOrder={openFoodOrder}
@@ -426,7 +430,7 @@ function AppInner() {
                   onOrderContextHandled={() => setFoodOrderContext(null)}
                 />
               )}
-              {page === "tournaments" && <TournamentTab />}
+              {page === "tournaments" && <TournamentTab onNavigate={goToPage} />}
               {page === "members" && role === "admin" && <CustomersPage />}
               {page === "operations" && role === "admin" && <OperationsTab />}
               {page === "billing" && role === "admin" && <SalesPage />}
@@ -435,7 +439,7 @@ function AppInner() {
                 "inventory",
                 "staff",
               ].includes(page) && <ClubSuiteTab view={page} />}
-              {page === "reservations" && <BookingsPage />}
+              {page === "reservations" && <BookingsPage onNavigate={goToPage} />}
               {page === "settings" && (
                 <SettingsTab
                   role={role}

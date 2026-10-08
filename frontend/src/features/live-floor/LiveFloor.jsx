@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import { getLiveFloor, getRates, saveRates, startSession } from "../../api/index.js";
 import RetryNotice from "../../components/RetryNotice.jsx";
 import { useEscapeKey } from "../../components/ui/index.js";
@@ -137,13 +138,17 @@ function NewSessionPanel({ open, tables, initialTableId, onClose, onCreated }) {
 
 export default function LiveFloor({ role = "admin", onNavigate, newSessionRequest = 0 }) {
   const { showToast } = useToast();
+  const [searchParams] = useSearchParams();
+  const requestedTable = searchParams.get("table") || "";
+  const requestedAction = searchParams.get("action") || "";
   const [floor, setFloor] = useState(null);
-  const [selectedTableId, setSelectedTableId] = useState("");
+  const [selectedTableId, setSelectedTableId] = useState(requestedTable);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [tick, setTick] = useState(0);
-  const [newSessionOpen, setNewSessionOpen] = useState(false);
-  const [newSessionTableId, setNewSessionTableId] = useState("");
+  const [newSessionOpen, setNewSessionOpen] = useState(requestedAction === "start");
+  const [newSessionTableId, setNewSessionTableId] = useState(requestedTable);
+  const [checkoutTableId, setCheckoutTableId] = useState(requestedAction === "checkout" ? requestedTable : "");
   const floorRefreshTimerRef = useRef(null);
 
   const openNewSession = useCallback((tableId = "") => {
@@ -336,18 +341,31 @@ export default function LiveFloor({ role = "admin", onNavigate, newSessionReques
                 tables={tables}
                 selectedTableId={selectedTable?.id}
                 tick={tick}
-                onSelectTable={(table) => setSelectedTableId(table.id)}
+                onSelectTable={(table) => {
+                  setCheckoutTableId("");
+                  setSelectedTableId(table.id);
+                }}
                 onStartSession={openNewSession}
+                onCheckout={(table) => {
+                  setSelectedTableId(table.id);
+                  setCheckoutTableId(table.id);
+                }}
+                onReviewBooking={() => onNavigate?.("reservations")}
                 onSaveRate={saveInlineRate}
                 onInvalidRate={(message) => showToast(message, "error")}
               />
             </div>
 
             <SessionWorkspace
+              key={`${selectedTable?.id || "none"}-${checkoutTableId}`}
               table={selectedTable}
+              initialCheckoutOpen={checkoutTableId === selectedTable?.id}
               tables={tables}
               tick={tick}
-              onClose={() => setSelectedTableId("")}
+              onClose={() => {
+                setSelectedTableId("");
+                setCheckoutTableId("");
+              }}
               onRefresh={() => loadFloor()}
               onStartSession={openNewSession}
             />

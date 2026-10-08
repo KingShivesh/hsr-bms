@@ -1,0 +1,274 @@
+/* SNOOK-derived primitives. Components consume semantic aliases below. */
+:root {
+  --neutral-white: #fafafa;
+  --neutral-100: #f4f4f4;
+  --neutral-200: #dedee4;
+  --neutral-500: #62626c;
+  --neutral-600: #52525b;
+  --neutral-900: #18181b;
+  --snook-canvas: #0b0b0f;
+  --snook-card: #111116;
+  --snook-overlay: #1a1a22;
+  --snook-border: #25252c;
+  --snook-green: #00ff7f;
+  --snook-green-hover: #42ff9c;
+  --snook-green-active: #00db6d;
+  --brand-ink: #07120d;
+  --brand-light: #006b3c;
+  --brand-light-hover: #00532e;
+  --brand-light-active: #003d22;
+  --font-sans: "Syne Variable", "Syne", sans-serif;
+  --font-mono: "DM Mono", monospace;
+  --weight-bold: 600;
+  --weight-heavy: 700;
+  --weight-black: 700;
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 8px;
+  --radius-xl: 12px;
+  --text-page-title: 24px;
+  --text-section: 18px;
+  --text-card-title: 14px;
+  --text-body: 14px;
+  --text-table: 13px;
+  --text-label: 12px;
+  --shadow-sm: none;
+  --shadow-md: none;
+  --elevation-1: none;
+  --elevation-2: none;
+  --elevation-3: none;
+}
+
+:root, body {
+  --surface-base: var(--neutral-white);
+  --surface-card: var(--neutral-100);
+  --surface-overlay: var(--neutral-white);
+  --surface-inset: var(--neutral-white);
+  --surface-sidebar: var(--neutral-100);
+  --surface: var(--surface-card);
+  --surface-raised: var(--surface-card);
+  --surface-muted: var(--surface-base);
+  --surface-soft: var(--surface-base);
+  --surface-emphasis: var(--surface-card);
+  --bg: var(--surface-base);
+  --bg-app: var(--surface-base);
+  --text-primary: var(--neutral-900);
+  --text-secondary: var(--neutral-600);
+  --text-muted: var(--neutral-500);
+  --border: var(--neutral-200);
+  --border-muted: var(--neutral-200);
+  --border-strong: #bcbcc6;
+  --accent: var(--brand-light);
+  --accent-hover: var(--brand-light-hover);
+  --accent-active: var(--brand-light-active);
+  --accent-bg: #e0f3e8;
+  --accent-soft: #eaf6ef;
+  --accent-border: #91c9aa;
+  --accent-text: var(--brand-light);
+  --text-on-accent: var(--neutral-white);
+  --on-accent: var(--text-on-accent);
+  --text-on-brand: var(--text-on-accent);
+  --success: var(--accent);
+  --success-bg: var(--accent-bg);
+  --success-text: var(--accent-text);
+  --warning: #936000;
+  --warning-bg: #fff3d4;
+  --warning-text: #704600;
+  --danger: #b42318;
+  --danger-bg: #fff1ef;
+  --danger-text: #8f1f17;
+  --text-on-danger: var(--neutral-white);
+  --sidebar-bg: var(--surface-sidebar);
+  --sidebar-bg-2: var(--surface-sidebar);
+  --sidebar-border: var(--border);
+  --sidebar-text: var(--text-primary);
+  --sidebar-muted: var(--text-muted);
+  --sidebar-active: var(--accent-bg);
+  --sidebar-active-border: var(--accent);
+  --input-bg: var(--surface-inset);
+  --border-default: var(--border);
+  --border-subtle: var(--border-muted);
+  --border-focus: var(--accent);
+  --action-primary: var(--accent);
+  --action-primary-hover: var(--accent-hover);
+  --action-primary-active: var(--accent-active);
+  --action-secondary: var(--surface-overlay);
+  --action-secondary-hover: var(--surface-muted);
+}
+
+body.dark {
+  --surface-base: var(--snook-canvas);
+  --surface-card: var(--snook-card);
+  --surface-overlay: var(--snook-overlay);
+  --surface-inset: var(--snook-canvas);
+  --surface-sidebar: var(--snook-canvas);
+  --surface: var(--surface-card);
+  --surface-raised: var(--surface-card);
+  --surface-muted: var(--surface-overlay);
+  --surface-soft: var(--surface-overlay);
+  --surface-emphasis: var(--surface-card);
+  --bg: var(--surface-base);
+  --bg-app: var(--surface-base);
+  --text-primary: var(--neutral-white);
+  --text-secondary: #b4b4bd;
+  --text-muted: #92929f;
+  --border: var(--snook-border);
+  --border-muted: #202027;
+  --border-strong: #454550;
+  --accent: var(--snook-green);
+  --accent-hover: var(--snook-green-hover);
+  --accent-active: var(--snook-green-active);
+  --accent-bg: #0c2519;
+  --accent-soft: #0e1c15;
+  --accent-border: #276b47;
+  --accent-text: var(--snook-green);
+  --text-on-accent: var(--brand-ink);
+  --on-accent: var(--text-on-accent);
+  --text-on-brand: var(--text-on-accent);
+  --success: var(--accent);
+  --success-bg: var(--accent-bg);
+  --success-text: var(--accent-text);
+  --warning: #f2bd58;
+  --warning-bg: #2b2112;
+  --warning-text: #f2ce82;
+  --danger: #f08077;
+  --danger-bg: #2a181b;
+  --danger-text: #ffb2aa;
+  --text-on-danger: var(--snook-canvas);
+  --sidebar-bg: var(--surface-sidebar);
+  --sidebar-bg-2: var(--surface-sidebar);
+  --sidebar-border: var(--border);
+  --sidebar-text: var(--text-primary);
+  --sidebar-muted: var(--text-muted);
+  --sidebar-active: var(--accent-bg);
+  --sidebar-active-border: var(--accent);
+  --input-bg: var(--surface-inset);
+}
+
+/* Shared primitives translate the palette without changing page structure. */
+body, body.dark {
+  background: var(--surface-base) !important;
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  letter-spacing: 0;
+}
+
+.shell, .main-content, .page, body.dark .main-content, body.dark .page {
+  background: var(--surface-base) !important;
+}
+
+h1, h2, h3, .topbar-title, .settings-panel-title {
+  font-weight: var(--weight-semibold) !important;
+}
+
+.topbar-right button, .cf-topbar .role-badge, .cf-command-pill,
+.ops-kpi-trend, .ops-table-card, .ops-attention-list {
+  font-weight: var(--weight-semibold);
+}
+
+.topbar-title, .cf-title-block {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.topbar-title {
+  font-size: var(--text-page-title) !important;
+  line-height: 1.15;
+}
+
+@media (min-width: 761px) and (max-width: 1600px) {
+  .topbar-date { display: none; }
+}
+
+.ui-button, .ui-input, .ui-select, .ui-card, .ui-panel, .ui-badge {
+  font-family: var(--font-sans);
+}
+
+.cf-sidebar, .sidebar {
+  background: var(--surface-sidebar) !important;
+  border-color: var(--border-subtle) !important;
+}
+
+.cf-topbar {
+  background: var(--surface-base) !important;
+  border-color: var(--border-subtle) !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+}
+
+.ui-card, .ui-panel, .ui-metric-card, .ops-panel,
+.ops-kpi, .ops-kpi-card, .lf-panel, .operations-card, .op2-panel {
+  background: var(--surface-card) !important;
+  border-color: var(--border-default) !important;
+  box-shadow: none !important;
+}
+
+.ui-button-primary, .btn-primary, .cf-page-primary-action,
+.ops-primary-action, .lf-primary-button {
+  color: var(--text-on-brand) !important;
+  background: var(--action-primary) !important;
+  border-color: var(--action-primary) !important;
+  box-shadow: none !important;
+}
+
+.cf-notification-dot {
+  color: var(--text-on-danger) !important;
+}
+
+.sb-logo-mark {
+  background: var(--accent) !important;
+  color: var(--text-on-accent) !important;
+  box-shadow: none !important;
+}
+
+.session-hero {
+  background: var(--surface-card) !important;
+  border: 1px solid var(--border);
+  box-shadow: none !important;
+}
+
+.session-hero strong, .session-hero b,
+.session-hero > div:first-child > span:not(.table-state-badge),
+.session-hero > div:last-child > span {
+  color: var(--text-primary) !important;
+}
+
+.queue-form .primary-action-btn,
+.booking-form .primary-action-btn {
+  background: var(--action-primary) !important;
+  color: var(--text-on-brand) !important;
+}
+
+.operations-rule-row em {
+  color: var(--accent-text);
+}
+
+.ops-kpi-trend,
+.ui-metric-delta {
+  background: var(--surface-muted) !important;
+  color: var(--text-secondary) !important;
+}
+
+.ui-metric-value, .ui-metric-card > strong, .ui-timer, .ui-currency,
+.ops-kpi-value, .ops-kpi-card > strong,
+.ops-kpi strong, .metric-value, .ops-kpi-support b,
+.table-state-timer, .table-state-rate, .lf-workspace-total strong,
+.analytics-summary-value, .analytics-stat-value, .lf-inline-rate,
+.lf-table-money strong, .session-money-card strong, .session-hero b,
+.session-hero > div:last-child > span {
+  font-family: var(--font-mono) !important;
+  font-weight: var(--weight-medium) !important;
+  font-variant-numeric: tabular-nums;
+}
+
+button:focus-visible, input:focus-visible, select:focus-visible,
+textarea:focus-visible, a:focus-visible {
+  outline: 2px solid var(--border-focus) !important;
+  outline-offset: 3px;
+}
+
+body.dark .modal-content, body.dark .ui-modal,
+body.dark .cf-command-dialog, body.dark .cf-notification-panel {
+  background: var(--surface-overlay);
+  box-shadow: none;
+}

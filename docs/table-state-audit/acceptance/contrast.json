@@ -1,0 +1,30 @@
+{
+  "generatedAt": "2026-10-08T18:20:21.777Z",
+  "appUrl": "http://127.0.0.1:5173",
+  "apiUrl": "http://127.0.0.1:8000",
+  "routes": [
+    "/",
+    "/analytics",
+    "/audit-log",
+    "/bookings",
+    "/cafe-pos",
+    "/customers",
+    "/daily-closing",
+    "/dashboard",
+    "/inventory",
+    "/legacy-table-controls",
+    "/live-floor",
+    "/pricing-rules",
+    "/sales",
+    "/settings",
+    "/tournaments",
+    "/waitlist"
+  ],
+  "dynamicStatesIncluded": [
+    "default route state",
+    "notification popover when bell exists",
+    "command palette shortcut",
+    "first non-destructive primary/action button per page when present"
+  ],
+  "violations": []
+}

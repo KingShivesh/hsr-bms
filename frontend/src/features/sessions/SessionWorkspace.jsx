@@ -33,11 +33,12 @@ export default function SessionWorkspace({
   onClose,
   onRefresh,
   onStartSession,
+  initialCheckoutOpen = false,
 }) {
   const { showToast } = useToast();
   const [activeTab, setActiveTab] = useState("overview");
   const [showOrders, setShowOrders] = useState(false);
-  const [checkoutOpen, setCheckoutOpen] = useState(false);
+  const [checkoutOpen, setCheckoutOpen] = useState(initialCheckoutOpen);
   const [busy, setBusy] = useState("");
   const [transferTarget, setTransferTarget] = useState("");
   useEscapeKey(onClose, !!table && !showOrders && !checkoutOpen);
@@ -193,7 +194,7 @@ export default function SessionWorkspace({
           )}
 
           <div className="session-action-bar">
-            <button type="button" className="lf-primary-button" onClick={() => setShowOrders(true)}>
+            <button type="button" className="lf-secondary-button" onClick={() => setShowOrders(true)}>
               <i className="ti ti-tools-kitchen-2" aria-hidden="true" />
               Add Food
             </button>
@@ -221,7 +222,7 @@ export default function SessionWorkspace({
                 {busy === "transfer" ? "Moving..." : "Move Session"}
               </button>
             </label>
-            <button type="button" className="lf-danger-button" onClick={() => setCheckoutOpen(true)}>
+            <button type="button" className="lf-primary-button" onClick={() => setCheckoutOpen(true)}>
               <i className="ti ti-receipt" aria-hidden="true" />
               Open Checkout
             </button>

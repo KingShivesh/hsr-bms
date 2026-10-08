@@ -1379,17 +1379,6 @@ body.dark .lf-table-card:focus-visible {
   border-color: var(--accent-hover);
 }
 
-.lf-table-card.is-running {
-  border-color: color-mix(in srgb, var(--accent) 32%, var(--border));
-  background: linear-gradient(180deg, color-mix(in srgb, var(--accent-bg) 38%, var(--surface)) 0%, var(--surface) 58%);
-}
-
-.lf-table-card.is-paused,
-.lf-table-card.is-reserved {
-  border-color: color-mix(in srgb, var(--warning) 28%, var(--border));
-  background: linear-gradient(180deg, color-mix(in srgb, var(--warning-bg) 36%, var(--surface)) 0%, var(--surface) 60%);
-}
-
 .lf-table-card.is-maintenance {
   border-color: color-mix(in srgb, var(--danger) 28%, var(--border));
   background: linear-gradient(180deg, color-mix(in srgb, var(--danger-bg) 36%, var(--surface)) 0%, var(--surface) 60%);
@@ -2710,6 +2699,7 @@ body.dark .lf-table-card:focus-visible {
     width: 100%;
   }
 }
+
 
 .lf-field {
   display: grid;
@@ -11099,18 +11089,6 @@ body {
   box-shadow: 0 0 0 3px rgba(32, 128, 79, 0.12), 0 16px 34px rgba(16, 32, 23, 0.12);
 }
 
-.table-floor-tile.running {
-  background: linear-gradient(180deg, var(--success-bg), var(--surface));
-}
-
-.table-floor-tile.paused {
-  background: linear-gradient(180deg, var(--warning-bg), var(--surface));
-}
-
-.table-floor-tile.maintenance {
-  background: linear-gradient(180deg, var(--danger-bg), var(--surface));
-}
-
 .table-floor-number {
   position: absolute;
   inset: 0;
@@ -11905,71 +11883,6 @@ body.dark .topbar-user-chip.staff {
 }
 
 /* Occupied table highlight */
-.table-session-card.occupied {
-  --table-control-bg: var(--occupied-control-bg);
-  --table-control-border: var(--occupied-control-border);
-  --table-control-surface: var(--occupied-control-surface);
-  background: var(--occupied-card-bg) !important;
-  border-color: var(--occupied-accent) !important;
-}
-
-.table-session-card.occupied .table-control-panel {
-  background:
-    linear-gradient(180deg, var(--occupied-control-bg), rgba(255, 255, 255, 0.96));
-}
-
-.table-session-card.occupied .table-control-top {
-  border-bottom: 1px solid var(--occupied-control-border);
-  padding-bottom: 8px;
-}
-
-.table-session-card.occupied .table-rate-line {
-  color: var(--accent-text);
-}
-
-.table-session-card.occupied .table-start-panel,
-.table-session-card.occupied .active-billing-summary,
-.table-session-card.occupied .table-frame-panel,
-.table-session-card.occupied .table-notes-panel,
-.table-session-card.occupied .table-inline-panel,
-.table-session-card.occupied .table-reservation-info,
-.table-session-card.occupied .table-frame-time-row {
-  background: rgba(255, 255, 255, 0.74);
-  border-color: var(--occupied-control-border);
-}
-
-.table-session-card.occupied .active-billing-summary {
-  box-shadow: inset 3px 0 0 var(--occupied-accent);
-}
-
-.table-floor-tile.running .table-floor-body,
-.table-floor-tile.paused .table-floor-body {
-  margin: 8px -2px -2px;
-  padding: 10px;
-  border: 1px solid rgba(32, 128, 79, 0.2);
-  border-radius: var(--radius-sm);
-  background: rgba(231, 244, 236, 0.72);
-}
-
-.table-floor-tile.paused .table-floor-body {
-  border-color: rgba(217, 164, 65, 0.28);
-  background: rgba(255, 248, 232, 0.82);
-}
-
-body.dark .table-session-card.occupied {
-  --occupied-card-bg: rgba(32, 128, 79, 0.12);
-  --occupied-control-bg: rgba(32, 128, 79, 0.1);
-  --occupied-control-surface: rgba(255, 255, 255, 0.04);
-  --occupied-control-border: rgba(140, 240, 178, 0.28);
-}
-
-body.dark .table-session-card.occupied .table-control-panel {
-  background: var(--occupied-control-bg) !important;
-}
-
-body.dark .table-session-card.occupied .table-rate-line {
-  color: var(--accent-hover);
-}
 
 /* Tournament HSR table floor */
 .tournament-floor-note {
@@ -12013,11 +11926,6 @@ body.dark .table-session-card.occupied .table-rate-line {
 .table-status-card.recommended {
   border-color: color-mix(in srgb, var(--accent) 34%, var(--border));
   background: color-mix(in srgb, var(--accent-bg) 44%, var(--surface));
-}
-
-.table-status-card.running,
-.table-status-card.paused {
-  border-color: color-mix(in srgb, var(--success) 34%, var(--border));
 }
 
 .table-status-card-head {
@@ -12419,11 +12327,6 @@ textarea:focus {
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--premium-accent) 18%, transparent) !important;
 }
 
-.table-floor-tile.running,
-.table-floor-tile.paused {
-  border-color: color-mix(in srgb, var(--premium-accent) 38%, var(--premium-border)) !important;
-}
-
 .table-floor-number {
   opacity: 0.28 !important;
 }
@@ -12440,19 +12343,6 @@ textarea:focus {
   border-color: color-mix(in srgb, var(--premium-accent) 28%, transparent) !important;
 }
 
-.table-floor-tile.running .table-floor-body,
-.table-floor-tile.paused .table-floor-body {
-  margin: 8px 0 0 !important;
-  background: var(--premium-accent-soft) !important;
-  border-color: color-mix(in srgb, var(--premium-accent) 26%, transparent) !important;
-  color: var(--premium-text) !important;
-}
-
-.table-floor-tile.paused .table-floor-body {
-  background: color-mix(in srgb, var(--premium-info-soft) 74%, var(--premium-surface)) !important;
-  border-color: color-mix(in srgb, var(--premium-info) 25%, transparent) !important;
-}
-
 .table-detail-panel .table-session-card {
   box-shadow: var(--premium-shadow) !important;
 }
@@ -12466,22 +12356,8 @@ textarea:focus {
   --table-control-soft: var(--premium-soft) !important;
 }
 
-.table-session-card.occupied {
-  background: linear-gradient(180deg, var(--premium-accent-soft), var(--premium-surface) 44%) !important;
-  border-color: color-mix(in srgb, var(--premium-accent) 42%, var(--premium-border)) !important;
-}
-
-.table-session-card.occupied .table-control-panel {
-  background: color-mix(in srgb, var(--premium-accent-soft) 42%, var(--premium-surface)) !important;
-}
-
 .table-rate-line {
   color: var(--premium-muted) !important;
-}
-
-.table-session-card.occupied .table-rate-line,
-.table-session-card.occupied .active-billing-summary strong {
-  color: var(--premium-accent-hover) !important;
 }
 
 .table-start-panel,
@@ -12644,21 +12520,11 @@ body.dark .checkout-bill-shell {
   color: var(--premium-text) !important;
 }
 
-body.dark .table-floor-tile.running .table-floor-body,
-body.dark .table-floor-tile.paused .table-floor-body,
-body.dark .table-session-card.occupied .table-control-panel,
-body.dark .table-session-card.occupied {
-  background: color-mix(in srgb, var(--premium-accent-soft) 58%, var(--premium-surface)) !important;
-  border-color: color-mix(in srgb, var(--premium-accent) 32%, var(--premium-border)) !important;
-}
-
 body.dark .table-floor-status {
   color: var(--accent-text) !important;
 }
 
-body.dark .table-floor-status.running,
-body.dark .table-session-card.occupied .table-rate-line,
-body.dark .table-session-card.occupied .active-billing-summary strong {
+body.dark .table-floor-status.running {
   color: var(--premium-accent-hover) !important;
 }
 
@@ -13355,32 +13221,6 @@ body.dark .settings-action-row {
   text-transform: none !important;
 }
 
-.table-session-card.occupied {
-  background:
-    linear-gradient(180deg, color-mix(in srgb, var(--premium-danger-soft) 78%, var(--surface)), var(--premium-surface) 46%) !important;
-  border-color: color-mix(in srgb, var(--premium-danger) 46%, var(--premium-border)) !important;
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--premium-danger) 13%, transparent) !important;
-}
-
-.table-session-card.occupied .table-control-panel {
-  background: color-mix(in srgb, var(--premium-danger-soft) 42%, var(--premium-surface)) !important;
-}
-
-.table-session-card.occupied .table-rate-line,
-.table-session-card.occupied .active-billing-summary strong {
-  color: var(--premium-danger) !important;
-}
-
-.table-session-card.occupied .table-start-panel,
-.table-session-card.occupied .active-billing-summary,
-.table-session-card.occupied .table-frame-panel,
-.table-session-card.occupied .table-notes-panel,
-.table-session-card.occupied .table-inline-panel,
-.table-session-card.occupied .table-reservation-info,
-.table-session-card.occupied .table-frame-time-row {
-  border-color: color-mix(in srgb, var(--premium-danger) 22%, var(--premium-border)) !important;
-}
-
 .dashboard-panel-action {
   background: var(--premium-primary-soft) !important;
   border-color: color-mix(in srgb, var(--premium-primary) 30%, transparent) !important;
@@ -13405,34 +13245,7 @@ body.dark .settings-action-row {
   color: var(--text-primary) !important;
 }
 
-body.dark .table-session-card.occupied,
-body.dark .table-session-card.occupied .table-control-panel {
-  background: color-mix(in srgb, var(--premium-danger-soft) 58%, var(--premium-surface)) !important;
-  border-color: color-mix(in srgb, var(--premium-danger) 34%, var(--premium-border)) !important;
-}
-
-body.dark .table-session-card.occupied .table-rate-line,
-body.dark .table-session-card.occupied .active-billing-summary strong {
-  color: var(--premium-danger) !important;
-}
-
 /* Strong visibility pass for client-facing controls */
-.table-session-card.occupied {
-  background:
-    linear-gradient(180deg, var(--accent-bg) 0%, var(--surface) 52%, var(--premium-surface) 100%) !important;
-  border-color: var(--accent-border) !important;
-  box-shadow:
-    0 0 0 3px color-mix(in srgb, var(--accent) 14%, transparent),
-    0 14px 34px color-mix(in srgb, var(--accent) 12%, transparent) !important;
-}
-
-.table-session-card.occupied .table-control-panel {
-  background: var(--accent-soft) !important;
-}
-
-.table-session-card.occupied .table-control-top {
-  border-bottom-color: var(--accent-border) !important;
-}
 
 .dashboard-panel-action {
   background: var(--accent) !important;
@@ -13456,17 +13269,6 @@ body.dark .table-session-card.occupied .active-billing-summary strong {
   background: var(--accent-hover) !important;
   border-color: var(--accent-hover) !important;
   color: var(--text-on-accent) !important;
-}
-
-body.dark .table-session-card.occupied {
-  background:
-    linear-gradient(180deg, color-mix(in srgb, var(--accent) 16%, var(--premium-surface)), var(--premium-surface) 54%, var(--surface) 100%) !important;
-  border-color: var(--accent-border) !important;
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 16%, transparent) !important;
-}
-
-body.dark .table-session-card.occupied .table-control-panel {
-  background: var(--accent-soft) !important;
 }
 
 body.dark .dashboard-panel-action {
@@ -13505,43 +13307,6 @@ body.dark .owner-close-day-btn {
   color: var(--text-primary) !important;
 }
 
-.table-floor-tile.running,
-.table-floor-tile.paused {
-  background: linear-gradient(180deg, var(--accent-bg) 0%, var(--surface) 58%, var(--surface) 100%) !important;
-  border-color: var(--accent-border) !important;
-  box-shadow:
-    0 0 0 3px color-mix(in srgb, var(--accent) 12%, transparent),
-    0 12px 30px color-mix(in srgb, var(--accent) 10%, transparent) !important;
-}
-
-.table-floor-tile.running .table-floor-body,
-.table-floor-tile.paused .table-floor-body {
-  background: var(--accent-soft) !important;
-  border-color: var(--accent-border) !important;
-}
-
-.table-floor-tile.running .table-floor-status {
-  background: var(--accent) !important;
-  border-color: var(--accent) !important;
-  color: var(--text-on-accent) !important;
-}
-
-.table-floor-tile.paused .table-floor-status {
-  background: var(--warning) !important;
-  border-color: var(--warning) !important;
-  color: var(--luxury-black) !important;
-}
-
-.table-floor-tile.running .table-floor-topline strong,
-.table-floor-tile.running .table-floor-title {
-  color: var(--accent-text) !important;
-}
-
-.table-floor-tile.paused .table-floor-topline strong,
-.table-floor-tile.paused .table-floor-title {
-  color: var(--warning-text) !important;
-}
-
 body.dark .dashboard-home .dashboard-open-floor-btn {
   background: var(--accent) !important;
   border-color: var(--accent) !important;
@@ -13552,18 +13317,6 @@ body.dark .dashboard-home .dashboard-close-day-btn {
   background: var(--accent) !important;
   border-color: var(--accent) !important;
   color: var(--text-primary) !important;
-}
-
-body.dark .table-floor-tile.running,
-body.dark .table-floor-tile.paused {
-  background: linear-gradient(180deg, color-mix(in srgb, var(--accent) 15%, var(--premium-surface)), var(--premium-surface) 62%) !important;
-  border-color: var(--accent-border) !important;
-}
-
-body.dark .table-floor-tile.running .table-floor-body,
-body.dark .table-floor-tile.paused .table-floor-body {
-  background: var(--accent-soft) !important;
-  border-color: var(--accent-border) !important;
 }
 
 .backend-status-banner {
@@ -15652,11 +15405,6 @@ body.dark .cf-table-slot small {
   background: linear-gradient(180deg, var(--warning-bg), var(--surface));
 }
 
-.ops-table-card.paused {
-  border-color: rgba(220, 38, 38, 0.34);
-  background: linear-gradient(180deg, var(--danger-bg), var(--surface));
-}
-
 .ops-table-top,
 .ops-table-status,
 .ops-table-main {
@@ -15695,10 +15443,6 @@ body.dark .cf-table-slot small {
 
 .ops-table-card.busy .ops-table-status i {
   color: var(--warning);
-}
-
-.ops-table-card.paused .ops-table-status i {
-  color: var(--danger);
 }
 
 .ops-table-main {
@@ -16621,10 +16365,6 @@ body.dark .ops-table-card.active {
 
 body.dark .ops-table-card.busy {
   background: linear-gradient(180deg, color-mix(in srgb, var(--warning) 14%, transparent), var(--surface-emphasis));
-}
-
-body.dark .ops-table-card.paused {
-  background: linear-gradient(180deg, color-mix(in srgb, var(--danger) 16%, transparent), var(--surface-emphasis));
 }
 
 button.sb-item {
@@ -18025,21 +17765,6 @@ body.dark .cf-modal-head {
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 12%, transparent) !important;
 }
 
-.table-floor-tile.running {
-  border-color: color-mix(in srgb, var(--success) 30%, var(--border)) !important;
-  background: var(--surface) !important;
-}
-
-.table-floor-tile.paused {
-  border-color: color-mix(in srgb, var(--warning) 30%, var(--border)) !important;
-  background: var(--surface) !important;
-}
-
-.table-floor-tile.maintenance {
-  border-color: color-mix(in srgb, var(--danger) 30%, var(--border)) !important;
-  background: var(--surface) !important;
-}
-
 .table-floor-body {
   margin: 0 !important;
   display: grid;
@@ -18556,40 +18281,6 @@ select:focus {
   min-width: var(--icon-md);
   height: var(--icon-md);
   font-size: var(--icon-md);
-}
-
-.table-session-card:not(.occupied) {
-  position: relative;
-  box-shadow: var(--elevation-1) !important;
-}
-
-.table-session-card:not(.occupied):hover {
-  border-color: var(--accent-border) !important;
-  box-shadow: 0 12px 30px rgba(16, 24, 40, 0.08) !important;
-}
-
-.table-session-card.occupied {
-  position: relative;
-  border-color: color-mix(in srgb, var(--accent) 44%, var(--border)) !important;
-  background:
-    linear-gradient(180deg, color-mix(in srgb, var(--accent) 7%, var(--surface)), var(--surface)) !important;
-  box-shadow: var(--elevation-2) !important;
-}
-
-body.dark .table-session-card.occupied {
-  background:
-    linear-gradient(180deg, color-mix(in srgb, var(--accent) 16%, var(--surface-raised)), var(--surface) 62%) !important;
-  border-color: var(--accent-border) !important;
-}
-
-.table-session-card.occupied::after,
-.table-floor-tile.running::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  border-radius: inherit;
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
 }
 
 .table-frame-panel.running {

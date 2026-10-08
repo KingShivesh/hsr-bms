@@ -8,10 +8,11 @@ import {
   startSession,
 } from "../../api/index.js";
 import RetryNotice from "../../components/RetryNotice.jsx";
+import { TableAttentionBadge, TablePrimaryAction, TableStateBadge } from "../../components/TableStateUI.jsx";
 import { useEscapeKey } from "../../components/ui/index.js";
 import { useToast } from "../../components/toastContext.js";
 import { HSR_TABLES, getTableRate } from "../../config/hsrTables.js";
-import { getTableStatus } from "../../config/tableStatus.js";
+import { tableActionNavigation, tableStateAttributes, getTableAttention, getTableStatus } from "../../config/tableStatus.js";
 import { useRealtimeSubscription } from "../../realtime/useRealtimeSubscription.js";
 
 function isoLocalNowPlus(minutes = 30) {
@@ -30,6 +31,14 @@ function shortDate(value) {
     hour: "2-digit",
     minute: "2-digit",
   });
+}
+
+function shortDuration(seconds = 0) {
+  const total = Math.max(0, Math.floor(Number(seconds) || 0));
+  const hours = Math.floor(total / 3600);
+  const minutes = String(Math.floor((total % 3600) / 60)).padStart(2, "0");
+  const remainder = String(total % 60).padStart(2, "0");
+  return hours ? `${hours}:${minutes}:${remainder}` : `${minutes}:${remainder}`;
 }
 
 function asArray(value) {
@@ -182,7 +191,7 @@ function BookingModal({ form, setForm, saving, onClose, onSubmit }) {
   );
 }
 
-export default function BookingsPage() {
+export default function BookingsPage({ onNavigate }) {
   const { showToast } = useToast();
   const [bookings, setBookings] = useState([]);
   const [tableState, setTableState] = useState([]);
@@ -289,6 +298,17 @@ export default function BookingsPage() {
     return candidates.find(({ table, state }) => tableAvailability(table, state).key === "available") || null;
   }
 
+  function handleTableAction(tableId, statusKey) {
+    if (statusKey === "reserved") {
+      setFilter("booked");
+      window.requestAnimationFrame(() => {
+        document.querySelector(".op2-panel")?.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+      return;
+    }
+    onNavigate?.(...tableActionNavigation(tableId, statusKey));
+  }
+
   async function submitBooking(event) {
     event.preventDefault();
     setBusy("create");
@@ -391,24 +411,42 @@ export default function BookingsPage() {
             maintenance: state?.maintenance,
           });
           return (
-            <article className="op2-table-booking-card" key={table.id}>
+            <article className="op2-table-booking-card table-state-card" {...tableStateAttributes(status.key)} key={table.id}>
               <div>
                 <strong>T{table.num}</strong>
                 <span>{table.label}</span>
               </div>
-              <em className={`lf-status-badge lf-status-${status.tone}`}>
-                <span />{status.label}
-              </em>
-              {rows.length ? (
+              <div className="table-state-card-flags">
+                <TableAttentionBadge attention={getTableAttention({ session: state?.session, elapsedSeconds: state?.elapsed_seconds })} />
+                <TableStateBadge statusKey={status.key} />
+              </div>
+              {state?.session ? (
+                <p>
+                  <b>{state.session.customer_name || "Player"}</b>
+                  <small>₹{Number(state.session.running_total || state.running_total || 0).toLocaleString("en-IN")} running</small>
+                </p>
+              ) : rows.length ? (
                 rows.slice(0, 2).map((booking) => (
                   <p key={booking.id}>
                     <b>{booking.customer_name}</b>
                     <small>{shortDate(booking.booking_time)}</small>
                   </p>
                 ))
+              ) : state?.maintenance ? (
+                <p><b>Unavailable</b><small>{state.maintenance.reason || "Maintenance active"}</small></p>
               ) : (
                 <p><b>No booking</b><small>Available for walk-ins</small></p>
               )}
+              <div className="op2-table-state-summary">
+                <span>{state?.session ? (status.key === "paused" ? "Frozen timer" : "Elapsed") : "Hourly rate"}</span>
+                <strong className={state?.session ? "table-state-timer" : ""} data-timer={status.timerStyle}>
+                  {state?.session ? shortDuration(state.session.elapsed_seconds) : `₹${state?.rate || getTableRate(table)}/hr`}
+                </strong>
+              </div>
+              <TablePrimaryAction
+                statusKey={status.key}
+                onClick={() => handleTableAction(table.id, status.key)}
+              />
             </article>
           );
         })}

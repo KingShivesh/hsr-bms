@@ -11,7 +11,8 @@ speed of new features.
 - Backend: FastAPI (Python), SQLite locally / Supabase-Postgres in 
   production, hosted on Render
 - Frontend: Vite + React, plain CSS (no Tailwind/component library) — 
-  design system is hand-rolled CSS custom properties in style.css
+  design system is hand-rolled CSS custom properties in style.css plus
+  design-tokens.css; keep the existing stack for incremental design work
 - Local dev: see backend/.env.example and frontend/.env.example for 
   setup; admin/admin123 is the seeded default login
 
@@ -19,12 +20,17 @@ speed of new features.
 CSS custom properties defined in :root and a dark-mode override 
 (body.dark class, toggled via localStorage("darkMode"), set in 
 main.jsx, toggled from Topbar.jsx):
-- --accent: deep emerald (matches HSR logo) — brand/primary actions 
-  ONLY, never used for status meaning
+- --accent: SNOOK-derived green, explicitly approved 2026-10-08:
+  dark `#00FF7F`, light `#006B3C`. Primary actions/current running state only.
+  Exact tokens and live computed-font evidence: `docs/SNOOK_THEME.md`.
+- Fonts: self-hosted Syne Variable for interface text, DM Mono for primary
+  numbers/timers. Do not synthesize heavy monospace weights.
 - --success / --warning / --danger (+ -bg variants): status meaning 
   ONLY, never decorative
 - --text-primary / --text-secondary / --text-muted: content text
-- --text-on-accent: text sitting ON the accent color or a dark/colored 
+- --text-on-accent: text sitting ON the accent color only (dark ink on neon
+  in dark mode). Neutral panels use --text-primary; danger fills use
+  --text-on-danger. Never reuse the brand foreground for an arbitrary dark
   surface (added specifically to fix a recurring misuse bug — see 
   "Known anti-pattern" below)
 - --surface / --surface-muted / --border: backgrounds and borders

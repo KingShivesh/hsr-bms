@@ -1,0 +1,1210 @@
+{
+  "reference": {
+    "url": "https://www.snook.in/#modes",
+    "body": {
+      "fontFamily": "Syne, \"Syne Fallback\", Syne, sans-serif",
+      "fontSize": "16px",
+      "fontWeight": "400",
+      "background": "rgb(11, 11, 15)",
+      "color": "rgb(250, 250, 250)"
+    },
+    "heading": {
+      "fontFamily": "Syne, \"Syne Fallback\"",
+      "fontSize": "48px",
+      "fontWeight": "900",
+      "background": "rgba(0, 0, 0, 0)",
+      "color": "rgb(250, 250, 250)"
+    },
+    "numeric": {
+      "fontFamily": "\"DM Mono\", \"DM Mono Fallback\"",
+      "fontSize": "18px",
+      "fontWeight": "500",
+      "background": "rgba(0, 0, 0, 0)",
+      "color": "rgb(250, 250, 250)"
+    },
+    "card": {
+      "fontFamily": "Syne, \"Syne Fallback\", Syne, sans-serif",
+      "fontSize": "16px",
+      "fontWeight": "400",
+      "background": "rgb(17, 17, 22)",
+      "color": "rgb(250, 250, 250)"
+    },
+    "accent": {
+      "fontFamily": "Syne, \"Syne Fallback\", Syne, sans-serif",
+      "fontSize": "16px",
+      "fontWeight": "400",
+      "background": "rgb(0, 255, 127)",
+      "color": "rgb(250, 250, 250)"
+    },
+    "themeColor": "#0B0B0F"
+  },
+  "themes": [
+    {
+      "theme": "light",
+      "font": "\"Syne Variable\", Syne, sans-serif",
+      "numericFont": "\"DM Mono\", monospace",
+      "canvas": "rgb(250, 250, 250)",
+      "card": "rgb(244, 244, 244)",
+      "border": "rgb(222, 222, 228)",
+      "accent": "#006b3c",
+      "valueSize": "28px",
+      "valueWeight": "500",
+      "labelSize": "10px",
+      "ratio": 2.8,
+      "fontsLoaded": true
+    },
+    {
+      "theme": "dark",
+      "font": "\"Syne Variable\", Syne, sans-serif",
+      "numericFont": "\"DM Mono\", monospace",
+      "canvas": "rgb(11, 11, 15)",
+      "card": "rgb(17, 17, 22)",
+      "border": "rgb(37, 37, 44)",
+      "accent": "#00ff7f",
+      "valueSize": "28px",
+      "valueWeight": "500",
+      "labelSize": "10px",
+      "ratio": 2.8,
+      "fontsLoaded": true
+    }
+  ],
+  "actions": [
+    {
+      "route": "/dashboard",
+      "state": "available",
+      "feedback": ".lf-new-session, .quick-session-backdrop",
+      "latencyMs": 108,
+      "pressFeedbackMs": 20,
+      "pressFeedbackVisible": true,
+      "resultingUrl": "http://127.0.0.1:5173/live-floor?table=t5&action=start"
+    },
+    {
+      "route": "/dashboard",
+      "state": "running",
+      "feedback": ".checkout-panel, .checkout-bill-screen, .table-state-primary:disabled",
+      "latencyMs": 110,
+      "pressFeedbackMs": 21,
+      "pressFeedbackVisible": true,
+      "resultingUrl": "http://127.0.0.1:5173/live-floor?table=t1&action=checkout"
+    },
+    {
+      "route": "/dashboard",
+      "state": "paused",
+      "feedback": ".checkout-panel, .checkout-bill-screen, .table-state-primary:disabled",
+      "latencyMs": 103,
+      "pressFeedbackMs": 20,
+      "pressFeedbackVisible": true,
+      "resultingUrl": "http://127.0.0.1:5173/live-floor?table=t2&action=checkout"
+    },
+    {
+      "route": "/dashboard",
+      "state": "reserved",
+      "feedback": ".op2-board",
+      "latencyMs": 91,
+      "pressFeedbackMs": 20,
+      "pressFeedbackVisible": true,
+      "resultingUrl": "http://127.0.0.1:5173/bookings"
+    },
+    {
+      "route": "/live-floor",
+      "state": "available",
+      "feedback": ".lf-new-session, .quick-session-backdrop",
+      "latencyMs": 25,
+      "pressFeedbackMs": 20,
+      "pressFeedbackVisible": true,
+      "resultingUrl": "http://127.0.0.1:5173/live-floor"
+    },
+    {
+      "route": "/live-floor",
+      "state": "running",
+      "feedback": ".checkout-panel, .checkout-bill-screen, .table-state-primary:disabled",
+      "latencyMs": 27,
+      "pressFeedbackMs": 71,
+      "pressFeedbackVisible": true,
+      "resultingUrl": "http://127.0.0.1:5173/live-floor"
+    },
+    {
+      "route": "/live-floor",
+      "state": "paused",
+      "feedback": ".checkout-panel, .checkout-bill-screen, .table-state-primary:disabled",
+      "latencyMs": 36,
+      "pressFeedbackMs": 20,
+      "pressFeedbackVisible": true,
+      "resultingUrl": "http://127.0.0.1:5173/live-floor"
+    },
+    {
+      "route": "/live-floor",
+      "state": "reserved",
+      "feedback": ".op2-board",
+      "latencyMs": 82,
+      "pressFeedbackMs": 19,
+      "pressFeedbackVisible": true,
+      "resultingUrl": "http://127.0.0.1:5173/bookings"
+    },
+    {
+      "route": "/legacy-table-controls",
+      "state": "available",
+      "feedback": ".lf-new-session, .quick-session-backdrop",
+      "latencyMs": 39,
+      "pressFeedbackMs": 21,
+      "pressFeedbackVisible": true,
+      "resultingUrl": "http://127.0.0.1:5173/legacy-table-controls"
+    },
+    {
+      "route": "/legacy-table-controls",
+      "state": "running",
+      "feedback": ".checkout-panel, .checkout-bill-screen, .table-state-primary:disabled",
+      "latencyMs": 20,
+      "pressFeedbackMs": 20,
+      "pressFeedbackVisible": true,
+      "resultingUrl": "http://127.0.0.1:5173/legacy-table-controls"
+    },
+    {
+      "route": "/legacy-table-controls",
+      "state": "paused",
+      "feedback": ".checkout-panel, .checkout-bill-screen, .table-state-primary:disabled",
+      "latencyMs": 59,
+      "pressFeedbackMs": 19,
+      "pressFeedbackVisible": true,
+      "resultingUrl": "http://127.0.0.1:5173/legacy-table-controls"
+    },
+    {
+      "route": "/legacy-table-controls",
+      "state": "reserved",
+      "feedback": ".op2-board",
+      "latencyMs": 109,
+      "pressFeedbackMs": 22,
+      "pressFeedbackVisible": true,
+      "resultingUrl": "http://127.0.0.1:5173/bookings"
+    },
+    {
+      "route": "/bookings",
+      "state": "available",
+      "feedback": ".lf-new-session, .quick-session-backdrop",
+      "latencyMs": 105,
+      "pressFeedbackMs": 71,
+      "pressFeedbackVisible": true,
+      "resultingUrl": "http://127.0.0.1:5173/live-floor?table=t5&action=start"
+    },
+    {
+      "route": "/bookings",
+      "state": "running",
+      "feedback": ".checkout-panel, .checkout-bill-screen, .table-state-primary:disabled",
+      "latencyMs": 14,
+      "pressFeedbackMs": 63,
+      "pressFeedbackVisible": true,
+      "resultingUrl": "http://127.0.0.1:5173/live-floor?table=t1&action=checkout"
+    },
+    {
+      "route": "/bookings",
+      "state": "paused",
+      "feedback": ".checkout-panel, .checkout-bill-screen, .table-state-primary:disabled",
+      "latencyMs": 16,
+      "pressFeedbackMs": 60,
+      "pressFeedbackVisible": true,
+      "resultingUrl": "http://127.0.0.1:5173/live-floor?table=t2&action=checkout"
+    },
+    {
+      "route": "/bookings",
+      "state": "reserved",
+      "feedback": ".op2-board",
+      "latencyMs": 9,
+      "pressFeedbackMs": 71,
+      "pressFeedbackVisible": true,
+      "resultingUrl": "http://127.0.0.1:5173/bookings"
+    },
+    {
+      "route": "/tournaments",
+      "state": "available",
+      "feedback": ".lf-new-session, .quick-session-backdrop",
+      "latencyMs": 99,
+      "pressFeedbackMs": 72,
+      "pressFeedbackVisible": true,
+      "resultingUrl": "http://127.0.0.1:5173/live-floor?table=t5&action=start"
+    },
+    {
+      "route": "/tournaments",
+      "state": "running",
+      "feedback": ".checkout-panel, .checkout-bill-screen, .table-state-primary:disabled",
+      "latencyMs": 16,
+      "pressFeedbackMs": 66,
+      "pressFeedbackVisible": true,
+      "resultingUrl": "http://127.0.0.1:5173/live-floor?table=t1&action=checkout"
+    },
+    {
+      "route": "/tournaments",
+      "state": "paused",
+      "feedback": ".checkout-panel, .checkout-bill-screen, .table-state-primary:disabled",
+      "latencyMs": 13,
+      "pressFeedbackMs": 66,
+      "pressFeedbackVisible": true,
+      "resultingUrl": "http://127.0.0.1:5173/live-floor?table=t2&action=checkout"
+    },
+    {
+      "route": "/tournaments",
+      "state": "reserved",
+      "feedback": ".op2-board",
+      "latencyMs": 85,
+      "pressFeedbackMs": 71,
+      "pressFeedbackVisible": true,
+      "resultingUrl": "http://127.0.0.1:5173/bookings"
+    }
+  ],
+  "mobile": [
+    {
+      "theme": "light",
+      "width": 1440,
+      "route": "/dashboard",
+      "viewport": 1440,
+      "scrollWidth": 1440,
+      "titleOverlapsActions": false,
+      "primaryTargets": [
+        {
+          "width": 121.6875,
+          "height": 45.375
+        },
+        {
+          "width": 121.703125,
+          "height": 45.375
+        },
+        {
+          "width": 121.703125,
+          "height": 45.375
+        },
+        {
+          "width": 123.703125,
+          "height": 44
+        },
+        {
+          "width": 123.6875,
+          "height": 45.375
+        }
+      ],
+      "minPrimaryHeight": 44
+    },
+    {
+      "theme": "light",
+      "width": 1440,
+      "route": "/live-floor",
+      "viewport": 1440,
+      "scrollWidth": 1440,
+      "titleOverlapsActions": false,
+      "primaryTargets": [
+        {
+          "width": 222,
+          "height": 44
+        },
+        {
+          "width": 222,
+          "height": 44
+        },
+        {
+          "width": 222,
+          "height": 44
+        },
+        {
+          "width": 224,
+          "height": 44
+        },
+        {
+          "width": 224,
+          "height": 44
+        }
+      ],
+      "minPrimaryHeight": 44
+    },
+    {
+      "theme": "light",
+      "width": 1440,
+      "route": "/legacy-table-controls",
+      "viewport": 1440,
+      "scrollWidth": 1440,
+      "titleOverlapsActions": false,
+      "primaryTargets": [
+        {
+          "width": 274,
+          "height": 44
+        },
+        {
+          "width": 274,
+          "height": 44
+        },
+        {
+          "width": 274,
+          "height": 44
+        },
+        {
+          "width": 276,
+          "height": 44
+        },
+        {
+          "width": 276,
+          "height": 44
+        },
+        {
+          "width": 412,
+          "height": 44
+        }
+      ],
+      "minPrimaryHeight": 44
+    },
+    {
+      "theme": "light",
+      "width": 1440,
+      "route": "/bookings",
+      "viewport": 1440,
+      "scrollWidth": 1440,
+      "titleOverlapsActions": false,
+      "primaryTargets": [
+        {
+          "width": 163.1875,
+          "height": 44
+        },
+        {
+          "width": 163.203125,
+          "height": 44
+        },
+        {
+          "width": 163.203125,
+          "height": 44
+        },
+        {
+          "width": 165.203125,
+          "height": 44
+        },
+        {
+          "width": 165.1875,
+          "height": 44
+        }
+      ],
+      "minPrimaryHeight": 44
+    },
+    {
+      "theme": "light",
+      "width": 1440,
+      "route": "/tournaments",
+      "viewport": 1440,
+      "scrollWidth": 1440,
+      "titleOverlapsActions": false,
+      "primaryTargets": [
+        {
+          "width": 135,
+          "height": 45.375
+        },
+        {
+          "width": 135,
+          "height": 45.375
+        },
+        {
+          "width": 135,
+          "height": 45.375
+        },
+        {
+          "width": 137,
+          "height": 44
+        },
+        {
+          "width": 137,
+          "height": 44
+        }
+      ],
+      "minPrimaryHeight": 44
+    },
+    {
+      "theme": "light",
+      "width": 375,
+      "route": "/dashboard",
+      "viewport": 375,
+      "scrollWidth": 375,
+      "titleOverlapsActions": false,
+      "primaryTargets": [
+        {
+          "width": 233,
+          "height": 48
+        },
+        {
+          "width": 233,
+          "height": 48
+        },
+        {
+          "width": 233,
+          "height": 48
+        },
+        {
+          "width": 235,
+          "height": 48
+        },
+        {
+          "width": 235,
+          "height": 48
+        }
+      ],
+      "minPrimaryHeight": 48
+    },
+    {
+      "theme": "light",
+      "width": 375,
+      "route": "/live-floor",
+      "viewport": 375,
+      "scrollWidth": 375,
+      "titleOverlapsActions": false,
+      "primaryTargets": [
+        {
+          "width": 179,
+          "height": 48
+        },
+        {
+          "width": 179,
+          "height": 48
+        },
+        {
+          "width": 179,
+          "height": 48
+        },
+        {
+          "width": 181,
+          "height": 48
+        },
+        {
+          "width": 181,
+          "height": 48
+        }
+      ],
+      "minPrimaryHeight": 48
+    },
+    {
+      "theme": "light",
+      "width": 375,
+      "route": "/legacy-table-controls",
+      "viewport": 375,
+      "scrollWidth": 375,
+      "titleOverlapsActions": false,
+      "primaryTargets": [
+        {
+          "width": 255,
+          "height": 48
+        },
+        {
+          "width": 255,
+          "height": 48
+        },
+        {
+          "width": 255,
+          "height": 48
+        },
+        {
+          "width": 257,
+          "height": 48
+        },
+        {
+          "width": 257,
+          "height": 48
+        },
+        {
+          "width": 263,
+          "height": 48
+        }
+      ],
+      "minPrimaryHeight": 48
+    },
+    {
+      "theme": "light",
+      "width": 375,
+      "route": "/bookings",
+      "viewport": 375,
+      "scrollWidth": 375,
+      "titleOverlapsActions": false,
+      "primaryTargets": [
+        {
+          "width": 247,
+          "height": 48
+        },
+        {
+          "width": 247,
+          "height": 48
+        },
+        {
+          "width": 247,
+          "height": 48
+        },
+        {
+          "width": 249,
+          "height": 48
+        },
+        {
+          "width": 249,
+          "height": 48
+        }
+      ],
+      "minPrimaryHeight": 48
+    },
+    {
+      "theme": "light",
+      "width": 375,
+      "route": "/tournaments",
+      "viewport": 375,
+      "scrollWidth": 375,
+      "titleOverlapsActions": false,
+      "primaryTargets": [
+        {
+          "width": 88.5,
+          "height": 48
+        },
+        {
+          "width": 88.5,
+          "height": 48
+        },
+        {
+          "width": 88.5,
+          "height": 48
+        },
+        {
+          "width": 90.5,
+          "height": 48
+        },
+        {
+          "width": 90.5,
+          "height": 48
+        }
+      ],
+      "minPrimaryHeight": 48
+    },
+    {
+      "theme": "light",
+      "width": 414,
+      "route": "/dashboard",
+      "viewport": 414,
+      "scrollWidth": 414,
+      "titleOverlapsActions": false,
+      "primaryTargets": [
+        {
+          "width": 272,
+          "height": 48
+        },
+        {
+          "width": 272,
+          "height": 48
+        },
+        {
+          "width": 272,
+          "height": 48
+        },
+        {
+          "width": 274,
+          "height": 48
+        },
+        {
+          "width": 274,
+          "height": 48
+        }
+      ],
+      "minPrimaryHeight": 48
+    },
+    {
+      "theme": "light",
+      "width": 414,
+      "route": "/live-floor",
+      "viewport": 414,
+      "scrollWidth": 414,
+      "titleOverlapsActions": false,
+      "primaryTargets": [
+        {
+          "width": 218,
+          "height": 48
+        },
+        {
+          "width": 218,
+          "height": 48
+        },
+        {
+          "width": 218,
+          "height": 48
+        },
+        {
+          "width": 220,
+          "height": 48
+        },
+        {
+          "width": 220,
+          "height": 48
+        }
+      ],
+      "minPrimaryHeight": 48
+    },
+    {
+      "theme": "light",
+      "width": 414,
+      "route": "/legacy-table-controls",
+      "viewport": 414,
+      "scrollWidth": 414,
+      "titleOverlapsActions": false,
+      "primaryTargets": [
+        {
+          "width": 294,
+          "height": 48
+        },
+        {
+          "width": 294,
+          "height": 48
+        },
+        {
+          "width": 294,
+          "height": 48
+        },
+        {
+          "width": 296,
+          "height": 48
+        },
+        {
+          "width": 296,
+          "height": 48
+        },
+        {
+          "width": 302,
+          "height": 48
+        }
+      ],
+      "minPrimaryHeight": 48
+    },
+    {
+      "theme": "light",
+      "width": 414,
+      "route": "/bookings",
+      "viewport": 414,
+      "scrollWidth": 414,
+      "titleOverlapsActions": false,
+      "primaryTargets": [
+        {
+          "width": 286,
+          "height": 48
+        },
+        {
+          "width": 286,
+          "height": 48
+        },
+        {
+          "width": 286,
+          "height": 48
+        },
+        {
+          "width": 288,
+          "height": 48
+        },
+        {
+          "width": 288,
+          "height": 48
+        }
+      ],
+      "minPrimaryHeight": 48
+    },
+    {
+      "theme": "light",
+      "width": 414,
+      "route": "/tournaments",
+      "viewport": 414,
+      "scrollWidth": 414,
+      "titleOverlapsActions": false,
+      "primaryTargets": [
+        {
+          "width": 108,
+          "height": 48
+        },
+        {
+          "width": 108,
+          "height": 48
+        },
+        {
+          "width": 108,
+          "height": 48
+        },
+        {
+          "width": 110,
+          "height": 48
+        },
+        {
+          "width": 110,
+          "height": 48
+        }
+      ],
+      "minPrimaryHeight": 48
+    },
+    {
+      "theme": "dark",
+      "width": 1440,
+      "route": "/dashboard",
+      "viewport": 1440,
+      "scrollWidth": 1440,
+      "titleOverlapsActions": false,
+      "primaryTargets": [
+        {
+          "width": 121.6875,
+          "height": 45.375
+        },
+        {
+          "width": 121.703125,
+          "height": 45.375
+        },
+        {
+          "width": 121.703125,
+          "height": 45.375
+        },
+        {
+          "width": 123.703125,
+          "height": 44
+        },
+        {
+          "width": 123.6875,
+          "height": 45.375
+        }
+      ],
+      "minPrimaryHeight": 44
+    },
+    {
+      "theme": "dark",
+      "width": 1440,
+      "route": "/live-floor",
+      "viewport": 1440,
+      "scrollWidth": 1440,
+      "titleOverlapsActions": false,
+      "primaryTargets": [
+        {
+          "width": 222,
+          "height": 44
+        },
+        {
+          "width": 222,
+          "height": 44
+        },
+        {
+          "width": 222,
+          "height": 44
+        },
+        {
+          "width": 224,
+          "height": 44
+        },
+        {
+          "width": 224,
+          "height": 44
+        }
+      ],
+      "minPrimaryHeight": 44
+    },
+    {
+      "theme": "dark",
+      "width": 1440,
+      "route": "/legacy-table-controls",
+      "viewport": 1440,
+      "scrollWidth": 1440,
+      "titleOverlapsActions": false,
+      "primaryTargets": [
+        {
+          "width": 274,
+          "height": 44
+        },
+        {
+          "width": 274,
+          "height": 44
+        },
+        {
+          "width": 274,
+          "height": 44
+        },
+        {
+          "width": 276,
+          "height": 44
+        },
+        {
+          "width": 276,
+          "height": 44
+        },
+        {
+          "width": 412,
+          "height": 44
+        }
+      ],
+      "minPrimaryHeight": 44
+    },
+    {
+      "theme": "dark",
+      "width": 1440,
+      "route": "/bookings",
+      "viewport": 1440,
+      "scrollWidth": 1440,
+      "titleOverlapsActions": false,
+      "primaryTargets": [
+        {
+          "width": 163.1875,
+          "height": 44
+        },
+        {
+          "width": 163.203125,
+          "height": 44
+        },
+        {
+          "width": 163.203125,
+          "height": 44
+        },
+        {
+          "width": 165.203125,
+          "height": 44
+        },
+        {
+          "width": 165.1875,
+          "height": 44
+        }
+      ],
+      "minPrimaryHeight": 44
+    },
+    {
+      "theme": "dark",
+      "width": 1440,
+      "route": "/tournaments",
+      "viewport": 1440,
+      "scrollWidth": 1440,
+      "titleOverlapsActions": false,
+      "primaryTargets": [
+        {
+          "width": 135,
+          "height": 45.375
+        },
+        {
+          "width": 135,
+          "height": 45.375
+        },
+        {
+          "width": 135,
+          "height": 45.375
+        },
+        {
+          "width": 137,
+          "height": 44
+        },
+        {
+          "width": 137,
+          "height": 44
+        }
+      ],
+      "minPrimaryHeight": 44
+    },
+    {
+      "theme": "dark",
+      "width": 375,
+      "route": "/dashboard",
+      "viewport": 375,
+      "scrollWidth": 375,
+      "titleOverlapsActions": false,
+      "primaryTargets": [
+        {
+          "width": 233,
+          "height": 48
+        },
+        {
+          "width": 233,
+          "height": 48
+        },
+        {
+          "width": 233,
+          "height": 48
+        },
+        {
+          "width": 235,
+          "height": 48
+        },
+        {
+          "width": 235,
+          "height": 48
+        }
+      ],
+      "minPrimaryHeight": 48
+    },
+    {
+      "theme": "dark",
+      "width": 375,
+      "route": "/live-floor",
+      "viewport": 375,
+      "scrollWidth": 375,
+      "titleOverlapsActions": false,
+      "primaryTargets": [
+        {
+          "width": 179,
+          "height": 48
+        },
+        {
+          "width": 179,
+          "height": 48
+        },
+        {
+          "width": 179,
+          "height": 48
+        },
+        {
+          "width": 181,
+          "height": 48
+        },
+        {
+          "width": 181,
+          "height": 48
+        }
+      ],
+      "minPrimaryHeight": 48
+    },
+    {
+      "theme": "dark",
+      "width": 375,
+      "route": "/legacy-table-controls",
+      "viewport": 375,
+      "scrollWidth": 375,
+      "titleOverlapsActions": false,
+      "primaryTargets": [
+        {
+          "width": 255,
+          "height": 48
+        },
+        {
+          "width": 255,
+          "height": 48
+        },
+        {
+          "width": 255,
+          "height": 48
+        },
+        {
+          "width": 257,
+          "height": 48
+        },
+        {
+          "width": 257,
+          "height": 48
+        },
+        {
+          "width": 263,
+          "height": 48
+        }
+      ],
+      "minPrimaryHeight": 48
+    },
+    {
+      "theme": "dark",
+      "width": 375,
+      "route": "/bookings",
+      "viewport": 375,
+      "scrollWidth": 375,
+      "titleOverlapsActions": false,
+      "primaryTargets": [
+        {
+          "width": 247,
+          "height": 48
+        },
+        {
+          "width": 247,
+          "height": 48
+        },
+        {
+          "width": 247,
+          "height": 48
+        },
+        {
+          "width": 249,
+          "height": 48
+        },
+        {
+          "width": 249,
+          "height": 48
+        }
+      ],
+      "minPrimaryHeight": 48
+    },
+    {
+      "theme": "dark",
+      "width": 375,
+      "route": "/tournaments",
+      "viewport": 375,
+      "scrollWidth": 375,
+      "titleOverlapsActions": false,
+      "primaryTargets": [
+        {
+          "width": 88.5,
+          "height": 48
+        },
+        {
+          "width": 88.5,
+          "height": 48
+        },
+        {
+          "width": 88.5,
+          "height": 48
+        },
+        {
+          "width": 90.5,
+          "height": 48
+        },
+        {
+          "width": 90.5,
+          "height": 48
+        }
+      ],
+      "minPrimaryHeight": 48
+    },
+    {
+      "theme": "dark",
+      "width": 414,
+      "route": "/dashboard",
+      "viewport": 414,
+      "scrollWidth": 414,
+      "titleOverlapsActions": false,
+      "primaryTargets": [
+        {
+          "width": 272,
+          "height": 48
+        },
+        {
+          "width": 272,
+          "height": 48
+        },
+        {
+          "width": 272,
+          "height": 48
+        },
+        {
+          "width": 274,
+          "height": 48
+        },
+        {
+          "width": 274,
+          "height": 48
+        }
+      ],
+      "minPrimaryHeight": 48
+    },
+    {
+      "theme": "dark",
+      "width": 414,
+      "route": "/live-floor",
+      "viewport": 414,
+      "scrollWidth": 414,
+      "titleOverlapsActions": false,
+      "primaryTargets": [
+        {
+          "width": 218,
+          "height": 48
+        },
+        {
+          "width": 218,
+          "height": 48
+        },
+        {
+          "width": 218,
+          "height": 48
+        },
+        {
+          "width": 220,
+          "height": 48
+        },
+        {
+          "width": 220,
+          "height": 48
+        }
+      ],
+      "minPrimaryHeight": 48
+    },
+    {
+      "theme": "dark",
+      "width": 414,
+      "route": "/legacy-table-controls",
+      "viewport": 414,
+      "scrollWidth": 414,
+      "titleOverlapsActions": false,
+      "primaryTargets": [
+        {
+          "width": 294,
+          "height": 48
+        },
+        {
+          "width": 294,
+          "height": 48
+        },
+        {
+          "width": 294,
+          "height": 48
+        },
+        {
+          "width": 296,
+          "height": 48
+        },
+        {
+          "width": 296,
+          "height": 48
+        },
+        {
+          "width": 302,
+          "height": 48
+        }
+      ],
+      "minPrimaryHeight": 48
+    },
+    {
+      "theme": "dark",
+      "width": 414,
+      "route": "/bookings",
+      "viewport": 414,
+      "scrollWidth": 414,
+      "titleOverlapsActions": false,
+      "primaryTargets": [
+        {
+          "width": 286,
+          "height": 48
+        },
+        {
+          "width": 286,
+          "height": 48
+        },
+        {
+          "width": 286,
+          "height": 48
+        },
+        {
+          "width": 288,
+          "height": 48
+        },
+        {
+          "width": 288,
+          "height": 48
+        }
+      ],
+      "minPrimaryHeight": 48
+    },
+    {
+      "theme": "dark",
+      "width": 414,
+      "route": "/tournaments",
+      "viewport": 414,
+      "scrollWidth": 414,
+      "titleOverlapsActions": false,
+      "primaryTargets": [
+        {
+          "width": 108,
+          "height": 48
+        },
+        {
+          "width": 108,
+          "height": 48
+        },
+        {
+          "width": 108,
+          "height": 48
+        },
+        {
+          "width": 110,
+          "height": 48
+        },
+        {
+          "width": 110,
+          "height": 48
+        }
+      ],
+      "minPrimaryHeight": 48
+    }
+  ],
+  "errors": []
+}

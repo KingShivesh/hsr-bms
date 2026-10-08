@@ -3,8 +3,11 @@ import path from "node:path";
 
 const root = process.cwd();
 const srcDir = path.join(root, "src");
-const cssPath = path.join(srcDir, "style.css");
-const css = fs.readFileSync(cssPath, "utf8");
+const sources = ["style.css", "design-tokens.css", "table-states.css"].map((name) => ({
+  name: `src/${name}`,
+  text: fs.readFileSync(path.join(srcDir, name), "utf8"),
+}));
+const css = sources.map((source) => source.text).join("\n");
 
 const defined = new Set();
 for (const match of css.matchAll(/--([a-zA-Z0-9_-]+)\s*:/g)) {
@@ -13,9 +16,16 @@ for (const match of css.matchAll(/--([a-zA-Z0-9_-]+)\s*:/g)) {
 
 const issues = [];
 const addIssue = (message, source = "src/style.css", index = 0) => {
-  const before = source === "src/style.css" ? css.slice(0, index) : "";
-  const line = before ? before.split("\n").length : 1;
-  issues.push(`${source}:${line} ${message}`);
+  let offset = index;
+  for (const candidate of sources) {
+    if (offset <= candidate.text.length) {
+      const line = candidate.text.slice(0, offset).split("\n").length;
+      issues.push(`${candidate.name}:${line} ${message}`);
+      return;
+    }
+    offset -= candidate.text.length + 1;
+  }
+  issues.push(`${source}:1 ${message}`);
 };
 
 for (const match of css.matchAll(/var\((--[a-zA-Z0-9_-]+)/g)) {

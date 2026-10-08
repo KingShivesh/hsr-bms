@@ -1,0 +1,602 @@
+[
+  {
+    "theme": "light",
+    "mode": "none",
+    "threshold": 20,
+    "runningCentroid": {
+      "luminance": 214.62311545482774,
+      "edgeDensity": 6.562068839385508
+    },
+    "availableCentroid": {
+      "luminance": 225.00411859766692,
+      "edgeDensity": 3.6720677187027206
+    },
+    "luminanceDelta": 10.381003142839177,
+    "edgeDensityDelta": 2.890001120682787,
+    "correct": 5,
+    "total": 5,
+    "pass": true,
+    "cards": [
+      {
+        "label": "Wiraka Running",
+        "status": "running",
+        "luminance": 214.9151617072998,
+        "edgeDensity": 6.459261610607493,
+        "borderContrast": 159.36980000000034,
+        "predicted": "running"
+      },
+      {
+        "label": "Wiraka Running",
+        "status": "running",
+        "luminance": 214.33106920235568,
+        "edgeDensity": 6.664876068163522,
+        "borderContrast": 159.36980000000034,
+        "predicted": "running"
+      },
+      {
+        "label": "English Available",
+        "status": "available",
+        "luminance": 224.96780991477402,
+        "edgeDensity": 3.7217023353215506,
+        "borderContrast": 0,
+        "predicted": "available"
+      },
+      {
+        "label": "English Available",
+        "status": "available",
+        "luminance": 224.98184237223347,
+        "edgeDensity": 3.6964409996327197,
+        "borderContrast": 0,
+        "predicted": "available"
+      },
+      {
+        "label": "Pool Available",
+        "status": "available",
+        "luminance": 225.06270350599326,
+        "edgeDensity": 3.5980598211538926,
+        "borderContrast": 0,
+        "predicted": "available"
+      }
+    ]
+  },
+  {
+    "theme": "light",
+    "mode": "blurredVision",
+    "threshold": 20,
+    "runningCentroid": {
+      "luminance": 220.03791992168613,
+      "edgeDensity": 1.883602798317007
+    },
+    "availableCentroid": {
+      "luminance": 227.2465887343234,
+      "edgeDensity": 1.1346409414068563
+    },
+    "luminanceDelta": 7.208668812637285,
+    "edgeDensityDelta": 0.7489618569101506,
+    "correct": 5,
+    "total": 5,
+    "pass": true,
+    "cards": [
+      {
+        "label": "Wiraka Running",
+        "status": "running",
+        "luminance": 220.21057228318156,
+        "edgeDensity": 1.8424750816323123,
+        "borderContrast": 40.99879999999992,
+        "predicted": "running"
+      },
+      {
+        "label": "Wiraka Running",
+        "status": "running",
+        "luminance": 219.86526756019066,
+        "edgeDensity": 1.9247305150017018,
+        "borderContrast": 40.99879999999992,
+        "predicted": "running"
+      },
+      {
+        "label": "English Available",
+        "status": "available",
+        "luminance": 227.2181319271732,
+        "edgeDensity": 1.14120227080994,
+        "borderContrast": 3.9277999999999604,
+        "predicted": "available"
+      },
+      {
+        "label": "English Available",
+        "status": "available",
+        "luminance": 227.22354969725635,
+        "edgeDensity": 1.1444370614448338,
+        "borderContrast": 3.9277999999999604,
+        "predicted": "available"
+      },
+      {
+        "label": "Pool Available",
+        "status": "available",
+        "luminance": 227.29808457854077,
+        "edgeDensity": 1.118283491965795,
+        "borderContrast": 3.9277999999999604,
+        "predicted": "available"
+      }
+    ]
+  },
+  {
+    "theme": "light",
+    "mode": "achromatopsia",
+    "threshold": 20,
+    "runningCentroid": {
+      "luminance": 215.8317768104472,
+      "edgeDensity": 6.41304574372004
+    },
+    "availableCentroid": {
+      "luminance": 226.13512069647803,
+      "edgeDensity": 3.6166751028050985
+    },
+    "luminanceDelta": 10.30334388603083,
+    "edgeDensityDelta": 2.796370640914941,
+    "correct": 5,
+    "total": 5,
+    "pass": true,
+    "cards": [
+      {
+        "label": "Wiraka Running",
+        "status": "running",
+        "luminance": 216.1234368816779,
+        "edgeDensity": 6.310340720743969,
+        "borderContrast": 147,
+        "predicted": "running"
+      },
+      {
+        "label": "Wiraka Running",
+        "status": "running",
+        "luminance": 215.54011673921647,
+        "edgeDensity": 6.515750766696111,
+        "borderContrast": 147,
+        "predicted": "running"
+      },
+      {
+        "label": "English Available",
+        "status": "available",
+        "luminance": 226.09922833399287,
+        "edgeDensity": 3.6660281667774943,
+        "borderContrast": 0,
+        "predicted": "available"
+      },
+      {
+        "label": "English Available",
+        "status": "available",
+        "luminance": 226.11328650573802,
+        "edgeDensity": 3.640739601218774,
+        "borderContrast": 0,
+        "predicted": "available"
+      },
+      {
+        "label": "Pool Available",
+        "status": "available",
+        "luminance": 226.1928472497032,
+        "edgeDensity": 3.543257540419028,
+        "borderContrast": 0,
+        "predicted": "available"
+      }
+    ]
+  },
+  {
+    "theme": "light",
+    "mode": "deuteranopia",
+    "threshold": 20,
+    "runningCentroid": {
+      "luminance": 215.34691966345997,
+      "edgeDensity": 6.424641222942377
+    },
+    "availableCentroid": {
+      "luminance": 225.78126439133143,
+      "edgeDensity": 3.640285943408356
+    },
+    "luminanceDelta": 10.434344727871462,
+    "edgeDensityDelta": 2.784355279534021,
+    "correct": 5,
+    "total": 5,
+    "pass": true,
+    "cards": [
+      {
+        "label": "Wiraka Running",
+        "status": "running",
+        "luminance": 215.63799623844727,
+        "edgeDensity": 6.322170128129978,
+        "borderContrast": 150.45719999999974,
+        "predicted": "running"
+      },
+      {
+        "label": "Wiraka Running",
+        "status": "running",
+        "luminance": 215.05584308847264,
+        "edgeDensity": 6.527112317754776,
+        "borderContrast": 150.45719999999974,
+        "predicted": "running"
+      },
+      {
+        "label": "English Available",
+        "status": "available",
+        "luminance": 225.74502327868012,
+        "edgeDensity": 3.689858010857776,
+        "borderContrast": 0,
+        "predicted": "available"
+      },
+      {
+        "label": "English Available",
+        "status": "available",
+        "luminance": 225.75906625256226,
+        "edgeDensity": 3.6645776849250784,
+        "borderContrast": 0,
+        "predicted": "available"
+      },
+      {
+        "label": "Pool Available",
+        "status": "available",
+        "luminance": 225.8397036427519,
+        "edgeDensity": 3.5664221344422136,
+        "borderContrast": 0,
+        "predicted": "available"
+      }
+    ]
+  },
+  {
+    "theme": "light",
+    "mode": "protanopia",
+    "threshold": 20,
+    "runningCentroid": {
+      "luminance": 216.9067658596813,
+      "edgeDensity": 6.410843565211485
+    },
+    "availableCentroid": {
+      "luminance": 226.46385584371612,
+      "edgeDensity": 3.5898076103894625
+    },
+    "luminanceDelta": 9.557089984034832,
+    "edgeDensityDelta": 2.821035954822022,
+    "correct": 5,
+    "total": 5,
+    "pass": true,
+    "cards": [
+      {
+        "label": "Wiraka Running",
+        "status": "running",
+        "luminance": 217.20045775421846,
+        "edgeDensity": 6.307194466885744,
+        "borderContrast": 144.89839999999896,
+        "predicted": "running"
+      },
+      {
+        "label": "Wiraka Running",
+        "status": "running",
+        "luminance": 216.61307396514408,
+        "edgeDensity": 6.514492663537224,
+        "borderContrast": 144.89839999999896,
+        "predicted": "running"
+      },
+      {
+        "label": "English Available",
+        "status": "available",
+        "luminance": 226.4272814762175,
+        "edgeDensity": 3.639550149369359,
+        "borderContrast": 0,
+        "predicted": "available"
+      },
+      {
+        "label": "English Available",
+        "status": "available",
+        "luminance": 226.44132445009964,
+        "edgeDensity": 3.6142698234366697,
+        "borderContrast": 0,
+        "predicted": "available"
+      },
+      {
+        "label": "Pool Available",
+        "status": "available",
+        "luminance": 226.52296160483112,
+        "edgeDensity": 3.51560285836236,
+        "borderContrast": 0,
+        "predicted": "available"
+      }
+    ]
+  },
+  {
+    "theme": "dark",
+    "mode": "none",
+    "threshold": 20,
+    "runningCentroid": {
+      "luminance": 52.25698398401971,
+      "edgeDensity": 6.623530510038993
+    },
+    "availableCentroid": {
+      "luminance": 39.66109792972182,
+      "edgeDensity": 3.5938523086899146
+    },
+    "luminanceDelta": 12.595886054297893,
+    "edgeDensityDelta": 3.0296782013490784,
+    "correct": 5,
+    "total": 5,
+    "pass": true,
+    "cards": [
+      {
+        "label": "Wiraka Running",
+        "status": "running",
+        "luminance": 51.91884352003044,
+        "edgeDensity": 6.508921220361798,
+        "borderContrast": 166.09539999999896,
+        "predicted": "running"
+      },
+      {
+        "label": "Wiraka Running",
+        "status": "running",
+        "luminance": 52.59512444800898,
+        "edgeDensity": 6.738139799716187,
+        "borderContrast": 166.09539999999896,
+        "predicted": "running"
+      },
+      {
+        "label": "English Available",
+        "status": "available",
+        "luminance": 39.696890241422565,
+        "edgeDensity": 3.6411498337585284,
+        "borderContrast": 0,
+        "predicted": "available"
+      },
+      {
+        "label": "English Available",
+        "status": "available",
+        "luminance": 39.67702725171136,
+        "edgeDensity": 3.611944956678018,
+        "borderContrast": 0,
+        "predicted": "available"
+      },
+      {
+        "label": "Pool Available",
+        "status": "available",
+        "luminance": 39.60937629603154,
+        "edgeDensity": 3.528462135633198,
+        "borderContrast": 0,
+        "predicted": "available"
+      }
+    ]
+  },
+  {
+    "theme": "dark",
+    "mode": "blurredVision",
+    "threshold": 20,
+    "runningCentroid": {
+      "luminance": 59.58762655515619,
+      "edgeDensity": 3.237014196532101
+    },
+    "availableCentroid": {
+      "luminance": 41.42275392232242,
+      "edgeDensity": 1.6830053283310094
+    },
+    "luminanceDelta": 18.16487263283377,
+    "edgeDensityDelta": 1.5540088682010917,
+    "correct": 5,
+    "total": 5,
+    "pass": true,
+    "cards": [
+      {
+        "label": "Wiraka Running",
+        "status": "running",
+        "luminance": 59.01231904031663,
+        "edgeDensity": 3.1472745377490443,
+        "borderContrast": 107.00600000000043,
+        "predicted": "running"
+      },
+      {
+        "label": "Wiraka Running",
+        "status": "running",
+        "luminance": 60.16293406999575,
+        "edgeDensity": 3.326753855315158,
+        "borderContrast": 107.00600000000043,
+        "predicted": "running"
+      },
+      {
+        "label": "English Available",
+        "status": "available",
+        "luminance": 41.509028181655474,
+        "edgeDensity": 1.6922775906386587,
+        "borderContrast": 8.783399999999988,
+        "predicted": "available"
+      },
+      {
+        "label": "English Available",
+        "status": "available",
+        "luminance": 41.46746925209492,
+        "edgeDensity": 1.697476574332098,
+        "borderContrast": 8.783399999999988,
+        "predicted": "available"
+      },
+      {
+        "label": "Pool Available",
+        "status": "available",
+        "luminance": 41.29176433321687,
+        "edgeDensity": 1.6592618200222713,
+        "borderContrast": 8.783399999999988,
+        "predicted": "available"
+      }
+    ]
+  },
+  {
+    "theme": "dark",
+    "mode": "achromatopsia",
+    "threshold": 20,
+    "runningCentroid": {
+      "luminance": 56.38227146814404,
+      "edgeDensity": 7.142848635826791
+    },
+    "availableCentroid": {
+      "luminance": 42.34705607175909,
+      "edgeDensity": 3.749616004181695
+    },
+    "luminanceDelta": 14.035215396384949,
+    "edgeDensityDelta": 3.393232631645096,
+    "correct": 5,
+    "total": 5,
+    "pass": true,
+    "cards": [
+      {
+        "label": "Wiraka Running",
+        "status": "running",
+        "luminance": 56.047783933518005,
+        "edgeDensity": 7.029556259118473,
+        "borderContrast": 196,
+        "predicted": "running"
+      },
+      {
+        "label": "Wiraka Running",
+        "status": "running",
+        "luminance": 56.71675900277008,
+        "edgeDensity": 7.256141012535109,
+        "borderContrast": 196,
+        "predicted": "running"
+      },
+      {
+        "label": "English Available",
+        "status": "available",
+        "luminance": 42.383049481599855,
+        "edgeDensity": 3.7965460424586146,
+        "borderContrast": 0,
+        "predicted": "available"
+      },
+      {
+        "label": "English Available",
+        "status": "available",
+        "luminance": 42.36315434903159,
+        "edgeDensity": 3.7672974542711932,
+        "borderContrast": 0,
+        "predicted": "available"
+      },
+      {
+        "label": "Pool Available",
+        "status": "available",
+        "luminance": 42.29496438464582,
+        "edgeDensity": 3.685004515815278,
+        "borderContrast": 0,
+        "predicted": "available"
+      }
+    ]
+  },
+  {
+    "theme": "dark",
+    "mode": "deuteranopia",
+    "threshold": 20,
+    "runningCentroid": {
+      "luminance": 54.729246059517465,
+      "edgeDensity": 6.991901751739656
+    },
+    "availableCentroid": {
+      "luminance": 41.55870893219902,
+      "edgeDensity": 3.6975286210056164
+    },
+    "luminanceDelta": 13.170537127318447,
+    "edgeDensityDelta": 3.2943731307340394,
+    "correct": 5,
+    "total": 5,
+    "pass": true,
+    "cards": [
+      {
+        "label": "Wiraka Running",
+        "status": "running",
+        "luminance": 54.39260006723375,
+        "edgeDensity": 6.87786390226023,
+        "borderContrast": 188.76999999999902,
+        "predicted": "running"
+      },
+      {
+        "label": "Wiraka Running",
+        "status": "running",
+        "luminance": 55.065892051801185,
+        "edgeDensity": 7.105939601219082,
+        "borderContrast": 188.76999999999902,
+        "predicted": "running"
+      },
+      {
+        "label": "English Available",
+        "status": "available",
+        "luminance": 41.59514195488839,
+        "edgeDensity": 3.7449146024593247,
+        "borderContrast": 0,
+        "predicted": "available"
+      },
+      {
+        "label": "English Available",
+        "status": "available",
+        "luminance": 41.57526424218498,
+        "edgeDensity": 3.715682295026585,
+        "borderContrast": 0,
+        "predicted": "available"
+      },
+      {
+        "label": "Pool Available",
+        "status": "available",
+        "luminance": 41.5057205995237,
+        "edgeDensity": 3.631988965530939,
+        "borderContrast": 0,
+        "predicted": "available"
+      }
+    ]
+  },
+  {
+    "theme": "dark",
+    "mode": "protanopia",
+    "threshold": 20,
+    "runningCentroid": {
+      "luminance": 57.95178351007817,
+      "edgeDensity": 7.199644369125821
+    },
+    "availableCentroid": {
+      "luminance": 43.58753420524706,
+      "edgeDensity": 3.7574758306286875
+    },
+    "luminanceDelta": 14.364249304831112,
+    "edgeDensityDelta": 3.4421685384971332,
+    "correct": 5,
+    "total": 5,
+    "pass": true,
+    "cards": [
+      {
+        "label": "Wiraka Running",
+        "status": "running",
+        "luminance": 57.6183079481461,
+        "edgeDensity": 7.087014887303209,
+        "borderContrast": 201.51860000000107,
+        "predicted": "running"
+      },
+      {
+        "label": "Wiraka Running",
+        "status": "running",
+        "luminance": 58.285259072010255,
+        "edgeDensity": 7.312273850948434,
+        "borderContrast": 201.51860000000107,
+        "predicted": "running"
+      },
+      {
+        "label": "English Available",
+        "status": "available",
+        "luminance": 43.62243723387186,
+        "edgeDensity": 3.804944619232263,
+        "borderContrast": 0,
+        "predicted": "available"
+      },
+      {
+        "label": "English Available",
+        "status": "available",
+        "luminance": 43.60268688167549,
+        "edgeDensity": 3.7758116875252776,
+        "borderContrast": 0,
+        "predicted": "available"
+      },
+      {
+        "label": "Pool Available",
+        "status": "available",
+        "luminance": 43.53747850019382,
+        "edgeDensity": 3.6916711851285227,
+        "borderContrast": 0,
+        "predicted": "available"
+      }
+    ]
+  }
+]

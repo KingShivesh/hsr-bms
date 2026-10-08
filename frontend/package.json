@@ -10,9 +10,13 @@
     "check:theme": "node ./scripts/check-theme-contrast.mjs",
     "scan:contrast": "node ./scripts/scan-contrast.mjs",
     "test:realtime-manager": "node ./scripts/test-realtime-manager.mjs",
+    "test:table-states": "node ./scripts/audit-table-state-clarity.mjs",
+    "test:reference-theme": "node ./scripts/verify-reference-theme.mjs",
     "preview": "node ./node_modules/vite/bin/vite.js preview"
   },
   "dependencies": {
+    "@fontsource-variable/syne": "^5.3.0",
+    "@fontsource/dm-mono": "^5.3.0",
     "@tailwindcss/vite": "^4.2.2",
     "axios": "^1.13.6",
     "bootstrap": "^5.3.8",
@@ -36,6 +40,8 @@
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-react-refresh": "^0.5.2",
     "globals": "^17.4.0",
+    "playwright": "^1.64.0",
+    "pngjs": "^7.0.0",
     "vite": "^8.0.1"
   }
 }

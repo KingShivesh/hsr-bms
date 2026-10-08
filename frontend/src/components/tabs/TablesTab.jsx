@@ -27,28 +27,12 @@ import {
 import { searchMembers } from "../../api/index.js";
 import { useToast } from "../toastContext.js";
 import { useEscapeKey } from "../ui/index.js";
+import { TableAttentionBadge, TablePrimaryAction, TableStateBadge } from "../TableStateUI.jsx";
 import { HSR_TABLES, getTableLabel, getTableRate } from "../../config/hsrTables.js";
-import { getTableStatus } from "../../config/tableStatus.js";
+import { tableStateAttributes, getTableAttention, getTableStatus } from "../../config/tableStatus.js";
 
 const TABLES = HSR_TABLES;
 const tableKey = (tableId) => String(tableId || "").trim().toLowerCase();
-
-const THEME = {
-  POOL: {
-    felt: "var(--accent)",
-    feltDark: "var(--accent-hover)",
-    cushion: "var(--success)",
-    rail: "var(--venue-rail)",
-    accent: "var(--accent)",
-  },
-  SNOOKER: {
-    felt: "var(--accent)",
-    feltDark: "var(--accent-hover)",
-    cushion: "var(--success)",
-    rail: "var(--venue-rail)",
-    accent: "var(--accent)",
-  },
-};
 
 function fmt(secs) {
   if (!secs) return "00:00";
@@ -612,6 +596,7 @@ function QuickSessionModal({
   maintenance,
   rates,
   onStart,
+  initialTableId = "",
   busyActions = {},
   showToast,
 }) {
@@ -635,13 +620,13 @@ function QuickSessionModal({
       return;
     }
     if (initializedOpen.current) return;
-    const firstAvailable = availableTables[0];
+    const firstAvailable = availableTables.find((table) => table.id === initialTableId) || availableTables[0];
     setTableId(firstAvailable?.id || "");
     setPlayer1("");
     setOtherPlayers("");
     setBillingMode(defaultBillingModeForTable(firstAvailable));
     initializedOpen.current = true;
-  }, [open, availableTables]);
+  }, [open, availableTables, initialTableId]);
 
   if (!open) return null;
 
@@ -1360,6 +1345,10 @@ function TableFloorTile({
   maintenance,
   selected,
   onSelect,
+  onQuickStart,
+  onCheckout,
+  onReviewBooking,
+  checkoutBusy = false,
   peakRate,
   gstPercent,
 }) {
@@ -1369,29 +1358,55 @@ function TableFloorTile({
   const bookingTime = booking ? bookingDisplayTime(booking) : "";
 
   const status = getTableStatus({ session, booking, maintenance });
-  const tone = tableState?.status_tone || status.tone;
+  const statusKey = tableState?.status_key || status.key;
   const statusLabel = tableState?.status_label || status.label;
+  const elapsedSeconds = Number(session?.elapsed || tableState?.elapsed_seconds || 0);
+  const attention = getTableAttention({ session: tableState?.session || session, elapsedSeconds });
+  const disabled = statusKey === "maintenance";
+
+  function handlePrimary(event) {
+    event.stopPropagation();
+    if (disabled) return;
+    onSelect();
+    if (statusKey === "available") onQuickStart?.();
+    else if (statusKey === "running" || statusKey === "paused") onCheckout?.();
+    else if (statusKey === "reserved") onReviewBooking?.();
+  }
 
   return (
-    <button
-      type="button"
-      className={`table-floor-tile ${selected ? "selected" : ""} ${tone}`}
-      onClick={onSelect}
-      aria-pressed={selected}
+    <article
+      className={`table-floor-tile table-state-card ${selected ? "selected" : ""}`}
+      {...tableStateAttributes(statusKey)}
+      data-attention={attention ? "true" : "false"}
+      onClick={() => !disabled && onSelect()}
+      aria-current={selected ? "true" : undefined}
+      role="button"
+      aria-label={`T${table.num} ${statusLabel}`}
+      aria-disabled={disabled}
+      tabIndex={disabled ? -1 : 0}
+      onKeyDown={(event) => {
+        if (event.target !== event.currentTarget) return;
+        if ((event.key === "Enter" || event.key === " ") && !disabled) {
+          event.preventDefault();
+          onSelect();
+        }
+      }}
     >
       <div className="table-floor-index">
         <strong>T{table.num}</strong>
         <span>{getTableLabel(table)}</span>
-        {session?.leakageAlert && <em>Review</em>}
+        <TableAttentionBadge attention={attention} />
       </div>
 
       <div className="table-floor-body">
         <div className="table-floor-topline">
-          <span className={`table-floor-status ${tone}`}>{statusLabel}</span>
+          <TableStateBadge statusKey={statusKey} label={statusLabel} />
           <strong>₹{rate}/hr</strong>
         </div>
         <div className="table-floor-summary">
-          <strong>{occupied ? fmt(session.elapsed) : booking ? bookingTime : "Ready"}</strong>
+          <strong className={occupied ? "table-state-timer" : ""} data-timer={status.timerStyle}>
+            {occupied ? fmt(session.elapsed) : booking ? bookingTime : `₹${rate}/hr`}
+          </strong>
           <span>
             {occupied
               ? `₹${total} running`
@@ -1417,7 +1432,8 @@ function TableFloorTile({
           )}
         </div>
       </div>
-    </button>
+      <TablePrimaryAction statusKey={statusKey} onClick={handlePrimary} disabled={checkoutBusy} label={checkoutBusy ? "Loading..." : ""} />
+    </article>
   );
 }
 
@@ -1660,6 +1676,7 @@ function TableCard({
   transferTargets = [],
   onReserve,
   onCancelReserve,
+  onReviewBooking,
   rates,
   maintenance,
   onMaintenance,
@@ -1692,7 +1709,7 @@ function TableCard({
   const occupied = !!session;
   const paused = session?.paused || false;
   const rate = getTableRate(table, rates);
-  const T = THEME[table.type];
+  const status = getTableStatus({ session, booking, maintenance });
 
   useEffect(() => {
     if (!occupied) {
@@ -1705,7 +1722,6 @@ function TableCard({
   const basePlay = session ? Math.round((mins / 60) * session.rate) : 0;
   const multiplier = peakRate?.multiplier || 1;
   const play = session ? Math.round(basePlay * multiplier) : 0;
-  const peakSurcharge = play - basePlay;
   const subtotal = play + (session?.foodTotal || 0);
   const gstAmt =
     gstPercent > 0 && subtotal > 0 ? Math.round((subtotal * gstPercent) / 100) : 0;
@@ -1732,20 +1748,11 @@ function TableCard({
   const reserveBusy = !!busyActions[`reserve:${table.id}`];
   const cancelReserveBusy = !!busyActions[`cancel-reserve:${table.id}`];
 
-  const pocketStyle = {
-    position: "absolute",
-    width: "18px",
-    height: "18px",
-    background: "var(--surface-emphasis)",
-    borderRadius: "50%",
-    border: "2px solid color-mix(in srgb, var(--surface-emphasis) 90%, var(--surface))",
-    boxShadow: "inset 0 2px 6px rgba(0,0,0,0.9), 0 0 0 1px var(--border)",
-  };
-
   if (maintenance) {
     return (
       <div
-        className={`table-maintenance-card ${compact ? "compact" : ""}`}
+        className={`table-maintenance-card table-state-card ${compact ? "compact" : ""}`}
+        {...tableStateAttributes(status.key)}
         style={{
           background: "var(--surface)",
           borderRadius: "var(--radius-md)",
@@ -1754,17 +1761,7 @@ function TableCard({
         }}
       >
         <div style={{ textAlign: "center", padding: "16px 0" }}>
-          <div
-            style={{
-              fontSize: "var(--text-xs)",
-              fontWeight: "var(--weight-bold)",
-              color: "var(--warning)",
-              letterSpacing: "2px",
-              marginBottom: "8px",
-            }}
-          >
-            MAINTENANCE
-          </div>
+          <TableStateBadge statusKey={status.key} />
           <div
             style={{
               fontSize: "var(--text-3xl)",
@@ -1824,315 +1821,26 @@ function TableCard({
       )}
 
       <div
-        className={`table-session-card ${compact ? "compact" : ""} ${occupied ? "occupied" : ""}`}
-        style={{
-          "--occupied-accent": T.accent,
-          "--occupied-card-bg": "color-mix(in srgb, var(--accent-bg) 55%, var(--surface))",
-          "--occupied-control-bg": "color-mix(in srgb, var(--accent-bg) 42%, var(--surface))",
-          "--occupied-control-surface": "var(--surface)",
-          "--occupied-control-border": "color-mix(in srgb, var(--accent) 24%, var(--border))",
-          background: occupied ? "var(--occupied-card-bg)" : "var(--table-card-bg)",
-          borderRadius: "var(--radius-md)",
-          overflow: "hidden",
-          border: `1px solid ${occupied ? T.accent : "var(--table-card-border)"}`,
-          boxShadow: occupied
-            ? "0 16px 34px color-mix(in srgb, var(--accent) 18%, transparent)"
-            : "var(--shadow-sm)",
-          transition: "all 0.3s",
-        }}
+        className={`table-session-card table-state-card ${compact ? "compact" : ""} ${occupied ? "occupied" : ""}`}
+        {...tableStateAttributes(status.key)}
       >
-        {/* ── PORTRAIT TABLE VISUAL ── */}
-        <div
-          style={{ background: T.rail, padding: "8px", position: "relative" }}
-        >
-          <div
-            style={{
-              background: occupied ? T.felt : T.feltDark,
-              borderRadius: "var(--radius-sm)",
-              position: "relative",
-              height: compact ? "160px" : "220px",
-              overflow: "hidden",
-              transition: "background 0.4s",
-            }}
-          >
-            {/* Cushions */}
-            <div
-              style={{
-                position: "absolute",
-                top: "8px",
-                left: "22px",
-                right: "22px",
-                height: "6px",
-                background: T.cushion,
-                borderRadius: "var(--radius-sm)",
-                opacity: 0.8,
-              }}
-            />
-            <div
-              style={{
-                position: "absolute",
-                bottom: "8px",
-                left: "22px",
-                right: "22px",
-                height: "6px",
-                background: T.cushion,
-                borderRadius: "var(--radius-sm)",
-                opacity: 0.8,
-              }}
-            />
-            <div
-              style={{
-                position: "absolute",
-                left: "8px",
-                top: "22px",
-                bottom: "22px",
-                width: "6px",
-                background: T.cushion,
-                borderRadius: "var(--radius-sm)",
-                opacity: 0.8,
-              }}
-            />
-            <div
-              style={{
-                position: "absolute",
-                right: "8px",
-                top: "22px",
-                bottom: "22px",
-                width: "6px",
-                background: T.cushion,
-                borderRadius: "var(--radius-sm)",
-                opacity: 0.8,
-              }}
-            />
-
-            {/* Corner pockets */}
-            <div style={{ ...pocketStyle, top: "-1px", left: "-1px" }} />
-            <div style={{ ...pocketStyle, top: "-1px", right: "-1px" }} />
-            <div style={{ ...pocketStyle, bottom: "-1px", left: "-1px" }} />
-            <div style={{ ...pocketStyle, bottom: "-1px", right: "-1px" }} />
-
-            {/* Side pockets */}
-            <div
-              style={{
-                ...pocketStyle,
-                top: "50%",
-                left: "-1px",
-                transform: "translateY(-50%)",
-              }}
-            />
-            <div
-              style={{
-                ...pocketStyle,
-                top: "50%",
-                right: "-1px",
-                transform: "translateY(-50%)",
-              }}
-            />
-
-            {/* Centre spot */}
-            <div
-              style={{
-                position: "absolute",
-                top: "50%",
-                left: "50%",
-                transform: "translate(-50%,-50%)",
-                width: "6px",
-                height: "6px",
-                borderRadius: "50%",
-                background: "rgba(255,255,255,0.15)",
-              }}
-            />
-
-            {/* Big table number watermark */}
-            <div
-              style={{
-                position: "absolute",
-                top: "50%",
-                left: "50%",
-                transform: "translate(-50%,-50%)",
-                fontSize: compact ? "var(--text-3xl)" : "calc(var(--text-3xl) * 2.8)",
-                fontWeight: "var(--weight-black)",
-                color: occupied
-                  ? "rgba(255,255,255,0.14)"
-                  : "rgba(255,255,255,0.16)",
-                fontVariantNumeric: "tabular-nums",
-                userSelect: "none",
-                lineHeight: 1,
-                zIndex: 1,
-              }}
-            >
-              {String(table.num).padStart(2, "0")}
-            </div>
-
-            {/* Timer */}
-            <div
-              style={{
-                position: "absolute",
-                top: "18px",
-                left: 0,
-                right: 0,
-                textAlign: "center",
-                fontSize: compact
-                  ? session?.elapsed >= 3600
-                    ? "var(--text-xl)"
-                    : "var(--text-2xl)"
-                  : session?.elapsed >= 3600
-                    ? "var(--text-2xl)"
-                    : "var(--text-3xl)",
-                fontWeight: "var(--weight-black)",
-                color: "var(--text-on-accent)",
-                fontVariantNumeric: "tabular-nums",
-                letterSpacing: "0",
-                textShadow: "0 2px 10px rgba(0,0,0,0.68)",
-                zIndex: 2,
-              }}
-            >
-              {fmt(session?.elapsed)}
-            </div>
-
-            {session?.leakageAlert && (
-              <div
-                style={{
-                  position: "absolute",
-                  top: "16px",
-                  right: "22px",
-                  background: "var(--danger)",
-                  color: "var(--text-on-accent)",
-                  borderRadius: "999px",
-                  padding: "3px 9px",
-                  fontSize: "var(--text-xs)",
-                  fontWeight: "var(--weight-heavy)",
-                  letterSpacing: "0.5px",
-                  zIndex: 3,
-                }}
-              >
-                REVIEW
-              </div>
-            )}
-
-            {/* Bill display */}
-            <div
-              className="table-felt-bill"
-              style={{
-                position: "absolute",
-                bottom: compact ? "42px" : "52px",
-                left: "50%",
-                transform: "translateX(-50%)",
-                minWidth: compact ? "132px" : "156px",
-                padding: "7px 14px",
-                borderRadius: "var(--radius-md)",
-                background: "rgba(0,0,0,0.28)",
-                boxShadow: "0 10px 24px rgba(0,0,0,0.18)",
-                backdropFilter: "blur(1px)",
-                textAlign: "center",
-                zIndex: 2,
-              }}
-            >
-              {peakRate?.is_peak && occupied && (
-                <div
-                  style={{
-                    fontSize: "var(--text-xs)",
-                    color: "var(--warning)",
-                    letterSpacing: "0.5px",
-                    marginBottom: "2px",
-                  }}
-                >
-                  {peakRate.label} ×{peakRate.multiplier}
-                  {peakSurcharge > 0 ? ` (+₹${peakSurcharge})` : ""}
-                </div>
-              )}
-              <div
-                style={{
-                  fontSize: "var(--text-xs)",
-                  color: "color-mix(in srgb, var(--text-on-accent) 86%, transparent)",
-                  letterSpacing: "1px",
-                  fontWeight: "var(--weight-heavy)",
-                  textShadow: "0 1px 5px rgba(0,0,0,0.45)",
-                }}
-              >
-                RUNNING TOTAL{gstPercent > 0 ? " (incl. GST est.)" : ""}
-              </div>
-              <div
-                className="table-felt-bill-total"
-                style={{
-                  fontSize: "var(--text-xl)",
-                  lineHeight: 1.1,
-                  fontWeight: "var(--weight-black)",
-                  color: "var(--text-on-accent)",
-                  textShadow: "0 2px 8px rgba(0,0,0,0.58)",
-                }}
-              >
-                ₹{total}
-              </div>
-              {occupied && activeBillingMode === "sharing" && shareCount > 1 && (
-                <div
-                  style={{
-                    marginTop: "2px",
-                    color: "color-mix(in srgb, var(--text-on-accent) 65%, transparent)",
-                    fontSize: "var(--text-xs)",
-                    fontWeight: "var(--weight-bold)",
-                  }}
-                >
-                  ₹{shareAmount} each · {shareCount} players
-                </div>
-              )}
-            </div>
-
-            {/* STOP / START button on felt */}
-            {occupied ? (
-              <button
-                onClick={() => {
-                  onStop(table.id);
-                }}
-                disabled={quoteBusy}
-                style={{
-                  position: "absolute",
-                  bottom: "8px",
-                  left: "50%",
-                  transform: "translateX(-50%)",
-                  background: "var(--danger)",
-                  color: "var(--text-on-accent)",
-                  border: "none",
-                  borderRadius: "var(--radius-sm)",
-                  padding: "6px 28px",
-                  fontSize: "var(--text-sm)",
-                  fontWeight: "var(--weight-bold)",
-                  cursor: quoteBusy ? "wait" : "pointer",
-                  letterSpacing: "0",
-                  boxShadow: "0 2px 8px rgba(0,0,0,0.4)",
-                  zIndex: 3,
-                }}
-              >
-                <i className="ti ti-receipt-refund" aria-hidden="true" />
-                <span>{quoteBusy ? "LOADING..." : "CLOSE TABLE"}</span>
-              </button>
-            ) : (
-              <button
-                onClick={() => onStart(table, billingMode, otherPlayers)}
-                disabled={startBusy}
-                style={{
-                  position: "absolute",
-                  bottom: "8px",
-                  left: "50%",
-                  transform: "translateX(-50%)",
-                  background: T.accent,
-                  color: "var(--text-on-accent)",
-                  border: "none",
-                  borderRadius: "var(--radius-sm)",
-                  padding: "6px 28px",
-                  fontSize: "var(--text-sm)",
-                  fontWeight: "var(--weight-bold)",
-                  cursor: startBusy ? "wait" : "pointer",
-                  letterSpacing: "0",
-                  boxShadow: "0 2px 8px rgba(0,0,0,0.4)",
-                  zIndex: 3,
-                }}
-              >
-                <i className="ti ti-player-play" aria-hidden="true" />
-                <span>{startBusy ? "STARTING..." : "START"}</span>
-              </button>
-            )}
+        <div className="table-session-state-summary">
+          <div className="table-state-card-flags">
+            <TableAttentionBadge attention={getTableAttention({ session: { ...session, leakage_alert: session?.leakageAlert }, elapsedSeconds: session?.elapsed })} />
+            <TableStateBadge statusKey={status.key} />
           </div>
+          <strong>T{table.num} · {getTableLabel(table)}</strong>
+          {occupied ? (
+            <>
+              <span className="table-state-timer" data-timer={status.timerStyle}>{fmt(session.elapsed)}</span>
+              <span>{activePlayers.join(", ") || session.customer_name || "Walk-in"} · ₹{total} running</span>
+            </>
+          ) : (
+            <>
+              <span className="table-state-rate">₹{rate}/hr</span>
+              {booking && <span>{bookingDisplayTime(booking)} · {booking.customer_name}</span>}
+            </>
+          )}
         </div>
 
         {/* ── CONTROLS PANEL BELOW TABLE ── */}
@@ -2143,9 +1851,6 @@ function TableCard({
               ₹{rate}/hr · {getTableLabel(table)}
             </span>
             <div className="table-utility-cluster">
-              {occupied && (
-                <div className="table-live-dot" style={{ "--table-accent": T.accent }} />
-              )}
               <button
                 type="button"
                 onClick={() => setShowHistory(true)}
@@ -2423,13 +2128,23 @@ function TableCard({
               </button>
             </div>
           )}
+          <TablePrimaryAction
+            statusKey={status.key}
+            disabled={startBusy || quoteBusy || pauseBusy}
+            label={startBusy ? "Starting..." : quoteBusy ? "Loading..." : ""}
+            onClick={() => {
+              if (occupied) onStop(table.id);
+              else if (booking) onReviewBooking?.();
+              else onStart(table, billingMode, otherPlayers);
+            }}
+          />
         </div>
       </div>
     </>
   );
 }
 
-export default function TablesTab({ onSessionEnd, newSessionRequest = 0, onOpenFoodOrder }) {
+export default function TablesTab({ onSessionEnd, newSessionRequest = 0, onOpenFoodOrder, onNavigate }) {
   const { showToast } = useToast();
   const [sessions, setSessions] = useState({});
   const [tableStates, setTableStates] = useState({});
@@ -3241,7 +2956,7 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0, onOpenF
     const grid = tableGridRef.current;
     if (!grid) return;
 
-    const tiles = Array.from(grid.querySelectorAll(".table-floor-tile:not(:disabled)"));
+    const tiles = Array.from(grid.querySelectorAll('.table-floor-tile:not([aria-disabled="true"])'));
     const activeTile = document.activeElement?.closest?.(".table-floor-tile");
     const activeIndex = activeTile ? tiles.indexOf(activeTile) : -1;
     if (activeIndex === -1) return;
@@ -3314,6 +3029,7 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0, onOpenF
         maintenance={maintenance}
         rates={rates}
         onStart={handleQuickStart}
+        initialTableId={selectedTableId}
         busyActions={busyActions}
         showToast={showToast}
       />
@@ -3354,6 +3070,10 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0, onOpenF
                 maintenance={maintenance[table.id] || null}
                 selected={selectedTable?.id === table.id}
                 onSelect={() => selectTable(table.id)}
+                onQuickStart={() => setQuickSessionOpen(true)}
+                onCheckout={() => handleStop(table.id)}
+                onReviewBooking={() => onNavigate?.("reservations")}
+                checkoutBusy={!!busyActions[`quote:${table.id}`]}
                 peakRate={peakRate}
                 gstPercent={gstPercent}
               />
@@ -3401,6 +3121,7 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0, onOpenF
               />
 
               <TableCard
+                onReviewBooking={() => onNavigate?.("reservations")}
                 key={selectedTable.id}
                 table={selectedTable}
                 session={sessions[selectedTable.id]}

@@ -8,20 +8,13 @@ import {
   recordTournamentWinner,
 } from "../../api/index.js";
 import { HSR_TABLES } from "../../config/hsrTables.js";
+import { tableActionNavigation } from "../../config/tableStatus.js";
 import TableStatusCard from "../TableStatusCard.jsx";
 import { useToast } from "../toastContext.js";
 import { useConfirm } from "../confirmContext.js";
 import RetryNotice from "../RetryNotice.jsx";
 
 const GAME_TYPES = ["8 Ball", "9 Ball", "10 Ball", "Snooker", "Straight Pool"];
-
-function fmtClock(ms) {
-  if (!ms) return "--:--";
-  return new Date(ms).toLocaleTimeString("en-IN", {
-    hour: "2-digit",
-    minute: "2-digit",
-  });
-}
 
 function recommendedTypeForGame(gameType) {
   return gameType === "Snooker" ? "SNOOKER" : "POOL";
@@ -58,7 +51,7 @@ function StatusPill({ status }) {
   );
 }
 
-function TournamentTableFloor({ gameType, rates, tableStateById }) {
+function TournamentTableFloor({ gameType, rates, tableStateById, onNavigate }) {
   const preferredType = recommendedTypeForGame(gameType);
 
   return (
@@ -69,7 +62,7 @@ function TournamentTableFloor({ gameType, rates, tableStateById }) {
         const occupied = !!session;
         const recommended = table.type === preferredType;
         const detail = occupied
-          ? `${session.customer_name || "Player"} · Started ${fmtClock(session.start_time)}`
+          ? `${session.customer_name || "Player"} · ₹${Number(session.running_total || 0).toLocaleString("en-IN")} running`
           : recommended
             ? `Best fit for ${gameType}`
             : "Backup table";
@@ -83,6 +76,7 @@ function TournamentTableFloor({ gameType, rates, tableStateById }) {
             recommended={recommended}
             recommendedLabel={`Best fit for ${gameType}`}
             detail={detail}
+            onAction={() => onNavigate?.(...tableActionNavigation(table.id, tableState?.status_key || "available"))}
           />
         );
       })}
@@ -90,7 +84,7 @@ function TournamentTableFloor({ gameType, rates, tableStateById }) {
   );
 }
 
-export default function TournamentTab() {
+export default function TournamentTab({ onNavigate }) {
   const { showToast } = useToast();
   const { requestConfirm } = useConfirm();
   const [tournaments, setTournaments] = useState([]);
@@ -382,6 +376,7 @@ export default function TournamentTab() {
             gameType={selected?.game_type || gameType}
             rates={rates}
             tableStateById={tableStateById}
+            onNavigate={onNavigate}
           />
         </Panel>
 

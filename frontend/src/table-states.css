@@ -1,0 +1,445 @@
+/* Shared table-state grammar. Every table renderer consumes tableStatus.js through these hooks. */
+.lf-table-grid,
+.table-floor-grid {
+  grid-auto-rows: 1fr;
+}
+
+.lf-table-card-head strong {
+  font-size: var(--text-2xl);
+}
+
+.lf-table-card.table-state-card.is-selected,
+.table-floor-tile.table-state-card.selected {
+  border-color: var(--table-state-border) !important;
+  box-shadow: none !important;
+}
+
+.lf-table-ready i {
+  color: var(--text-secondary) !important;
+}
+
+.table-state-card:focus-visible {
+  outline: 2px solid var(--border-focus) !important;
+  outline-offset: 3px;
+}
+
+.table-state-card[data-border="solid"] {
+  --table-state-border: var(--border);
+  --table-state-ink: var(--text-muted);
+  --table-state-tint: var(--surface);
+}
+
+.table-state-card-flags {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+.table-state-badge,
+.table-state-attention {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 28px;
+  padding: 0 var(--space-2);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface-muted);
+  color: var(--text-secondary);
+  font-size: var(--text-xs);
+  font-style: normal;
+  font-weight: var(--weight-bold);
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.table-state-badge[data-state="running"] {
+  border-color: color-mix(in srgb, var(--accent) 52%, var(--border));
+  background: var(--accent-bg);
+  color: var(--accent-text);
+}
+
+.table-state-badge[data-state="paused"],
+.table-state-badge[data-state="reserved"] {
+  border-color: color-mix(in srgb, var(--warning) 50%, var(--border));
+  background: var(--warning-bg);
+  color: var(--warning-text);
+}
+
+.table-state-badge[data-state="maintenance"] {
+  color: var(--text-muted);
+}
+
+.table-state-dot {
+  width: 8px;
+  height: 8px;
+  flex: 0 0 8px;
+  border: 1.5px solid currentColor;
+  border-radius: 50%;
+  background: transparent;
+}
+
+.table-state-dot[data-dot="filled"],
+.table-state-dot[data-dot="pulse"] {
+  background: currentColor;
+}
+
+.table-state-dot[data-dot="pulse"] {
+  animation: table-state-pulse 2.2s ease-out infinite;
+}
+
+.table-state-dot[data-dot="muted"] {
+  border-radius: 2px;
+  opacity: 0.7;
+}
+
+.table-state-attention {
+  border-color: color-mix(in srgb, var(--warning) 55%, var(--border));
+  background: var(--warning-bg);
+  color: var(--warning-text);
+}
+
+.table-state-timer,
+.table-state-rate {
+  display: block;
+  color: var(--text-primary) !important;
+  font-size: var(--text-3xl) !important;
+  font-weight: var(--weight-medium) !important;
+  line-height: 1 !important;
+  font-variant-numeric: tabular-nums;
+}
+
+.table-session-state-summary {
+  display: grid;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  border-bottom: 1px solid var(--table-state-border);
+}
+
+.table-session-state-summary .table-state-card-flags {
+  justify-content: flex-start;
+}
+
+.table-session-card .table-control-panel {
+  background: transparent !important;
+  color: var(--text-primary);
+}
+
+.table-session-card .table-session-actions {
+  gap: var(--space-3);
+  margin-block: var(--space-3);
+}
+
+.table-session-card .table-control-btn,
+.table-session-card .table-utility-btn {
+  min-height: var(--btn-h-lg);
+  min-width: var(--btn-h-lg);
+}
+
+.table-state-rate,
+.ops-table-card:not([data-border="accent"]):not([data-border="warning"]) .ops-table-main > span {
+  font-family: var(--font-mono);
+  font-size: var(--text-lg) !important;
+  color: var(--text-secondary) !important;
+}
+
+.lf-inline-rate {
+  min-height: var(--btn-h-lg);
+  font-size: var(--text-xl) !important;
+  color: var(--text-secondary) !important;
+}
+
+.table-state-primary:hover:not(:disabled) {
+  background: var(--accent-hover);
+  border-color: var(--accent-hover);
+}
+
+.table-state-primary:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--accent) 34%, transparent);
+  outline-offset: 2px;
+}
+
+.table-state-primary:active:not(:disabled),
+.ops-table-card:active:not(:disabled) .table-state-primary-static {
+  background: var(--accent-active) !important;
+  transform: translateY(1px);
+  transition: none;
+}
+
+.table-state-primary-static {
+  align-self: end;
+}
+
+.lf-table-card.table-state-card,
+.table-floor-tile.table-state-card,
+.op2-table-booking-card.table-state-card,
+.table-status-card.table-state-card {
+  min-height: 278px;
+}
+
+.table-floor-tile.table-state-card,
+.table-status-card.table-state-card,
+.op2-table-booking-card.table-state-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.table-floor-tile.table-state-card {
+  padding: var(--space-3);
+  cursor: pointer;
+}
+
+.table-floor-tile.table-state-card[aria-disabled="true"] {
+  cursor: not-allowed;
+}
+
+.table-floor-tile .table-state-badge {
+  max-width: 100%;
+}
+
+.op2-table-state-summary {
+  display: grid;
+  gap: var(--space-1);
+}
+
+.op2-table-state-summary > span {
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semibold);
+  text-transform: uppercase;
+}
+
+.op2-table-state-summary .table-state-timer {
+  font-size: var(--text-2xl) !important;
+}
+
+.table-status-card .table-state-timer,
+.table-status-card .table-state-rate {
+  font-size: var(--text-2xl) !important;
+}
+
+@keyframes table-state-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 color-mix(in srgb, currentColor 30%, transparent); }
+  50% { box-shadow: 0 0 0 5px transparent; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .table-state-dot[data-dot="pulse"] {
+    animation: none;
+  }
+}
+
+@media (max-width: 760px) {
+  .table-state-primary {
+    min-height: 48px;
+  }
+
+  .lf-table-card.table-state-card,
+  .table-floor-tile.table-state-card,
+  .op2-table-booking-card.table-state-card,
+  .table-status-card.table-state-card {
+    min-height: 260px;
+  }
+}
+
+/* Loaded last so the shared state system, not page-local legacy rules, owns table semantics. */
+.table-state-card {
+  overflow: hidden;
+  border-radius: var(--radius-md);
+  position: relative;
+  --table-state-ink: var(--text-secondary);
+  --table-state-border: var(--border);
+  --table-state-tint: var(--surface);
+  border: 1px solid var(--table-state-border) !important;
+  background: var(--table-state-tint) !important;
+  box-shadow: none !important;
+}
+
+.table-state-card[data-border="accent"] {
+  --table-state-ink: var(--accent-text);
+  --table-state-border: var(--accent);
+  --table-state-tint: color-mix(in srgb, var(--accent-bg) 62%, var(--surface));
+  border-width: 2px !important;
+}
+
+.table-state-card[data-border="warning"] {
+  --table-state-ink: var(--warning-text);
+  --table-state-border: var(--warning);
+  --table-state-tint: color-mix(in srgb, var(--warning-bg) 62%, var(--surface));
+  border-width: 2px !important;
+}
+
+.table-state-card[data-border="dashed"] {
+  --table-state-tint: var(--surface);
+  --table-state-ink: var(--warning-text);
+  --table-state-border: color-mix(in srgb, var(--warning) 76%, var(--border));
+  border-width: 2px !important;
+  border-style: dashed !important;
+}
+
+.table-state-card[data-border="muted"] {
+  color: var(--text-muted);
+  --table-state-ink: var(--text-muted);
+  --table-state-border: color-mix(in srgb, var(--text-muted) 50%, var(--border));
+  --table-state-tint: repeating-linear-gradient(
+    -45deg,
+    var(--surface-muted),
+    var(--surface-muted) 8px,
+    color-mix(in srgb, var(--surface) 68%, var(--border)) 8px,
+    color-mix(in srgb, var(--surface) 68%, var(--border)) 16px
+  );
+}
+
+.table-state-card[data-attention="true"] {
+  outline: 3px solid color-mix(in srgb, var(--warning) 58%, transparent);
+  outline-offset: 2px;
+}
+
+.table-state-primary {
+  cursor: pointer;
+  font-weight: var(--weight-bold);
+  font-size: var(--text-sm);
+  font: inherit;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--accent);
+  padding: 0 var(--space-3);
+  width: 100%;
+  gap: var(--space-2);
+  justify-content: center;
+  align-items: center;
+  display: inline-flex;
+  min-height: var(--btn-h-lg) !important;
+  margin-top: auto !important;
+  border-color: var(--accent) !important;
+  background: var(--accent) !important;
+  color: var(--text-on-accent) !important;
+}
+
+.table-state-primary:disabled,
+.table-state-card[data-border="muted"] .table-state-primary {
+  cursor: not-allowed;
+  border-color: var(--border-strong) !important;
+  background: var(--surface-muted) !important;
+  color: var(--text-muted) !important;
+}
+
+.table-state-timer {
+  color: var(--text-primary) !important;
+  font-size: var(--text-3xl) !important;
+  font-weight: var(--weight-medium) !important;
+  font-variant-numeric: tabular-nums;
+}
+
+.table-state-badge > span,
+.table-state-badge > i {
+  color: inherit !important;
+}
+
+.table-state-badge {
+  color: var(--text-secondary) !important;
+}
+
+.table-state-badge[data-tone="running"] {
+  color: var(--accent-text) !important;
+}
+
+.table-state-badge[data-tone="paused"],
+.table-state-badge[data-tone="booked"] {
+  color: var(--warning-text) !important;
+}
+
+.table-state-card:disabled {
+  opacity: 1 !important;
+}
+
+.table-state-timer[data-timer="frozen"] {
+  opacity: 0.66;
+}
+
+.ops-table-card.table-state-card {
+  min-height: 220px !important;
+  overflow: hidden;
+}
+
+.ops-table-card .table-state-card-flags {
+  justify-content: flex-start;
+  min-width: 0;
+}
+
+.ops-table-card .table-state-badge,
+.ops-table-card .table-state-attention {
+  max-width: 100%;
+  min-height: 24px;
+  padding-inline: 6px;
+  font-size: 10px;
+}
+
+.ops-table-card .ops-table-main {
+  display: grid;
+  grid-template-columns: 1fr;
+  align-content: end;
+  justify-items: start;
+}
+
+.ops-table-card .ops-table-main strong {
+  color: var(--text-secondary);
+  font-size: var(--text-sm);
+}
+
+.ops-table-card .table-state-timer {
+  font-size: var(--text-2xl) !important;
+}
+
+.table-floor-tile.table-state-card,
+.op2-table-booking-card.table-state-card,
+.table-status-card.table-state-card {
+  min-height: 278px !important;
+}
+
+.table-status-card.table-state-card,
+.table-status-card .table-status-card-main,
+.table-status-card .table-status-card-detail {
+  min-width: 0;
+  width: 100%;
+}
+
+.table-status-card .table-status-card-detail {
+  align-self: stretch;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  text-align: left;
+}
+
+.table-floor-tile.table-state-card .table-state-primary {
+  grid-column: 1 / -1;
+  width: 100% !important;
+}
+
+.table-floor-index .table-state-attention {
+  position: absolute;
+  top: var(--space-3);
+  right: var(--space-3);
+  display: inline-flex !important;
+  width: auto;
+  height: 28px;
+}
+
+.lf-table-card[data-border="accent"] .lf-table-card-body,
+.lf-table-card[data-border="warning"] .lf-table-card-body {
+  grid-template-columns: 1fr;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .table-state-dot[data-dot="pulse"] {
+    animation: none !important;
+  }
+}
+
+@media (max-width: 760px) {
+  .table-state-primary {
+    min-height: 48px !important;
+  }
+}

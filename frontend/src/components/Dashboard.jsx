@@ -16,8 +16,9 @@ import {
 import {
   getDashboardLive,
 } from "../api/index.js";
+import { TableAttentionBadge, TableStateBadge } from "./TableStateUI.jsx";
 import { HSR_TABLES, TOTAL_TABLES, getTableLabel } from "../config/hsrTables.js";
-import { getTableStatusByKey } from "../config/tableStatus.js";
+import { tableActionNavigation, tableStateAttributes, getTableAttention, getTableStatusByKey } from "../config/tableStatus.js";
 import { useRealtimeSubscription } from "../realtime/useRealtimeSubscription.js";
 
 const TABLES = HSR_TABLES;
@@ -407,27 +408,32 @@ function LiveFloor({ tables, elapsed, onNavigate }) {
           const session = table.session;
           const elapsedSecs = elapsed[table.id] ?? table.elapsed_seconds ?? 0;
           const active = Boolean(session);
-          const busy = elapsedSecs >= 3600;
           const status = getTableStatusByKey(table.status_key);
+          const attention = getTableAttention({ session, elapsedSeconds: elapsedSecs });
           const runningTotal = table.running_total || session?.running_total || 0;
           return (
             <button
               type="button"
               key={table.id}
-              className={`ops-table-card ${active ? "active" : "idle"} ${busy ? "busy" : ""} ${status.className}`}
-              onClick={() => onNavigate("tables")}
+              className="ops-table-card table-state-card"
+              {...tableStateAttributes(status.key)}
+              data-attention={attention ? "true" : "false"}
+              onClick={() => onNavigate(...tableActionNavigation(table.id, status.key))}
+              disabled={status.key === "maintenance"}
             >
               <div className="ops-table-top">
                 <strong>T{table.num}</strong>
                 <span>{getTableLabel(table)}</span>
               </div>
-              <div className="ops-table-status">
-                <i className="ti ti-circle-filled" aria-hidden="true" />
-                {status.label}
+              <div className="table-state-card-flags">
+                <TableAttentionBadge attention={attention} />
+                <TableStateBadge statusKey={status.key} />
               </div>
               <div className="ops-table-main">
-                <span>{active ? fmtTime(elapsedSecs) : "Ready"}</span>
-                <strong>{active ? money(runningTotal) : "—"}</strong>
+                <span className={active ? "table-state-timer" : ""} data-timer={status.timerStyle}>
+                  {active ? fmtTime(elapsedSecs) : status.key === "reserved" ? "Reserved" : money(table.rate || 0) + "/hr"}
+                </span>
+                <strong>{active ? money(runningTotal) : status.label}</strong>
               </div>
               <div className="ops-table-meta">
                 {active ? (
@@ -436,12 +442,16 @@ function LiveFloor({ tables, elapsed, onNavigate }) {
                     <span>{session.billing_mode || "single"} · Food {money(session.food_total || 0)}</span>
                   </>
                 ) : (
-                  <>
-                    <span>Ready to start</span>
-                    <span>Tap to open table controls</span>
-                  </>
+                  <span>{status.key === "reserved"
+                    ? `${new Date(table.booking?.booking_time).toLocaleTimeString("en-IN", { hour: "2-digit", minute: "2-digit" })} · ${table.booking?.customer_name || "Reserved guest"}`
+                    : status.key === "maintenance" ? table.maintenance?.reason || "Unavailable"
+                    : "Ready to start"}</span>
                 )}
               </div>
+              <span className="table-state-primary table-state-primary-static">
+                <i className={`ti ${status.primaryAction.icon}`} aria-hidden="true" />
+                {status.primaryAction.label}
+              </span>
             </button>
           );
         })}

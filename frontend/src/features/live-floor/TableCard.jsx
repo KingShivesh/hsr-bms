@@ -1,4 +1,6 @@
 import { useEffect, useRef, useState } from "react";
+import { TableAttentionBadge, TablePrimaryAction } from "../../components/TableStateUI.jsx";
+import { tableStateAttributes, getTableAttention, getTableStatusByKey } from "../../config/tableStatus.js";
 import TableStatusBadge from "./TableStatusBadge.jsx";
 
 function formatTimer(seconds = 0) {
@@ -33,19 +35,23 @@ export default function TableCard({
   tick = 0,
   onSelect,
   onStart,
+  onCheckout,
+  onReviewBooking,
   onSaveRate,
   onInvalidRate,
 }) {
   const statusKey = table.status_key || "available";
+  const status = getTableStatusByKey(statusKey);
   const session = table.session;
   const elapsed = session && !session.paused ? (session.elapsed_seconds || 0) + tick : table.elapsed_seconds || 0;
   const isAvailable = statusKey === "available";
+  const isMaintenance = statusKey === "maintenance";
   const customer = session?.customer_name || table.booking?.customer_name || "";
-  const actionLabel = isAvailable ? "Start Table" : statusKey === "reserved" ? "Review Booking" : "Open Session";
   const runningTotal = Number(session?.running_total || table.running_total || 0);
   const foodTotal = Number(session?.food_total || 0);
   const shownRate = Number(table.rate || 0);
-  const canEditRate = !session && statusKey !== "reserved" && typeof onSaveRate === "function";
+  const canEditRate = isAvailable && typeof onSaveRate === "function";
+  const attention = getTableAttention({ session, elapsedSeconds: elapsed });
   const [rateEditing, setRateEditing] = useState(false);
   const [rateDraft, setRateDraft] = useState(String(shownRate || ""));
   const [rateError, setRateError] = useState("");
@@ -104,20 +110,27 @@ export default function TableCard({
 
   function handleAction(event) {
     event.stopPropagation();
+    if (isMaintenance) return;
     if (isAvailable) onStart?.(table.id);
+    else if (statusKey === "running" || statusKey === "paused") onCheckout?.(table);
+    else if (statusKey === "reserved") onReviewBooking?.(table);
     else onSelect?.(table);
   }
 
   return (
     <article
-      className={`lf-table-card ${selected ? "is-selected" : ""} is-${statusKey}`}
-      onClick={() => onSelect?.(table)}
-      tabIndex={0}
+      className={`lf-table-card table-state-card ${selected ? "is-selected" : ""}`}
+      {...tableStateAttributes(status.key)}
+      data-attention={attention ? "true" : "false"}
+      onClick={() => !isMaintenance && onSelect?.(table)}
+      tabIndex={isMaintenance ? -1 : 0}
       role="button"
+      aria-disabled={isMaintenance}
       onKeyDown={(event) => {
+        if (event.target !== event.currentTarget) return;
         if (event.key === "Enter" || event.key === " ") {
           event.preventDefault();
-          onSelect?.(table);
+          if (!isMaintenance) onSelect?.(table);
         }
       }}
       aria-label={`${table.label || table.id} ${table.status_label || statusKey}`}
@@ -127,18 +140,21 @@ export default function TableCard({
           <span className="lf-table-kicker">{table.type || table.label || "Table"}</span>
           <strong>{String(table.id || "").toUpperCase()}</strong>
         </div>
-        <TableStatusBadge statusKey={statusKey} label={table.status_label} />
+        <div className="table-state-card-flags">
+          <TableAttentionBadge attention={attention} />
+          <TableStatusBadge statusKey={statusKey} label={table.status_label} />
+        </div>
       </div>
 
       <div className="lf-table-card-body">
         <div>
           <span>{session ? "Customer" : statusKey === "reserved" ? "Booking time" : "Availability"}</span>
           <b title={statusKey === "reserved" ? bookingTime(table.booking) : customer || "Walk-in ready"}>
-            {statusKey === "reserved" ? bookingTime(table.booking) : customer || "Walk-in ready"}
+            {statusKey === "reserved" ? bookingTime(table.booking) : isMaintenance ? "Unavailable" : customer || "Walk-in ready"}
           </b>
         </div>
         <div>
-          <span>{session ? "Live timer" : statusKey === "reserved" ? "Guest" : "Rate"}</span>
+          <span>{session ? (statusKey === "paused" ? "Frozen timer" : "Elapsed") : statusKey === "reserved" ? "Guest" : "Rate"}</span>
           {rateEditing ? (
             <div className="lf-rate-editor" onClick={(event) => event.stopPropagation()}>
               <label>
@@ -187,7 +203,7 @@ export default function TableCard({
               ₹{shownRate}/hr
             </button>
           ) : (
-            <b title={session ? formatTimer(elapsed) : statusKey === "reserved" ? customer || "Reserved guest" : `₹${shownRate}/hr`}>
+            <b className={session ? "table-state-timer" : ""} data-timer={status.timerStyle} title={session ? formatTimer(elapsed) : statusKey === "reserved" ? customer || "Reserved guest" : `₹${shownRate}/hr`}>
               {session ? formatTimer(elapsed) : statusKey === "reserved" ? customer || "Reserved guest" : `₹${shownRate}/hr`}
             </b>
           )}
@@ -215,10 +231,7 @@ export default function TableCard({
         <p className="lf-table-note">{table.maintenance?.reason || "Maintenance active"}</p>
       )}
 
-      <button type="button" className={isAvailable ? "lf-card-primary" : "lf-card-secondary"} onClick={handleAction}>
-        <i className={`ti ${isAvailable ? "ti-player-play" : "ti-layout-sidebar-right-expand"}`} aria-hidden="true" />
-        {actionLabel}
-      </button>
+      <TablePrimaryAction statusKey={statusKey} onClick={handleAction} />
     </article>
   );
 }

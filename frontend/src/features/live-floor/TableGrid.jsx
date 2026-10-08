@@ -7,6 +7,8 @@ export default function TableGrid({
   tick = 0,
   onSelectTable,
   onStartSession,
+  onCheckout,
+  onReviewBooking,
   onSaveRate,
   onInvalidRate,
 }) {
@@ -28,7 +30,8 @@ export default function TableGrid({
     const grid = gridRef.current;
     if (!grid) return;
 
-    const cards = Array.from(grid.querySelectorAll(".lf-table-card"));
+    if (event.target.matches("input, select, textarea")) return;
+    const cards = Array.from(grid.querySelectorAll('.lf-table-card:not([aria-disabled="true"])'));
     if (!cards.length) return;
 
     const activeEl = document.activeElement;
@@ -143,6 +146,8 @@ export default function TableGrid({
           tick={tick}
           onSelect={onSelectTable}
           onStart={onStartSession}
+          onCheckout={onCheckout}
+          onReviewBooking={onReviewBooking}
           onSaveRate={onSaveRate}
           onInvalidRate={onInvalidRate}
         />
