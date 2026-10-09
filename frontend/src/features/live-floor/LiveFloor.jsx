@@ -1,13 +1,15 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import { getLiveFloor, getRates, saveRates, startSession } from "../../api/index.js";
+import { getLiveFloor, getRates, saveRates, startSession, pauseSession } from "../../api/index.js";
 import RetryNotice from "../../components/RetryNotice.jsx";
-import { useEscapeKey } from "../../components/ui/index.js";
+import { Modal, Drawer } from "../../components/ui/index.js";
 import { useToast } from "../../components/toastContext.js";
 import { useRealtimeSubscription } from "../../realtime/useRealtimeSubscription.js";
 import SessionWorkspace from "../sessions/SessionWorkspace.jsx";
 import TableGrid from "./TableGrid.jsx";
 import TariffSelector from "../sessions/TariffSelector.jsx";
+import ProductSelector from "../orders/ProductSelector.jsx";
+import CheckoutPanel from "../checkout/CheckoutPanel.jsx";
 
 function todayLabel() {
   return new Date().toLocaleDateString("en-IN", {
@@ -46,28 +48,42 @@ function LiveFloorSkeleton() {
   );
 }
 
-function NewSessionPanel({ open, tables, initialTableId, onClose, onCreated }) {
+function NewSessionModal({ tables, initialTableId, onClose, onCreated }) {
   const { showToast } = useToast();
-  useEscapeKey(onClose, open);
-  const availableTables = useMemo(() => tables.filter((table) => table.status_key === "available"), [tables]);
+  const availableTables = useMemo(() => tables.filter((table) => table.status_key === "available" || (table.id === initialTableId && table.status_key === "reserved")), [tables, initialTableId]);
   const defaultTableId = initialTableId || availableTables[0]?.id || "";
-  const [customer, setCustomer] = useState("");
+  const [customer, setCustomer] = useState(tables.find((table) => table.id === initialTableId)?.booking?.customer_name || "");
   const [tableId, setTableId] = useState(defaultTableId);
   const [mode, setMode] = useState("single");
   const [tariff, setTariff] = useState({ tariff_mode: "hourly", package_id: "" });
   const [saving, setSaving] = useState(false);
+  const formRef = useRef(null);
 
   useEffect(() => {
-    if (open) setTableId(defaultTableId);
-  }, [open, defaultTableId]);
+    if (!tableId && defaultTableId) setTableId(defaultTableId);
+  }, [defaultTableId, tableId]);
 
-  if (!open) return null;
+  useEffect(() => {
+    const previous = document.activeElement;
+    const dialog = formRef.current?.closest('[role="dialog"]');
+    formRef.current?.querySelector("input")?.focus();
+    function trapFocus(event) {
+      if (event.key !== "Tab") return;
+      const items = Array.from(dialog.querySelectorAll('button:not(:disabled), input:not(:disabled), select:not(:disabled), [tabindex="0"]'));
+      const first = items[0];
+      const last = items.at(-1);
+      if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last?.focus(); }
+      else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first?.focus(); }
+    }
+    dialog?.addEventListener("keydown", trapFocus);
+    return () => { dialog?.removeEventListener("keydown", trapFocus); previous?.focus(); };
+  }, []);
 
   const selectedTable = availableTables.find((table) => table.id === tableId);
 
   async function handleSubmit(event) {
     event.preventDefault();
-    if (!tableId) {
+    if (!selectedTable) {
       showToast("Select an available table.", "error");
       return;
     }
@@ -89,23 +105,15 @@ function NewSessionPanel({ open, tables, initialTableId, onClose, onCreated }) {
   }
 
   return (
-    <div className="lf-modal-backdrop" role="presentation">
-      <form className="lf-new-session" onSubmit={handleSubmit}>
-        <div className="order-selector-head">
-          <div>
-            <span className="lf-eyebrow">New session</span>
-            <h3>Start table quickly</h3>
-          </div>
-          <button type="button" className="lf-icon-button" onClick={onClose} aria-label="Close new session">
-            <i className="ti ti-x" aria-hidden="true" />
-          </button>
-        </div>
+    <Modal open portal title="Start Session" onClose={saving ? undefined : onClose} className="lf-start-modal">
+      <form ref={formRef} className="lf-new-session" onSubmit={handleSubmit}>
+        <fieldset disabled={saving}>
         <label className="lf-field">
           <span>Customer</span>
           <input value={customer} onChange={(event) => setCustomer(event.target.value)} placeholder="Walk-in or customer name" />
         </label>
         <label className="lf-field">
-          <span>Available table</span>
+          <span>Table</span>
           <select value={tableId} onChange={(event) => { setTableId(event.target.value); setTariff({ tariff_mode: "hourly", package_id: "" }); }}>
             {availableTables.map((table) => (
               <option key={table.id} value={table.id}>
@@ -132,11 +140,15 @@ function NewSessionPanel({ open, tables, initialTableId, onClose, onCreated }) {
             </button>
           ))}
         </div>
-          <button type="submit" className="lf-primary-button" disabled={saving || !availableTables.length}>
-          {saving ? "Starting..." : "Start Table"}
-        </button>
+        <div className="lf-modal-actions">
+          <button type="button" className="lf-secondary-button" onClick={onClose}>Cancel</button>
+          <button type="submit" className="lf-primary-button" disabled={!selectedTable}>
+            {saving ? "Starting..." : "Start Session"}
+          </button>
+        </div>
+        </fieldset>
       </form>
-    </div>
+    </Modal>
   );
 }
 
@@ -146,13 +158,16 @@ export default function LiveFloor({ role = "admin", onNavigate, newSessionReques
   const requestedTable = searchParams.get("table") || "";
   const requestedAction = searchParams.get("action") || "";
   const [floor, setFloor] = useState(null);
-  const [selectedTableId, setSelectedTableId] = useState(requestedTable);
+  const [selectedTableId, setSelectedTableId] = useState(requestedAction ? "" : requestedTable);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [tick, setTick] = useState(0);
   const [newSessionOpen, setNewSessionOpen] = useState(requestedAction === "start");
   const [newSessionTableId, setNewSessionTableId] = useState(requestedTable);
   const [checkoutTableId, setCheckoutTableId] = useState(requestedAction === "checkout" ? requestedTable : "");
+  const [foodTableId, setFoodTableId] = useState("");
+  const [busyTables, setBusyTables] = useState({});
+  const pendingTablesRef = useRef(new Set());
   const floorRefreshTimerRef = useRef(null);
 
   const openNewSession = useCallback((tableId = "") => {
@@ -179,7 +194,7 @@ export default function LiveFloor({ role = "admin", onNavigate, newSessionReques
       setFloor(nextFloor);
       setSelectedTableId((current) => {
         if (current && nextFloor.tables?.some((table) => table.id === current)) return current;
-        return nextFloor.tables?.[0]?.id || "";
+        return "";
       });
       setTick(0);
     } catch (err) {
@@ -274,6 +289,24 @@ export default function LiveFloor({ role = "admin", onNavigate, newSessionReques
     () => tables.find((table) => table.id === selectedTableId) || null,
     [tables, selectedTableId],
   );
+  const checkoutTable = tables.find((table) => table.id === checkoutTableId);
+  const foodTable = tables.find((table) => table.id === foodTableId);
+
+  async function togglePause(table) {
+    if (pendingTablesRef.current.has(table.id)) return;
+    pendingTablesRef.current.add(table.id);
+    setBusyTables((current) => ({ ...current, [table.id]: true }));
+    try {
+      await pauseSession(table.id);
+      showToast(table.session?.paused ? "Session resumed" : "Session paused", "success");
+      await loadFloor();
+    } catch (err) {
+      showToast(err.userMessage || "Could not update session.", "error");
+    } finally {
+      pendingTablesRef.current.delete(table.id);
+      setBusyTables((current) => ({ ...current, [table.id]: false }));
+    }
+  }
   const upcomingBookings = tables.filter((table) => table.booking).length;
   const reservedTables = tables.filter((table) => table.status_key === "reserved").length;
   const pausedTables = tables.filter((table) => table.status_key === "paused").length;
@@ -351,42 +384,45 @@ export default function LiveFloor({ role = "admin", onNavigate, newSessionReques
                 }}
                 onStartSession={openNewSession}
                 onCheckout={(table) => {
-                  setSelectedTableId(table.id);
+                  setSelectedTableId("");
                   setCheckoutTableId(table.id);
                 }}
-                onReviewBooking={() => onNavigate?.("reservations")}
+                onPause={togglePause}
+                onFood={(table) => setFoodTableId(table.id)}
+                busyTables={busyTables}
+                onReviewBooking={(table) => openNewSession(table.id)}
                 onSaveRate={saveInlineRate}
                 onInvalidRate={(message) => showToast(message, "error")}
               />
             </div>
 
+          </div>
+
+          <Drawer open={!!selectedTable} portal title={`Session details · ${String(selectedTable?.id || "").toUpperCase()}`} onClose={() => setSelectedTableId("")} className="lf-detail-drawer">
             <SessionWorkspace
-              key={`${selectedTable?.id || "none"}-${checkoutTableId}`}
+              key={selectedTable?.id || "none"}
               table={selectedTable}
-              initialCheckoutOpen={checkoutTableId === selectedTable?.id}
               tables={tables}
               tick={tick}
-              onClose={() => {
-                setSelectedTableId("");
-                setCheckoutTableId("");
-              }}
               onRefresh={() => loadFloor()}
-              onStartSession={openNewSession}
             />
-          </div>
+          </Drawer>
         </>
       )}
 
-      <NewSessionPanel
-        open={newSessionOpen}
+      {newSessionOpen && <NewSessionModal
         tables={tables}
         initialTableId={newSessionTableId}
         onClose={() => setNewSessionOpen(false)}
-        onCreated={async (tableId) => {
+        onCreated={async () => {
           await loadFloor();
-          setSelectedTableId(tableId);
+          setSelectedTableId("");
         }}
-      />
+      />}
+      <Modal open={!!foodTable?.session} portal title={`Session food · ${String(foodTableId).toUpperCase()}`} onClose={() => setFoodTableId("")} className="lf-food-modal" size="lg">
+        <ProductSelector tableId={foodTableId} players={foodTable?.session?.players || []} onClose={() => setFoodTableId("")} onAdded={async () => { await loadFloor(); setFoodTableId(""); }} />
+      </Modal>
+      <CheckoutPanel table={checkoutTable} open={!!checkoutTable} onClose={() => setCheckoutTableId("")} onComplete={loadFloor} />
     </section>
   );
 }

@@ -8,7 +8,7 @@ if (!["before", "after"].includes(phase)) throw new Error("Unknown phase");
 const app = "http://127.0.0.1:5175";
 const api = "http://127.0.0.1:8002";
 const database = "/tmp/hsr-tariff-browser.db";
-const directory = path.resolve("../docs/tariff-billing-audit", phase);
+const directory = path.resolve(process.env.TARIFF_AUDIT_DIR || "../docs/tariff-billing-audit", phase);
 await fs.mkdir(directory, { recursive: true });
 let auth;
 async function request(method, route, body) {
@@ -30,6 +30,14 @@ try {
   async function go(route) { await page.goto(app + route, { waitUntil: "load" }); await page.waitForTimeout(300); await page.evaluate(() => document.fonts.ready); }
   await go("/live-floor");
   async function screenshot(name, fullPage = false) { await page.waitForTimeout(250); await page.screenshot({ path: path.join(directory, name + ".png"), fullPage }); }
+  async function openCheckout(tableId) {
+    if (phase === "before") {
+      await page.getByRole("button", { name: "Open Checkout", exact: true }).click();
+    } else {
+      if (await page.locator(".lf-detail-drawer").count()) await page.locator(".lf-detail-drawer").getByRole("button", { name: "Close panel" }).click();
+      await page.locator(".lf-table-card").filter({ has: page.locator(".lf-table-card-head strong", { hasText: tableId.toUpperCase() }) }).getByRole("button", { name: "End", exact: true }).click();
+    }
+  }
   async function feedback(button, routePattern) {
     await page.route(routePattern, async route => { await new Promise(resolve => setTimeout(resolve, 350)); await route.continue(); }, { times: 1 });
     await button.evaluate(button => {
@@ -75,17 +83,19 @@ try {
     result.themes.push(await page.evaluate(() => { const style = getComputedStyle(document.body); return { theme: document.body.classList.contains("dark") ? "dark" : "light", font: style.fontFamily, canvas: style.backgroundColor, accent: style.getPropertyValue("--accent").trim() }; }));
   }
   await page.getByLabel("Customer", { exact: true }).fill("QA Tariff Player");
-  await feedback(page.locator(".lf-new-session").getByRole("button", { name: "Start Table", exact: true }), "**/sessions/start");
+  await feedback(page.locator(".lf-new-session").getByRole("button", { name: phase === "before" ? "Start Table" : "Start Session", exact: true }), "**/sessions/start");
   await page.locator(".lf-new-session").waitFor({ state: "hidden" });
   if (phase === "after") {
+    await go("/live-floor?table=t1");
     await page.getByRole("button", { name: "Complete Frame" }).waitFor();
-    await page.getByRole("button", { name: "Open Checkout", exact: true }).click();
+    await openCheckout("t1");
     await page.getByText("Close the open frame before checkout.", { exact: true }).waitFor();
     const finalize = page.locator(".checkout-panel").getByRole("button", { name: /Close table/i });
     if (!(await finalize.isDisabled())) throw new Error("Open frame checkout enabled");
     result.openFrameCheckoutBlocked = true;
     await page.keyboard.press("Escape");
     await page.locator(".checkout-panel").waitFor({ state: "hidden" });
+    await go("/live-floor?table=t1");
     await feedback(page.getByRole("button", { name: "Complete Frame", exact: true }), "**/sessions/t1/frames/close");
     await page.getByRole("button", { name: "Start Frame", exact: true }).waitFor();
     await page.getByRole("button", { name: "Start Frame", exact: true }).click();
@@ -101,9 +111,10 @@ try {
   for (const theme of ["light", "dark"]) {
     await page.evaluate(theme => localStorage.setItem("darkMode", String(theme === "dark")), theme);
     await go("/live-floor?table=t1");
-    await page.getByRole("button", { name: "Open Checkout", exact: true }).waitFor();
+    await page.locator(".lf-table-card").last().waitFor();
+    if (phase === "after") await page.locator(".lf-detail-drawer").getByRole("button", { name: "Close panel" }).click();
     await screenshot(`floor-${theme}`, true);
-    await page.getByRole("button", { name: "Open Checkout", exact: true }).click();
+    await openCheckout("t1");
     await page.locator(".checkout-panel .checkout-summary-grid").waitFor();
     await screenshot(`checkout-${theme}`);
   }
@@ -117,7 +128,7 @@ try {
     await page.getByLabel("Tariff", { exact: true }).selectOption("package");
     const catalog = await request("GET", "/settings/tariffs");
     await page.getByLabel("Package", { exact: true }).selectOption(catalog.packages[0].id);
-    await page.locator(".lf-new-session").getByRole("button", { name: "Start Table", exact: true }).click();
+    await page.locator(".lf-new-session").getByRole("button", { name: "Start Session", exact: true }).click();
     await page.locator(".lf-new-session").waitFor({ state: "hidden" });
     await request("POST", "/settings/tariffs", { ...catalog, packages: [] });
     const fixed = await request("GET", "/sessions/quote/t2");
@@ -127,7 +138,8 @@ try {
     for (const theme of ["light", "dark"]) {
       await page.evaluate(theme => localStorage.setItem("darkMode", String(theme === "dark")), theme);
       await go("/live-floor?table=t2");
-      await page.getByRole("button", { name: "Open Checkout", exact: true }).waitFor();
+      await page.locator(".lf-table-card").last().waitFor();
+      await page.locator(".lf-detail-drawer").getByRole("button", { name: "Close panel" }).click();
       await screenshot(`package-${theme}`, true);
     }
     for (const width of [375, 414]) {

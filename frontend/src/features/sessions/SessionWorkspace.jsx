@@ -1,9 +1,6 @@
 import { useMemo, useState } from "react";
-import { pauseSession, transferSession } from "../../api/index.js";
+import { transferSession } from "../../api/index.js";
 import { useToast } from "../../components/toastContext.js";
-import { useEscapeKey } from "../../components/ui/index.js";
-import CheckoutPanel from "../checkout/CheckoutPanel.jsx";
-import ProductSelector from "../orders/ProductSelector.jsx";
 import TableStatusBadge from "../live-floor/TableStatusBadge.jsx";
 import FrameControls from "./FrameControls.jsx";
 import { tariffDescription } from "./tariffs.js";
@@ -32,18 +29,12 @@ export default function SessionWorkspace({
   table,
   tables = [],
   tick = 0,
-  onClose,
   onRefresh,
-  onStartSession,
-  initialCheckoutOpen = false,
 }) {
   const { showToast } = useToast();
   const [activeTab, setActiveTab] = useState("overview");
-  const [showOrders, setShowOrders] = useState(false);
-  const [checkoutOpen, setCheckoutOpen] = useState(initialCheckoutOpen);
   const [busy, setBusy] = useState("");
   const [transferTarget, setTransferTarget] = useState("");
-  useEscapeKey(onClose, !!table && !showOrders && !checkoutOpen);
   const session = table?.session;
   const elapsed = session && !session.paused ? (session.elapsed_seconds || 0) + tick : session?.elapsed_seconds || 0;
   const players = useMemo(() => sessionPlayers(session), [session]);
@@ -66,16 +57,7 @@ export default function SessionWorkspace({
   if (!table) return null;
 
   return (
-    <aside className={`session-workspace ${session?.tariff_mode === "frame" || session?.billing_mode === "lp" ? "has-frames" : ""}`} aria-label="Session workspace">
-      <div className="session-workspace-head">
-        <div>
-          <span className="lf-eyebrow">Session workspace</span>
-          <h2>{String(table.id || "").toUpperCase()} · {table.type || table.label}</h2>
-        </div>
-        <button type="button" className="lf-icon-button" onClick={onClose} aria-label="Close session workspace">
-          <i className="ti ti-x" aria-hidden="true" />
-        </button>
-      </div>
+    <div className="session-workspace lf-session-details" aria-label="Session details">
 
       <div className="session-hero">
         <div>
@@ -92,16 +74,8 @@ export default function SessionWorkspace({
       {!session && (
         <div className="session-empty-panel">
           <i className="ti ti-player-play" aria-hidden="true" />
-          <h3>{table.status_key === "maintenance" ? "Table unavailable" : "Start from this table"}</h3>
-          <p>{table.status_key === "maintenance" ? table.maintenance?.reason || "Maintenance is active." : "Create a walk-in or customer session without leaving the floor."}</p>
-          <button
-            type="button"
-            className="lf-primary-button"
-            onClick={() => onStartSession?.(table.id)}
-            disabled={table.status_key !== "available"}
-          >
-            Start Table
-          </button>
+          <h3>{table.status_key === "maintenance" ? "Table unavailable" : "No active session"}</h3>
+          <p>{table.maintenance?.reason || table.booking?.customer_name || `Rate: ₹${table.rate}/hr`}</p>
         </div>
       )}
 
@@ -153,10 +127,6 @@ export default function SessionWorkspace({
             <div className="session-list-panel">
               <div className="session-list-head">
                 <h3>Session orders</h3>
-                <button type="button" className="lf-secondary-button" onClick={() => setShowOrders(true)}>
-                  <i className="ti ti-plus" aria-hidden="true" />
-                  Add Food
-                </button>
               </div>
               {(session.food_items || []).length ? (
                 <div className="session-order-list">
@@ -199,18 +169,6 @@ export default function SessionWorkspace({
 
           </div>
           <div className="session-action-bar">
-            <button type="button" className="lf-secondary-button" onClick={() => setShowOrders(true)}>
-              <i className="ti ti-tools-kitchen-2" aria-hidden="true" />
-              Add Food
-            </button>
-            <button
-              type="button"
-              className="lf-secondary-button"
-              disabled={busy === "pause"}
-              onClick={() => runAction("pause", () => pauseSession(table.id), session.paused ? "Session resumed" : "Session paused")}
-            >
-              {busy === "pause" ? "Working..." : session.paused ? "Resume" : "Pause"}
-            </button>
             <label className="session-transfer">
               <span>Transfer</span>
               <select value={transferTarget} onChange={(event) => setTransferTarget(event.target.value)}>
@@ -227,34 +185,10 @@ export default function SessionWorkspace({
                 {busy === "transfer" ? "Moving..." : "Move Session"}
               </button>
             </label>
-            <button type="button" className="lf-primary-button" onClick={() => setCheckoutOpen(true)}>
-              <i className="ti ti-receipt" aria-hidden="true" />
-              Open Checkout
-            </button>
           </div>
         </>
       )}
 
-      {showOrders && (
-        <div className="order-drawer-shell">
-          <ProductSelector
-            tableId={table.id}
-            players={players}
-            onClose={() => setShowOrders(false)}
-            onAdded={async () => {
-              await onRefresh?.();
-              setShowOrders(false);
-            }}
-          />
-        </div>
-      )}
-
-      <CheckoutPanel
-        table={table}
-        open={checkoutOpen}
-        onClose={() => setCheckoutOpen(false)}
-        onComplete={onRefresh}
-      />
-    </aside>
+    </div>
   );
 }

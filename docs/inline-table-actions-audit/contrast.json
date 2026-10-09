@@ -1,0 +1,8 @@
+{
+  "generatedAt": "2026-10-09T11:33:40.147Z",
+  "appUrl": "http://127.0.0.1:5175",
+  "apiUrl": "http://127.0.0.1:8002",
+  "routes": ["/", "/analytics", "/audit-log", "/bookings", "/cafe-pos", "/customers", "/daily-closing", "/dashboard", "/inventory", "/legacy-table-controls", "/live-floor", "/pricing-rules", "/sales", "/settings", "/tournaments", "/waitlist"],
+  "dynamicStatesIncluded": ["default route state", "notification popover when bell exists", "command palette shortcut", "first non-destructive primary/action button per page when present"],
+  "violations": []
+}

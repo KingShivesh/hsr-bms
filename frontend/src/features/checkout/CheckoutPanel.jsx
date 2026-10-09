@@ -178,6 +178,7 @@ export default function CheckoutPanel({ table, open, onClose, onComplete }) {
 
   return (
     <Drawer
+      portal
       open={open}
       title={receipt ? "Payment Complete" : `Checkout ${String(tableId).toUpperCase()}`}
       description={receipt ? "Receipt is ready for staff handoff." : "Bill is frozen while payment is collected."}

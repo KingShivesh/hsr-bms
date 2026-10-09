@@ -1,4 +1,5 @@
 import Button, { IconButton } from "./Button.jsx";
+import { createPortal } from "react-dom";
 import { useEscapeKey } from "./useEscapeKey.js";
 
 export function Modal({
@@ -10,12 +11,13 @@ export function Modal({
   onClose,
   className = "",
   size = "md",
+  portal = false,
 }) {
   useEscapeKey(onClose, open);
 
   if (!open) return null;
 
-  return (
+  const content = (
     <div
       className="ui-overlay"
       role="presentation"
@@ -41,6 +43,7 @@ export function Modal({
       </section>
     </div>
   );
+  return portal ? createPortal(content, document.body) : content;
 }
 
 export function Drawer({
@@ -52,12 +55,13 @@ export function Drawer({
   onClose,
   className = "",
   side = "right",
+  portal = false,
 }) {
   useEscapeKey(onClose, open);
 
   if (!open) return null;
 
-  return (
+  const content = (
     <div
       className="ui-overlay"
       role="presentation"
@@ -83,6 +87,7 @@ export function Drawer({
       </aside>
     </div>
   );
+  return portal ? createPortal(content, document.body) : content;
 }
 
 export function ConfirmActions({ cancelLabel = "Cancel", confirmLabel = "Confirm Action", loading, onCancel, onConfirm, tone = "danger" }) {

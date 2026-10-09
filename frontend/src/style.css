@@ -20409,3 +20409,12 @@ body.dark .dashboard-home .dashboard-close-day-btn * {
   .tariff-package-row label { grid-column: 1; }
   .tariff-package-row .lf-icon-button { grid-column: 2; grid-row: 1; }
 }
+
+@media (max-width: 760px) {
+  /* Touch/sticky hover must not expand the rail over table action targets. */
+  .cf-sidebar:not(.mobile-open),
+  .cf-sidebar:not(.mobile-open):hover,
+  .cf-sidebar:not(.mobile-open):focus-within {
+    width: 64px !important;
+  }
+}

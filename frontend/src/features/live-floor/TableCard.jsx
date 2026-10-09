@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { TableAttentionBadge, TablePrimaryAction } from "../../components/TableStateUI.jsx";
+import { TableAttentionBadge } from "../../components/TableStateUI.jsx";
 import { tableStateAttributes, getTableAttention, getTableStatusByKey } from "../../config/tableStatus.js";
 import TableStatusBadge from "./TableStatusBadge.jsx";
 import { tariffDescription } from "../sessions/tariffs.js";
@@ -37,6 +37,9 @@ export default function TableCard({
   onSelect,
   onStart,
   onCheckout,
+  onPause,
+  onFood,
+  busy = false,
   onReviewBooking,
   onSaveRate,
   onInvalidRate,
@@ -125,7 +128,7 @@ export default function TableCard({
       data-attention={attention ? "true" : "false"}
       onClick={() => !isMaintenance && onSelect?.(table)}
       tabIndex={isMaintenance ? -1 : 0}
-      role="button"
+      role="group"
       aria-disabled={isMaintenance}
       onKeyDown={(event) => {
         if (event.target !== event.currentTarget) return;
@@ -135,6 +138,7 @@ export default function TableCard({
         }
       }}
       aria-label={`${table.label || table.id} ${table.status_label || statusKey}`}
+      aria-busy={busy || rateSaving}
     >
       <div className="lf-table-card-head">
         <div>
@@ -232,7 +236,27 @@ export default function TableCard({
         <p className="lf-table-note">{table.maintenance?.reason || "Maintenance active"}</p>
       )}
 
-      <TablePrimaryAction statusKey={statusKey} onClick={handleAction} />
+      <div className="lf-card-actions" onClick={(event) => event.stopPropagation()}>
+        {session ? (
+          <>
+            <button type="button" data-variant={session.paused ? "primary" : "secondary"} disabled={busy} onClick={() => onPause?.(table)}>
+              <i className={`ti ${session.paused ? "ti-player-play" : "ti-player-pause"}`} aria-hidden="true" />
+              {busy ? "Working..." : session.paused ? "Resume" : "Pause"}
+            </button>
+            <button type="button" disabled={busy} onClick={() => onFood?.(table)}>
+              <i className="ti ti-tools-kitchen-2" aria-hidden="true" /> Food
+            </button>
+            <button type="button" data-variant="danger" disabled={busy} onClick={handleAction}>
+              <i className="ti ti-receipt" aria-hidden="true" /> End
+            </button>
+          </>
+        ) : (
+          <button type="button" data-variant="primary" disabled={isMaintenance || busy} onClick={handleAction}>
+            <i className={`ti ${isAvailable ? "ti-player-play" : statusKey === "reserved" ? "ti-calendar-check" : "ti-lock"}`} aria-hidden="true" />
+            {isAvailable ? "Start Session" : statusKey === "reserved" ? "Check In" : "Unavailable"}
+          </button>
+        )}
+      </div>
     </article>
   );
 }

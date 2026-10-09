@@ -8,6 +8,9 @@ export default function TableGrid({
   onSelectTable,
   onStartSession,
   onCheckout,
+  onPause,
+  onFood,
+  busyTables = {},
   onReviewBooking,
   onSaveRate,
   onInvalidRate,
@@ -31,6 +34,7 @@ export default function TableGrid({
     if (!grid) return;
 
     if (event.target.matches("input, select, textarea")) return;
+    if (event.target !== event.target.closest(".lf-table-card")) return;
     const cards = Array.from(grid.querySelectorAll('.lf-table-card:not([aria-disabled="true"])'));
     if (!cards.length) return;
 
@@ -147,6 +151,9 @@ export default function TableGrid({
           onSelect={onSelectTable}
           onStart={onStartSession}
           onCheckout={onCheckout}
+          onPause={onPause}
+          onFood={onFood}
+          busy={!!busyTables[table.id]}
           onReviewBooking={onReviewBooking}
           onSaveRate={onSaveRate}
           onInvalidRate={onInvalidRate}
