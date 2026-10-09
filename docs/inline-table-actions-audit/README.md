@@ -88,3 +88,14 @@ refuses non-QA active sessions and cleans its temporary records afterwards.
 Use `TARIFF_AUDIT_DIR` when rerunning the tariff script to avoid replacing
 historical release evidence. Production verification is read-only bundle
 byte-hash comparison against the exact local release build.
+
+## Shipped release
+
+Feature commit `6ec8809fd199624000c0bfc9873db328f6106198` was fast-forward merged
+to main and pushed. At `2026-10-09T11:40:05.851Z`, production served entry
+`/assets/index-B3-rWrZ6.js` and all 22 JavaScript/CSS assets matched the local
+release build byte-for-byte. `production.json` records every SHA-256 hash.
+Backend health/ready both passed; its runtime revision remained `05a8652`,
+an ancestor with an identical backend code tree (this release is frontend-only).
+No production data was mutated. Local fixtures, transactions and QA menu,
+booking and maintenance records were removed; temporary QA servers stopped.

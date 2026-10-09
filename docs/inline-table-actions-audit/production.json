@@ -1,0 +1,133 @@
+{
+  "verifiedAt": "2026-10-09T11:40:05.851Z",
+  "release": "6ec8809fd199624000c0bfc9873db328f6106198",
+  "site": "https://hsr-bms.vercel.app",
+  "entry": "/assets/index-B3-rWrZ6.js",
+  "allAssetsMatch": true,
+  "assetCount": 22,
+  "health": {
+    "status": "ok",
+    "service": "HSR Snooker Cafe BMS",
+    "revision": "05a8652a12fd476221cc1ec4b4dde91cd7e88b2d"
+  },
+  "ready": {
+    "status": "ok",
+    "service": "HSR Snooker Cafe BMS",
+    "database": "ok"
+  },
+  "backendRevisionIsAncestor": true,
+  "backendCodeUnchanged": true,
+  "productionMutations": 0,
+  "assets": [
+    {
+      "path": "/assets/BookingsPage-gq1oVoAM.js",
+      "bytes": 13440,
+      "sha256": "50d9ab39d7d34ca6808eb46245c8fcf6910d6620214adffe0c53caf1e2fc4c27"
+    },
+    {
+      "path": "/assets/ClosingTab-Ct5NUZAB.js",
+      "bytes": 11418,
+      "sha256": "fc5e409b436851d91e96de5985d5375e29216e6520ba3a81792764e57e99609b"
+    },
+    {
+      "path": "/assets/ClubSuiteTab-BPCaE_py.js",
+      "bytes": 32380,
+      "sha256": "582f311817e49188c9fa73975ca90022730f2e19958856248765a7a6fe75ba6f"
+    },
+    {
+      "path": "/assets/CustomersPage-dsC4mpyp.js",
+      "bytes": 10336,
+      "sha256": "d0dbb94974a80a267398a2f41a35f9bdb5203a58a6e8e1ece2853a4115281592"
+    },
+    {
+      "path": "/assets/Dashboard-DlKcIFrr.js",
+      "bytes": 13992,
+      "sha256": "27bd23a26eedc00cd121a0170d3f5759d220a993e0492d187491b731767adb6c"
+    },
+    {
+      "path": "/assets/FoodTab-Dli53e73.js",
+      "bytes": 22348,
+      "sha256": "24792326c94ccf79819e90aa2017c5513b77612987a46a6f3350831955c6efb8"
+    },
+    {
+      "path": "/assets/FrameControls-CR_IqKkE.js",
+      "bytes": 3172,
+      "sha256": "99f2873d81f6b876313b661fc602150496ca8b8d755547acdbc7a7342e339d9c"
+    },
+    {
+      "path": "/assets/LiveFloor-BaXp4aui.js",
+      "bytes": 36347,
+      "sha256": "80538c075ba32c06c2486dcac065fa4768159164bdc22252776f8d6a0ea2457d"
+    },
+    {
+      "path": "/assets/OperationsTab-D_w2JhVW.js",
+      "bytes": 8460,
+      "sha256": "2332ffb1618ee93527ad22ebfed5aed85541b40e526e06c90af520cd4187034c"
+    },
+    {
+      "path": "/assets/ReportsTab-Bxi-6zEP.js",
+      "bytes": 26921,
+      "sha256": "385f5031fd6df346508699d16f41c6027bc08133372eb77cea904822a7c0e57c"
+    },
+    {
+      "path": "/assets/RetryNotice-BXn2_HS5.js",
+      "bytes": 519,
+      "sha256": "d050cbd224b966e5a548a08fce3251ec7fa38232cdfb460f21a71833851fcc17"
+    },
+    {
+      "path": "/assets/SalesPage-B_ypXMPX.js",
+      "bytes": 8210,
+      "sha256": "0fa23418f385c69cd9428e7c0d5915e17b7df87806ac415e424e6e81f05fe7e7"
+    },
+    {
+      "path": "/assets/SettingsTab-D4G5fQf9.js",
+      "bytes": 14053,
+      "sha256": "fdd92dfded4c46f2429293e675b965303d3fd9a6eb118025e3582f8bdb24a84d"
+    },
+    {
+      "path": "/assets/TableStateUI-W1txcQ3b.js",
+      "bytes": 948,
+      "sha256": "a6a933c64079596f85dc81cb28e44abc044e87a4616132ee05ed096b9b2921ef"
+    },
+    {
+      "path": "/assets/TablesTab-B_3fxHRG.js",
+      "bytes": 63065,
+      "sha256": "d3335aa138e34ae14799342464c56d5029a12557eb5539fe19d6bc2b29df626e"
+    },
+    {
+      "path": "/assets/TournamentTab-DIoU_qc9.js",
+      "bytes": 11990,
+      "sha256": "c635cfa320dbd5c37475a30d1720e0e56e8e94a600fbc81b916a5bcde2943528"
+    },
+    {
+      "path": "/assets/index-B3-rWrZ6.js",
+      "bytes": 329248,
+      "sha256": "30f7ad98402c4b2236e5fad13c0c1d2007fe1bb57f003bac81f572b1c677a1d5"
+    },
+    {
+      "path": "/assets/index-DhLo9W_b.css",
+      "bytes": 630450,
+      "sha256": "57beb74e95636963613b34c2aa14b3966a0977b2ee9c309095446d91d8748865"
+    },
+    {
+      "path": "/assets/tableStatus-BdJXKnvP.js",
+      "bytes": 2243,
+      "sha256": "79568c741ae729035cdfa8da4772ad3817f7bd8981cdd0b33068783bf4f59978"
+    },
+    {
+      "path": "/assets/tariffs-CNk0tb2z.js",
+      "bytes": 314,
+      "sha256": "f02fc7a77a0d66bb1e3dd37d80d9f34e7d2810e1d8d879e80aee38aa1646016b"
+    },
+    {
+      "path": "/assets/ui-C6ZbqTRL.js",
+      "bytes": 4614,
+      "sha256": "7d4d8e9b4a214565a3f10e9a3c4d210d809e7f110ca0f8dff969dd7b684b0130"
+    },
+    {
+      "path": "/assets/useRealtimeSubscription-UFBsOvmT.js",
+      "bytes": 5311,
+      "sha256": "e63a5c49e50fc0d0d78d64b6aa164c2ffc30e0020132b55f6d454f57432cd457"
+    }
+  ]
+}
