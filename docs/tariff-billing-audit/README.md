@@ -56,5 +56,25 @@ the disposable backend at port 8002 and preview at port 5175, then
 unchanged base commit. The script refuses to run when that fixture DB has an
 active session and cleans up its QA sessions/transactions afterward.
 
-Fresh-install PostgreSQL parity and actual production release verification are
-required before closing this batch; see the release evidence alongside this file.
+## Shipped verification
+
+- Feature commit `05a8652a12fd476221cc1ec4b4dde91cd7e88b2d` fast-forward merged
+  into main and pushed. No merge conflict or unmerged code remains.
+- [PostgreSQL parity run](https://github.com/KingShivesh/hsr-bms/actions/runs/37918318131)
+  passed on that exact commit: fresh requirements, production-shaped app import,
+  all 24 focused tests (including concurrent frame requests), and full soak.
+- [Production evidence](production.json), checked 2026-10-09 10:37 UTC:
+  Render `/health.revision` exactly matches the feature commit; `/ready` confirms
+  the database is healthy. All 22 JS/CSS assets match the verified local build
+  byte-for-byte, including the new Settings/Live Floor/FrameControls chunks.
+- Main entry: `index-D_ygOBn5.js`, SHA-256
+  `640c851f5659348badcb9010ffb3971ab2912c0ebbe8da23c003bad291cc028c`.
+  CSS: `index-B4ZBi_Hn.css`, SHA-256
+  `20bac3ad278a57d9a86c72124aef91125305e5b7c314a706b61ce5f3c57acb92`.
+- `npm run scan:contrast`: **0 violations**; raw output in `contrast.json`.
+  Lint, production build, theme guardrail and shared SSE-manager regression pass.
+- Local QA sessions, frames, transactions, audit entries and tariff catalog
+  are cleaned. No production mutation/account creation was performed.
+
+This closes Feature 2. Member credit is the next separate design checkpoint;
+the paused whole-app UX and SSE expansion are not resumed by this batch.

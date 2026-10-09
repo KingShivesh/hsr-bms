@@ -1,0 +1,152 @@
+{
+  "revision": "05a8652a12fd476221cc1ec4b4dde91cd7e88b2d",
+  "health": {
+    "status": "ok",
+    "service": "HSR Snooker Cafe BMS",
+    "revision": "05a8652a12fd476221cc1ec4b4dde91cd7e88b2d"
+  },
+  "ready": {
+    "status": "ok",
+    "service": "HSR Snooker Cafe BMS",
+    "database": "ok"
+  },
+  "entryAssets": [
+    "/assets/index-D_ygOBn5.js",
+    "/assets/index-B4ZBi_Hn.css"
+  ],
+  "assets": [
+    {
+      "asset": "/assets/BookingsPage-DTV2FlPw.js",
+      "status": 200,
+      "sha256": "715c4a0026df81c39e1d278ae3419ad361f9aa2773a94c64f8c0b2ef4668dd1f",
+      "matchesBuild": true
+    },
+    {
+      "asset": "/assets/ClosingTab-ClrOZWMw.js",
+      "status": 200,
+      "sha256": "4d10d68b7a2d52da8739dee8222976fe6b08a034a4c80bc64a4088c3f482951d",
+      "matchesBuild": true
+    },
+    {
+      "asset": "/assets/ClubSuiteTab-eFe9hd9O.js",
+      "status": 200,
+      "sha256": "ef62b8c22e2c92e87b5828b3ad312477b78cd74d9e63430876fcc23bf267116e",
+      "matchesBuild": true
+    },
+    {
+      "asset": "/assets/CustomersPage-CYmrZ1EG.js",
+      "status": 200,
+      "sha256": "d503b33c598b8d38bb62cb5ffa80bc19f2638413f50ec85896d33f014937a930",
+      "matchesBuild": true
+    },
+    {
+      "asset": "/assets/Dashboard-C6NyMNrk.js",
+      "status": 200,
+      "sha256": "e045844da40e02c286fc24b2dd399410f8f5a94973990e9de6bc1b77423e68ab",
+      "matchesBuild": true
+    },
+    {
+      "asset": "/assets/FoodTab-Ds_R-mXD.js",
+      "status": 200,
+      "sha256": "9f6c39a6ebee8fd309dc0e934e919b0fc8d9207a4559c9cc64f32c8881377649",
+      "matchesBuild": true
+    },
+    {
+      "asset": "/assets/FrameControls-ClcnCMxY.js",
+      "status": 200,
+      "sha256": "25844e0a2176be7b49ab696ec6d0104747adba98ae9a62e8f94d0557e43b678f",
+      "matchesBuild": true
+    },
+    {
+      "asset": "/assets/LiveFloor-DH-gqNI2.js",
+      "status": 200,
+      "sha256": "41b7a0ab8e58ba44da7c6bb7204d78df9498d0882f2f4e4bd80df994d0730a49",
+      "matchesBuild": true
+    },
+    {
+      "asset": "/assets/OperationsTab-CLmvE0KH.js",
+      "status": 200,
+      "sha256": "746f25be1494062c69acef3dfb17e871bee84eb78ca272d1ffa8ce74d31ea3f6",
+      "matchesBuild": true
+    },
+    {
+      "asset": "/assets/ReportsTab-DPQb5BAV.js",
+      "status": 200,
+      "sha256": "7c37144c0cfdd74fe566af044988331e988dcd276a077b1276893711e3f8957f",
+      "matchesBuild": true
+    },
+    {
+      "asset": "/assets/RetryNotice-BGERKdJW.js",
+      "status": 200,
+      "sha256": "f4dd7eb910fb67dd6af5476fcc32e294853d993270d82c22e484dad4fd48c684",
+      "matchesBuild": true
+    },
+    {
+      "asset": "/assets/SalesPage-HZoRpWGj.js",
+      "status": 200,
+      "sha256": "c1b431a815e0642a277331125ad5378acd69a454312d2c39772e8e52caacb83d",
+      "matchesBuild": true
+    },
+    {
+      "asset": "/assets/SettingsTab-DhkU9ikf.js",
+      "status": 200,
+      "sha256": "ef3bafdbb2fe7910c8a4f18f002546a763d96b234c1b1f2dc96f9c2ee694ea24",
+      "matchesBuild": true
+    },
+    {
+      "asset": "/assets/TableStateUI-5QtuE3KW.js",
+      "status": 200,
+      "sha256": "6978f0730f9ba9de7e7d9d77785c12e262506f2705ec8d583b8ba36ac7a43452",
+      "matchesBuild": true
+    },
+    {
+      "asset": "/assets/TablesTab-gjuL2_j1.js",
+      "status": 200,
+      "sha256": "eea3c9a4db80d0cf5da05c27f4fb4ab8ac350bfc131ac7773c44544a130a7fe0",
+      "matchesBuild": true
+    },
+    {
+      "asset": "/assets/TournamentTab-DMNjJz-j.js",
+      "status": 200,
+      "sha256": "f4421eb64e1cdc9d8eb928750bfe79cf52ed64735229a7a0bce07d8e56d07d4b",
+      "matchesBuild": true
+    },
+    {
+      "asset": "/assets/index-B4ZBi_Hn.css",
+      "status": 200,
+      "sha256": "20bac3ad278a57d9a86c72124aef91125305e5b7c314a706b61ce5f3c57acb92",
+      "matchesBuild": true
+    },
+    {
+      "asset": "/assets/index-D_ygOBn5.js",
+      "status": 200,
+      "sha256": "640c851f5659348badcb9010ffb3971ab2912c0ebbe8da23c003bad291cc028c",
+      "matchesBuild": true
+    },
+    {
+      "asset": "/assets/tableStatus-BdJXKnvP.js",
+      "status": 200,
+      "sha256": "79568c741ae729035cdfa8da4772ad3817f7bd8981cdd0b33068783bf4f59978",
+      "matchesBuild": true
+    },
+    {
+      "asset": "/assets/tariffs-CNk0tb2z.js",
+      "status": 200,
+      "sha256": "f02fc7a77a0d66bb1e3dd37d80d9f34e7d2810e1d8d879e80aee38aa1646016b",
+      "matchesBuild": true
+    },
+    {
+      "asset": "/assets/ui-5ozbCA7W.js",
+      "status": 200,
+      "sha256": "585c3a090d1764a35df7971bb832357be20be8062d33f85edce928fe4ed838fb",
+      "matchesBuild": true
+    },
+    {
+      "asset": "/assets/useRealtimeSubscription-CgGhNgwx.js",
+      "status": 200,
+      "sha256": "f43dc0cc56f33c0df8f6bfd33dc4b7563497541365e7ef70ba1a0238f35af3fe",
+      "matchesBuild": true
+    }
+  ],
+  "verifiedAt": "2026-10-09T10:37:26.439Z"
+}
