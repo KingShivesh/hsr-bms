@@ -6,7 +6,7 @@ from database import get_db
 from deps import require_admin
 from datetime import datetime, timedelta
 from collections import defaultdict
-import models, io, json, time
+import models, io, json, time, csv
 from audit import get_controls
 from live_state import dashboard_payload
 from hsr_config import (
@@ -37,7 +37,9 @@ def valid_duration(duration: int | None) -> bool:
     return isinstance(duration, int) and 0 < duration <= MAX_REPORT_DURATION_MINUTES
 
 def valid_report_transaction(t: models.Transaction) -> bool:
-    if not valid_duration(t.duration):
+    if not valid_duration(t.duration) and not (
+        t.tariff_mode in {"frame", "package"} and isinstance(t.duration, int) and t.duration > 0
+    ):
         return False
     if not (t.customer_name or "").strip() and (t.total or 0) <= 0:
         return False
@@ -149,6 +151,11 @@ def transaction_report_row(t: models.Transaction, frames_by_txn: dict[int, list[
         "tbl": t.table_id,
         "nm": t.customer_name,
         "dur": t.duration,
+        "tariff_mode": t.tariff_mode or "hourly",
+        "tariff_price": t.tariff_price,
+        "tariff_label": t.tariff_label or "",
+        "frame_count": t.frame_count or 0,
+        "package_id": t.package_id or "",
         "ply": t.play_charge,
         "famt": t.food_charge,
         "food": t.food_items,
@@ -229,21 +236,19 @@ def export_csv(
     frames_by_txn = closed_frames_by_transaction(db, [t.id for t in transactions])
 
     output = io.StringIO()
-    output.write("Date,Table,Customer,Billing Mode,Payer,Duration,Session Start,Session End,Frames,Play,Food,Total,Notes\n")
+    writer = csv.writer(output)
+    writer.writerow(["Date", "Table", "Customer", "Billing Mode", "Payer", "Duration", "Session Start", "Session End", "Frames", "Play", "Food", "Total", "Notes", "Tariff", "Unit Price", "Package", "Completed Frames"])
     for t in transactions:
-        notes = (t.notes or "").replace('"', '""')
         mode = getattr(t, "billing_mode", "single") or "single"
-        payer = (getattr(t, "payer_name", "") or "").replace('"', '""')
         frames = frames_by_txn.get(t.id, [])
         frame_summary = "; ".join(
             f"F{frame.frame_no} lost by {frame.loser_name or 'unrecorded'}"
             for frame in frames
-        ).replace('"', '""')
-        output.write(
-            f'"{t.date}",{t.table_id},{t.customer_name},{mode},"{payer}",{t.duration},'
-            f'{getattr(t, "session_started_at", 0) or 0},{getattr(t, "session_ended_at", 0) or 0},'
-            f'"{frame_summary}",{t.play_charge},{t.food_charge},{t.total},"{notes}"\n'
         )
+        writer.writerow([t.date, t.table_id, t.customer_name, mode, t.payer_name or "", t.duration,
+                         t.session_started_at or 0, t.session_ended_at or 0, frame_summary,
+                         t.play_charge, t.food_charge, t.total, t.notes or "", t.tariff_mode or "hourly",
+                         t.tariff_price, t.tariff_label or "", t.frame_count or 0])
     output.seek(0)
 
     period_label = {"today": "today", "week": "this_week"}.get(period, "all_time")

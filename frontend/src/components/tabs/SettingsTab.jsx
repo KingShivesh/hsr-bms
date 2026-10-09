@@ -12,6 +12,7 @@ import {
   changeStaffAuth,
 } from "../../api/index.js";
 import { useToast } from "../toastContext.js";
+import TariffSettings from "../../features/sessions/TariffSettings.jsx";
 
 function SettingsCard({ title, description, children }) {
   return (
@@ -247,6 +248,8 @@ export default function SettingsTab({ role = "admin", onOpenTables, onNavigate }
           Save Table Rates
         </button>
       </SettingsCard>
+
+      {role === "admin" && <TariffSettings />}
 
       {/* Min session */}
       <SettingsCard

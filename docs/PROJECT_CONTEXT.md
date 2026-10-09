@@ -126,7 +126,15 @@ dead/reachable component findings, and the full routing migration.
 ## Deferred / Follow-up
 - Functional build scope and exclusions: `docs/FUNCTIONAL_ROADMAP.md`.
   Preserve the SNOOK color/font contract. Existing single/sharing/LP describe
-  payer allocation; do not confuse them with upcoming hourly/frame/package tariffs.
+  payer allocation; do not confuse them with independent hourly/frame/package tariffs.
+- Tariffs: `tariff_mode` defaults to hourly for existing rows/clients. Admin-only
+  `/settings/tariffs` stores frame rates and fixed package catalog. Non-hourly
+  price/name are locked at session start, saved on receipts and survive catalog
+  edits/removal/transfer. Packages have no automatic overage; do not invent it.
+  Frame sessions open the first frame at start and cannot close with an open
+  frame. Frame mutation/checkout uses PostgreSQL session row locks and stale
+  frame-ID checks. SSE payloads remain metadata-only. See
+  `docs/tariff-billing-audit/README.md` for verification and actual screenshots.
 - Session timing/pricing: new sessions preserve `started_at` and snapshot the
   peak multiplier/label. Nullable snapshots intentionally retain the old pricing
   policy for sessions already open during deployment. `start_time` is still the

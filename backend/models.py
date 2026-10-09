@@ -14,6 +14,7 @@ class Settings(Base): #This tells SQLAlchemy This class should become a database
     min_session  = Column(Integer, default=0)
     gst_percent  = Column(Float,   default=0)
     booking_grace_minutes = Column(Integer, default=10)
+    tariffs_json = Column(Text, default='{}')
 
 class Member(Base):
     __tablename__ = "members"
@@ -55,6 +56,11 @@ class Transaction(Base):
     session_key    = Column(String,  default="", index=True)
     session_started_at = Column(Float, default=0)
     session_ended_at   = Column(Float, default=0)
+    tariff_mode    = Column(String, default="hourly")
+    tariff_price   = Column(Integer, nullable=True)
+    tariff_label   = Column(String, default="")
+    package_id     = Column(String, default="")
+    frame_count    = Column(Integer, default=0)
 
 class ActiveSession(Base):
     __tablename__ = "active_sessions"
@@ -78,6 +84,10 @@ class ActiveSession(Base):
     total_paused_ms = Column(Float, nullable=True)
     rate_multiplier = Column(Float, nullable=True)
     rate_label    = Column(String, nullable=True)
+    tariff_mode   = Column(String, default="hourly")
+    tariff_price  = Column(Integer, nullable=True)
+    tariff_label  = Column(String, default="")
+    package_id    = Column(String, default="")
 
 class SessionFrame(Base):
     __tablename__ = "session_frames"

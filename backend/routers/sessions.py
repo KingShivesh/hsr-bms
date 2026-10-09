@@ -7,9 +7,9 @@ from database import get_db
 from datetime import datetime, timedelta
 from routers.members import update_member_on_checkout
 import models, time, math, json, uuid
-from typing import Optional
+from typing import Optional, Literal
 from audit import log_action, require_manager_pin
-from pricing import calc_checkout, get_peak_multiplier
+from pricing import calc_checkout, get_peak_multiplier, snapshot_tariff, session_tariff
 from deps import get_current_claims, require_admin
 from hsr_config import TABLE_RATES, format_ist_now, get_ist_now, rate_for_table
 from live_state import build_live_floor_state, build_table_state, serialize_session as serialize_live_session, session_elapsed_ms, session_started_at
@@ -29,6 +29,8 @@ class StartSession(BaseModel):
     split_name:    str  = ""
     billing_mode:  str  = "single"
     players:       list[str] = Field(default_factory=list)
+    tariff_mode:   Literal["hourly", "frame", "package"] = "hourly"
+    package_id:    str = Field(default="", max_length=100)
 
 class FoodItem(BaseModel):
     item: str
@@ -44,7 +46,8 @@ class UpdateNotes(BaseModel):
     notes: str
 
 class CloseFrameBody(BaseModel):
-    loser_name: str
+    loser_name: str = ""
+    frame_id: int | None = None
 
 class TransferTableBody(BaseModel):
     target_table_id: str
@@ -64,13 +67,14 @@ def require_known_table_id(table_id: str) -> str:
         raise HTTPException(status_code=400, detail="Unknown table.")
     return normalized
 
-def active_session_for_table(db: Session, table_id: str):
+def active_session_for_table(db: Session, table_id: str, *, lock: bool = False):
     normalized = normalize_table_id(table_id)
     if not normalized:
         return None
-    rows = db.query(models.ActiveSession).filter(
+    query = db.query(models.ActiveSession).filter(
         func.lower(models.ActiveSession.table_id) == normalized
-    ).all()
+    )
+    rows = (query.with_for_update() if lock else query).all()
     return next((row for row in rows if normalize_person_name(row.customer_name)), None) or (rows[0] if rows else None)
 
 def maintenance_for_table(db: Session, table_id: str):
@@ -361,6 +365,11 @@ def transaction_checkout_response(
     )
     return {
         "date": t.date,
+        "tariff_mode": t.tariff_mode or "hourly",
+        "tariff_price": t.tariff_price,
+        "tariff_label": t.tariff_label or "",
+        "package_id": t.package_id or "",
+        "frame_count": t.frame_count or 0,
         "ts": t.ts,
         "tbl": t.table_id,
         "nm": t.customer_name,
@@ -580,6 +589,7 @@ def start_session(
     split_name = ", ".join(players[1:])
     settings = db.query(models.Settings).first()
     rate = rate_for_table(table_id, body.rate, settings)
+    tariff = snapshot_tariff(settings, table_id, body.tariff_mode, body.package_id)
     maint = maintenance_for_table(db, table_id)
     if maint:
         raise HTTPException(status_code=400, detail=f"Table is under maintenance: {maint.reason}")
@@ -597,6 +607,8 @@ def start_session(
     sess.rate_multiplier, sess.rate_label = get_peak_multiplier(db)
     sess.customer_name = customer_name
     sess.rate          = rate
+    for key, value in tariff.items():
+        setattr(sess, key, value)
     sess.food_total    = 0
     sess.food_items    = "[]"
     sess.paused        = False
@@ -610,14 +622,16 @@ def start_session(
     sess.session_key   = new_session_key(table_id)
     if not existing:
         db.add(sess)
+    first_frame = create_frame_for_session(db, sess, 1) if body.tariff_mode == "frame" else None
     complete_matching_booking(db, table_id, customer_name)
     record_session_event(
         db,
         event_type="session_started",
         table_id=table_id,
         session_key=sess.session_key,
-        detail=f"{table_id.upper()} started as {billing_mode} at ₹{rate}/hr",
+        detail=f"{table_id.upper()} started as {billing_mode}, {body.tariff_mode}",
         payload={
+            **tariff,
             "billing_mode": billing_mode,
             "players": players,
             "rate": rate,
@@ -629,7 +643,7 @@ def start_session(
     log_action(
         db,
         "session_start",
-        f"{table_id.upper()} started as {billing_mode} at ₹{rate}/hr",
+        f"{table_id.upper()} started as {billing_mode}, {body.tariff_mode}",
         table_id=table_id,
     )
     try:
@@ -638,7 +652,7 @@ def start_session(
         db.rollback()
         raise HTTPException(status_code=409, detail="Session already running")
     queue_realtime_event(background_tasks, "table.updated", "floor", "live-floor")
-    return {"ok": True, "frames": []}
+    return {"ok": True, "frames": [serialize_frame(first_frame)] if first_frame else []}
 
 @router.post("/pause/{table_id}")
 def pause_session(
@@ -706,12 +720,14 @@ def quote_session(
     elapsed_ms = session_elapsed_ms(sess, quoted_at_ms)
     elapsed_ms = max(0, elapsed_ms)
 
-    minutes = billable_minutes(elapsed_ms, min_mins)
+    hourly = (sess.tariff_mode or "hourly") == "hourly"
+    minutes = billable_minutes(elapsed_ms, min_mins if hourly else 0)
     actual_minutes = minutes
-    duration_capped = minutes > MAX_SESSION_DURATION_MINUTES
+    duration_capped = hourly and minutes > MAX_SESSION_DURATION_MINUTES
     if duration_capped:
         minutes = MAX_SESSION_DURATION_MINUTES
 
+    frames = active_session_frames(db, sess)
     checkout = calc_checkout(
         db,
         minutes=minutes,
@@ -719,6 +735,7 @@ def quote_session(
         food_total=sess.food_total,
         peak_multiplier=sess.rate_multiplier,
         peak_label=sess.rate_label,
+        **session_tariff(sess, frames),
     )
     play      = checkout["play"]
     food      = checkout["food"]
@@ -738,7 +755,6 @@ def quote_session(
     players = json.loads(getattr(sess, "players_json", "[]") or "[]")
     if not players:
         players = clean_players(sess.customer_name, [], sess.split_name or "")
-    frames = active_session_frames(db, sess)
     billable_frames = [frame for frame in frames if frame.status == "closed"]
     losses_by_player = frame_loss_summary(billable_frames)
     if billing_mode == "single":
@@ -776,6 +792,8 @@ def quote_session(
 
     return {
         "tbl": normalize_table_id(table_id).upper(),
+        **session_tariff(sess, frames),
+        "checkout_blocked": (sess.tariff_mode == "frame" or billing_mode == "lp") and any(frame.status == "open" for frame in frames),
         "nm": display_customer,
         "dur": minutes,
         "actual_dur": actual_minutes,
@@ -823,7 +841,7 @@ def stop_session(
 ):
     table_id = require_known_table_id(table_id)
     expected_session_key = (session_key or "").strip()
-    sess = active_session_for_table(db, table_id)
+    sess = active_session_for_table(db, table_id, lock=True)
     if not sess:
         existing_transaction = transaction_for_session_key(db, expected_session_key)
         if existing_transaction:
@@ -849,11 +867,15 @@ def stop_session(
     elapsed_ms = session_elapsed_ms(sess, closed_at_ms)
     elapsed_ms = max(0, elapsed_ms)
 
-    minutes = billable_minutes(elapsed_ms, min_mins)
+    hourly = (sess.tariff_mode or "hourly") == "hourly"
+    minutes = billable_minutes(elapsed_ms, min_mins if hourly else 0)
     actual_minutes = minutes
-    duration_capped = minutes > MAX_SESSION_DURATION_MINUTES
+    duration_capped = hourly and minutes > MAX_SESSION_DURATION_MINUTES
     if duration_capped:
         minutes = MAX_SESSION_DURATION_MINUTES
+    frames = active_session_frames(db, sess)
+    if (sess.tariff_mode == "frame" or sess.billing_mode == "lp") and any(frame.status == "open" for frame in frames):
+        raise HTTPException(409, "Close the open frame before checkout.")
     checkout = calc_checkout(
         db,
         minutes=minutes,
@@ -861,6 +883,7 @@ def stop_session(
         food_total=sess.food_total,
         peak_multiplier=sess.rate_multiplier,
         peak_label=sess.rate_label,
+        **session_tariff(sess, frames),
     )
 
     play            = checkout["play"]
@@ -889,7 +912,6 @@ def stop_session(
     players = json.loads(getattr(sess, "players_json", "[]") or "[]")
     if not players:
         players = clean_players(sess.customer_name, [], sess.split_name or "")
-    frames = active_session_frames(db, sess)
     billable_frames = [frame for frame in frames if frame.status == "closed"]
     losses_by_player = frame_loss_summary(billable_frames)
     if billing_mode == "single":
@@ -936,7 +958,7 @@ def stop_session(
         cap_note = f"Duration capped at {minutes} min; actual elapsed {actual_minutes} min"
         notes = f"{notes} | {cap_note}" if notes else cap_note
     if billing_mode == "lp" and billable_frames:
-        lp_note = "Legacy frame losses recorded for reference"
+        lp_note = "Frame losses determine payer allocation"
         notes = f"{notes} | {lp_note}" if notes else lp_note
     elif billing_mode == "sharing":
         share_note = f"Sharing between {share_count} players; approx ₹{split_per_head} each"
@@ -961,6 +983,7 @@ def stop_session(
     serialized_frames = [serialize_frame(frame) for frame in billable_frames]
 
     t = models.Transaction(
+        **session_tariff(sess, frames),
         date          = format_ist_now(),
         ts            = time.time() * 1000,
         table_id      = table_id.upper(),
@@ -1220,7 +1243,7 @@ def start_frame(
     db: Session = Depends(get_db),
 ):
     table_id = require_known_table_id(table_id)
-    sess = active_session_for_table(db, table_id)
+    sess = active_session_for_table(db, table_id, lock=True)
     if not sess:
         raise HTTPException(status_code=404, detail="No active session")
     if sess.paused:
@@ -1258,18 +1281,19 @@ def close_frame(
     db: Session = Depends(get_db),
 ):
     table_id = require_known_table_id(table_id)
-    sess = active_session_for_table(db, table_id)
+    sess = active_session_for_table(db, table_id, lock=True)
     if not sess:
         raise HTTPException(status_code=404, detail="No active session")
     if sess.paused:
         raise HTTPException(status_code=400, detail="Resume the table before closing a frame.")
     loser_name = normalize_person_name(body.loser_name)
-    if not loser_name:
+    if not loser_name and sess.billing_mode == "lp":
         raise HTTPException(status_code=400, detail="Enter who lost this frame.")
     players = json.loads(getattr(sess, "players_json", "[]") or "[]")
     if not players:
         players = clean_players(sess.customer_name, [], sess.split_name or "")
-    players, loser_name = merge_session_player(players, loser_name)
+    if loser_name:
+        players, loser_name = merge_session_player(players, loser_name)
     sess.players_json = json.dumps(players)
     sess.split_name = ", ".join(players[1:])
 
@@ -1277,15 +1301,18 @@ def close_frame(
     open_frame = next((frame for frame in frames if frame.status == "open"), None)
     if not open_frame:
         raise HTTPException(status_code=400, detail="Start a frame before closing it.")
+    if body.frame_id is not None and body.frame_id != open_frame.id:
+        raise HTTPException(409, "This frame has changed. Refresh before completing it.")
     open_frame.status = "closed"
     open_frame.ended_at = time.time() * 1000
     open_frame.loser_name = loser_name
+    detail = f"Frame {open_frame.frame_no} lost by {loser_name}" if loser_name else f"Frame {open_frame.frame_no} completed"
     record_session_event(
         db,
         event_type="frame_closed",
         table_id=table_id,
         session_key=ensure_session_key(db, sess),
-        detail=f"Frame {open_frame.frame_no} lost by {loser_name}",
+        detail=detail,
         payload={
             "frame_no": open_frame.frame_no,
             "started_at": open_frame.started_at,
@@ -1294,7 +1321,7 @@ def close_frame(
             "players": players,
         },
     )
-    log_action(db, "frame_close", f"Frame {open_frame.frame_no} lost by {loser_name}", table_id=table_id)
+    log_action(db, "frame_close", detail, table_id=table_id)
     db.commit()
     queue_realtime_event(background_tasks, "table.updated", "floor", "live-floor")
     frames = active_session_frames(db, sess)

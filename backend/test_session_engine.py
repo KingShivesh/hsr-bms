@@ -5,6 +5,9 @@ import os
 import tempfile
 import time
 import unittest
+import csv
+import io
+from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime
 from unittest.mock import patch
 from urllib.parse import urlsplit
@@ -72,6 +75,147 @@ class SessionEngineTests(unittest.TestCase):
                 db.add(rule)
             rule.multiplier = multiplier
             db.commit()
+
+    def tariffs(self, price=80, packages=None):
+        return self.call("POST", "/settings/tariffs", json={
+            "frame_rates": {"wr": price, "sr": 60, "pr": 40},
+            "packages": packages if packages is not None else [{"id": "qa-fixed", "name": "QA Fixed", "price": 500, "table_group": "wr"}],
+        })
+
+    def complete_frame(self, table="t1", loser=""):
+        return self.call("POST", f"/sessions/{table}/frames/close", json={"loser_name": loser})
+
+    def test_tariff_catalog_requires_admin_and_valid_prices(self):
+        self.assertEqual(self.call("GET", "/settings/tariffs")["packages"], [])
+        self.call("POST", "/sessions/start", expected=400, json={"table_id": "t1", "customer_name": "QA", "rate": 1, "tariff_mode": "frame"})
+        self.client.headers["Authorization"] = f"Bearer {create_token('qa-staff', 'staff')}"
+        self.call("POST", "/settings/tariffs", expected=403, json={"frame_rates": {"wr": 80}})
+        self.client.headers["Authorization"] = f"Bearer {create_token('qa-engine', 'admin')}"
+        self.call("POST", "/settings/tariffs", expected=422, json={"frame_rates": {"wr": -1}})
+        duplicate = [{"id": "same", "name": "QA", "price": 500}] * 2
+        self.call("POST", "/settings/tariffs", expected=422, json={"frame_rates": {}, "packages": duplicate})
+        self.call("POST", "/settings/tariffs", expected=422, json={"frame_rates": {}, "packages": [{"id": "qa", "name": "  ", "price": 500}]})
+        self.call("POST", "/sessions/start", expected=422, json={"table_id": "t1", "customer_name": "QA", "rate": 320, "tariff_mode": "invented"})
+
+    def test_frame_billing_snapshots_price_and_blocks_open_frame(self):
+        self.tariffs()
+        self.peak(1.5)
+        with SessionLocal() as db:
+            db.query(models.Settings).first().min_session = 120
+            db.commit()
+        self.start(tariff_mode="frame", tariff_price=1)
+        self.now += 16 * 60 * 60_000
+        quote = self.quote()
+        self.assertEqual(quote["ply"], 0)
+        self.assertTrue(quote["checkout_blocked"])
+        self.assertFalse(quote["duration_capped"])
+        self.call("POST", "/sessions/stop/t1", expected=409)
+        self.complete_frame()
+        self.tariffs(price=120)
+        self.call("POST", "/sessions/t1/frames/start")
+        self.complete_frame()
+        self.call("POST", "/sessions/t1/food", json={"item": "QA Engine Tea", "qty": 2})
+        quote = self.quote()
+        self.assertEqual((quote["ply"], quote["tot"], quote["frame_count"], quote["tariff_price"]), (160, 200, 2, 80))
+        self.assertEqual(quote["peak_surcharge"], 0)
+        self.assertEqual(self.call("GET", "/sessions/active")[0]["running_total"], 200)
+        bill = self.call("POST", "/sessions/stop/t1", params={"session_key": quote["session_key"]})
+        replay = self.call("POST", "/sessions/stop/t1", params={"session_key": quote["session_key"]})
+        self.assertEqual((bill["tot"], replay["tot"], replay["frame_count"], replay["tariff_price"]), (200, 200, 2, 80))
+        self.assertEqual(replay["tariff_mode"], "frame")
+        history = self.call("GET", "/reports/history")
+        self.assertEqual(history[0]["tariff_mode"], "frame")
+        self.assertEqual(history[0]["frame_count"], 2)
+
+    def test_package_price_survives_removal_pause_transfer_and_long_duration(self):
+        self.tariffs()
+        self.peak(2)
+        self.start(tariff_mode="package", package_id="qa-fixed")
+        self.now += 120_000
+        self.call("POST", "/sessions/pause/t1")
+        self.now += 60_000
+        self.call("POST", "/sessions/pause/t1")
+        self.tariffs(packages=[])
+        self.call("POST", "/sessions/transfer/t1", json={"target_table_id": "t5"})
+        self.now += 16 * 60 * 60_000
+        quote = self.quote("t5")
+        self.assertEqual((quote["ply"], quote["tariff_label"], quote["package_id"]), (500, "QA Fixed", "qa-fixed"))
+        self.assertEqual(quote["peak_surcharge"], 0)
+        bill = self.call("POST", "/sessions/stop/t5", params={"session_key": quote["session_key"]})
+        self.assertEqual(bill["tariff_mode"], "package")
+        self.assertEqual(self.call("GET", "/reports/history")[0]["tot"], 500)
+
+    def test_package_group_and_missing_package_are_rejected(self):
+        self.tariffs()
+        for table, package in [("t5", "qa-fixed"), ("t1", "missing")]:
+            self.call("POST", "/sessions/start", expected=400, json={"table_id": table, "customer_name": "QA", "rate": 1, "tariff_mode": "package", "package_id": package})
+        self.assertEqual(self.call("GET", "/sessions/active"), [])
+
+    def test_frame_lp_allocation_and_stale_frame_protection(self):
+        self.tariffs()
+        self.start(tariff_mode="frame", billing_mode="lp", players=["Second Player"])
+        first = self.call("GET", "/sessions/active")[0]["current_frame"]
+        self.call("POST", "/sessions/t1/frames/close", expected=400, json={})
+        self.complete_frame(loser="Second Player")
+        self.call("POST", "/sessions/t1/frames/start")
+        self.call("POST", "/sessions/t1/frames/close", expected=409, json={"frame_id": first["id"], "loser_name": "QA Engine Player"})
+        self.complete_frame(loser="QA Engine Player")
+        quote = self.quote()
+        self.assertEqual({row["name"]: row["total"] for row in quote["player_breakdown"]}, {"QA Engine Player": 80, "Second Player": 80})
+
+    def test_fixed_tariffs_keep_tax_discount_and_sharing(self):
+        self.tariffs()
+        with SessionLocal() as db:
+            db.query(models.Settings).first().gst_percent = 10
+            db.commit()
+        self.start(tariff_mode="package", package_id="qa-fixed", billing_mode="sharing", players=["Second Player"])
+        self.call("POST", "/sessions/t1/food", json={"item": "QA Engine Tea", "qty": 1})
+        quote = self.call("GET", "/sessions/quote/t1", params={"discount_type": "rupee", "discount_value": 50})
+        self.assertEqual((quote["ply"], quote["gst_amt"], quote["tot"]), (500, 52, 522))
+        self.assertEqual(sum(row["total"] for row in quote["player_breakdown"]), 522)
+        bill = self.call("POST", "/sessions/stop/t1", params={"session_key": quote["session_key"], "discount_type": "rupee", "discount_value": 50, "discount_reason": "QA"})
+        self.assertEqual(bill["tot"], 522)
+
+    def test_tariff_schema_upgrade_defaults_legacy_to_hourly(self):
+        self.start()
+        with engine.begin() as connection:
+            for table, columns in {"settings": ["tariffs_json"], "active_sessions": ["tariff_mode", "tariff_price", "tariff_label", "package_id"], "transactions": ["tariff_mode", "tariff_price", "tariff_label", "package_id", "frame_count"]}.items():
+                for column in columns:
+                    connection.execute(text(f"ALTER TABLE {table} DROP COLUMN {column}"))
+        ensure_runtime_columns()
+        ensure_runtime_columns()
+        quote = self.quote()
+        self.assertEqual(quote["tariff_mode"], "hourly")
+        self.assertIsNone(quote["tariff_price"])
+        self.assertEqual(self.call("GET", "/settings/tariffs")["packages"], [])
+
+    def test_tariff_export_and_events_use_correct_boundaries(self):
+        self.tariffs(packages=[{"id": "qa", "name": 'QA, "Fixed"', "price": 500, "table_group": "any"}])
+        with patch("routers.sessions.queue_realtime_event") as event:
+            self.start(tariff_mode="package", package_id="qa")
+            self.assertEqual(event.call_args.args[1:], ("table.updated", "floor", "live-floor"))
+            self.assertEqual(event.call_args.kwargs, {})
+        self.call("POST", "/sessions/stop/t1")
+        response = self.client.get("/reports/export")
+        self.assertEqual(response.status_code, 200)
+        row = list(csv.DictReader(io.StringIO(response.text)))[0]
+        self.assertEqual((row["Tariff"], row["Unit Price"], row["Package"]), ("package", "500", 'QA, "Fixed"'))
+
+    @unittest.skipUnless(engine.dialect.name == "postgresql", "Row-lock concurrency verified on PostgreSQL in parity CI")
+    def test_concurrent_frame_requests_do_not_duplicate_charges(self):
+        self.tariffs()
+        self.start(tariff_mode="frame")
+        self.complete_frame()
+        with ThreadPoolExecutor(max_workers=4) as pool:
+            responses = list(pool.map(lambda _: self.client.post("/sessions/t1/frames/start"), range(8)))
+        self.assertTrue(all(response.status_code == 200 for response in responses))
+        self.assertEqual(len({response.json()["frame"]["id"] for response in responses}), 1)
+        frame_id = responses[0].json()["frame"]["id"]
+        with ThreadPoolExecutor(max_workers=4) as pool:
+            responses = list(pool.map(lambda _: self.client.post("/sessions/t1/frames/close", json={"frame_id": frame_id}), range(8)))
+        self.assertEqual(sum(response.status_code == 200 for response in responses), 1)
+        self.assertTrue(all(response.status_code in {200, 400} for response in responses))
+        self.assertEqual((self.quote()["ply"], self.quote()["frame_count"]), (160, 2))
 
     def test_pause_resume_preserves_original_start_and_excludes_breaks(self):
         started = self.now

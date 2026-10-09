@@ -20379,3 +20379,33 @@ body.dark .dashboard-home .dashboard-close-day-btn * {
     grid-template-columns: 1fr;
   }
 }
+
+.tariff-selector { display: grid; gap: 12px; min-width: 0; }
+.tariff-fieldset { border: 0; padding: 0; margin: 0; min-width: 0; }
+.tariff-package-row { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) minmax(0, 1.5fr) 44px; align-items: end; gap: 12px; margin: 16px 0; }
+.tariff-package-row label { min-width: 0; }
+.tariff-settings-actions { display: flex; justify-content: space-between; gap: 16px; margin-top: 16px; flex-wrap: wrap; }
+.session-panel-grid > .session-list-panel { grid-column: 1 / -1; }
+.session-workspace.has-frames { display: flex; flex-direction: column; overflow: hidden; }
+.session-workspace.has-frames .session-workspace-content { min-height: 0; overflow-y: auto; flex: 1; }
+.session-workspace.has-frames > .session-workspace-head,
+.session-workspace.has-frames > .session-hero,
+.session-workspace.has-frames .session-tabs,
+.session-workspace.has-frames .session-action-bar { flex-shrink: 0; }
+.session-workspace.has-frames .session-action-bar { position: static; margin-top: 0; background: var(--surface); border-top: 1px solid var(--border); }
+@media (max-width: 760px) {
+  .session-workspace.has-frames .session-workspace-head { flex-direction: row; align-items: center; }
+  .session-workspace.has-frames .session-workspace-head .lf-icon-button { flex-shrink: 0; }
+  .session-workspace.has-frames .session-billing-note { display: none; }
+  .session-workspace.has-frames .session-hero,
+  .session-workspace.has-frames .session-tabs { margin-bottom: 0; }
+  .session-workspace.has-frames .session-action-bar { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+  .session-workspace.has-frames .session-transfer,
+  .session-workspace.has-frames .session-action-bar > .lf-primary-button { grid-column: 1 / -1; }
+  .session-workspace.has-frames .session-transfer { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 600px) {
+  .tariff-package-row { grid-template-columns: minmax(0, 1fr) 44px; }
+  .tariff-package-row label { grid-column: 1; }
+  .tariff-package-row .lf-icon-button { grid-column: 2; grid-row: 1; }
+}

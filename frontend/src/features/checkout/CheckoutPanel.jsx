@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { quoteSession, stopSession } from "../../api/index.js";
 import { Alert, Badge, Button, Drawer } from "../../components/ui/index.js";
 import { useToast } from "../../components/toastContext.js";
+import { tariffDescription } from "../sessions/tariffs.js";
 
 const PAYMENT_METHODS = [
   { id: "Cash", label: "Cash", icon: "ti-cash" },
@@ -141,7 +142,7 @@ export default function CheckoutPanel({ table, open, onClose, onComplete }) {
   }
 
   async function handleFinalize() {
-    if (!quote) return;
+    if (!quote || quote.checkout_blocked) return;
     if (discountAmount > 0 && !discountReason.trim()) {
       setError("Enter a reason for the discount before closing.");
       return;
@@ -191,7 +192,7 @@ export default function CheckoutPanel({ table, open, onClose, onComplete }) {
           <div>
             <span className="lf-eyebrow">Receipt</span>
             <h3>{receipt.tbl || String(tableId).toUpperCase()} · {money(receipt.tot)}</h3>
-            <p>{receipt.payment_method || paymentMethod} · {receipt.dur || 0} min · {receipt.nm || "Customer"}</p>
+            <p>{receipt.payment_method || paymentMethod} · {tariffDescription(receipt)} · {receipt.nm || "Customer"}</p>
           </div>
           <div className="checkout-summary-grid">
             <div><span>Table</span><strong>{money(receipt.ply)}</strong></div>
@@ -222,7 +223,7 @@ export default function CheckoutPanel({ table, open, onClose, onComplete }) {
                 <div>
                   <Badge tone="running" dot>{String(quote.billing_mode || "single").toUpperCase()}</Badge>
                   <h3>{money(finalTotal)}</h3>
-                  <p>{quote.nm || "Customer"} · {quote.dur || 0} billable min</p>
+                  <p>{quote.nm || "Customer"} · {quote.tariff_mode && quote.tariff_mode !== "hourly" ? tariffDescription(quote) : `${quote.dur || 0} billable min`}</p>
                 </div>
                 <div className="checkout-freeze-pill">
                   <i className="ti ti-snowflake" aria-hidden="true" />
@@ -230,6 +231,7 @@ export default function CheckoutPanel({ table, open, onClose, onComplete }) {
                 </div>
               </div>
 
+              {quote.checkout_blocked && <Alert tone="warning">Close the open frame before checkout.</Alert>}
               <div className="checkout-summary-grid">
                 <div><span>Table</span><strong>{money(quote.ply)}</strong></div>
                 <div><span>Food</span><strong>{money(quote.famt)}</strong></div>
@@ -327,7 +329,7 @@ export default function CheckoutPanel({ table, open, onClose, onComplete }) {
                 <Button variant="secondary" onClick={onClose} disabled={finalizing}>
                   Keep Table Open
                 </Button>
-                <Button variant="primary" loading={finalizing || loading} onClick={handleFinalize}>
+                <Button variant="primary" loading={finalizing || loading} disabled={quote.checkout_blocked} onClick={handleFinalize}>
                   Close table · {money(finalTotal)}
                 </Button>
               </div>

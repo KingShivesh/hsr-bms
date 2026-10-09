@@ -138,6 +138,7 @@ export const startSession = (
   split_name,
   billing_mode = split ? "lp" : "single",
   players = [],
+  tariff = {},
 ) =>
   api.post("/sessions/start", {
     table_id: tableKey(table_id),
@@ -147,6 +148,8 @@ export const startSession = (
     split_name,
     billing_mode,
     players,
+    tariff_mode: tariff.tariff_mode || "hourly",
+    package_id: tariff.package_id || "",
   });
 
 export const pauseSession = (table_id) =>
@@ -226,8 +229,8 @@ export const addFood = (table_id, item, qty, mrp = null, player_name = "") =>
   api.post(`/sessions/${tableKey(table_id)}/food`, { item, qty, mrp, player_name });
 export const startFrame = (table_id) =>
   api.post(`/sessions/${tableKey(table_id)}/frames/start`);
-export const closeFrame = (table_id, loser_name) =>
-  api.post(`/sessions/${tableKey(table_id)}/frames/close`, { loser_name });
+export const closeFrame = (table_id, loser_name, frame_id = null) =>
+  api.post(`/sessions/${tableKey(table_id)}/frames/close`, { loser_name, frame_id });
 export const addReserve = (table_id, name, time) =>
   api.post(`/sessions/${tableKey(table_id)}/reserve`, { name, time });
 export const cancelReserve = (table_id) =>
@@ -266,6 +269,8 @@ export const getAnalytics = () => api.get("/reports/analytics");
 
 // Settings
 export const getRates = () => api.get("/settings/rates");
+export const getTariffs = () => api.get("/settings/tariffs");
+export const saveTariffs = (catalog) => api.post("/settings/tariffs", catalog);
 export const saveRates = (wr, pr, sr) => api.post("/settings/rates", { wr, pr, sr });
 export const getMenu = () => api.get("/settings/menu");
 export const getMenuFull = () => api.get("/settings/menu");

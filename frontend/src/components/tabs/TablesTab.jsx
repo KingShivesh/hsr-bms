@@ -30,6 +30,9 @@ import { useEscapeKey } from "../ui/index.js";
 import { TableAttentionBadge, TablePrimaryAction, TableStateBadge } from "../TableStateUI.jsx";
 import { HSR_TABLES, getTableLabel, getTableRate } from "../../config/hsrTables.js";
 import { tableStateAttributes, getTableAttention, getTableStatus } from "../../config/tableStatus.js";
+import TariffSelector from "../../features/sessions/TariffSelector.jsx";
+import FrameControls from "../../features/sessions/FrameControls.jsx";
+import { tariffDescription } from "../../features/sessions/tariffs.js";
 
 const TABLES = HSR_TABLES;
 const tableKey = (tableId) => String(tableId || "").trim().toLowerCase();
@@ -172,6 +175,7 @@ function bookingDisplayTime(booking) {
 
 function runningTotalForSession(session, peakRate, gstPercent) {
   if (!session) return 0;
+  if (Number.isFinite(session.running_total)) return session.running_total;
   const mins = Math.max(1, Math.round(session.elapsed / 60));
   const basePlay = Math.round((mins / 60) * session.rate);
   const play = Math.round(basePlay * (peakRate?.multiplier || 1));
@@ -604,6 +608,7 @@ function QuickSessionModal({
   const [player1, setPlayer1] = useState("");
   const [otherPlayers, setOtherPlayers] = useState("");
   const [billingMode, setBillingMode] = useState("single");
+  const [tariff, setTariff] = useState({ tariff_mode: "hourly", package_id: "" });
   useEscapeKey(onClose, open);
   const initializedOpen = useRef(false);
   const availableTables = tables.filter(
@@ -625,6 +630,7 @@ function QuickSessionModal({
     setPlayer1("");
     setOtherPlayers("");
     setBillingMode(defaultBillingModeForTable(firstAvailable));
+    setTariff({ tariff_mode: "hourly", package_id: "" });
     initializedOpen.current = true;
   }, [open, availableTables, initialTableId]);
 
@@ -641,6 +647,7 @@ function QuickSessionModal({
       player1,
       otherPlayers,
       billingMode,
+      tariff,
     });
     if (ok) onClose();
   }
@@ -690,6 +697,7 @@ function QuickSessionModal({
                   setTableId(table.id);
                   setOtherPlayers("");
                   setBillingMode(defaultBillingModeForTable(table));
+                  setTariff({ tariff_mode: "hourly", package_id: "" });
                 }}
               >
                 <strong>T{table.num}</strong>
@@ -710,6 +718,7 @@ function QuickSessionModal({
         )}
 
         <div className="quick-session-fields">
+          <TariffSelector tableId={selectedTable?.id} value={tariff} onChange={setTariff} />
           <div>
             <label className="form-label">
               {billingMode === "single" ? "Customer name (optional)" : "Customer names (optional)"}
@@ -996,7 +1005,7 @@ function CheckoutQuoteScreen({
               {quote.tableId?.toUpperCase()} · ₹{total}
             </div>
             <div className="checkout-bill-sub">
-              {quote.paymentMethod || rec.payment_method || "Cash"} · {rec.dur || 0} min
+              {quote.paymentMethod || rec.payment_method || "Cash"} · {rec.dur || 0} min · {tariffDescription(rec)}
             </div>
             <div className="checkout-session-time">
               <span>Session started {fmtDateTime(rec.session_started_at)}</span>
@@ -1006,6 +1015,7 @@ function CheckoutQuoteScreen({
             <div className="checkout-freeze-note" role="status">
               Timer stopped for checkout. Payment and discount changes will not add more table time.
             </div>
+            {rec.checkout_blocked && <div className="checkout-cap-warning" role="alert">Close the open frame before checkout.</div>}
             {rec.duration_capped && (
               <div className="checkout-cap-warning">
                 Long session capped at {rec.dur} min from {rec.actual_dur} min.
@@ -1223,7 +1233,7 @@ function CheckoutQuoteScreen({
             type="button"
             className="checkout-bill-close"
             onClick={onFinalize}
-            disabled={quote.loading || quote.finalizing}
+            disabled={quote.loading || quote.finalizing || rec.checkout_blocked}
           >
             {quote.finalizing ? "Closing..." : `Close table · ₹${total}`}
           </button>
@@ -1256,7 +1266,7 @@ function CheckoutBillScreen({ bill, onClose }) {
               {bill.tableId?.toUpperCase()} · ₹{total}
             </div>
             <div className="checkout-bill-sub">
-              {rec.payment_method || bill.paymentMethod || "Cash"} · {rec.dur || 0} min
+              {rec.payment_method || bill.paymentMethod || "Cash"} · {rec.dur || 0} min · {tariffDescription(rec)}
             </div>
             <div className="checkout-session-time">
               <span>Session started {fmtDateTime(sessionStartedAt)}</span>
@@ -1682,12 +1692,14 @@ function TableCard({
   onMaintenance,
   onClearMaintenance,
   onSaveNotes,
+  onRefresh,
   peakRate,
   gstPercent,
   busyActions = {},
   compact = false,
 }) {
   const [billingMode, setBillingMode] = useState(() => defaultBillingModeForTable(table));
+  const [tariff, setTariff] = useState({ tariff_mode: "hourly", package_id: "" });
   const [otherPlayers, setOtherPlayers] = useState("");
   const [reserveOpen, setReserveOpen] = useState(false);
   const [notesOpen, setNotesOpen] = useState(false);
@@ -1714,6 +1726,7 @@ function TableCard({
   useEffect(() => {
     if (!occupied) {
       setBillingMode(defaultBillingModeForTable(table));
+      setTariff({ tariff_mode: "hourly", package_id: "" });
       setOtherPlayers("");
     }
   }, [occupied, table]);
@@ -1725,7 +1738,7 @@ function TableCard({
   const subtotal = play + (session?.foodTotal || 0);
   const gstAmt =
     gstPercent > 0 && subtotal > 0 ? Math.round((subtotal * gstPercent) / 100) : 0;
-  const total = subtotal + gstAmt;
+  const total = session?.running_total ?? (subtotal + gstAmt);
   const activeBillingMode = session?.billingMode || "single";
   const activePlayers = session?.players?.length
     ? session.players
@@ -1898,6 +1911,7 @@ function TableCard({
 
           {!occupied && (
             <div className="table-start-panel">
+              <TariffSelector tableId={table.id} value={tariff} onChange={setTariff} />
               <div className="billing-mode-control" aria-label="Billing mode">
                 {BILLING_MODES.map((mode) => (
                   <button
@@ -1949,7 +1963,7 @@ function TableCard({
           )}
           {occupied && (
             <div className="active-billing-summary">
-              <span>{billingModeLabel(activeBillingMode)}</span>
+              <span>{billingModeLabel(activeBillingMode)} · {tariffDescription(session)}</span>
               <strong>Session started {fmtClock(session.startTime)}</strong>
               <strong>Session end {paused ? "Paused" : "Running"}</strong>
               {activeBillingMode === "sharing" && shareCount > 1 && (
@@ -1959,6 +1973,7 @@ function TableCard({
             </div>
           )}
 
+          {occupied && <FrameControls tableId={table.id} session={session} onRefresh={onRefresh} />}
           {occupied && (
             <div className="table-session-actions">
               <button
@@ -2135,7 +2150,7 @@ function TableCard({
             onClick={() => {
               if (occupied) onStop(table.id);
               else if (booking) onReviewBooking?.();
-              else onStart(table, billingMode, otherPlayers);
+              else onStart(table, billingMode, otherPlayers, tariff);
             }}
           />
         </div>
@@ -2263,6 +2278,7 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0, onOpenF
           ? x.players
           : [x.customer_name, ...(x.split_name ? splitPlayerNames(x.split_name) : [])].filter(Boolean);
         s[id] = {
+          ...x,
           startTime: x.paused ? Date.now() - x.elapsed_ms : x.start_time,
           elapsed: Math.floor(
             (x.paused ? x.elapsed_ms : Date.now() - x.start_time) / 1000,
@@ -2438,7 +2454,7 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0, onOpenF
     });
   }
 
-  async function handleStart(table, billingMode, otherPlayers) {
+  async function handleStart(table, billingMode, otherPlayers, tariff = {}) {
     const name = (names[table.id] || "").trim();
     const players = buildPlayers(name, otherPlayers, billingMode);
     const primaryName = players[0];
@@ -2462,6 +2478,7 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0, onOpenF
           players.slice(1).join(", "),
           billingMode,
           players,
+          tariff,
         );
         setSessions((prev) => ({
           ...prev,
@@ -2496,7 +2513,7 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0, onOpenF
     });
   }
 
-  async function handleQuickStart({ table, player1, billingMode, otherPlayers }) {
+  async function handleQuickStart({ table, player1, billingMode, otherPlayers, tariff = {} }) {
     const name = (player1 || "").trim();
     const players = buildPlayers(name, otherPlayers, billingMode);
     const primaryName = players[0];
@@ -2524,6 +2541,7 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0, onOpenF
           players.slice(1).join(", "),
           billingMode,
           players,
+          tariff,
         );
         setSessions((prev) => ({
           ...prev,
@@ -3148,6 +3166,7 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0, onOpenF
                 onMaintenance={handleSetMaintenance}
                 onClearMaintenance={handleClearMaintenance}
                 onSaveNotes={handleSaveNotes}
+                onRefresh={fetchActive}
                 peakRate={peakRate}
                 gstPercent={gstPercent}
                 showToast={showToast}

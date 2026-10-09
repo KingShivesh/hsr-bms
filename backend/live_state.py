@@ -12,7 +12,7 @@ from sqlalchemy.orm import Session
 import models
 from audit import get_controls
 from hsr_config import TABLES, TABLE_RATES, get_ist_now, get_ist_today_str, rate_for_table
-from pricing import calc_checkout
+from pricing import calc_checkout, session_tariff, tariff_catalog
 
 
 TABLE_STATUS = {
@@ -180,8 +180,11 @@ def billable_minutes(elapsed_ms: float, min_mins: int = 0) -> int:
     return max(minutes, int(min_mins or 0))
 
 
-def live_charge(db: Session, session: models.ActiveSession, elapsed_ms: float, settings) -> dict:
-    minutes = min(billable_minutes(elapsed_ms, getattr(settings, "min_session", 0) or 0), 12 * 60)
+def live_charge(db: Session, session: models.ActiveSession, elapsed_ms: float, settings, frames) -> dict:
+    hourly = (session.tariff_mode or "hourly") == "hourly"
+    minutes = billable_minutes(elapsed_ms, (getattr(settings, "min_session", 0) or 0) if hourly else 0)
+    if hourly:
+        minutes = min(minutes, 12 * 60)
     checkout = calc_checkout(
         db,
         minutes=minutes,
@@ -189,6 +192,7 @@ def live_charge(db: Session, session: models.ActiveSession, elapsed_ms: float, s
         food_total=session.food_total or 0,
         peak_multiplier=session.rate_multiplier,
         peak_label=session.rate_label,
+        **session_tariff(session, frames),
     )
     return {
         "minutes": minutes,
@@ -205,14 +209,16 @@ def serialize_session(db: Session, session: models.ActiveSession, *, now_ms: flo
     controls = controls or get_controls(db)
     settings = settings or db.query(models.Settings).first()
     elapsed_ms = session_elapsed_ms(session, now_ms)
-    frames = [serialize_frame(frame) for frame in table_frames(db, session)]
+    frame_rows = table_frames(db, session)
+    frames = [serialize_frame(frame) for frame in frame_rows]
     players = safe_json(getattr(session, "players_json", "[]"), [])
     if not players:
         players = [session.customer_name] if session.customer_name else []
-    charge = live_charge(db, session, elapsed_ms, settings)
+    charge = live_charge(db, session, elapsed_ms, settings, frame_rows)
     status = status_for_table(session=session)
     return {
         "table_id": normalize_table_id(session.table_id),
+        **session_tariff(session, frame_rows),
         "customer_name": session.customer_name,
         "rate": session.rate or 0,
         "start_time": session.start_time,
@@ -328,6 +334,7 @@ def build_table_state(db: Session) -> dict:
         table_rows.append({
             **table,
             "rate": rate_for_table(table_id, 0, settings),
+            "tariffs": tariff_catalog(settings),
             "status_key": status["key"],
             "status_label": status["label"],
             "status_tone": status["tone"],

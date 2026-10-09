@@ -7,8 +7,8 @@ shipped SNOOK palette, Syne/DM Mono fonts, state grammar, or existing stack.
 
 | Brief feature | Scope | Current checkpoint |
 | --- | --- | --- |
-| 1 | Table lifecycle, pause/resume, authoritative billing | Session-engine foundation batch |
-| 2 | Hourly, per-frame and fixed-package billing | Next design/build batch; existing single/sharing/LP are payer modes, not these tariff modes |
+| 1 | Table lifecycle, pause/resume, authoritative billing | Foundation shipped in ecaff80; session-engine-audit evidence |
+| 2 | Hourly, per-frame and fixed-package billing | Built and browser-verified; PostgreSQL/release gates recorded in tariff-billing-audit |
 | 4 | Member credit limits, append-only ledger, settlement, usage | Planned; external reminders need separate provider configuration |
 | 5 | Unified table/cafe bill, menu, kitchen workflow, cafe analytics | Existing session food retained; kitchen lifecycle planned |
 | 8 | Revenue/utilization/credit analytics | Existing reporting retained; credit metrics depend on ledger |

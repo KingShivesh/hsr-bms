@@ -3,6 +3,7 @@ import { getFoodOrders, getHistory } from "../../api/index.js";
 import RetryNotice from "../../components/RetryNotice.jsx";
 import { Button, Drawer } from "../../components/ui/index.js";
 import { useRealtimeSubscription } from "../../realtime/useRealtimeSubscription.js";
+import { tariffDescription } from "../sessions/tariffs.js";
 
 const BILL_DATE_FORMATTER = new Intl.DateTimeFormat("en-IN", {
   timeZone: "Asia/Kolkata",
@@ -273,6 +274,7 @@ export default function SalesPage() {
               <div><dt>Table</dt><dd>{String(selected.tbl || "-").toUpperCase()}</dd></div>
               <div><dt>Payment</dt><dd>{paymentMethod(selected)}</dd></div>
               <div><dt>Duration</dt><dd>{Number(selected.dur || 0)} min</dd></div>
+              {selected.tbl !== "CAFE" && <div><dt>Tariff</dt><dd>{tariffDescription(selected)}</dd></div>}
               <div><dt>Table charge</dt><dd>{money(billTableCharge(selected))}</dd></div>
               <div><dt>Food</dt><dd>{money(billFoodCharge(selected))}</dd></div>
               <div><dt>Total</dt><dd>{money(billTotal(selected))}</dd></div>

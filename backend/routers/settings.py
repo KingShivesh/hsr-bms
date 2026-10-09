@@ -1,5 +1,8 @@
 from fastapi import APIRouter, BackgroundTasks, HTTPException, Depends
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, model_validator
+from typing import Literal
+import json
+from pricing import tariff_catalog
 from sqlalchemy.orm import Session
 from database import get_db
 from typing import Optional
@@ -25,6 +28,43 @@ class Rates(BaseModel):
     wr: int = Field(ge=1, le=5000)
     pr: int = Field(ge=1, le=5000)
     sr: int = Field(ge=1, le=5000)
+
+class FrameRates(BaseModel):
+    wr: int = Field(default=0, ge=0, le=5000)
+    sr: int = Field(default=0, ge=0, le=5000)
+    pr: int = Field(default=0, ge=0, le=5000)
+
+class PackagePrice(BaseModel):
+    id: str = Field(min_length=1, max_length=100, pattern=r"^[a-zA-Z0-9_-]+$")
+    name: str = Field(min_length=1, max_length=60)
+    price: int = Field(ge=1, le=100000)
+    table_group: Literal["any", "wr", "sr", "pr"] = "any"
+
+class TariffCatalog(BaseModel):
+    frame_rates: FrameRates
+    packages: list[PackagePrice] = Field(default_factory=list, max_length=20)
+
+    @model_validator(mode="after")
+    def validate_packages(self):
+        if len({row.id for row in self.packages}) != len(self.packages):
+            raise ValueError("Package IDs must be unique")
+        for row in self.packages:
+            row.name = " ".join(row.name.split())
+            if not row.name:
+                raise ValueError("Enter a package name")
+        return self
+
+@router.get("/tariffs")
+def get_tariffs(db: Session = Depends(get_db)):
+    return tariff_catalog(get_or_create_settings(db))
+
+@router.post("/tariffs")
+def save_tariffs(body: TariffCatalog, db: Session = Depends(get_db), _: dict = Depends(require_admin)):
+    settings = get_or_create_settings(db)
+    settings.tariffs_json = json.dumps(body.model_dump())
+    log_action(db, "tariffs_update", "Frame rates and fixed packages updated")
+    db.commit()
+    return {"ok": True}
 
 class MenuItemBody(BaseModel):
     name:     str = Field(min_length=1, max_length=80)

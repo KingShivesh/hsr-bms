@@ -32,6 +32,7 @@ def ensure_runtime_columns():
     """Add lightweight columns that were introduced after initial installs."""
     columns = {
         "settings": {
+            "tariffs_json": "TEXT DEFAULT '{}'",
             "wr": "INTEGER DEFAULT 320",
             "booking_grace_minutes": "INTEGER DEFAULT 10",
             "staff_username": "VARCHAR(255) DEFAULT 'staff'",
@@ -41,6 +42,10 @@ def ensure_runtime_columns():
             "released_at": "VARCHAR(255) DEFAULT ''",
         },
         "active_sessions": {
+            "tariff_mode": "VARCHAR(50) DEFAULT 'hourly'",
+            "tariff_price": "INTEGER",
+            "tariff_label": "VARCHAR(255) DEFAULT ''",
+            "package_id": "VARCHAR(100) DEFAULT ''",
             "billing_mode": "VARCHAR(50) DEFAULT 'single'",
             "players_json": "TEXT DEFAULT '[]'",
             "session_key": "VARCHAR(255) DEFAULT ''",
@@ -54,6 +59,11 @@ def ensure_runtime_columns():
             "session_key": "VARCHAR(255) DEFAULT ''",
         },
         "transactions": {
+            "tariff_mode": "VARCHAR(50) DEFAULT 'hourly'",
+            "tariff_price": "INTEGER",
+            "tariff_label": "VARCHAR(255) DEFAULT ''",
+            "package_id": "VARCHAR(100) DEFAULT ''",
+            "frame_count": "INTEGER DEFAULT 0",
             "billing_mode": "VARCHAR(50) DEFAULT 'single'",
             "players_json": "TEXT DEFAULT '[]'",
             "payer_name": "VARCHAR(255) DEFAULT ''",

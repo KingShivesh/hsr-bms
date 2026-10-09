@@ -5,6 +5,8 @@ import { useEscapeKey } from "../../components/ui/index.js";
 import CheckoutPanel from "../checkout/CheckoutPanel.jsx";
 import ProductSelector from "../orders/ProductSelector.jsx";
 import TableStatusBadge from "../live-floor/TableStatusBadge.jsx";
+import FrameControls from "./FrameControls.jsx";
+import { tariffDescription } from "./tariffs.js";
 
 function formatTimer(seconds = 0) {
   const total = Math.max(0, Math.floor(Number(seconds) || 0));
@@ -64,7 +66,7 @@ export default function SessionWorkspace({
   if (!table) return null;
 
   return (
-    <aside className="session-workspace" aria-label="Session workspace">
+    <aside className={`session-workspace ${session?.tariff_mode === "frame" || session?.billing_mode === "lp" ? "has-frames" : ""}`} aria-label="Session workspace">
       <div className="session-workspace-head">
         <div>
           <span className="lf-eyebrow">Session workspace</span>
@@ -79,7 +81,7 @@ export default function SessionWorkspace({
         <div>
           <TableStatusBadge statusKey={table.status_key} label={table.status_label} />
           <strong>{session?.customer_name || table.booking?.customer_name || "No active customer"}</strong>
-          <span>{session ? "Backend-authoritative billing" : "Ready for a new session"}</span>
+          <span className="session-billing-note">{session ? "Backend-authoritative billing" : "Ready for a new session"}</span>
         </div>
         <div>
           <span>{session ? formatTimer(elapsed) : "00:00:00"}</span>
@@ -118,8 +120,10 @@ export default function SessionWorkspace({
             ))}
           </div>
 
+          <div className="session-workspace-content">
           {activeTab === "overview" && (
             <div className="session-panel-grid">
+              <FrameControls tableId={table.id} session={session} onRefresh={onRefresh} />
               <div className="session-money-card">
                 <span>Table charges</span>
                 <strong>₹{Number(session.play_estimate || 0).toLocaleString("en-IN")}</strong>
@@ -137,10 +141,10 @@ export default function SessionWorkspace({
                 <strong>₹{Number(session.running_total || 0).toLocaleString("en-IN")}</strong>
               </div>
               <dl className="session-facts">
-                <div><dt>Started</dt><dd>{formatClock(session.start_time)}</dd></div>
+                <div><dt>Started</dt><dd>{formatClock(session.session_started_at || session.start_time)}</dd></div>
                 <div><dt>Elapsed</dt><dd>{formatTimer(elapsed)}</dd></div>
-                <div><dt>Rate</dt><dd>₹{Number(session.rate || table.rate || 0).toLocaleString("en-IN")}/hr</dd></div>
-                <div><dt>Mode</dt><dd>{String(session.billing_mode || "single").toUpperCase()}</dd></div>
+                <div><dt>Tariff</dt><dd>{session.tariff_mode && session.tariff_mode !== "hourly" ? tariffDescription(session) : `₹${session.rate || table.rate}/hr`}</dd></div>
+                <div><dt>Who pays</dt><dd>{String(session.billing_mode || "single").toUpperCase()}</dd></div>
               </dl>
             </div>
           )}
@@ -193,6 +197,7 @@ export default function SessionWorkspace({
             </div>
           )}
 
+          </div>
           <div className="session-action-bar">
             <button type="button" className="lf-secondary-button" onClick={() => setShowOrders(true)}>
               <i className="ti ti-tools-kitchen-2" aria-hidden="true" />

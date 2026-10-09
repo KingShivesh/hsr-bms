@@ -7,6 +7,7 @@ import { useToast } from "../../components/toastContext.js";
 import { useRealtimeSubscription } from "../../realtime/useRealtimeSubscription.js";
 import SessionWorkspace from "../sessions/SessionWorkspace.jsx";
 import TableGrid from "./TableGrid.jsx";
+import TariffSelector from "../sessions/TariffSelector.jsx";
 
 function todayLabel() {
   return new Date().toLocaleDateString("en-IN", {
@@ -53,6 +54,7 @@ function NewSessionPanel({ open, tables, initialTableId, onClose, onCreated }) {
   const [customer, setCustomer] = useState("");
   const [tableId, setTableId] = useState(defaultTableId);
   const [mode, setMode] = useState("single");
+  const [tariff, setTariff] = useState({ tariff_mode: "hourly", package_id: "" });
   const [saving, setSaving] = useState(false);
 
   useEffect(() => {
@@ -72,10 +74,11 @@ function NewSessionPanel({ open, tables, initialTableId, onClose, onCreated }) {
     setSaving(true);
     try {
       const name = customer.trim() || "Walk-in";
-      await startSession(tableId, name, selectedTable?.rate || 0, mode !== "single", "", mode, name ? [name] : []);
+      await startSession(tableId, name, selectedTable?.rate || 0, mode !== "single", "", mode, name ? [name] : [], tariff);
       showToast(`${String(tableId).toUpperCase()} session started`, "success");
       setCustomer("");
       setMode("single");
+      setTariff({ tariff_mode: "hourly", package_id: "" });
       await onCreated?.(tableId);
       onClose?.();
     } catch (err) {
@@ -103,7 +106,7 @@ function NewSessionPanel({ open, tables, initialTableId, onClose, onCreated }) {
         </label>
         <label className="lf-field">
           <span>Available table</span>
-          <select value={tableId} onChange={(event) => setTableId(event.target.value)}>
+          <select value={tableId} onChange={(event) => { setTableId(event.target.value); setTariff({ tariff_mode: "hourly", package_id: "" }); }}>
             {availableTables.map((table) => (
               <option key={table.id} value={table.id}>
                 {String(table.id).toUpperCase()} · {table.type} · ₹{table.rate}/hr
@@ -111,7 +114,8 @@ function NewSessionPanel({ open, tables, initialTableId, onClose, onCreated }) {
             ))}
           </select>
         </label>
-        <div className="lf-mode-grid" role="group" aria-label="Billing mode">
+        <TariffSelector tableId={tableId} value={tariff} onChange={setTariff} catalog={selectedTable?.tariffs} />
+        <div className="lf-mode-grid" role="group" aria-label="Who pays">
           {[
             ["single", "Single", "One payer"],
             ["sharing", "Sharing", "Split payment"],

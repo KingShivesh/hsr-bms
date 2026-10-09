@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { TableAttentionBadge, TablePrimaryAction } from "../../components/TableStateUI.jsx";
 import { tableStateAttributes, getTableAttention, getTableStatusByKey } from "../../config/tableStatus.js";
 import TableStatusBadge from "./TableStatusBadge.jsx";
+import { tariffDescription } from "../sessions/tariffs.js";
 
 function formatTimer(seconds = 0) {
   const total = Math.max(0, Math.floor(Number(seconds) || 0));
@@ -216,7 +217,7 @@ export default function TableCard({
             <span>Running total</span>
             <strong>₹{runningTotal.toLocaleString("en-IN")}</strong>
           </div>
-          <small>Food ₹{foodTotal.toLocaleString("en-IN")}</small>
+          <small>{tariffDescription(session)} · Food ₹{foodTotal.toLocaleString("en-IN")}</small>
         </div>
       )}
 
