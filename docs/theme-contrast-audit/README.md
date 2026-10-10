@@ -114,7 +114,18 @@ full-size screenshots for every route are in `before/` and `after/`.
 
 ## Deployment
 
-Production proof is recorded in `production.json` after merge/push. The reusable
+Shipped on main as `1fc9d7de4b045ad3ddb007b49ade4b00e1e3c871`.
+Production verification at `2026-10-10T17:42:17.360Z` confirmed entry
+`/assets/index-HoaDSX9B.js` and byte-identical hashes for all 33 JS/CSS/font
+assets. The early bootstrap is present in live HTML. `production-browser.json`
+and the two `production-login-*.png` images confirm actual deployed light/dark
+colors and Syne. Backend `/health` and `/ready` pass; its earlier revision is
+an ancestor with identical backend code, as expected for a frontend-only fix.
+No production mutation was performed. `cleanup.json` confirms zero local QA
+sessions, frames, transactions, menu items, bookings and maintenance records.
+The developer database was not touched, and temporary QA servers were stopped.
+
+Production proof is recorded in `production.json`. The reusable
 `verify-production-assets.mjs` checks every JS/CSS/font asset against the
 production-shaped local build, confirms the early bootstrap in live HTML,
 checks release ancestry on `origin/main`, and verifies backend health/readiness
