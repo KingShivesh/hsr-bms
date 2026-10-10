@@ -5,9 +5,11 @@ import { spawnSync } from "node:child_process";
 import { chromium } from "playwright";
 import { scanRenderedContrast } from "./rendered-contrast.mjs";
 
-const app = "http://127.0.0.1:5175";
-const api = "http://127.0.0.1:8002";
-const database = "/tmp/hsr-tariff-browser.db";
+const app = process.env.INLINE_APP_URL || "http://127.0.0.1:5175";
+const api = process.env.INLINE_API_URL || "http://127.0.0.1:8002";
+const database = process.env.INLINE_DATABASE_PATH || "/tmp/hsr-tariff-browser.db";
+assert.ok(database.startsWith("/tmp/hsr-") && /^[\w/.-]+$/.test(database), "Use disposable QA data only");
+assert.ok([app, api].every(url => ["127.0.0.1", "localhost"].includes(new URL(url).hostname)), "Use local QA servers only");
 const directory = path.resolve(process.env.INLINE_AUDIT_DIR || "../docs/inline-table-actions-audit/after");
 await fs.mkdir(directory, { recursive: true });
 const seed = spawnSync("../backend/venv/bin/python", ["-c", `
@@ -147,6 +149,7 @@ try {
 
   await request("POST", "/settings/menu", { name: "QA Inline Tea", price: 25, category: "Drinks" });
   await stateCard("running").getByRole("button", { name: "Food", exact: true }).click();
+  await page.locator(".order-selector").getByPlaceholder("Fries, tea, cigarettes...").fill("QA Inline Tea");
   await page.locator(".order-selector").getByRole("button", { name: /QA Inline Tea/ }).click();
   await feedback(page.getByRole("button", { name: "Add Food to Session" }), "**/sessions/t1/food");
   await page.locator(".lf-food-modal").waitFor({ state: "hidden" });

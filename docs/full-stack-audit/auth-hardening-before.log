@@ -1,0 +1,62 @@
+/private/tmp/hsr-audit-venv/lib/python3.13/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+  from starlette.testclient import TestClient as TestClient  # noqa
+test_login_limit_cannot_be_bypassed_with_forwarded_header (__main__.FullStackTests.test_login_limit_cannot_be_bypassed_with_forwarded_header) ... /private/tmp/hsr-full-stack-baseline/backend/deps.py:42: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  expire = datetime.utcnow() + timedelta(hours=TOKEN_HOURS)
+INFO:hsr-bms:request_id=08fa11a8-7aa7-4e59-8cad-eb5be7e5ceb8 method=POST path=/auth/login status=200 duration_ms=397
+INFO:httpx:HTTP Request: POST http://testserver/auth/login "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=b7b25117-7c0a-4a45-af68-513da004b0a7 method=POST path=/auth/login status=200 duration_ms=382
+INFO:httpx:HTTP Request: POST http://testserver/auth/login "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=437cebc3-4ecb-4988-964a-0b9a00dd6420 method=POST path=/auth/login status=401 duration_ms=384
+INFO:httpx:HTTP Request: POST http://testserver/auth/login "HTTP/1.1 401 Unauthorized"
+INFO:hsr-bms:request_id=c0b8a299-a4d0-4d03-839f-19f7f39214f7 method=POST path=/auth/login status=401 duration_ms=438
+INFO:httpx:HTTP Request: POST http://testserver/auth/login "HTTP/1.1 401 Unauthorized"
+INFO:hsr-bms:request_id=4a3380f6-5315-4c48-b49c-e335357752d2 method=POST path=/auth/login status=401 duration_ms=461
+INFO:httpx:HTTP Request: POST http://testserver/auth/login "HTTP/1.1 401 Unauthorized"
+INFO:hsr-bms:request_id=7569952b-15bb-40a7-bf19-2a000c757714 method=POST path=/auth/login status=401 duration_ms=547
+INFO:httpx:HTTP Request: POST http://testserver/auth/login "HTTP/1.1 401 Unauthorized"
+INFO:hsr-bms:request_id=92959b24-5960-42e2-833d-49df5f7e9c7a method=POST path=/auth/login status=401 duration_ms=512
+INFO:httpx:HTTP Request: POST http://testserver/auth/login "HTTP/1.1 401 Unauthorized"
+INFO:hsr-bms:request_id=07edf649-a7cd-41c4-ac01-37b6b4b205b6 method=POST path=/auth/login status=401 duration_ms=1250
+INFO:httpx:HTTP Request: POST http://testserver/auth/login "HTTP/1.1 401 Unauthorized"
+FAIL
+test_production_rejects_seeded_default_credentials (__main__.FullStackTests.test_production_rejects_seeded_default_credentials) ... INFO:hsr-bms:request_id=0dc2a591-cfb8-4fb1-8bce-a478716fe4f7 method=POST path=/auth/login status=200 duration_ms=396
+INFO:httpx:HTTP Request: POST http://testserver/auth/login "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=5f9eff80-29c6-4f5f-8f79-49ace32f959d method=POST path=/auth/login status=200 duration_ms=403
+INFO:httpx:HTTP Request: POST http://testserver/auth/login "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=c664a2a8-7041-47ee-942b-62e162a4d468 method=POST path=/auth/login status=200 duration_ms=582
+INFO:httpx:HTTP Request: POST http://testserver/auth/login "HTTP/1.1 200 OK"
+FAIL
+
+======================================================================
+FAIL: test_login_limit_cannot_be_bypassed_with_forwarded_header (__main__.FullStackTests.test_login_limit_cannot_be_bypassed_with_forwarded_header)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/hsr-full-stack-baseline/backend/test_full_stack.py", line 180, in test_login_limit_cannot_be_bypassed_with_forwarded_header
+    self.assertEqual(statuses, [401, 401, 401, 401, 401, 429])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [401, 401, 401, 401, 401, 401] != [401, 401, 401, 401, 401, 429]
+
+First differing element 5:
+401
+429
+
+- [401, 401, 401, 401, 401, 401]
+?                            ^^
+
++ [401, 401, 401, 401, 401, 429]
+?                            ^^
+
+
+======================================================================
+FAIL: test_production_rejects_seeded_default_credentials (__main__.FullStackTests.test_production_rejects_seeded_default_credentials)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/hsr-full-stack-baseline/backend/test_full_stack.py", line 189, in test_production_rejects_seeded_default_credentials
+    self.assertEqual(response.status_code, 401, response.text)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 200 != 401 : {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJzdGFmZiIsInJvbGUiOiJzdGFmZiIsImV4cCI6MTc5MTc0NzI3OH0.wAMGddDJ7hv3mw0MsUE4RhstrdRfOJzecGjVM5m4mtM","role":"staff","username":"staff"}
+
+----------------------------------------------------------------------
+Ran 2 tests in 8.243s
+
+FAILED (failures=2)

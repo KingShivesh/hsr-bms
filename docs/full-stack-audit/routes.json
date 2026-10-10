@@ -1,0 +1,497 @@
+[
+  {
+    "method": "POST",
+    "path": "/auth/login",
+    "public": true
+  },
+  {
+    "method": "GET",
+    "path": "/auth/me",
+    "public": false
+  },
+  {
+    "method": "POST",
+    "path": "/auth/logout",
+    "public": false
+  },
+  {
+    "method": "POST",
+    "path": "/auth/change",
+    "public": false
+  },
+  {
+    "method": "POST",
+    "path": "/auth/change-staff",
+    "public": false
+  },
+  {
+    "method": "GET",
+    "path": "/events/stream",
+    "public": false
+  },
+  {
+    "method": "POST",
+    "path": "/sessions/start",
+    "public": false
+  },
+  {
+    "method": "POST",
+    "path": "/sessions/pause/{table_id}",
+    "public": false
+  },
+  {
+    "method": "GET",
+    "path": "/sessions/quote/{table_id}",
+    "public": false
+  },
+  {
+    "method": "POST",
+    "path": "/sessions/stop/{table_id}",
+    "public": false
+  },
+  {
+    "method": "POST",
+    "path": "/sessions/transfer/{table_id}",
+    "public": false
+  },
+  {
+    "method": "POST",
+    "path": "/sessions/reset/{table_id}",
+    "public": false
+  },
+  {
+    "method": "POST",
+    "path": "/sessions/{table_id}/frames/start",
+    "public": false
+  },
+  {
+    "method": "POST",
+    "path": "/sessions/{table_id}/frames/close",
+    "public": false
+  },
+  {
+    "method": "POST",
+    "path": "/sessions/{table_id}/food",
+    "public": false
+  },
+  {
+    "method": "POST",
+    "path": "/sessions/{table_id}/notes",
+    "public": false
+  },
+  {
+    "method": "POST",
+    "path": "/sessions/{table_id}/reserve",
+    "public": false
+  },
+  {
+    "method": "DELETE",
+    "path": "/sessions/{table_id}/reserve",
+    "public": false
+  },
+  {
+    "method": "GET",
+    "path": "/sessions/active",
+    "public": false
+  },
+  {
+    "method": "GET",
+    "path": "/sessions/tables",
+    "public": false
+  },
+  {
+    "method": "GET",
+    "path": "/sessions/live-floor",
+    "public": false
+  },
+  {
+    "method": "GET",
+    "path": "/sessions/history/{table_id}",
+    "public": false
+  },
+  {
+    "method": "GET",
+    "path": "/sessions/audit/{table_id}",
+    "public": false
+  },
+  {
+    "method": "GET",
+    "path": "/sessions/events/{table_id}",
+    "public": false
+  },
+  {
+    "method": "POST",
+    "path": "/sessions/maintenance/{table_id}",
+    "public": false
+  },
+  {
+    "method": "DELETE",
+    "path": "/sessions/maintenance/{table_id}",
+    "public": false
+  },
+  {
+    "method": "GET",
+    "path": "/sessions/maintenance",
+    "public": false
+  },
+  {
+    "method": "GET",
+    "path": "/members/search",
+    "public": false
+  },
+  {
+    "method": "GET",
+    "path": "/members/",
+    "public": false
+  },
+  {
+    "method": "POST",
+    "path": "/members/",
+    "public": false
+  },
+  {
+    "method": "GET",
+    "path": "/members/duplicates",
+    "public": false
+  },
+  {
+    "method": "POST",
+    "path": "/members/merge",
+    "public": false
+  },
+  {
+    "method": "POST",
+    "path": "/members/{customer_id}/upgrade",
+    "public": false
+  },
+  {
+    "method": "POST",
+    "path": "/members/{customer_id}/restore",
+    "public": false
+  },
+  {
+    "method": "DELETE",
+    "path": "/members/{customer_id}",
+    "public": false
+  },
+  {
+    "method": "GET",
+    "path": "/reports/summary",
+    "public": false
+  },
+  {
+    "method": "GET",
+    "path": "/reports/dashboard",
+    "public": false
+  },
+  {
+    "method": "GET",
+    "path": "/reports/history",
+    "public": false
+  },
+  {
+    "method": "GET",
+    "path": "/reports/export",
+    "public": false
+  },
+  {
+    "method": "GET",
+    "path": "/reports/top-customers",
+    "public": false
+  },
+  {
+    "method": "GET",
+    "path": "/reports/table-utilization",
+    "public": false
+  },
+  {
+    "method": "GET",
+    "path": "/reports/closing-report",
+    "public": false
+  },
+  {
+    "method": "POST",
+    "path": "/reports/day-close",
+    "public": false
+  },
+  {
+    "method": "GET",
+    "path": "/reports/closing-insights",
+    "public": false
+  },
+  {
+    "method": "GET",
+    "path": "/reports/analytics",
+    "public": false
+  },
+  {
+    "method": "GET",
+    "path": "/reports/advanced-analytics",
+    "public": false
+  },
+  {
+    "method": "GET",
+    "path": "/settings/tariffs",
+    "public": false
+  },
+  {
+    "method": "POST",
+    "path": "/settings/tariffs",
+    "public": false
+  },
+  {
+    "method": "GET",
+    "path": "/settings/rates",
+    "public": false
+  },
+  {
+    "method": "POST",
+    "path": "/settings/rates",
+    "public": false
+  },
+  {
+    "method": "GET",
+    "path": "/settings/min-session",
+    "public": false
+  },
+  {
+    "method": "POST",
+    "path": "/settings/min-session",
+    "public": false
+  },
+  {
+    "method": "GET",
+    "path": "/settings/booking-grace",
+    "public": false
+  },
+  {
+    "method": "POST",
+    "path": "/settings/booking-grace",
+    "public": false
+  },
+  {
+    "method": "GET",
+    "path": "/settings/menu",
+    "public": false
+  },
+  {
+    "method": "POST",
+    "path": "/settings/menu",
+    "public": false
+  },
+  {
+    "method": "POST",
+    "path": "/settings/menu/update",
+    "public": false
+  },
+  {
+    "method": "POST",
+    "path": "/settings/menu/restore",
+    "public": false
+  },
+  {
+    "method": "POST",
+    "path": "/settings/menu/{item_name}/availability",
+    "public": false
+  },
+  {
+    "method": "DELETE",
+    "path": "/settings/menu/{item_name}",
+    "public": false
+  },
+  {
+    "method": "POST",
+    "path": "/settings/reset-daily",
+    "public": false
+  },
+  {
+    "method": "POST",
+    "path": "/settings/clear-all",
+    "public": false
+  },
+  {
+    "method": "POST",
+    "path": "/food/order",
+    "public": false
+  },
+  {
+    "method": "GET",
+    "path": "/food/orders",
+    "public": false
+  },
+  {
+    "method": "DELETE",
+    "path": "/food/orders/{order_id}",
+    "public": false
+  },
+  {
+    "method": "POST",
+    "path": "/food/orders/{order_id}/restore",
+    "public": false
+  },
+  {
+    "method": "GET",
+    "path": "/food/stats",
+    "public": false
+  },
+  {
+    "method": "GET",
+    "path": "/operations/peak-hours",
+    "public": false
+  },
+  {
+    "method": "POST",
+    "path": "/operations/peak-hours",
+    "public": false
+  },
+  {
+    "method": "PUT",
+    "path": "/operations/peak-hours/{rule_id}",
+    "public": false
+  },
+  {
+    "method": "DELETE",
+    "path": "/operations/peak-hours/{rule_id}",
+    "public": false
+  },
+  {
+    "method": "GET",
+    "path": "/operations/current-rate",
+    "public": false
+  },
+  {
+    "method": "GET",
+    "path": "/operations/gst",
+    "public": false
+  },
+  {
+    "method": "POST",
+    "path": "/operations/gst",
+    "public": false
+  },
+  {
+    "method": "GET",
+    "path": "/operations/security-controls",
+    "public": false
+  },
+  {
+    "method": "POST",
+    "path": "/operations/security-controls",
+    "public": false
+  },
+  {
+    "method": "GET",
+    "path": "/operations/audit-logs",
+    "public": false
+  },
+  {
+    "method": "GET",
+    "path": "/tournaments/",
+    "public": false
+  },
+  {
+    "method": "POST",
+    "path": "/tournaments/",
+    "public": false
+  },
+  {
+    "method": "GET",
+    "path": "/tournaments/{tournament_id}",
+    "public": false
+  },
+  {
+    "method": "POST",
+    "path": "/tournaments/{tournament_id}/matches/{match_id}/winner",
+    "public": false
+  },
+  {
+    "method": "POST",
+    "path": "/tournaments/{tournament_id}/close",
+    "public": false
+  },
+  {
+    "method": "GET",
+    "path": "/waitlist",
+    "public": false
+  },
+  {
+    "method": "POST",
+    "path": "/waitlist",
+    "public": false
+  },
+  {
+    "method": "POST",
+    "path": "/waitlist/{entry_id}/seat",
+    "public": false
+  },
+  {
+    "method": "DELETE",
+    "path": "/waitlist/{entry_id}",
+    "public": false
+  },
+  {
+    "method": "GET",
+    "path": "/bookings",
+    "public": false
+  },
+  {
+    "method": "POST",
+    "path": "/bookings",
+    "public": false
+  },
+  {
+    "method": "POST",
+    "path": "/bookings/{booking_id}/restore",
+    "public": false
+  },
+  {
+    "method": "DELETE",
+    "path": "/bookings/{booking_id}",
+    "public": false
+  },
+  {
+    "method": "GET",
+    "path": "/staff/roles",
+    "public": false
+  },
+  {
+    "method": "POST",
+    "path": "/staff/roles",
+    "public": false
+  },
+  {
+    "method": "GET",
+    "path": "/challenges",
+    "public": false
+  },
+  {
+    "method": "POST",
+    "path": "/challenges",
+    "public": false
+  },
+  {
+    "method": "POST",
+    "path": "/challenges/{challenge_id}/match",
+    "public": false
+  },
+  {
+    "method": "DELETE",
+    "path": "/challenges/{challenge_id}",
+    "public": false
+  },
+  {
+    "method": "GET",
+    "path": "/",
+    "public": true
+  },
+  {
+    "method": "GET",
+    "path": "/health",
+    "public": true
+  },
+  {
+    "method": "GET",
+    "path": "/ready",
+    "public": true
+  }
+]

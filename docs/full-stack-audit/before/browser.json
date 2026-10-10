@@ -1,0 +1,1271 @@
+{
+  "stage": "before",
+  "pages": [
+    {
+      "route": "/login",
+      "theme": "light",
+      "violations": [],
+      "passes": 22,
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "nodes": 2
+        }
+      ],
+      "overflow": false,
+      "fonts": [
+        "\"Syne Variable\", Syne, sans-serif"
+      ],
+      "nativeScheme": "light",
+      "title": "HSR Snooker Cafe BMS",
+      "screenshot": "before/login-light.png"
+    },
+    {
+      "route": "/",
+      "theme": "light",
+      "violations": [],
+      "passes": 19,
+      "incomplete": [
+        {
+          "id": "aria-prohibited-attr",
+          "nodes": 1
+        },
+        {
+          "id": "color-contrast",
+          "nodes": 3
+        }
+      ],
+      "overflow": false,
+      "fonts": [
+        "\"Syne Variable\", Syne, sans-serif",
+        "\"DM Mono\", monospace"
+      ],
+      "nativeScheme": "light",
+      "title": "HSR Snooker Cafe BMS",
+      "screenshot": "before/home-light.png"
+    },
+    {
+      "route": "/dashboard",
+      "theme": "light",
+      "violations": [],
+      "passes": 21,
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "nodes": 16
+        }
+      ],
+      "overflow": false,
+      "fonts": [
+        "\"Syne Variable\", Syne, sans-serif"
+      ],
+      "nativeScheme": "light",
+      "title": "HSR Snooker Cafe BMS",
+      "screenshot": "before/dashboard-light.png"
+    },
+    {
+      "route": "/live-floor",
+      "theme": "light",
+      "violations": [],
+      "passes": 19,
+      "incomplete": [
+        {
+          "id": "aria-prohibited-attr",
+          "nodes": 1
+        },
+        {
+          "id": "color-contrast",
+          "nodes": 3
+        }
+      ],
+      "overflow": false,
+      "fonts": [
+        "\"Syne Variable\", Syne, sans-serif",
+        "\"DM Mono\", monospace"
+      ],
+      "nativeScheme": "light",
+      "title": "HSR Snooker Cafe BMS",
+      "screenshot": "before/live-floor-light.png"
+    },
+    {
+      "route": "/inventory",
+      "theme": "light",
+      "violations": [
+        {
+          "id": "select-name",
+          "impact": "critical",
+          "help": "Select element must have an accessible name",
+          "nodes": [
+            {
+              "target": [
+                "select"
+              ],
+              "html": "<select><option value=\"t1\">T1</option><option value=\"t2\">T2</option><option value=\"t3\">T3</option><option value=\"t4\">T4</option><option value=\"t5\">T5</option></select>",
+              "failureSummary": "Fix any of the following:\n  Element does not have an implicit (wrapped) <label>\n  Element does not have an explicit <label>\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute\n  Element's default semantics were not overridden with role=\"none\" or role=\"presentation\""
+            }
+          ]
+        }
+      ],
+      "passes": 18,
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "nodes": 1
+        }
+      ],
+      "overflow": false,
+      "fonts": [
+        "\"Syne Variable\", Syne, sans-serif"
+      ],
+      "nativeScheme": "light",
+      "title": "HSR Snooker Cafe BMS",
+      "screenshot": "before/inventory-light.png"
+    },
+    {
+      "route": "/bookings",
+      "theme": "light",
+      "violations": [],
+      "passes": 18,
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "nodes": 1
+        }
+      ],
+      "overflow": false,
+      "fonts": [
+        "\"Syne Variable\", Syne, sans-serif"
+      ],
+      "nativeScheme": "light",
+      "title": "HSR Snooker Cafe BMS",
+      "screenshot": "before/bookings-light.png"
+    },
+    {
+      "route": "/customers",
+      "theme": "light",
+      "violations": [],
+      "passes": 18,
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "nodes": 1
+        }
+      ],
+      "overflow": false,
+      "fonts": [
+        "\"Syne Variable\", Syne, sans-serif"
+      ],
+      "nativeScheme": "light",
+      "title": "HSR Snooker Cafe BMS",
+      "screenshot": "before/customers-light.png"
+    },
+    {
+      "route": "/sales",
+      "theme": "light",
+      "violations": [],
+      "passes": 18,
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "nodes": 1
+        }
+      ],
+      "overflow": false,
+      "fonts": [
+        "\"Syne Variable\", Syne, sans-serif"
+      ],
+      "nativeScheme": "light",
+      "title": "HSR Snooker Cafe BMS",
+      "screenshot": "before/sales-light.png"
+    },
+    {
+      "route": "/analytics",
+      "theme": "light",
+      "violations": [],
+      "passes": 20,
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "nodes": 1
+        }
+      ],
+      "overflow": false,
+      "fonts": [
+        "\"Syne Variable\", Syne, sans-serif"
+      ],
+      "nativeScheme": "light",
+      "title": "HSR Snooker Cafe BMS",
+      "screenshot": "before/analytics-light.png"
+    },
+    {
+      "route": "/cafe-pos",
+      "theme": "light",
+      "violations": [],
+      "passes": 18,
+      "incomplete": [
+        {
+          "id": "aria-prohibited-attr",
+          "nodes": 1
+        },
+        {
+          "id": "color-contrast",
+          "nodes": 1
+        }
+      ],
+      "overflow": false,
+      "fonts": [
+        "\"Syne Variable\", Syne, sans-serif"
+      ],
+      "nativeScheme": "light",
+      "title": "HSR Snooker Cafe BMS",
+      "screenshot": "before/cafe-pos-light.png"
+    },
+    {
+      "route": "/waitlist",
+      "theme": "light",
+      "violations": [],
+      "passes": 16,
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "nodes": 1
+        }
+      ],
+      "overflow": false,
+      "fonts": [
+        "\"Syne Variable\", Syne, sans-serif"
+      ],
+      "nativeScheme": "light",
+      "title": "HSR Snooker Cafe BMS",
+      "screenshot": "before/waitlist-light.png"
+    },
+    {
+      "route": "/legacy-table-controls",
+      "theme": "light",
+      "violations": [
+        {
+          "id": "label",
+          "impact": "critical",
+          "help": "Form elements must have labels",
+          "nodes": [
+            {
+              "target": [
+                ".table-field-stack:nth-child(1) > .table-player-field > .table-player-input[autocomplete=\"off\"][value=\"\"]"
+              ],
+              "html": "<input autocomplete=\"off\" class=\"table-player-input\" value=\"\" style=\"margin: 0px;\">",
+              "failureSummary": "Fix any of the following:\n  Element does not have an implicit (wrapped) <label>\n  Element does not have an explicit <label>\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute\n  Element has no placeholder attribute\n  Element's default semantics were not overridden with role=\"none\" or role=\"presentation\""
+            },
+            {
+              "target": [
+                ".table-field-stack:nth-child(2) > .table-player-field > .table-player-input[autocomplete=\"off\"][value=\"\"]"
+              ],
+              "html": "<input autocomplete=\"off\" class=\"table-player-input\" value=\"\" style=\"margin: 0px;\">",
+              "failureSummary": "Fix any of the following:\n  Element does not have an implicit (wrapped) <label>\n  Element does not have an explicit <label>\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute\n  Element has no placeholder attribute\n  Element's default semantics were not overridden with role=\"none\" or role=\"presentation\""
+            },
+            {
+              "target": [
+                "input[type=\"datetime-local\"]"
+              ],
+              "html": "<input class=\"table-mini-input\" required=\"\" type=\"datetime-local\" value=\"2026-10-11T01:00\">",
+              "failureSummary": "Fix any of the following:\n  Element does not have an implicit (wrapped) <label>\n  Element does not have an explicit <label>\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute\n  Element has no placeholder attribute\n  Element's default semantics were not overridden with role=\"none\" or role=\"presentation\""
+            }
+          ]
+        },
+        {
+          "id": "nested-interactive",
+          "impact": "serious",
+          "help": "Interactive controls must not be nested",
+          "nodes": [
+            {
+              "target": [
+                ".selected"
+              ],
+              "html": "<article class=\"table-floor-tile table-state-card selected\" data-table-state=\"available\" data-border=\"solid\" data-tint=\"neutral\" data-tone=\"idle\" data-attention=\"false\" aria-current=\"true\" role=\"button\" aria-label=\"T1 Available\" aria-disabled=\"false\" tabindex=\"0\">",
+              "failureSummary": "Fix any of the following:\n  Element has focusable descendants. Move them outside of the element, or remove them."
+            },
+            {
+              "target": [
+                "article[aria-label=\"T2 Available\"]"
+              ],
+              "html": "<article class=\"table-floor-tile table-state-card \" data-table-state=\"available\" data-border=\"solid\" data-tint=\"neutral\" data-tone=\"idle\" data-attention=\"false\" role=\"button\" aria-label=\"T2 Available\" aria-disabled=\"false\" tabindex=\"0\">",
+              "failureSummary": "Fix any of the following:\n  Element has focusable descendants. Move them outside of the element, or remove them."
+            },
+            {
+              "target": [
+                "article[aria-label=\"T3 Available\"]"
+              ],
+              "html": "<article class=\"table-floor-tile table-state-card \" data-table-state=\"available\" data-border=\"solid\" data-tint=\"neutral\" data-tone=\"idle\" data-attention=\"false\" role=\"button\" aria-label=\"T3 Available\" aria-disabled=\"false\" tabindex=\"0\">",
+              "failureSummary": "Fix any of the following:\n  Element has focusable descendants. Move them outside of the element, or remove them."
+            },
+            {
+              "target": [
+                "article[aria-label=\"T4 Available\"]"
+              ],
+              "html": "<article class=\"table-floor-tile table-state-card \" data-table-state=\"available\" data-border=\"solid\" data-tint=\"neutral\" data-tone=\"idle\" data-attention=\"false\" role=\"button\" aria-label=\"T4 Available\" aria-disabled=\"false\" tabindex=\"0\">",
+              "failureSummary": "Fix any of the following:\n  Element has focusable descendants. Move them outside of the element, or remove them."
+            },
+            {
+              "target": [
+                "article[aria-label=\"T5 Available\"]"
+              ],
+              "html": "<article class=\"table-floor-tile table-state-card \" data-table-state=\"available\" data-border=\"solid\" data-tint=\"neutral\" data-tone=\"idle\" data-attention=\"false\" role=\"button\" aria-label=\"T5 Available\" aria-disabled=\"false\" tabindex=\"0\">",
+              "failureSummary": "Fix any of the following:\n  Element has focusable descendants. Move them outside of the element, or remove them."
+            }
+          ]
+        },
+        {
+          "id": "select-name",
+          "impact": "critical",
+          "help": "Select element must have an accessible name",
+          "nodes": [
+            {
+              "target": [
+                ".queue-form > select"
+              ],
+              "html": "<select class=\"table-mini-input\"><option value=\"ANY\">Any table</option><option value=\"POOL\">Pool</option><option value=\"SNOOKER\">Snooker</option></select>",
+              "failureSummary": "Fix any of the following:\n  Element does not have an implicit (wrapped) <label>\n  Element does not have an explicit <label>\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute\n  Element's default semantics were not overridden with role=\"none\" or role=\"presentation\""
+            },
+            {
+              "target": [
+                ".booking-form > select"
+              ],
+              "html": "<select class=\"table-mini-input\"><option value=\"ANY\">Any table</option><option value=\"T1\">T1 · SNOOKER</option><option value=\"T2\">T2 · SNOOKER</option><option value=\"T3\">T3 · SNOOKER</option><option value=\"T4\">T4 · SNOOKER</option><option value=\"T5\">T5 · POOL</option></select>",
+              "failureSummary": "Fix any of the following:\n  Element does not have an implicit (wrapped) <label>\n  Element does not have an explicit <label>\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute\n  Element's default semantics were not overridden with role=\"none\" or role=\"presentation\""
+            }
+          ]
+        }
+      ],
+      "passes": 24,
+      "incomplete": [
+        {
+          "id": "aria-prohibited-attr",
+          "nodes": 3
+        },
+        {
+          "id": "color-contrast",
+          "nodes": 1
+        }
+      ],
+      "overflow": false,
+      "fonts": [
+        "\"Syne Variable\", Syne, sans-serif"
+      ],
+      "nativeScheme": "light",
+      "title": "HSR Snooker Cafe BMS",
+      "screenshot": "before/legacy-table-controls-light.png"
+    },
+    {
+      "route": "/tournaments",
+      "theme": "light",
+      "violations": [
+        {
+          "id": "label",
+          "impact": "critical",
+          "help": "Form elements must have labels",
+          "nodes": [
+            {
+              "target": [
+                "input[value=\"Friday Knockout\"]"
+              ],
+              "html": "<input class=\"input-field\" value=\"Friday Knockout\">",
+              "failureSummary": "Fix any of the following:\n  Element does not have an implicit (wrapped) <label>\n  Element does not have an explicit <label>\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute\n  Element has no placeholder attribute\n  Element's default semantics were not overridden with role=\"none\" or role=\"presentation\""
+            },
+            {
+              "target": [
+                "input[type=\"number\"]"
+              ],
+              "html": "<input class=\"input-field\" type=\"number\" value=\"0\">",
+              "failureSummary": "Fix any of the following:\n  Element does not have an implicit (wrapped) <label>\n  Element does not have an explicit <label>\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute\n  Element has no placeholder attribute\n  Element's default semantics were not overridden with role=\"none\" or role=\"presentation\""
+            }
+          ]
+        },
+        {
+          "id": "select-name",
+          "impact": "critical",
+          "help": "Select element must have an accessible name",
+          "nodes": [
+            {
+              "target": [
+                "select"
+              ],
+              "html": "<select class=\"input-field\"><option>8 Ball</option><option>9 Ball</option><option>10 Ball</option><option>Snooker</option><option>Straight Pool</option></select>",
+              "failureSummary": "Fix any of the following:\n  Element does not have an implicit (wrapped) <label>\n  Element does not have an explicit <label>\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute\n  Element's default semantics were not overridden with role=\"none\" or role=\"presentation\""
+            }
+          ]
+        }
+      ],
+      "passes": 18,
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "nodes": 1
+        }
+      ],
+      "overflow": false,
+      "fonts": [
+        "\"Syne Variable\", Syne, sans-serif"
+      ],
+      "nativeScheme": "light",
+      "title": "HSR Snooker Cafe BMS",
+      "screenshot": "before/tournaments-light.png"
+    },
+    {
+      "route": "/daily-closing",
+      "theme": "light",
+      "violations": [],
+      "passes": 18,
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "nodes": 3
+        }
+      ],
+      "overflow": false,
+      "fonts": [
+        "\"Syne Variable\", Syne, sans-serif"
+      ],
+      "nativeScheme": "light",
+      "title": "HSR Snooker Cafe BMS",
+      "screenshot": "before/daily-closing-light.png"
+    },
+    {
+      "route": "/pricing-rules",
+      "theme": "light",
+      "violations": [
+        {
+          "id": "label",
+          "impact": "critical",
+          "help": "Form elements must have labels",
+          "nodes": [
+            {
+              "target": [
+                "input[value=\"Evening Peak\"]"
+              ],
+              "html": "<input class=\"input-field\" value=\"Evening Peak\" style=\"margin: 0px; width: 140px;\">",
+              "failureSummary": "Fix any of the following:\n  Element does not have an implicit (wrapped) <label>\n  Element does not have an explicit <label>\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute\n  Element has no placeholder attribute\n  Element's default semantics were not overridden with role=\"none\" or role=\"presentation\""
+            },
+            {
+              "target": [
+                "input[min=\"0\"]"
+              ],
+              "html": "<input min=\"0\" max=\"23\" class=\"input-field\" type=\"number\" value=\"18\" style=\"margin: 0px; width: 90px;\">",
+              "failureSummary": "Fix any of the following:\n  Element does not have an implicit (wrapped) <label>\n  Element does not have an explicit <label>\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute\n  Element has no placeholder attribute\n  Element's default semantics were not overridden with role=\"none\" or role=\"presentation\""
+            },
+            {
+              "target": [
+                "input[max=\"24\"]"
+              ],
+              "html": "<input min=\"1\" max=\"24\" class=\"input-field\" type=\"number\" value=\"22\" style=\"margin: 0px; width: 90px;\">",
+              "failureSummary": "Fix any of the following:\n  Element does not have an implicit (wrapped) <label>\n  Element does not have an explicit <label>\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute\n  Element has no placeholder attribute\n  Element's default semantics were not overridden with role=\"none\" or role=\"presentation\""
+            },
+            {
+              "target": [
+                "input[max=\"5\"]"
+              ],
+              "html": "<input min=\"1\" max=\"5\" step=\"0.1\" class=\"input-field\" type=\"number\" value=\"1.5\" style=\"margin: 0px; width: 90px;\">",
+              "failureSummary": "Fix any of the following:\n  Element does not have an implicit (wrapped) <label>\n  Element does not have an explicit <label>\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute\n  Element has no placeholder attribute\n  Element's default semantics were not overridden with role=\"none\" or role=\"presentation\""
+            }
+          ]
+        }
+      ],
+      "passes": 17,
+      "incomplete": [
+        {
+          "id": "aria-prohibited-attr",
+          "nodes": 1
+        },
+        {
+          "id": "color-contrast",
+          "nodes": 1
+        }
+      ],
+      "overflow": false,
+      "fonts": [
+        "\"Syne Variable\", Syne, sans-serif"
+      ],
+      "nativeScheme": "light",
+      "title": "HSR Snooker Cafe BMS",
+      "screenshot": "before/pricing-rules-light.png"
+    },
+    {
+      "route": "/audit-log",
+      "theme": "light",
+      "violations": [],
+      "passes": 16,
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "nodes": 1
+        }
+      ],
+      "overflow": false,
+      "fonts": [
+        "\"Syne Variable\", Syne, sans-serif"
+      ],
+      "nativeScheme": "light",
+      "title": "HSR Snooker Cafe BMS",
+      "screenshot": "before/audit-log-light.png"
+    },
+    {
+      "route": "/settings",
+      "theme": "light",
+      "violations": [
+        {
+          "id": "label",
+          "impact": "critical",
+          "help": "Form elements must have labels",
+          "nodes": [
+            {
+              "target": [
+                "input[value=\"320\"]"
+              ],
+              "html": "<input class=\"input-field\" type=\"number\" value=\"320\">",
+              "failureSummary": "Fix any of the following:\n  Element does not have an implicit (wrapped) <label>\n  Element does not have an explicit <label>\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute\n  Element has no placeholder attribute\n  Element's default semantics were not overridden with role=\"none\" or role=\"presentation\""
+            },
+            {
+              "target": [
+                "input[value=\"170\"]"
+              ],
+              "html": "<input class=\"input-field\" type=\"number\" value=\"170\">",
+              "failureSummary": "Fix any of the following:\n  Element does not have an implicit (wrapped) <label>\n  Element does not have an explicit <label>\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute\n  Element has no placeholder attribute\n  Element's default semantics were not overridden with role=\"none\" or role=\"presentation\""
+            },
+            {
+              "target": [
+                "input[value=\"270\"]"
+              ],
+              "html": "<input class=\"input-field\" type=\"number\" value=\"270\">",
+              "failureSummary": "Fix any of the following:\n  Element does not have an implicit (wrapped) <label>\n  Element does not have an explicit <label>\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute\n  Element has no placeholder attribute\n  Element's default semantics were not overridden with role=\"none\" or role=\"presentation\""
+            },
+            {
+              "target": [
+                ".settings-inline-field > input[min=\"0\"][value=\"0\"][type=\"number\"]"
+              ],
+              "html": "<input min=\"0\" class=\"input-field\" type=\"number\" value=\"0\">",
+              "failureSummary": "Fix any of the following:\n  Element does not have an implicit (wrapped) <label>\n  Element does not have an explicit <label>\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute\n  Element has no placeholder attribute\n  Element's default semantics were not overridden with role=\"none\" or role=\"presentation\""
+            },
+            {
+              "target": [
+                "input[min=\"1\"]"
+              ],
+              "html": "<input min=\"1\" max=\"120\" class=\"input-field\" type=\"number\" value=\"10\">",
+              "failureSummary": "Fix any of the following:\n  Element does not have an implicit (wrapped) <label>\n  Element does not have an explicit <label>\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute\n  Element has no placeholder attribute\n  Element's default semantics were not overridden with role=\"none\" or role=\"presentation\""
+            },
+            {
+              "target": [
+                "input[value=\"staff\"]"
+              ],
+              "html": "<input class=\"input-field\" type=\"text\" value=\"staff\">",
+              "failureSummary": "Fix any of the following:\n  Element does not have an implicit (wrapped) <label>\n  Element does not have an explicit <label>\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute\n  Element has no placeholder attribute\n  Element's default semantics were not overridden with role=\"none\" or role=\"presentation\""
+            }
+          ]
+        }
+      ],
+      "passes": 18,
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "nodes": 1
+        }
+      ],
+      "overflow": false,
+      "fonts": [
+        "\"Syne Variable\", Syne, sans-serif"
+      ],
+      "nativeScheme": "light",
+      "title": "HSR Snooker Cafe BMS",
+      "screenshot": "before/settings-light.png"
+    },
+    {
+      "route": "/login",
+      "theme": "dark",
+      "violations": [],
+      "passes": 22,
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "nodes": 2
+        }
+      ],
+      "overflow": false,
+      "fonts": [
+        "\"Syne Variable\", Syne, sans-serif"
+      ],
+      "nativeScheme": "dark",
+      "title": "HSR Snooker Cafe BMS",
+      "screenshot": "before/login-dark.png"
+    },
+    {
+      "route": "/",
+      "theme": "dark",
+      "violations": [],
+      "passes": 19,
+      "incomplete": [
+        {
+          "id": "aria-prohibited-attr",
+          "nodes": 1
+        },
+        {
+          "id": "color-contrast",
+          "nodes": 3
+        }
+      ],
+      "overflow": false,
+      "fonts": [
+        "\"Syne Variable\", Syne, sans-serif",
+        "\"DM Mono\", monospace"
+      ],
+      "nativeScheme": "dark",
+      "title": "HSR Snooker Cafe BMS",
+      "screenshot": "before/home-dark.png"
+    },
+    {
+      "route": "/dashboard",
+      "theme": "dark",
+      "violations": [],
+      "passes": 21,
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "nodes": 1
+        }
+      ],
+      "overflow": false,
+      "fonts": [
+        "\"Syne Variable\", Syne, sans-serif"
+      ],
+      "nativeScheme": "dark",
+      "title": "HSR Snooker Cafe BMS",
+      "screenshot": "before/dashboard-dark.png"
+    },
+    {
+      "route": "/live-floor",
+      "theme": "dark",
+      "violations": [],
+      "passes": 19,
+      "incomplete": [
+        {
+          "id": "aria-prohibited-attr",
+          "nodes": 1
+        },
+        {
+          "id": "color-contrast",
+          "nodes": 3
+        }
+      ],
+      "overflow": false,
+      "fonts": [
+        "\"Syne Variable\", Syne, sans-serif",
+        "\"DM Mono\", monospace"
+      ],
+      "nativeScheme": "dark",
+      "title": "HSR Snooker Cafe BMS",
+      "screenshot": "before/live-floor-dark.png"
+    },
+    {
+      "route": "/inventory",
+      "theme": "dark",
+      "violations": [
+        {
+          "id": "select-name",
+          "impact": "critical",
+          "help": "Select element must have an accessible name",
+          "nodes": [
+            {
+              "target": [
+                "select"
+              ],
+              "html": "<select><option value=\"t1\">T1</option><option value=\"t2\">T2</option><option value=\"t3\">T3</option><option value=\"t4\">T4</option><option value=\"t5\">T5</option></select>",
+              "failureSummary": "Fix any of the following:\n  Element does not have an implicit (wrapped) <label>\n  Element does not have an explicit <label>\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute\n  Element's default semantics were not overridden with role=\"none\" or role=\"presentation\""
+            }
+          ]
+        }
+      ],
+      "passes": 18,
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "nodes": 1
+        }
+      ],
+      "overflow": false,
+      "fonts": [
+        "\"Syne Variable\", Syne, sans-serif"
+      ],
+      "nativeScheme": "dark",
+      "title": "HSR Snooker Cafe BMS",
+      "screenshot": "before/inventory-dark.png"
+    },
+    {
+      "route": "/bookings",
+      "theme": "dark",
+      "violations": [],
+      "passes": 18,
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "nodes": 1
+        }
+      ],
+      "overflow": false,
+      "fonts": [
+        "\"Syne Variable\", Syne, sans-serif"
+      ],
+      "nativeScheme": "dark",
+      "title": "HSR Snooker Cafe BMS",
+      "screenshot": "before/bookings-dark.png"
+    },
+    {
+      "route": "/customers",
+      "theme": "dark",
+      "violations": [],
+      "passes": 18,
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "nodes": 1
+        }
+      ],
+      "overflow": false,
+      "fonts": [
+        "\"Syne Variable\", Syne, sans-serif"
+      ],
+      "nativeScheme": "dark",
+      "title": "HSR Snooker Cafe BMS",
+      "screenshot": "before/customers-dark.png"
+    },
+    {
+      "route": "/sales",
+      "theme": "dark",
+      "violations": [],
+      "passes": 18,
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "nodes": 1
+        }
+      ],
+      "overflow": false,
+      "fonts": [
+        "\"Syne Variable\", Syne, sans-serif"
+      ],
+      "nativeScheme": "dark",
+      "title": "HSR Snooker Cafe BMS",
+      "screenshot": "before/sales-dark.png"
+    },
+    {
+      "route": "/analytics",
+      "theme": "dark",
+      "violations": [],
+      "passes": 20,
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "nodes": 1
+        }
+      ],
+      "overflow": false,
+      "fonts": [
+        "\"Syne Variable\", Syne, sans-serif"
+      ],
+      "nativeScheme": "dark",
+      "title": "HSR Snooker Cafe BMS",
+      "screenshot": "before/analytics-dark.png"
+    },
+    {
+      "route": "/cafe-pos",
+      "theme": "dark",
+      "violations": [],
+      "passes": 18,
+      "incomplete": [
+        {
+          "id": "aria-prohibited-attr",
+          "nodes": 1
+        },
+        {
+          "id": "color-contrast",
+          "nodes": 1
+        }
+      ],
+      "overflow": false,
+      "fonts": [
+        "\"Syne Variable\", Syne, sans-serif"
+      ],
+      "nativeScheme": "dark",
+      "title": "HSR Snooker Cafe BMS",
+      "screenshot": "before/cafe-pos-dark.png"
+    },
+    {
+      "route": "/waitlist",
+      "theme": "dark",
+      "violations": [],
+      "passes": 16,
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "nodes": 1
+        }
+      ],
+      "overflow": false,
+      "fonts": [
+        "\"Syne Variable\", Syne, sans-serif"
+      ],
+      "nativeScheme": "dark",
+      "title": "HSR Snooker Cafe BMS",
+      "screenshot": "before/waitlist-dark.png"
+    },
+    {
+      "route": "/legacy-table-controls",
+      "theme": "dark",
+      "violations": [
+        {
+          "id": "label",
+          "impact": "critical",
+          "help": "Form elements must have labels",
+          "nodes": [
+            {
+              "target": [
+                ".table-field-stack:nth-child(1) > .table-player-field > .table-player-input[autocomplete=\"off\"][value=\"\"]"
+              ],
+              "html": "<input autocomplete=\"off\" class=\"table-player-input\" value=\"\" style=\"margin: 0px;\">",
+              "failureSummary": "Fix any of the following:\n  Element does not have an implicit (wrapped) <label>\n  Element does not have an explicit <label>\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute\n  Element has no placeholder attribute\n  Element's default semantics were not overridden with role=\"none\" or role=\"presentation\""
+            },
+            {
+              "target": [
+                ".table-field-stack:nth-child(2) > .table-player-field > .table-player-input[autocomplete=\"off\"][value=\"\"]"
+              ],
+              "html": "<input autocomplete=\"off\" class=\"table-player-input\" value=\"\" style=\"margin: 0px;\">",
+              "failureSummary": "Fix any of the following:\n  Element does not have an implicit (wrapped) <label>\n  Element does not have an explicit <label>\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute\n  Element has no placeholder attribute\n  Element's default semantics were not overridden with role=\"none\" or role=\"presentation\""
+            },
+            {
+              "target": [
+                "input[type=\"datetime-local\"]"
+              ],
+              "html": "<input class=\"table-mini-input\" required=\"\" type=\"datetime-local\" value=\"2026-10-11T01:00\">",
+              "failureSummary": "Fix any of the following:\n  Element does not have an implicit (wrapped) <label>\n  Element does not have an explicit <label>\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute\n  Element has no placeholder attribute\n  Element's default semantics were not overridden with role=\"none\" or role=\"presentation\""
+            }
+          ]
+        },
+        {
+          "id": "nested-interactive",
+          "impact": "serious",
+          "help": "Interactive controls must not be nested",
+          "nodes": [
+            {
+              "target": [
+                ".selected"
+              ],
+              "html": "<article class=\"table-floor-tile table-state-card selected\" data-table-state=\"available\" data-border=\"solid\" data-tint=\"neutral\" data-tone=\"idle\" data-attention=\"false\" aria-current=\"true\" role=\"button\" aria-label=\"T1 Available\" aria-disabled=\"false\" tabindex=\"0\">",
+              "failureSummary": "Fix any of the following:\n  Element has focusable descendants. Move them outside of the element, or remove them."
+            },
+            {
+              "target": [
+                "article[aria-label=\"T2 Available\"]"
+              ],
+              "html": "<article class=\"table-floor-tile table-state-card \" data-table-state=\"available\" data-border=\"solid\" data-tint=\"neutral\" data-tone=\"idle\" data-attention=\"false\" role=\"button\" aria-label=\"T2 Available\" aria-disabled=\"false\" tabindex=\"0\">",
+              "failureSummary": "Fix any of the following:\n  Element has focusable descendants. Move them outside of the element, or remove them."
+            },
+            {
+              "target": [
+                "article[aria-label=\"T3 Available\"]"
+              ],
+              "html": "<article class=\"table-floor-tile table-state-card \" data-table-state=\"available\" data-border=\"solid\" data-tint=\"neutral\" data-tone=\"idle\" data-attention=\"false\" role=\"button\" aria-label=\"T3 Available\" aria-disabled=\"false\" tabindex=\"0\">",
+              "failureSummary": "Fix any of the following:\n  Element has focusable descendants. Move them outside of the element, or remove them."
+            },
+            {
+              "target": [
+                "article[aria-label=\"T4 Available\"]"
+              ],
+              "html": "<article class=\"table-floor-tile table-state-card \" data-table-state=\"available\" data-border=\"solid\" data-tint=\"neutral\" data-tone=\"idle\" data-attention=\"false\" role=\"button\" aria-label=\"T4 Available\" aria-disabled=\"false\" tabindex=\"0\">",
+              "failureSummary": "Fix any of the following:\n  Element has focusable descendants. Move them outside of the element, or remove them."
+            },
+            {
+              "target": [
+                "article[aria-label=\"T5 Available\"]"
+              ],
+              "html": "<article class=\"table-floor-tile table-state-card \" data-table-state=\"available\" data-border=\"solid\" data-tint=\"neutral\" data-tone=\"idle\" data-attention=\"false\" role=\"button\" aria-label=\"T5 Available\" aria-disabled=\"false\" tabindex=\"0\">",
+              "failureSummary": "Fix any of the following:\n  Element has focusable descendants. Move them outside of the element, or remove them."
+            }
+          ]
+        },
+        {
+          "id": "select-name",
+          "impact": "critical",
+          "help": "Select element must have an accessible name",
+          "nodes": [
+            {
+              "target": [
+                ".queue-form > select"
+              ],
+              "html": "<select class=\"table-mini-input\"><option value=\"ANY\">Any table</option><option value=\"POOL\">Pool</option><option value=\"SNOOKER\">Snooker</option></select>",
+              "failureSummary": "Fix any of the following:\n  Element does not have an implicit (wrapped) <label>\n  Element does not have an explicit <label>\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute\n  Element's default semantics were not overridden with role=\"none\" or role=\"presentation\""
+            },
+            {
+              "target": [
+                ".booking-form > select"
+              ],
+              "html": "<select class=\"table-mini-input\"><option value=\"ANY\">Any table</option><option value=\"T1\">T1 · SNOOKER</option><option value=\"T2\">T2 · SNOOKER</option><option value=\"T3\">T3 · SNOOKER</option><option value=\"T4\">T4 · SNOOKER</option><option value=\"T5\">T5 · POOL</option></select>",
+              "failureSummary": "Fix any of the following:\n  Element does not have an implicit (wrapped) <label>\n  Element does not have an explicit <label>\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute\n  Element's default semantics were not overridden with role=\"none\" or role=\"presentation\""
+            }
+          ]
+        }
+      ],
+      "passes": 24,
+      "incomplete": [
+        {
+          "id": "aria-prohibited-attr",
+          "nodes": 3
+        },
+        {
+          "id": "color-contrast",
+          "nodes": 1
+        }
+      ],
+      "overflow": false,
+      "fonts": [
+        "\"Syne Variable\", Syne, sans-serif"
+      ],
+      "nativeScheme": "dark",
+      "title": "HSR Snooker Cafe BMS",
+      "screenshot": "before/legacy-table-controls-dark.png"
+    },
+    {
+      "route": "/tournaments",
+      "theme": "dark",
+      "violations": [
+        {
+          "id": "label",
+          "impact": "critical",
+          "help": "Form elements must have labels",
+          "nodes": [
+            {
+              "target": [
+                "input[value=\"Friday Knockout\"]"
+              ],
+              "html": "<input class=\"input-field\" value=\"Friday Knockout\">",
+              "failureSummary": "Fix any of the following:\n  Element does not have an implicit (wrapped) <label>\n  Element does not have an explicit <label>\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute\n  Element has no placeholder attribute\n  Element's default semantics were not overridden with role=\"none\" or role=\"presentation\""
+            },
+            {
+              "target": [
+                "input[type=\"number\"]"
+              ],
+              "html": "<input class=\"input-field\" type=\"number\" value=\"0\">",
+              "failureSummary": "Fix any of the following:\n  Element does not have an implicit (wrapped) <label>\n  Element does not have an explicit <label>\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute\n  Element has no placeholder attribute\n  Element's default semantics were not overridden with role=\"none\" or role=\"presentation\""
+            }
+          ]
+        },
+        {
+          "id": "select-name",
+          "impact": "critical",
+          "help": "Select element must have an accessible name",
+          "nodes": [
+            {
+              "target": [
+                "select"
+              ],
+              "html": "<select class=\"input-field\"><option>8 Ball</option><option>9 Ball</option><option>10 Ball</option><option>Snooker</option><option>Straight Pool</option></select>",
+              "failureSummary": "Fix any of the following:\n  Element does not have an implicit (wrapped) <label>\n  Element does not have an explicit <label>\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute\n  Element's default semantics were not overridden with role=\"none\" or role=\"presentation\""
+            }
+          ]
+        }
+      ],
+      "passes": 18,
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "nodes": 1
+        }
+      ],
+      "overflow": false,
+      "fonts": [
+        "\"Syne Variable\", Syne, sans-serif"
+      ],
+      "nativeScheme": "dark",
+      "title": "HSR Snooker Cafe BMS",
+      "screenshot": "before/tournaments-dark.png"
+    },
+    {
+      "route": "/daily-closing",
+      "theme": "dark",
+      "violations": [],
+      "passes": 18,
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "nodes": 1
+        }
+      ],
+      "overflow": false,
+      "fonts": [
+        "\"Syne Variable\", Syne, sans-serif"
+      ],
+      "nativeScheme": "dark",
+      "title": "HSR Snooker Cafe BMS",
+      "screenshot": "before/daily-closing-dark.png"
+    },
+    {
+      "route": "/pricing-rules",
+      "theme": "dark",
+      "violations": [
+        {
+          "id": "label",
+          "impact": "critical",
+          "help": "Form elements must have labels",
+          "nodes": [
+            {
+              "target": [
+                "input[value=\"Evening Peak\"]"
+              ],
+              "html": "<input class=\"input-field\" value=\"Evening Peak\" style=\"margin: 0px; width: 140px;\">",
+              "failureSummary": "Fix any of the following:\n  Element does not have an implicit (wrapped) <label>\n  Element does not have an explicit <label>\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute\n  Element has no placeholder attribute\n  Element's default semantics were not overridden with role=\"none\" or role=\"presentation\""
+            },
+            {
+              "target": [
+                "input[min=\"0\"]"
+              ],
+              "html": "<input min=\"0\" max=\"23\" class=\"input-field\" type=\"number\" value=\"18\" style=\"margin: 0px; width: 90px;\">",
+              "failureSummary": "Fix any of the following:\n  Element does not have an implicit (wrapped) <label>\n  Element does not have an explicit <label>\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute\n  Element has no placeholder attribute\n  Element's default semantics were not overridden with role=\"none\" or role=\"presentation\""
+            },
+            {
+              "target": [
+                "input[max=\"24\"]"
+              ],
+              "html": "<input min=\"1\" max=\"24\" class=\"input-field\" type=\"number\" value=\"22\" style=\"margin: 0px; width: 90px;\">",
+              "failureSummary": "Fix any of the following:\n  Element does not have an implicit (wrapped) <label>\n  Element does not have an explicit <label>\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute\n  Element has no placeholder attribute\n  Element's default semantics were not overridden with role=\"none\" or role=\"presentation\""
+            },
+            {
+              "target": [
+                "input[max=\"5\"]"
+              ],
+              "html": "<input min=\"1\" max=\"5\" step=\"0.1\" class=\"input-field\" type=\"number\" value=\"1.5\" style=\"margin: 0px; width: 90px;\">",
+              "failureSummary": "Fix any of the following:\n  Element does not have an implicit (wrapped) <label>\n  Element does not have an explicit <label>\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute\n  Element has no placeholder attribute\n  Element's default semantics were not overridden with role=\"none\" or role=\"presentation\""
+            }
+          ]
+        }
+      ],
+      "passes": 17,
+      "incomplete": [
+        {
+          "id": "aria-prohibited-attr",
+          "nodes": 1
+        },
+        {
+          "id": "color-contrast",
+          "nodes": 1
+        }
+      ],
+      "overflow": false,
+      "fonts": [
+        "\"Syne Variable\", Syne, sans-serif"
+      ],
+      "nativeScheme": "dark",
+      "title": "HSR Snooker Cafe BMS",
+      "screenshot": "before/pricing-rules-dark.png"
+    },
+    {
+      "route": "/audit-log",
+      "theme": "dark",
+      "violations": [],
+      "passes": 16,
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "nodes": 1
+        }
+      ],
+      "overflow": false,
+      "fonts": [
+        "\"Syne Variable\", Syne, sans-serif"
+      ],
+      "nativeScheme": "dark",
+      "title": "HSR Snooker Cafe BMS",
+      "screenshot": "before/audit-log-dark.png"
+    },
+    {
+      "route": "/settings",
+      "theme": "dark",
+      "violations": [
+        {
+          "id": "label",
+          "impact": "critical",
+          "help": "Form elements must have labels",
+          "nodes": [
+            {
+              "target": [
+                "input[value=\"320\"]"
+              ],
+              "html": "<input class=\"input-field\" type=\"number\" value=\"320\">",
+              "failureSummary": "Fix any of the following:\n  Element does not have an implicit (wrapped) <label>\n  Element does not have an explicit <label>\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute\n  Element has no placeholder attribute\n  Element's default semantics were not overridden with role=\"none\" or role=\"presentation\""
+            },
+            {
+              "target": [
+                "input[value=\"170\"]"
+              ],
+              "html": "<input class=\"input-field\" type=\"number\" value=\"170\">",
+              "failureSummary": "Fix any of the following:\n  Element does not have an implicit (wrapped) <label>\n  Element does not have an explicit <label>\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute\n  Element has no placeholder attribute\n  Element's default semantics were not overridden with role=\"none\" or role=\"presentation\""
+            },
+            {
+              "target": [
+                "input[value=\"270\"]"
+              ],
+              "html": "<input class=\"input-field\" type=\"number\" value=\"270\">",
+              "failureSummary": "Fix any of the following:\n  Element does not have an implicit (wrapped) <label>\n  Element does not have an explicit <label>\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute\n  Element has no placeholder attribute\n  Element's default semantics were not overridden with role=\"none\" or role=\"presentation\""
+            },
+            {
+              "target": [
+                ".settings-inline-field > input[min=\"0\"][value=\"0\"][type=\"number\"]"
+              ],
+              "html": "<input min=\"0\" class=\"input-field\" type=\"number\" value=\"0\">",
+              "failureSummary": "Fix any of the following:\n  Element does not have an implicit (wrapped) <label>\n  Element does not have an explicit <label>\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute\n  Element has no placeholder attribute\n  Element's default semantics were not overridden with role=\"none\" or role=\"presentation\""
+            },
+            {
+              "target": [
+                "input[min=\"1\"]"
+              ],
+              "html": "<input min=\"1\" max=\"120\" class=\"input-field\" type=\"number\" value=\"10\">",
+              "failureSummary": "Fix any of the following:\n  Element does not have an implicit (wrapped) <label>\n  Element does not have an explicit <label>\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute\n  Element has no placeholder attribute\n  Element's default semantics were not overridden with role=\"none\" or role=\"presentation\""
+            },
+            {
+              "target": [
+                "input[value=\"staff\"]"
+              ],
+              "html": "<input class=\"input-field\" type=\"text\" value=\"staff\">",
+              "failureSummary": "Fix any of the following:\n  Element does not have an implicit (wrapped) <label>\n  Element does not have an explicit <label>\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute\n  Element has no placeholder attribute\n  Element's default semantics were not overridden with role=\"none\" or role=\"presentation\""
+            }
+          ]
+        }
+      ],
+      "passes": 18,
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "nodes": 1
+        }
+      ],
+      "overflow": false,
+      "fonts": [
+        "\"Syne Variable\", Syne, sans-serif"
+      ],
+      "nativeScheme": "dark",
+      "title": "HSR Snooker Cafe BMS",
+      "screenshot": "before/settings-dark.png"
+    }
+  ],
+  "crash": [
+    {
+      "theme": "light",
+      "shellVisible": false,
+      "alertVisible": false,
+      "text": "",
+      "screenshot": "before/route-crash-light.png"
+    },
+    {
+      "theme": "dark",
+      "shellVisible": false,
+      "alertVisible": false,
+      "text": "",
+      "screenshot": "before/route-crash-dark.png"
+    }
+  ],
+  "mobile": [
+    {
+      "route": "/live-floor",
+      "theme": "light",
+      "width": 375,
+      "overflow": false
+    },
+    {
+      "route": "/live-floor",
+      "theme": "light",
+      "width": 414,
+      "overflow": false
+    },
+    {
+      "route": "/bookings",
+      "theme": "light",
+      "width": 375,
+      "overflow": false
+    },
+    {
+      "route": "/bookings",
+      "theme": "light",
+      "width": 414,
+      "overflow": false
+    },
+    {
+      "route": "/cafe-pos",
+      "theme": "light",
+      "width": 375,
+      "overflow": false
+    },
+    {
+      "route": "/cafe-pos",
+      "theme": "light",
+      "width": 414,
+      "overflow": false
+    },
+    {
+      "route": "/settings",
+      "theme": "light",
+      "width": 375,
+      "overflow": false
+    },
+    {
+      "route": "/settings",
+      "theme": "light",
+      "width": 414,
+      "overflow": false
+    },
+    {
+      "route": "/live-floor",
+      "theme": "dark",
+      "width": 375,
+      "overflow": false
+    },
+    {
+      "route": "/live-floor",
+      "theme": "dark",
+      "width": 414,
+      "overflow": false
+    },
+    {
+      "route": "/bookings",
+      "theme": "dark",
+      "width": 375,
+      "overflow": false
+    },
+    {
+      "route": "/bookings",
+      "theme": "dark",
+      "width": 414,
+      "overflow": false
+    },
+    {
+      "route": "/cafe-pos",
+      "theme": "dark",
+      "width": 375,
+      "overflow": false
+    },
+    {
+      "route": "/cafe-pos",
+      "theme": "dark",
+      "width": 414,
+      "overflow": false
+    },
+    {
+      "route": "/settings",
+      "theme": "dark",
+      "width": 375,
+      "overflow": false
+    },
+    {
+      "route": "/settings",
+      "theme": "dark",
+      "width": 414,
+      "overflow": false
+    }
+  ],
+  "errors": [],
+  "limitations": [
+    "Chromium/local QA; not an exhaustive device or assistive-technology audit"
+  ]
+}

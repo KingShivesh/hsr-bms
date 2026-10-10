@@ -1,0 +1,383 @@
+/private/tmp/hsr-audit-venv/lib/python3.13/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+  from starlette.testclient import TestClient as TestClient  # noqa
+test_admin_dashboard_is_not_staff_accessible (__main__.FullStackTests.test_admin_dashboard_is_not_staff_accessible) ... INFO:hsr-bms:request_id=072c9896-5090-4183-b71b-0d55bc50b3e4 method=POST path=/auth/login status=200 duration_ms=398
+INFO:httpx:HTTP Request: POST http://testserver/auth/login "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=ed83ded7-f1a8-4fd8-a970-d2fbc0db9bda method=POST path=/auth/login status=200 duration_ms=386
+INFO:httpx:HTTP Request: POST http://testserver/auth/login "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=a1a065b2-c33f-42fe-9543-59ad5b6239d9 method=GET path=/reports/dashboard status=403 duration_ms=26
+INFO:httpx:HTTP Request: GET http://testserver/reports/dashboard "HTTP/1.1 403 Forbidden"
+ok
+test_admin_rotation_revokes_old_token (__main__.FullStackTests.test_admin_rotation_revokes_old_token) ... INFO:hsr-bms:request_id=2a406c68-1a2c-454a-88b7-3c858ec91c1e method=POST path=/auth/login status=200 duration_ms=476
+INFO:httpx:HTTP Request: POST http://testserver/auth/login "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=c1fce0f2-b526-4420-a260-e52fd4ff1d5f method=POST path=/auth/login status=200 duration_ms=385
+INFO:httpx:HTTP Request: POST http://testserver/auth/login "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=8230a80e-0e10-4b3e-b655-a2c3360ecf4f method=POST path=/auth/change status=200 duration_ms=395
+INFO:httpx:HTTP Request: POST http://testserver/auth/change "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=7b78e606-139c-4c05-95a0-96a34947951b method=GET path=/auth/me status=401 duration_ms=4
+INFO:httpx:HTTP Request: GET http://testserver/auth/me "HTTP/1.1 401 Unauthorized"
+INFO:hsr-bms:request_id=49bea7f2-d0ea-49f7-8f7b-24f1f1fe3267 method=POST path=/auth/login status=401 duration_ms=385
+INFO:httpx:HTTP Request: POST http://testserver/auth/login "HTTP/1.1 401 Unauthorized"
+INFO:hsr-bms:request_id=e6aa8948-234b-48ac-a816-3082fef7d1af method=POST path=/auth/login status=200 duration_ms=391
+INFO:httpx:HTTP Request: POST http://testserver/auth/login "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=656049f9-9a4a-461e-8271-186663e174e0 method=GET path=/auth/me status=200 duration_ms=8
+INFO:httpx:HTTP Request: GET http://testserver/auth/me "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=975a38e4-4855-43ce-994f-2175159eb5bb method=GET path=/auth/me status=200 duration_ms=5
+INFO:httpx:HTTP Request: GET http://testserver/auth/me "HTTP/1.1 200 OK"
+ok
+test_backdated_checkout_cannot_erase_shift (__main__.FullStackTests.test_backdated_checkout_cannot_erase_shift) ... INFO:hsr-bms:request_id=91c6ca1a-5ef7-45ae-892e-9284d3a139b3 method=POST path=/auth/login status=200 duration_ms=385
+INFO:httpx:HTTP Request: POST http://testserver/auth/login "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=dd6ee2c9-524d-4fcc-bafd-fb9d59e19977 method=POST path=/auth/login status=200 duration_ms=385
+INFO:httpx:HTTP Request: POST http://testserver/auth/login "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=17ff2999-0b74-450d-a6da-2263653670d4 method=POST path=/sessions/start status=200 duration_ms=32
+INFO:httpx:HTTP Request: POST http://testserver/sessions/start "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=b20c17e8-2b63-407f-8b27-d1c2bf7f7b33 method=POST path=/sessions/stop/t1 status=409 duration_ms=15
+INFO:httpx:HTTP Request: POST http://testserver/sessions/stop/t1?closed_at_ms=1791647044469.501 "HTTP/1.1 409 Conflict"
+ok
+test_bcrypt_login_never_errors_on_long_input (__main__.FullStackTests.test_bcrypt_login_never_errors_on_long_input) ... INFO:hsr-bms:request_id=8181d44b-36e3-45e6-8de6-1c547e2491f0 method=POST path=/auth/login status=200 duration_ms=386
+INFO:httpx:HTTP Request: POST http://testserver/auth/login "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=e0c269fe-8ec5-4202-9b91-97b7292b7f58 method=POST path=/auth/login status=200 duration_ms=386
+INFO:httpx:HTTP Request: POST http://testserver/auth/login "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=1be14b6d-8686-4a58-bd08-514155b085aa method=POST path=/auth/login status=401 duration_ms=5
+INFO:httpx:HTTP Request: POST http://testserver/auth/login "HTTP/1.1 401 Unauthorized"
+ok
+test_booking_conflict_and_repeat_cancel (__main__.FullStackTests.test_booking_conflict_and_repeat_cancel) ... INFO:hsr-bms:request_id=a659ddab-bb00-4e31-a6a7-a025d305b599 method=POST path=/auth/login status=200 duration_ms=385
+INFO:httpx:HTTP Request: POST http://testserver/auth/login "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=9a2c2ffb-87a5-4b52-b95b-9d877e99d615 method=POST path=/auth/login status=200 duration_ms=386
+INFO:httpx:HTTP Request: POST http://testserver/auth/login "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=4a8e8506-6e19-47e0-905a-ec2a8891ec29 method=POST path=/bookings status=200 duration_ms=34
+INFO:httpx:HTTP Request: POST http://testserver/bookings "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=011aa697-407a-48d7-be23-c6402bb42c78 method=POST path=/bookings status=400 duration_ms=8
+INFO:httpx:HTTP Request: POST http://testserver/bookings "HTTP/1.1 400 Bad Request"
+INFO:hsr-bms:request_id=bbc54e0d-fef5-4031-b56e-b790825a98d8 method=DELETE path=/bookings/36 status=200 duration_ms=10
+INFO:httpx:HTTP Request: DELETE http://testserver/bookings/36 "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=ac611e9e-a720-4608-9c3f-ce76362c889a method=DELETE path=/bookings/36 status=200 duration_ms=7
+INFO:httpx:HTTP Request: DELETE http://testserver/bookings/36 "HTTP/1.1 200 OK"
+ok
+test_concurrent_food_additions_preserve_all_lines (__main__.FullStackTests.test_concurrent_food_additions_preserve_all_lines) ... INFO:hsr-bms:request_id=57521d1b-cd19-44fd-8530-5bd9e7b66776 method=POST path=/auth/login status=200 duration_ms=385
+INFO:httpx:HTTP Request: POST http://testserver/auth/login "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=ff28093a-b093-4609-a4bf-9f00ef72b27d method=POST path=/auth/login status=200 duration_ms=400
+INFO:httpx:HTTP Request: POST http://testserver/auth/login "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=340c5b48-32d4-4bf1-8e95-d826f48626fb method=POST path=/sessions/start status=200 duration_ms=17
+INFO:httpx:HTTP Request: POST http://testserver/sessions/start "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=5b0a2711-a916-427c-9539-241f1612b5b5 method=POST path=/sessions/t1/food status=200 duration_ms=20
+INFO:httpx:HTTP Request: POST http://testserver/sessions/t1/food "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=74a6606c-5901-48fc-a5a5-60017fe09525 method=POST path=/sessions/t1/food status=200 duration_ms=32
+INFO:httpx:HTTP Request: POST http://testserver/sessions/t1/food "HTTP/1.1 200 OK"
+ok
+test_legacy_token_requires_reauthentication (__main__.FullStackTests.test_legacy_token_requires_reauthentication) ... INFO:hsr-bms:request_id=7f358901-1ec4-4125-afeb-376fa1f07d2c method=POST path=/auth/login status=200 duration_ms=385
+INFO:httpx:HTTP Request: POST http://testserver/auth/login "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=63c8bc0f-0cda-4fd9-a3bf-d8f934e59c8e method=POST path=/auth/login status=200 duration_ms=385
+INFO:httpx:HTTP Request: POST http://testserver/auth/login "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=aae465c3-64d0-4598-804c-85c6cfd60399 method=GET path=/auth/me status=401 duration_ms=1
+INFO:httpx:HTTP Request: GET http://testserver/auth/me "HTTP/1.1 401 Unauthorized"
+ok
+test_login_limit_cannot_be_bypassed_with_forwarded_header (__main__.FullStackTests.test_login_limit_cannot_be_bypassed_with_forwarded_header) ... INFO:hsr-bms:request_id=f119d140-8048-44c4-a342-390eff922e1e method=POST path=/auth/login status=200 duration_ms=384
+INFO:httpx:HTTP Request: POST http://testserver/auth/login "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=7264a88b-0c46-4fd6-aca1-6271fd657c23 method=POST path=/auth/login status=200 duration_ms=385
+INFO:httpx:HTTP Request: POST http://testserver/auth/login "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=027d94fa-2f52-4047-8ee7-a3720b9afa99 method=POST path=/auth/login status=401 duration_ms=390
+INFO:httpx:HTTP Request: POST http://testserver/auth/login "HTTP/1.1 401 Unauthorized"
+INFO:hsr-bms:request_id=69fa2991-366d-4c09-a523-365108d6d99f method=POST path=/auth/login status=401 duration_ms=390
+INFO:httpx:HTTP Request: POST http://testserver/auth/login "HTTP/1.1 401 Unauthorized"
+INFO:hsr-bms:request_id=e88ee6fd-6ed4-40f4-a900-37e8a208a20d method=POST path=/auth/login status=401 duration_ms=386
+INFO:httpx:HTTP Request: POST http://testserver/auth/login "HTTP/1.1 401 Unauthorized"
+INFO:hsr-bms:request_id=e5c536f3-14d9-4016-ba6b-6d24d75841c9 method=POST path=/auth/login status=401 duration_ms=387
+INFO:httpx:HTTP Request: POST http://testserver/auth/login "HTTP/1.1 401 Unauthorized"
+INFO:hsr-bms:request_id=a77d1dd7-ff5d-4f68-b681-14ed440c5aa9 method=POST path=/auth/login status=401 duration_ms=387
+INFO:httpx:HTTP Request: POST http://testserver/auth/login "HTTP/1.1 401 Unauthorized"
+INFO:hsr-bms:request_id=b8e1c2cd-d166-4f86-97af-aa8b8a4ef5d7 method=POST path=/auth/login status=429 duration_ms=5
+INFO:httpx:HTTP Request: POST http://testserver/auth/login "HTTP/1.1 429 Too Many Requests"
+ok
+test_logout_revokes_one_session_not_all (__main__.FullStackTests.test_logout_revokes_one_session_not_all) ... INFO:hsr-bms:request_id=c900d601-49dd-4fbb-b932-d2e8821d0741 method=POST path=/auth/login status=200 duration_ms=385
+INFO:httpx:HTTP Request: POST http://testserver/auth/login "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=e622f3cc-7267-49b3-badf-ea89d1b79491 method=POST path=/auth/login status=200 duration_ms=386
+INFO:httpx:HTTP Request: POST http://testserver/auth/login "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=f393c6cf-7611-4d5c-82fb-d504e47ecd5f method=POST path=/auth/login status=200 duration_ms=386
+INFO:httpx:HTTP Request: POST http://testserver/auth/login "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=1176bb82-dbc2-4b4f-a8f3-923f00371550 method=POST path=/auth/logout status=200 duration_ms=19
+INFO:httpx:HTTP Request: POST http://testserver/auth/logout "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=c2978900-10a7-4462-a021-283691452003 method=GET path=/auth/me status=401 duration_ms=7
+INFO:httpx:HTTP Request: GET http://testserver/auth/me "HTTP/1.1 401 Unauthorized"
+INFO:hsr-bms:request_id=85eb3172-2198-4679-8522-748c3c58c2f5 method=GET path=/auth/me status=200 duration_ms=4
+INFO:httpx:HTTP Request: GET http://testserver/auth/me "HTTP/1.1 200 OK"
+ok
+test_password_validation_applies_to_stored_password (__main__.FullStackTests.test_password_validation_applies_to_stored_password) ... INFO:hsr-bms:request_id=48d664fe-ba70-4382-a8f9-935d9d03b353 method=POST path=/auth/login status=200 duration_ms=384
+INFO:httpx:HTTP Request: POST http://testserver/auth/login "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=690d13c4-1625-443b-affc-b6d944ec09f5 method=POST path=/auth/login status=200 duration_ms=385
+INFO:httpx:HTTP Request: POST http://testserver/auth/login "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=eec0a524-2934-43e4-8a42-83bb0afd7750 method=POST path=/auth/change status=422 duration_ms=7
+INFO:httpx:HTTP Request: POST http://testserver/auth/change "HTTP/1.1 422 Unprocessable Entity"
+INFO:hsr-bms:request_id=e32e911f-765c-4bcc-b9f0-939afc6fff92 method=POST path=/auth/change status=422 duration_ms=6
+INFO:httpx:HTTP Request: POST http://testserver/auth/change "HTTP/1.1 422 Unprocessable Entity"
+INFO:hsr-bms:request_id=c7a458c9-83e3-4ed2-ad14-2cec74d7f888 method=POST path=/auth/change status=422 duration_ms=6
+INFO:httpx:HTTP Request: POST http://testserver/auth/change "HTTP/1.1 422 Unprocessable Entity"
+ok
+test_production_rejects_seeded_default_credentials (__main__.FullStackTests.test_production_rejects_seeded_default_credentials) ... INFO:hsr-bms:request_id=8141ddd3-c39b-40dc-96f2-845d444cb192 method=POST path=/auth/login status=200 duration_ms=389
+INFO:httpx:HTTP Request: POST http://testserver/auth/login "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=583e6ee0-888c-42f0-b37a-5b4a6c8784d6 method=POST path=/auth/login status=200 duration_ms=386
+INFO:httpx:HTTP Request: POST http://testserver/auth/login "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=4c4bf5c5-c32d-45a3-a3e0-7262b0e9b721 method=POST path=/auth/login status=401 duration_ms=4
+INFO:httpx:HTTP Request: POST http://testserver/auth/login "HTTP/1.1 401 Unauthorized"
+INFO:hsr-bms:request_id=afbb5481-ccbd-4aee-b457-e14ddf52977e method=POST path=/auth/change status=422 duration_ms=5
+INFO:httpx:HTTP Request: POST http://testserver/auth/change "HTTP/1.1 422 Unprocessable Entity"
+ok
+test_public_route_boundary (__main__.FullStackTests.test_public_route_boundary) ... INFO:hsr-bms:request_id=3c2948b4-5617-4efb-8c5a-3583984f1548 method=POST path=/auth/login status=200 duration_ms=385
+INFO:httpx:HTTP Request: POST http://testserver/auth/login "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=c9a0a317-a3b4-4296-b8f9-efed9b92076b method=POST path=/auth/login status=200 duration_ms=385
+INFO:httpx:HTTP Request: POST http://testserver/auth/login "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=f371bff9-3211-4e40-b3fb-c8b207e959e0 method=GET path=/auth/me status=401 duration_ms=1
+INFO:httpx:HTTP Request: GET http://testserver/auth/me "HTTP/1.1 401 Unauthorized"
+INFO:hsr-bms:request_id=8ae67fcb-7741-4944-86b4-1ac2a81c3b6a method=POST path=/auth/logout status=401 duration_ms=0
+INFO:httpx:HTTP Request: POST http://testserver/auth/logout "HTTP/1.1 401 Unauthorized"
+INFO:hsr-bms:request_id=dd7416b6-c0da-4806-bb2d-48e408879390 method=POST path=/auth/change status=401 duration_ms=1
+INFO:httpx:HTTP Request: POST http://testserver/auth/change "HTTP/1.1 401 Unauthorized"
+INFO:hsr-bms:request_id=5e75e751-2e9b-4dec-acfa-c7802041f315 method=POST path=/auth/change-staff status=401 duration_ms=1
+INFO:httpx:HTTP Request: POST http://testserver/auth/change-staff "HTTP/1.1 401 Unauthorized"
+INFO:hsr-bms:request_id=e6a6d8b3-5c64-478f-9e40-06d48209a2b3 method=GET path=/events/stream status=401 duration_ms=1
+INFO:httpx:HTTP Request: GET http://testserver/events/stream "HTTP/1.1 401 Unauthorized"
+INFO:hsr-bms:request_id=ad31ad40-6a23-4a50-8062-5431ca24b9d0 method=POST path=/sessions/start status=401 duration_ms=1
+INFO:httpx:HTTP Request: POST http://testserver/sessions/start "HTTP/1.1 401 Unauthorized"
+INFO:hsr-bms:request_id=0bd28d21-79ed-4d29-a7e0-55fc5b6e4e00 method=POST path=/sessions/pause/t1 status=401 duration_ms=1
+INFO:httpx:HTTP Request: POST http://testserver/sessions/pause/t1 "HTTP/1.1 401 Unauthorized"
+INFO:hsr-bms:request_id=070e2b8b-93c1-4083-98d6-d046c9b05a77 method=GET path=/sessions/quote/t1 status=401 duration_ms=1
+INFO:httpx:HTTP Request: GET http://testserver/sessions/quote/t1 "HTTP/1.1 401 Unauthorized"
+INFO:hsr-bms:request_id=a458ebbd-127a-4714-ac20-8afd16e9549e method=POST path=/sessions/stop/t1 status=401 duration_ms=1
+INFO:httpx:HTTP Request: POST http://testserver/sessions/stop/t1 "HTTP/1.1 401 Unauthorized"
+INFO:hsr-bms:request_id=26b5888f-eeb1-47f5-81e2-62c2ba46539e method=POST path=/sessions/transfer/t1 status=401 duration_ms=1
+INFO:httpx:HTTP Request: POST http://testserver/sessions/transfer/t1 "HTTP/1.1 401 Unauthorized"
+INFO:hsr-bms:request_id=bb992523-ec95-4320-9fbc-3aa3023dbbac method=POST path=/sessions/reset/t1 status=401 duration_ms=1
+INFO:httpx:HTTP Request: POST http://testserver/sessions/reset/t1 "HTTP/1.1 401 Unauthorized"
+INFO:hsr-bms:request_id=7ff94f86-cbc6-4e25-b5c7-c2c37e787231 method=POST path=/sessions/t1/frames/start status=401 duration_ms=1
+INFO:httpx:HTTP Request: POST http://testserver/sessions/t1/frames/start "HTTP/1.1 401 Unauthorized"
+INFO:hsr-bms:request_id=26355c08-ca39-4135-8b1f-c763b9a2b0e1 method=POST path=/sessions/t1/frames/close status=401 duration_ms=1
+INFO:httpx:HTTP Request: POST http://testserver/sessions/t1/frames/close "HTTP/1.1 401 Unauthorized"
+INFO:hsr-bms:request_id=6ebfb5a4-c7b5-4469-b97e-a0785e1c3310 method=POST path=/sessions/t1/food status=401 duration_ms=1
+INFO:httpx:HTTP Request: POST http://testserver/sessions/t1/food "HTTP/1.1 401 Unauthorized"
+INFO:hsr-bms:request_id=db4e2b8a-e4c9-4a5c-840c-cdeb06070693 method=POST path=/sessions/t1/notes status=401 duration_ms=1
+INFO:httpx:HTTP Request: POST http://testserver/sessions/t1/notes "HTTP/1.1 401 Unauthorized"
+INFO:hsr-bms:request_id=b1b47002-4ddb-4d7d-a20d-781694268021 method=POST path=/sessions/t1/reserve status=401 duration_ms=1
+INFO:httpx:HTTP Request: POST http://testserver/sessions/t1/reserve "HTTP/1.1 401 Unauthorized"
+INFO:hsr-bms:request_id=82514580-4391-41d9-82ad-c5880ffde112 method=DELETE path=/sessions/t1/reserve status=401 duration_ms=1
+INFO:httpx:HTTP Request: DELETE http://testserver/sessions/t1/reserve "HTTP/1.1 401 Unauthorized"
+INFO:hsr-bms:request_id=d8ed9a9a-6b22-477f-8f40-017c9bc6d609 method=GET path=/sessions/active status=401 duration_ms=1
+INFO:httpx:HTTP Request: GET http://testserver/sessions/active "HTTP/1.1 401 Unauthorized"
+INFO:hsr-bms:request_id=b2a1ec38-4373-4904-92e4-45c2e82743d9 method=GET path=/sessions/tables status=401 duration_ms=1
+INFO:httpx:HTTP Request: GET http://testserver/sessions/tables "HTTP/1.1 401 Unauthorized"
+INFO:hsr-bms:request_id=07b35822-1196-4aa9-a4f3-af93213aab72 method=GET path=/sessions/live-floor status=401 duration_ms=1
+INFO:httpx:HTTP Request: GET http://testserver/sessions/live-floor "HTTP/1.1 401 Unauthorized"
+INFO:hsr-bms:request_id=c9e30c82-e84e-439a-9edc-f5103abdef62 method=GET path=/sessions/history/t1 status=401 duration_ms=1
+INFO:httpx:HTTP Request: GET http://testserver/sessions/history/t1 "HTTP/1.1 401 Unauthorized"
+INFO:hsr-bms:request_id=dd1a9c8a-c744-4ea5-beb2-68dc4382cb19 method=GET path=/sessions/audit/t1 status=401 duration_ms=1
+INFO:httpx:HTTP Request: GET http://testserver/sessions/audit/t1 "HTTP/1.1 401 Unauthorized"
+INFO:hsr-bms:request_id=d82ba5f4-847c-4ac4-9977-ebb9d70fd424 method=GET path=/sessions/events/t1 status=401 duration_ms=1
+INFO:httpx:HTTP Request: GET http://testserver/sessions/events/t1 "HTTP/1.1 401 Unauthorized"
+INFO:hsr-bms:request_id=6362c8a8-c168-4957-a679-ecb73bc73e08 method=POST path=/sessions/maintenance/t1 status=401 duration_ms=1
+INFO:httpx:HTTP Request: POST http://testserver/sessions/maintenance/t1 "HTTP/1.1 401 Unauthorized"
+INFO:hsr-bms:request_id=d47814b3-64ce-4228-872e-043c9ab0b2bb method=DELETE path=/sessions/maintenance/t1 status=401 duration_ms=1
+INFO:httpx:HTTP Request: DELETE http://testserver/sessions/maintenance/t1 "HTTP/1.1 401 Unauthorized"
+INFO:hsr-bms:request_id=fe7a0984-c0e0-466c-ab48-cc71bb8dd76c method=GET path=/sessions/maintenance status=401 duration_ms=1
+INFO:httpx:HTTP Request: GET http://testserver/sessions/maintenance "HTTP/1.1 401 Unauthorized"
+INFO:hsr-bms:request_id=56f3a18b-a28e-4526-b7f1-8cd2cd7ee23e method=GET path=/members/search status=401 duration_ms=1
+INFO:httpx:HTTP Request: GET http://testserver/members/search "HTTP/1.1 401 Unauthorized"
+INFO:hsr-bms:request_id=864bc23c-b960-49ca-b5ac-99a68aa42783 method=GET path=/members/ status=401 duration_ms=1
+INFO:httpx:HTTP Request: GET http://testserver/members/ "HTTP/1.1 401 Unauthorized"
+INFO:hsr-bms:request_id=e87fe4cd-a316-4642-9a2f-19bd78928991 method=POST path=/members/ status=401 duration_ms=1
+INFO:httpx:HTTP Request: POST http://testserver/members/ "HTTP/1.1 401 Unauthorized"
+INFO:hsr-bms:request_id=64d5e526-d718-4857-85c7-ea9e3e718b75 method=GET path=/members/duplicates status=401 duration_ms=1
+INFO:httpx:HTTP Request: GET http://testserver/members/duplicates "HTTP/1.1 401 Unauthorized"
+INFO:hsr-bms:request_id=3f7632fa-4486-45fb-ae8d-b599adf2589e method=POST path=/members/merge status=401 duration_ms=1
+INFO:httpx:HTTP Request: POST http://testserver/members/merge "HTTP/1.1 401 Unauthorized"
+INFO:hsr-bms:request_id=2053d3cc-189c-4ab5-b082-51657f9b5b30 method=POST path=/members/1/upgrade status=401 duration_ms=1
+INFO:httpx:HTTP Request: POST http://testserver/members/1/upgrade "HTTP/1.1 401 Unauthorized"
+INFO:hsr-bms:request_id=d6bdc306-5298-4748-960d-b3db17f87593 method=POST path=/members/1/restore status=401 duration_ms=1
+INFO:httpx:HTTP Request: POST http://testserver/members/1/restore "HTTP/1.1 401 Unauthorized"
+INFO:hsr-bms:request_id=d7073a90-9179-4f23-8329-daaf09bc2377 method=DELETE path=/members/1 status=401 duration_ms=1
+INFO:httpx:HTTP Request: DELETE http://testserver/members/1 "HTTP/1.1 401 Unauthorized"
+INFO:hsr-bms:request_id=2c36fb49-38c3-4c1d-8a5b-8d1317fea30e method=GET path=/reports/summary status=401 duration_ms=1
+INFO:httpx:HTTP Request: GET http://testserver/reports/summary "HTTP/1.1 401 Unauthorized"
+INFO:hsr-bms:request_id=e13a584d-e431-475b-8f2b-d4be85af5abd method=GET path=/reports/dashboard status=401 duration_ms=0
+INFO:httpx:HTTP Request: GET http://testserver/reports/dashboard "HTTP/1.1 401 Unauthorized"
+INFO:hsr-bms:request_id=b2df73d5-e85f-4d2a-be78-ae35456c84fd method=GET path=/reports/history status=401 duration_ms=1
+INFO:httpx:HTTP Request: GET http://testserver/reports/history "HTTP/1.1 401 Unauthorized"
+INFO:hsr-bms:request_id=3968d4c4-ca05-4bf0-8b2b-9b2cff1ee390 method=GET path=/reports/export status=401 duration_ms=1
+INFO:httpx:HTTP Request: GET http://testserver/reports/export "HTTP/1.1 401 Unauthorized"
+INFO:hsr-bms:request_id=49b794bf-2f17-4e10-a57a-ffe2a4af8859 method=GET path=/reports/top-customers status=401 duration_ms=1
+INFO:httpx:HTTP Request: GET http://testserver/reports/top-customers "HTTP/1.1 401 Unauthorized"
+INFO:hsr-bms:request_id=a5e89d00-a0fb-479b-8373-76291c80bb40 method=GET path=/reports/table-utilization status=401 duration_ms=1
+INFO:httpx:HTTP Request: GET http://testserver/reports/table-utilization "HTTP/1.1 401 Unauthorized"
+INFO:hsr-bms:request_id=e8f573ee-a9c2-498e-a23e-06efedabb6e9 method=GET path=/reports/closing-report status=401 duration_ms=2
+INFO:httpx:HTTP Request: GET http://testserver/reports/closing-report "HTTP/1.1 401 Unauthorized"
+INFO:hsr-bms:request_id=c40cbe88-f3ee-4bb2-bd90-e6133cc9591c method=POST path=/reports/day-close status=401 duration_ms=1
+INFO:httpx:HTTP Request: POST http://testserver/reports/day-close "HTTP/1.1 401 Unauthorized"
+INFO:hsr-bms:request_id=f66114c0-1794-4af9-bcd4-d716e6a79f63 method=GET path=/reports/closing-insights status=401 duration_ms=1
+INFO:httpx:HTTP Request: GET http://testserver/reports/closing-insights "HTTP/1.1 401 Unauthorized"
+INFO:hsr-bms:request_id=326926fa-522c-4821-9f9e-7d36e4ae20d1 method=GET path=/reports/analytics status=401 duration_ms=1
+INFO:httpx:HTTP Request: GET http://testserver/reports/analytics "HTTP/1.1 401 Unauthorized"
+INFO:hsr-bms:request_id=42c59721-22f9-485c-b85e-b0dcaa871b4f method=GET path=/reports/advanced-analytics status=401 duration_ms=1
+INFO:httpx:HTTP Request: GET http://testserver/reports/advanced-analytics "HTTP/1.1 401 Unauthorized"
+INFO:hsr-bms:request_id=a85e9c63-f43d-4205-bc8e-91d66e80ef1d method=GET path=/settings/tariffs status=401 duration_ms=1
+INFO:httpx:HTTP Request: GET http://testserver/settings/tariffs "HTTP/1.1 401 Unauthorized"
+INFO:hsr-bms:request_id=3c992da4-c37e-4cbf-9f30-acc75800b151 method=POST path=/settings/tariffs status=401 duration_ms=1
+INFO:httpx:HTTP Request: POST http://testserver/settings/tariffs "HTTP/1.1 401 Unauthorized"
+INFO:hsr-bms:request_id=5c5e04d2-598a-4614-a54a-29c5c0481c62 method=GET path=/settings/rates status=401 duration_ms=1
+INFO:httpx:HTTP Request: GET http://testserver/settings/rates "HTTP/1.1 401 Unauthorized"
+INFO:hsr-bms:request_id=4cf7bf65-d037-44fb-8d37-2d135a0464e4 method=POST path=/settings/rates status=401 duration_ms=1
+INFO:httpx:HTTP Request: POST http://testserver/settings/rates "HTTP/1.1 401 Unauthorized"
+INFO:hsr-bms:request_id=6a5d71ac-92ff-4a0a-b1cb-2ea458534653 method=GET path=/settings/min-session status=401 duration_ms=1
+INFO:httpx:HTTP Request: GET http://testserver/settings/min-session "HTTP/1.1 401 Unauthorized"
+INFO:hsr-bms:request_id=cbadc723-c86d-4531-8c09-08072caa40bf method=POST path=/settings/min-session status=401 duration_ms=1
+INFO:httpx:HTTP Request: POST http://testserver/settings/min-session "HTTP/1.1 401 Unauthorized"
+INFO:hsr-bms:request_id=3c5a7495-ca8d-42f0-90e5-7405461d9036 method=GET path=/settings/booking-grace status=401 duration_ms=1
+INFO:httpx:HTTP Request: GET http://testserver/settings/booking-grace "HTTP/1.1 401 Unauthorized"
+INFO:hsr-bms:request_id=36e0fe0d-25a9-4ef7-836e-1b2c3ca5ab6b method=POST path=/settings/booking-grace status=401 duration_ms=1
+INFO:httpx:HTTP Request: POST http://testserver/settings/booking-grace "HTTP/1.1 401 Unauthorized"
+INFO:hsr-bms:request_id=9ec5cce4-6907-4799-97dc-8fd1e0034bee method=GET path=/settings/menu status=401 duration_ms=1
+INFO:httpx:HTTP Request: GET http://testserver/settings/menu "HTTP/1.1 401 Unauthorized"
+INFO:hsr-bms:request_id=30dd2c5a-ceb4-4b70-9c7c-6e3679549800 method=POST path=/settings/menu status=401 duration_ms=1
+INFO:httpx:HTTP Request: POST http://testserver/settings/menu "HTTP/1.1 401 Unauthorized"
+INFO:hsr-bms:request_id=fe47abe4-7540-43fe-a834-a00996a80fa4 method=POST path=/settings/menu/update status=401 duration_ms=1
+INFO:httpx:HTTP Request: POST http://testserver/settings/menu/update "HTTP/1.1 401 Unauthorized"
+INFO:hsr-bms:request_id=115a7a6c-25f8-45f1-ad70-59bd275ab87d method=POST path=/settings/menu/restore status=401 duration_ms=1
+INFO:httpx:HTTP Request: POST http://testserver/settings/menu/restore "HTTP/1.1 401 Unauthorized"
+INFO:hsr-bms:request_id=d4152710-e655-4b82-b089-29f7966da962 method=POST path=/settings/menu/1/availability status=401 duration_ms=1
+INFO:httpx:HTTP Request: POST http://testserver/settings/menu/1/availability "HTTP/1.1 401 Unauthorized"
+INFO:hsr-bms:request_id=1002a089-bf04-4c1b-ae83-c8aee3171bfd method=DELETE path=/settings/menu/1 status=401 duration_ms=1
+INFO:httpx:HTTP Request: DELETE http://testserver/settings/menu/1 "HTTP/1.1 401 Unauthorized"
+INFO:hsr-bms:request_id=a4ff0f0b-37c5-4f4c-ade3-07f869adae89 method=POST path=/settings/reset-daily status=401 duration_ms=1
+INFO:httpx:HTTP Request: POST http://testserver/settings/reset-daily "HTTP/1.1 401 Unauthorized"
+INFO:hsr-bms:request_id=32f6308d-4c14-495c-b8d8-9685e6faf486 method=POST path=/settings/clear-all status=401 duration_ms=1
+INFO:httpx:HTTP Request: POST http://testserver/settings/clear-all "HTTP/1.1 401 Unauthorized"
+INFO:hsr-bms:request_id=5c3a9807-d3ca-4a55-9839-8df2c0b7ee14 method=POST path=/food/order status=401 duration_ms=1
+INFO:httpx:HTTP Request: POST http://testserver/food/order "HTTP/1.1 401 Unauthorized"
+INFO:hsr-bms:request_id=d37ea52a-ecc8-4fda-9a33-3fe7ff6d16b4 method=GET path=/food/orders status=401 duration_ms=1
+INFO:httpx:HTTP Request: GET http://testserver/food/orders "HTTP/1.1 401 Unauthorized"
+INFO:hsr-bms:request_id=16075c81-162a-448f-b732-ecf12614ef9f method=DELETE path=/food/orders/1 status=401 duration_ms=1
+INFO:httpx:HTTP Request: DELETE http://testserver/food/orders/1 "HTTP/1.1 401 Unauthorized"
+INFO:hsr-bms:request_id=4a89ef79-adba-43b3-aaca-e46afca0962b method=POST path=/food/orders/1/restore status=401 duration_ms=1
+INFO:httpx:HTTP Request: POST http://testserver/food/orders/1/restore "HTTP/1.1 401 Unauthorized"
+INFO:hsr-bms:request_id=c5279a0c-7214-4809-9ef4-6cbe17806190 method=GET path=/food/stats status=401 duration_ms=1
+INFO:httpx:HTTP Request: GET http://testserver/food/stats "HTTP/1.1 401 Unauthorized"
+INFO:hsr-bms:request_id=f58d8029-002c-41c8-8735-6d8a53fec12d method=GET path=/operations/peak-hours status=401 duration_ms=1
+INFO:httpx:HTTP Request: GET http://testserver/operations/peak-hours "HTTP/1.1 401 Unauthorized"
+INFO:hsr-bms:request_id=0403e151-b275-4d46-ace3-fc00816badda method=POST path=/operations/peak-hours status=401 duration_ms=1
+INFO:httpx:HTTP Request: POST http://testserver/operations/peak-hours "HTTP/1.1 401 Unauthorized"
+INFO:hsr-bms:request_id=244a1783-3b22-4823-beac-78f3720a860d method=PUT path=/operations/peak-hours/1 status=401 duration_ms=1
+INFO:httpx:HTTP Request: PUT http://testserver/operations/peak-hours/1 "HTTP/1.1 401 Unauthorized"
+INFO:hsr-bms:request_id=0a1a636f-5a53-49b2-b94d-20356d0b0b45 method=DELETE path=/operations/peak-hours/1 status=401 duration_ms=2
+INFO:httpx:HTTP Request: DELETE http://testserver/operations/peak-hours/1 "HTTP/1.1 401 Unauthorized"
+INFO:hsr-bms:request_id=2aa38863-07c1-4ad4-9d98-7a49f48443f8 method=GET path=/operations/current-rate status=401 duration_ms=1
+INFO:httpx:HTTP Request: GET http://testserver/operations/current-rate "HTTP/1.1 401 Unauthorized"
+INFO:hsr-bms:request_id=ccdf7f61-c7d7-4242-9e9b-398cf296a7ca method=GET path=/operations/gst status=401 duration_ms=1
+INFO:httpx:HTTP Request: GET http://testserver/operations/gst "HTTP/1.1 401 Unauthorized"
+INFO:hsr-bms:request_id=7326d5ad-ff8b-4af8-8b1f-895f3bf49a74 method=POST path=/operations/gst status=401 duration_ms=1
+INFO:httpx:HTTP Request: POST http://testserver/operations/gst "HTTP/1.1 401 Unauthorized"
+INFO:hsr-bms:request_id=a2b8e663-4a8f-488a-a18a-03e788436d1c method=GET path=/operations/security-controls status=401 duration_ms=1
+INFO:httpx:HTTP Request: GET http://testserver/operations/security-controls "HTTP/1.1 401 Unauthorized"
+INFO:hsr-bms:request_id=d46cb089-f6d7-4b85-816a-1bb92f39a1bd method=POST path=/operations/security-controls status=401 duration_ms=1
+INFO:httpx:HTTP Request: POST http://testserver/operations/security-controls "HTTP/1.1 401 Unauthorized"
+INFO:hsr-bms:request_id=72b3d184-0a42-4fcc-a24a-a0bc0d558c34 method=GET path=/operations/audit-logs status=401 duration_ms=1
+INFO:httpx:HTTP Request: GET http://testserver/operations/audit-logs "HTTP/1.1 401 Unauthorized"
+INFO:hsr-bms:request_id=c0b30d30-90da-424c-bf86-79abc7be65c2 method=GET path=/tournaments/ status=401 duration_ms=2
+INFO:httpx:HTTP Request: GET http://testserver/tournaments/ "HTTP/1.1 401 Unauthorized"
+INFO:hsr-bms:request_id=60f7224f-b68b-4384-831c-f7eef20d63cf method=POST path=/tournaments/ status=401 duration_ms=1
+INFO:httpx:HTTP Request: POST http://testserver/tournaments/ "HTTP/1.1 401 Unauthorized"
+INFO:hsr-bms:request_id=e5356f40-117d-46e9-9795-daf5a29f0ee6 method=GET path=/tournaments/1 status=401 duration_ms=1
+INFO:httpx:HTTP Request: GET http://testserver/tournaments/1 "HTTP/1.1 401 Unauthorized"
+INFO:hsr-bms:request_id=eb64d8b0-3085-4e7f-8ff7-f65794ac2802 method=POST path=/tournaments/1/matches/1/winner status=401 duration_ms=1
+INFO:httpx:HTTP Request: POST http://testserver/tournaments/1/matches/1/winner "HTTP/1.1 401 Unauthorized"
+INFO:hsr-bms:request_id=a97f797b-4a85-45c6-b87d-3800f3c88602 method=POST path=/tournaments/1/close status=401 duration_ms=1
+INFO:httpx:HTTP Request: POST http://testserver/tournaments/1/close "HTTP/1.1 401 Unauthorized"
+INFO:hsr-bms:request_id=d7647cc2-e76f-44ef-b138-7be4bf7c4a7a method=GET path=/waitlist status=401 duration_ms=1
+INFO:httpx:HTTP Request: GET http://testserver/waitlist "HTTP/1.1 401 Unauthorized"
+INFO:hsr-bms:request_id=d21489a8-0f87-4fb4-b637-a0b91495b81c method=POST path=/waitlist status=401 duration_ms=1
+INFO:httpx:HTTP Request: POST http://testserver/waitlist "HTTP/1.1 401 Unauthorized"
+INFO:hsr-bms:request_id=dcaf5ea4-04a2-42bd-aa11-3e51b273efe5 method=POST path=/waitlist/1/seat status=401 duration_ms=1
+INFO:httpx:HTTP Request: POST http://testserver/waitlist/1/seat "HTTP/1.1 401 Unauthorized"
+INFO:hsr-bms:request_id=84c26857-f7b4-4a87-8c18-b0789677a00e method=DELETE path=/waitlist/1 status=401 duration_ms=1
+INFO:httpx:HTTP Request: DELETE http://testserver/waitlist/1 "HTTP/1.1 401 Unauthorized"
+INFO:hsr-bms:request_id=287b5262-757e-4fa1-bd5e-6b986a28e40e method=GET path=/bookings status=401 duration_ms=1
+INFO:httpx:HTTP Request: GET http://testserver/bookings "HTTP/1.1 401 Unauthorized"
+INFO:hsr-bms:request_id=93cf5582-24f2-4d1d-ac47-5ee114136736 method=POST path=/bookings status=401 duration_ms=1
+INFO:httpx:HTTP Request: POST http://testserver/bookings "HTTP/1.1 401 Unauthorized"
+INFO:hsr-bms:request_id=eddb6432-9e26-457f-8b4a-1c18204fd733 method=POST path=/bookings/1/restore status=401 duration_ms=1
+INFO:httpx:HTTP Request: POST http://testserver/bookings/1/restore "HTTP/1.1 401 Unauthorized"
+INFO:hsr-bms:request_id=b86729ef-32f6-4948-9c2f-015133c24bca method=DELETE path=/bookings/1 status=401 duration_ms=1
+INFO:httpx:HTTP Request: DELETE http://testserver/bookings/1 "HTTP/1.1 401 Unauthorized"
+INFO:hsr-bms:request_id=b9da42af-18c6-46a8-8e75-8c660e7c6fe4 method=GET path=/staff/roles status=401 duration_ms=2
+INFO:httpx:HTTP Request: GET http://testserver/staff/roles "HTTP/1.1 401 Unauthorized"
+INFO:hsr-bms:request_id=9f9f8075-d08f-4851-89e8-23c4cd103f60 method=POST path=/staff/roles status=401 duration_ms=1
+INFO:httpx:HTTP Request: POST http://testserver/staff/roles "HTTP/1.1 401 Unauthorized"
+INFO:hsr-bms:request_id=9be7e033-6ea6-4243-bd94-376de587d293 method=GET path=/challenges status=401 duration_ms=1
+INFO:httpx:HTTP Request: GET http://testserver/challenges "HTTP/1.1 401 Unauthorized"
+INFO:hsr-bms:request_id=5b850802-a73a-4af8-83ee-5bfcc2966dc8 method=POST path=/challenges status=401 duration_ms=1
+INFO:httpx:HTTP Request: POST http://testserver/challenges "HTTP/1.1 401 Unauthorized"
+INFO:hsr-bms:request_id=bc8f591b-3f06-41f2-a6ea-ed2f825fffc7 method=POST path=/challenges/1/match status=401 duration_ms=1
+INFO:httpx:HTTP Request: POST http://testserver/challenges/1/match "HTTP/1.1 401 Unauthorized"
+INFO:hsr-bms:request_id=61625853-b7ee-425f-8dfb-a13a97a39201 method=DELETE path=/challenges/1 status=401 duration_ms=1
+INFO:httpx:HTTP Request: DELETE http://testserver/challenges/1 "HTTP/1.1 401 Unauthorized"
+ok
+test_signed_checkout_freezes_and_rejects_tampering (__main__.FullStackTests.test_signed_checkout_freezes_and_rejects_tampering) ... INFO:hsr-bms:request_id=ba3faa64-c68d-4818-87b0-f0f769c584b3 method=POST path=/auth/login status=200 duration_ms=415
+INFO:httpx:HTTP Request: POST http://testserver/auth/login "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=4710c8bc-c213-4c18-8ffc-c0a09b05b5da method=POST path=/auth/login status=200 duration_ms=384
+INFO:httpx:HTTP Request: POST http://testserver/auth/login "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=950e3acd-9640-40f9-9a68-9e2856f57e2a method=POST path=/sessions/start status=200 duration_ms=19
+INFO:httpx:HTTP Request: POST http://testserver/sessions/start "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=ed7b3abf-30ce-4d94-9e79-69528d755631 method=GET path=/sessions/quote/t1 status=200 duration_ms=13
+INFO:httpx:HTTP Request: GET http://testserver/sessions/quote/t1 "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=dced7e20-b8bb-4fa6-898d-170e2160a4d8 method=POST path=/sessions/stop/t1 status=409 duration_ms=11
+INFO:httpx:HTTP Request: POST http://testserver/sessions/stop/t1?closed_at_ms=1791661403610.22&checkout_token_value=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwdXJwb3NlIjoiY2hlY2tvdXQiLCJzZXNzaW9uX2tleSI6InQxOjgzZTYwYTAwZTkxZjQwYzNiN2ZjOTRiNzA0ODM3YmE3IiwiY2xvc2VkX2F0X21zIjoxNzkxNjYxNDAzNjExLjIyLCJleHAiOjE3OTE2NjIwMDN9.z7hF3K5JzPbplCPIvP1YvfrgSk84OF4xBYrgk_bvh1E&session_key=t1%3A83e60a00e91f40c3b7fc94b704837ba7 "HTTP/1.1 409 Conflict"
+INFO:hsr-bms:request_id=dc2be52b-c566-416e-b1a2-e96c87c9ace9 method=POST path=/sessions/start status=200 duration_ms=15
+INFO:httpx:HTTP Request: POST http://testserver/sessions/start "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=99e05843-117a-4048-8869-6c64e5986b63 method=POST path=/sessions/stop/t2 status=409 duration_ms=9
+INFO:httpx:HTTP Request: POST http://testserver/sessions/stop/t2?closed_at_ms=1791661403611.22&checkout_token_value=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwdXJwb3NlIjoiY2hlY2tvdXQiLCJzZXNzaW9uX2tleSI6InQxOjgzZTYwYTAwZTkxZjQwYzNiN2ZjOTRiNzA0ODM3YmE3IiwiY2xvc2VkX2F0X21zIjoxNzkxNjYxNDAzNjExLjIyLCJleHAiOjE3OTE2NjIwMDN9.z7hF3K5JzPbplCPIvP1YvfrgSk84OF4xBYrgk_bvh1E "HTTP/1.1 409 Conflict"
+INFO:hsr-bms:request_id=8a2239e5-388e-4e8a-a33b-ed3166290e98 method=POST path=/sessions/stop/t1 status=409 duration_ms=9
+INFO:httpx:HTTP Request: POST http://testserver/sessions/stop/t1?closed_at_ms=1791661403611.22&checkout_token_value=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwdXJwb3NlIjoiY2hlY2tvdXQiLCJzZXNzaW9uX2tleSI6InQxOjgzZTYwYTAwZTkxZjQwYzNiN2ZjOTRiNzA0ODM3YmE3IiwiY2xvc2VkX2F0X21zIjoxNzkxNjYxNDAzNjExLjIyLCJleHAiOjE3OTE2NjIwMDN9.z7hF3K5JzPbplCPIvP1YvfrgSk84OF4xBYrgk_bvh1E&session_key=t1%3A83e60a00e91f40c3b7fc94b704837ba7 "HTTP/1.1 409 Conflict"
+INFO:hsr-bms:request_id=1bb0abb5-e4d2-4a5b-b7e1-9f66d8fefbd9 method=POST path=/sessions/stop/t1 status=200 duration_ms=27
+INFO:httpx:HTTP Request: POST http://testserver/sessions/stop/t1?closed_at_ms=1791661403611.22&checkout_token_value=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwdXJwb3NlIjoiY2hlY2tvdXQiLCJzZXNzaW9uX2tleSI6InQxOjgzZTYwYTAwZTkxZjQwYzNiN2ZjOTRiNzA0ODM3YmE3IiwiY2xvc2VkX2F0X21zIjoxNzkxNjYxNDAzNjExLjIyLCJleHAiOjE3OTE2NjIwMDN9.z7hF3K5JzPbplCPIvP1YvfrgSk84OF4xBYrgk_bvh1E&session_key=t1%3A83e60a00e91f40c3b7fc94b704837ba7 "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=72b0ac0e-b531-4cc6-a3cf-edf5c058d2b7 method=POST path=/sessions/stop/t1 status=200 duration_ms=10
+INFO:httpx:HTTP Request: POST http://testserver/sessions/stop/t1?closed_at_ms=1791661403611.22&checkout_token_value=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwdXJwb3NlIjoiY2hlY2tvdXQiLCJzZXNzaW9uX2tleSI6InQxOjgzZTYwYTAwZTkxZjQwYzNiN2ZjOTRiNzA0ODM3YmE3IiwiY2xvc2VkX2F0X21zIjoxNzkxNjYxNDAzNjExLjIyLCJleHAiOjE3OTE2NjIwMDN9.z7hF3K5JzPbplCPIvP1YvfrgSk84OF4xBYrgk_bvh1E&session_key=t1%3A83e60a00e91f40c3b7fc94b704837ba7 "HTTP/1.1 200 OK"
+ok
+test_staff_rotation_revokes_only_staff (__main__.FullStackTests.test_staff_rotation_revokes_only_staff) ... INFO:hsr-bms:request_id=5ed857c5-c560-4f6a-8b07-05c0ecfcf2e9 method=POST path=/auth/login status=200 duration_ms=385
+INFO:httpx:HTTP Request: POST http://testserver/auth/login "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=1069f79b-b4c5-487f-b855-dd52a4ec18f7 method=POST path=/auth/login status=200 duration_ms=385
+INFO:httpx:HTTP Request: POST http://testserver/auth/login "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=3a26eac8-997a-4130-a1c8-459d3fc97034 method=POST path=/auth/change-staff status=200 duration_ms=395
+INFO:httpx:HTTP Request: POST http://testserver/auth/change-staff "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=574b1838-ea7c-4fb4-a26d-de6ea8c53e23 method=GET path=/auth/me status=401 duration_ms=6
+INFO:httpx:HTTP Request: GET http://testserver/auth/me "HTTP/1.1 401 Unauthorized"
+INFO:hsr-bms:request_id=353ef17d-e2d8-417e-ac2a-a1ea77a62f6b method=GET path=/auth/me status=200 duration_ms=6
+INFO:httpx:HTTP Request: GET http://testserver/auth/me "HTTP/1.1 200 OK"
+ok
+test_undo_cannot_create_fictitious_sale (__main__.FullStackTests.test_undo_cannot_create_fictitious_sale) ... INFO:hsr-bms:request_id=8e09d9c1-d62c-4d38-82fa-8b8222eac9da method=POST path=/auth/login status=200 duration_ms=485
+INFO:httpx:HTTP Request: POST http://testserver/auth/login "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=16de39be-27af-4955-bfd8-fb33a4d097f1 method=POST path=/auth/login status=200 duration_ms=386
+INFO:httpx:HTTP Request: POST http://testserver/auth/login "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=80a3fe91-cb2a-49b2-9cd1-e2fc0eeca50f method=POST path=/food/orders/900000/restore status=404 duration_ms=12
+INFO:httpx:HTTP Request: POST http://testserver/food/orders/900000/restore "HTTP/1.1 404 Not Found"
+ok
+test_undo_preserves_server_receipt (__main__.FullStackTests.test_undo_preserves_server_receipt) ... INFO:hsr-bms:request_id=c1f22f39-82f0-40c3-82e5-74a292d8514d method=POST path=/auth/login status=200 duration_ms=385
+INFO:httpx:HTTP Request: POST http://testserver/auth/login "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=717a883e-81d9-4a0a-8a06-e69740ad01e9 method=POST path=/auth/login status=200 duration_ms=386
+INFO:httpx:HTTP Request: POST http://testserver/auth/login "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=f7345f09-2223-4ba0-ad90-9970952b67eb method=POST path=/food/order status=200 duration_ms=11
+INFO:httpx:HTTP Request: POST http://testserver/food/order "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=c39d8564-01be-4839-9e37-f6f76f74b7ff method=GET path=/food/orders status=200 duration_ms=8
+INFO:httpx:HTTP Request: GET http://testserver/food/orders "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=c892c3c7-927b-48c3-b9b6-b792f723e3cf method=DELETE path=/food/orders/36 status=200 duration_ms=10
+INFO:httpx:HTTP Request: DELETE http://testserver/food/orders/36 "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=101512bf-5dea-4a42-8c6b-e5580dc11e52 method=GET path=/food/orders status=200 duration_ms=7
+INFO:httpx:HTTP Request: GET http://testserver/food/orders "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=7fe9d5d7-ddec-4fe6-bb33-8a31aa026ecc method=GET path=/reports/closing-report status=200 duration_ms=14
+INFO:httpx:HTTP Request: GET http://testserver/reports/closing-report "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=ecea03b8-a23c-42a1-b6e1-fefb11dc31ca method=POST path=/food/orders/36/restore status=200 duration_ms=12
+INFO:httpx:HTTP Request: POST http://testserver/food/orders/36/restore "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=b3d2fb13-3d2f-4cff-80d8-583e331a3aef method=POST path=/food/orders/36/restore status=200 duration_ms=12
+INFO:httpx:HTTP Request: POST http://testserver/food/orders/36/restore "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=1668761f-3f6d-4afb-ba0c-d02046ad0e9f method=GET path=/food/orders status=200 duration_ms=11
+INFO:httpx:HTTP Request: GET http://testserver/food/orders "HTTP/1.1 200 OK"
+ok
+
+----------------------------------------------------------------------
+Ran 16 tests in 30.752s
+
+OK

@@ -1,0 +1,12 @@
+[
+  {
+    "theme": "light",
+    "shellSurvived": true,
+    "retryAfterRestoringNetwork": true
+  },
+  {
+    "theme": "dark",
+    "shellSurvived": true,
+    "retryAfterRestoringNetwork": true
+  }
+]

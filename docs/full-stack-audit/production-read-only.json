@@ -1,0 +1,80 @@
+{
+  "frontend": {
+    "status": 200,
+    "headers": {
+      "access-control-allow-origin": "*",
+      "age": "7267",
+      "cache-control": "public, max-age=0, must-revalidate",
+      "content-disposition": "inline",
+      "content-encoding": "br",
+      "content-type": "text/html; charset=utf-8",
+      "date": "Sat, 10 Oct 2026 19:49:33 GMT",
+      "etag": "W/\"6119d3a9f1b6da3e1b8e1f728270d6ae\"",
+      "last-modified": "Sat, 10 Oct 2026 17:48:25 GMT",
+      "server": "Vercel",
+      "strict-transport-security": "max-age=63072000; includeSubDomains; preload",
+      "transfer-encoding": "chunked",
+      "x-vercel-cache": "HIT",
+      "x-vercel-id": "bom1::j4nn7-1791661773331-5145d79eff01"
+    }
+  },
+  "backend": {
+    "status": 200,
+    "health": {
+      "status": "ok",
+      "service": "HSR Snooker Cafe BMS",
+      "revision": "05a8652a12fd476221cc1ec4b4dde91cd7e88b2d"
+    },
+    "headers": {
+      "alt-svc": "h3=\":443\"; ma=86400",
+      "cache-control": "no-store",
+      "cf-cache-status": "DYNAMIC",
+      "cf-ray": "a48826243e3f58b8-MAA",
+      "connection": "keep-alive",
+      "content-encoding": "br",
+      "content-length": "90",
+      "content-type": "application/json",
+      "date": "Sat, 10 Oct 2026 19:49:33 GMT",
+      "permissions-policy": "camera=(), microphone=(), geolocation=()",
+      "referrer-policy": "no-referrer",
+      "rndr-id": "6fadf9b8-54e1-4c4d",
+      "server": "cloudflare",
+      "strict-transport-security": "max-age=31536000; includeSubDomains",
+      "vary": "Origin, Accept-Encoding",
+      "x-content-type-options": "nosniff",
+      "x-frame-options": "DENY",
+      "x-render-origin-server": "uvicorn",
+      "x-request-id": "3986b3e2-b3b8-4ecf-9275-1dc75ab9a929"
+    }
+  },
+  "cors": {
+    "origin": "https://audit-untrusted.vercel.app",
+    "status": 200,
+    "headers": {
+      "access-control-allow-credentials": "true",
+      "access-control-allow-headers": "content-type",
+      "access-control-allow-methods": "DELETE, GET, HEAD, OPTIONS, PATCH, POST, PUT, QUERY",
+      "access-control-allow-origin": "https://audit-untrusted.vercel.app",
+      "access-control-max-age": "600",
+      "alt-svc": "h3=\":443\"; ma=86400",
+      "cache-control": "no-store",
+      "cf-cache-status": "DYNAMIC",
+      "cf-ray": "a4882624ecb97fa5-MAA",
+      "connection": "keep-alive",
+      "content-encoding": "br",
+      "content-length": "6",
+      "content-type": "text/plain; charset=utf-8",
+      "date": "Sat, 10 Oct 2026 19:49:33 GMT",
+      "permissions-policy": "camera=(), microphone=(), geolocation=()",
+      "referrer-policy": "no-referrer",
+      "rndr-id": "c301bd8c-0c59-4915",
+      "server": "cloudflare",
+      "strict-transport-security": "max-age=31536000; includeSubDomains",
+      "vary": "Origin, Access-Control-Request-Method, Access-Control-Request-Headers, Access-Control-Request-Private-Network, Accept-Encoding",
+      "x-content-type-options": "nosniff",
+      "x-frame-options": "DENY",
+      "x-render-origin-server": "uvicorn",
+      "x-request-id": "9227a76a-2ed9-4f26-bec0-c59763ab1d35"
+    }
+  }
+}

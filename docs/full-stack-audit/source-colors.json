@@ -1,0 +1,1305 @@
+{
+  "method": "Line-based source inventory, not computed contrast or an AST proof",
+  "componentUtilities": [],
+  "componentLiterals": [],
+  "entries": [
+    {
+      "file": "src/components/Dashboard.jsx",
+      "line": 1073,
+      "source": "<XAxis dataKey=\"date\" tick={{ fontSize: \"var(--text-sm)\", fill: \"var(--text-secondary)\" }} axisLine={false} tickLine={false} />",
+      "utilities": [],
+      "hex": [],
+      "classification": "legitimate semantic inline style"
+    },
+    {
+      "file": "src/components/Dashboard.jsx",
+      "line": 1075,
+      "source": "tick={{ fontSize: \"var(--text-sm)\", fill: \"var(--text-secondary)\" }}",
+      "utilities": [],
+      "hex": [],
+      "classification": "legitimate semantic inline style"
+    },
+    {
+      "file": "src/components/tabs/ClosingTab.jsx",
+      "line": 369,
+      "source": "<td style={{ color: \"var(--success)\", fontWeight: \"var(--weight-heavy)\" }}>{money(stats.revenue)}</td>",
+      "utilities": [],
+      "hex": [],
+      "classification": "legitimate semantic inline style"
+    },
+    {
+      "file": "src/components/tabs/ClosingTab.jsx",
+      "line": 427,
+      "source": "<td style={{ color: \"var(--text-secondary)\", fontSize: \"var(--text-sm)\" }}>{row.date}</td>",
+      "utilities": [],
+      "hex": [],
+      "classification": "legitimate semantic inline style"
+    },
+    {
+      "file": "src/components/tabs/ClosingTab.jsx",
+      "line": 428,
+      "source": "<td style={{ color: \"var(--danger)\", fontWeight: \"var(--weight-heavy)\" }}>{row.action.replaceAll(\"_\", \" \")}</td>",
+      "utilities": [],
+      "hex": [],
+      "classification": "legitimate semantic inline style"
+    },
+    {
+      "file": "src/components/tabs/FoodTab.jsx",
+      "line": 952,
+      "source": "<td style={{ color: \"var(--text-muted)\", fontSize: \"var(--text-sm)\" }}>",
+      "utilities": [],
+      "hex": [],
+      "classification": "legitimate semantic inline style"
+    },
+    {
+      "file": "src/components/tabs/FoodTab.jsx",
+      "line": 956,
+      "source": "<td style={{ color: \"var(--accent)\", fontWeight: \"var(--weight-semibold)\" }}>",
+      "utilities": [],
+      "hex": [],
+      "classification": "legitimate semantic inline style"
+    },
+    {
+      "file": "src/components/tabs/FoodTab.jsx",
+      "line": 959,
+      "source": "<td style={{ color: \"var(--success)\", fontWeight: \"var(--weight-semibold)\" }}>",
+      "utilities": [],
+      "hex": [],
+      "classification": "legitimate semantic inline style"
+    },
+    {
+      "file": "src/components/tabs/FoodTab.jsx",
+      "line": 995,
+      "source": "color: \"var(--text-muted)\",",
+      "utilities": [],
+      "hex": [],
+      "classification": "legitimate semantic inline style"
+    },
+    {
+      "file": "src/components/tabs/FoodTab.jsx",
+      "line": 1043,
+      "source": "<td style={{ color: \"var(--text-muted)\", fontSize: \"var(--text-sm)\" }}>",
+      "utilities": [],
+      "hex": [],
+      "classification": "legitimate semantic inline style"
+    },
+    {
+      "file": "src/components/tabs/FoodTab.jsx",
+      "line": 1047,
+      "source": "<td style={{ fontSize: \"var(--text-sm)\", color: \"var(--text-secondary)\" }}>",
+      "utilities": [],
+      "hex": [],
+      "classification": "legitimate semantic inline style"
+    },
+    {
+      "file": "src/components/tabs/FoodTab.jsx",
+      "line": 1050,
+      "source": "<td style={{ fontWeight: \"var(--weight-bold)\", color: o.payment_method === \"UPI\" ? \"var(--accent)\" : \"var(--success)\" }}>",
+      "utilities": [],
+      "hex": [],
+      "classification": "legitimate semantic inline style"
+    },
+    {
+      "file": "src/components/tabs/FoodTab.jsx",
+      "line": 1053,
+      "source": "<td style={{ fontWeight: \"var(--weight-semibold)\", color: \"var(--success)\" }}>",
+      "utilities": [],
+      "hex": [],
+      "classification": "legitimate semantic inline style"
+    },
+    {
+      "file": "src/components/tabs/OperationsTab.jsx",
+      "line": 185,
+      "source": "color: currentRate.is_peak ? \"var(--warning-foreground)\" : \"var(--success-foreground)\",",
+      "utilities": [],
+      "hex": [],
+      "classification": "legitimate semantic inline style"
+    },
+    {
+      "file": "src/components/tabs/OperationsTab.jsx",
+      "line": 276,
+      "source": "<div style={{ fontSize: \"var(--text-sm)\", color: \"var(--text-muted)\", marginTop: \"8px\" }}>",
+      "utilities": [],
+      "hex": [],
+      "classification": "legitimate semantic inline style"
+    },
+    {
+      "file": "src/components/tabs/OperationsTab.jsx",
+      "line": 386,
+      "source": "color: \"var(--success-foreground)\",",
+      "utilities": [],
+      "hex": [],
+      "classification": "legitimate semantic inline style"
+    },
+    {
+      "file": "src/components/tabs/OperationsTab.jsx",
+      "line": 408,
+      "source": "<span style={{ fontSize: \"var(--text-sm)\", color: \"var(--text-secondary)\" }}>%</span>",
+      "utilities": [],
+      "hex": [],
+      "classification": "legitimate semantic inline style"
+    },
+    {
+      "file": "src/components/tabs/OperationsTab.jsx",
+      "line": 430,
+      "source": "color: \"var(--accent-text)\",",
+      "utilities": [],
+      "hex": [],
+      "classification": "legitimate semantic inline style"
+    },
+    {
+      "file": "src/components/tabs/OperationsTab.jsx",
+      "line": 439,
+      "source": "<div style={{ marginTop: \"8px\", fontSize: \"var(--text-sm)\", color: \"var(--text-muted)\" }}>",
+      "utilities": [],
+      "hex": [],
+      "classification": "legitimate semantic inline style"
+    },
+    {
+      "file": "src/components/tabs/ReportsTab.jsx",
+      "line": 235,
+      "source": "<div style={{ fontSize: \"var(--text-sm)\", fontWeight: \"var(--weight-semibold)\", color: \"var(--venue-text, var(--text))\" }}>",
+      "utilities": [],
+      "hex": [],
+      "classification": "legitimate semantic inline style"
+    },
+    {
+      "file": "src/components/tabs/ReportsTab.jsx",
+      "line": 271,
+      "source": "color: \"var(--success-foreground)\",",
+      "utilities": [],
+      "hex": [],
+      "classification": "legitimate semantic inline style"
+    },
+    {
+      "file": "src/components/tabs/ReportsTab.jsx",
+      "line": 328,
+      "source": "<td style={{ color: \"var(--text-muted)\", fontSize: \"var(--text-sm)\" }}>{formatBillDate(r)}</td>",
+      "utilities": [],
+      "hex": [],
+      "classification": "legitimate semantic inline style"
+    },
+    {
+      "file": "src/components/tabs/ReportsTab.jsx",
+      "line": 333,
+      "source": "color: \"var(--text-primary)\",",
+      "utilities": [],
+      "hex": [],
+      "classification": "legitimate semantic inline style"
+    },
+    {
+      "file": "src/components/tabs/ReportsTab.jsx",
+      "line": 344,
+      "source": "<td style={{ color: \"var(--text-secondary)\", fontSize: \"var(--text-sm)\", fontWeight: \"var(--weight-bold)\" }}>",
+      "utilities": [],
+      "hex": [],
+      "classification": "legitimate semantic inline style"
+    },
+    {
+      "file": "src/components/tabs/ReportsTab.jsx",
+      "line": 347,
+      "source": "<td style={{ color: \"var(--text-secondary)\" }}>{r.dur}m</td>",
+      "utilities": [],
+      "hex": [],
+      "classification": "legitimate semantic inline style"
+    },
+    {
+      "file": "src/components/tabs/ReportsTab.jsx",
+      "line": 348,
+      "source": "<td style={{ color: \"var(--success)\", fontWeight: \"var(--weight-medium)\" }}>",
+      "utilities": [],
+      "hex": [],
+      "classification": "legitimate semantic inline style"
+    },
+    {
+      "file": "src/components/tabs/ReportsTab.jsx",
+      "line": 351,
+      "source": "<td style={{ color: \"var(--warning)\" }}>₹{r.famt || 0}</td>",
+      "utilities": [],
+      "hex": [],
+      "classification": "legitimate semantic inline style"
+    },
+    {
+      "file": "src/components/tabs/ReportsTab.jsx",
+      "line": 390,
+      "source": "<div style={{ fontSize: \"var(--text-base)\", fontWeight: \"var(--weight-semibold)\", color: \"var(--venue-text, var(--text))\" }}>",
+      "utilities": [],
+      "hex": [],
+      "classification": "legitimate semantic inline style"
+    },
+    {
+      "file": "src/components/tabs/ReportsTab.jsx",
+      "line": 393,
+      "source": "<span style={{ fontSize: \"var(--text-sm)\", color: \"var(--text-muted)\", fontWeight: \"var(--weight-regular)\" }}>",
+      "utilities": [],
+      "hex": [],
+      "classification": "legitimate semantic inline style"
+    },
+    {
+      "file": "src/components/tabs/ReportsTab.jsx",
+      "line": 452,
+      "source": "color:",
+      "utilities": [],
+      "hex": [],
+      "classification": "CSS rule or dynamic value; not a component utility violation"
+    },
+    {
+      "file": "src/components/tabs/ReportsTab.jsx",
+      "line": 466,
+      "source": "<td style={{ color: \"var(--accent)\", fontWeight: \"var(--weight-medium)\" }}>",
+      "utilities": [],
+      "hex": [],
+      "classification": "legitimate semantic inline style"
+    },
+    {
+      "file": "src/components/tabs/ReportsTab.jsx",
+      "line": 469,
+      "source": "<td style={{ color: \"var(--text-secondary)\" }}>",
+      "utilities": [],
+      "hex": [],
+      "classification": "legitimate semantic inline style"
+    },
+    {
+      "file": "src/components/tabs/ReportsTab.jsx",
+      "line": 472,
+      "source": "<td style={{ color: \"var(--warning)\" }}>",
+      "utilities": [],
+      "hex": [],
+      "classification": "legitimate semantic inline style"
+    },
+    {
+      "file": "src/components/tabs/ReportsTab.jsx",
+      "line": 475,
+      "source": "<td style={{ fontWeight: \"var(--weight-bold)\", color: \"var(--success)\" }}>",
+      "utilities": [],
+      "hex": [],
+      "classification": "legitimate semantic inline style"
+    },
+    {
+      "file": "src/components/tabs/ReportsTab.jsx",
+      "line": 506,
+      "source": "color: \"var(--text-primary)\",",
+      "utilities": [],
+      "hex": [],
+      "classification": "legitimate semantic inline style"
+    },
+    {
+      "file": "src/components/tabs/ReportsTab.jsx",
+      "line": 569,
+      "source": "color: d.type === \"POOL\" ? \"var(--success)\" : \"var(--danger)\",",
+      "utilities": [],
+      "hex": [],
+      "classification": "legitimate semantic inline style"
+    },
+    {
+      "file": "src/components/tabs/ReportsTab.jsx",
+      "line": 576,
+      "source": "<td style={{ color: \"var(--accent)\", fontWeight: \"var(--weight-medium)\" }}>",
+      "utilities": [],
+      "hex": [],
+      "classification": "legitimate semantic inline style"
+    },
+    {
+      "file": "src/components/tabs/ReportsTab.jsx",
+      "line": 579,
+      "source": "<td style={{ color: \"var(--text-secondary)\" }}>{d.avg_dur}m</td>",
+      "utilities": [],
+      "hex": [],
+      "classification": "legitimate semantic inline style"
+    },
+    {
+      "file": "src/components/tabs/ReportsTab.jsx",
+      "line": 580,
+      "source": "<td style={{ color: \"var(--warning)\" }}>",
+      "utilities": [],
+      "hex": [],
+      "classification": "legitimate semantic inline style"
+    },
+    {
+      "file": "src/components/tabs/ReportsTab.jsx",
+      "line": 583,
+      "source": "<td style={{ fontWeight: \"var(--weight-bold)\", color: \"var(--success)\" }}>",
+      "utilities": [],
+      "hex": [],
+      "classification": "legitimate semantic inline style"
+    },
+    {
+      "file": "src/components/tabs/ReportsTab.jsx",
+      "line": 612,
+      "source": "style={{ fontSize: \"var(--text-xs)\", color: \"var(--text-muted)\", width: \"36px\" }}",
+      "utilities": [],
+      "hex": [],
+      "classification": "legitimate semantic inline style"
+    },
+    {
+      "file": "src/components/tabs/ReportsTab.jsx",
+      "line": 669,
+      "source": "<div style={{ fontSize: \"var(--text-base)\", fontWeight: \"var(--weight-semibold)\", color: \"var(--venue-text, var(--text))\" }}>",
+      "utilities": [],
+      "hex": [],
+      "classification": "legitimate semantic inline style"
+    },
+    {
+      "file": "src/components/tabs/ReportsTab.jsx",
+      "line": 672,
+      "source": "<div style={{ fontSize: \"var(--text-sm)\", color: \"var(--text-muted)\", marginTop: \"2px\" }}>",
+      "utilities": [],
+      "hex": [],
+      "classification": "legitimate semantic inline style"
+    },
+    {
+      "file": "src/components/tabs/ReportsTab.jsx",
+      "line": 733,
+      "source": "color: \"var(--text-primary)\",",
+      "utilities": [],
+      "hex": [],
+      "classification": "legitimate semantic inline style"
+    },
+    {
+      "file": "src/components/tabs/ReportsTab.jsx",
+      "line": 753,
+      "source": "<td style={{ color: \"var(--accent)\" }}>{stats.sessions}</td>",
+      "utilities": [],
+      "hex": [],
+      "classification": "legitimate semantic inline style"
+    },
+    {
+      "file": "src/components/tabs/ReportsTab.jsx",
+      "line": 754,
+      "source": "<td style={{ fontWeight: \"var(--weight-semibold)\", color: \"var(--success)\" }}>",
+      "utilities": [],
+      "hex": [],
+      "classification": "legitimate semantic inline style"
+    },
+    {
+      "file": "src/components/tabs/ReportsTab.jsx",
+      "line": 771,
+      "source": "color: \"var(--text-primary)\",",
+      "utilities": [],
+      "hex": [],
+      "classification": "legitimate semantic inline style"
+    },
+    {
+      "file": "src/components/tabs/ReportsTab.jsx",
+      "line": 790,
+      "source": "<td style={{ color: \"var(--warning)\", fontWeight: \"var(--weight-semibold)\" }}>{qty}</td>",
+      "utilities": [],
+      "hex": [],
+      "classification": "legitimate semantic inline style"
+    },
+    {
+      "file": "src/components/tabs/ReportsTab.jsx",
+      "line": 805,
+      "source": "color: \"var(--text-primary)\",",
+      "utilities": [],
+      "hex": [],
+      "classification": "legitimate semantic inline style"
+    },
+    {
+      "file": "src/components/tabs/ReportsTab.jsx",
+      "line": 827,
+      "source": "<td style={{ color: \"var(--text-secondary)\" }}>{t.dur}m</td>",
+      "utilities": [],
+      "hex": [],
+      "classification": "legitimate semantic inline style"
+    },
+    {
+      "file": "src/components/tabs/ReportsTab.jsx",
+      "line": 828,
+      "source": "<td style={{ color: \"var(--success)\" }}>₹{t.ply}</td>",
+      "utilities": [],
+      "hex": [],
+      "classification": "legitimate semantic inline style"
+    },
+    {
+      "file": "src/components/tabs/ReportsTab.jsx",
+      "line": 829,
+      "source": "<td style={{ color: \"var(--warning)\" }}>₹{t.famt}</td>",
+      "utilities": [],
+      "hex": [],
+      "classification": "legitimate semantic inline style"
+    },
+    {
+      "file": "src/components/tabs/ReportsTab.jsx",
+      "line": 897,
+      "source": "color: fg,",
+      "utilities": [],
+      "hex": [],
+      "classification": "CSS rule or dynamic value; not a component utility violation"
+    },
+    {
+      "file": "src/components/tabs/ReportsTab.jsx",
+      "line": 907,
+      "source": "<div style={{ fontSize: \"var(--text-sm)\", color: \"var(--text-secondary)\" }}>{insight.detail}</div>",
+      "utilities": [],
+      "hex": [],
+      "classification": "legitimate semantic inline style"
+    },
+    {
+      "file": "src/components/tabs/ReportsTab.jsx",
+      "line": 954,
+      "source": "<td style={{ color: \"var(--text-secondary)\", fontSize: \"var(--text-sm)\" }}>{r.date}</td>",
+      "utilities": [],
+      "hex": [],
+      "classification": "legitimate semantic inline style"
+    },
+    {
+      "file": "src/components/tabs/ReportsTab.jsx",
+      "line": 955,
+      "source": "<td style={{ fontWeight: \"var(--weight-bold)\", color: r.severity === \"critical\" ? \"var(--danger)\" : r.severity === \"warning\" ? \"var(--warning)\" : \"var(--accent)\" }}>",
+      "utilities": [],
+      "hex": [],
+      "classification": "legitimate semantic inline style"
+    },
+    {
+      "file": "src/components/tabs/ReportsTab.jsx",
+      "line": 1047,
+      "source": "<td style={{ color: \"var(--success)\", fontWeight: \"var(--weight-bold)\" }}>₹{row.revenue.toLocaleString(\"en-IN\")}</td>",
+      "utilities": [],
+      "hex": [],
+      "classification": "legitimate semantic inline style"
+    },
+    {
+      "file": "src/components/tabs/TablesTab.jsx",
+      "line": 262,
+      "source": "<span style={{ color: \"var(--text-primary)\", fontWeight: \"var(--weight-medium)\" }}>{m.nm}</span>",
+      "utilities": [],
+      "hex": [],
+      "classification": "legitimate semantic inline style"
+    },
+    {
+      "file": "src/components/tabs/TablesTab.jsx",
+      "line": 266,
+      "source": "color: \"var(--accent-text)\",",
+      "utilities": [],
+      "hex": [],
+      "classification": "legitimate semantic inline style"
+    },
+    {
+      "file": "src/components/tabs/TablesTab.jsx",
+      "line": 1782,
+      "source": "color: \"var(--text-muted)\",",
+      "utilities": [],
+      "hex": [],
+      "classification": "legitimate semantic inline style"
+    },
+    {
+      "file": "src/components/tabs/TablesTab.jsx",
+      "line": 1788,
+      "source": "<div style={{ fontSize: \"var(--text-sm)\", color: \"var(--text-secondary)\", marginBottom: \"4px\" }}>",
+      "utilities": [],
+      "hex": [],
+      "classification": "legitimate semantic inline style"
+    },
+    {
+      "file": "src/components/tabs/TablesTab.jsx",
+      "line": 1792,
+      "source": "style={{ fontSize: \"var(--text-xs)\", color: \"var(--text-muted)\", marginBottom: \"16px\" }}",
+      "utilities": [],
+      "hex": [],
+      "classification": "legitimate semantic inline style"
+    },
+    {
+      "file": "src/components/tabs/TablesTab.jsx",
+      "line": 1801,
+      "source": "color: \"var(--text-on-accent)\",",
+      "utilities": [],
+      "hex": [],
+      "classification": "legitimate semantic inline style"
+    },
+    {
+      "file": "src/components/tabs/TournamentTab.jsx",
+      "line": 45,
+      "source": "color: done ? \"var(--success)\" : \"var(--accent)\",",
+      "utilities": [],
+      "hex": [],
+      "classification": "legitimate semantic inline style"
+    },
+    {
+      "file": "src/components/tabs/TournamentTab.jsx",
+      "line": 284,
+      "source": "color: \"var(--success)\",",
+      "utilities": [],
+      "hex": [],
+      "classification": "legitimate semantic inline style"
+    },
+    {
+      "file": "src/components/tabs/TournamentTab.jsx",
+      "line": 334,
+      "source": "<div style={{ color: \"var(--text-muted)\", fontSize: \"var(--text-sm)\", padding: \"10px 0\" }}>",
+      "utilities": [],
+      "hex": [],
+      "classification": "legitimate semantic inline style"
+    },
+    {
+      "file": "src/components/tabs/TournamentTab.jsx",
+      "line": 347,
+      "source": "color: selected?.id === t.id ? \"var(--text-on-accent)\" : \"var(--text-primary)\",",
+      "utilities": [],
+      "hex": [],
+      "classification": "legitimate semantic inline style"
+    },
+    {
+      "file": "src/components/tabs/TournamentTab.jsx",
+      "line": 361,
+      "source": "<div style={{ color: selected?.id === t.id ? \"var(--text-muted)\" : \"var(--text-secondary)\", fontSize: \"var(--text-xs)\", marginTop: \"4px\" }}>",
+      "utilities": [],
+      "hex": [],
+      "classification": "legitimate semantic inline style"
+    },
+    {
+      "file": "src/components/tabs/TournamentTab.jsx",
+      "line": 385,
+      "source": "<div style={{ color: \"var(--text-muted)\", padding: \"36px\", textAlign: \"center\" }}>",
+      "utilities": [],
+      "hex": [],
+      "classification": "legitimate semantic inline style"
+    },
+    {
+      "file": "src/components/tabs/TournamentTab.jsx",
+      "line": 426,
+      "source": "<div style={{ color: \"var(--text-secondary)\", fontSize: \"var(--text-xs)\", marginBottom: \"4px\" }}>",
+      "utilities": [],
+      "hex": [],
+      "classification": "legitimate semantic inline style"
+    },
+    {
+      "file": "src/components/tabs/TournamentTab.jsx",
+      "line": 429,
+      "source": "<div style={{ color: \"var(--text-primary)\", fontWeight: \"var(--weight-bold)\" }}>{value}</div>",
+      "utilities": [],
+      "hex": [],
+      "classification": "legitimate semantic inline style"
+    },
+    {
+      "file": "src/components/tabs/TournamentTab.jsx",
+      "line": 441,
+      "source": "color: \"var(--text-secondary)\",",
+      "utilities": [],
+      "hex": [],
+      "classification": "legitimate semantic inline style"
+    },
+    {
+      "file": "src/components/tabs/TournamentTab.jsx",
+      "line": 459,
+      "source": "<div style={{ fontSize: \"var(--text-xs)\", color: \"var(--text-muted)\", marginBottom: \"8px\" }}>",
+      "utilities": [],
+      "hex": [],
+      "classification": "legitimate semantic inline style"
+    },
+    {
+      "file": "src/components/tabs/TournamentTab.jsx",
+      "line": 476,
+      "source": "color: won ? \"var(--success)\" : \"var(--text-primary)\",",
+      "utilities": [],
+      "hex": [],
+      "classification": "legitimate semantic inline style"
+    },
+    {
+      "file": "src/components/tabs/TournamentTab.jsx",
+      "line": 485,
+      "source": "<span style={{ fontSize: \"var(--text-xs)\", color: won ? \"var(--success)\" : \"var(--text-muted)\" }}>",
+      "utilities": [],
+      "hex": [],
+      "classification": "legitimate semantic inline style"
+    },
+    {
+      "file": "src/components/tabs/TournamentTab.jsx",
+      "line": 492,
+      "source": "<div style={{ color: \"var(--text-muted)\", fontSize: \"var(--text-sm)\", padding: \"4px 2px\" }}>",
+      "utilities": [],
+      "hex": [],
+      "classification": "legitimate semantic inline style"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 37,
+      "source": "--accent-bg: #e0f3e8;",
+      "utilities": [],
+      "hex": [
+        "#e0f3e8"
+      ],
+      "classification": "legitimate canonical tokens"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 38,
+      "source": "--accent-soft: #eaf6ef;",
+      "utilities": [],
+      "hex": [
+        "#eaf6ef"
+      ],
+      "classification": "legitimate canonical tokens"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 39,
+      "source": "--accent-border: #91c9aa;",
+      "utilities": [],
+      "hex": [
+        "#91c9aa"
+      ],
+      "classification": "legitimate canonical tokens"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 46,
+      "source": "--border-strong: #bcbcc6;",
+      "utilities": [],
+      "hex": [
+        "#bcbcc6"
+      ],
+      "classification": "legitimate canonical tokens"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 62,
+      "source": "--warning: #936000;",
+      "utilities": [],
+      "hex": [
+        "#936000"
+      ],
+      "classification": "legitimate canonical tokens"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 63,
+      "source": "--warning-bg: #fff3d4;",
+      "utilities": [],
+      "hex": [
+        "#fff3d4"
+      ],
+      "classification": "legitimate canonical tokens"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 64,
+      "source": "--warning-text: #704600;",
+      "utilities": [],
+      "hex": [
+        "#704600"
+      ],
+      "classification": "legitimate canonical tokens"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 66,
+      "source": "--danger: #b42318;",
+      "utilities": [],
+      "hex": [
+        "#b42318"
+      ],
+      "classification": "legitimate canonical tokens"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 67,
+      "source": "--danger-bg: #fff1ef;",
+      "utilities": [],
+      "hex": [
+        "#fff1ef"
+      ],
+      "classification": "legitimate canonical tokens"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 68,
+      "source": "--danger-text: #8f1f17;",
+      "utilities": [],
+      "hex": [
+        "#8f1f17"
+      ],
+      "classification": "legitimate canonical tokens"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 208,
+      "source": "--neutral-white: #fafafa;",
+      "utilities": [],
+      "hex": [
+        "#fafafa"
+      ],
+      "classification": "legitimate canonical tokens"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 209,
+      "source": "--neutral-100: #f4f4f4;",
+      "utilities": [],
+      "hex": [
+        "#f4f4f4"
+      ],
+      "classification": "legitimate canonical tokens"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 210,
+      "source": "--neutral-200: #dedee4;",
+      "utilities": [],
+      "hex": [
+        "#dedee4"
+      ],
+      "classification": "legitimate canonical tokens"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 211,
+      "source": "--neutral-500: #62626c;",
+      "utilities": [],
+      "hex": [
+        "#62626c"
+      ],
+      "classification": "legitimate canonical tokens"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 212,
+      "source": "--neutral-600: #52525b;",
+      "utilities": [],
+      "hex": [
+        "#52525b"
+      ],
+      "classification": "legitimate canonical tokens"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 213,
+      "source": "--neutral-900: #18181b;",
+      "utilities": [],
+      "hex": [
+        "#18181b"
+      ],
+      "classification": "legitimate canonical tokens"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 214,
+      "source": "--snook-canvas: #0b0b0f;",
+      "utilities": [],
+      "hex": [
+        "#0b0b0f"
+      ],
+      "classification": "legitimate canonical tokens"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 215,
+      "source": "--snook-card: #111116;",
+      "utilities": [],
+      "hex": [
+        "#111116"
+      ],
+      "classification": "legitimate canonical tokens"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 216,
+      "source": "--snook-overlay: #1a1a22;",
+      "utilities": [],
+      "hex": [
+        "#1a1a22"
+      ],
+      "classification": "legitimate canonical tokens"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 217,
+      "source": "--snook-border: #25252c;",
+      "utilities": [],
+      "hex": [
+        "#25252c"
+      ],
+      "classification": "legitimate canonical tokens"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 218,
+      "source": "--snook-green: #00ff7f;",
+      "utilities": [],
+      "hex": [
+        "#00ff7f"
+      ],
+      "classification": "legitimate canonical tokens"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 219,
+      "source": "--snook-green-hover: #42ff9c;",
+      "utilities": [],
+      "hex": [
+        "#42ff9c"
+      ],
+      "classification": "legitimate canonical tokens"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 220,
+      "source": "--snook-green-active: #00db6d;",
+      "utilities": [],
+      "hex": [
+        "#00db6d"
+      ],
+      "classification": "legitimate canonical tokens"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 221,
+      "source": "--brand-ink: #07120d;",
+      "utilities": [],
+      "hex": [
+        "#07120d"
+      ],
+      "classification": "legitimate canonical tokens"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 222,
+      "source": "--brand-light: #006b3c;",
+      "utilities": [],
+      "hex": [
+        "#006b3c"
+      ],
+      "classification": "legitimate canonical tokens"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 223,
+      "source": "--brand-light-hover: #00532e;",
+      "utilities": [],
+      "hex": [
+        "#00532e"
+      ],
+      "classification": "legitimate canonical tokens"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 224,
+      "source": "--brand-light-active: #003d22;",
+      "utilities": [],
+      "hex": [
+        "#003d22"
+      ],
+      "classification": "legitimate canonical tokens"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 239,
+      "source": "--border-control: #858590;",
+      "utilities": [],
+      "hex": [
+        "#858590"
+      ],
+      "classification": "legitimate canonical tokens"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 269,
+      "source": "--accent-bg: #0c2519;",
+      "utilities": [],
+      "hex": [
+        "#0c2519"
+      ],
+      "classification": "legitimate canonical tokens"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 270,
+      "source": "--accent-soft: #0e1c15;",
+      "utilities": [],
+      "hex": [
+        "#0e1c15"
+      ],
+      "classification": "legitimate canonical tokens"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 271,
+      "source": "--accent-border: #276b47;",
+      "utilities": [],
+      "hex": [
+        "#276b47"
+      ],
+      "classification": "legitimate canonical tokens"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 277,
+      "source": "--border-muted: #202027;",
+      "utilities": [],
+      "hex": [
+        "#202027"
+      ],
+      "classification": "legitimate canonical tokens"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 278,
+      "source": "--border-strong: #454550;",
+      "utilities": [],
+      "hex": [
+        "#454550"
+      ],
+      "classification": "legitimate canonical tokens"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 280,
+      "source": "--text-secondary: #b4b4bd;",
+      "utilities": [],
+      "hex": [
+        "#b4b4bd"
+      ],
+      "classification": "legitimate canonical tokens"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 281,
+      "source": "--text-muted: #92929f;",
+      "utilities": [],
+      "hex": [
+        "#92929f"
+      ],
+      "classification": "legitimate canonical tokens"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 294,
+      "source": "--warning: #f2bd58;",
+      "utilities": [],
+      "hex": [
+        "#f2bd58"
+      ],
+      "classification": "legitimate canonical tokens"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 295,
+      "source": "--warning-bg: #2b2112;",
+      "utilities": [],
+      "hex": [
+        "#2b2112"
+      ],
+      "classification": "legitimate canonical tokens"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 296,
+      "source": "--warning-text: #f2ce82;",
+      "utilities": [],
+      "hex": [
+        "#f2ce82"
+      ],
+      "classification": "legitimate canonical tokens"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 298,
+      "source": "--danger: #f08077;",
+      "utilities": [],
+      "hex": [
+        "#f08077"
+      ],
+      "classification": "legitimate canonical tokens"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 299,
+      "source": "--danger-bg: #2a181b;",
+      "utilities": [],
+      "hex": [
+        "#2a181b"
+      ],
+      "classification": "legitimate canonical tokens"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 300,
+      "source": "--danger-text: #ffb2aa;",
+      "utilities": [],
+      "hex": [
+        "#ffb2aa"
+      ],
+      "classification": "legitimate canonical tokens"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 411,
+      "source": "--border-control: #6c6c78;",
+      "utilities": [],
+      "hex": [
+        "#6c6c78"
+      ],
+      "classification": "legitimate canonical tokens"
+    },
+    {
+      "file": "src/table-states.css",
+      "line": 449,
+      "source": "--table-available-bg: #15803d;",
+      "utilities": [],
+      "hex": [
+        "#15803d"
+      ],
+      "classification": "CSS rule or dynamic value; not a component utility violation"
+    },
+    {
+      "file": "src/table-states.css",
+      "line": 450,
+      "source": "--table-available-bg-hover: #166534;",
+      "utilities": [],
+      "hex": [
+        "#166534"
+      ],
+      "classification": "CSS rule or dynamic value; not a component utility violation"
+    },
+    {
+      "file": "src/table-states.css",
+      "line": 451,
+      "source": "--table-available-border: #22c55e;",
+      "utilities": [],
+      "hex": [
+        "#22c55e"
+      ],
+      "classification": "CSS rule or dynamic value; not a component utility violation"
+    },
+    {
+      "file": "src/table-states.css",
+      "line": 452,
+      "source": "--table-available-text: #ffffff;",
+      "utilities": [],
+      "hex": [
+        "#ffffff"
+      ],
+      "classification": "CSS rule or dynamic value; not a component utility violation"
+    },
+    {
+      "file": "src/table-states.css",
+      "line": 453,
+      "source": "--table-occupied-bg: #dc2626;",
+      "utilities": [],
+      "hex": [
+        "#dc2626"
+      ],
+      "classification": "CSS rule or dynamic value; not a component utility violation"
+    },
+    {
+      "file": "src/table-states.css",
+      "line": 454,
+      "source": "--table-occupied-bg-hover: #b91c1c;",
+      "utilities": [],
+      "hex": [
+        "#b91c1c"
+      ],
+      "classification": "CSS rule or dynamic value; not a component utility violation"
+    },
+    {
+      "file": "src/table-states.css",
+      "line": 455,
+      "source": "--table-occupied-border: #ef4444;",
+      "utilities": [],
+      "hex": [
+        "#ef4444"
+      ],
+      "classification": "CSS rule or dynamic value; not a component utility violation"
+    },
+    {
+      "file": "src/table-states.css",
+      "line": 456,
+      "source": "--table-occupied-text: #ffffff;",
+      "utilities": [],
+      "hex": [
+        "#ffffff"
+      ],
+      "classification": "CSS rule or dynamic value; not a component utility violation"
+    },
+    {
+      "file": "src/table-states.css",
+      "line": 457,
+      "source": "--table-paused-bg: #b45309;",
+      "utilities": [],
+      "hex": [
+        "#b45309"
+      ],
+      "classification": "CSS rule or dynamic value; not a component utility violation"
+    },
+    {
+      "file": "src/table-states.css",
+      "line": 458,
+      "source": "--table-paused-bg-hover: #92400e;",
+      "utilities": [],
+      "hex": [
+        "#92400e"
+      ],
+      "classification": "CSS rule or dynamic value; not a component utility violation"
+    },
+    {
+      "file": "src/table-states.css",
+      "line": 459,
+      "source": "--table-paused-border: #f59e0b;",
+      "utilities": [],
+      "hex": [
+        "#f59e0b"
+      ],
+      "classification": "CSS rule or dynamic value; not a component utility violation"
+    },
+    {
+      "file": "src/table-states.css",
+      "line": 460,
+      "source": "--table-paused-text: #ffffff;",
+      "utilities": [],
+      "hex": [
+        "#ffffff"
+      ],
+      "classification": "CSS rule or dynamic value; not a component utility violation"
+    },
+    {
+      "file": "src/table-states.css",
+      "line": 461,
+      "source": "--table-reserved-bg: #2563eb;",
+      "utilities": [],
+      "hex": [
+        "#2563eb"
+      ],
+      "classification": "CSS rule or dynamic value; not a component utility violation"
+    },
+    {
+      "file": "src/table-states.css",
+      "line": 462,
+      "source": "--table-reserved-bg-hover: #1d4ed8;",
+      "utilities": [],
+      "hex": [
+        "#1d4ed8"
+      ],
+      "classification": "CSS rule or dynamic value; not a component utility violation"
+    },
+    {
+      "file": "src/table-states.css",
+      "line": 463,
+      "source": "--table-reserved-border: #3b82f6;",
+      "utilities": [],
+      "hex": [
+        "#3b82f6"
+      ],
+      "classification": "CSS rule or dynamic value; not a component utility violation"
+    },
+    {
+      "file": "src/table-states.css",
+      "line": 464,
+      "source": "--table-reserved-text: #ffffff;",
+      "utilities": [],
+      "hex": [
+        "#ffffff"
+      ],
+      "classification": "CSS rule or dynamic value; not a component utility violation"
+    },
+    {
+      "file": "src/table-states.css",
+      "line": 508,
+      "source": "color: #ffffff;",
+      "utilities": [],
+      "hex": [
+        "#ffffff"
+      ],
+      "classification": "CSS rule or dynamic value; not a component utility violation"
+    },
+    {
+      "file": "src/table-states.css",
+      "line": 515,
+      "source": "color: #ffffff !important;",
+      "utilities": [],
+      "hex": [
+        "#ffffff"
+      ],
+      "classification": "CSS rule or dynamic value; not a component utility violation"
+    },
+    {
+      "file": "src/table-states.css",
+      "line": 524,
+      "source": "color: #ffffff !important;",
+      "utilities": [],
+      "hex": [
+        "#ffffff"
+      ],
+      "classification": "CSS rule or dynamic value; not a component utility violation"
+    },
+    {
+      "file": "src/table-states.css",
+      "line": 527,
+      "source": "background: #ffffff;",
+      "utilities": [],
+      "hex": [
+        "#ffffff"
+      ],
+      "classification": "CSS rule or dynamic value; not a component utility violation"
+    },
+    {
+      "file": "src/table-states.css",
+      "line": 528,
+      "source": "border-color: #ffffff;",
+      "utilities": [],
+      "hex": [
+        "#ffffff"
+      ],
+      "classification": "CSS rule or dynamic value; not a component utility violation"
+    },
+    {
+      "file": "src/table-states.css",
+      "line": 529,
+      "source": "color: #733c00 !important;",
+      "utilities": [],
+      "hex": [
+        "#733c00"
+      ],
+      "classification": "CSS rule or dynamic value; not a component utility violation"
+    },
+    {
+      "file": "src/table-states.css",
+      "line": 568,
+      "source": "color: #ffffff;",
+      "utilities": [],
+      "hex": [
+        "#ffffff"
+      ],
+      "classification": "CSS rule or dynamic value; not a component utility violation"
+    },
+    {
+      "file": "src/table-states.css",
+      "line": 578,
+      "source": "background: #ffffff;",
+      "utilities": [],
+      "hex": [
+        "#ffffff"
+      ],
+      "classification": "CSS rule or dynamic value; not a component utility violation"
+    },
+    {
+      "file": "src/table-states.css",
+      "line": 580,
+      "source": "border-color: #ffffff;",
+      "utilities": [],
+      "hex": [
+        "#ffffff"
+      ],
+      "classification": "CSS rule or dynamic value; not a component utility violation"
+    },
+    {
+      "file": "src/table-states.css",
+      "line": 583,
+      "source": ".lf-card-actions button[data-variant=\"primary\"]:hover:not(:disabled) { background: #f3f4f6; }",
+      "utilities": [],
+      "hex": [
+        "#f3f4f6"
+      ],
+      "classification": "CSS rule or dynamic value; not a component utility violation"
+    },
+    {
+      "file": "src/table-states.css",
+      "line": 585,
+      "source": ".lf-card-actions button:focus-visible { outline: 3px solid #ffffff; outline-offset: 2px; }",
+      "utilities": [],
+      "hex": [
+        "#ffffff"
+      ],
+      "classification": "CSS rule or dynamic value; not a component utility violation"
+    }
+  ]
+}

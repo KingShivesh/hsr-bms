@@ -1,0 +1,16 @@
+[
+  {
+    "theme": "light",
+    "networkFailureVisible": true,
+    "sessionPreservedOnFailure": true,
+    "successfulLogoutNavigatedToLogin": true,
+    "oldTokenStatus": 401
+  },
+  {
+    "theme": "dark",
+    "networkFailureVisible": true,
+    "sessionPreservedOnFailure": true,
+    "successfulLogoutNavigatedToLogin": true,
+    "oldTokenStatus": 401
+  }
+]

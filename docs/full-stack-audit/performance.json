@@ -1,0 +1,30 @@
+{
+  "environment": "local production build, disposable SQLite API; Lighthouse desktop lab, NOT field or Render cold-start performance",
+  "inp": "Not measured: navigation Lighthouse reports TBT, not field INP/FID",
+  "results": [
+    {
+      "route": "/dashboard",
+      "score": 0.97,
+      "lcpMilliseconds": 1802.416275,
+      "cls": 0,
+      "totalBlockingTimeMilliseconds": 38.748050000000035,
+      "runtimeError": null
+    },
+    {
+      "route": "/live-floor",
+      "score": 0.99,
+      "lcpMilliseconds": 1803.0552250000003,
+      "cls": 0,
+      "totalBlockingTimeMilliseconds": 55,
+      "runtimeError": null
+    },
+    {
+      "route": "/sales",
+      "score": 1,
+      "lcpMilliseconds": 1428.9453,
+      "cls": 0,
+      "totalBlockingTimeMilliseconds": 25.890049999999974,
+      "runtimeError": null
+    }
+  ]
+}

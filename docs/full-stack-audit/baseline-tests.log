@@ -1,0 +1,202 @@
+test_admin_dashboard_is_not_staff_accessible (__main__.FullStackTests.test_admin_dashboard_is_not_staff_accessible) ... /private/tmp/hsr-full-stack-baseline/backend/deps.py:42: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  expire = datetime.utcnow() + timedelta(hours=TOKEN_HOURS)
+INFO:hsr-bms:request_id=b2f8a8c4-b972-496f-8c47-fbb59acec907 method=POST path=/auth/login status=200 duration_ms=407
+INFO:httpx2:HTTP Request: POST http://testserver/auth/login "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=983aada6-2c92-431a-8de6-1a3635e12b4a method=POST path=/auth/login status=200 duration_ms=387
+INFO:httpx2:HTTP Request: POST http://testserver/auth/login "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=7af2ace6-967f-468a-9f7e-e81af11c3aba method=GET path=/reports/dashboard status=200 duration_ms=48
+INFO:httpx2:HTTP Request: GET http://testserver/reports/dashboard "HTTP/1.1 200 OK"
+FAIL
+test_admin_rotation_revokes_old_token (__main__.FullStackTests.test_admin_rotation_revokes_old_token) ... /private/tmp/hsr-full-stack-baseline/backend/deps.py:42: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  expire = datetime.utcnow() + timedelta(hours=TOKEN_HOURS)
+INFO:hsr-bms:request_id=e9a0d700-52b2-4762-9264-d856a89fdab5 method=POST path=/auth/login status=200 duration_ms=386
+INFO:httpx2:HTTP Request: POST http://testserver/auth/login "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=7c65636c-fdfc-4878-bcef-3b57cb10ad41 method=POST path=/auth/login status=200 duration_ms=383
+INFO:httpx2:HTTP Request: POST http://testserver/auth/login "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=5dec738f-5d19-451c-ae44-3d30ced2ffaa method=POST path=/auth/change status=200 duration_ms=385
+INFO:httpx2:HTTP Request: POST http://testserver/auth/change "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=8d55fcb3-bc0a-4c76-a24c-a413c636936f method=GET path=/auth/me status=200 duration_ms=1
+INFO:httpx2:HTTP Request: GET http://testserver/auth/me "HTTP/1.1 200 OK"
+FAIL
+test_backdated_checkout_cannot_erase_shift (__main__.FullStackTests.test_backdated_checkout_cannot_erase_shift) ... INFO:hsr-bms:request_id=71381608-ab9f-4705-ad91-95c8c76c9edd method=POST path=/auth/login status=200 duration_ms=383
+INFO:httpx2:HTTP Request: POST http://testserver/auth/login "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=e0b89fb9-5302-4418-a64c-7200fc3cf889 method=POST path=/auth/login status=200 duration_ms=383
+INFO:httpx2:HTTP Request: POST http://testserver/auth/login "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=c11b4aea-c47f-4282-a463-5fa19c7462e0 method=POST path=/sessions/start status=200 duration_ms=12
+INFO:httpx2:HTTP Request: POST http://testserver/sessions/start "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=992b06e2-b124-4b76-bd11-ba94cc5de740 method=POST path=/sessions/stop/t1 status=200 duration_ms=16
+INFO:httpx2:HTTP Request: POST http://testserver/sessions/stop/t1?closed_at_ms=1791645850041.465 "HTTP/1.1 200 OK"
+FAIL
+test_bcrypt_login_never_errors_on_long_input (__main__.FullStackTests.test_bcrypt_login_never_errors_on_long_input) ... INFO:hsr-bms:request_id=e677f489-f407-44f1-b75a-be40b6dc1ead method=POST path=/auth/login status=200 duration_ms=383
+INFO:httpx2:HTTP Request: POST http://testserver/auth/login "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=10085621-3d49-47a7-b5e2-ddbd26a625ac method=POST path=/auth/login status=200 duration_ms=401
+INFO:httpx2:HTTP Request: POST http://testserver/auth/login "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=14c6c78f-47b3-4f82-ad45-7513d32f42bd method=POST path=/auth/login status=401 duration_ms=2
+INFO:httpx2:HTTP Request: POST http://testserver/auth/login "HTTP/1.1 401 Unauthorized"
+ok
+test_booking_conflict_and_repeat_cancel (__main__.FullStackTests.test_booking_conflict_and_repeat_cancel) ... INFO:hsr-bms:request_id=9697ff36-c95b-469c-829b-2b7e22fad416 method=POST path=/auth/login status=200 duration_ms=385
+INFO:httpx2:HTTP Request: POST http://testserver/auth/login "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=80e15cad-7895-41cf-9fb8-f6f1465bb99e method=POST path=/auth/login status=200 duration_ms=386
+INFO:httpx2:HTTP Request: POST http://testserver/auth/login "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=30a8b595-3cc4-457b-aa17-1f65617615c5 method=POST path=/bookings status=200 duration_ms=32
+INFO:httpx2:HTTP Request: POST http://testserver/bookings "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=7600a04c-24ac-45dd-871a-bdaf69a33f3e method=POST path=/bookings status=400 duration_ms=2
+INFO:httpx2:HTTP Request: POST http://testserver/bookings "HTTP/1.1 400 Bad Request"
+INFO:hsr-bms:request_id=2d753cb9-4a55-43bb-9554-83a01d750c8d method=DELETE path=/bookings/1 status=200 duration_ms=6
+INFO:httpx2:HTTP Request: DELETE http://testserver/bookings/1 "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=42e52b12-6125-4872-9265-4d1a58ba7e2a method=DELETE path=/bookings/1 status=200 duration_ms=2
+INFO:httpx2:HTTP Request: DELETE http://testserver/bookings/1 "HTTP/1.1 200 OK"
+ok
+test_logout_revokes_one_session_not_all (__main__.FullStackTests.test_logout_revokes_one_session_not_all) ... /private/tmp/hsr-full-stack-baseline/backend/deps.py:42: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  expire = datetime.utcnow() + timedelta(hours=TOKEN_HOURS)
+INFO:hsr-bms:request_id=4761223e-9958-4b35-b430-a6e5e92715ec method=POST path=/auth/login status=200 duration_ms=383
+INFO:httpx2:HTTP Request: POST http://testserver/auth/login "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=506823ab-292f-464d-b03b-c8dd3a0e27e3 method=POST path=/auth/login status=200 duration_ms=382
+INFO:httpx2:HTTP Request: POST http://testserver/auth/login "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=15f28110-142a-490d-8d19-6aae8177e761 method=POST path=/auth/login status=200 duration_ms=383
+INFO:httpx2:HTTP Request: POST http://testserver/auth/login "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=4180159e-3bae-491d-a49c-e683246d8df1 method=POST path=/auth/logout status=404 duration_ms=5
+INFO:httpx2:HTTP Request: POST http://testserver/auth/logout "HTTP/1.1 404 Not Found"
+FAIL
+test_password_validation_applies_to_stored_password (__main__.FullStackTests.test_password_validation_applies_to_stored_password) ... /private/tmp/hsr-full-stack-baseline/backend/deps.py:42: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  expire = datetime.utcnow() + timedelta(hours=TOKEN_HOURS)
+INFO:hsr-bms:request_id=4dccdf82-8437-4da8-b8a7-055722d09f2f method=POST path=/auth/login status=200 duration_ms=386
+INFO:httpx2:HTTP Request: POST http://testserver/auth/login "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=eaeab7c6-36d9-4203-86d6-2652512a6df8 method=POST path=/auth/login status=200 duration_ms=383
+INFO:httpx2:HTTP Request: POST http://testserver/auth/login "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=84741f12-79e2-4a6b-be48-87a3c1d7e206 method=POST path=/auth/change status=200 duration_ms=384
+INFO:httpx2:HTTP Request: POST http://testserver/auth/change "HTTP/1.1 200 OK"
+FAIL
+test_public_route_boundary (__main__.FullStackTests.test_public_route_boundary) ... INFO:hsr-bms:request_id=83f26184-09b8-4e27-bca0-f62858ac78aa method=POST path=/auth/login status=200 duration_ms=383
+INFO:httpx2:HTTP Request: POST http://testserver/auth/login "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=bdd05e6c-1d23-43ac-a58f-0c4b6b088f79 method=POST path=/auth/login status=200 duration_ms=383
+INFO:httpx2:HTTP Request: POST http://testserver/auth/login "HTTP/1.1 200 OK"
+ok
+test_staff_rotation_revokes_only_staff (__main__.FullStackTests.test_staff_rotation_revokes_only_staff) ... INFO:hsr-bms:request_id=9ecefdfb-7289-4949-a4ed-8e48db1b1e17 method=POST path=/auth/login status=200 duration_ms=383
+INFO:httpx2:HTTP Request: POST http://testserver/auth/login "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=52680603-7049-43e9-839f-81ca5940db1f method=POST path=/auth/login status=200 duration_ms=383
+INFO:httpx2:HTTP Request: POST http://testserver/auth/login "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=cb7e17f5-4e15-411a-a8cd-7830076124a0 method=POST path=/auth/change-staff status=200 duration_ms=387
+INFO:httpx2:HTTP Request: POST http://testserver/auth/change-staff "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=806cd9d2-23ed-4880-8745-92fd3187d693 method=GET path=/auth/me status=200 duration_ms=1
+INFO:httpx2:HTTP Request: GET http://testserver/auth/me "HTTP/1.1 200 OK"
+FAIL
+test_undo_cannot_create_fictitious_sale (__main__.FullStackTests.test_undo_cannot_create_fictitious_sale) ... INFO:hsr-bms:request_id=e891d5c8-8bce-4a2d-ad5f-ea47dae49493 method=POST path=/auth/login status=200 duration_ms=383
+INFO:httpx2:HTTP Request: POST http://testserver/auth/login "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=04d3d8c3-0aa3-4e3b-87e9-a1ab9fe1be4c method=POST path=/auth/login status=200 duration_ms=383
+INFO:httpx2:HTTP Request: POST http://testserver/auth/login "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=a8482e2d-a11e-476c-b8e2-92c0bbcff6e1 method=POST path=/food/orders/900000/restore status=200 duration_ms=6
+INFO:httpx2:HTTP Request: POST http://testserver/food/orders/900000/restore "HTTP/1.1 200 OK"
+FAIL
+test_undo_preserves_server_receipt (__main__.FullStackTests.test_undo_preserves_server_receipt) ... INFO:hsr-bms:request_id=5d5d8c76-242e-4132-b479-afc2d8c6b818 method=POST path=/auth/login status=200 duration_ms=391
+INFO:httpx2:HTTP Request: POST http://testserver/auth/login "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=6e867bb1-338d-48c6-a1bf-fde945961238 method=POST path=/auth/login status=200 duration_ms=383
+INFO:httpx2:HTTP Request: POST http://testserver/auth/login "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=e6a1d8b0-a5bd-4d0c-9805-25dfd75974b0 method=POST path=/food/order status=200 duration_ms=6
+INFO:httpx2:HTTP Request: POST http://testserver/food/order "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=fe4d314b-c298-4ecb-b5f2-ed2075048f16 method=GET path=/food/orders status=200 duration_ms=2
+INFO:httpx2:HTTP Request: GET http://testserver/food/orders "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=a02d6f76-3836-4c76-8c5b-f2e8340e689e method=DELETE path=/food/orders/1 status=200 duration_ms=3
+INFO:httpx2:HTTP Request: DELETE http://testserver/food/orders/1 "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=56471f3f-e2f1-486d-87b6-4c4530f4beed method=GET path=/food/orders status=200 duration_ms=1
+INFO:httpx2:HTTP Request: GET http://testserver/food/orders "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=e7f4ed39-5ff2-4eb6-80dc-28f2e9f39a35 method=GET path=/reports/closing-report status=200 duration_ms=7
+INFO:httpx2:HTTP Request: GET http://testserver/reports/closing-report "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=db3231b7-42bb-48f3-99f1-8bb46d6478cd method=POST path=/food/orders/1/restore status=200 duration_ms=4
+INFO:httpx2:HTTP Request: POST http://testserver/food/orders/1/restore "HTTP/1.1 200 OK"
+FAIL
+
+======================================================================
+FAIL: test_admin_dashboard_is_not_staff_accessible (__main__.FullStackTests.test_admin_dashboard_is_not_staff_accessible)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/hsr-full-stack-baseline/backend/test_full_stack.py", line 109, in test_admin_dashboard_is_not_staff_accessible
+    self.assertEqual(response.status_code, 403, response.text[:500])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 200 != 403 : {"date":"11/10/2026","period":"today","period_label":"Today","generated_at":1791660186528.498,"metrics":{"sale":0,"total_revenue":0,"food":0,"sessions":0,"cust":0,"food_attach":0,"avg_bill":0,"avg_time":0,"tables_used":0,"active_tables":0,"idle_tables":5,"total_tables":5,"occupancy":0,"live_floor_value":0,"top_table":"-","recent_average":0},"yesterday":{"sale":0,"total_revenue":0,"food":0,"sessions":0,"cust":0,"food_attach":0,"avg_bill":0,"avg_time":0,"tables_used":0},"trends":{"today_revenue":{
+
+======================================================================
+FAIL: test_admin_rotation_revokes_old_token (__main__.FullStackTests.test_admin_rotation_revokes_old_token)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/hsr-full-stack-baseline/backend/test_full_stack.py", line 63, in test_admin_rotation_revokes_old_token
+    self.assertEqual(self.client.get("/auth/me").status_code, 401)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 200 != 401
+
+======================================================================
+FAIL: test_backdated_checkout_cannot_erase_shift (__main__.FullStackTests.test_backdated_checkout_cannot_erase_shift)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/hsr-full-stack-baseline/backend/test_full_stack.py", line 120, in test_backdated_checkout_cannot_erase_shift
+    self.assertEqual(response.status_code, 409, response.text)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 200 != 409 : {"date":"11/10/2026, 00:53:10","tariff_mode":"hourly","tariff_price":null,"tariff_label":"Hourly","package_id":"","frame_count":0,"ts":1791660190060.2651,"tbl":"T1","nm":"QA Audit Player","dur":1,"ply":5,"actual_dur":1,"duration_capped":false,"famt":0,"food":"None","tot":5,"notes":"","raw_total":5,"discount_amount":0,"discount_type":"none","subtotal":5,"gst_amt":0,"gst_percent":0,"peak_surcharge":0,"peak_label":"Standard","payment_method":"Cash","payment_split":[{"method":"Cash","amount":5}],"discount_reason":"","billing_mode":"single","session_key":"t1:a5ba4e4bc446464485ce062be6845168","session_started_at":1791645790041.465,"session_ended_at":1791645850041.465,"players":["QA Audit Player"],"payer_name":"QA Audit Player","split_per_head":5,"share_count":1,"player_breakdown":[{"name":"QA Audit Player","table":5,"food":0,"total":5,"lost_frames":[]}],"frames":[],"idempotent":false}
+
+======================================================================
+FAIL: test_logout_revokes_one_session_not_all (__main__.FullStackTests.test_logout_revokes_one_session_not_all)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/hsr-full-stack-baseline/backend/test_full_stack.py", line 79, in test_logout_revokes_one_session_not_all
+    self.assertEqual(response.status_code, 200, response.text)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 404 != 200 : {"detail":"Not Found"}
+
+======================================================================
+FAIL: test_password_validation_applies_to_stored_password (__main__.FullStackTests.test_password_validation_applies_to_stored_password)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/hsr-full-stack-baseline/backend/test_full_stack.py", line 128, in test_password_validation_applies_to_stored_password
+    self.assertIn(response.status_code, (400, 422), response.text)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 200 not found in (400, 422) : {"ok":true}
+
+======================================================================
+FAIL: test_staff_rotation_revokes_only_staff (__main__.FullStackTests.test_staff_rotation_revokes_only_staff)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/hsr-full-stack-baseline/backend/test_full_stack.py", line 73, in test_staff_rotation_revokes_only_staff
+    self.assertEqual(self.client.get("/auth/me", headers={"Authorization": f"Bearer {self.staff}"}).status_code, 401)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 200 != 401
+
+======================================================================
+FAIL: test_undo_cannot_create_fictitious_sale (__main__.FullStackTests.test_undo_cannot_create_fictitious_sale)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/hsr-full-stack-baseline/backend/test_full_stack.py", line 88, in test_undo_cannot_create_fictitious_sale
+    self.assertEqual(response.status_code, 404, response.text)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 200 != 404 : {"id":900000,"date":"11/10/2026, 00:53:22","ts":1791660202259.766,"customer_name":"QA invented customer","items":[],"total":900000,"payment_method":"UPI"}
+
+======================================================================
+FAIL: test_undo_preserves_server_receipt (__main__.FullStackTests.test_undo_preserves_server_receipt)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/hsr-full-stack-baseline/backend/test_full_stack.py", line 102, in test_undo_preserves_server_receipt
+    self.assertEqual(response.json(), original)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'id'[78 chars] 'QA Tampered', 'items': [{'item': 'QA Audit T[66 chars]UPI'} != {'id'[78 chars] 'QA Real Customer', 'items': [{'item': 'QA Au[68 chars]ash'}
+- {'customer_name': 'QA Tampered',
+?                       ^  -  --
+
++ {'customer_name': 'QA Real Customer',
+?                       ^^ +++++++
+
+   'date': '11/10/2026, 00:53:23',
+   'id': 1,
+   'items': [{'item': 'QA Audit Tea', 'price': 40, 'qty': 2}],
+-  'payment_method': 'UPI',
+?                     ^^^
+
++  'payment_method': 'Cash',
+?                     ^^^^
+
+-  'total': 999999,
++  'total': 40,
+   'ts': 1791660203817.219}
+
+----------------------------------------------------------------------
+Ran 11 tests in 18.939s
+
+FAILED (failures=8)

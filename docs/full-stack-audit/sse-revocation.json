@@ -1,0 +1,13 @@
+{
+  "connected": true,
+  "logout": 200,
+  "restAfterLogout": 401,
+  "streamAuthExpired": true,
+  "elapsedMilliseconds": 30052.7,
+  "events": [
+    "system.connected",
+    "system.heartbeat",
+    "system.heartbeat",
+    "system.auth_expired"
+  ]
+}

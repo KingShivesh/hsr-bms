@@ -140,6 +140,16 @@ dead/reachable component findings, and the full routing migration.
   session after their checks pass; do not leave verified work unshipped.
 
 ## Deferred / Follow-up
+- Full-stack integrity audit (2026-10-11): `docs/full-stack-audit/README.md`
+  records reproduced security/billing fixes, tests and deferred tickets.
+  Tokens now have credential versions and per-session revocation; legacy tokens
+  require a fresh login. Never allow seeded passwords on Render/production.
+  Checkout freezes use a server-signed session-bound token, not trusted client
+  timestamps. Food undo restores the original soft-cancelled server receipt.
+  Single-venue session/booking writes use a transaction-scoped DB gate before
+  reads, including empty slots; do not commit helper state early inside them.
+  Before multi-tenant/multi-worker expansion, revisit that gate and the documented
+  in-process SSE broker boundary. Keep the SNOOK palette/fonts unchanged.
 - Functional build scope and exclusions: `docs/FUNCTIONAL_ROADMAP.md`.
   Preserve the SNOOK color/font contract. Existing single/sharing/LP describe
   payer allocation; do not confuse them with independent hourly/frame/package tariffs.
