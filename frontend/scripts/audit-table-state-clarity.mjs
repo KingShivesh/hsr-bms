@@ -82,9 +82,9 @@ async function login(page) {
 
 async function openFloor(page, theme = "light") {
   const dark = theme === "dark";
-  await page.evaluate((nextDark) => localStorage.setItem("darkMode", String(nextDark)), dark);
+  await page.evaluate((nextDark) => window.HSRTheme.set(nextDark ? "dark" : "light"), dark);
   await page.goto(`${appUrl}/live-floor`, { waitUntil: "domcontentloaded" });
-  await page.evaluate((nextDark) => document.body.classList.toggle("dark", nextDark), dark);
+  await page.evaluate((nextDark) => window.HSRTheme.set(nextDark ? "dark" : "light"), dark);
   await page.locator(".lf-floor-panel").waitFor({ state: "visible", timeout: 20000 });
   await page.waitForTimeout(700);
   await page.evaluate(() => document.fonts.ready);

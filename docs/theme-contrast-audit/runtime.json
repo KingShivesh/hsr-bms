@@ -1,0 +1,319 @@
+{
+  "bootstrap": [
+    {
+      "scheme": "dark",
+      "stored": "light",
+      "expected": "light",
+      "theme": "light",
+      "canvas": "rgb(250, 250, 250)",
+      "color": "rgb(24, 24, 27)",
+      "appNotMounted": true
+    },
+    {
+      "scheme": "light",
+      "stored": "dark",
+      "expected": "dark",
+      "theme": "dark",
+      "canvas": "rgb(11, 11, 15)",
+      "color": "rgb(250, 250, 250)",
+      "appNotMounted": true
+    },
+    {
+      "scheme": "light",
+      "legacy": "true",
+      "expected": "dark",
+      "theme": "dark",
+      "canvas": "rgb(11, 11, 15)",
+      "color": "rgb(250, 250, 250)",
+      "appNotMounted": true
+    },
+    {
+      "scheme": "dark",
+      "legacy": "false",
+      "expected": "light",
+      "theme": "light",
+      "canvas": "rgb(250, 250, 250)",
+      "color": "rgb(24, 24, 27)",
+      "appNotMounted": true
+    },
+    {
+      "scheme": "dark",
+      "stored": "invalid",
+      "expected": "dark",
+      "theme": "dark",
+      "canvas": "rgb(11, 11, 15)",
+      "color": "rgb(250, 250, 250)",
+      "appNotMounted": true
+    },
+    {
+      "scheme": "light",
+      "expected": "light",
+      "theme": "light",
+      "canvas": "rgb(250, 250, 250)",
+      "color": "rgb(24, 24, 27)",
+      "appNotMounted": true
+    },
+    {
+      "scheme": "dark",
+      "blocked": true,
+      "expected": "dark",
+      "theme": "dark",
+      "canvas": "rgb(11, 11, 15)",
+      "color": "rgb(250, 250, 250)",
+      "appNotMounted": true
+    }
+  ],
+  "pairs": [
+    {
+      "theme": "light",
+      "pairs": [
+        {
+          "foreground": "--text-primary",
+          "background": "--bg-base",
+          "color": "rgb(24, 24, 27)",
+          "fill": "rgb(250, 250, 250)",
+          "ratio": 16.97,
+          "minimum": 4.5
+        },
+        {
+          "foreground": "--text-primary",
+          "background": "--bg-raised",
+          "color": "rgb(24, 24, 27)",
+          "fill": "rgb(244, 244, 244)",
+          "ratio": 16.11,
+          "minimum": 4.5
+        },
+        {
+          "foreground": "--text-secondary",
+          "background": "--bg-raised",
+          "color": "rgb(82, 82, 91)",
+          "fill": "rgb(244, 244, 244)",
+          "ratio": 7.03,
+          "minimum": 4.5
+        },
+        {
+          "foreground": "--text-muted",
+          "background": "--bg-raised",
+          "color": "rgb(98, 98, 108)",
+          "fill": "rgb(244, 244, 244)",
+          "ratio": 5.48,
+          "minimum": 4.5
+        },
+        {
+          "foreground": "--input-placeholder",
+          "background": "--input-bg",
+          "color": "rgb(98, 98, 108)",
+          "fill": "rgb(250, 250, 250)",
+          "ratio": 5.78,
+          "minimum": 4.5
+        },
+        {
+          "foreground": "--text-on-brand",
+          "background": "--action-primary",
+          "color": "rgb(250, 250, 250)",
+          "fill": "rgb(0, 107, 60)",
+          "ratio": 6.35,
+          "minimum": 4.5
+        },
+        {
+          "foreground": "--status-error-text",
+          "background": "--status-error-bg",
+          "color": "rgb(143, 31, 23)",
+          "fill": "rgb(255, 241, 239)",
+          "ratio": 8.03,
+          "minimum": 4.5
+        },
+        {
+          "foreground": "--status-success-text",
+          "background": "--status-success-bg",
+          "color": "rgb(0, 107, 60)",
+          "fill": "rgb(224, 243, 232)",
+          "ratio": 5.73,
+          "minimum": 4.5
+        },
+        {
+          "foreground": "--status-warning-text",
+          "background": "--status-warning-bg",
+          "color": "rgb(112, 70, 0)",
+          "fill": "rgb(255, 243, 212)",
+          "ratio": 7.42,
+          "minimum": 4.5
+        },
+        {
+          "foreground": "--text-disabled",
+          "background": "--bg-surface-hover",
+          "color": "rgb(98, 98, 108)",
+          "fill": "rgb(250, 250, 250)",
+          "ratio": 5.78,
+          "minimum": 4.5
+        },
+        {
+          "foreground": "--input-border",
+          "background": "--input-bg",
+          "color": "rgb(133, 133, 144)",
+          "fill": "rgb(250, 250, 250)",
+          "ratio": 3.5,
+          "minimum": 3
+        }
+      ]
+    },
+    {
+      "theme": "dark",
+      "pairs": [
+        {
+          "foreground": "--text-primary",
+          "background": "--bg-base",
+          "color": "rgb(250, 250, 250)",
+          "fill": "rgb(11, 11, 15)",
+          "ratio": 18.82,
+          "minimum": 4.5
+        },
+        {
+          "foreground": "--text-primary",
+          "background": "--bg-raised",
+          "color": "rgb(250, 250, 250)",
+          "fill": "rgb(17, 17, 22)",
+          "ratio": 18.03,
+          "minimum": 4.5
+        },
+        {
+          "foreground": "--text-secondary",
+          "background": "--bg-raised",
+          "color": "rgb(180, 180, 189)",
+          "fill": "rgb(17, 17, 22)",
+          "ratio": 9.15,
+          "minimum": 4.5
+        },
+        {
+          "foreground": "--text-muted",
+          "background": "--bg-raised",
+          "color": "rgb(146, 146, 159)",
+          "fill": "rgb(17, 17, 22)",
+          "ratio": 6.13,
+          "minimum": 4.5
+        },
+        {
+          "foreground": "--input-placeholder",
+          "background": "--input-bg",
+          "color": "rgb(146, 146, 159)",
+          "fill": "rgb(11, 11, 15)",
+          "ratio": 6.39,
+          "minimum": 4.5
+        },
+        {
+          "foreground": "--text-on-brand",
+          "background": "--action-primary",
+          "color": "rgb(7, 18, 13)",
+          "fill": "rgb(0, 255, 127)",
+          "ratio": 14.17,
+          "minimum": 4.5
+        },
+        {
+          "foreground": "--status-error-text",
+          "background": "--status-error-bg",
+          "color": "rgb(255, 178, 170)",
+          "fill": "rgb(42, 24, 27)",
+          "ratio": 9.8,
+          "minimum": 4.5
+        },
+        {
+          "foreground": "--status-success-text",
+          "background": "--status-success-bg",
+          "color": "rgb(0, 255, 127)",
+          "fill": "rgb(12, 37, 25)",
+          "ratio": 12.06,
+          "minimum": 4.5
+        },
+        {
+          "foreground": "--status-warning-text",
+          "background": "--status-warning-bg",
+          "color": "rgb(242, 206, 130)",
+          "fill": "rgb(43, 33, 18)",
+          "ratio": 10.48,
+          "minimum": 4.5
+        },
+        {
+          "foreground": "--text-disabled",
+          "background": "--bg-surface-hover",
+          "color": "rgb(146, 146, 159)",
+          "fill": "rgb(26, 26, 34)",
+          "ratio": 5.63,
+          "minimum": 4.5
+        },
+        {
+          "foreground": "--input-border",
+          "background": "--input-bg",
+          "color": "rgb(108, 108, 120)",
+          "fill": "rgb(11, 11, 15)",
+          "ratio": 3.79,
+          "minimum": 3
+        }
+      ]
+    }
+  ],
+  "interaction": [
+    "Toggle writes canonical theme; reload and navigation retain it; html/body stay synchronized",
+    "Second tab preference change synchronizes the open application",
+    "light: all four saturated state colors and white foreground preserved",
+    "dark: all four saturated state colors and white foreground preserved"
+  ],
+  "mobile": [
+    {
+      "width": 375,
+      "theme": "light",
+      "route": "/login",
+      "overflow": 0,
+      "violations": 0
+    },
+    {
+      "width": 375,
+      "theme": "light",
+      "route": "/live-floor",
+      "overflow": 0,
+      "violations": 0
+    },
+    {
+      "width": 375,
+      "theme": "dark",
+      "route": "/login",
+      "overflow": 0,
+      "violations": 0
+    },
+    {
+      "width": 375,
+      "theme": "dark",
+      "route": "/live-floor",
+      "overflow": 0,
+      "violations": 0
+    },
+    {
+      "width": 414,
+      "theme": "light",
+      "route": "/login",
+      "overflow": 0,
+      "violations": 0
+    },
+    {
+      "width": 414,
+      "theme": "light",
+      "route": "/live-floor",
+      "overflow": 0,
+      "violations": 0
+    },
+    {
+      "width": 414,
+      "theme": "dark",
+      "route": "/login",
+      "overflow": 0,
+      "violations": 0
+    },
+    {
+      "width": 414,
+      "theme": "dark",
+      "route": "/live-floor",
+      "overflow": 0,
+      "violations": 0
+    }
+  ],
+  "errors": []
+}

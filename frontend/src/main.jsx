@@ -10,10 +10,7 @@ import "./design-tokens.css";
 import "./table-states.css";
 import App from "./App.jsx";
 
-const storedDarkMode = localStorage.getItem("darkMode");
-if (storedDarkMode === null || storedDarkMode === "true") {
-  document.body.classList.add("dark");
-}
+window.HSRTheme.sync();
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>

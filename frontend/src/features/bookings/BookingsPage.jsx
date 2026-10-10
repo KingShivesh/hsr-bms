@@ -83,7 +83,7 @@ function BookingModal({ form, setForm, saving, onClose, onSubmit }) {
 
   return (
     <div className="lf-modal-backdrop" role="presentation">
-      <form className="op2-modal" onSubmit={onSubmit}>
+      <form className="op2-modal" onSubmit={onSubmit} role="dialog" aria-modal="true" aria-label="Reserve a table">
         <div className="order-selector-head">
           <div>
             <span className="lf-eyebrow">Booking</span>

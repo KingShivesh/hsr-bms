@@ -1,0 +1,291 @@
+{
+  "themes": [
+    {
+      "theme": "light",
+      "font": "\"Syne Variable\", Syne, sans-serif",
+      "canvas": "rgb(250, 250, 250)",
+      "accent": "#006b3c"
+    },
+    {
+      "theme": "dark",
+      "font": "\"Syne Variable\", Syne, sans-serif",
+      "canvas": "rgb(11, 11, 15)",
+      "accent": "#00ff7f"
+    }
+  ],
+  "cards": [
+    {
+      "theme": "light",
+      "cards": [
+        {
+          "state": "running",
+          "background": "rgb(220, 38, 38)",
+          "color": "rgb(255, 255, 255)",
+          "labels": [
+            "Pause",
+            "Food",
+            "End"
+          ],
+          "targets": [
+            {
+              "width": 70.65625,
+              "height": 44
+            },
+            {
+              "width": 70.671875,
+              "height": 44
+            },
+            {
+              "width": 66.65625,
+              "height": 44
+            }
+          ]
+        },
+        {
+          "state": "paused",
+          "background": "rgb(180, 83, 9)",
+          "color": "rgb(255, 255, 255)",
+          "labels": [
+            "Resume",
+            "Food",
+            "End"
+          ],
+          "targets": [
+            {
+              "width": 70.65625,
+              "height": 44
+            },
+            {
+              "width": 70.671875,
+              "height": 44
+            },
+            {
+              "width": 66.65625,
+              "height": 44
+            }
+          ]
+        },
+        {
+          "state": "reserved",
+          "background": "rgb(37, 99, 235)",
+          "color": "rgb(255, 255, 255)",
+          "labels": [
+            "Check In"
+          ],
+          "targets": [
+            {
+              "width": 228,
+              "height": 44
+            }
+          ]
+        },
+        {
+          "state": "maintenance",
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "rgb(98, 98, 108)",
+          "labels": [
+            "Unavailable"
+          ],
+          "targets": [
+            {
+              "width": 228,
+              "height": 44
+            }
+          ]
+        },
+        {
+          "state": "available",
+          "background": "rgb(21, 128, 61)",
+          "color": "rgb(255, 255, 255)",
+          "labels": [
+            "Start Session"
+          ],
+          "targets": [
+            {
+              "width": 228,
+              "height": 44
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "theme": "dark",
+      "cards": [
+        {
+          "state": "running",
+          "background": "rgb(220, 38, 38)",
+          "color": "rgb(255, 255, 255)",
+          "labels": [
+            "Pause",
+            "Food",
+            "End"
+          ],
+          "targets": [
+            {
+              "width": 70.65625,
+              "height": 44
+            },
+            {
+              "width": 70.671875,
+              "height": 44
+            },
+            {
+              "width": 66.65625,
+              "height": 44
+            }
+          ]
+        },
+        {
+          "state": "paused",
+          "background": "rgb(180, 83, 9)",
+          "color": "rgb(255, 255, 255)",
+          "labels": [
+            "Resume",
+            "Food",
+            "End"
+          ],
+          "targets": [
+            {
+              "width": 70.65625,
+              "height": 44
+            },
+            {
+              "width": 70.671875,
+              "height": 44
+            },
+            {
+              "width": 66.65625,
+              "height": 44
+            }
+          ]
+        },
+        {
+          "state": "reserved",
+          "background": "rgb(37, 99, 235)",
+          "color": "rgb(255, 255, 255)",
+          "labels": [
+            "Check In"
+          ],
+          "targets": [
+            {
+              "width": 228,
+              "height": 44
+            }
+          ]
+        },
+        {
+          "state": "maintenance",
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "rgb(146, 146, 159)",
+          "labels": [
+            "Unavailable"
+          ],
+          "targets": [
+            {
+              "width": 228,
+              "height": 44
+            }
+          ]
+        },
+        {
+          "state": "available",
+          "background": "rgb(21, 128, 61)",
+          "color": "rgb(255, 255, 255)",
+          "labels": [
+            "Start Session"
+          ],
+          "targets": [
+            {
+              "width": 228,
+              "height": 44
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "mobile": [
+    {
+      "width": 375,
+      "theme": "light",
+      "overflow": 0,
+      "allActionTargets": "44px minimum; unobscured",
+      "modalBounds": {
+        "x": 19.42999267578125,
+        "y": 128.24435424804688,
+        "width": 336.1400146484375,
+        "height": 639.5112609863281
+      }
+    },
+    {
+      "width": 375,
+      "theme": "dark",
+      "overflow": 0,
+      "allActionTargets": "44px minimum; unobscured",
+      "modalBounds": {
+        "x": 19.42999267578125,
+        "y": 128.24435424804688,
+        "width": 336.1400146484375,
+        "height": 639.5112609863281
+      }
+    },
+    {
+      "width": 414,
+      "theme": "light",
+      "overflow": 0,
+      "allActionTargets": "44px minimum; unobscured",
+      "modalBounds": {
+        "x": 19.819992065429688,
+        "y": 128.24435424804688,
+        "width": 374.36000061035156,
+        "height": 639.5112609863281
+      }
+    },
+    {
+      "width": 414,
+      "theme": "dark",
+      "overflow": 0,
+      "allActionTargets": "44px minimum; unobscured",
+      "modalBounds": {
+        "x": 19.819992065429688,
+        "y": 128.24435424804688,
+        "width": 374.36000061035156,
+        "height": 639.5112609863281
+      }
+    }
+  ],
+  "feedback": [
+    {
+      "label": "Pause",
+      "milliseconds": 8
+    },
+    {
+      "label": "Resume",
+      "milliseconds": 13.800000011920929
+    },
+    {
+      "label": "Add Food to Session",
+      "milliseconds": 4.699999988079071
+    },
+    {
+      "label": "Close table · ₹461",
+      "milliseconds": 6.399999976158142
+    },
+    {
+      "label": "Start Session",
+      "milliseconds": 5.600000023841858
+    }
+  ],
+  "checks": [
+    "Five real states, no auto-workspace, start is centered modal, both themes",
+    "Start deep-link with no table selects first available table after initial loading",
+    "Pause/resume directly on card, timer freezes, no drawer",
+    "Failed pause reports error, keeps running state, re-enables control",
+    "Food opens directly from card and posts onto correct session",
+    "End opens checkout directly; cancel preserves session; confirmed payment saves receipt",
+    "Reserved Check In opens populated modal, starts correct table and completes matching booking",
+    "Card body opens details; frame controls preserved; open-frame billing guard preserved"
+  ],
+  "errors": []
+}

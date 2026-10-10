@@ -71,7 +71,7 @@ try {
     result.catalog = { frameRate: catalog.frame_rates.wr, packagePrice: catalog.packages[0].price };
   }
   for (const theme of ["light", "dark"]) {
-    await page.evaluate(theme => localStorage.setItem("darkMode", String(theme === "dark")), theme);
+    await page.evaluate(theme => window.HSRTheme.set(theme), theme);
     await go("/settings");
     await page.getByText("HSR Table Rates", { exact: true }).waitFor();
     if (phase === "after") await page.getByRole("button", { name: "Save Tariffs" }).waitFor();
@@ -109,7 +109,7 @@ try {
     result.frameQuote = { charge: quote.ply, price: quote.tariff_price, completedFrames: quote.frame_count };
   }
   for (const theme of ["light", "dark"]) {
-    await page.evaluate(theme => localStorage.setItem("darkMode", String(theme === "dark")), theme);
+    await page.evaluate(theme => window.HSRTheme.set(theme), theme);
     await go("/live-floor?table=t1");
     await page.locator(".lf-table-card").last().waitFor();
     if (phase === "after") await page.locator(".lf-detail-drawer").getByRole("button", { name: "Close panel" }).click();
@@ -136,7 +136,7 @@ try {
     result.packageQuote = { priceAfterCatalogRemoval: fixed.ply, name: fixed.tariff_label };
     await request("POST", "/settings/tariffs", catalog);
     for (const theme of ["light", "dark"]) {
-      await page.evaluate(theme => localStorage.setItem("darkMode", String(theme === "dark")), theme);
+      await page.evaluate(theme => window.HSRTheme.set(theme), theme);
       await go("/live-floor?table=t2");
       await page.locator(".lf-table-card").last().waitFor();
       await page.locator(".lf-detail-drawer").getByRole("button", { name: "Close panel" }).click();
@@ -171,7 +171,7 @@ try {
     for (const width of [375, 414]) {
       await page.setViewportSize({ width, height: 896 });
       for (const theme of ["light", "dark"]) {
-        await page.evaluate(theme => localStorage.setItem("darkMode", String(theme === "dark")), theme);
+        await page.evaluate(theme => window.HSRTheme.set(theme), theme);
         await go("/live-floor?table=t1");
         const frameAction = page.getByRole("button", { name: "Start Frame", exact: true });
         await frameAction.waitFor();

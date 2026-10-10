@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { getAuditLogs, getBookings, getTableState, getWaitlist } from "../api/index.js";
+import { useTheme } from "../hooks/useTheme.js";
 
 const PAGE_DESCRIPTIONS = {
   "Executive Overview": "For owners: see today's revenue, floor pressure and what needs attention first.",
@@ -118,9 +119,7 @@ export default function Topbar({
     bookings: [],
     maintenance: [],
   });
-  const [dark, setDark] = useState(
-    () => localStorage.getItem("darkMode") !== "false",
-  );
+  const { dark, toggleTheme } = useTheme();
   const displayName = username || role;
   const displayLabel =
     displayName.charAt(0).toUpperCase() + displayName.slice(1).toLowerCase();
@@ -148,15 +147,6 @@ export default function Topbar({
     const iv = setInterval(tick, 1000);
     return () => clearInterval(iv);
   }, []);
-
-  useEffect(() => {
-    if (dark) {
-      document.body.classList.add("dark");
-    } else {
-      document.body.classList.remove("dark");
-    }
-    localStorage.setItem("darkMode", dark);
-  }, [dark]);
 
   const notificationRows = useMemo(() => buildNotificationRows(notificationData), [notificationData]);
   const primaryAction = PAGE_PRIMARY_ACTIONS[title];
@@ -346,7 +336,7 @@ export default function Topbar({
         </div>
         <button
           className="topbar-icon-btn"
-          onClick={() => setDark((p) => !p)}
+          onClick={toggleTheme}
           title={dark ? "Switch to light mode" : "Switch to dark mode"}
           aria-label={dark ? "Switch to light mode" : "Switch to dark mode"}
         >

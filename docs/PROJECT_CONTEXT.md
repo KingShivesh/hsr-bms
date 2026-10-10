@@ -10,16 +10,21 @@ speed of new features.
 ## Stack
 - Backend: FastAPI (Python), SQLite locally / Supabase-Postgres in 
   production, hosted on Render
-- Frontend: Vite + React, plain CSS (no Tailwind/component library) — 
+- Frontend: Vite + React, Tailwind v4 + Bootstrap with primarily hand-rolled CSS —
   design system is hand-rolled CSS custom properties in style.css plus
   design-tokens.css; keep the existing stack for incremental design work
 - Local dev: see backend/.env.example and frontend/.env.example for 
   setup; admin/admin123 is the seeded default login
 
 ## Design system (established, do not redefine ad hoc)
-CSS custom properties defined in :root and a dark-mode override 
-(body.dark class, toggled via localStorage("darkMode"), set in 
-main.jsx, toggled from Topbar.jsx):
+CSS custom properties are centralized in `frontend/src/design-tokens.css`.
+The parser-time bootstrap in `frontend/index.html` owns theme resolution before
+React/CSS load. `localStorage.theme` is canonical (`light` / `dark`); old
+`darkMode` preferences remain a compatible fallback. Without a saved preference,
+use the system theme. `html.dark` controls the tokens; `body.dark` is synchronized
+only for legacy selectors. Topbar uses `useTheme` / `window.HSRTheme`, not a second
+theme state/effect. Login uses the same contract. Tailwind v4 semantic utilities
+are mapped with `@theme inline` in `index.css`; do not add Tailwind v3 config.
 - --accent: SNOOK-derived green, explicitly approved 2026-10-08:
   dark `#00FF7F`, light `#006B3C`. Primary actions/current running state only.
   Exact tokens and live computed-font evidence: `docs/SNOOK_THEME.md`.
@@ -41,6 +46,17 @@ main.jsx, toggled from Topbar.jsx):
   shipping CSS/theme work. It fails on undefined CSS custom properties
   and the recurring bad pattern where text tokens are used as fills, or
   surface/background tokens are used as text colors.
+- `npm run scan:contrast` now includes login, input values/placeholders, alpha
+  compositing and foreground dialogs. Gradients/images are checked using rendered
+  background pixel samples. It must wait for loaded data, not accept skeletons
+  as a passing page. Disabled controls are WCAG-exempt; their semantic pair is
+  independently tested. `npm run test:theme-runtime` checks theme bootstrap,
+  storage/system preference, persistence, cross-tab changes, paired-token
+  contrast, mobile readability and preservation of saturated Live Floor cards.
+- Text on neutral panels must not use `--text-on-brand` / `--text-on-accent`.
+  Their values intentionally invert between the light/dark green action fills.
+  Never lower label contrast with opacity; use the secondary/muted role instead.
+  Evidence and test setup: `docs/theme-contrast-audit/README.md`.
 
 ## Shared components (use these, don't reimplement)
 - MetricCard / ui-metric-card — the canonical stat card. Multiple 

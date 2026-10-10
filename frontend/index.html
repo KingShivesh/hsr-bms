@@ -2,6 +2,48 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <style>
+      html, body { background: var(--initial-canvas); color: var(--initial-text); }
+    </style>
+    <script>
+      (function () {
+        var media = window.matchMedia("(prefers-color-scheme: dark)");
+        var listeners = new Set();
+        function saved() {
+          try {
+            var theme = localStorage.getItem("theme");
+            if (theme === "light" || theme === "dark") return theme;
+            var legacy = localStorage.getItem("darkMode");
+            if (legacy === "true" || legacy === "false") return legacy === "true" ? "dark" : "light";
+          } catch (_) {}
+          return null;
+        }
+        var current = saved() || (media.matches ? "dark" : "light");
+        function sync() {
+          var dark = current === "dark";
+          var root = document.documentElement;
+          root.classList.toggle("dark", dark);
+          root.dataset.theme = current;
+          root.style.colorScheme = current;
+          root.style.setProperty("--initial-canvas", dark ? "#0b0b0f" : "#fafafa");
+          root.style.setProperty("--initial-text", dark ? "#fafafa" : "#18181b");
+          if (document.body) document.body.classList.toggle("dark", dark);
+        }
+        function set(theme, persist) {
+          current = theme;
+          if (persist) {
+            try { localStorage.setItem("theme", theme); localStorage.setItem("darkMode", String(theme === "dark")); } catch (_) {}
+          }
+          sync();
+          listeners.forEach(function (notify) { notify(); });
+        }
+        window.HSRTheme = { get: function () { return current; }, sync: sync, set: function (theme) { set(theme, true); }, subscribe: function (notify) { listeners.add(notify); return function () { listeners.delete(notify); }; } };
+        sync();
+        document.addEventListener("DOMContentLoaded", sync, { once: true });
+        window.addEventListener("storage", function (event) { if (event.key === "theme" || event.key === "darkMode" || event.key === null) set(saved() || (media.matches ? "dark" : "light"), false); });
+        media.addEventListener("change", function () { if (!saved()) set(media.matches ? "dark" : "light", false); });
+      })();
+    </script>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>HSR Snooker Cafe BMS</title>

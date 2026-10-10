@@ -34,7 +34,7 @@ async function main() {
   await page.getByTestId("password-input").fill("admin123");
   await page.getByTestId("login-button").click();
   await page.waitForURL((url) => url.pathname !== "/login");
-  await page.evaluate(() => localStorage.setItem("darkMode", "true"));
+  await page.evaluate(() => window.HSRTheme.set("dark"));
 
   if (process.env.CAPTURE_HSR_AFTER) {
     await capture(page, `${appUrl}/dashboard`, "hsr-dashboard-after.png", ".ops-dashboard");

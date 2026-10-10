@@ -31,7 +31,7 @@ export default function Login({ onLogin }) {
   }
 
   return (
-    <div className="login-container cf-login-container">
+    <div className="login-container cf-login-container bg-bg-base text-text-primary">
       <div className="login-shell cf-login-shell">
         <section className="login-showcase" aria-label={APP_NAME}>
           <div className="login-brand">
@@ -102,11 +102,13 @@ export default function Login({ onLogin }) {
 
           <form onSubmit={handleSubmit}>
             <div className="form-group">
-              <label className="form-label">Username</label>
+              <label className="form-label" htmlFor="login-username">Username</label>
               <div className="login-input-wrap">
                 <i className="ti ti-user" aria-hidden="true" />
                 <input
                   type="text"
+                  id="login-username"
+                  autoComplete="username"
                   className="input-field login-input"
                   placeholder="Enter username"
                   value={username}
@@ -117,11 +119,13 @@ export default function Login({ onLogin }) {
               </div>
             </div>
             <div className="form-group">
-              <label className="form-label">Password</label>
+              <label className="form-label" htmlFor="login-password">Password</label>
               <div className="login-input-wrap">
                 <i className="ti ti-key" aria-hidden="true" />
                 <input
                   type="password"
+                  id="login-password"
+                  autoComplete="current-password"
                   className="input-field login-input"
                   placeholder="Enter password"
                   value={password}
@@ -140,7 +144,7 @@ export default function Login({ onLogin }) {
               <span>{loading ? "Signing in..." : "Sign in"}</span>
               <i className="ti ti-arrow-right" aria-hidden="true" />
             </button>
-            <div className="error-message">{error}</div>
+            <div className="error-message" role="alert">{error}</div>
           </form>
 
           <div className="login-footer">

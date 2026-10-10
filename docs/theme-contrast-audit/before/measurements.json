@@ -1,0 +1,1353 @@
+{
+  "stage": "before",
+  "routes": [
+    "/",
+    "/login",
+    "/dashboard",
+    "/live-floor",
+    "/inventory",
+    "/bookings",
+    "/customers",
+    "/sales",
+    "/analytics",
+    "/cafe-pos",
+    "/waitlist",
+    "/legacy-table-controls",
+    "/tournaments",
+    "/daily-closing",
+    "/pricing-rules",
+    "/audit-log",
+    "/settings"
+  ],
+  "violations": [
+    {
+      "route": "/login",
+      "theme": "light",
+      "state": "default",
+      "selector": "div.login-title",
+      "kind": "text",
+      "text": "HSR Snooker Cafe BMS",
+      "color": "rgb(250, 250, 250)",
+      "background": {
+        "r": 229,
+        "g": 234,
+        "b": 231
+      },
+      "fontSize": "28px",
+      "fontWeight": "700",
+      "ratio": 1.17,
+      "required": 3,
+      "gradient": true,
+      "backgroundMethod": "rendered pixels, three samples per text line"
+    },
+    {
+      "route": "/login",
+      "theme": "light",
+      "state": "default",
+      "selector": "h2",
+      "kind": "text",
+      "text": "Run tables, food, bookings and closing from one screen.",
+      "color": "rgb(250, 250, 250)",
+      "background": {
+        "r": 228,
+        "g": 234,
+        "b": 230
+      },
+      "fontSize": "54px",
+      "fontWeight": "600",
+      "ratio": 1.17,
+      "required": 3,
+      "gradient": true,
+      "backgroundMethod": "rendered pixels, three samples per text line"
+    },
+    {
+      "route": "/login",
+      "theme": "light",
+      "state": "default",
+      "selector": "span",
+      "kind": "text",
+      "text": "5",
+      "color": "rgb(250, 250, 250)",
+      "background": {
+        "r": 199,
+        "g": 213,
+        "b": 203
+      },
+      "fontSize": "18px",
+      "fontWeight": "700",
+      "ratio": 1.46,
+      "required": 4.5,
+      "gradient": true,
+      "backgroundMethod": "rendered pixels, three samples per text line"
+    },
+    {
+      "route": "/login",
+      "theme": "light",
+      "state": "default",
+      "selector": "small",
+      "kind": "text",
+      "text": "Tables",
+      "color": "rgba(248, 250, 252, 0.58)",
+      "background": {
+        "r": 199,
+        "g": 214,
+        "b": 203
+      },
+      "fontSize": "12px",
+      "fontWeight": "700",
+      "ratio": 1.24,
+      "required": 4.5,
+      "gradient": true,
+      "backgroundMethod": "rendered pixels, three samples per text line"
+    },
+    {
+      "route": "/login",
+      "theme": "light",
+      "state": "default",
+      "selector": "span",
+      "kind": "text",
+      "text": "₹",
+      "color": "rgb(250, 250, 250)",
+      "background": {
+        "r": 180,
+        "g": 197,
+        "b": 185
+      },
+      "fontSize": "18px",
+      "fontWeight": "700",
+      "ratio": 1.73,
+      "required": 4.5,
+      "gradient": true,
+      "backgroundMethod": "rendered pixels, three samples per text line"
+    },
+    {
+      "route": "/login",
+      "theme": "light",
+      "state": "default",
+      "selector": "small",
+      "kind": "text",
+      "text": "Billing",
+      "color": "rgba(248, 250, 252, 0.58)",
+      "background": {
+        "r": 187,
+        "g": 206,
+        "b": 193
+      },
+      "fontSize": "12px",
+      "fontWeight": "700",
+      "ratio": 1.32,
+      "required": 4.5,
+      "gradient": true,
+      "backgroundMethod": "rendered pixels, three samples per text line"
+    },
+    {
+      "route": "/login",
+      "theme": "light",
+      "state": "default",
+      "selector": "span",
+      "kind": "text",
+      "text": "T1-T5",
+      "color": "rgb(250, 250, 250)",
+      "background": {
+        "r": 174,
+        "g": 193,
+        "b": 179
+      },
+      "fontSize": "18px",
+      "fontWeight": "700",
+      "ratio": 1.82,
+      "required": 4.5,
+      "gradient": true,
+      "backgroundMethod": "rendered pixels, three samples per text line"
+    },
+    {
+      "route": "/login",
+      "theme": "light",
+      "state": "default",
+      "selector": "small",
+      "kind": "text",
+      "text": "HSR Setup",
+      "color": "rgba(248, 250, 252, 0.58)",
+      "background": {
+        "r": 181,
+        "g": 202,
+        "b": 187
+      },
+      "fontSize": "12px",
+      "fontWeight": "700",
+      "ratio": 1.35,
+      "required": 4.5,
+      "gradient": true,
+      "backgroundMethod": "rendered pixels, three samples per text line"
+    },
+    {
+      "route": "/login",
+      "theme": "light",
+      "state": "default",
+      "selector": "span",
+      "kind": "text",
+      "text": "24/7",
+      "color": "rgb(250, 250, 250)",
+      "background": {
+        "r": 168,
+        "g": 192,
+        "b": 177
+      },
+      "fontSize": "18px",
+      "fontWeight": "700",
+      "ratio": 1.86,
+      "required": 4.5,
+      "gradient": true,
+      "backgroundMethod": "rendered pixels, three samples per text line"
+    },
+    {
+      "route": "/login",
+      "theme": "light",
+      "state": "default",
+      "selector": "small",
+      "kind": "text",
+      "text": "Live Ops",
+      "color": "rgba(248, 250, 252, 0.58)",
+      "background": {
+        "r": 175,
+        "g": 198,
+        "b": 184
+      },
+      "fontSize": "12px",
+      "fontWeight": "700",
+      "ratio": 1.39,
+      "required": 4.5,
+      "gradient": true,
+      "backgroundMethod": "rendered pixels, three samples per text line"
+    },
+    {
+      "route": "/login",
+      "theme": "light",
+      "state": "login-error-and-filled-inputs",
+      "selector": "div.login-title",
+      "kind": "text",
+      "text": "HSR Snooker Cafe BMS",
+      "color": "rgb(250, 250, 250)",
+      "background": {
+        "r": 229,
+        "g": 234,
+        "b": 231
+      },
+      "fontSize": "28px",
+      "fontWeight": "700",
+      "ratio": 1.17,
+      "required": 3,
+      "gradient": true,
+      "backgroundMethod": "rendered pixels, three samples per text line"
+    },
+    {
+      "route": "/login",
+      "theme": "light",
+      "state": "login-error-and-filled-inputs",
+      "selector": "h2",
+      "kind": "text",
+      "text": "Run tables, food, bookings and closing from one screen.",
+      "color": "rgb(250, 250, 250)",
+      "background": {
+        "r": 228,
+        "g": 234,
+        "b": 230
+      },
+      "fontSize": "54px",
+      "fontWeight": "600",
+      "ratio": 1.17,
+      "required": 3,
+      "gradient": true,
+      "backgroundMethod": "rendered pixels, three samples per text line"
+    },
+    {
+      "route": "/login",
+      "theme": "light",
+      "state": "login-error-and-filled-inputs",
+      "selector": "span",
+      "kind": "text",
+      "text": "5",
+      "color": "rgb(250, 250, 250)",
+      "background": {
+        "r": 199,
+        "g": 213,
+        "b": 203
+      },
+      "fontSize": "18px",
+      "fontWeight": "700",
+      "ratio": 1.46,
+      "required": 4.5,
+      "gradient": true,
+      "backgroundMethod": "rendered pixels, three samples per text line"
+    },
+    {
+      "route": "/login",
+      "theme": "light",
+      "state": "login-error-and-filled-inputs",
+      "selector": "small",
+      "kind": "text",
+      "text": "Tables",
+      "color": "rgba(248, 250, 252, 0.58)",
+      "background": {
+        "r": 199,
+        "g": 214,
+        "b": 203
+      },
+      "fontSize": "12px",
+      "fontWeight": "700",
+      "ratio": 1.24,
+      "required": 4.5,
+      "gradient": true,
+      "backgroundMethod": "rendered pixels, three samples per text line"
+    },
+    {
+      "route": "/login",
+      "theme": "light",
+      "state": "login-error-and-filled-inputs",
+      "selector": "span",
+      "kind": "text",
+      "text": "₹",
+      "color": "rgb(250, 250, 250)",
+      "background": {
+        "r": 180,
+        "g": 197,
+        "b": 185
+      },
+      "fontSize": "18px",
+      "fontWeight": "700",
+      "ratio": 1.73,
+      "required": 4.5,
+      "gradient": true,
+      "backgroundMethod": "rendered pixels, three samples per text line"
+    },
+    {
+      "route": "/login",
+      "theme": "light",
+      "state": "login-error-and-filled-inputs",
+      "selector": "small",
+      "kind": "text",
+      "text": "Billing",
+      "color": "rgba(248, 250, 252, 0.58)",
+      "background": {
+        "r": 187,
+        "g": 206,
+        "b": 193
+      },
+      "fontSize": "12px",
+      "fontWeight": "700",
+      "ratio": 1.32,
+      "required": 4.5,
+      "gradient": true,
+      "backgroundMethod": "rendered pixels, three samples per text line"
+    },
+    {
+      "route": "/login",
+      "theme": "light",
+      "state": "login-error-and-filled-inputs",
+      "selector": "span",
+      "kind": "text",
+      "text": "T1-T5",
+      "color": "rgb(250, 250, 250)",
+      "background": {
+        "r": 174,
+        "g": 193,
+        "b": 179
+      },
+      "fontSize": "18px",
+      "fontWeight": "700",
+      "ratio": 1.82,
+      "required": 4.5,
+      "gradient": true,
+      "backgroundMethod": "rendered pixels, three samples per text line"
+    },
+    {
+      "route": "/login",
+      "theme": "light",
+      "state": "login-error-and-filled-inputs",
+      "selector": "small",
+      "kind": "text",
+      "text": "HSR Setup",
+      "color": "rgba(248, 250, 252, 0.58)",
+      "background": {
+        "r": 181,
+        "g": 202,
+        "b": 187
+      },
+      "fontSize": "12px",
+      "fontWeight": "700",
+      "ratio": 1.35,
+      "required": 4.5,
+      "gradient": true,
+      "backgroundMethod": "rendered pixels, three samples per text line"
+    },
+    {
+      "route": "/login",
+      "theme": "light",
+      "state": "login-error-and-filled-inputs",
+      "selector": "span",
+      "kind": "text",
+      "text": "24/7",
+      "color": "rgb(250, 250, 250)",
+      "background": {
+        "r": 168,
+        "g": 192,
+        "b": 177
+      },
+      "fontSize": "18px",
+      "fontWeight": "700",
+      "ratio": 1.86,
+      "required": 4.5,
+      "gradient": true,
+      "backgroundMethod": "rendered pixels, three samples per text line"
+    },
+    {
+      "route": "/login",
+      "theme": "light",
+      "state": "login-error-and-filled-inputs",
+      "selector": "small",
+      "kind": "text",
+      "text": "Live Ops",
+      "color": "rgba(248, 250, 252, 0.58)",
+      "background": {
+        "r": 175,
+        "g": 198,
+        "b": 184
+      },
+      "fontSize": "12px",
+      "fontWeight": "700",
+      "ratio": 1.39,
+      "required": 4.5,
+      "gradient": true,
+      "backgroundMethod": "rendered pixels, three samples per text line"
+    },
+    {
+      "route": "/",
+      "theme": "light",
+      "state": "default",
+      "selector": "span.sb-badge",
+      "kind": "text",
+      "text": "2 Active",
+      "color": "rgb(0, 107, 60)",
+      "background": {
+        "r": 188,
+        "g": 218,
+        "b": 204
+      },
+      "fontSize": "10px",
+      "fontWeight": "700",
+      "ratio": 4.43,
+      "required": 4.5,
+      "gradient": true,
+      "backgroundMethod": "rendered pixels, three samples per text line"
+    },
+    {
+      "route": "/live-floor",
+      "theme": "light",
+      "state": "default",
+      "selector": "span.sb-badge",
+      "kind": "text",
+      "text": "2 Active",
+      "color": "rgb(0, 107, 60)",
+      "background": {
+        "r": 188,
+        "g": 218,
+        "b": 204
+      },
+      "fontSize": "10px",
+      "fontWeight": "700",
+      "ratio": 4.43,
+      "required": 4.5,
+      "gradient": true,
+      "backgroundMethod": "rendered pixels, three samples per text line"
+    },
+    {
+      "route": "/login",
+      "theme": "dark",
+      "state": "default",
+      "selector": "h2",
+      "kind": "text",
+      "text": "Run tables, food, bookings and closing from one screen.",
+      "color": "rgb(7, 18, 13)",
+      "background": {
+        "r": 10,
+        "g": 19,
+        "b": 15
+      },
+      "fontSize": "54px",
+      "fontWeight": "600",
+      "ratio": 1.01,
+      "required": 3,
+      "gradient": true,
+      "backgroundMethod": "rendered pixels, three samples per text line"
+    },
+    {
+      "route": "/login",
+      "theme": "dark",
+      "state": "default",
+      "selector": "span",
+      "kind": "text",
+      "text": "5",
+      "color": "rgb(7, 18, 13)",
+      "background": {
+        "r": 34,
+        "g": 49,
+        "b": 41
+      },
+      "fontSize": "18px",
+      "fontWeight": "700",
+      "ratio": 1.4,
+      "required": 4.5,
+      "gradient": true,
+      "backgroundMethod": "rendered pixels, three samples per text line"
+    },
+    {
+      "route": "/login",
+      "theme": "dark",
+      "state": "default",
+      "selector": "span",
+      "kind": "text",
+      "text": "₹",
+      "color": "rgb(7, 18, 13)",
+      "background": {
+        "r": 32,
+        "g": 47,
+        "b": 40
+      },
+      "fontSize": "18px",
+      "fontWeight": "700",
+      "ratio": 1.36,
+      "required": 4.5,
+      "gradient": true,
+      "backgroundMethod": "rendered pixels, three samples per text line"
+    },
+    {
+      "route": "/login",
+      "theme": "dark",
+      "state": "default",
+      "selector": "span",
+      "kind": "text",
+      "text": "T1-T5",
+      "color": "rgb(7, 18, 13)",
+      "background": {
+        "r": 33,
+        "g": 49,
+        "b": 42
+      },
+      "fontSize": "18px",
+      "fontWeight": "700",
+      "ratio": 1.4,
+      "required": 4.5,
+      "gradient": true,
+      "backgroundMethod": "rendered pixels, three samples per text line"
+    },
+    {
+      "route": "/login",
+      "theme": "dark",
+      "state": "default",
+      "selector": "span",
+      "kind": "text",
+      "text": "24/7",
+      "color": "rgb(7, 18, 13)",
+      "background": {
+        "r": 34,
+        "g": 50,
+        "b": 43
+      },
+      "fontSize": "18px",
+      "fontWeight": "700",
+      "ratio": 1.42,
+      "required": 4.5,
+      "gradient": true,
+      "backgroundMethod": "rendered pixels, three samples per text line"
+    },
+    {
+      "route": "/login",
+      "theme": "dark",
+      "state": "login-error-and-filled-inputs",
+      "selector": "h2",
+      "kind": "text",
+      "text": "Run tables, food, bookings and closing from one screen.",
+      "color": "rgb(7, 18, 13)",
+      "background": {
+        "r": 10,
+        "g": 19,
+        "b": 15
+      },
+      "fontSize": "54px",
+      "fontWeight": "600",
+      "ratio": 1.01,
+      "required": 3,
+      "gradient": true,
+      "backgroundMethod": "rendered pixels, three samples per text line"
+    },
+    {
+      "route": "/login",
+      "theme": "dark",
+      "state": "login-error-and-filled-inputs",
+      "selector": "span",
+      "kind": "text",
+      "text": "5",
+      "color": "rgb(7, 18, 13)",
+      "background": {
+        "r": 34,
+        "g": 49,
+        "b": 41
+      },
+      "fontSize": "18px",
+      "fontWeight": "700",
+      "ratio": 1.4,
+      "required": 4.5,
+      "gradient": true,
+      "backgroundMethod": "rendered pixels, three samples per text line"
+    },
+    {
+      "route": "/login",
+      "theme": "dark",
+      "state": "login-error-and-filled-inputs",
+      "selector": "span",
+      "kind": "text",
+      "text": "₹",
+      "color": "rgb(7, 18, 13)",
+      "background": {
+        "r": 32,
+        "g": 47,
+        "b": 40
+      },
+      "fontSize": "18px",
+      "fontWeight": "700",
+      "ratio": 1.36,
+      "required": 4.5,
+      "gradient": true,
+      "backgroundMethod": "rendered pixels, three samples per text line"
+    },
+    {
+      "route": "/login",
+      "theme": "dark",
+      "state": "login-error-and-filled-inputs",
+      "selector": "span",
+      "kind": "text",
+      "text": "T1-T5",
+      "color": "rgb(7, 18, 13)",
+      "background": {
+        "r": 33,
+        "g": 49,
+        "b": 42
+      },
+      "fontSize": "18px",
+      "fontWeight": "700",
+      "ratio": 1.4,
+      "required": 4.5,
+      "gradient": true,
+      "backgroundMethod": "rendered pixels, three samples per text line"
+    },
+    {
+      "route": "/login",
+      "theme": "dark",
+      "state": "login-error-and-filled-inputs",
+      "selector": "span",
+      "kind": "text",
+      "text": "24/7",
+      "color": "rgb(7, 18, 13)",
+      "background": {
+        "r": 34,
+        "g": 50,
+        "b": 43
+      },
+      "fontSize": "18px",
+      "fontWeight": "700",
+      "ratio": 1.42,
+      "required": 4.5,
+      "gradient": true,
+      "backgroundMethod": "rendered pixels, three samples per text line"
+    }
+  ],
+  "gradients": [
+    {
+      "route": "/login",
+      "theme": "light",
+      "text": "Run tables, food, bookings and closing from one screen.",
+      "selector": ""
+    },
+    {
+      "route": "/login",
+      "theme": "light",
+      "text": "Built for fast counter operations: live timers, LP billing, ",
+      "selector": ""
+    },
+    {
+      "route": "/login",
+      "theme": "light",
+      "text": "Tables",
+      "selector": ""
+    },
+    {
+      "route": "/login",
+      "theme": "light",
+      "text": "Billing",
+      "selector": ""
+    },
+    {
+      "route": "/login",
+      "theme": "light",
+      "text": "HSR Setup",
+      "selector": ""
+    },
+    {
+      "route": "/login",
+      "theme": "light",
+      "text": "Live Ops",
+      "selector": ""
+    },
+    {
+      "route": "/login",
+      "theme": "light",
+      "text": "Welcome back",
+      "selector": ""
+    },
+    {
+      "route": "/login",
+      "theme": "light",
+      "text": "",
+      "selector": "input-field login-input"
+    },
+    {
+      "route": "/login",
+      "theme": "light",
+      "text": "",
+      "selector": "input-field login-input"
+    },
+    {
+      "route": "/login",
+      "theme": "light",
+      "text": "Sign in",
+      "selector": "btn-login cf-btn-login"
+    },
+    {
+      "route": "/",
+      "theme": "light",
+      "text": "Live Floor2 Active",
+      "selector": "sb-item active"
+    },
+    {
+      "route": "/",
+      "theme": "light",
+      "text": "Command Center",
+      "selector": ""
+    },
+    {
+      "route": "/",
+      "theme": "light",
+      "text": "New Booking",
+      "selector": "lf-secondary-button"
+    },
+    {
+      "route": "/",
+      "theme": "light",
+      "text": "Add Customer",
+      "selector": "lf-secondary-button"
+    },
+    {
+      "route": "/",
+      "theme": "light",
+      "text": "Start Table",
+      "selector": "lf-primary-button"
+    },
+    {
+      "route": "/",
+      "theme": "light",
+      "text": "QA TABLE STATE AUDIT",
+      "selector": "lf-table-note"
+    },
+    {
+      "route": "/",
+      "theme": "light",
+      "text": "Unavailable",
+      "selector": ""
+    },
+    {
+      "route": "/dashboard",
+      "theme": "light",
+      "text": "Executive Overview",
+      "selector": "sb-item active"
+    },
+    {
+      "route": "/dashboard",
+      "theme": "light",
+      "text": "No closed sessions in range",
+      "selector": ""
+    },
+    {
+      "route": "/dashboard",
+      "theme": "light",
+      "text": "live estimate now",
+      "selector": ""
+    },
+    {
+      "route": "/dashboard",
+      "theme": "light",
+      "text": "Today register",
+      "selector": ""
+    },
+    {
+      "route": "/dashboard",
+      "theme": "light",
+      "text": "No cafe orders in range",
+      "selector": ""
+    },
+    {
+      "route": "/live-floor",
+      "theme": "light",
+      "text": "Live Floor2 Active",
+      "selector": "sb-item active"
+    },
+    {
+      "route": "/live-floor",
+      "theme": "light",
+      "text": "Command Center",
+      "selector": ""
+    },
+    {
+      "route": "/live-floor",
+      "theme": "light",
+      "text": "New Booking",
+      "selector": "lf-secondary-button"
+    },
+    {
+      "route": "/live-floor",
+      "theme": "light",
+      "text": "Add Customer",
+      "selector": "lf-secondary-button"
+    },
+    {
+      "route": "/live-floor",
+      "theme": "light",
+      "text": "Start Table",
+      "selector": "lf-primary-button"
+    },
+    {
+      "route": "/live-floor",
+      "theme": "light",
+      "text": "QA TABLE STATE AUDIT",
+      "selector": "lf-table-note"
+    },
+    {
+      "route": "/live-floor",
+      "theme": "light",
+      "text": "Unavailable",
+      "selector": ""
+    },
+    {
+      "route": "/inventory",
+      "theme": "light",
+      "text": "Inventory & Stocks",
+      "selector": "sb-item active"
+    },
+    {
+      "route": "/bookings",
+      "theme": "light",
+      "text": "Bookings",
+      "selector": "sb-item active"
+    },
+    {
+      "route": "/bookings",
+      "theme": "light",
+      "text": "UnavailableQA TABLE STATE AUDIT",
+      "selector": ""
+    },
+    {
+      "route": "/bookings",
+      "theme": "light",
+      "text": "QA TABLE STATE AUDIT",
+      "selector": ""
+    },
+    {
+      "route": "/bookings",
+      "theme": "light",
+      "text": "Unavailable",
+      "selector": "table-state-primary"
+    },
+    {
+      "route": "/customers",
+      "theme": "light",
+      "text": "Customers",
+      "selector": "sb-item active"
+    },
+    {
+      "route": "/sales",
+      "theme": "light",
+      "text": "Sales",
+      "selector": "sb-item active"
+    },
+    {
+      "route": "/analytics",
+      "theme": "light",
+      "text": "Analytics & Reports",
+      "selector": "sb-item active"
+    },
+    {
+      "route": "/cafe-pos",
+      "theme": "light",
+      "text": "Cafe POS",
+      "selector": "sb-item active"
+    },
+    {
+      "route": "/waitlist",
+      "theme": "light",
+      "text": "Waitlist",
+      "selector": "sb-item active"
+    },
+    {
+      "route": "/legacy-table-controls",
+      "theme": "light",
+      "text": "Advanced Table Controls",
+      "selector": "sb-item active"
+    },
+    {
+      "route": "/legacy-table-controls",
+      "theme": "light",
+      "text": "Unavailable",
+      "selector": "table-state-primary"
+    },
+    {
+      "route": "/tournaments",
+      "theme": "light",
+      "text": "Tournaments",
+      "selector": "sb-item active"
+    },
+    {
+      "route": "/tournaments",
+      "theme": "light",
+      "text": "Unavailable",
+      "selector": "table-state-primary"
+    },
+    {
+      "route": "/daily-closing",
+      "theme": "light",
+      "text": "Daily Closing",
+      "selector": "sb-item active"
+    },
+    {
+      "route": "/pricing-rules",
+      "theme": "light",
+      "text": "Pricing & Rules",
+      "selector": "sb-item active"
+    },
+    {
+      "route": "/audit-log",
+      "theme": "light",
+      "text": "Audit Log",
+      "selector": "sb-item active"
+    },
+    {
+      "route": "/settings",
+      "theme": "light",
+      "text": "Settings",
+      "selector": "sb-item active"
+    },
+    {
+      "route": "/login",
+      "theme": "dark",
+      "text": "Run tables, food, bookings and closing from one screen.",
+      "selector": ""
+    },
+    {
+      "route": "/login",
+      "theme": "dark",
+      "text": "Built for fast counter operations: live timers, LP billing, ",
+      "selector": ""
+    },
+    {
+      "route": "/login",
+      "theme": "dark",
+      "text": "Tables",
+      "selector": ""
+    },
+    {
+      "route": "/login",
+      "theme": "dark",
+      "text": "Billing",
+      "selector": ""
+    },
+    {
+      "route": "/login",
+      "theme": "dark",
+      "text": "HSR Setup",
+      "selector": ""
+    },
+    {
+      "route": "/login",
+      "theme": "dark",
+      "text": "Live Ops",
+      "selector": ""
+    },
+    {
+      "route": "/login",
+      "theme": "dark",
+      "text": "Welcome back",
+      "selector": ""
+    },
+    {
+      "route": "/login",
+      "theme": "dark",
+      "text": "",
+      "selector": "input-field login-input"
+    },
+    {
+      "route": "/login",
+      "theme": "dark",
+      "text": "",
+      "selector": "input-field login-input"
+    },
+    {
+      "route": "/login",
+      "theme": "dark",
+      "text": "Sign in",
+      "selector": "btn-login cf-btn-login"
+    },
+    {
+      "route": "/",
+      "theme": "dark",
+      "text": "Live Floor2 Active",
+      "selector": "sb-item active"
+    },
+    {
+      "route": "/",
+      "theme": "dark",
+      "text": "Command Center",
+      "selector": ""
+    },
+    {
+      "route": "/",
+      "theme": "dark",
+      "text": "New Booking",
+      "selector": "lf-secondary-button"
+    },
+    {
+      "route": "/",
+      "theme": "dark",
+      "text": "Add Customer",
+      "selector": "lf-secondary-button"
+    },
+    {
+      "route": "/",
+      "theme": "dark",
+      "text": "Start Table",
+      "selector": "lf-primary-button"
+    },
+    {
+      "route": "/",
+      "theme": "dark",
+      "text": "QA TABLE STATE AUDIT",
+      "selector": "lf-table-note"
+    },
+    {
+      "route": "/",
+      "theme": "dark",
+      "text": "Unavailable",
+      "selector": ""
+    },
+    {
+      "route": "/dashboard",
+      "theme": "dark",
+      "text": "Executive Overview",
+      "selector": "sb-item active"
+    },
+    {
+      "route": "/live-floor",
+      "theme": "dark",
+      "text": "Live Floor2 Active",
+      "selector": "sb-item active"
+    },
+    {
+      "route": "/live-floor",
+      "theme": "dark",
+      "text": "Command Center",
+      "selector": ""
+    },
+    {
+      "route": "/live-floor",
+      "theme": "dark",
+      "text": "New Booking",
+      "selector": "lf-secondary-button"
+    },
+    {
+      "route": "/live-floor",
+      "theme": "dark",
+      "text": "Add Customer",
+      "selector": "lf-secondary-button"
+    },
+    {
+      "route": "/live-floor",
+      "theme": "dark",
+      "text": "Start Table",
+      "selector": "lf-primary-button"
+    },
+    {
+      "route": "/live-floor",
+      "theme": "dark",
+      "text": "QA TABLE STATE AUDIT",
+      "selector": "lf-table-note"
+    },
+    {
+      "route": "/live-floor",
+      "theme": "dark",
+      "text": "Unavailable",
+      "selector": ""
+    },
+    {
+      "route": "/inventory",
+      "theme": "dark",
+      "text": "Inventory & Stocks",
+      "selector": "sb-item active"
+    },
+    {
+      "route": "/bookings",
+      "theme": "dark",
+      "text": "Bookings",
+      "selector": "sb-item active"
+    },
+    {
+      "route": "/bookings",
+      "theme": "dark",
+      "text": "UnavailableQA TABLE STATE AUDIT",
+      "selector": ""
+    },
+    {
+      "route": "/bookings",
+      "theme": "dark",
+      "text": "QA TABLE STATE AUDIT",
+      "selector": ""
+    },
+    {
+      "route": "/bookings",
+      "theme": "dark",
+      "text": "Unavailable",
+      "selector": "table-state-primary"
+    },
+    {
+      "route": "/customers",
+      "theme": "dark",
+      "text": "Customers",
+      "selector": "sb-item active"
+    },
+    {
+      "route": "/sales",
+      "theme": "dark",
+      "text": "Sales",
+      "selector": "sb-item active"
+    },
+    {
+      "route": "/analytics",
+      "theme": "dark",
+      "text": "Analytics & Reports",
+      "selector": "sb-item active"
+    },
+    {
+      "route": "/cafe-pos",
+      "theme": "dark",
+      "text": "Cafe POS",
+      "selector": "sb-item active"
+    },
+    {
+      "route": "/waitlist",
+      "theme": "dark",
+      "text": "Waitlist",
+      "selector": "sb-item active"
+    },
+    {
+      "route": "/legacy-table-controls",
+      "theme": "dark",
+      "text": "Advanced Table Controls",
+      "selector": "sb-item active"
+    },
+    {
+      "route": "/tournaments",
+      "theme": "dark",
+      "text": "Tournaments",
+      "selector": "sb-item active"
+    },
+    {
+      "route": "/tournaments",
+      "theme": "dark",
+      "text": "Unavailable",
+      "selector": "table-state-primary"
+    },
+    {
+      "route": "/daily-closing",
+      "theme": "dark",
+      "text": "Daily Closing",
+      "selector": "sb-item active"
+    },
+    {
+      "route": "/pricing-rules",
+      "theme": "dark",
+      "text": "Pricing & Rules",
+      "selector": "sb-item active"
+    },
+    {
+      "route": "/audit-log",
+      "theme": "dark",
+      "text": "Audit Log",
+      "selector": "sb-item active"
+    },
+    {
+      "route": "/settings",
+      "theme": "dark",
+      "text": "Settings",
+      "selector": "sb-item active"
+    }
+  ],
+  "errors": [],
+  "cards": [
+    {
+      "theme": "light",
+      "cards": [
+        {
+          "state": "running",
+          "background": "rgb(220, 38, 38)",
+          "color": "rgb(255, 255, 255)"
+        },
+        {
+          "state": "paused",
+          "background": "rgb(180, 83, 9)",
+          "color": "rgb(255, 255, 255)"
+        },
+        {
+          "state": "reserved",
+          "background": "rgb(37, 99, 235)",
+          "color": "rgb(255, 255, 255)"
+        },
+        {
+          "state": "maintenance",
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "rgb(98, 98, 108)"
+        },
+        {
+          "state": "available",
+          "background": "rgb(21, 128, 61)",
+          "color": "rgb(255, 255, 255)"
+        }
+      ]
+    },
+    {
+      "theme": "dark",
+      "cards": [
+        {
+          "state": "running",
+          "background": "rgb(220, 38, 38)",
+          "color": "rgb(255, 255, 255)"
+        },
+        {
+          "state": "paused",
+          "background": "rgb(180, 83, 9)",
+          "color": "rgb(255, 255, 255)"
+        },
+        {
+          "state": "reserved",
+          "background": "rgb(37, 99, 235)",
+          "color": "rgb(255, 255, 255)"
+        },
+        {
+          "state": "maintenance",
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "rgb(146, 146, 159)"
+        },
+        {
+          "state": "available",
+          "background": "rgb(21, 128, 61)",
+          "color": "rgb(255, 255, 255)"
+        }
+      ]
+    }
+  ],
+  "login": [
+    [
+      {
+        "text": "HSR Snooker Cafe BMS",
+        "color": "rgb(250, 250, 250)"
+      },
+      {
+        "text": "Run tables, food, bookings and closing from one screen.",
+        "color": "rgb(250, 250, 250)"
+      },
+      {
+        "text": "Tables",
+        "color": "rgba(248, 250, 252, 0.58)"
+      },
+      {
+        "text": "Billing",
+        "color": "rgba(248, 250, 252, 0.58)"
+      },
+      {
+        "text": "HSR Setup",
+        "color": "rgba(248, 250, 252, 0.58)"
+      },
+      {
+        "text": "Live Ops",
+        "color": "rgba(248, 250, 252, 0.58)"
+      }
+    ],
+    [
+      {
+        "text": "HSR Snooker Cafe BMS",
+        "color": "rgb(250, 250, 250)"
+      },
+      {
+        "text": "Run tables, food, bookings and closing from one screen.",
+        "color": "rgb(7, 18, 13)"
+      },
+      {
+        "text": "Tables",
+        "color": "rgba(248, 250, 252, 0.58)"
+      },
+      {
+        "text": "Billing",
+        "color": "rgba(248, 250, 252, 0.58)"
+      },
+      {
+        "text": "HSR Setup",
+        "color": "rgba(248, 250, 252, 0.58)"
+      },
+      {
+        "text": "Live Ops",
+        "color": "rgba(248, 250, 252, 0.58)"
+      }
+    ]
+  ],
+  "screenshots": [
+    "before/login-light.png",
+    "before/dashboard-light.png",
+    "before/dashboard-light.png",
+    "before/live-floor-light.png",
+    "before/inventory-light.png",
+    "before/bookings-light.png",
+    "before/customers-light.png",
+    "before/sales-light.png",
+    "before/analytics-light.png",
+    "before/cafe-pos-light.png",
+    "before/waitlist-light.png",
+    "before/legacy-table-controls-light.png",
+    "before/tournaments-light.png",
+    "before/daily-closing-light.png",
+    "before/pricing-rules-light.png",
+    "before/audit-log-light.png",
+    "before/settings-light.png",
+    "before/login-dark.png",
+    "before/dashboard-dark.png",
+    "before/dashboard-dark.png",
+    "before/live-floor-dark.png",
+    "before/inventory-dark.png",
+    "before/bookings-dark.png",
+    "before/customers-dark.png",
+    "before/sales-dark.png",
+    "before/analytics-dark.png",
+    "before/cafe-pos-dark.png",
+    "before/waitlist-dark.png",
+    "before/legacy-table-controls-dark.png",
+    "before/tournaments-dark.png",
+    "before/daily-closing-dark.png",
+    "before/pricing-rules-dark.png",
+    "before/audit-log-dark.png",
+    "before/settings-dark.png"
+  ]
+}

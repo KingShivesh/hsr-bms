@@ -27,15 +27,14 @@ async function login(page) {
 
 async function setTheme(page, theme) {
   await page.evaluate((dark) => {
-    localStorage.setItem("darkMode", String(dark));
-    document.body.classList.toggle("dark", dark);
+    window.HSRTheme.set(dark ? "dark" : "light");
   }, theme === "dark");
 }
 
 async function captureSurface(page, surface, theme) {
   await setTheme(page, theme);
   await page.goto(`${appUrl}${surface.route}`, { waitUntil: "domcontentloaded" });
-  await page.evaluate((dark) => document.body.classList.toggle("dark", dark), theme === "dark");
+  await page.evaluate((dark) => window.HSRTheme.set(dark ? "dark" : "light"), theme === "dark");
   const target = page.locator(surface.selector).first();
   await target.waitFor({ state: "visible", timeout: 20000 });
   await page.waitForTimeout(1000);

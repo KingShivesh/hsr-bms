@@ -20,10 +20,10 @@ function seed(mode) {
 }
 
 async function open(route, theme = "dark") {
-  if (page.url().startsWith(app)) await page.evaluate((dark) => localStorage.setItem("darkMode", String(dark)), theme === "dark");
+  if (page.url().startsWith(app)) await page.evaluate((dark) => window.HSRTheme.set(dark ? "dark" : "light"), theme === "dark");
   await page.goto(`${app}${route}`, { waitUntil: "domcontentloaded" });
   await page.locator(".table-state-card").first().waitFor({ state: "visible" });
-  await page.evaluate((dark) => document.body.classList.toggle("dark", dark), theme === "dark");
+  await page.evaluate((dark) => window.HSRTheme.set(dark ? "dark" : "light"), theme === "dark");
   await page.evaluate(() => document.fonts.ready);
   await page.evaluate(() => document.fonts.load('500 28px "DM Mono"', "0123456789"));
   await page.waitForTimeout(350);

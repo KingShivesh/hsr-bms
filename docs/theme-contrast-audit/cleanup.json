@@ -1,0 +1,13 @@
+{
+  "database": "/tmp/hsr-tariff-browser.db",
+  "developerDatabaseUntouched": true,
+  "productionMutations": 0,
+  "counts": {
+    "active_sessions": 0,
+    "open_frames": 0,
+    "transactions": 0,
+    "qa_menu_items": 0,
+    "qa_bookings": 0,
+    "qa_maintenance": 0
+  }
+}

@@ -79,7 +79,7 @@ try {
   result.rate = { agreedPlay: agreed.ply, afterRuleEditPlay: changed.ply, pausedMinutes: changed.dur };
   if (phase === "after" && (agreed.ply !== 360 || changed.ply !== agreed.ply)) throw new Error("Rate snapshot changed");
   for (const theme of ["light", "dark"]) {
-    await page.evaluate(theme => localStorage.setItem("darkMode", String(theme === "dark")), theme);
+    await page.evaluate(theme => window.HSRTheme.set(theme), theme);
     await page.goto(`${app}/live-floor?table=t1`, { waitUntil: "domcontentloaded" });
     await page.locator(".lf-table-card").first().waitFor({ state: "visible" });
     await page.evaluate(() => document.fonts.ready);

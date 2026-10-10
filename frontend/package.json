@@ -12,6 +12,7 @@
     "test:realtime-manager": "node ./scripts/test-realtime-manager.mjs",
     "test:table-states": "node ./scripts/audit-table-state-clarity.mjs",
     "test:reference-theme": "node ./scripts/verify-reference-theme.mjs",
+    "test:theme-runtime": "node ./scripts/test-theme-runtime.mjs",
     "preview": "node ./node_modules/vite/bin/vite.js preview"
   },
   "dependencies": {

@@ -1,0 +1,592 @@
+{
+  "stage": "after",
+  "routes": [
+    "/",
+    "/login",
+    "/dashboard",
+    "/live-floor",
+    "/inventory",
+    "/bookings",
+    "/customers",
+    "/sales",
+    "/analytics",
+    "/cafe-pos",
+    "/waitlist",
+    "/legacy-table-controls",
+    "/tournaments",
+    "/daily-closing",
+    "/pricing-rules",
+    "/audit-log",
+    "/settings"
+  ],
+  "violations": [],
+  "gradients": [
+    {
+      "route": "/",
+      "theme": "light",
+      "text": "Live Floor2 Active",
+      "selector": "sb-item active"
+    },
+    {
+      "route": "/",
+      "theme": "light",
+      "text": "Command Center",
+      "selector": ""
+    },
+    {
+      "route": "/",
+      "theme": "light",
+      "text": "New Booking",
+      "selector": "lf-secondary-button"
+    },
+    {
+      "route": "/",
+      "theme": "light",
+      "text": "Add Customer",
+      "selector": "lf-secondary-button"
+    },
+    {
+      "route": "/",
+      "theme": "light",
+      "text": "Start Table",
+      "selector": "lf-primary-button"
+    },
+    {
+      "route": "/",
+      "theme": "light",
+      "text": "QA TABLE STATE AUDIT",
+      "selector": "lf-table-note"
+    },
+    {
+      "route": "/",
+      "theme": "light",
+      "text": "Unavailable",
+      "selector": ""
+    },
+    {
+      "route": "/dashboard",
+      "theme": "light",
+      "text": "Executive Overview",
+      "selector": "sb-item active"
+    },
+    {
+      "route": "/dashboard",
+      "theme": "light",
+      "text": "No closed sessions in range",
+      "selector": ""
+    },
+    {
+      "route": "/dashboard",
+      "theme": "light",
+      "text": "live estimate now",
+      "selector": ""
+    },
+    {
+      "route": "/dashboard",
+      "theme": "light",
+      "text": "Today register",
+      "selector": ""
+    },
+    {
+      "route": "/dashboard",
+      "theme": "light",
+      "text": "No cafe orders in range",
+      "selector": ""
+    },
+    {
+      "route": "/live-floor",
+      "theme": "light",
+      "text": "Live Floor2 Active",
+      "selector": "sb-item active"
+    },
+    {
+      "route": "/live-floor",
+      "theme": "light",
+      "text": "Command Center",
+      "selector": ""
+    },
+    {
+      "route": "/live-floor",
+      "theme": "light",
+      "text": "New Booking",
+      "selector": "lf-secondary-button"
+    },
+    {
+      "route": "/live-floor",
+      "theme": "light",
+      "text": "Add Customer",
+      "selector": "lf-secondary-button"
+    },
+    {
+      "route": "/live-floor",
+      "theme": "light",
+      "text": "Start Table",
+      "selector": "lf-primary-button"
+    },
+    {
+      "route": "/live-floor",
+      "theme": "light",
+      "text": "QA TABLE STATE AUDIT",
+      "selector": "lf-table-note"
+    },
+    {
+      "route": "/live-floor",
+      "theme": "light",
+      "text": "Unavailable",
+      "selector": ""
+    },
+    {
+      "route": "/inventory",
+      "theme": "light",
+      "text": "Inventory & Stocks",
+      "selector": "sb-item active"
+    },
+    {
+      "route": "/bookings",
+      "theme": "light",
+      "text": "Bookings",
+      "selector": "sb-item active"
+    },
+    {
+      "route": "/bookings",
+      "theme": "light",
+      "text": "UnavailableQA TABLE STATE AUDIT",
+      "selector": ""
+    },
+    {
+      "route": "/bookings",
+      "theme": "light",
+      "text": "QA TABLE STATE AUDIT",
+      "selector": ""
+    },
+    {
+      "route": "/bookings",
+      "theme": "light",
+      "text": "Unavailable",
+      "selector": "table-state-primary"
+    },
+    {
+      "route": "/customers",
+      "theme": "light",
+      "text": "Customers",
+      "selector": "sb-item active"
+    },
+    {
+      "route": "/sales",
+      "theme": "light",
+      "text": "Sales",
+      "selector": "sb-item active"
+    },
+    {
+      "route": "/analytics",
+      "theme": "light",
+      "text": "Analytics & Reports",
+      "selector": "sb-item active"
+    },
+    {
+      "route": "/cafe-pos",
+      "theme": "light",
+      "text": "Cafe POS",
+      "selector": "sb-item active"
+    },
+    {
+      "route": "/waitlist",
+      "theme": "light",
+      "text": "Waitlist",
+      "selector": "sb-item active"
+    },
+    {
+      "route": "/legacy-table-controls",
+      "theme": "light",
+      "text": "Advanced Table Controls",
+      "selector": "sb-item active"
+    },
+    {
+      "route": "/legacy-table-controls",
+      "theme": "light",
+      "text": "Unavailable",
+      "selector": "table-state-primary"
+    },
+    {
+      "route": "/tournaments",
+      "theme": "light",
+      "text": "Tournaments",
+      "selector": "sb-item active"
+    },
+    {
+      "route": "/tournaments",
+      "theme": "light",
+      "text": "Unavailable",
+      "selector": "table-state-primary"
+    },
+    {
+      "route": "/daily-closing",
+      "theme": "light",
+      "text": "Daily Closing",
+      "selector": "sb-item active"
+    },
+    {
+      "route": "/pricing-rules",
+      "theme": "light",
+      "text": "Pricing & Rules",
+      "selector": "sb-item active"
+    },
+    {
+      "route": "/audit-log",
+      "theme": "light",
+      "text": "Audit Log",
+      "selector": "sb-item active"
+    },
+    {
+      "route": "/settings",
+      "theme": "light",
+      "text": "Settings",
+      "selector": "sb-item active"
+    },
+    {
+      "route": "/",
+      "theme": "dark",
+      "text": "Live Floor2 Active",
+      "selector": "sb-item active"
+    },
+    {
+      "route": "/",
+      "theme": "dark",
+      "text": "Command Center",
+      "selector": ""
+    },
+    {
+      "route": "/",
+      "theme": "dark",
+      "text": "New Booking",
+      "selector": "lf-secondary-button"
+    },
+    {
+      "route": "/",
+      "theme": "dark",
+      "text": "Add Customer",
+      "selector": "lf-secondary-button"
+    },
+    {
+      "route": "/",
+      "theme": "dark",
+      "text": "Start Table",
+      "selector": "lf-primary-button"
+    },
+    {
+      "route": "/",
+      "theme": "dark",
+      "text": "QA TABLE STATE AUDIT",
+      "selector": "lf-table-note"
+    },
+    {
+      "route": "/",
+      "theme": "dark",
+      "text": "Unavailable",
+      "selector": ""
+    },
+    {
+      "route": "/dashboard",
+      "theme": "dark",
+      "text": "Executive Overview",
+      "selector": "sb-item active"
+    },
+    {
+      "route": "/live-floor",
+      "theme": "dark",
+      "text": "Live Floor2 Active",
+      "selector": "sb-item active"
+    },
+    {
+      "route": "/live-floor",
+      "theme": "dark",
+      "text": "Command Center",
+      "selector": ""
+    },
+    {
+      "route": "/live-floor",
+      "theme": "dark",
+      "text": "New Booking",
+      "selector": "lf-secondary-button"
+    },
+    {
+      "route": "/live-floor",
+      "theme": "dark",
+      "text": "Add Customer",
+      "selector": "lf-secondary-button"
+    },
+    {
+      "route": "/live-floor",
+      "theme": "dark",
+      "text": "Start Table",
+      "selector": "lf-primary-button"
+    },
+    {
+      "route": "/live-floor",
+      "theme": "dark",
+      "text": "QA TABLE STATE AUDIT",
+      "selector": "lf-table-note"
+    },
+    {
+      "route": "/live-floor",
+      "theme": "dark",
+      "text": "Unavailable",
+      "selector": ""
+    },
+    {
+      "route": "/inventory",
+      "theme": "dark",
+      "text": "Inventory & Stocks",
+      "selector": "sb-item active"
+    },
+    {
+      "route": "/bookings",
+      "theme": "dark",
+      "text": "Bookings",
+      "selector": "sb-item active"
+    },
+    {
+      "route": "/bookings",
+      "theme": "dark",
+      "text": "UnavailableQA TABLE STATE AUDIT",
+      "selector": ""
+    },
+    {
+      "route": "/bookings",
+      "theme": "dark",
+      "text": "QA TABLE STATE AUDIT",
+      "selector": ""
+    },
+    {
+      "route": "/bookings",
+      "theme": "dark",
+      "text": "Unavailable",
+      "selector": "table-state-primary"
+    },
+    {
+      "route": "/customers",
+      "theme": "dark",
+      "text": "Customers",
+      "selector": "sb-item active"
+    },
+    {
+      "route": "/sales",
+      "theme": "dark",
+      "text": "Sales",
+      "selector": "sb-item active"
+    },
+    {
+      "route": "/analytics",
+      "theme": "dark",
+      "text": "Analytics & Reports",
+      "selector": "sb-item active"
+    },
+    {
+      "route": "/cafe-pos",
+      "theme": "dark",
+      "text": "Cafe POS",
+      "selector": "sb-item active"
+    },
+    {
+      "route": "/waitlist",
+      "theme": "dark",
+      "text": "Waitlist",
+      "selector": "sb-item active"
+    },
+    {
+      "route": "/legacy-table-controls",
+      "theme": "dark",
+      "text": "Advanced Table Controls",
+      "selector": "sb-item active"
+    },
+    {
+      "route": "/tournaments",
+      "theme": "dark",
+      "text": "Tournaments",
+      "selector": "sb-item active"
+    },
+    {
+      "route": "/tournaments",
+      "theme": "dark",
+      "text": "Unavailable",
+      "selector": "table-state-primary"
+    },
+    {
+      "route": "/daily-closing",
+      "theme": "dark",
+      "text": "Daily Closing",
+      "selector": "sb-item active"
+    },
+    {
+      "route": "/pricing-rules",
+      "theme": "dark",
+      "text": "Pricing & Rules",
+      "selector": "sb-item active"
+    },
+    {
+      "route": "/audit-log",
+      "theme": "dark",
+      "text": "Audit Log",
+      "selector": "sb-item active"
+    },
+    {
+      "route": "/settings",
+      "theme": "dark",
+      "text": "Settings",
+      "selector": "sb-item active"
+    }
+  ],
+  "errors": [],
+  "cards": [
+    {
+      "theme": "light",
+      "cards": [
+        {
+          "state": "running",
+          "background": "rgb(220, 38, 38)",
+          "color": "rgb(255, 255, 255)"
+        },
+        {
+          "state": "paused",
+          "background": "rgb(180, 83, 9)",
+          "color": "rgb(255, 255, 255)"
+        },
+        {
+          "state": "reserved",
+          "background": "rgb(37, 99, 235)",
+          "color": "rgb(255, 255, 255)"
+        },
+        {
+          "state": "maintenance",
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "rgb(98, 98, 108)"
+        },
+        {
+          "state": "available",
+          "background": "rgb(21, 128, 61)",
+          "color": "rgb(255, 255, 255)"
+        }
+      ]
+    },
+    {
+      "theme": "dark",
+      "cards": [
+        {
+          "state": "running",
+          "background": "rgb(220, 38, 38)",
+          "color": "rgb(255, 255, 255)"
+        },
+        {
+          "state": "paused",
+          "background": "rgb(180, 83, 9)",
+          "color": "rgb(255, 255, 255)"
+        },
+        {
+          "state": "reserved",
+          "background": "rgb(37, 99, 235)",
+          "color": "rgb(255, 255, 255)"
+        },
+        {
+          "state": "maintenance",
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "rgb(146, 146, 159)"
+        },
+        {
+          "state": "available",
+          "background": "rgb(21, 128, 61)",
+          "color": "rgb(255, 255, 255)"
+        }
+      ]
+    }
+  ],
+  "login": [
+    [
+      {
+        "text": "HSR Snooker Cafe BMS",
+        "color": "rgb(24, 24, 27)"
+      },
+      {
+        "text": "Run tables, food, bookings and closing from one screen.",
+        "color": "rgb(24, 24, 27)"
+      },
+      {
+        "text": "Tables",
+        "color": "rgb(82, 82, 91)"
+      },
+      {
+        "text": "Billing",
+        "color": "rgb(82, 82, 91)"
+      },
+      {
+        "text": "HSR Setup",
+        "color": "rgb(82, 82, 91)"
+      },
+      {
+        "text": "Live Ops",
+        "color": "rgb(82, 82, 91)"
+      }
+    ],
+    [
+      {
+        "text": "HSR Snooker Cafe BMS",
+        "color": "rgb(250, 250, 250)"
+      },
+      {
+        "text": "Run tables, food, bookings and closing from one screen.",
+        "color": "rgb(250, 250, 250)"
+      },
+      {
+        "text": "Tables",
+        "color": "rgb(180, 180, 189)"
+      },
+      {
+        "text": "Billing",
+        "color": "rgb(180, 180, 189)"
+      },
+      {
+        "text": "HSR Setup",
+        "color": "rgb(180, 180, 189)"
+      },
+      {
+        "text": "Live Ops",
+        "color": "rgb(180, 180, 189)"
+      }
+    ]
+  ],
+  "screenshots": [
+    "after/login-light.png",
+    "after/dashboard-light.png",
+    "after/dashboard-light.png",
+    "after/live-floor-light.png",
+    "after/inventory-light.png",
+    "after/bookings-light.png",
+    "after/customers-light.png",
+    "after/sales-light.png",
+    "after/analytics-light.png",
+    "after/cafe-pos-light.png",
+    "after/waitlist-light.png",
+    "after/legacy-table-controls-light.png",
+    "after/tournaments-light.png",
+    "after/daily-closing-light.png",
+    "after/pricing-rules-light.png",
+    "after/audit-log-light.png",
+    "after/settings-light.png",
+    "after/login-dark.png",
+    "after/dashboard-dark.png",
+    "after/dashboard-dark.png",
+    "after/live-floor-dark.png",
+    "after/inventory-dark.png",
+    "after/bookings-dark.png",
+    "after/customers-dark.png",
+    "after/sales-dark.png",
+    "after/analytics-dark.png",
+    "after/cafe-pos-dark.png",
+    "after/waitlist-dark.png",
+    "after/legacy-table-controls-dark.png",
+    "after/tournaments-dark.png",
+    "after/daily-closing-dark.png",
+    "after/pricing-rules-dark.png",
+    "after/audit-log-dark.png",
+    "after/settings-dark.png"
+  ]
+}

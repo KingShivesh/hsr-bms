@@ -3,11 +3,12 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import { spawnSync } from "node:child_process";
 import { chromium } from "playwright";
+import { scanRenderedContrast } from "./rendered-contrast.mjs";
 
 const app = "http://127.0.0.1:5175";
 const api = "http://127.0.0.1:8002";
 const database = "/tmp/hsr-tariff-browser.db";
-const directory = path.resolve("../docs/inline-table-actions-audit/after");
+const directory = path.resolve(process.env.INLINE_AUDIT_DIR || "../docs/inline-table-actions-audit/after");
 await fs.mkdir(directory, { recursive: true });
 const seed = spawnSync("../backend/venv/bin/python", ["-c", `
 import importlib.util, sqlite3
@@ -28,8 +29,9 @@ async function request(method, route, body) {
 auth = await request("POST", "/auth/login", { username: "admin", password: "admin123" });
 const browser = await chromium.launch({ executablePath: "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome", headless: true });
 const result = { themes: [], cards: [], mobile: [], feedback: [], checks: [], errors: [] };
+let page;
 try {
-  const page = await browser.newPage({ viewport: { width: 1440, height: 1000 } });
+  page = await browser.newPage({ viewport: { width: 1440, height: 1000 } });
   await page.addInitScript(auth => { localStorage.setItem("token", auth.token); localStorage.setItem("role", auth.role); localStorage.setItem("username", auth.username); }, auth);
   page.on("pageerror", error => result.errors.push(error.message));
   async function go() {
@@ -42,9 +44,12 @@ try {
     await page.evaluate(() => window.scrollTo(0, 0));
     await page.mouse.move(0, 0);
     await page.waitForTimeout(350);
+    assert.deepEqual(await scanRenderedContrast(page, { route: "/live-floor", theme: await page.evaluate(() => window.HSRTheme.get()), state: name }), []);
     await page.screenshot({ path: path.join(directory, name + ".png"), fullPage });
   }
   async function feedback(button, pattern) {
+    await page.mouse.move(0, 0);
+    await page.waitForTimeout(250);
     await page.route(pattern, async route => { await new Promise(resolve => setTimeout(resolve, 350)); await route.continue(); }, { times: 1 });
     await button.evaluate(button => {
       window.__feedback = null;
@@ -55,7 +60,12 @@ try {
       }, { once: true });
     });
     const label = (await button.textContent()).trim();
-    await button.click();
+    try { await button.click(); }
+    catch (error) {
+      await page.screenshot({ path: path.join(directory, "failed-feedback.png"), fullPage: true });
+      console.error(await button.evaluate(el => ({ bounds: el.getBoundingClientRect().toJSON(), transform: getComputedStyle(el).transform, animation: getComputedStyle(el).animation, dialog: el.closest('[role="dialog"]')?.getBoundingClientRect().toJSON() })));
+      throw error;
+    }
     await page.waitForFunction(() => window.__feedback !== null);
     const ms = await page.evaluate(() => window.__feedback);
     assert.ok(ms < 200, `Slow feedback: ${label} ${ms}`);
@@ -64,7 +74,7 @@ try {
 
   await go();
   for (const theme of ["light", "dark"]) {
-    await page.evaluate(theme => localStorage.setItem("darkMode", String(theme === "dark")), theme);
+    await page.evaluate(theme => window.HSRTheme.set(theme), theme);
     await go();
     assert.equal(await page.locator(".session-workspace").count(), 0, "No automatic side workspace");
     result.themes.push(await page.evaluate(() => { const s = getComputedStyle(document.body); return { theme: document.body.classList.contains("dark") ? "dark" : "light", font: s.fontFamily, canvas: s.backgroundColor, accent: s.getPropertyValue("--accent").trim() }; }));
@@ -94,7 +104,7 @@ try {
   for (const width of [375, 414]) {
     await page.setViewportSize({ width, height: 896 });
     for (const theme of ["light", "dark"]) {
-      await page.evaluate(theme => localStorage.setItem("darkMode", String(theme === "dark")), theme);
+      await page.evaluate(theme => window.HSRTheme.set(theme), theme);
       await go();
       assert.equal(await page.evaluate(() => document.documentElement.scrollWidth), width);
       const actions = page.locator(".lf-card-actions button:not(:disabled)");
@@ -187,6 +197,10 @@ try {
   result.checks.push("Card body opens details; frame controls preserved; open-frame billing guard preserved");
 
   assert.equal(result.errors.length, 0, result.errors.join("\n"));
+} catch (error) {
+  await page?.screenshot({ path: path.join(directory, "failed-action.png"), fullPage: true });
+  console.error({ failure: error.message, cards: await page?.locator(".lf-table-card").allTextContents(), active: await request("GET", "/sessions/active") });
+  throw error;
 } finally {
   await browser.close();
   const cleanup = spawnSync("sqlite3", [database, "DELETE FROM session_frames; DELETE FROM active_sessions; DELETE FROM transactions; DELETE FROM closed_session_frames; DELETE FROM session_events; DELETE FROM members; DELETE FROM audit_logs; DELETE FROM table_maintenance WHERE reason='QA TABLE STATE AUDIT'; DELETE FROM bookings WHERE notes='QA TABLE STATE AUDIT'; DELETE FROM menu_items WHERE name='QA Inline Tea'; UPDATE settings SET tariffs_json='{}';"], { encoding: "utf8" });
