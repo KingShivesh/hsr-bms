@@ -2,6 +2,11 @@
 
 Date: 2026-10-11 IST. Baseline: `226a51d` on main. Branch: `codex/full-stack-integrity-audit`.
 
+**Shipped and verified:** main `7d3dc79` is live on Render, `/health` and
+`/ready` return 200/database ok; all 22 production JavaScript/CSS assets match
+the tested build by SHA-256. Full runtime/asset/ancestry receipt: `deployment.json`.
+Final branch parity also passed [run 38081454846](https://github.com/KingShivesh/hsr-bms/actions/runs/38081454846).
+
 ## 1. Executive summary
 
 27 grouped findings: **0 confirmed Critical, 9 High, 14 Medium, 4 Low**. All nine High findings are fixed and regression-verified. One Medium password-validation defect was fixed with the same authentication boundary; the other 13 Medium and four Low findings are deferred below. Absence of a confirmed Critical finding is not a security certification.
