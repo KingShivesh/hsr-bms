@@ -3,7 +3,8 @@ import asyncio
 from fastapi import APIRouter, Depends, HTTPException, Query, Request
 from sse_starlette import EventSourceResponse, JSONServerSentEvent, ServerSentEvent
 
-from deps import get_current_claims
+from deps import assert_claims_active, get_current_claims
+from database import SessionLocal
 from realtime import ROLE_TOPICS, VALID_TOPICS, event_broker, seconds_until_expiry, utc_timestamp
 
 
@@ -91,8 +92,19 @@ async def stream_events(
                         timeout=min(30.0, remaining),
                     )
                 except asyncio.TimeoutError:
-                    continue
-                yield sse_event(event)
+                    event = None
+                def still_authorized():
+                    with SessionLocal() as db:
+                        try:
+                            assert_claims_active(db, claims)
+                            return True
+                        except HTTPException:
+                            return False
+                if not await asyncio.to_thread(still_authorized):
+                    yield JSONServerSentEvent(event="system.auth_expired", data={"occurred_at": utc_timestamp()})
+                    return
+                if event is not None:
+                    yield sse_event(event)
         finally:
             await event_broker.unsubscribe(subscriber.id)
 

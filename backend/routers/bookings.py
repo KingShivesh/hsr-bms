@@ -8,7 +8,7 @@ from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
 import models
-from database import get_db
+from database import get_mutation_db
 from hsr_config import IST_TZ, TABLE_RATES, get_ist_now
 from validators import require_full_name
 from realtime import queue_realtime_event
@@ -86,7 +86,7 @@ def _release_missed_bookings(db: Session) -> None:
 
 
 @router.get("")
-def list_bookings(db: Session = Depends(get_db)):
+def list_bookings(db: Session = Depends(get_mutation_db)):
     _release_missed_bookings(db)
     now = get_ist_now() - timedelta(hours=2)
     rows = (
@@ -106,7 +106,7 @@ def list_bookings(db: Session = Depends(get_db)):
 def create_booking(
     body: BookingBody,
     background_tasks: BackgroundTasks,
-    db: Session = Depends(get_db),
+    db: Session = Depends(get_mutation_db),
 ):
     name = require_full_name(body.customer_name, "Booking customer name")
     booking_dt = _parse_time(body.booking_time)
@@ -165,7 +165,7 @@ def create_booking(
 def restore_booking(
     booking_id: int,
     background_tasks: BackgroundTasks,
-    db: Session = Depends(get_db),
+    db: Session = Depends(get_mutation_db),
 ):
     booking = db.query(models.Booking).filter(models.Booking.id == booking_id).first()
     if not booking:
@@ -207,7 +207,7 @@ def restore_booking(
 def cancel_booking(
     booking_id: int,
     background_tasks: BackgroundTasks,
-    db: Session = Depends(get_db),
+    db: Session = Depends(get_mutation_db),
 ):
     booking = db.query(models.Booking).filter(models.Booking.id == booking_id).first()
     if booking:

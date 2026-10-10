@@ -3,14 +3,15 @@ from pydantic import BaseModel, Field
 from sqlalchemy import func, or_
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
-from database import get_db
+from database import get_db, get_mutation_db
 from datetime import datetime, timedelta
 from routers.members import update_member_on_checkout
 import models, time, math, json, uuid
 from typing import Optional, Literal
 from audit import log_action, require_manager_pin
 from pricing import calc_checkout, get_peak_multiplier, snapshot_tariff, session_tariff
-from deps import get_current_claims, require_admin
+from deps import ALGORITHM, SECRET_KEY, get_current_claims, require_admin
+from jose import JWTError, jwt
 from hsr_config import TABLE_RATES, format_ist_now, get_ist_now, rate_for_table
 from live_state import build_live_floor_state, build_table_state, serialize_session as serialize_live_session, session_elapsed_ms, session_started_at
 from realtime import queue_realtime_event
@@ -495,11 +496,29 @@ def billable_minutes(elapsed_ms: float, min_mins: int = 0) -> int:
         minutes = min_mins
     return minutes
 
-def checkout_clock_ms(sess: models.ActiveSession, requested_ms: float | None = None) -> float:
+def checkout_clock_ms(sess: models.ActiveSession, requested_ms: float | None = None, *, token: str = "", issuing: bool = False) -> float:
     now_ms = time.time() * 1000
-    if requested_ms:
-        return min(max(requested_ms, sess.started_at or sess.start_time), now_ms)
+    if requested_ms is not None:
+        if not math.isfinite(requested_ms):
+            raise HTTPException(400, "Invalid checkout time.")
+        if token:
+            try:
+                payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM], options={"require_exp": True})
+                valid = (payload.get("purpose") == "checkout" and payload.get("session_key") == sess.session_key
+                         and payload.get("closed_at_ms") == requested_ms and 0 <= now_ms - requested_ms <= 600_000)
+                if valid:
+                    return requested_ms
+            except JWTError:
+                pass
+        elif issuing and abs(now_ms - requested_ms) <= 5000:
+            return now_ms
+        raise HTTPException(409, "Checkout quote expired or invalid. Close checkout and reopen it to refresh the bill.")
     return now_ms
+
+
+def checkout_token(sess: models.ActiveSession, closed_at_ms: float) -> str:
+    return jwt.encode({"purpose": "checkout", "session_key": sess.session_key,
+                       "closed_at_ms": closed_at_ms, "exp": int(closed_at_ms / 1000 + 600)}, SECRET_KEY, algorithm=ALGORITHM)
 
 def initialize_session_timing(db: Session, sess: models.ActiveSession) -> None:
     if sess.started_at is None:
@@ -573,7 +592,7 @@ def archive_closed_frames(
 def start_session(
     body: StartSession,
     background_tasks: BackgroundTasks,
-    db: Session = Depends(get_db),
+    db: Session = Depends(get_mutation_db),
 ):
     table_id = require_known_table_id(body.table_id)
     billing_mode = normalize_billing_mode(body.billing_mode, body.split)
@@ -594,7 +613,7 @@ def start_session(
     if maint:
         raise HTTPException(status_code=400, detail=f"Table is under maintenance: {maint.reason}")
 
-    existing = active_session_for_table(db, table_id)
+    existing = active_session_for_table(db, table_id, lock=True)
     if existing and normalize_person_name(existing.customer_name):
         raise HTTPException(status_code=400, detail="Session already running")
 
@@ -658,9 +677,9 @@ def start_session(
 def pause_session(
     table_id: str,
     background_tasks: BackgroundTasks,
-    db: Session = Depends(get_db),
+    db: Session = Depends(get_mutation_db),
 ):
-    sess = active_session_for_table(db, table_id)
+    sess = active_session_for_table(db, table_id, lock=True)
     if not sess:
         raise HTTPException(status_code=404, detail="No active session")
     initialize_session_timing(db, sess)
@@ -705,6 +724,7 @@ def quote_session(
     discount_type:  str = "none",
     discount_value: int = 0,
     closed_at_ms:   float | None = None,
+    checkout_token_value: str = "",
     db: Session = Depends(get_db),
     user: dict = Depends(get_current_claims),
 ):
@@ -715,7 +735,8 @@ def quote_session(
 
     settings   = db.query(models.Settings).first()
     min_mins   = settings.min_session if settings else 0
-    quoted_at_ms = checkout_clock_ms(sess, closed_at_ms)
+    ensure_session_key(db, sess)
+    quoted_at_ms = checkout_clock_ms(sess, closed_at_ms, token=checkout_token_value, issuing=True)
     started_at = session_started_at(db, sess)
     elapsed_ms = session_elapsed_ms(sess, quoted_at_ms)
     elapsed_ms = max(0, elapsed_ms)
@@ -822,6 +843,7 @@ def quote_session(
         "player_breakdown": player_breakdown,
         "frames": [serialize_frame(frame) for frame in billable_frames],
         "quote": True,
+        "checkout_token": checkout_token(sess, quoted_at_ms),
     }
 
 @router.post("/stop/{table_id}")
@@ -836,7 +858,8 @@ def stop_session(
     discount_reason: str = "",
     payment_split_json: str = "",
     session_key: str = "",
-    db: Session = Depends(get_db),
+    checkout_token_value: str = "",
+    db: Session = Depends(get_mutation_db),
     user: dict = Depends(get_current_claims),
 ):
     table_id = require_known_table_id(table_id)
@@ -862,7 +885,7 @@ def stop_session(
     # Minimum session check
     settings   = db.query(models.Settings).first()
     min_mins   = settings.min_session if settings else 0
-    closed_at_ms = checkout_clock_ms(sess, closed_at_ms)
+    closed_at_ms = checkout_clock_ms(sess, closed_at_ms, token=checkout_token_value)
     started_at = session_started_at(db, sess)
     elapsed_ms = session_elapsed_ms(sess, closed_at_ms)
     elapsed_ms = max(0, elapsed_ms)
@@ -1124,14 +1147,14 @@ def transfer_session(
     table_id: str,
     body: TransferTableBody,
     background_tasks: BackgroundTasks,
-    db: Session = Depends(get_db),
+    db: Session = Depends(get_mutation_db),
 ):
     source_id = require_known_table_id(table_id)
     target_id = require_known_table_id(body.target_table_id)
     if source_id == target_id:
         raise HTTPException(status_code=400, detail="Choose a different table.")
 
-    sess = active_session_for_table(db, source_id)
+    sess = active_session_for_table(db, source_id, lock=True)
     if not sess:
         raise HTTPException(status_code=404, detail="No active session")
     if active_session_for_table(db, target_id):
@@ -1201,12 +1224,12 @@ def reset_session(
     table_id: str,
     background_tasks: BackgroundTasks,
     manager_pin: str = "",
-    db: Session = Depends(get_db),
+    db: Session = Depends(get_mutation_db),
     _: dict = Depends(require_admin),
 ):
     require_manager_pin(db, manager_pin)
     table_id = require_known_table_id(table_id)
-    sess = active_session_for_table(db, table_id)
+    sess = active_session_for_table(db, table_id, lock=True)
     if sess:
         elapsed_ms = sess.elapsed_ms if sess.paused else time.time() * 1000 - sess.start_time
         log_action(
@@ -1240,7 +1263,7 @@ def reset_session(
 def start_frame(
     table_id: str,
     background_tasks: BackgroundTasks,
-    db: Session = Depends(get_db),
+    db: Session = Depends(get_mutation_db),
 ):
     table_id = require_known_table_id(table_id)
     sess = active_session_for_table(db, table_id, lock=True)
@@ -1278,7 +1301,7 @@ def close_frame(
     table_id: str,
     body: CloseFrameBody,
     background_tasks: BackgroundTasks,
-    db: Session = Depends(get_db),
+    db: Session = Depends(get_mutation_db),
 ):
     table_id = require_known_table_id(table_id)
     sess = active_session_for_table(db, table_id, lock=True)
@@ -1337,10 +1360,10 @@ def add_food(
     table_id: str,
     body: FoodItem,
     background_tasks: BackgroundTasks,
-    db: Session = Depends(get_db),
+    db: Session = Depends(get_mutation_db),
 ):
     table_id = require_known_table_id(table_id)
-    sess = active_session_for_table(db, table_id)
+    sess = active_session_for_table(db, table_id, lock=True)
     if not sess:
         raise HTTPException(status_code=404, detail="No active session")
     menu_item = db.query(models.MenuItem).filter(
@@ -1406,10 +1429,10 @@ def update_notes(
     table_id: str,
     body: UpdateNotes,
     background_tasks: BackgroundTasks,
-    db: Session = Depends(get_db),
+    db: Session = Depends(get_mutation_db),
 ):
     table_id = require_known_table_id(table_id)
-    sess = active_session_for_table(db, table_id)
+    sess = active_session_for_table(db, table_id, lock=True)
     if not sess:
         raise HTTPException(status_code=404, detail="No active session")
     sess.notes = body.notes
@@ -1422,7 +1445,7 @@ def reserve(
     table_id: str,
     body: Reservation,
     background_tasks: BackgroundTasks,
-    db: Session = Depends(get_db),
+    db: Session = Depends(get_mutation_db),
 ):
     table_id = require_known_table_id(table_id)
     name = normalize_person_name(body.name)
@@ -1468,7 +1491,7 @@ def reserve(
 def cancel_reserve(
     table_id: str,
     background_tasks: BackgroundTasks,
-    db: Session = Depends(get_db),
+    db: Session = Depends(get_mutation_db),
 ):
     table_id = require_known_table_id(table_id)
     sess = active_session_for_table(db, table_id)
@@ -1581,7 +1604,7 @@ def set_maintenance(
     table_id: str,
     body: MaintenanceBody,
     background_tasks: BackgroundTasks,
-    db: Session = Depends(get_db),
+    db: Session = Depends(get_mutation_db),
 ):
     table_id = require_known_table_id(table_id)
     existing = maintenance_for_table(db, table_id)
@@ -1603,7 +1626,7 @@ def set_maintenance(
 def clear_maintenance(
     table_id: str,
     background_tasks: BackgroundTasks,
-    db: Session = Depends(get_db),
+    db: Session = Depends(get_mutation_db),
 ):
     table_id = require_known_table_id(table_id)
     m = maintenance_for_table(db, table_id)

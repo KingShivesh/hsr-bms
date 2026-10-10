@@ -8,6 +8,8 @@ class Settings(Base): #This tells SQLAlchemy This class should become a database
     password     = Column(String,  default="admin123")
     staff_username = Column(String, default="staff")
     staff_password = Column(String, default="staff123")
+    auth_version = Column(Integer, default=0, nullable=False)
+    staff_auth_version = Column(Integer, default=0, nullable=False)
     wr           = Column(Integer, default=320)
     pr           = Column(Integer, default=170)
     sr           = Column(Integer, default=270)
@@ -28,6 +30,11 @@ class Member(Base):
     member_type = Column(String,  default="Regular")
     last_visit  = Column(String,  default="-")
     notes       = Column(Text,    default="")
+
+class RevokedToken(Base):
+    __tablename__ = "revoked_tokens"
+    token_digest = Column(String(64), primary_key=True)
+    expires_at = Column(Float, nullable=False, index=True)
 
 class Transaction(Base):
     __tablename__ = "transactions"
@@ -144,6 +151,7 @@ class FoodOnlyOrder(Base):
     items         = Column(Text)
     total         = Column(Integer)
     payment_method = Column(String, default="Cash")
+    cancelled_at = Column(Float, default=0, nullable=False)
 
 class TableMaintenance(Base):
     __tablename__ = "table_maintenance"

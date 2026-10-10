@@ -7,6 +7,8 @@ import models, json, time
 from collections import Counter, defaultdict
 from hsr_config import format_ist_now
 from realtime import queue_realtime_event
+from audit import log_action
+from deps import get_current_claims
 
 router = APIRouter()
 PAYMENT_METHODS = {"Cash", "UPI", "Card"}
@@ -87,7 +89,7 @@ def place_food_order(
 
 @router.get("/orders")
 def get_food_orders(db: Session = Depends(get_db)):
-    orders = db.query(models.FoodOnlyOrder).order_by(models.FoodOnlyOrder.ts.desc()).all()
+    orders = db.query(models.FoodOnlyOrder).filter(models.FoodOnlyOrder.cancelled_at == 0).order_by(models.FoodOnlyOrder.ts.desc()).all()
     return [_food_order_payload(o) for o in orders]
 
 @router.delete("/orders/{order_id}")
@@ -95,11 +97,15 @@ def cancel_food_order(
     order_id: int,
     background_tasks: BackgroundTasks,
     db: Session = Depends(get_db),
+    claims: dict = Depends(get_current_claims),
 ):
-    order = db.query(models.FoodOnlyOrder).filter(models.FoodOnlyOrder.id == order_id).first()
+    order = db.query(models.FoodOnlyOrder).filter(models.FoodOnlyOrder.id == order_id).with_for_update().first()
     if not order:
         raise HTTPException(status_code=404, detail="Food order not found")
-    db.delete(order)
+    if order.cancelled_at:
+        return {"ok": True}
+    order.cancelled_at = time.time() * 1000
+    log_action(db, "order_cancel", f"Cafe order {order.id} cancelled", staff=claims["username"], amount=order.total)
     db.commit()
     queue_realtime_event(background_tasks, "order.cancelled", "orders", "orders", "food-stats")
     return {"ok": True}
@@ -110,22 +116,16 @@ def restore_food_order(
     body: RestoreFoodOrderBody,
     background_tasks: BackgroundTasks,
     db: Session = Depends(get_db),
+    claims: dict = Depends(get_current_claims),
 ):
-    existing = db.query(models.FoodOnlyOrder).filter(models.FoodOnlyOrder.id == order_id).first()
-    if existing:
-        return _food_order_payload(existing)
-
-    payment_method = body.payment_method if body.payment_method in PAYMENT_METHODS else "Cash"
-    order = models.FoodOnlyOrder(
-        id=order_id,
-        date=body.date or format_ist_now(),
-        ts=body.ts or time.time() * 1000,
-        customer_name=body.customer_name,
-        items=json.dumps(body.items),
-        total=body.total,
-        payment_method=payment_method,
-    )
-    db.add(order)
+    order = db.query(models.FoodOnlyOrder).filter(models.FoodOnlyOrder.id == order_id).with_for_update().first()
+    if not order:
+        raise HTTPException(status_code=404, detail="Original food order not found")
+    if not order.cancelled_at:
+        return _food_order_payload(order)
+    # Undo restores only the persisted receipt, never client-supplied financial data.
+    order.cancelled_at = 0
+    log_action(db, "order_restore", f"Cafe order {order.id} restored", staff=claims["username"], amount=order.total)
     db.commit()
     db.refresh(order)
     queue_realtime_event(background_tasks, "order.restored", "orders", "orders", "food-stats")
@@ -148,7 +148,7 @@ def get_food_stats(db: Session = Depends(get_db)):
         except: pass
 
     # From food-only orders
-    orders = db.query(models.FoodOnlyOrder).all()
+    orders = db.query(models.FoodOnlyOrder).filter(models.FoodOnlyOrder.cancelled_at == 0).all()
     for o in orders:
         try:
             items = json.loads(o.items or "[]")

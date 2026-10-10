@@ -74,16 +74,16 @@ def recent_transactions(db: Session, days: int) -> list[models.Transaction]:
 
 def food_only_for_day(db: Session, day: str | None = None) -> list[models.FoodOnlyOrder]:
     day = day or get_ist_today_str()
-    return db.query(models.FoodOnlyOrder).filter(models.FoodOnlyOrder.date.like(f"{day}%")).all()
+    return db.query(models.FoodOnlyOrder).filter(models.FoodOnlyOrder.cancelled_at == 0, models.FoodOnlyOrder.date.like(f"{day}%")).all()
 
 
 def food_only_recent(db: Session, days: int) -> list[models.FoodOnlyOrder]:
     since_ms = (time.time() - days * 24 * 60 * 60) * 1000
-    return db.query(models.FoodOnlyOrder).filter(models.FoodOnlyOrder.ts >= since_ms).all()
+    return db.query(models.FoodOnlyOrder).filter(models.FoodOnlyOrder.cancelled_at == 0, models.FoodOnlyOrder.ts >= since_ms).all()
 
 
 def food_only_all(db: Session) -> list[models.FoodOnlyOrder]:
-    return db.query(models.FoodOnlyOrder).all()
+    return db.query(models.FoodOnlyOrder).filter(models.FoodOnlyOrder.cancelled_at == 0).all()
 
 
 def summarize_day(transactions: list[models.Transaction], food_orders: list[models.FoodOnlyOrder] | None = None) -> dict:

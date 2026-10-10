@@ -3,6 +3,7 @@ import os
 from dotenv import load_dotenv
 from sqlalchemy import create_engine, inspect, text
 from sqlalchemy.orm import declarative_base, sessionmaker
+from fastapi import Depends
 
 load_dotenv()
 
@@ -32,6 +33,8 @@ def ensure_runtime_columns():
     """Add lightweight columns that were introduced after initial installs."""
     columns = {
         "settings": {
+            "auth_version": "INTEGER NOT NULL DEFAULT 0",
+            "staff_auth_version": "INTEGER NOT NULL DEFAULT 0",
             "tariffs_json": "TEXT DEFAULT '{}'",
             "wr": "INTEGER DEFAULT 320",
             "booking_grace_minutes": "INTEGER DEFAULT 10",
@@ -74,6 +77,7 @@ def ensure_runtime_columns():
             "session_ended_at": "FLOAT DEFAULT 0",
         },
         "food_only_orders": {
+            "cancelled_at": "FLOAT NOT NULL DEFAULT 0",
             "payment_method": "VARCHAR(50) DEFAULT 'Cash'",
         },
         "members": {
@@ -160,3 +164,12 @@ def get_db():
         raise
     finally:
         db.close()
+
+
+def get_mutation_db(db=Depends(get_db)):
+    # A single venue has only five tables. Lock before reads, including empty slots.
+    if engine.dialect.name == "postgresql":
+        db.execute(text("SELECT pg_advisory_xact_lock(:key)"), {"key": 48535201})
+    elif engine.dialect.name == "sqlite":
+        db.execute(text("BEGIN IMMEDIATE"))
+    return db

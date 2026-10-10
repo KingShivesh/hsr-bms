@@ -1,12 +1,13 @@
 import time
 
 from fastapi import APIRouter, Depends, HTTPException, Request
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, field_validator
 from sqlalchemy.orm import Session
 
 from database import get_db
 from deps import create_token, get_current_claims, hash_password, require_admin, upgrade_password_if_plain, verify_password
 import models
+from hsr_config import is_production_env
 
 router = APIRouter()
 DEFAULT_STAFF_USERNAME = "staff"
@@ -26,18 +27,37 @@ class ChangeAuthRequest(BaseModel):
     username: str = Field(min_length=3, max_length=80)
     password: str = Field(min_length=8, max_length=128)
 
+    @field_validator("username")
+    @classmethod
+    def validate_username(cls, value):
+        value = value.strip()
+        if len(value) < 3:
+            raise ValueError("Username must be at least 3 characters")
+        return value
+
+    @field_validator("password")
+    @classmethod
+    def validate_password(cls, value):
+        if is_production_env() and value in {"admin123", DEFAULT_STAFF_PASSWORD}:
+            raise ValueError("Choose a non-default password for production")
+        if len(value.strip()) < 8:
+            raise ValueError("Password must contain at least 8 non-padding characters")
+        if len(value.encode("utf-8")) > 72:
+            raise ValueError("Password must not exceed 72 UTF-8 bytes")
+        return value
+
 
 def login_key(request: Request, username: str) -> str:
-    forwarded_for = request.headers.get("x-forwarded-for", "")
-    client_ip = forwarded_for.split(",", 1)[0].strip()
-    if not client_ip and request.client:
-        client_ip = request.client.host
-    return f"{client_ip or 'unknown'}:{username.strip().lower()}"
+    # Account-wide limits cannot be bypassed by rotating or spoofing client IPs.
+    return username.strip().lower()
 
 
 def assert_login_allowed(request: Request, username: str) -> str:
     key = login_key(request, username)
     now = time.time()
+    for expired_key in list(_login_failures):
+        if not any(now - ts < LOGIN_WINDOW_SECONDS for ts in _login_failures[expired_key]):
+            _login_failures.pop(expired_key, None)
     recent = [
         ts for ts in _login_failures.get(key, [])
         if now - ts < LOGIN_WINDOW_SECONDS
@@ -104,12 +124,15 @@ def login(body: LoginRequest, request: Request, db: Session = Depends(get_db)):
     username = body.username.strip()
     password = body.password
     attempt_key = assert_login_allowed(request, username)
+    if is_production_env() and password in {"admin123", DEFAULT_STAFF_PASSWORD}:
+        record_login_failure(attempt_key)
+        raise HTTPException(status_code=401, detail="Invalid username or password")
 
     if username == settings.username and verify_password(password, settings.password):
         upgrade_password_if_plain(db, settings, password)
         clear_login_failures(attempt_key)
         return {
-            "token": create_token(username, "admin"),
+            "token": create_token(username, "admin", auth_version=settings.auth_version),
             "role": "admin",
             "username": username,
         }
@@ -119,7 +142,7 @@ def login(body: LoginRequest, request: Request, db: Session = Depends(get_db)):
         upgrade_staff_password_if_plain(db, settings, password)
         clear_login_failures(attempt_key)
         return {
-            "token": create_token(username, "staff"),
+            "token": create_token(username, "staff", auth_version=settings.staff_auth_version),
             "role": "staff",
             "username": username,
         }
@@ -130,7 +153,15 @@ def login(body: LoginRequest, request: Request, db: Session = Depends(get_db)):
 
 @router.get("/me")
 def me(claims: dict = Depends(get_current_claims)):
-    return claims
+    return {key: claims[key] for key in ("username", "role", "expires_at")}
+
+
+@router.post("/logout")
+def logout(claims: dict = Depends(get_current_claims), db: Session = Depends(get_db)):
+    db.query(models.RevokedToken).filter(models.RevokedToken.expires_at <= time.time()).delete()
+    db.merge(models.RevokedToken(token_digest=claims["token_digest"], expires_at=claims["expires_at"]))
+    db.commit()
+    return {"ok": True}
 
 
 @router.post("/change")
@@ -140,14 +171,15 @@ def change_auth(
     _: dict = Depends(require_admin),
 ):
     username = body.username.strip()
-    password = body.password.strip()
+    password = body.password
     if not username:
         raise HTTPException(status_code=400, detail="Username is required")
 
-    settings = get_or_create_settings(db)
+    settings = db.query(models.Settings).with_for_update().populate_existing().first()
 
     settings.username = username
     settings.password = hash_password(password)
+    settings.auth_version += 1
     db.commit()
     return {"ok": True}
 
@@ -159,13 +191,14 @@ def change_staff_auth(
     _: dict = Depends(require_admin),
 ):
     username = body.username.strip()
-    password = body.password.strip()
+    password = body.password
     if not username:
         raise HTTPException(status_code=400, detail="Username is required")
 
-    settings = get_or_create_settings(db)
+    settings = db.query(models.Settings).with_for_update().populate_existing().first()
 
     settings.staff_username = username
     settings.staff_password = hash_password(password)
+    settings.staff_auth_version += 1
     db.commit()
     return {"ok": True}

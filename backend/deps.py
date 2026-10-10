@@ -1,5 +1,8 @@
 import os
-from datetime import datetime, timedelta
+import hashlib
+import time
+import uuid
+from datetime import datetime, timedelta, timezone
 
 import bcrypt
 from fastapi import Depends, HTTPException, status
@@ -8,6 +11,7 @@ from jose import JWTError, jwt
 from sqlalchemy.orm import Session
 
 import models
+from database import SessionLocal
 from hsr_config import DEFAULT_SECRET_KEY
 
 SECRET_KEY = os.getenv("SECRET_KEY", DEFAULT_SECRET_KEY)
@@ -38,10 +42,15 @@ def upgrade_password_if_plain(db: Session, settings: models.Settings, plain: str
         db.commit()
 
 
-def create_token(username: str, role: str = "admin") -> str:
-    expire = datetime.utcnow() + timedelta(hours=TOKEN_HOURS)
+def create_token(username: str, role: str = "admin", *, auth_version: int | None = None) -> str:
+    if auth_version is None:
+        with SessionLocal() as db:
+            settings = db.query(models.Settings).first()
+            field = "staff_auth_version" if role == "staff" else "auth_version"
+            auth_version = getattr(settings, field, 0) if settings else 0
+    expire = datetime.now(timezone.utc) + timedelta(hours=TOKEN_HOURS)
     return jwt.encode(
-        {"sub": username, "role": role, "exp": expire},
+        {"sub": username, "role": role, "exp": expire, "version": auth_version, "jti": uuid.uuid4().hex},
         SECRET_KEY,
         algorithm=ALGORITHM,
     )
@@ -57,24 +66,42 @@ def get_current_claims(
             headers={"WWW-Authenticate": "Bearer"},
         )
     try:
-        payload = jwt.decode(credentials.credentials, SECRET_KEY, algorithms=[ALGORITHM])
+        payload = jwt.decode(credentials.credentials, SECRET_KEY, algorithms=[ALGORITHM], options={"require_exp": True})
         username = payload.get("sub")
         role = payload.get("role") or "admin"
+        if "version" not in payload or not payload.get("jti"):
+            raise HTTPException(status_code=401, detail="Session upgraded. Please log in again.")
         if not username:
             raise HTTPException(status_code=401, detail="Invalid token")
         if role not in {"admin", "staff"}:
             raise HTTPException(status_code=401, detail="Invalid token role")
-        return {
+        claims = {
             "username": username,
             "role": role,
             "expires_at": payload.get("exp"),
+            "auth_version": payload.get("version", 0),
+            "token_digest": hashlib.sha256(credentials.credentials.encode()).hexdigest(),
         }
+        with SessionLocal() as db:
+            assert_claims_active(db, claims)
+        return claims
     except JWTError:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Invalid or expired token",
             headers={"WWW-Authenticate": "Bearer"},
         )
+
+
+def assert_claims_active(db: Session, claims: dict) -> None:
+    settings = db.query(models.Settings).populate_existing().first()
+    staff = claims["role"] == "staff"
+    name = settings.staff_username if settings and staff else (settings.username if settings else None)
+    version = getattr(settings, "staff_auth_version" if staff else "auth_version", 0)
+    revoked = db.get(models.RevokedToken, claims["token_digest"])
+    if (not settings or name != claims["username"] or version != claims["auth_version"]
+            or revoked is not None or float(claims.get("expires_at") or 0) <= time.time()):
+        raise HTTPException(status_code=401, detail="Session expired. Please log in again.")
 
 
 def get_current_user(claims: dict = Depends(get_current_claims)) -> str:

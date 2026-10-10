@@ -6,6 +6,7 @@ import tempfile
 import time
 import traceback
 from datetime import datetime, timedelta
+from urllib.parse import urlsplit
 
 
 def parse_args():
@@ -22,6 +23,9 @@ def parse_args():
 args = parse_args()
 db_path = ""
 if args.database_url:
+    target = urlsplit(args.database_url)
+    if target.hostname not in {"localhost", "127.0.0.1", "::1"} or not target.path.startswith("/hsr_"):
+        raise ValueError("Soak tests require a disposable loopback hsr_* database")
     os.environ["DATABASE_URL"] = args.database_url
     database_label = "postgres"
 else:
@@ -41,6 +45,17 @@ import seed  # noqa: E402,F401 - intentionally seeds the temp database
 from fastapi.testclient import TestClient  # noqa: E402
 from hsr_config import get_ist_now  # noqa: E402
 from main import app  # noqa: E402
+from database import SessionLocal  # noqa: E402
+from deps import hash_password  # noqa: E402
+from models import Settings  # noqa: E402
+
+ADMIN_PASSWORD = "Soak-QA-admin-only-2026!"
+STAFF_PASSWORD = "Soak-QA-staff-only-2026!"
+with SessionLocal() as fixture_db:
+    fixture_settings = fixture_db.query(Settings).first()
+    fixture_settings.password = hash_password(ADMIN_PASSWORD)
+    fixture_settings.staff_password = hash_password(STAFF_PASSWORD)
+    fixture_db.commit()
 
 
 TABLES = ["t1", "t2", "t3", "t4", "t5"]
@@ -108,7 +123,7 @@ def login():
     global token
     response = client.post(
         "/auth/login",
-        json={"username": "admin", "password": "admin123"},
+        json={"username": "admin", "password": ADMIN_PASSWORD},
     )
     if response.status_code != 200:
         raise SoakFailure(f"Login failed: {response.status_code} {response.text}")
@@ -379,7 +394,7 @@ def run_staff_discount_guard_check():
     admin_token = token
     staff_login = client.post(
         "/auth/login",
-        json={"username": "staff", "password": "staff123"},
+        json={"username": "staff", "password": STAFF_PASSWORD},
     )
     if staff_login.status_code != 200:
         raise SoakFailure(f"Staff login failed: {staff_login.status_code} {staff_login.text}")

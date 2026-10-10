@@ -18,7 +18,7 @@ def get_controls(db: Session) -> models.SecurityControl:
         alert_unbilled_minutes=10,
     )
     db.add(controls)
-    db.commit()
+    db.flush()
     db.refresh(controls)
     return controls
 

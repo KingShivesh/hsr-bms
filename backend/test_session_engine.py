@@ -38,7 +38,7 @@ class SessionEngineTests(unittest.TestCase):
             for table in reversed(Base.metadata.sorted_tables):
                 connection.execute(table.delete())
         with SessionLocal() as db:
-            db.add(models.Settings(id=1, min_session=0, gst_percent=0))
+            db.add(models.Settings(id=1, username="qa-engine", staff_username="qa-staff", min_session=0, gst_percent=0))
             db.add(models.MenuItem(name="QA Engine Tea", price=20, category="Beverages", available=True))
             db.commit()
         self.client = TestClient(app)
@@ -271,7 +271,8 @@ class SessionEngineTests(unittest.TestCase):
         self.start()
         self.now += 60_000
         self.call("POST", "/sessions/pause/t1")
-        quote = self.call("GET", "/sessions/quote/t1", params={"closed_at_ms": self.now + 3600_000})
+        self.call("GET", "/sessions/quote/t1", expected=409, params={"closed_at_ms": self.now + 3600_000})
+        quote = self.quote()
         self.assertEqual(quote["session_ended_at"], self.now)
         self.assertEqual(quote["dur"], 1)
 

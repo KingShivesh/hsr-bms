@@ -211,6 +211,7 @@ def get_summary(db: Session = Depends(get_db)):
 def get_dashboard(
     period: str = Query("today", pattern="^(today|week|all)$"),
     db: Session = Depends(get_db),
+    _: dict = Depends(require_admin),
 ):
     return dashboard_payload(db, period=period)
 
@@ -349,6 +350,7 @@ def closing_report(db: Session = Depends(get_db)):
         )
 
     food_only_orders = db.query(models.FoodOnlyOrder).filter(
+        models.FoodOnlyOrder.cancelled_at == 0,
         models.FoodOnlyOrder.date.like(f"{today}%")
     ).all()
     food_only_revenue = sum(o.total for o in food_only_orders)
