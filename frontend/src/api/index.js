@@ -124,6 +124,7 @@ export const getBackendHealth = async () => {
 export const login = (username, password) =>
   api.post("/auth/login", { username, password });
 export const getMe = () => api.get("/auth/me");
+export const logout = () => api.post("/auth/logout");
 export const changeAuth = (username, password) =>
   api.post("/auth/change", { username, password });
 export const changeStaffAuth = (username, password) =>
@@ -164,6 +165,7 @@ const sessionCheckoutParams = (
   discount_reason = "",
   payment_split = [],
   session_key = "",
+  checkout_token = "",
 ) => {
   const params = new URLSearchParams({
     payment_method,
@@ -179,6 +181,7 @@ const sessionCheckoutParams = (
     params.set("payment_split_json", JSON.stringify(payment_split));
   }
   if (session_key) params.set("session_key", session_key);
+  if (checkout_token) params.set("checkout_token_value", checkout_token);
   return params.toString();
 };
 
@@ -192,6 +195,7 @@ export const stopSession = (
   discount_reason = "",
   payment_split = [],
   session_key = "",
+  checkout_token = "",
 ) =>
   api.post(
     `/sessions/stop/${tableKey(table_id)}?${sessionCheckoutParams(
@@ -203,6 +207,7 @@ export const stopSession = (
       discount_reason,
       payment_split,
       session_key,
+      checkout_token,
     )}`,
   );
 export const quoteSession = (
@@ -211,6 +216,7 @@ export const quoteSession = (
   discount_type = "none",
   discount_value = 0,
   closed_at_ms = "",
+  checkout_token = "",
 ) =>
   api.get(
     `/sessions/quote/${tableKey(table_id)}?${sessionCheckoutParams(
@@ -219,6 +225,10 @@ export const quoteSession = (
       discount_type,
       discount_value,
       closed_at_ms,
+      "",
+      [],
+      "",
+      checkout_token,
     )}`,
   );
 export const resetSession = (table_id, manager_pin = "") =>

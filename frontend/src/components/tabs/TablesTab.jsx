@@ -2705,6 +2705,7 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0, onOpenF
         discountType,
         parseInt(nextValue, 10) || 0,
         checkoutQuote.closedAtMs,
+        checkoutQuote.rec?.checkout_token,
       );
       if (checkoutQuoteSeqRef.current !== requestSeq) return;
       setCheckoutQuote((prev) => ({
@@ -2751,6 +2752,7 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0, onOpenF
         checkoutQuote.discountType,
         parseInt(checkoutQuote.discountValue, 10) || 0,
         checkoutQuote.closedAtMs,
+        checkoutQuote.rec?.checkout_token,
       );
       if (checkoutQuoteSeqRef.current !== requestSeq) return;
       setCheckoutQuote((prev) => ({
@@ -2820,6 +2822,7 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0, onOpenF
         discountReason.trim(),
         splitPayload,
         checkoutQuote.sessionKey || checkoutQuote.rec?.session_key || "",
+        checkoutQuote.rec?.checkout_token,
       );
       const rec = { ...res.data };
       setSessions((prev) => {

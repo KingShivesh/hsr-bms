@@ -69,6 +69,7 @@ export default function CheckoutPanel({ table, open, onClose, onComplete }) {
     nextDiscountType,
     nextDiscountValue,
     nextClosedAtMs,
+    nextCheckoutToken = "",
   }) => {
     if (!tableId) return;
     setLoading(true);
@@ -80,8 +81,10 @@ export default function CheckoutPanel({ table, open, onClose, onComplete }) {
         nextDiscountType,
         nextDiscountType === "rupee" ? parseInt(sanitizeRupeeDiscount(nextDiscountValue), 10) || 0 : 0,
         nextClosedAtMs,
+        nextCheckoutToken,
       );
       setQuote(res.data || {});
+      setClosedAtMs(res.data.session_ended_at);
     } catch (err) {
       setError(err.userMessage || err.response?.data?.detail || "Could not prepare checkout.");
     } finally {
@@ -97,13 +100,12 @@ export default function CheckoutPanel({ table, open, onClose, onComplete }) {
     setDiscountReason("");
     setReceipt(null);
     setError("");
-    const frozenAt = Date.now();
-    setClosedAtMs(frozenAt);
+    setClosedAtMs("");
     loadQuote({
       nextPaymentMethod: "Cash",
       nextDiscountType: "none",
       nextDiscountValue: 0,
-      nextClosedAtMs: frozenAt,
+      nextClosedAtMs: "",
     });
   }, [open, tableId, loadQuote]);
 
@@ -114,6 +116,7 @@ export default function CheckoutPanel({ table, open, onClose, onComplete }) {
       nextDiscountType: discountType,
       nextDiscountValue: discountValue,
       nextClosedAtMs: closedAtMs,
+      nextCheckoutToken: quote?.checkout_token,
     });
   }
 
@@ -127,6 +130,7 @@ export default function CheckoutPanel({ table, open, onClose, onComplete }) {
       nextDiscountType: nextType,
       nextDiscountValue: nextValue,
       nextClosedAtMs: closedAtMs,
+      nextCheckoutToken: quote?.checkout_token,
     });
   }
 
@@ -138,6 +142,7 @@ export default function CheckoutPanel({ table, open, onClose, onComplete }) {
       nextDiscountType: "rupee",
       nextDiscountValue: nextValue,
       nextClosedAtMs: closedAtMs,
+      nextCheckoutToken: quote?.checkout_token,
     });
   }
 
@@ -160,6 +165,7 @@ export default function CheckoutPanel({ table, open, onClose, onComplete }) {
         discountReason.trim(),
         [],
         sessionKey,
+        quote.checkout_token,
       );
       setReceipt(res.data || {});
       showToast(`${String(tableId).toUpperCase()} closed via ${paymentMethod}`, "success");

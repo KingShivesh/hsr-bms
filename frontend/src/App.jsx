@@ -11,10 +11,11 @@ import Login from "./components/Login.jsx";
 import Sidebar from "./components/Sidebar.jsx";
 import Topbar from "./components/Topbar.jsx";
 import CommandBar from "./components/CommandBar.jsx";
+import RouteErrorBoundary from "./components/RouteErrorBoundary.jsx";
 import { ToastProvider } from "./components/Toast.jsx";
 import { ConfirmProvider } from "./components/ConfirmDialog.jsx";
 import { useConfirm } from "./components/confirmContext.js";
-import { getBackendHealth, getMe, getSummary } from "./api/index.js";
+import { getBackendHealth, getMe, getSummary, logout } from "./api/index.js";
 
 const Dashboard = lazy(() => import("./components/Dashboard.jsx"));
 const LiveFloor = lazy(() => import("./features/live-floor/LiveFloor.jsx"));
@@ -321,6 +322,14 @@ function AppInner() {
       tone: "warning",
     });
     if (!confirmed) return;
+    try {
+      await logout();
+    } catch (error) {
+      if (error.response?.status !== 401) {
+        await requestConfirm({ title: "Could not log out securely", message: "The server could not end this session. Check your connection and try again.", confirmLabel: "OK", tone: "warning" });
+        return;
+      }
+    }
     localStorage.removeItem("token");
     localStorage.removeItem("role");
     localStorage.removeItem("username");
@@ -393,6 +402,7 @@ function AppInner() {
             onNavigate={goToPage}
           />
           <BackendStatusBanner backendStatus={backendStatus} onRetry={() => checkBackend({ showWakeDelay: true })} />
+          <RouteErrorBoundary key={`${location.pathname}:${page}`}>
           <Suspense
             fallback={
               <div className="page">
@@ -452,6 +462,7 @@ function AppInner() {
               )}
             </div>
           </Suspense>
+          </RouteErrorBoundary>
         </div>
         <CommandBar
           page={page}
