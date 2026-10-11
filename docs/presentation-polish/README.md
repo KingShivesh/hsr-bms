@@ -62,7 +62,8 @@ The font comparison measured Executive Overview at 240.44px in Syne and
 230.14px in Inter, both 24px/600. The three primary KPI values remain DM Mono,
 32px/500, in both variants. Inter looks more conventional for dense labels;
 Syne retains more of the established identity. Recommendation: Inter for
-interface text, subject to the user's explicit choice. **No switch applied.**
+interface text was presented for comparison. The user chose to retain
+**Syne + DM Mono on 2026-10-12. No switch applied; the font decision is closed.**
 
 ## Scope and exceptions
 

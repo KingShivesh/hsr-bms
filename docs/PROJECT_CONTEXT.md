@@ -30,9 +30,9 @@ are mapped with `@theme inline` in `index.css`; do not add Tailwind v3 config.
   Exact tokens and live computed-font evidence: `docs/SNOOK_THEME.md`.
 - Fonts: self-hosted Syne Variable for interface text, DM Mono for primary
   numbers/timers. Do not synthesize heavy monospace weights.
-- Inter is a comparison only, pending the user's choice. Evidence is in
-  `docs/presentation-polish/font-comparison/`; do not treat that preview as
-  permission to switch application fonts.
+- The user chose to retain Syne + DM Mono after the Inter comparison
+  (2026-10-12). Evidence is in `docs/presentation-polish/font-comparison/`;
+  that preview is not permission to switch application fonts.
 - Presentation contract: seven text sizes (11/13/14/16/20/24/32px) with matching
   leading tokens; `presentation.css` loads last. Use shared Button, Input,
   Select, Textarea and Table. The `native` Button adapter preserves existing
