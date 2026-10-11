@@ -1,0 +1,21 @@
+{
+  "database": "Disposable loopback PostgreSQL 16",
+  "sessionTests": {"discovered": 34, "passed": 34, "skipped": 0},
+  "authFinancialTests": {"discovered": 16, "passed": 16, "skipped": 0},
+  "migrationTests": {"discovered": 1, "passed": 1, "skipped": 0},
+  "concurrentStart": {"httpStatuses": [200, 409], "sessionsCreated": 1, "startAuditEntries": 1},
+  "soak": {
+    "result": "PASS",
+    "elapsedSeconds": 1.9,
+    "cycles": 1,
+    "requests": 87,
+    "sessionsClosed": 3,
+    "ledgerChecks": 3,
+    "activeSessionsLeft": 0,
+    "averageLatencyMs": 14.3,
+    "p95LatencyMs": 24.5
+  },
+  "sqlite": {"sessionAndMigrationDiscovered": 35, "sessionAndMigrationPassed": 34, "postgresOnlySkipped": 1, "authFinancialDiscovered": 16, "authFinancialPassed": 15, "postgresOnlyAuthSkipped": 1},
+  "creditEnforcement": "NOT IMPLEMENTED: no member credit accounting contract exists",
+  "productionMutations": 0
+}

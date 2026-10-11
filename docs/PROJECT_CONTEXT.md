@@ -140,6 +140,13 @@ dead/reachable component findings, and the full routing migration.
   session after their checks pass; do not leave verified work unshipped.
 
 ## Deferred / Follow-up
+- Session identity repair: `docs/session-start-audit/README.md`. A NULL guest name
+  is valid; use the shared session_identity predicate, never customer-name truthiness
+  to decide occupancy. Member statistics require explicit member_id; never create
+  members from guest checkout names. Bookings start by ID, not name heuristics.
+  Three recorded identity migration stages have tested rollback; do not roll back
+  to a name-only occupancy backend with anonymous sessions still active.
+  Credit ledger/limits/PIN overrides remain OPEN, not a fake zero-balance check.
 - Full-stack integrity audit (2026-10-11): `docs/full-stack-audit/README.md`
   records reproduced security/billing fixes, tests and deferred tickets.
   Tokens now have credential versions and per-session revocation; legacy tokens

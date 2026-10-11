@@ -1,0 +1,100 @@
+[
+  {
+    "theme": "light",
+    "stage": "after",
+    "startEnabled": true
+  },
+  {
+    "theme": "light",
+    "width": 375,
+    "overflow": false
+  },
+  {
+    "theme": "light",
+    "width": 414,
+    "overflow": false
+  },
+  {
+    "theme": "light",
+    "tab": "member",
+    "width": 375,
+    "overflow": false
+  },
+  {
+    "theme": "light",
+    "tab": "member",
+    "width": 414,
+    "overflow": false
+  },
+  {
+    "theme": "light",
+    "tab": "booking",
+    "width": 375,
+    "overflow": false
+  },
+  {
+    "theme": "light",
+    "tab": "booking",
+    "width": 414,
+    "overflow": false
+  },
+  {
+    "theme": "light",
+    "anonymousNull": true,
+    "memberLinked": true,
+    "bookingLinked": true,
+    "feedbackMs": 9.099999964237213,
+    "keyboardTabsAndEscape": true,
+    "advancedUsesSharedModal": true,
+    "errors": []
+  },
+  {
+    "theme": "dark",
+    "stage": "after",
+    "startEnabled": true
+  },
+  {
+    "theme": "dark",
+    "width": 375,
+    "overflow": false
+  },
+  {
+    "theme": "dark",
+    "width": 414,
+    "overflow": false
+  },
+  {
+    "theme": "dark",
+    "tab": "member",
+    "width": 375,
+    "overflow": false
+  },
+  {
+    "theme": "dark",
+    "tab": "member",
+    "width": 414,
+    "overflow": false
+  },
+  {
+    "theme": "dark",
+    "tab": "booking",
+    "width": 375,
+    "overflow": false
+  },
+  {
+    "theme": "dark",
+    "tab": "booking",
+    "width": 414,
+    "overflow": false
+  },
+  {
+    "theme": "dark",
+    "anonymousNull": true,
+    "memberLinked": true,
+    "bookingLinked": true,
+    "feedbackMs": 6.199999988079071,
+    "keyboardTabsAndEscape": true,
+    "advancedUsesSharedModal": true,
+    "errors": []
+  }
+]

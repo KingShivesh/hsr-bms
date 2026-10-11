@@ -2,7 +2,8 @@ import fs from "node:fs/promises";
 import { createHash } from "node:crypto";
 import { execFileSync } from "node:child_process";
 
-const backendFix = "aa8b5cf";
+const backendFix = process.env.DEPLOY_EXPECTED_BACKEND_COMMIT || "aa8b5cf";
+const outputPath = process.env.DEPLOY_REPORT_PATH || "../docs/full-stack-audit/deployment.json";
 const base = "https://hsr-bms.vercel.app";
 const api = "https://hsr-bms-backend.onrender.com";
 const sha = bytes => createHash("sha256").update(bytes).digest("hex");
@@ -43,10 +44,10 @@ for (let attempt = 0; attempt < 24; attempt++) {
   const state = `${row.frontendMatches}/${row.backendContainsFix}/${row.healthStatus}/${row.readyStatus}`;
   if (state !== lastState) { console.log(JSON.stringify(row)); lastState = state; }
   if (row.frontendMatches && row.backendContainsFix && row.readyStatus === 200) {
-    await fs.writeFile("../docs/full-stack-audit/deployment.json", JSON.stringify({ verified: true, backendFixCommit: backendFix, localHead: execFileSync("git", ["rev-parse", "HEAD"], { encoding: "utf8" }).trim(), observations }, null, 2));
+    await fs.writeFile(outputPath, JSON.stringify({ verified: true, backendFixCommit: backendFix, localHead: execFileSync("git", ["rev-parse", "HEAD"], { encoding: "utf8" }).trim(), observations }, null, 2));
     process.exit(0);
   }
   await new Promise(resolve => setTimeout(resolve, 30000));
 }
-await fs.writeFile("../docs/full-stack-audit/deployment.json", JSON.stringify({ verified: false, observations }, null, 2));
+await fs.writeFile(outputPath, JSON.stringify({ verified: false, observations }, null, 2));
 throw new Error("Deployment not verified within the bounded window");

@@ -1,0 +1,32 @@
+[
+  {
+    "theme": "light",
+    "stage": "before",
+    "startEnabled": true
+  },
+  {
+    "theme": "light",
+    "width": 375,
+    "overflow": false
+  },
+  {
+    "theme": "light",
+    "width": 414,
+    "overflow": false
+  },
+  {
+    "theme": "dark",
+    "stage": "before",
+    "startEnabled": true
+  },
+  {
+    "theme": "dark",
+    "width": 375,
+    "overflow": false
+  },
+  {
+    "theme": "dark",
+    "width": 414,
+    "overflow": false
+  }
+]

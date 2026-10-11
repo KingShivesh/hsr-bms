@@ -5,7 +5,7 @@ import { scanRenderedContrast } from "./rendered-contrast.mjs";
 
 const app = process.env.CONTRAST_APP_URL || "http://127.0.0.1:5175";
 const api = process.env.CONTRAST_API_URL || "http://127.0.0.1:8002";
-const directory = "../docs/theme-contrast-audit";
+const directory = process.env.THEME_RUNTIME_REPORT_DIR || "../docs/theme-contrast-audit";
 await fs.mkdir(directory, { recursive: true });
 const browser = await chromium.launch({ executablePath: "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome", headless: true });
 const report = { bootstrap: [], pairs: [], interaction: [], mobile: [], errors: [] };
