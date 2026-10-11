@@ -1,4 +1,4 @@
-import { Icon as HsrIcon } from "./index.js";
+import Icon from "./Icon.jsx";
 export default function EmptyState({
   icon = "ti-circle-check",
   title = "Nothing here yet",
@@ -9,9 +9,9 @@ export default function EmptyState({
   return (
     <div className={["ui-empty-state", className].filter(Boolean).join(" ")}>
       <span className="ui-empty-icon" aria-hidden="true">
-        <HsrIcon className={`ti ${icon}`} />
+        <Icon className={`ti ${icon}`} />
       </span>
-      <div>
+      <div className="ui-empty-copy">
         <h3>{title}</h3>
         {description && <p>{description}</p>}
       </div>

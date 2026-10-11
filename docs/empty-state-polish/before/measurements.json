@@ -1,0 +1,633 @@
+{
+  "stage": "before",
+  "samples": [
+    {
+      "route": "/customers",
+      "theme": "dark",
+      "width": 1440,
+      "state": "empty",
+      "text": "REGISTER\nAll customers\nNo customers found\nAdd a customer or change the search query.\nAdd Customer",
+      "overflow": 0,
+      "font": "\"Syne Variable\", Syne, sans-serif",
+      "canvas": "#0b0b0f",
+      "accent": "#00ff7f",
+      "actions": [
+        {
+          "label": "Add Customer",
+          "height": 36
+        }
+      ]
+    },
+    {
+      "route": "/customers",
+      "theme": "dark",
+      "width": 1440,
+      "state": "filtered",
+      "text": "REGISTER\nAll customers\nNo customers found\nAdd a customer or change the search query.\nAdd Customer",
+      "overflow": 0,
+      "font": "\"Syne Variable\", Syne, sans-serif",
+      "canvas": "#0b0b0f",
+      "accent": "#00ff7f",
+      "actions": [
+        {
+          "label": "Add Customer",
+          "height": 36
+        }
+      ]
+    },
+    {
+      "route": "/bookings",
+      "theme": "dark",
+      "width": 1440,
+      "state": "empty",
+      "text": "REGISTER\nBooking list\nBooked\nMissed\nAll\nNo bookings found\nCreate a reservation or adjust the filter.\nNew Booking",
+      "overflow": 0,
+      "font": "\"Syne Variable\", Syne, sans-serif",
+      "canvas": "#0b0b0f",
+      "accent": "#00ff7f",
+      "actions": [
+        {
+          "label": "Booked",
+          "height": 44
+        },
+        {
+          "label": "Missed",
+          "height": 44
+        },
+        {
+          "label": "All",
+          "height": 44
+        },
+        {
+          "label": "New Booking",
+          "height": 36
+        }
+      ]
+    },
+    {
+      "route": "/bookings",
+      "theme": "dark",
+      "width": 1440,
+      "state": "filtered",
+      "text": "REGISTER\nBooking list\nBooked\nMissed\nAll\nNo bookings found\nCreate a reservation or adjust the filter.\nNew Booking",
+      "overflow": 0,
+      "font": "\"Syne Variable\", Syne, sans-serif",
+      "canvas": "#0b0b0f",
+      "accent": "#00ff7f",
+      "actions": [
+        {
+          "label": "Booked",
+          "height": 44
+        },
+        {
+          "label": "Missed",
+          "height": 44
+        },
+        {
+          "label": "All",
+          "height": 44
+        },
+        {
+          "label": "New Booking",
+          "height": 36
+        }
+      ]
+    },
+    {
+      "route": "/waitlist",
+      "theme": "dark",
+      "width": 1440,
+      "state": "empty",
+      "text": "BOOKINGS\nUpcoming / Missed\nNo Bookings To Review\nUpcoming and missed bookings will appear here.",
+      "overflow": 0,
+      "font": "\"Syne Variable\", Syne, sans-serif",
+      "canvas": "#0b0b0f",
+      "accent": "#00ff7f",
+      "actions": []
+    },
+    {
+      "route": "/customers",
+      "theme": "dark",
+      "width": 375,
+      "state": "empty",
+      "text": "REGISTER\nAll customers\nNo customers found\nAdd a customer or change the search query.\nAdd Customer",
+      "overflow": 0,
+      "font": "\"Syne Variable\", Syne, sans-serif",
+      "canvas": "#0b0b0f",
+      "accent": "#00ff7f",
+      "actions": [
+        {
+          "label": "Add Customer",
+          "height": 44
+        }
+      ]
+    },
+    {
+      "route": "/customers",
+      "theme": "dark",
+      "width": 375,
+      "state": "filtered",
+      "text": "REGISTER\nAll customers\nNo customers found\nAdd a customer or change the search query.\nAdd Customer",
+      "overflow": 0,
+      "font": "\"Syne Variable\", Syne, sans-serif",
+      "canvas": "#0b0b0f",
+      "accent": "#00ff7f",
+      "actions": [
+        {
+          "label": "Add Customer",
+          "height": 44
+        }
+      ]
+    },
+    {
+      "route": "/bookings",
+      "theme": "dark",
+      "width": 375,
+      "state": "empty",
+      "text": "REGISTER\nBooking list\nBooked\nMissed\nAll\nNo bookings found\nCreate a reservation or adjust the filter.\nNew Booking",
+      "overflow": 0,
+      "font": "\"Syne Variable\", Syne, sans-serif",
+      "canvas": "#0b0b0f",
+      "accent": "#00ff7f",
+      "actions": [
+        {
+          "label": "Booked",
+          "height": 44
+        },
+        {
+          "label": "Missed",
+          "height": 44
+        },
+        {
+          "label": "All",
+          "height": 44
+        },
+        {
+          "label": "New Booking",
+          "height": 44
+        }
+      ]
+    },
+    {
+      "route": "/bookings",
+      "theme": "dark",
+      "width": 375,
+      "state": "filtered",
+      "text": "REGISTER\nBooking list\nBooked\nMissed\nAll\nNo bookings found\nCreate a reservation or adjust the filter.\nNew Booking",
+      "overflow": 0,
+      "font": "\"Syne Variable\", Syne, sans-serif",
+      "canvas": "#0b0b0f",
+      "accent": "#00ff7f",
+      "actions": [
+        {
+          "label": "Booked",
+          "height": 44
+        },
+        {
+          "label": "Missed",
+          "height": 44
+        },
+        {
+          "label": "All",
+          "height": 44
+        },
+        {
+          "label": "New Booking",
+          "height": 44
+        }
+      ]
+    },
+    {
+      "route": "/waitlist",
+      "theme": "dark",
+      "width": 375,
+      "state": "empty",
+      "text": "BOOKINGS\nUpcoming / Missed\nNo Bookings To Review\nUpcoming and missed bookings will appear here.",
+      "overflow": 0,
+      "font": "\"Syne Variable\", Syne, sans-serif",
+      "canvas": "#0b0b0f",
+      "accent": "#00ff7f",
+      "actions": []
+    },
+    {
+      "route": "/customers",
+      "theme": "dark",
+      "width": 414,
+      "state": "empty",
+      "text": "REGISTER\nAll customers\nNo customers found\nAdd a customer or change the search query.\nAdd Customer",
+      "overflow": 0,
+      "font": "\"Syne Variable\", Syne, sans-serif",
+      "canvas": "#0b0b0f",
+      "accent": "#00ff7f",
+      "actions": [
+        {
+          "label": "Add Customer",
+          "height": 44
+        }
+      ]
+    },
+    {
+      "route": "/customers",
+      "theme": "dark",
+      "width": 414,
+      "state": "filtered",
+      "text": "REGISTER\nAll customers\nNo customers found\nAdd a customer or change the search query.\nAdd Customer",
+      "overflow": 0,
+      "font": "\"Syne Variable\", Syne, sans-serif",
+      "canvas": "#0b0b0f",
+      "accent": "#00ff7f",
+      "actions": [
+        {
+          "label": "Add Customer",
+          "height": 44
+        }
+      ]
+    },
+    {
+      "route": "/bookings",
+      "theme": "dark",
+      "width": 414,
+      "state": "empty",
+      "text": "REGISTER\nBooking list\nBooked\nMissed\nAll\nNo bookings found\nCreate a reservation or adjust the filter.\nNew Booking",
+      "overflow": 0,
+      "font": "\"Syne Variable\", Syne, sans-serif",
+      "canvas": "#0b0b0f",
+      "accent": "#00ff7f",
+      "actions": [
+        {
+          "label": "Booked",
+          "height": 44
+        },
+        {
+          "label": "Missed",
+          "height": 44
+        },
+        {
+          "label": "All",
+          "height": 44
+        },
+        {
+          "label": "New Booking",
+          "height": 44
+        }
+      ]
+    },
+    {
+      "route": "/bookings",
+      "theme": "dark",
+      "width": 414,
+      "state": "filtered",
+      "text": "REGISTER\nBooking list\nBooked\nMissed\nAll\nNo bookings found\nCreate a reservation or adjust the filter.\nNew Booking",
+      "overflow": 0,
+      "font": "\"Syne Variable\", Syne, sans-serif",
+      "canvas": "#0b0b0f",
+      "accent": "#00ff7f",
+      "actions": [
+        {
+          "label": "Booked",
+          "height": 44
+        },
+        {
+          "label": "Missed",
+          "height": 44
+        },
+        {
+          "label": "All",
+          "height": 44
+        },
+        {
+          "label": "New Booking",
+          "height": 44
+        }
+      ]
+    },
+    {
+      "route": "/waitlist",
+      "theme": "dark",
+      "width": 414,
+      "state": "empty",
+      "text": "BOOKINGS\nUpcoming / Missed\nNo Bookings To Review\nUpcoming and missed bookings will appear here.",
+      "overflow": 0,
+      "font": "\"Syne Variable\", Syne, sans-serif",
+      "canvas": "#0b0b0f",
+      "accent": "#00ff7f",
+      "actions": []
+    },
+    {
+      "route": "/customers",
+      "theme": "light",
+      "width": 1440,
+      "state": "empty",
+      "text": "REGISTER\nAll customers\nNo customers found\nAdd a customer or change the search query.\nAdd Customer",
+      "overflow": 0,
+      "font": "\"Syne Variable\", Syne, sans-serif",
+      "canvas": "#fafafa",
+      "accent": "#006b3c",
+      "actions": [
+        {
+          "label": "Add Customer",
+          "height": 36
+        }
+      ]
+    },
+    {
+      "route": "/customers",
+      "theme": "light",
+      "width": 1440,
+      "state": "filtered",
+      "text": "REGISTER\nAll customers\nNo customers found\nAdd a customer or change the search query.\nAdd Customer",
+      "overflow": 0,
+      "font": "\"Syne Variable\", Syne, sans-serif",
+      "canvas": "#fafafa",
+      "accent": "#006b3c",
+      "actions": [
+        {
+          "label": "Add Customer",
+          "height": 36
+        }
+      ]
+    },
+    {
+      "route": "/bookings",
+      "theme": "light",
+      "width": 1440,
+      "state": "empty",
+      "text": "REGISTER\nBooking list\nBooked\nMissed\nAll\nNo bookings found\nCreate a reservation or adjust the filter.\nNew Booking",
+      "overflow": 0,
+      "font": "\"Syne Variable\", Syne, sans-serif",
+      "canvas": "#fafafa",
+      "accent": "#006b3c",
+      "actions": [
+        {
+          "label": "Booked",
+          "height": 44
+        },
+        {
+          "label": "Missed",
+          "height": 44
+        },
+        {
+          "label": "All",
+          "height": 44
+        },
+        {
+          "label": "New Booking",
+          "height": 36
+        }
+      ]
+    },
+    {
+      "route": "/bookings",
+      "theme": "light",
+      "width": 1440,
+      "state": "filtered",
+      "text": "REGISTER\nBooking list\nBooked\nMissed\nAll\nNo bookings found\nCreate a reservation or adjust the filter.\nNew Booking",
+      "overflow": 0,
+      "font": "\"Syne Variable\", Syne, sans-serif",
+      "canvas": "#fafafa",
+      "accent": "#006b3c",
+      "actions": [
+        {
+          "label": "Booked",
+          "height": 44
+        },
+        {
+          "label": "Missed",
+          "height": 44
+        },
+        {
+          "label": "All",
+          "height": 44
+        },
+        {
+          "label": "New Booking",
+          "height": 36
+        }
+      ]
+    },
+    {
+      "route": "/waitlist",
+      "theme": "light",
+      "width": 1440,
+      "state": "empty",
+      "text": "BOOKINGS\nUpcoming / Missed\nNo Bookings To Review\nUpcoming and missed bookings will appear here.",
+      "overflow": 0,
+      "font": "\"Syne Variable\", Syne, sans-serif",
+      "canvas": "#fafafa",
+      "accent": "#006b3c",
+      "actions": []
+    },
+    {
+      "route": "/customers",
+      "theme": "light",
+      "width": 375,
+      "state": "empty",
+      "text": "REGISTER\nAll customers\nNo customers found\nAdd a customer or change the search query.\nAdd Customer",
+      "overflow": 0,
+      "font": "\"Syne Variable\", Syne, sans-serif",
+      "canvas": "#fafafa",
+      "accent": "#006b3c",
+      "actions": [
+        {
+          "label": "Add Customer",
+          "height": 44
+        }
+      ]
+    },
+    {
+      "route": "/customers",
+      "theme": "light",
+      "width": 375,
+      "state": "filtered",
+      "text": "REGISTER\nAll customers\nNo customers found\nAdd a customer or change the search query.\nAdd Customer",
+      "overflow": 0,
+      "font": "\"Syne Variable\", Syne, sans-serif",
+      "canvas": "#fafafa",
+      "accent": "#006b3c",
+      "actions": [
+        {
+          "label": "Add Customer",
+          "height": 44
+        }
+      ]
+    },
+    {
+      "route": "/bookings",
+      "theme": "light",
+      "width": 375,
+      "state": "empty",
+      "text": "REGISTER\nBooking list\nBooked\nMissed\nAll\nNo bookings found\nCreate a reservation or adjust the filter.\nNew Booking",
+      "overflow": 0,
+      "font": "\"Syne Variable\", Syne, sans-serif",
+      "canvas": "#fafafa",
+      "accent": "#006b3c",
+      "actions": [
+        {
+          "label": "Booked",
+          "height": 44
+        },
+        {
+          "label": "Missed",
+          "height": 44
+        },
+        {
+          "label": "All",
+          "height": 44
+        },
+        {
+          "label": "New Booking",
+          "height": 44
+        }
+      ]
+    },
+    {
+      "route": "/bookings",
+      "theme": "light",
+      "width": 375,
+      "state": "filtered",
+      "text": "REGISTER\nBooking list\nBooked\nMissed\nAll\nNo bookings found\nCreate a reservation or adjust the filter.\nNew Booking",
+      "overflow": 0,
+      "font": "\"Syne Variable\", Syne, sans-serif",
+      "canvas": "#fafafa",
+      "accent": "#006b3c",
+      "actions": [
+        {
+          "label": "Booked",
+          "height": 44
+        },
+        {
+          "label": "Missed",
+          "height": 44
+        },
+        {
+          "label": "All",
+          "height": 44
+        },
+        {
+          "label": "New Booking",
+          "height": 44
+        }
+      ]
+    },
+    {
+      "route": "/waitlist",
+      "theme": "light",
+      "width": 375,
+      "state": "empty",
+      "text": "BOOKINGS\nUpcoming / Missed\nNo Bookings To Review\nUpcoming and missed bookings will appear here.",
+      "overflow": 0,
+      "font": "\"Syne Variable\", Syne, sans-serif",
+      "canvas": "#fafafa",
+      "accent": "#006b3c",
+      "actions": []
+    },
+    {
+      "route": "/customers",
+      "theme": "light",
+      "width": 414,
+      "state": "empty",
+      "text": "REGISTER\nAll customers\nNo customers found\nAdd a customer or change the search query.\nAdd Customer",
+      "overflow": 0,
+      "font": "\"Syne Variable\", Syne, sans-serif",
+      "canvas": "#fafafa",
+      "accent": "#006b3c",
+      "actions": [
+        {
+          "label": "Add Customer",
+          "height": 44
+        }
+      ]
+    },
+    {
+      "route": "/customers",
+      "theme": "light",
+      "width": 414,
+      "state": "filtered",
+      "text": "REGISTER\nAll customers\nNo customers found\nAdd a customer or change the search query.\nAdd Customer",
+      "overflow": 0,
+      "font": "\"Syne Variable\", Syne, sans-serif",
+      "canvas": "#fafafa",
+      "accent": "#006b3c",
+      "actions": [
+        {
+          "label": "Add Customer",
+          "height": 44
+        }
+      ]
+    },
+    {
+      "route": "/bookings",
+      "theme": "light",
+      "width": 414,
+      "state": "empty",
+      "text": "REGISTER\nBooking list\nBooked\nMissed\nAll\nNo bookings found\nCreate a reservation or adjust the filter.\nNew Booking",
+      "overflow": 0,
+      "font": "\"Syne Variable\", Syne, sans-serif",
+      "canvas": "#fafafa",
+      "accent": "#006b3c",
+      "actions": [
+        {
+          "label": "Booked",
+          "height": 44
+        },
+        {
+          "label": "Missed",
+          "height": 44
+        },
+        {
+          "label": "All",
+          "height": 44
+        },
+        {
+          "label": "New Booking",
+          "height": 44
+        }
+      ]
+    },
+    {
+      "route": "/bookings",
+      "theme": "light",
+      "width": 414,
+      "state": "filtered",
+      "text": "REGISTER\nBooking list\nBooked\nMissed\nAll\nNo bookings found\nCreate a reservation or adjust the filter.\nNew Booking",
+      "overflow": 0,
+      "font": "\"Syne Variable\", Syne, sans-serif",
+      "canvas": "#fafafa",
+      "accent": "#006b3c",
+      "actions": [
+        {
+          "label": "Booked",
+          "height": 44
+        },
+        {
+          "label": "Missed",
+          "height": 44
+        },
+        {
+          "label": "All",
+          "height": 44
+        },
+        {
+          "label": "New Booking",
+          "height": 44
+        }
+      ]
+    },
+    {
+      "route": "/waitlist",
+      "theme": "light",
+      "width": 414,
+      "state": "empty",
+      "text": "BOOKINGS\nUpcoming / Missed\nNo Bookings To Review\nUpcoming and missed bookings will appear here.",
+      "overflow": 0,
+      "font": "\"Syne Variable\", Syne, sans-serif",
+      "canvas": "#fafafa",
+      "accent": "#006b3c",
+      "actions": []
+    }
+  ],
+  "actions": [],
+  "errors": [],
+  "blockedWrites": 0,
+  "fixtures": "Browser-only responses; no records created"
+}

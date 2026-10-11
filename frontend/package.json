@@ -15,6 +15,7 @@
     "test:theme-runtime": "node ./scripts/test-theme-runtime.mjs",
     "test:presentation": "node ./scripts/verify-presentation.mjs",
     "test:presentation-controls": "node ./scripts/test-presentation-controls.mjs",
+    "test:empty-states": "node ./scripts/test-empty-states.mjs",
     "preview": "node ./node_modules/vite/bin/vite.js preview"
   },
   "dependencies": {

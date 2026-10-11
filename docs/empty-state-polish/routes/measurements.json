@@ -1,0 +1,1918 @@
+{
+  "stage": "after",
+  "generatedAt": "2026-10-11T22:58:30.933Z",
+  "routes": [
+    {
+      "route": "/",
+      "theme": "dark",
+      "width": 1440,
+      "overflow": 0,
+      "fontSizes": [
+        11,
+        13,
+        14,
+        16,
+        20,
+        24
+      ],
+      "weights": [
+        "700",
+        "600",
+        "500",
+        "400"
+      ],
+      "offScale": [],
+      "rows": [],
+      "unsharedControls": [],
+      "topbarHeight": 77,
+      "palette": {
+        "canvas": "#0b0b0f",
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      }
+    },
+    {
+      "route": "/login",
+      "theme": "dark",
+      "width": 1440,
+      "overflow": 0,
+      "fontSizes": [
+        11,
+        13,
+        14,
+        16,
+        20,
+        24
+      ],
+      "weights": [
+        "700",
+        "600",
+        "500",
+        "400"
+      ],
+      "offScale": [],
+      "rows": [],
+      "unsharedControls": [],
+      "topbarHeight": 77,
+      "palette": {
+        "canvas": "#0b0b0f",
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      }
+    },
+    {
+      "route": "/dashboard",
+      "theme": "dark",
+      "width": 1440,
+      "overflow": 0,
+      "fontSizes": [
+        11,
+        13,
+        14,
+        16,
+        20,
+        24,
+        32
+      ],
+      "weights": [
+        "700",
+        "600",
+        "500",
+        "400"
+      ],
+      "offScale": [],
+      "rows": [],
+      "unsharedControls": [],
+      "topbarHeight": 77,
+      "palette": {
+        "canvas": "#0b0b0f",
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      }
+    },
+    {
+      "route": "/dashboard",
+      "theme": "dark",
+      "width": 375,
+      "overflow": 0,
+      "fontSizes": [
+        11,
+        13,
+        14,
+        16,
+        20,
+        24,
+        32
+      ],
+      "weights": [
+        "700",
+        "500",
+        "600"
+      ],
+      "offScale": [],
+      "rows": [],
+      "unsharedControls": [],
+      "topbarHeight": 81,
+      "palette": {
+        "canvas": "#0b0b0f",
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      }
+    },
+    {
+      "route": "/dashboard",
+      "theme": "dark",
+      "width": 414,
+      "overflow": 0,
+      "fontSizes": [
+        11,
+        13,
+        14,
+        16,
+        20,
+        24,
+        32
+      ],
+      "weights": [
+        "700",
+        "500",
+        "600"
+      ],
+      "offScale": [],
+      "rows": [],
+      "unsharedControls": [],
+      "topbarHeight": 81,
+      "palette": {
+        "canvas": "#0b0b0f",
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      }
+    },
+    {
+      "route": "/live-floor",
+      "theme": "dark",
+      "width": 1440,
+      "overflow": 0,
+      "fontSizes": [
+        11,
+        13,
+        14,
+        16,
+        20,
+        24
+      ],
+      "weights": [
+        "700",
+        "600",
+        "500",
+        "400"
+      ],
+      "offScale": [],
+      "rows": [],
+      "unsharedControls": [],
+      "topbarHeight": 77,
+      "palette": {
+        "canvas": "#0b0b0f",
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      }
+    },
+    {
+      "route": "/live-floor",
+      "theme": "dark",
+      "width": 375,
+      "overflow": 0,
+      "fontSizes": [
+        11,
+        13,
+        14,
+        16,
+        20,
+        24
+      ],
+      "weights": [
+        "700",
+        "500",
+        "600"
+      ],
+      "offScale": [],
+      "rows": [],
+      "unsharedControls": [],
+      "topbarHeight": 81,
+      "palette": {
+        "canvas": "#0b0b0f",
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      }
+    },
+    {
+      "route": "/live-floor",
+      "theme": "dark",
+      "width": 414,
+      "overflow": 0,
+      "fontSizes": [
+        11,
+        13,
+        14,
+        16,
+        20,
+        24
+      ],
+      "weights": [
+        "700",
+        "500",
+        "600"
+      ],
+      "offScale": [],
+      "rows": [],
+      "unsharedControls": [],
+      "topbarHeight": 81,
+      "palette": {
+        "canvas": "#0b0b0f",
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      }
+    },
+    {
+      "route": "/inventory",
+      "theme": "dark",
+      "width": 1440,
+      "overflow": 0,
+      "fontSizes": [
+        11,
+        13,
+        14,
+        16,
+        20,
+        24,
+        32
+      ],
+      "weights": [
+        "700",
+        "600",
+        "500",
+        "400"
+      ],
+      "offScale": [],
+      "rows": [],
+      "unsharedControls": [],
+      "topbarHeight": 77,
+      "palette": {
+        "canvas": "#0b0b0f",
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      }
+    },
+    {
+      "route": "/inventory",
+      "theme": "dark",
+      "width": 375,
+      "overflow": 0,
+      "fontSizes": [
+        11,
+        13,
+        14,
+        16,
+        20,
+        24,
+        32
+      ],
+      "weights": [
+        "700",
+        "500",
+        "600",
+        "400"
+      ],
+      "offScale": [],
+      "rows": [],
+      "unsharedControls": [],
+      "topbarHeight": 81,
+      "palette": {
+        "canvas": "#0b0b0f",
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      }
+    },
+    {
+      "route": "/inventory",
+      "theme": "dark",
+      "width": 414,
+      "overflow": 0,
+      "fontSizes": [
+        11,
+        13,
+        14,
+        16,
+        20,
+        24,
+        32
+      ],
+      "weights": [
+        "700",
+        "500",
+        "600",
+        "400"
+      ],
+      "offScale": [],
+      "rows": [],
+      "unsharedControls": [],
+      "topbarHeight": 81,
+      "palette": {
+        "canvas": "#0b0b0f",
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      }
+    },
+    {
+      "route": "/bookings",
+      "theme": "dark",
+      "width": 1440,
+      "overflow": 0,
+      "fontSizes": [
+        11,
+        13,
+        14,
+        16,
+        20,
+        24,
+        32
+      ],
+      "weights": [
+        "700",
+        "600",
+        "500",
+        "400"
+      ],
+      "offScale": [],
+      "rows": [],
+      "unsharedControls": [],
+      "topbarHeight": 77,
+      "palette": {
+        "canvas": "#0b0b0f",
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      }
+    },
+    {
+      "route": "/bookings",
+      "theme": "dark",
+      "width": 375,
+      "overflow": 0,
+      "fontSizes": [
+        11,
+        13,
+        14,
+        16,
+        20,
+        24,
+        32
+      ],
+      "weights": [
+        "700",
+        "500",
+        "600",
+        "400"
+      ],
+      "offScale": [],
+      "rows": [],
+      "unsharedControls": [],
+      "topbarHeight": 81,
+      "palette": {
+        "canvas": "#0b0b0f",
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      }
+    },
+    {
+      "route": "/bookings",
+      "theme": "dark",
+      "width": 414,
+      "overflow": 0,
+      "fontSizes": [
+        11,
+        13,
+        14,
+        16,
+        20,
+        24,
+        32
+      ],
+      "weights": [
+        "700",
+        "500",
+        "600",
+        "400"
+      ],
+      "offScale": [],
+      "rows": [],
+      "unsharedControls": [],
+      "topbarHeight": 81,
+      "palette": {
+        "canvas": "#0b0b0f",
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      }
+    },
+    {
+      "route": "/customers",
+      "theme": "dark",
+      "width": 1440,
+      "overflow": 0,
+      "fontSizes": [
+        11,
+        13,
+        14,
+        16,
+        24,
+        32
+      ],
+      "weights": [
+        "700",
+        "600",
+        "500",
+        "400"
+      ],
+      "offScale": [],
+      "rows": [],
+      "unsharedControls": [],
+      "topbarHeight": 77,
+      "palette": {
+        "canvas": "#0b0b0f",
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      }
+    },
+    {
+      "route": "/customers",
+      "theme": "dark",
+      "width": 375,
+      "overflow": 0,
+      "fontSizes": [
+        11,
+        13,
+        16,
+        24,
+        32
+      ],
+      "weights": [
+        "700",
+        "500",
+        "600",
+        "400"
+      ],
+      "offScale": [],
+      "rows": [],
+      "unsharedControls": [],
+      "topbarHeight": 81,
+      "palette": {
+        "canvas": "#0b0b0f",
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      }
+    },
+    {
+      "route": "/customers",
+      "theme": "dark",
+      "width": 414,
+      "overflow": 0,
+      "fontSizes": [
+        11,
+        13,
+        16,
+        24,
+        32
+      ],
+      "weights": [
+        "700",
+        "500",
+        "600",
+        "400"
+      ],
+      "offScale": [],
+      "rows": [],
+      "unsharedControls": [],
+      "topbarHeight": 81,
+      "palette": {
+        "canvas": "#0b0b0f",
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      }
+    },
+    {
+      "route": "/sales",
+      "theme": "dark",
+      "width": 1440,
+      "overflow": 0,
+      "fontSizes": [
+        11,
+        13,
+        14,
+        16,
+        20,
+        24,
+        32
+      ],
+      "weights": [
+        "700",
+        "600",
+        "500",
+        "400"
+      ],
+      "offScale": [],
+      "rows": [],
+      "unsharedControls": [],
+      "topbarHeight": 77,
+      "palette": {
+        "canvas": "#0b0b0f",
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      }
+    },
+    {
+      "route": "/sales",
+      "theme": "dark",
+      "width": 375,
+      "overflow": 0,
+      "fontSizes": [
+        11,
+        13,
+        14,
+        16,
+        20,
+        24,
+        32
+      ],
+      "weights": [
+        "700",
+        "500",
+        "600"
+      ],
+      "offScale": [],
+      "rows": [],
+      "unsharedControls": [],
+      "topbarHeight": 81,
+      "palette": {
+        "canvas": "#0b0b0f",
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      }
+    },
+    {
+      "route": "/sales",
+      "theme": "dark",
+      "width": 414,
+      "overflow": 0,
+      "fontSizes": [
+        11,
+        13,
+        14,
+        16,
+        20,
+        24,
+        32
+      ],
+      "weights": [
+        "700",
+        "500",
+        "600"
+      ],
+      "offScale": [],
+      "rows": [],
+      "unsharedControls": [],
+      "topbarHeight": 81,
+      "palette": {
+        "canvas": "#0b0b0f",
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      }
+    },
+    {
+      "route": "/analytics",
+      "theme": "dark",
+      "width": 1440,
+      "overflow": 0,
+      "fontSizes": [
+        11,
+        13,
+        14,
+        24,
+        32
+      ],
+      "weights": [
+        "700",
+        "600",
+        "500",
+        "400"
+      ],
+      "offScale": [],
+      "rows": [
+        140
+      ],
+      "unsharedControls": [],
+      "topbarHeight": 77,
+      "palette": {
+        "canvas": "#0b0b0f",
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      }
+    },
+    {
+      "route": "/cafe-pos",
+      "theme": "dark",
+      "width": 1440,
+      "overflow": 0,
+      "fontSizes": [
+        11,
+        13,
+        14,
+        24
+      ],
+      "weights": [
+        "700",
+        "600",
+        "500",
+        "400"
+      ],
+      "offScale": [],
+      "rows": [],
+      "unsharedControls": [],
+      "topbarHeight": 77,
+      "palette": {
+        "canvas": "#0b0b0f",
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      }
+    },
+    {
+      "route": "/cafe-pos",
+      "theme": "dark",
+      "width": 375,
+      "overflow": 0,
+      "fontSizes": [
+        11,
+        13,
+        14,
+        24
+      ],
+      "weights": [
+        "700",
+        "500",
+        "600"
+      ],
+      "offScale": [],
+      "rows": [],
+      "unsharedControls": [],
+      "topbarHeight": 81,
+      "palette": {
+        "canvas": "#0b0b0f",
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      }
+    },
+    {
+      "route": "/cafe-pos",
+      "theme": "dark",
+      "width": 414,
+      "overflow": 0,
+      "fontSizes": [
+        11,
+        13,
+        14,
+        24
+      ],
+      "weights": [
+        "700",
+        "500",
+        "600"
+      ],
+      "offScale": [],
+      "rows": [],
+      "unsharedControls": [],
+      "topbarHeight": 81,
+      "palette": {
+        "canvas": "#0b0b0f",
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      }
+    },
+    {
+      "route": "/waitlist",
+      "theme": "dark",
+      "width": 1440,
+      "overflow": 0,
+      "fontSizes": [
+        11,
+        13,
+        14,
+        16,
+        20,
+        24,
+        32
+      ],
+      "weights": [
+        "700",
+        "600",
+        "500",
+        "400"
+      ],
+      "offScale": [],
+      "rows": [],
+      "unsharedControls": [],
+      "topbarHeight": 77,
+      "palette": {
+        "canvas": "#0b0b0f",
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      }
+    },
+    {
+      "route": "/legacy-table-controls",
+      "theme": "dark",
+      "width": 1440,
+      "overflow": 0,
+      "fontSizes": [
+        11,
+        13,
+        14,
+        16,
+        20,
+        24
+      ],
+      "weights": [
+        "700",
+        "600",
+        "500",
+        "400"
+      ],
+      "offScale": [],
+      "rows": [],
+      "unsharedControls": [],
+      "topbarHeight": 77,
+      "palette": {
+        "canvas": "#0b0b0f",
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      }
+    },
+    {
+      "route": "/tournaments",
+      "theme": "dark",
+      "width": 1440,
+      "overflow": 0,
+      "fontSizes": [
+        11,
+        13,
+        14,
+        16,
+        24
+      ],
+      "weights": [
+        "700",
+        "600",
+        "500",
+        "400"
+      ],
+      "offScale": [],
+      "rows": [],
+      "unsharedControls": [],
+      "topbarHeight": 77,
+      "palette": {
+        "canvas": "#0b0b0f",
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      }
+    },
+    {
+      "route": "/daily-closing",
+      "theme": "dark",
+      "width": 1440,
+      "overflow": 0,
+      "fontSizes": [
+        11,
+        13,
+        14,
+        20,
+        24,
+        32
+      ],
+      "weights": [
+        "700",
+        "600",
+        "500",
+        "400"
+      ],
+      "offScale": [],
+      "rows": [],
+      "unsharedControls": [],
+      "topbarHeight": 77,
+      "palette": {
+        "canvas": "#0b0b0f",
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      }
+    },
+    {
+      "route": "/pricing-rules",
+      "theme": "dark",
+      "width": 1440,
+      "overflow": 0,
+      "fontSizes": [
+        11,
+        13,
+        14,
+        24
+      ],
+      "weights": [
+        "700",
+        "600",
+        "500",
+        "400"
+      ],
+      "offScale": [],
+      "rows": [],
+      "unsharedControls": [],
+      "topbarHeight": 77,
+      "palette": {
+        "canvas": "#0b0b0f",
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      }
+    },
+    {
+      "route": "/audit-log",
+      "theme": "dark",
+      "width": 1440,
+      "overflow": 0,
+      "fontSizes": [
+        11,
+        13,
+        14,
+        16,
+        20,
+        24,
+        32
+      ],
+      "weights": [
+        "700",
+        "600",
+        "500",
+        "400"
+      ],
+      "offScale": [],
+      "rows": [],
+      "unsharedControls": [],
+      "topbarHeight": 77,
+      "palette": {
+        "canvas": "#0b0b0f",
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      }
+    },
+    {
+      "route": "/settings",
+      "theme": "dark",
+      "width": 1440,
+      "overflow": 0,
+      "fontSizes": [
+        11,
+        13,
+        14,
+        24
+      ],
+      "weights": [
+        "700",
+        "600",
+        "500",
+        "400"
+      ],
+      "offScale": [],
+      "rows": [],
+      "unsharedControls": [],
+      "topbarHeight": 77,
+      "palette": {
+        "canvas": "#0b0b0f",
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      }
+    },
+    {
+      "route": "/settings",
+      "theme": "dark",
+      "width": 375,
+      "overflow": 0,
+      "fontSizes": [
+        11,
+        13,
+        14,
+        24
+      ],
+      "weights": [
+        "700",
+        "500",
+        "600",
+        "400"
+      ],
+      "offScale": [],
+      "rows": [],
+      "unsharedControls": [],
+      "topbarHeight": 81,
+      "palette": {
+        "canvas": "#0b0b0f",
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      }
+    },
+    {
+      "route": "/settings",
+      "theme": "dark",
+      "width": 414,
+      "overflow": 0,
+      "fontSizes": [
+        11,
+        13,
+        14,
+        24
+      ],
+      "weights": [
+        "700",
+        "500",
+        "600",
+        "400"
+      ],
+      "offScale": [],
+      "rows": [],
+      "unsharedControls": [],
+      "topbarHeight": 81,
+      "palette": {
+        "canvas": "#0b0b0f",
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      }
+    },
+    {
+      "route": "/",
+      "theme": "light",
+      "width": 1440,
+      "overflow": 0,
+      "fontSizes": [
+        11,
+        13,
+        14,
+        16,
+        20,
+        24
+      ],
+      "weights": [
+        "700",
+        "600",
+        "500",
+        "400"
+      ],
+      "offScale": [],
+      "rows": [],
+      "unsharedControls": [],
+      "topbarHeight": 77,
+      "palette": {
+        "canvas": "#fafafa",
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      }
+    },
+    {
+      "route": "/login",
+      "theme": "light",
+      "width": 1440,
+      "overflow": 0,
+      "fontSizes": [
+        11,
+        13,
+        14,
+        16,
+        20,
+        24
+      ],
+      "weights": [
+        "700",
+        "600",
+        "500",
+        "400"
+      ],
+      "offScale": [],
+      "rows": [],
+      "unsharedControls": [],
+      "topbarHeight": 77,
+      "palette": {
+        "canvas": "#fafafa",
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      }
+    },
+    {
+      "route": "/dashboard",
+      "theme": "light",
+      "width": 1440,
+      "overflow": 0,
+      "fontSizes": [
+        11,
+        13,
+        14,
+        16,
+        20,
+        24,
+        32
+      ],
+      "weights": [
+        "700",
+        "600",
+        "500",
+        "400"
+      ],
+      "offScale": [],
+      "rows": [],
+      "unsharedControls": [],
+      "topbarHeight": 77,
+      "palette": {
+        "canvas": "#fafafa",
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      }
+    },
+    {
+      "route": "/dashboard",
+      "theme": "light",
+      "width": 375,
+      "overflow": 0,
+      "fontSizes": [
+        11,
+        13,
+        14,
+        16,
+        20,
+        24,
+        32
+      ],
+      "weights": [
+        "700",
+        "500",
+        "600"
+      ],
+      "offScale": [],
+      "rows": [],
+      "unsharedControls": [],
+      "topbarHeight": 81,
+      "palette": {
+        "canvas": "#fafafa",
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      }
+    },
+    {
+      "route": "/dashboard",
+      "theme": "light",
+      "width": 414,
+      "overflow": 0,
+      "fontSizes": [
+        11,
+        13,
+        14,
+        16,
+        20,
+        24,
+        32
+      ],
+      "weights": [
+        "700",
+        "500",
+        "600"
+      ],
+      "offScale": [],
+      "rows": [],
+      "unsharedControls": [],
+      "topbarHeight": 81,
+      "palette": {
+        "canvas": "#fafafa",
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      }
+    },
+    {
+      "route": "/live-floor",
+      "theme": "light",
+      "width": 1440,
+      "overflow": 0,
+      "fontSizes": [
+        11,
+        13,
+        14,
+        16,
+        20,
+        24
+      ],
+      "weights": [
+        "700",
+        "600",
+        "500",
+        "400"
+      ],
+      "offScale": [],
+      "rows": [],
+      "unsharedControls": [],
+      "topbarHeight": 77,
+      "palette": {
+        "canvas": "#fafafa",
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      }
+    },
+    {
+      "route": "/live-floor",
+      "theme": "light",
+      "width": 375,
+      "overflow": 0,
+      "fontSizes": [
+        11,
+        13,
+        14,
+        16,
+        20,
+        24
+      ],
+      "weights": [
+        "700",
+        "500",
+        "600"
+      ],
+      "offScale": [],
+      "rows": [],
+      "unsharedControls": [],
+      "topbarHeight": 81,
+      "palette": {
+        "canvas": "#fafafa",
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      }
+    },
+    {
+      "route": "/live-floor",
+      "theme": "light",
+      "width": 414,
+      "overflow": 0,
+      "fontSizes": [
+        11,
+        13,
+        14,
+        16,
+        20,
+        24
+      ],
+      "weights": [
+        "700",
+        "500",
+        "600"
+      ],
+      "offScale": [],
+      "rows": [],
+      "unsharedControls": [],
+      "topbarHeight": 81,
+      "palette": {
+        "canvas": "#fafafa",
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      }
+    },
+    {
+      "route": "/inventory",
+      "theme": "light",
+      "width": 1440,
+      "overflow": 0,
+      "fontSizes": [
+        11,
+        13,
+        14,
+        16,
+        20,
+        24,
+        32
+      ],
+      "weights": [
+        "700",
+        "600",
+        "500",
+        "400"
+      ],
+      "offScale": [],
+      "rows": [],
+      "unsharedControls": [],
+      "topbarHeight": 77,
+      "palette": {
+        "canvas": "#fafafa",
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      }
+    },
+    {
+      "route": "/inventory",
+      "theme": "light",
+      "width": 375,
+      "overflow": 0,
+      "fontSizes": [
+        11,
+        13,
+        14,
+        16,
+        20,
+        24,
+        32
+      ],
+      "weights": [
+        "700",
+        "500",
+        "600",
+        "400"
+      ],
+      "offScale": [],
+      "rows": [],
+      "unsharedControls": [],
+      "topbarHeight": 81,
+      "palette": {
+        "canvas": "#fafafa",
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      }
+    },
+    {
+      "route": "/inventory",
+      "theme": "light",
+      "width": 414,
+      "overflow": 0,
+      "fontSizes": [
+        11,
+        13,
+        14,
+        16,
+        20,
+        24,
+        32
+      ],
+      "weights": [
+        "700",
+        "500",
+        "600",
+        "400"
+      ],
+      "offScale": [],
+      "rows": [],
+      "unsharedControls": [],
+      "topbarHeight": 81,
+      "palette": {
+        "canvas": "#fafafa",
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      }
+    },
+    {
+      "route": "/bookings",
+      "theme": "light",
+      "width": 1440,
+      "overflow": 0,
+      "fontSizes": [
+        11,
+        13,
+        14,
+        16,
+        20,
+        24,
+        32
+      ],
+      "weights": [
+        "700",
+        "600",
+        "500",
+        "400"
+      ],
+      "offScale": [],
+      "rows": [],
+      "unsharedControls": [],
+      "topbarHeight": 77,
+      "palette": {
+        "canvas": "#fafafa",
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      }
+    },
+    {
+      "route": "/bookings",
+      "theme": "light",
+      "width": 375,
+      "overflow": 0,
+      "fontSizes": [
+        11,
+        13,
+        14,
+        16,
+        20,
+        24,
+        32
+      ],
+      "weights": [
+        "700",
+        "500",
+        "600",
+        "400"
+      ],
+      "offScale": [],
+      "rows": [],
+      "unsharedControls": [],
+      "topbarHeight": 81,
+      "palette": {
+        "canvas": "#fafafa",
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      }
+    },
+    {
+      "route": "/bookings",
+      "theme": "light",
+      "width": 414,
+      "overflow": 0,
+      "fontSizes": [
+        11,
+        13,
+        14,
+        16,
+        20,
+        24,
+        32
+      ],
+      "weights": [
+        "700",
+        "500",
+        "600",
+        "400"
+      ],
+      "offScale": [],
+      "rows": [],
+      "unsharedControls": [],
+      "topbarHeight": 81,
+      "palette": {
+        "canvas": "#fafafa",
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      }
+    },
+    {
+      "route": "/customers",
+      "theme": "light",
+      "width": 1440,
+      "overflow": 0,
+      "fontSizes": [
+        11,
+        13,
+        14,
+        16,
+        24,
+        32
+      ],
+      "weights": [
+        "700",
+        "600",
+        "500",
+        "400"
+      ],
+      "offScale": [],
+      "rows": [],
+      "unsharedControls": [],
+      "topbarHeight": 77,
+      "palette": {
+        "canvas": "#fafafa",
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      }
+    },
+    {
+      "route": "/customers",
+      "theme": "light",
+      "width": 375,
+      "overflow": 0,
+      "fontSizes": [
+        11,
+        13,
+        16,
+        24,
+        32
+      ],
+      "weights": [
+        "700",
+        "500",
+        "600",
+        "400"
+      ],
+      "offScale": [],
+      "rows": [],
+      "unsharedControls": [],
+      "topbarHeight": 81,
+      "palette": {
+        "canvas": "#fafafa",
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      }
+    },
+    {
+      "route": "/customers",
+      "theme": "light",
+      "width": 414,
+      "overflow": 0,
+      "fontSizes": [
+        11,
+        13,
+        16,
+        24,
+        32
+      ],
+      "weights": [
+        "700",
+        "500",
+        "600",
+        "400"
+      ],
+      "offScale": [],
+      "rows": [],
+      "unsharedControls": [],
+      "topbarHeight": 81,
+      "palette": {
+        "canvas": "#fafafa",
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      }
+    },
+    {
+      "route": "/sales",
+      "theme": "light",
+      "width": 1440,
+      "overflow": 0,
+      "fontSizes": [
+        11,
+        13,
+        14,
+        16,
+        20,
+        24,
+        32
+      ],
+      "weights": [
+        "700",
+        "600",
+        "500",
+        "400"
+      ],
+      "offScale": [],
+      "rows": [],
+      "unsharedControls": [],
+      "topbarHeight": 77,
+      "palette": {
+        "canvas": "#fafafa",
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      }
+    },
+    {
+      "route": "/sales",
+      "theme": "light",
+      "width": 375,
+      "overflow": 0,
+      "fontSizes": [
+        11,
+        13,
+        14,
+        16,
+        20,
+        24,
+        32
+      ],
+      "weights": [
+        "700",
+        "500",
+        "600"
+      ],
+      "offScale": [],
+      "rows": [],
+      "unsharedControls": [],
+      "topbarHeight": 81,
+      "palette": {
+        "canvas": "#fafafa",
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      }
+    },
+    {
+      "route": "/sales",
+      "theme": "light",
+      "width": 414,
+      "overflow": 0,
+      "fontSizes": [
+        11,
+        13,
+        14,
+        16,
+        20,
+        24,
+        32
+      ],
+      "weights": [
+        "700",
+        "500",
+        "600"
+      ],
+      "offScale": [],
+      "rows": [],
+      "unsharedControls": [],
+      "topbarHeight": 81,
+      "palette": {
+        "canvas": "#fafafa",
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      }
+    },
+    {
+      "route": "/analytics",
+      "theme": "light",
+      "width": 1440,
+      "overflow": 0,
+      "fontSizes": [
+        11,
+        13,
+        14,
+        24,
+        32
+      ],
+      "weights": [
+        "700",
+        "600",
+        "500",
+        "400"
+      ],
+      "offScale": [],
+      "rows": [
+        140
+      ],
+      "unsharedControls": [],
+      "topbarHeight": 77,
+      "palette": {
+        "canvas": "#fafafa",
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      }
+    },
+    {
+      "route": "/cafe-pos",
+      "theme": "light",
+      "width": 1440,
+      "overflow": 0,
+      "fontSizes": [
+        11,
+        13,
+        14,
+        24
+      ],
+      "weights": [
+        "700",
+        "600",
+        "500",
+        "400"
+      ],
+      "offScale": [],
+      "rows": [],
+      "unsharedControls": [],
+      "topbarHeight": 77,
+      "palette": {
+        "canvas": "#fafafa",
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      }
+    },
+    {
+      "route": "/cafe-pos",
+      "theme": "light",
+      "width": 375,
+      "overflow": 0,
+      "fontSizes": [
+        11,
+        13,
+        14,
+        24
+      ],
+      "weights": [
+        "700",
+        "500",
+        "600"
+      ],
+      "offScale": [],
+      "rows": [],
+      "unsharedControls": [],
+      "topbarHeight": 81,
+      "palette": {
+        "canvas": "#fafafa",
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      }
+    },
+    {
+      "route": "/cafe-pos",
+      "theme": "light",
+      "width": 414,
+      "overflow": 0,
+      "fontSizes": [
+        11,
+        13,
+        14,
+        24
+      ],
+      "weights": [
+        "700",
+        "500",
+        "600"
+      ],
+      "offScale": [],
+      "rows": [],
+      "unsharedControls": [],
+      "topbarHeight": 81,
+      "palette": {
+        "canvas": "#fafafa",
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      }
+    },
+    {
+      "route": "/waitlist",
+      "theme": "light",
+      "width": 1440,
+      "overflow": 0,
+      "fontSizes": [
+        11,
+        13,
+        14,
+        16,
+        20,
+        24,
+        32
+      ],
+      "weights": [
+        "700",
+        "600",
+        "500",
+        "400"
+      ],
+      "offScale": [],
+      "rows": [],
+      "unsharedControls": [],
+      "topbarHeight": 77,
+      "palette": {
+        "canvas": "#fafafa",
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      }
+    },
+    {
+      "route": "/legacy-table-controls",
+      "theme": "light",
+      "width": 1440,
+      "overflow": 0,
+      "fontSizes": [
+        11,
+        13,
+        14,
+        16,
+        20,
+        24
+      ],
+      "weights": [
+        "700",
+        "600",
+        "500",
+        "400"
+      ],
+      "offScale": [],
+      "rows": [],
+      "unsharedControls": [],
+      "topbarHeight": 77,
+      "palette": {
+        "canvas": "#fafafa",
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      }
+    },
+    {
+      "route": "/tournaments",
+      "theme": "light",
+      "width": 1440,
+      "overflow": 0,
+      "fontSizes": [
+        11,
+        13,
+        14,
+        16,
+        24
+      ],
+      "weights": [
+        "700",
+        "600",
+        "500",
+        "400"
+      ],
+      "offScale": [],
+      "rows": [],
+      "unsharedControls": [],
+      "topbarHeight": 77,
+      "palette": {
+        "canvas": "#fafafa",
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      }
+    },
+    {
+      "route": "/daily-closing",
+      "theme": "light",
+      "width": 1440,
+      "overflow": 0,
+      "fontSizes": [
+        11,
+        13,
+        14,
+        20,
+        24,
+        32
+      ],
+      "weights": [
+        "700",
+        "600",
+        "500",
+        "400"
+      ],
+      "offScale": [],
+      "rows": [],
+      "unsharedControls": [],
+      "topbarHeight": 77,
+      "palette": {
+        "canvas": "#fafafa",
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      }
+    },
+    {
+      "route": "/pricing-rules",
+      "theme": "light",
+      "width": 1440,
+      "overflow": 0,
+      "fontSizes": [
+        11,
+        13,
+        14,
+        24
+      ],
+      "weights": [
+        "700",
+        "600",
+        "500",
+        "400"
+      ],
+      "offScale": [],
+      "rows": [],
+      "unsharedControls": [],
+      "topbarHeight": 77,
+      "palette": {
+        "canvas": "#fafafa",
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      }
+    },
+    {
+      "route": "/audit-log",
+      "theme": "light",
+      "width": 1440,
+      "overflow": 0,
+      "fontSizes": [
+        11,
+        13,
+        14,
+        16,
+        20,
+        24,
+        32
+      ],
+      "weights": [
+        "700",
+        "600",
+        "500",
+        "400"
+      ],
+      "offScale": [],
+      "rows": [],
+      "unsharedControls": [],
+      "topbarHeight": 77,
+      "palette": {
+        "canvas": "#fafafa",
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      }
+    },
+    {
+      "route": "/settings",
+      "theme": "light",
+      "width": 1440,
+      "overflow": 0,
+      "fontSizes": [
+        11,
+        13,
+        14,
+        24
+      ],
+      "weights": [
+        "700",
+        "600",
+        "500",
+        "400"
+      ],
+      "offScale": [],
+      "rows": [],
+      "unsharedControls": [],
+      "topbarHeight": 77,
+      "palette": {
+        "canvas": "#fafafa",
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      }
+    },
+    {
+      "route": "/settings",
+      "theme": "light",
+      "width": 375,
+      "overflow": 0,
+      "fontSizes": [
+        11,
+        13,
+        14,
+        24
+      ],
+      "weights": [
+        "700",
+        "500",
+        "600",
+        "400"
+      ],
+      "offScale": [],
+      "rows": [],
+      "unsharedControls": [],
+      "topbarHeight": 81,
+      "palette": {
+        "canvas": "#fafafa",
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      }
+    },
+    {
+      "route": "/settings",
+      "theme": "light",
+      "width": 414,
+      "overflow": 0,
+      "fontSizes": [
+        11,
+        13,
+        14,
+        24
+      ],
+      "weights": [
+        "700",
+        "500",
+        "600",
+        "400"
+      ],
+      "offScale": [],
+      "rows": [],
+      "unsharedControls": [],
+      "topbarHeight": 81,
+      "palette": {
+        "canvas": "#fafafa",
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      }
+    }
+  ],
+  "errors": [],
+  "keyboard": [
+    {
+      "theme": "dark",
+      "metaK": true,
+      "ctrlK": true,
+      "arrowsEnter": true,
+      "escape": true
+    },
+    {
+      "theme": "light",
+      "metaK": true,
+      "ctrlK": true,
+      "arrowsEnter": true,
+      "escape": true
+    }
+  ],
+  "interactions": []
+}

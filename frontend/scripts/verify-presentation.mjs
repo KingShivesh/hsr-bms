@@ -7,7 +7,7 @@ const app = process.env.POLISH_APP_URL || "http://127.0.0.1:5177";
 const api = process.env.POLISH_API_URL || "http://127.0.0.1:8003";
 for (const url of [app, api]) assert.ok(["localhost", "127.0.0.1"].includes(new URL(url).hostname), "Local QA only");
 const stage = process.env.POLISH_STAGE || "before";
-const directory = path.resolve(`../docs/presentation-polish/${stage}`);
+const directory = path.resolve(process.env.POLISH_OUTPUT_DIR || `../docs/presentation-polish/${stage}`);
 await fs.mkdir(directory, { recursive: true });
 const authResponse = await fetch(api + "/auth/login", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ username: "admin", password: "admin123" }) });
 assert.equal(authResponse.status, 200);

@@ -1,5 +1,5 @@
 import { formatCurrency as polishCurrency } from "../../utils/format.js";
-import { Icon as HsrIcon, Input as HsrInput, Button as HsrButton } from "../../components/ui/index.js";
+import { Icon as HsrIcon, Input as HsrInput, Button as HsrButton, EmptyState } from "../../components/ui/index.js";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   addMember,
@@ -344,15 +344,16 @@ export default function CustomersPage() {
             })}
           </div>
         ) : (
-          <div className="op2-empty">
-            <HsrIcon className="ti ti-users" aria-hidden="true" />
-            <strong>No customers found</strong>
-            <span>Add a customer or change the search query.</span>
-            <HsrButton native type="button" className="lf-primary-button empty-action-button" onClick={() => newCustomerInputRef.current?.focus()}>
-              <HsrIcon className="ti ti-user-plus" aria-hidden="true" />
-              Add Customer
-            </HsrButton>
-          </div>
+          <EmptyState
+            icon={query.trim() ? "ti-search" : "ti-users"}
+            title={query.trim() ? "No customers match your search" : "Keep your regulars in one place"}
+            description={query.trim() ? "Try another name or phone number, or clear your search." : "Add your first customer to keep their visits and spend together."}
+            action={query.trim() ? (
+              <Button icon="ti-x" onClick={() => setQuery("")}>Clear search</Button>
+            ) : (
+              <Button icon="ti-user-plus" onClick={() => newCustomerInputRef.current?.focus()}>Add Customer</Button>
+            )}
+          />
         )}
       </section>
 

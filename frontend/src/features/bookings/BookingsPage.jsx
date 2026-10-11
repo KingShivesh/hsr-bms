@@ -1,4 +1,4 @@
-import { Icon as HsrIcon, Button as HsrButton, Input as HsrInput, Select as HsrSelect, Textarea as HsrTextarea } from "../../components/ui/index.js";
+import { Icon as HsrIcon, Button as HsrButton, Input as HsrInput, Select as HsrSelect, Textarea as HsrTextarea, EmptyState, Button } from "../../components/ui/index.js";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   cancelBooking,
@@ -463,7 +463,7 @@ export default function BookingsPage({ onNavigate }) {
           <div className="op2-controls">
             <HsrInput value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search booking..." />
             {["booked", "missed", "all"].map((status) => (
-              <HsrButton native type="button" key={status} className={filter === status ? "active" : ""} onClick={() => setFilter(status)}>
+              <HsrButton native type="button" key={status} aria-pressed={filter === status} className={filter === status ? "active" : ""} onClick={() => setFilter(status)}>
                 {status}
               </HsrButton>
             ))}
@@ -506,15 +506,18 @@ export default function BookingsPage({ onNavigate }) {
             })}
           </div>
         ) : (
-          <div className="op2-empty">
-            <HsrIcon className="ti ti-calendar-check" aria-hidden="true" />
-            <strong>No bookings found</strong>
-            <span>Create a reservation or adjust the filter.</span>
-            <HsrButton native type="button" className="lf-primary-button empty-action-button" onClick={() => setShowModal(true)}>
-              <HsrIcon className="ti ti-calendar-plus" aria-hidden="true" />
-              New Booking
-            </HsrButton>
-          </div>
+          <EmptyState
+            icon={query.trim() ? "ti-search" : "ti-calendar-check"}
+            title={query.trim() ? "No bookings match your search" : filter === "missed" ? "No missed bookings" : bookings.length ? "No bookings in this view" : "Make room for your next booking"}
+            description={query.trim() ? "Try another name or phone number, or clear your search." : filter === "missed" ? "Bookings marked as missed will appear here for review." : bookings.length ? "Your register has bookings under another status." : "Reserve a table to keep upcoming guests and arrival times together."}
+            action={query.trim() ? (
+              <Button icon="ti-x" onClick={() => setQuery("")}>Clear search</Button>
+            ) : filter === "missed" || bookings.length ? (
+              <Button icon="ti-layout-list" onClick={() => setFilter("all")}>Show all bookings</Button>
+            ) : (
+              <Button icon="ti-calendar-plus" onClick={() => setShowModal(true)}>New Booking</Button>
+            )}
+          />
         )}
       </section>
 

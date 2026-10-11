@@ -1,5 +1,5 @@
 import { formatCurrency as polishCurrency } from "../../utils/format.js";
-import { Icon as HsrIcon, Button as HsrButton, Select as HsrSelect, Input as HsrInput, Textarea as HsrTextarea } from "../ui/index.js";
+import { Icon as HsrIcon, Button as HsrButton, Select as HsrSelect, Input as HsrInput, Textarea as HsrTextarea, EmptyState, Button } from "../ui/index.js";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   addMenuItem,
@@ -280,23 +280,14 @@ function Stat({ label, value }) {
   return <MetricCard label={label} value={value} className="cf-stat" />;
 }
 
-function EmptyState({ icon = "ti-info-circle", title, detail }) {
-  return (
-    <div className="cf-empty">
-      <HsrIcon className={`ti ${icon}`} aria-hidden="true" />
-      <strong>{title}</strong>
-      <span>{detail}</span>
-    </div>
-  );
-}
-
-function RowList({ rows, emptyTitle = "Nothing pending", emptyDetail = "New activity will appear here automatically." }) {
+function RowList({ rows, emptyTitle = "Nothing pending", emptyDetail = "New activity will appear here automatically.", emptyIcon = "ti-circle-check", emptyAction }) {
   if (!rows.length) {
     return (
       <EmptyState
-        icon="ti-circle-check"
+        icon={emptyIcon}
         title={emptyTitle}
-        detail={emptyDetail}
+        description={emptyDetail}
+        action={emptyAction}
       />
     );
   }
@@ -371,8 +362,10 @@ function WaitlistView({ waitlist, bookings, activeSessions, maintenance, actions
       <div className="cf-two-col">
         <Section eyebrow="Queue" title="Walk-ins Waiting">
           <RowList
-            emptyTitle="No guests waiting"
-            emptyDetail="Walk-in customers added from the queue desk will show here."
+            emptyIcon="ti-clock"
+            emptyTitle="Ready for the next walk-in"
+            emptyDetail="Add a waiting guest to keep their place in the queue."
+            emptyAction={<Button icon="ti-user-plus" disabled={busy} onClick={() => setShowAdd(true)}>Add Walk-in Guest</Button>}
             rows={waitlist.map((entry) => ({
               id: `wait-${entry.id}`,
               icon: "ti-clock",
@@ -1029,7 +1022,7 @@ function InventoryView({ menu, maintenance, actions, busy, activeAction, showToa
               <EmptyState
                 icon="ti-package"
                 title="No menu items"
-                detail="Add snacks, drinks or cigarettes to start building the menu."
+                description="Add snacks, drinks or cigarettes to start building the menu."
               />
             )}
           </div>

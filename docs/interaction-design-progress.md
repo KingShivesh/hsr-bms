@@ -104,3 +104,18 @@ Lane A verification debt is closed. The checklist below is retained as the brows
 - Partial failure: with multiple selected rows, force one item operation to fail and confirm the UI reports the exact success/failure count. Failed names must remain selected/visible in the result area so the operator knows which items need attention.
 - Bulk delete: select five temporary QA items and trigger `Delete Items`; confirm five individual undo toasts stack cleanly without overlap, then verify the items are deleted from the database.
 - Regression: after bulk actions, confirm single-row `Edit Item`, stock toggle, and `Delete Item` actions still fire normally.
+
+## Presentation follow-up - 2026-10-12
+
+- Font comparison decision is closed: retain self-hosted Syne + DM Mono.
+  The browser-only Inter preview is not a request to switch fonts.
+- Customers/Bookings/Waitlist empty-state cluster is browser-verified:
+  contextual search/status recovery, existing-form actions, shared neutral
+  presentation, both themes and 375/414px mobile. No new backend or SSE work.
+- Evidence: `docs/empty-state-polish/README.md` and screenshot gallery.
+  36 action checks at 1.5-112.4ms; 66 route samples; contrast 0 violations/0 errors.
+- The recent shared presentation makes one Escape close the active modal;
+  older B3 blur-first instructions above describe historical behavior, not the
+  current contract. Meta-K/Ctrl-K/arrows/Enter/Escape passed in both themes.
+- Cafe POS/Analytics page-local empty states are still open for a separate
+  consolidation pass. This entry does not declare the whole brief complete.
