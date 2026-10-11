@@ -438,7 +438,7 @@ function LiveFloor({ tables, elapsed, onNavigate }) {
               <div className="ops-table-meta">
                 {active ? (
                   <>
-                    <span>{session.customer_name || "Player"}</span>
+                    <span>{session.customer_name || "Guest"}</span>
                     <span>{session.billing_mode || "single"} · Food {money(session.food_total || 0)}</span>
                   </>
                 ) : (
@@ -731,7 +731,7 @@ function RecentActivity({ auditLogs, runningTables, foodOrders }) {
     id: `live-${table.id}`,
     icon: "ti-player-play",
     title: `T${table.num} running`,
-    detail: `${session.customer_name || "Player"} · ${fmtTime(elapsedSecs)} · ${money(estimateTableCharge(session, elapsedSecs))}`,
+    detail: `${session.customer_name || "Guest"} · ${fmtTime(elapsedSecs)} · ${money(estimateTableCharge(session, elapsedSecs))}`,
     tone: "positive",
   }));
   const orderRows = foodOrders.slice(0, 2).map((order) => ({
@@ -784,7 +784,7 @@ function TodayTimeline({ runningTables, foodOrders, bookings, auditLogs, onNavig
       id: `live-${table.id}`,
       time: "Live now",
       title: `T${table.num} running`,
-      detail: `${session.customer_name || "Player"} · ${fmtTime(elapsedSecs)} · ${money(estimateTableCharge(session, elapsedSecs) + (session.food_total || 0))}`,
+      detail: `${session.customer_name || "Guest"} · ${fmtTime(elapsedSecs)} · ${money(estimateTableCharge(session, elapsedSecs) + (session.food_total || 0))}`,
       icon: "ti-player-play",
       tone: "active",
       page: "tables",

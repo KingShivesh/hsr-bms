@@ -3,6 +3,7 @@ import { TableAttentionBadge } from "../../components/TableStateUI.jsx";
 import { tableStateAttributes, getTableAttention, getTableStatusByKey } from "../../config/tableStatus.js";
 import TableStatusBadge from "./TableStatusBadge.jsx";
 import { tariffDescription } from "../sessions/tariffs.js";
+import SessionIdentity from "../sessions/SessionIdentity.jsx";
 
 function formatTimer(seconds = 0) {
   const total = Math.max(0, Math.floor(Number(seconds) || 0));
@@ -50,7 +51,7 @@ export default function TableCard({
   const elapsed = session && !session.paused ? (session.elapsed_seconds || 0) + tick : table.elapsed_seconds || 0;
   const isAvailable = statusKey === "available";
   const isMaintenance = statusKey === "maintenance";
-  const customer = session?.customer_name || table.booking?.customer_name || "";
+  const customer = session ? session.customer_name || "Guest" : table.booking?.customer_name || "";
   const runningTotal = Number(session?.running_total || table.running_total || 0);
   const foodTotal = Number(session?.food_total || 0);
   const shownRate = Number(table.rate || 0);
@@ -155,7 +156,7 @@ export default function TableCard({
         <div>
           <span>{session ? "Customer" : statusKey === "reserved" ? "Booking time" : "Availability"}</span>
           <b title={statusKey === "reserved" ? bookingTime(table.booking) : customer || "Walk-in ready"}>
-            {statusKey === "reserved" ? bookingTime(table.booking) : isMaintenance ? "Unavailable" : customer || "Walk-in ready"}
+            {session ? <SessionIdentity session={session} /> : statusKey === "reserved" ? bookingTime(table.booking) : isMaintenance ? "Unavailable" : customer || "Walk-in ready"}
           </b>
         </div>
         <div>

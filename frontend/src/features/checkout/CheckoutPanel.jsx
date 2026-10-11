@@ -199,7 +199,7 @@ export default function CheckoutPanel({ table, open, onClose, onComplete }) {
           <div>
             <span className="lf-eyebrow">Receipt</span>
             <h3>{receipt.tbl || String(tableId).toUpperCase()} · {money(receipt.tot)}</h3>
-            <p>{receipt.payment_method || paymentMethod} · {tariffDescription(receipt)} · {receipt.nm || "Customer"}</p>
+            <p>{receipt.payment_method || paymentMethod} · {tariffDescription(receipt)} · {receipt.nm || `${receipt.tbl || tableId.toUpperCase()} · Guest`}</p>
           </div>
           <div className="checkout-summary-grid">
             <div><span>Table</span><strong>{money(receipt.ply)}</strong></div>
@@ -230,7 +230,7 @@ export default function CheckoutPanel({ table, open, onClose, onComplete }) {
                 <div>
                   <Badge tone="running" dot>{String(quote.billing_mode || "single").toUpperCase()}</Badge>
                   <h3>{money(finalTotal)}</h3>
-                  <p>{quote.nm || "Customer"} · {quote.tariff_mode && quote.tariff_mode !== "hourly" ? tariffDescription(quote) : `${quote.dur || 0} billable min`}</p>
+                  <p>{quote.nm || `${quote.tbl || tableId.toUpperCase()} · Guest`} · {quote.tariff_mode && quote.tariff_mode !== "hourly" ? tariffDescription(quote) : `${quote.dur || 0} billable min`}</p>
                 </div>
                 <div className="checkout-freeze-pill">
                   <i className="ti ti-snowflake" aria-hidden="true" />

@@ -216,7 +216,7 @@ export default function CommandBar({ page, setPage, onNewSession, role = "admin"
     const sessionCommands = searchData.sessions.map((session) => ({
       id: `session-${session.table_id}`,
       label: `${String(session.table_id || "").toUpperCase()} running table`,
-      hint: `${session.customer_name || "Player"} · ${getTableLabel(HSR_TABLES.find((table) => table.id === String(session.table_id || "").toLowerCase())) || "Table"} · open workspace`,
+      hint: `${session.customer_name || "Guest"} · ${getTableLabel(HSR_TABLES.find((table) => table.id === String(session.table_id || "").toLowerCase())) || "Table"} · open workspace`,
       icon: "ti-player-play",
       action: () => setPage("live-floor"),
     }));

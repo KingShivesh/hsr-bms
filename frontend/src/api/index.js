@@ -151,7 +151,13 @@ export const startSession = (
     players,
     tariff_mode: tariff.tariff_mode || "hourly",
     package_id: tariff.package_id || "",
+    player_type: tariff.player_type || "guest",
+    member_id: tariff.member_id || null,
+    booking_id: tariff.booking_id || null,
+    player_count: tariff.player_count ?? 2,
   });
+
+export const getSessionBookings = (table_id) => api.get(`/bookings/start-options/${tableKey(table_id)}`);
 
 export const pauseSession = (table_id) =>
   api.post(`/sessions/pause/${tableKey(table_id)}`);

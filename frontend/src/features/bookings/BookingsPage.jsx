@@ -369,6 +369,7 @@ export default function BookingsPage({ onNavigate }) {
         "",
         "single",
         [booking.customer_name],
+        { player_type: "booking", booking_id: booking.id },
       );
       showToast(`${booking.customer_name} checked in to T${target.table.num}`, "success");
       await loadBookings();
@@ -422,7 +423,7 @@ export default function BookingsPage({ onNavigate }) {
               </div>
               {state?.session ? (
                 <p>
-                  <b>{state.session.customer_name || "Player"}</b>
+                  <b>{state.session.customer_name || "Guest"}</b>
                   <small>₹{Number(state.session.running_total || state.running_total || 0).toLocaleString("en-IN")} running</small>
                 </p>
               ) : rows.length ? (

@@ -30,7 +30,7 @@ import { useEscapeKey } from "../ui/index.js";
 import { TableAttentionBadge, TablePrimaryAction, TableStateBadge } from "../TableStateUI.jsx";
 import { HSR_TABLES, getTableLabel, getTableRate } from "../../config/hsrTables.js";
 import { tableStateAttributes, getTableAttention, getTableStatus } from "../../config/tableStatus.js";
-import TariffSelector from "../../features/sessions/TariffSelector.jsx";
+import StartSessionModal from "../../features/sessions/StartSessionModal.jsx";
 import FrameControls from "../../features/sessions/FrameControls.jsx";
 import { tariffDescription } from "../../features/sessions/tariffs.js";
 
@@ -67,11 +67,6 @@ function isFullName(name) {
   return name.trim().length > 0;
 }
 
-const BILLING_MODES = [
-  { id: "single", label: "Single", hint: "One payer" },
-  { id: "sharing", label: "Sharing", hint: "Split payment" },
-  { id: "lp", label: "LP", hint: "Loser pays" },
-];
 const PAYMENT_METHODS = ["Cash", "UPI", "Card", "Split"];
 const DISCOUNT_OPTIONS = [
   { id: "none", label: "No discount" },
@@ -86,9 +81,6 @@ function sanitizeRupeeDiscount(value) {
   return String(Math.min(parseInt(digits, 10), 50));
 }
 
-function defaultBillingModeForTable(table) {
-  return table?.type === "POOL" ? "single" : "lp";
-}
 
 function splitPlayerNames(value) {
   return (value || "")
@@ -97,10 +89,6 @@ function splitPlayerNames(value) {
     .filter(Boolean);
 }
 
-function defaultPlayersForMode(billingMode) {
-  if (billingMode === "single") return ["Walk In Customer"];
-  return ["Player One", "Player Two"];
-}
 
 const GENERIC_PLAYER_NAMES = new Set([
   "player one",
@@ -116,31 +104,6 @@ function visiblePlayerNames(players = []) {
   return players.filter((name) => name && !isGenericPlayerName(name));
 }
 
-function buildPlayers(primaryName, extraNames, billingMode) {
-  const defaults = defaultPlayersForMode(billingMode);
-  const primary = (primaryName || "").trim() || defaults[0];
-  const extras = splitPlayerNames(extraNames);
-  const players = billingMode === "single"
-    ? [primary]
-    : [primary, ...(extras.length ? extras : defaults.slice(1))];
-  const seen = new Set();
-  return players.filter((name) => {
-    const key = name.toLowerCase();
-    if (!name || seen.has(key)) return false;
-    seen.add(key);
-    return true;
-  });
-}
-
-function validateBillingPlayers(players, billingMode) {
-  if (!players[0]) return "Please enter the customer name.";
-  const invalid = players.find((name) => !isFullName(name));
-  if (invalid) return `Please enter a name for "${invalid}".`;
-  if (billingMode !== "single" && players.length < 2) {
-    return "Please enter at least two players for Sharing or LP.";
-  }
-  return "";
-}
 
 function billingModeLabel(mode) {
   if (mode === "sharing") return "Sharing";
@@ -592,195 +555,6 @@ function BookingPanel({ bookings, onCreate, onCancel, busyActions = {}, showToas
   );
 }
 
-function QuickSessionModal({
-  open,
-  onClose,
-  tables,
-  sessions,
-  maintenance,
-  rates,
-  onStart,
-  initialTableId = "",
-  busyActions = {},
-  showToast,
-}) {
-  const [tableId, setTableId] = useState("");
-  const [player1, setPlayer1] = useState("");
-  const [otherPlayers, setOtherPlayers] = useState("");
-  const [billingMode, setBillingMode] = useState("single");
-  const [tariff, setTariff] = useState({ tariff_mode: "hourly", package_id: "" });
-  useEscapeKey(onClose, open);
-  const initializedOpen = useRef(false);
-  const availableTables = tables.filter(
-    (table) => !sessions[table.id] && !maintenance[table.id],
-  );
-  const selectedTable =
-    tables.find((table) => table.id === tableId) || availableTables[0] || null;
-  const selectedRate = getTableRate(selectedTable, rates);
-  const startBusy = selectedTable ? !!busyActions[`start:${selectedTable.id}`] : false;
-
-  useEffect(() => {
-    if (!open) {
-      initializedOpen.current = false;
-      return;
-    }
-    if (initializedOpen.current) return;
-    const firstAvailable = availableTables.find((table) => table.id === initialTableId) || availableTables[0];
-    setTableId(firstAvailable?.id || "");
-    setPlayer1("");
-    setOtherPlayers("");
-    setBillingMode(defaultBillingModeForTable(firstAvailable));
-    setTariff({ tariff_mode: "hourly", package_id: "" });
-    initializedOpen.current = true;
-  }, [open, availableTables, initialTableId]);
-
-  if (!open) return null;
-
-  async function submit(e) {
-    e.preventDefault();
-    if (!selectedTable) {
-      showToast?.("No available table to start.", "error");
-      return;
-    }
-    const ok = await onStart({
-      table: selectedTable,
-      player1,
-      otherPlayers,
-      billingMode,
-      tariff,
-    });
-    if (ok) onClose();
-  }
-
-  return (
-    <div
-      className="quick-session-backdrop"
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="quick-session-title"
-      onMouseDown={onClose}
-    >
-      <form
-        className="quick-session-modal"
-        onSubmit={submit}
-        onMouseDown={(e) => e.stopPropagation()}
-      >
-        <div className="quick-session-head">
-          <div>
-            <div className="quick-session-eyebrow">New session</div>
-            <div id="quick-session-title" className="quick-session-title">
-              Start a table now
-            </div>
-          </div>
-          <button
-            type="button"
-            className="quick-session-close"
-            onClick={onClose}
-            aria-label="Close new session"
-          >
-            <i className="ti ti-x" aria-hidden="true" />
-          </button>
-        </div>
-
-        <div className="quick-session-table-grid">
-          {tables.map((table) => {
-            const occupied = !!sessions[table.id];
-            const blocked = !!maintenance[table.id];
-            const disabled = occupied || blocked;
-            return (
-              <button
-                key={table.id}
-                type="button"
-                className={`quick-table-choice ${table.id === selectedTable?.id ? "active" : ""}`}
-                disabled={disabled}
-                onClick={() => {
-                  setTableId(table.id);
-                  setOtherPlayers("");
-                  setBillingMode(defaultBillingModeForTable(table));
-                  setTariff({ tariff_mode: "hourly", package_id: "" });
-                }}
-              >
-                <strong>T{table.num}</strong>
-                <span>{blocked ? "Maintenance" : occupied ? "Busy" : getTableLabel(table)}</span>
-              </button>
-            );
-          })}
-        </div>
-
-        {selectedTable ? (
-          <div className="quick-session-rate">
-            T{selectedTable.num} · {getTableLabel(selectedTable)} · ₹{selectedRate}/hr
-          </div>
-        ) : (
-          <div className="quick-session-rate warning">
-            All tables are busy or under maintenance.
-          </div>
-        )}
-
-        <div className="quick-session-fields">
-          <TariffSelector tableId={selectedTable?.id} value={tariff} onChange={setTariff} />
-          <div>
-            <label className="form-label">
-              {billingMode === "single" ? "Customer name (optional)" : "Customer names (optional)"}
-            </label>
-            <CustomerInput
-              value={player1}
-              onChange={setPlayer1}
-              placeholder=""
-            />
-          </div>
-          <div className="billing-mode-control quick" aria-label="Billing mode">
-            {BILLING_MODES.map((mode) => (
-              <button
-                key={mode.id}
-                type="button"
-                className={billingMode === mode.id ? "active" : ""}
-                onClick={() => setBillingMode(mode.id)}
-              >
-                <strong>{mode.label}</strong>
-                <span>{mode.hint}</span>
-              </button>
-            ))}
-          </div>
-          {billingMode !== "single" && (
-            <div>
-              <label className="form-label">
-                {billingMode === "lp" ? "Second name (optional)" : "Other names (optional)"}
-              </label>
-              {billingMode === "lp" ? (
-                <CustomerInput
-                  value={otherPlayers}
-                  onChange={setOtherPlayers}
-                  placeholder=""
-                />
-              ) : (
-                <input
-                  className="table-mini-input"
-                  value={otherPlayers}
-                  onChange={(e) => setOtherPlayers(e.target.value)}
-                  aria-label="Other names"
-                />
-              )}
-            </div>
-          )}
-        </div>
-
-        <div className="quick-session-actions">
-          <button type="button" className="quick-session-secondary" onClick={onClose}>
-            Discard Session
-          </button>
-          <button
-            type="submit"
-            className="primary-action-btn"
-            disabled={!selectedTable || startBusy}
-          >
-            {startBusy ? "Starting..." : "Start Table"}
-          </button>
-        </div>
-      </form>
-    </div>
-  );
-}
 
 function HistoryModal({ tableId, tableNum, onClose }) {
   const [history, setHistory] = useState([]);
@@ -1676,8 +1450,6 @@ function TableCard({
   table,
   session,
   booking,
-  name,
-  onNameChange,
   onStart,
   onPause,
   onReset,
@@ -1698,9 +1470,6 @@ function TableCard({
   busyActions = {},
   compact = false,
 }) {
-  const [billingMode, setBillingMode] = useState(() => defaultBillingModeForTable(table));
-  const [tariff, setTariff] = useState({ tariff_mode: "hourly", package_id: "" });
-  const [otherPlayers, setOtherPlayers] = useState("");
   const [reserveOpen, setReserveOpen] = useState(false);
   const [notesOpen, setNotesOpen] = useState(false);
   const [transferOpen, setTransferOpen] = useState(false);
@@ -1722,14 +1491,6 @@ function TableCard({
   const paused = session?.paused || false;
   const rate = getTableRate(table, rates);
   const status = getTableStatus({ session, booking, maintenance });
-
-  useEffect(() => {
-    if (!occupied) {
-      setBillingMode(defaultBillingModeForTable(table));
-      setTariff({ tariff_mode: "hourly", package_id: "" });
-      setOtherPlayers("");
-    }
-  }, [occupied, table]);
 
   const mins = session ? Math.max(1, Math.round(session.elapsed / 60)) : 0;
   const basePlay = session ? Math.round((mins / 60) * session.rate) : 0;
@@ -1846,7 +1607,7 @@ function TableCard({
           {occupied ? (
             <>
               <span className="table-state-timer" data-timer={status.timerStyle}>{fmt(session.elapsed)}</span>
-              <span>{activePlayers.join(", ") || session.customer_name || "Walk-in"} · ₹{total} running</span>
+              <span>{activePlayers.join(", ") || session.customer_name || "Guest"} · ₹{total} running</span>
             </>
           ) : (
             <>
@@ -1909,58 +1670,6 @@ function TableCard({
               </div>
             )}
 
-          {!occupied && (
-            <div className="table-start-panel">
-              <TariffSelector tableId={table.id} value={tariff} onChange={setTariff} />
-              <div className="billing-mode-control" aria-label="Billing mode">
-                {BILLING_MODES.map((mode) => (
-                  <button
-                    key={mode.id}
-                    type="button"
-                    className={billingMode === mode.id ? "active" : ""}
-                    onClick={() => setBillingMode(mode.id)}
-                  >
-                    <strong>{mode.label}</strong>
-                    <span>{mode.hint}</span>
-                  </button>
-                ))}
-              </div>
-
-              <div className="table-start-fields">
-                <div className="table-field-stack">
-                  <span>
-                    {billingMode === "single" ? "Customer name optional" : "Player 1 optional"}
-                  </span>
-                  <CustomerInput
-                    value={name}
-                    onChange={onNameChange}
-                    placeholder=""
-                  />
-                </div>
-                {billingMode !== "single" && (
-                  <div className="table-field-stack">
-                    <span>
-                      {billingMode === "lp" ? "Player 2 optional" : "Other players optional"}
-                    </span>
-                    {billingMode === "lp" ? (
-                      <CustomerInput
-                        value={otherPlayers}
-                        onChange={setOtherPlayers}
-                        placeholder=""
-                      />
-                    ) : (
-                      <input
-                        className="table-mini-input"
-                        value={otherPlayers}
-                        onChange={(e) => setOtherPlayers(e.target.value)}
-                        aria-label="Other names"
-                      />
-                    )}
-                  </div>
-                )}
-              </div>
-            </div>
-          )}
           {occupied && (
             <div className="active-billing-summary">
               <span>{billingModeLabel(activeBillingMode)} · {tariffDescription(session)}</span>
@@ -2150,7 +1859,7 @@ function TableCard({
             onClick={() => {
               if (occupied) onStop(table.id);
               else if (booking) onReviewBooking?.();
-              else onStart(table, billingMode, otherPlayers, tariff);
+              else onStart(table);
             }}
           />
         </div>
@@ -2454,127 +2163,6 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0, onOpenF
     });
   }
 
-  async function handleStart(table, billingMode, otherPlayers, tariff = {}) {
-    const name = (names[table.id] || "").trim();
-    const players = buildPlayers(name, otherPlayers, billingMode);
-    const primaryName = players[0];
-    const validation = validateBillingPlayers(players, billingMode);
-    if (validation) {
-      showToast(validation, "error");
-      return false;
-    }
-    if (sessions[table.id]) {
-      showToast("Session already running", "error");
-      return false;
-    }
-    const rate = getTableRate(table, rates);
-    return runBusyAction(`start:${table.id}`, async () => {
-      try {
-        await startSession(
-          table.id,
-          primaryName,
-          rate,
-          billingMode !== "single",
-          players.slice(1).join(", "),
-          billingMode,
-          players,
-          tariff,
-        );
-        setSessions((prev) => ({
-          ...prev,
-          [table.id]: {
-            startTime: Date.now(),
-            elapsed: 0,
-            rate,
-            paused: false,
-            foodTotal: 0,
-            foodItems: [],
-            reservation: null,
-            notes: "",
-            billingMode,
-            players,
-            loserPays: billingMode === "lp",
-            player1: players[0],
-            player2: players.slice(1).join(", "),
-          },
-        }));
-        setNames((prev) => ({ ...prev, [table.id]: primaryName }));
-        setSelectedTableId(table.id);
-        await fetchQueue();
-        await fetchBookings();
-        await fetchActive();
-        onSessionEnd?.();
-        showToast(`Session started on T${table.num}`, "success");
-        return true;
-      } catch (e) {
-        showToast(e.response?.data?.detail || "Failed to start", "error");
-        return false;
-      }
-    });
-  }
-
-  async function handleQuickStart({ table, player1, billingMode, otherPlayers, tariff = {} }) {
-    const name = (player1 || "").trim();
-    const players = buildPlayers(name, otherPlayers, billingMode);
-    const primaryName = players[0];
-    const validation = validateBillingPlayers(players, billingMode);
-    if (validation) {
-      showToast(validation, "error");
-      return false;
-    }
-    if (sessions[table.id]) {
-      showToast("Session already running", "error");
-      return false;
-    }
-    if (maintenance[table.id]) {
-      showToast(`Table is under maintenance: ${maintenance[table.id].reason}`, "error");
-      return false;
-    }
-    const rate = getTableRate(table, rates);
-    return runBusyAction(`start:${table.id}`, async () => {
-      try {
-        await startSession(
-          table.id,
-          primaryName,
-          rate,
-          billingMode !== "single",
-          players.slice(1).join(", "),
-          billingMode,
-          players,
-          tariff,
-        );
-        setSessions((prev) => ({
-          ...prev,
-          [table.id]: {
-            startTime: Date.now(),
-            elapsed: 0,
-            rate,
-            paused: false,
-            foodTotal: 0,
-            foodItems: [],
-            reservation: null,
-            notes: "",
-            billingMode,
-            players,
-            loserPays: billingMode === "lp",
-            player1: players[0],
-            player2: players.slice(1).join(", "),
-          },
-        }));
-        setNames((prev) => ({ ...prev, [table.id]: primaryName }));
-        setSelectedTableId(table.id);
-        await fetchQueue();
-        await fetchBookings();
-        await fetchActive();
-        onSessionEnd?.();
-        showToast(`Session started on T${table.num}`, "success");
-        return true;
-      } catch (e) {
-        showToast(e.response?.data?.detail || "Failed to start session", "error");
-        return false;
-      }
-    });
-  }
 
   async function handlePause(id) {
     if (!sessions[id]) return false;
@@ -3042,18 +2630,12 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0, onOpenF
         onClose={() => setCheckoutBill(null)}
       />
 
-      <QuickSessionModal
-        open={quickSessionOpen}
+      {quickSessionOpen && <StartSessionModal
         onClose={() => setQuickSessionOpen(false)}
-        tables={TABLES}
-        sessions={sessions}
-        maintenance={maintenance}
-        rates={rates}
-        onStart={handleQuickStart}
+        tables={TABLES.map(table => ({ ...table, rate: getTableRate(table, rates), status_key: maintenance[table.id] ? "maintenance" : sessions[table.id] ? "running" : "available" }))}
+        onCreated={async () => { await fetchActive(); await fetchBookings(); onSessionEnd?.(); }}
         initialTableId={selectedTableId}
-        busyActions={busyActions}
-        showToast={showToast}
-      />
+      />}
 
       <div className="advanced-table-controls-page">
         <LiveFloorCommand
@@ -3151,7 +2733,7 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0, onOpenF
                 onNameChange={(val) =>
                   setNames((prev) => ({ ...prev, [selectedTable.id]: val }))
                 }
-                onStart={handleStart}
+                onStart={(table) => { setSelectedTableId(table.id); setQuickSessionOpen(true); }}
                 onPause={handlePause}
                 onReset={handleReset}
                 onStop={handleStop}

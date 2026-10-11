@@ -36,7 +36,7 @@ function billFoodCharge(row) {
 }
 
 function billCustomer(row) {
-  return row?.payer_name || row?.nm || row?.customer_name || "Walk-in";
+  return row?.payer_name || row?.nm || row?.customer_name || "Guest";
 }
 
 function billDate(row) {

@@ -4,6 +4,7 @@ import { useToast } from "../../components/toastContext.js";
 import TableStatusBadge from "../live-floor/TableStatusBadge.jsx";
 import FrameControls from "./FrameControls.jsx";
 import { tariffDescription } from "./tariffs.js";
+import SessionIdentity from "./SessionIdentity.jsx";
 
 function formatTimer(seconds = 0) {
   const total = Math.max(0, Math.floor(Number(seconds) || 0));
@@ -62,7 +63,7 @@ export default function SessionWorkspace({
       <div className="session-hero">
         <div>
           <TableStatusBadge statusKey={table.status_key} label={table.status_label} />
-          <strong>{session?.customer_name || table.booking?.customer_name || "No active customer"}</strong>
+          <strong>{session ? <SessionIdentity session={session} /> : table.booking?.customer_name || "No active customer"}</strong>
           <span className="session-billing-note">{session ? "Backend-authoritative billing" : "Ready for a new session"}</span>
         </div>
         <div>
@@ -147,7 +148,7 @@ export default function SessionWorkspace({
             <div className="session-list-panel">
               <h3>Customer</h3>
               <dl className="session-facts">
-                <div><dt>Name</dt><dd>{session.customer_name || "Walk-in"}</dd></div>
+                <div><dt>Name</dt><dd><SessionIdentity session={session} /></dd></div>
                 <div><dt>Players</dt><dd>{players.length ? players.join(", ") : "Not recorded"}</dd></div>
                 <div><dt>Split</dt><dd>{session.split ? session.split_name || "Sharing" : "Single payer"}</dd></div>
               </dl>

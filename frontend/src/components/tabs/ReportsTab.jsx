@@ -53,7 +53,7 @@ function formatBillDate(row) {
 }
 
 function billCustomerName(row) {
-  return row?.payer_name || row?.nm || row?.customer_name || "Walk-in";
+  return row?.payer_name || row?.nm || row?.customer_name || "Guest";
 }
 
 function billTotal(row) {

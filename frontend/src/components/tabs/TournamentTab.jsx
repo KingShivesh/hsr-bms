@@ -62,7 +62,7 @@ function TournamentTableFloor({ gameType, rates, tableStateById, onNavigate }) {
         const occupied = !!session;
         const recommended = table.type === preferredType;
         const detail = occupied
-          ? `${session.customer_name || "Player"} · ₹${Number(session.running_total || 0).toLocaleString("en-IN")} running`
+          ? `${session.customer_name || "Guest"} · ₹${Number(session.running_total || 0).toLocaleString("en-IN")} running`
           : recommended
             ? `Best fit for ${gameType}`
             : "Backup table";

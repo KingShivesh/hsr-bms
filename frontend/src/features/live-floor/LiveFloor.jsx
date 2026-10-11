@@ -1,13 +1,13 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import { getLiveFloor, getRates, saveRates, startSession, pauseSession } from "../../api/index.js";
+import { getLiveFloor, getRates, saveRates, pauseSession } from "../../api/index.js";
 import RetryNotice from "../../components/RetryNotice.jsx";
 import { Modal, Drawer } from "../../components/ui/index.js";
 import { useToast } from "../../components/toastContext.js";
 import { useRealtimeSubscription } from "../../realtime/useRealtimeSubscription.js";
 import SessionWorkspace from "../sessions/SessionWorkspace.jsx";
 import TableGrid from "./TableGrid.jsx";
-import TariffSelector from "../sessions/TariffSelector.jsx";
+import StartSessionModal from "../sessions/StartSessionModal.jsx";
 import ProductSelector from "../orders/ProductSelector.jsx";
 import CheckoutPanel from "../checkout/CheckoutPanel.jsx";
 
@@ -45,110 +45,6 @@ function LiveFloorSkeleton() {
       <div />
       <div />
     </div>
-  );
-}
-
-function NewSessionModal({ tables, initialTableId, onClose, onCreated }) {
-  const { showToast } = useToast();
-  const availableTables = useMemo(() => tables.filter((table) => table.status_key === "available" || (table.id === initialTableId && table.status_key === "reserved")), [tables, initialTableId]);
-  const defaultTableId = initialTableId || availableTables[0]?.id || "";
-  const [customer, setCustomer] = useState(tables.find((table) => table.id === initialTableId)?.booking?.customer_name || "");
-  const [tableId, setTableId] = useState(defaultTableId);
-  const [mode, setMode] = useState("single");
-  const [tariff, setTariff] = useState({ tariff_mode: "hourly", package_id: "" });
-  const [saving, setSaving] = useState(false);
-  const formRef = useRef(null);
-
-  useEffect(() => {
-    if (!tableId && defaultTableId) setTableId(defaultTableId);
-  }, [defaultTableId, tableId]);
-
-  useEffect(() => {
-    const previous = document.activeElement;
-    const dialog = formRef.current?.closest('[role="dialog"]');
-    formRef.current?.querySelector("input")?.focus();
-    function trapFocus(event) {
-      if (event.key !== "Tab") return;
-      const items = Array.from(dialog.querySelectorAll('button:not(:disabled), input:not(:disabled), select:not(:disabled), [tabindex="0"]'));
-      const first = items[0];
-      const last = items.at(-1);
-      if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last?.focus(); }
-      else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first?.focus(); }
-    }
-    dialog?.addEventListener("keydown", trapFocus);
-    return () => { dialog?.removeEventListener("keydown", trapFocus); previous?.focus(); };
-  }, []);
-
-  const selectedTable = availableTables.find((table) => table.id === tableId);
-
-  async function handleSubmit(event) {
-    event.preventDefault();
-    if (!selectedTable) {
-      showToast("Select an available table.", "error");
-      return;
-    }
-    setSaving(true);
-    try {
-      const name = customer.trim() || "Walk-in";
-      await startSession(tableId, name, selectedTable?.rate || 0, mode !== "single", "", mode, name ? [name] : [], tariff);
-      showToast(`${String(tableId).toUpperCase()} session started`, "success");
-      setCustomer("");
-      setMode("single");
-      setTariff({ tariff_mode: "hourly", package_id: "" });
-      await onCreated?.(tableId);
-      onClose?.();
-    } catch (err) {
-      showToast(err.userMessage || "Could not start session.", "error");
-    } finally {
-      setSaving(false);
-    }
-  }
-
-  return (
-    <Modal open portal title="Start Session" onClose={saving ? undefined : onClose} className="lf-start-modal">
-      <form ref={formRef} className="lf-new-session" onSubmit={handleSubmit}>
-        <fieldset disabled={saving}>
-        <label className="lf-field">
-          <span>Customer</span>
-          <input value={customer} onChange={(event) => setCustomer(event.target.value)} placeholder="Walk-in or customer name" />
-        </label>
-        <label className="lf-field">
-          <span>Table</span>
-          <select value={tableId} onChange={(event) => { setTableId(event.target.value); setTariff({ tariff_mode: "hourly", package_id: "" }); }}>
-            {availableTables.map((table) => (
-              <option key={table.id} value={table.id}>
-                {String(table.id).toUpperCase()} · {table.type} · ₹{table.rate}/hr
-              </option>
-            ))}
-          </select>
-        </label>
-        <TariffSelector tableId={tableId} value={tariff} onChange={setTariff} catalog={selectedTable?.tariffs} />
-        <div className="lf-mode-grid" role="group" aria-label="Who pays">
-          {[
-            ["single", "Single", "One payer"],
-            ["sharing", "Sharing", "Split payment"],
-            ["lp", "LP", "Loser pays"],
-          ].map(([value, label, detail]) => (
-            <button
-              type="button"
-              key={value}
-              className={mode === value ? "is-selected" : ""}
-              onClick={() => setMode(value)}
-            >
-              <strong>{label}</strong>
-              <span>{detail}</span>
-            </button>
-          ))}
-        </div>
-        <div className="lf-modal-actions">
-          <button type="button" className="lf-secondary-button" onClick={onClose}>Cancel</button>
-          <button type="submit" className="lf-primary-button" disabled={!selectedTable}>
-            {saving ? "Starting..." : "Start Session"}
-          </button>
-        </div>
-        </fieldset>
-      </form>
-    </Modal>
   );
 }
 
@@ -410,7 +306,7 @@ export default function LiveFloor({ role = "admin", onNavigate, newSessionReques
         </>
       )}
 
-      {newSessionOpen && <NewSessionModal
+      {newSessionOpen && <StartSessionModal
         tables={tables}
         initialTableId={newSessionTableId}
         onClose={() => setNewSessionOpen(false)}
