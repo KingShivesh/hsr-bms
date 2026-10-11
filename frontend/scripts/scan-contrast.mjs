@@ -28,7 +28,7 @@ try {
     for (const route of routes) {
       await page.goto(appUrl + route, { waitUntil: "domcontentloaded" });
       await page.waitForTimeout(1000);
-      await page.locator(".page-skeleton,.ui-skeleton-stack,.ui-skeleton-grid,.lf-skeleton").waitFor({ state: "hidden" });
+      await page.waitForFunction(() => ![...document.querySelectorAll(".page-skeleton,.ui-skeleton-stack,.ui-skeleton-grid,.lf-skeleton")].some(node => node.getClientRects().length));
       if (route === "/live-floor") await page.locator(".lf-table-card").last().waitFor();
       await page.evaluate(() => document.fonts.ready);
       const check = async state => report.violations.push(...await scanRenderedContrast(page, { theme, route, state }));
@@ -39,6 +39,7 @@ try {
         await page.getByTestId("password-input").fill("QA invalid");
         await page.getByTestId("login-button").click();
         await page.getByText("Invalid username or password", { exact: true }).waitFor();
+        await page.waitForTimeout(200);
         await check("login-error-and-filled-fields");
         await page.unroute("**/auth/login");
         continue;

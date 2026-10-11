@@ -1,0 +1,1657 @@
+{
+  "method": "Browser-only Inter injection. Same local app, data, colors, type sizes, and spacing. DM Mono numbers retained in both variants. No application dependency or font token changed.",
+  "samples": [
+    {
+      "route": "/dashboard",
+      "theme": "dark",
+      "width": 1440,
+      "variant": "syne",
+      "filename": "dashboard-dark-1440-syne.png",
+      "bodyFont": "\"Syne Variable\", Syne, sans-serif",
+      "canvas": "rgb(11, 11, 15)",
+      "overflow": 0,
+      "titles": [
+        {
+          "text": "Executive Overview",
+          "font": "\"Syne Variable\", Syne, sans-serif",
+          "size": "24px",
+          "weight": "600",
+          "width": 528.375,
+          "height": 32,
+          "textWidth": 240.4375
+        }
+      ],
+      "labels": [
+        {
+          "text": "Live Floor",
+          "font": "\"Syne Variable\", Syne, sans-serif",
+          "size": "13px",
+          "weight": "500",
+          "width": 205,
+          "height": 20,
+          "textWidth": 59.609375
+        },
+        {
+          "text": "Bookings",
+          "font": "\"Syne Variable\", Syne, sans-serif",
+          "size": "13px",
+          "weight": "500",
+          "width": 205,
+          "height": 20,
+          "textWidth": 56.28125
+        },
+        {
+          "text": "Customers",
+          "font": "\"Syne Variable\", Syne, sans-serif",
+          "size": "13px",
+          "weight": "500",
+          "width": 205,
+          "height": 20,
+          "textWidth": 67.265625
+        },
+        {
+          "text": "Waitlist",
+          "font": "\"Syne Variable\", Syne, sans-serif",
+          "size": "13px",
+          "weight": "500",
+          "width": 205,
+          "height": 20,
+          "textWidth": 47.234375
+        },
+        {
+          "text": "Cafe POS",
+          "font": "\"Syne Variable\", Syne, sans-serif",
+          "size": "13px",
+          "weight": "500",
+          "width": 205,
+          "height": 20,
+          "textWidth": 59.265625
+        },
+        {
+          "text": "Sales",
+          "font": "\"Syne Variable\", Syne, sans-serif",
+          "size": "13px",
+          "weight": "500",
+          "width": 205,
+          "height": 20,
+          "textWidth": 32.578125
+        },
+        {
+          "text": "Analytics & Reports",
+          "font": "\"Syne Variable\", Syne, sans-serif",
+          "size": "13px",
+          "weight": "500",
+          "width": 205,
+          "height": 20,
+          "textWidth": 118.96875
+        },
+        {
+          "text": "Daily Closing",
+          "font": "\"Syne Variable\", Syne, sans-serif",
+          "size": "13px",
+          "weight": "500",
+          "width": 205,
+          "height": 20,
+          "textWidth": 79.296875
+        }
+      ],
+      "numbers": [
+        {
+          "text": "₹0",
+          "font": "\"DM Mono\", monospace",
+          "size": "32px",
+          "weight": "500",
+          "width": 36.90625,
+          "height": 40,
+          "textWidth": 36.90625
+        },
+        {
+          "text": "0/5",
+          "font": "\"DM Mono\", monospace",
+          "size": "32px",
+          "weight": "500",
+          "width": 230,
+          "height": 40,
+          "textWidth": 57.609375
+        },
+        {
+          "text": "0%",
+          "font": "\"DM Mono\", monospace",
+          "size": "32px",
+          "weight": "500",
+          "width": 230,
+          "height": 40,
+          "textWidth": 38.40625
+        }
+      ]
+    },
+    {
+      "route": "/dashboard",
+      "theme": "dark",
+      "width": 1440,
+      "variant": "inter",
+      "filename": "dashboard-dark-1440-inter.png",
+      "bodyFont": "\"Inter Comparison\", sans-serif",
+      "canvas": "rgb(11, 11, 15)",
+      "overflow": 0,
+      "titles": [
+        {
+          "text": "Executive Overview",
+          "font": "\"Inter Comparison\", sans-serif",
+          "size": "24px",
+          "weight": "600",
+          "width": 543.703125,
+          "height": 32,
+          "textWidth": 230.140625
+        }
+      ],
+      "labels": [
+        {
+          "text": "Live Floor",
+          "font": "\"Inter Comparison\", sans-serif",
+          "size": "13px",
+          "weight": "500",
+          "width": 205,
+          "height": 20,
+          "textWidth": 60.65625
+        },
+        {
+          "text": "Bookings",
+          "font": "\"Inter Comparison\", sans-serif",
+          "size": "13px",
+          "weight": "500",
+          "width": 205,
+          "height": 20,
+          "textWidth": 57.671875
+        },
+        {
+          "text": "Customers",
+          "font": "\"Inter Comparison\", sans-serif",
+          "size": "13px",
+          "weight": "500",
+          "width": 205,
+          "height": 20,
+          "textWidth": 67.734375
+        },
+        {
+          "text": "Waitlist",
+          "font": "\"Inter Comparison\", sans-serif",
+          "size": "13px",
+          "weight": "500",
+          "width": 205,
+          "height": 20,
+          "textWidth": 45.421875
+        },
+        {
+          "text": "Cafe POS",
+          "font": "\"Inter Comparison\", sans-serif",
+          "size": "13px",
+          "weight": "500",
+          "width": 205,
+          "height": 20,
+          "textWidth": 59.34375
+        },
+        {
+          "text": "Sales",
+          "font": "\"Inter Comparison\", sans-serif",
+          "size": "13px",
+          "weight": "500",
+          "width": 205,
+          "height": 20,
+          "textWidth": 33.703125
+        },
+        {
+          "text": "Analytics & Reports",
+          "font": "\"Inter Comparison\", sans-serif",
+          "size": "13px",
+          "weight": "500",
+          "width": 205,
+          "height": 20,
+          "textWidth": 121.46875
+        },
+        {
+          "text": "Daily Closing",
+          "font": "\"Inter Comparison\", sans-serif",
+          "size": "13px",
+          "weight": "500",
+          "width": 205,
+          "height": 20,
+          "textWidth": 81.1875
+        }
+      ],
+      "numbers": [
+        {
+          "text": "₹0",
+          "font": "\"DM Mono\", monospace",
+          "size": "32px",
+          "weight": "500",
+          "width": 36.90625,
+          "height": 40,
+          "textWidth": 36.90625
+        },
+        {
+          "text": "0/5",
+          "font": "\"DM Mono\", monospace",
+          "size": "32px",
+          "weight": "500",
+          "width": 230,
+          "height": 40,
+          "textWidth": 57.609375
+        },
+        {
+          "text": "0%",
+          "font": "\"DM Mono\", monospace",
+          "size": "32px",
+          "weight": "500",
+          "width": 230,
+          "height": 40,
+          "textWidth": 38.40625
+        }
+      ]
+    },
+    {
+      "route": "/dashboard",
+      "theme": "dark",
+      "width": 375,
+      "variant": "syne",
+      "filename": "dashboard-dark-375-syne.png",
+      "bodyFont": "\"Syne Variable\", Syne, sans-serif",
+      "canvas": "rgb(11, 11, 15)",
+      "overflow": 0,
+      "titles": [
+        {
+          "text": "Executive Overview",
+          "font": "\"Syne Variable\", Syne, sans-serif",
+          "size": "24px",
+          "weight": "600",
+          "width": 69,
+          "height": 32,
+          "textWidth": 240.4375
+        }
+      ],
+      "labels": [
+        {
+          "text": "Today Revenue",
+          "font": "\"Syne Variable\", Syne, sans-serif",
+          "size": "11px",
+          "weight": "600",
+          "width": 99.453125,
+          "height": 16,
+          "textWidth": 99.453125
+        },
+        {
+          "text": "Active Tables",
+          "font": "\"Syne Variable\", Syne, sans-serif",
+          "size": "11px",
+          "weight": "600",
+          "width": 89.203125,
+          "height": 16,
+          "textWidth": 89.203125
+        },
+        {
+          "text": "Food Attach",
+          "font": "\"Syne Variable\", Syne, sans-serif",
+          "size": "11px",
+          "weight": "600",
+          "width": 84.25,
+          "height": 16,
+          "textWidth": 84.25
+        }
+      ],
+      "numbers": [
+        {
+          "text": "₹0",
+          "font": "\"DM Mono\", monospace",
+          "size": "32px",
+          "weight": "500",
+          "width": 36.90625,
+          "height": 40,
+          "textWidth": 36.90625
+        },
+        {
+          "text": "0/5",
+          "font": "\"DM Mono\", monospace",
+          "size": "32px",
+          "weight": "500",
+          "width": 245,
+          "height": 40,
+          "textWidth": 57.609375
+        },
+        {
+          "text": "0%",
+          "font": "\"DM Mono\", monospace",
+          "size": "32px",
+          "weight": "500",
+          "width": 245,
+          "height": 40,
+          "textWidth": 38.40625
+        }
+      ]
+    },
+    {
+      "route": "/dashboard",
+      "theme": "dark",
+      "width": 375,
+      "variant": "inter",
+      "filename": "dashboard-dark-375-inter.png",
+      "bodyFont": "\"Inter Comparison\", sans-serif",
+      "canvas": "rgb(11, 11, 15)",
+      "overflow": 0,
+      "titles": [
+        {
+          "text": "Executive Overview",
+          "font": "\"Inter Comparison\", sans-serif",
+          "size": "24px",
+          "weight": "600",
+          "width": 69,
+          "height": 32,
+          "textWidth": 230.140625
+        }
+      ],
+      "labels": [
+        {
+          "text": "Today Revenue",
+          "font": "\"Inter Comparison\", sans-serif",
+          "size": "11px",
+          "weight": "600",
+          "width": 92.453125,
+          "height": 16,
+          "textWidth": 92.453125
+        },
+        {
+          "text": "Active Tables",
+          "font": "\"Inter Comparison\", sans-serif",
+          "size": "11px",
+          "weight": "600",
+          "width": 85.1875,
+          "height": 16,
+          "textWidth": 85.1875
+        },
+        {
+          "text": "Food Attach",
+          "font": "\"Inter Comparison\", sans-serif",
+          "size": "11px",
+          "weight": "600",
+          "width": 78.765625,
+          "height": 16,
+          "textWidth": 78.765625
+        }
+      ],
+      "numbers": [
+        {
+          "text": "₹0",
+          "font": "\"DM Mono\", monospace",
+          "size": "32px",
+          "weight": "500",
+          "width": 36.90625,
+          "height": 40,
+          "textWidth": 36.90625
+        },
+        {
+          "text": "0/5",
+          "font": "\"DM Mono\", monospace",
+          "size": "32px",
+          "weight": "500",
+          "width": 245,
+          "height": 40,
+          "textWidth": 57.609375
+        },
+        {
+          "text": "0%",
+          "font": "\"DM Mono\", monospace",
+          "size": "32px",
+          "weight": "500",
+          "width": 245,
+          "height": 40,
+          "textWidth": 38.40625
+        }
+      ]
+    },
+    {
+      "route": "/live-floor",
+      "theme": "dark",
+      "width": 1440,
+      "variant": "syne",
+      "filename": "live-floor-dark-1440-syne.png",
+      "bodyFont": "\"Syne Variable\", Syne, sans-serif",
+      "canvas": "rgb(11, 11, 15)",
+      "overflow": 0,
+      "titles": [
+        {
+          "text": "Live Floor",
+          "font": "\"Syne Variable\", Syne, sans-serif",
+          "size": "24px",
+          "weight": "600",
+          "width": 560.484375,
+          "height": 32,
+          "textWidth": 118.03125
+        },
+        {
+          "text": "Command Center",
+          "font": "\"Syne Variable\", Syne, sans-serif",
+          "size": "24px",
+          "weight": "600",
+          "width": 400.09375,
+          "height": 32,
+          "textWidth": 221.828125
+        },
+        {
+          "text": "5 tables ready",
+          "font": "\"Syne Variable\", Syne, sans-serif",
+          "size": "24px",
+          "weight": "600",
+          "width": 172.5,
+          "height": 32,
+          "textWidth": 172.5
+        }
+      ],
+      "labels": [
+        {
+          "text": "Live Floor",
+          "font": "\"Syne Variable\", Syne, sans-serif",
+          "size": "13px",
+          "weight": "500",
+          "width": 205,
+          "height": 20,
+          "textWidth": 59.609375
+        },
+        {
+          "text": "Bookings",
+          "font": "\"Syne Variable\", Syne, sans-serif",
+          "size": "13px",
+          "weight": "500",
+          "width": 205,
+          "height": 20,
+          "textWidth": 56.28125
+        },
+        {
+          "text": "Customers",
+          "font": "\"Syne Variable\", Syne, sans-serif",
+          "size": "13px",
+          "weight": "500",
+          "width": 205,
+          "height": 20,
+          "textWidth": 67.265625
+        },
+        {
+          "text": "Waitlist",
+          "font": "\"Syne Variable\", Syne, sans-serif",
+          "size": "13px",
+          "weight": "500",
+          "width": 205,
+          "height": 20,
+          "textWidth": 47.234375
+        },
+        {
+          "text": "Cafe POS",
+          "font": "\"Syne Variable\", Syne, sans-serif",
+          "size": "13px",
+          "weight": "500",
+          "width": 205,
+          "height": 20,
+          "textWidth": 59.265625
+        },
+        {
+          "text": "Sales",
+          "font": "\"Syne Variable\", Syne, sans-serif",
+          "size": "13px",
+          "weight": "500",
+          "width": 205,
+          "height": 20,
+          "textWidth": 32.578125
+        },
+        {
+          "text": "Analytics & Reports",
+          "font": "\"Syne Variable\", Syne, sans-serif",
+          "size": "13px",
+          "weight": "500",
+          "width": 205,
+          "height": 20,
+          "textWidth": 118.96875
+        },
+        {
+          "text": "Daily Closing",
+          "font": "\"Syne Variable\", Syne, sans-serif",
+          "size": "13px",
+          "weight": "500",
+          "width": 205,
+          "height": 20,
+          "textWidth": 79.296875
+        }
+      ],
+      "numbers": []
+    },
+    {
+      "route": "/live-floor",
+      "theme": "dark",
+      "width": 1440,
+      "variant": "inter",
+      "filename": "live-floor-dark-1440-inter.png",
+      "bodyFont": "\"Inter Comparison\", sans-serif",
+      "canvas": "rgb(11, 11, 15)",
+      "overflow": 0,
+      "titles": [
+        {
+          "text": "Live Floor",
+          "font": "\"Inter Comparison\", sans-serif",
+          "size": "24px",
+          "weight": "600",
+          "width": 573.953125,
+          "height": 32,
+          "textWidth": 113.28125
+        },
+        {
+          "text": "Command Center",
+          "font": "\"Inter Comparison\", sans-serif",
+          "size": "24px",
+          "weight": "600",
+          "width": 403.578125,
+          "height": 32,
+          "textWidth": 203.921875
+        },
+        {
+          "text": "5 tables ready",
+          "font": "\"Inter Comparison\", sans-serif",
+          "size": "24px",
+          "weight": "600",
+          "width": 165.96875,
+          "height": 32,
+          "textWidth": 165.96875
+        }
+      ],
+      "labels": [
+        {
+          "text": "Live Floor",
+          "font": "\"Inter Comparison\", sans-serif",
+          "size": "13px",
+          "weight": "500",
+          "width": 205,
+          "height": 20,
+          "textWidth": 60.65625
+        },
+        {
+          "text": "Bookings",
+          "font": "\"Inter Comparison\", sans-serif",
+          "size": "13px",
+          "weight": "500",
+          "width": 205,
+          "height": 20,
+          "textWidth": 57.671875
+        },
+        {
+          "text": "Customers",
+          "font": "\"Inter Comparison\", sans-serif",
+          "size": "13px",
+          "weight": "500",
+          "width": 205,
+          "height": 20,
+          "textWidth": 67.734375
+        },
+        {
+          "text": "Waitlist",
+          "font": "\"Inter Comparison\", sans-serif",
+          "size": "13px",
+          "weight": "500",
+          "width": 205,
+          "height": 20,
+          "textWidth": 45.421875
+        },
+        {
+          "text": "Cafe POS",
+          "font": "\"Inter Comparison\", sans-serif",
+          "size": "13px",
+          "weight": "500",
+          "width": 205,
+          "height": 20,
+          "textWidth": 59.34375
+        },
+        {
+          "text": "Sales",
+          "font": "\"Inter Comparison\", sans-serif",
+          "size": "13px",
+          "weight": "500",
+          "width": 205,
+          "height": 20,
+          "textWidth": 33.703125
+        },
+        {
+          "text": "Analytics & Reports",
+          "font": "\"Inter Comparison\", sans-serif",
+          "size": "13px",
+          "weight": "500",
+          "width": 205,
+          "height": 20,
+          "textWidth": 121.46875
+        },
+        {
+          "text": "Daily Closing",
+          "font": "\"Inter Comparison\", sans-serif",
+          "size": "13px",
+          "weight": "500",
+          "width": 205,
+          "height": 20,
+          "textWidth": 81.1875
+        }
+      ],
+      "numbers": []
+    },
+    {
+      "route": "/settings",
+      "theme": "dark",
+      "width": 1440,
+      "variant": "syne",
+      "filename": "settings-dark-1440-syne.png",
+      "bodyFont": "\"Syne Variable\", Syne, sans-serif",
+      "canvas": "rgb(11, 11, 15)",
+      "overflow": 0,
+      "titles": [
+        {
+          "text": "Club Settings",
+          "font": "\"Syne Variable\", Syne, sans-serif",
+          "size": "24px",
+          "weight": "600",
+          "width": 542.984375,
+          "height": 32,
+          "textWidth": 161.34375
+        }
+      ],
+      "labels": [
+        {
+          "text": "Live Floor",
+          "font": "\"Syne Variable\", Syne, sans-serif",
+          "size": "13px",
+          "weight": "500",
+          "width": 205,
+          "height": 20,
+          "textWidth": 59.609375
+        },
+        {
+          "text": "Bookings",
+          "font": "\"Syne Variable\", Syne, sans-serif",
+          "size": "13px",
+          "weight": "500",
+          "width": 205,
+          "height": 20,
+          "textWidth": 56.28125
+        },
+        {
+          "text": "Customers",
+          "font": "\"Syne Variable\", Syne, sans-serif",
+          "size": "13px",
+          "weight": "500",
+          "width": 205,
+          "height": 20,
+          "textWidth": 67.265625
+        },
+        {
+          "text": "Waitlist",
+          "font": "\"Syne Variable\", Syne, sans-serif",
+          "size": "13px",
+          "weight": "500",
+          "width": 205,
+          "height": 20,
+          "textWidth": 47.234375
+        },
+        {
+          "text": "Cafe POS",
+          "font": "\"Syne Variable\", Syne, sans-serif",
+          "size": "13px",
+          "weight": "500",
+          "width": 205,
+          "height": 20,
+          "textWidth": 59.265625
+        },
+        {
+          "text": "Sales",
+          "font": "\"Syne Variable\", Syne, sans-serif",
+          "size": "13px",
+          "weight": "500",
+          "width": 205,
+          "height": 20,
+          "textWidth": 32.578125
+        },
+        {
+          "text": "Analytics & Reports",
+          "font": "\"Syne Variable\", Syne, sans-serif",
+          "size": "13px",
+          "weight": "500",
+          "width": 205,
+          "height": 20,
+          "textWidth": 118.96875
+        },
+        {
+          "text": "Daily Closing",
+          "font": "\"Syne Variable\", Syne, sans-serif",
+          "size": "13px",
+          "weight": "500",
+          "width": 205,
+          "height": 20,
+          "textWidth": 79.296875
+        }
+      ],
+      "numbers": []
+    },
+    {
+      "route": "/settings",
+      "theme": "dark",
+      "width": 1440,
+      "variant": "inter",
+      "filename": "settings-dark-1440-inter.png",
+      "bodyFont": "\"Inter Comparison\", sans-serif",
+      "canvas": "rgb(11, 11, 15)",
+      "overflow": 0,
+      "titles": [
+        {
+          "text": "Club Settings",
+          "font": "\"Inter Comparison\", sans-serif",
+          "size": "24px",
+          "weight": "600",
+          "width": 556.15625,
+          "height": 32,
+          "textWidth": 155.828125
+        }
+      ],
+      "labels": [
+        {
+          "text": "Live Floor",
+          "font": "\"Inter Comparison\", sans-serif",
+          "size": "13px",
+          "weight": "500",
+          "width": 205,
+          "height": 20,
+          "textWidth": 60.65625
+        },
+        {
+          "text": "Bookings",
+          "font": "\"Inter Comparison\", sans-serif",
+          "size": "13px",
+          "weight": "500",
+          "width": 205,
+          "height": 20,
+          "textWidth": 57.671875
+        },
+        {
+          "text": "Customers",
+          "font": "\"Inter Comparison\", sans-serif",
+          "size": "13px",
+          "weight": "500",
+          "width": 205,
+          "height": 20,
+          "textWidth": 67.734375
+        },
+        {
+          "text": "Waitlist",
+          "font": "\"Inter Comparison\", sans-serif",
+          "size": "13px",
+          "weight": "500",
+          "width": 205,
+          "height": 20,
+          "textWidth": 45.421875
+        },
+        {
+          "text": "Cafe POS",
+          "font": "\"Inter Comparison\", sans-serif",
+          "size": "13px",
+          "weight": "500",
+          "width": 205,
+          "height": 20,
+          "textWidth": 59.34375
+        },
+        {
+          "text": "Sales",
+          "font": "\"Inter Comparison\", sans-serif",
+          "size": "13px",
+          "weight": "500",
+          "width": 205,
+          "height": 20,
+          "textWidth": 33.703125
+        },
+        {
+          "text": "Analytics & Reports",
+          "font": "\"Inter Comparison\", sans-serif",
+          "size": "13px",
+          "weight": "500",
+          "width": 205,
+          "height": 20,
+          "textWidth": 121.46875
+        },
+        {
+          "text": "Daily Closing",
+          "font": "\"Inter Comparison\", sans-serif",
+          "size": "13px",
+          "weight": "500",
+          "width": 205,
+          "height": 20,
+          "textWidth": 81.1875
+        }
+      ],
+      "numbers": []
+    },
+    {
+      "route": "/dashboard",
+      "theme": "light",
+      "width": 1440,
+      "variant": "syne",
+      "filename": "dashboard-light-1440-syne.png",
+      "bodyFont": "\"Syne Variable\", Syne, sans-serif",
+      "canvas": "rgb(250, 250, 250)",
+      "overflow": 0,
+      "titles": [
+        {
+          "text": "Executive Overview",
+          "font": "\"Syne Variable\", Syne, sans-serif",
+          "size": "24px",
+          "weight": "600",
+          "width": 528.375,
+          "height": 32,
+          "textWidth": 240.4375
+        }
+      ],
+      "labels": [
+        {
+          "text": "Live Floor",
+          "font": "\"Syne Variable\", Syne, sans-serif",
+          "size": "13px",
+          "weight": "500",
+          "width": 205,
+          "height": 20,
+          "textWidth": 59.609375
+        },
+        {
+          "text": "Bookings",
+          "font": "\"Syne Variable\", Syne, sans-serif",
+          "size": "13px",
+          "weight": "500",
+          "width": 205,
+          "height": 20,
+          "textWidth": 56.28125
+        },
+        {
+          "text": "Customers",
+          "font": "\"Syne Variable\", Syne, sans-serif",
+          "size": "13px",
+          "weight": "500",
+          "width": 205,
+          "height": 20,
+          "textWidth": 67.265625
+        },
+        {
+          "text": "Waitlist",
+          "font": "\"Syne Variable\", Syne, sans-serif",
+          "size": "13px",
+          "weight": "500",
+          "width": 205,
+          "height": 20,
+          "textWidth": 47.234375
+        },
+        {
+          "text": "Cafe POS",
+          "font": "\"Syne Variable\", Syne, sans-serif",
+          "size": "13px",
+          "weight": "500",
+          "width": 205,
+          "height": 20,
+          "textWidth": 59.265625
+        },
+        {
+          "text": "Sales",
+          "font": "\"Syne Variable\", Syne, sans-serif",
+          "size": "13px",
+          "weight": "500",
+          "width": 205,
+          "height": 20,
+          "textWidth": 32.578125
+        },
+        {
+          "text": "Analytics & Reports",
+          "font": "\"Syne Variable\", Syne, sans-serif",
+          "size": "13px",
+          "weight": "500",
+          "width": 205,
+          "height": 20,
+          "textWidth": 118.96875
+        },
+        {
+          "text": "Daily Closing",
+          "font": "\"Syne Variable\", Syne, sans-serif",
+          "size": "13px",
+          "weight": "500",
+          "width": 205,
+          "height": 20,
+          "textWidth": 79.296875
+        }
+      ],
+      "numbers": [
+        {
+          "text": "₹0",
+          "font": "\"DM Mono\", monospace",
+          "size": "32px",
+          "weight": "500",
+          "width": 36.90625,
+          "height": 40,
+          "textWidth": 36.90625
+        },
+        {
+          "text": "0/5",
+          "font": "\"DM Mono\", monospace",
+          "size": "32px",
+          "weight": "500",
+          "width": 230,
+          "height": 40,
+          "textWidth": 57.609375
+        },
+        {
+          "text": "0%",
+          "font": "\"DM Mono\", monospace",
+          "size": "32px",
+          "weight": "500",
+          "width": 230,
+          "height": 40,
+          "textWidth": 38.40625
+        }
+      ]
+    },
+    {
+      "route": "/dashboard",
+      "theme": "light",
+      "width": 1440,
+      "variant": "inter",
+      "filename": "dashboard-light-1440-inter.png",
+      "bodyFont": "\"Inter Comparison\", sans-serif",
+      "canvas": "rgb(250, 250, 250)",
+      "overflow": 0,
+      "titles": [
+        {
+          "text": "Executive Overview",
+          "font": "\"Inter Comparison\", sans-serif",
+          "size": "24px",
+          "weight": "600",
+          "width": 543.703125,
+          "height": 32,
+          "textWidth": 230.140625
+        }
+      ],
+      "labels": [
+        {
+          "text": "Live Floor",
+          "font": "\"Inter Comparison\", sans-serif",
+          "size": "13px",
+          "weight": "500",
+          "width": 205,
+          "height": 20,
+          "textWidth": 60.65625
+        },
+        {
+          "text": "Bookings",
+          "font": "\"Inter Comparison\", sans-serif",
+          "size": "13px",
+          "weight": "500",
+          "width": 205,
+          "height": 20,
+          "textWidth": 57.671875
+        },
+        {
+          "text": "Customers",
+          "font": "\"Inter Comparison\", sans-serif",
+          "size": "13px",
+          "weight": "500",
+          "width": 205,
+          "height": 20,
+          "textWidth": 67.734375
+        },
+        {
+          "text": "Waitlist",
+          "font": "\"Inter Comparison\", sans-serif",
+          "size": "13px",
+          "weight": "500",
+          "width": 205,
+          "height": 20,
+          "textWidth": 45.421875
+        },
+        {
+          "text": "Cafe POS",
+          "font": "\"Inter Comparison\", sans-serif",
+          "size": "13px",
+          "weight": "500",
+          "width": 205,
+          "height": 20,
+          "textWidth": 59.34375
+        },
+        {
+          "text": "Sales",
+          "font": "\"Inter Comparison\", sans-serif",
+          "size": "13px",
+          "weight": "500",
+          "width": 205,
+          "height": 20,
+          "textWidth": 33.703125
+        },
+        {
+          "text": "Analytics & Reports",
+          "font": "\"Inter Comparison\", sans-serif",
+          "size": "13px",
+          "weight": "500",
+          "width": 205,
+          "height": 20,
+          "textWidth": 121.46875
+        },
+        {
+          "text": "Daily Closing",
+          "font": "\"Inter Comparison\", sans-serif",
+          "size": "13px",
+          "weight": "500",
+          "width": 205,
+          "height": 20,
+          "textWidth": 81.1875
+        }
+      ],
+      "numbers": [
+        {
+          "text": "₹0",
+          "font": "\"DM Mono\", monospace",
+          "size": "32px",
+          "weight": "500",
+          "width": 36.90625,
+          "height": 40,
+          "textWidth": 36.90625
+        },
+        {
+          "text": "0/5",
+          "font": "\"DM Mono\", monospace",
+          "size": "32px",
+          "weight": "500",
+          "width": 230,
+          "height": 40,
+          "textWidth": 57.609375
+        },
+        {
+          "text": "0%",
+          "font": "\"DM Mono\", monospace",
+          "size": "32px",
+          "weight": "500",
+          "width": 230,
+          "height": 40,
+          "textWidth": 38.40625
+        }
+      ]
+    },
+    {
+      "route": "/dashboard",
+      "theme": "light",
+      "width": 375,
+      "variant": "syne",
+      "filename": "dashboard-light-375-syne.png",
+      "bodyFont": "\"Syne Variable\", Syne, sans-serif",
+      "canvas": "rgb(250, 250, 250)",
+      "overflow": 0,
+      "titles": [
+        {
+          "text": "Executive Overview",
+          "font": "\"Syne Variable\", Syne, sans-serif",
+          "size": "24px",
+          "weight": "600",
+          "width": 69,
+          "height": 32,
+          "textWidth": 240.4375
+        }
+      ],
+      "labels": [
+        {
+          "text": "Today Revenue",
+          "font": "\"Syne Variable\", Syne, sans-serif",
+          "size": "11px",
+          "weight": "600",
+          "width": 99.453125,
+          "height": 16,
+          "textWidth": 99.453125
+        },
+        {
+          "text": "Active Tables",
+          "font": "\"Syne Variable\", Syne, sans-serif",
+          "size": "11px",
+          "weight": "600",
+          "width": 89.203125,
+          "height": 16,
+          "textWidth": 89.203125
+        },
+        {
+          "text": "Food Attach",
+          "font": "\"Syne Variable\", Syne, sans-serif",
+          "size": "11px",
+          "weight": "600",
+          "width": 84.25,
+          "height": 16,
+          "textWidth": 84.25
+        }
+      ],
+      "numbers": [
+        {
+          "text": "₹0",
+          "font": "\"DM Mono\", monospace",
+          "size": "32px",
+          "weight": "500",
+          "width": 36.90625,
+          "height": 40,
+          "textWidth": 36.90625
+        },
+        {
+          "text": "0/5",
+          "font": "\"DM Mono\", monospace",
+          "size": "32px",
+          "weight": "500",
+          "width": 245,
+          "height": 40,
+          "textWidth": 57.609375
+        },
+        {
+          "text": "0%",
+          "font": "\"DM Mono\", monospace",
+          "size": "32px",
+          "weight": "500",
+          "width": 245,
+          "height": 40,
+          "textWidth": 38.40625
+        }
+      ]
+    },
+    {
+      "route": "/dashboard",
+      "theme": "light",
+      "width": 375,
+      "variant": "inter",
+      "filename": "dashboard-light-375-inter.png",
+      "bodyFont": "\"Inter Comparison\", sans-serif",
+      "canvas": "rgb(250, 250, 250)",
+      "overflow": 0,
+      "titles": [
+        {
+          "text": "Executive Overview",
+          "font": "\"Inter Comparison\", sans-serif",
+          "size": "24px",
+          "weight": "600",
+          "width": 69,
+          "height": 32,
+          "textWidth": 230.140625
+        }
+      ],
+      "labels": [
+        {
+          "text": "Today Revenue",
+          "font": "\"Inter Comparison\", sans-serif",
+          "size": "11px",
+          "weight": "600",
+          "width": 92.453125,
+          "height": 16,
+          "textWidth": 92.453125
+        },
+        {
+          "text": "Active Tables",
+          "font": "\"Inter Comparison\", sans-serif",
+          "size": "11px",
+          "weight": "600",
+          "width": 85.1875,
+          "height": 16,
+          "textWidth": 85.1875
+        },
+        {
+          "text": "Food Attach",
+          "font": "\"Inter Comparison\", sans-serif",
+          "size": "11px",
+          "weight": "600",
+          "width": 78.765625,
+          "height": 16,
+          "textWidth": 78.765625
+        }
+      ],
+      "numbers": [
+        {
+          "text": "₹0",
+          "font": "\"DM Mono\", monospace",
+          "size": "32px",
+          "weight": "500",
+          "width": 36.90625,
+          "height": 40,
+          "textWidth": 36.90625
+        },
+        {
+          "text": "0/5",
+          "font": "\"DM Mono\", monospace",
+          "size": "32px",
+          "weight": "500",
+          "width": 245,
+          "height": 40,
+          "textWidth": 57.609375
+        },
+        {
+          "text": "0%",
+          "font": "\"DM Mono\", monospace",
+          "size": "32px",
+          "weight": "500",
+          "width": 245,
+          "height": 40,
+          "textWidth": 38.40625
+        }
+      ]
+    },
+    {
+      "route": "/live-floor",
+      "theme": "light",
+      "width": 1440,
+      "variant": "syne",
+      "filename": "live-floor-light-1440-syne.png",
+      "bodyFont": "\"Syne Variable\", Syne, sans-serif",
+      "canvas": "rgb(250, 250, 250)",
+      "overflow": 0,
+      "titles": [
+        {
+          "text": "Live Floor",
+          "font": "\"Syne Variable\", Syne, sans-serif",
+          "size": "24px",
+          "weight": "600",
+          "width": 560.484375,
+          "height": 32,
+          "textWidth": 118.03125
+        },
+        {
+          "text": "Command Center",
+          "font": "\"Syne Variable\", Syne, sans-serif",
+          "size": "24px",
+          "weight": "600",
+          "width": 400.09375,
+          "height": 32,
+          "textWidth": 221.828125
+        },
+        {
+          "text": "5 tables ready",
+          "font": "\"Syne Variable\", Syne, sans-serif",
+          "size": "24px",
+          "weight": "600",
+          "width": 172.5,
+          "height": 32,
+          "textWidth": 172.5
+        }
+      ],
+      "labels": [
+        {
+          "text": "Live Floor",
+          "font": "\"Syne Variable\", Syne, sans-serif",
+          "size": "13px",
+          "weight": "500",
+          "width": 205,
+          "height": 20,
+          "textWidth": 59.609375
+        },
+        {
+          "text": "Bookings",
+          "font": "\"Syne Variable\", Syne, sans-serif",
+          "size": "13px",
+          "weight": "500",
+          "width": 205,
+          "height": 20,
+          "textWidth": 56.28125
+        },
+        {
+          "text": "Customers",
+          "font": "\"Syne Variable\", Syne, sans-serif",
+          "size": "13px",
+          "weight": "500",
+          "width": 205,
+          "height": 20,
+          "textWidth": 67.265625
+        },
+        {
+          "text": "Waitlist",
+          "font": "\"Syne Variable\", Syne, sans-serif",
+          "size": "13px",
+          "weight": "500",
+          "width": 205,
+          "height": 20,
+          "textWidth": 47.234375
+        },
+        {
+          "text": "Cafe POS",
+          "font": "\"Syne Variable\", Syne, sans-serif",
+          "size": "13px",
+          "weight": "500",
+          "width": 205,
+          "height": 20,
+          "textWidth": 59.265625
+        },
+        {
+          "text": "Sales",
+          "font": "\"Syne Variable\", Syne, sans-serif",
+          "size": "13px",
+          "weight": "500",
+          "width": 205,
+          "height": 20,
+          "textWidth": 32.578125
+        },
+        {
+          "text": "Analytics & Reports",
+          "font": "\"Syne Variable\", Syne, sans-serif",
+          "size": "13px",
+          "weight": "500",
+          "width": 205,
+          "height": 20,
+          "textWidth": 118.96875
+        },
+        {
+          "text": "Daily Closing",
+          "font": "\"Syne Variable\", Syne, sans-serif",
+          "size": "13px",
+          "weight": "500",
+          "width": 205,
+          "height": 20,
+          "textWidth": 79.296875
+        }
+      ],
+      "numbers": []
+    },
+    {
+      "route": "/live-floor",
+      "theme": "light",
+      "width": 1440,
+      "variant": "inter",
+      "filename": "live-floor-light-1440-inter.png",
+      "bodyFont": "\"Inter Comparison\", sans-serif",
+      "canvas": "rgb(250, 250, 250)",
+      "overflow": 0,
+      "titles": [
+        {
+          "text": "Live Floor",
+          "font": "\"Inter Comparison\", sans-serif",
+          "size": "24px",
+          "weight": "600",
+          "width": 573.953125,
+          "height": 32,
+          "textWidth": 113.28125
+        },
+        {
+          "text": "Command Center",
+          "font": "\"Inter Comparison\", sans-serif",
+          "size": "24px",
+          "weight": "600",
+          "width": 403.578125,
+          "height": 32,
+          "textWidth": 203.921875
+        },
+        {
+          "text": "5 tables ready",
+          "font": "\"Inter Comparison\", sans-serif",
+          "size": "24px",
+          "weight": "600",
+          "width": 165.96875,
+          "height": 32,
+          "textWidth": 165.96875
+        }
+      ],
+      "labels": [
+        {
+          "text": "Live Floor",
+          "font": "\"Inter Comparison\", sans-serif",
+          "size": "13px",
+          "weight": "500",
+          "width": 205,
+          "height": 20,
+          "textWidth": 60.65625
+        },
+        {
+          "text": "Bookings",
+          "font": "\"Inter Comparison\", sans-serif",
+          "size": "13px",
+          "weight": "500",
+          "width": 205,
+          "height": 20,
+          "textWidth": 57.671875
+        },
+        {
+          "text": "Customers",
+          "font": "\"Inter Comparison\", sans-serif",
+          "size": "13px",
+          "weight": "500",
+          "width": 205,
+          "height": 20,
+          "textWidth": 67.734375
+        },
+        {
+          "text": "Waitlist",
+          "font": "\"Inter Comparison\", sans-serif",
+          "size": "13px",
+          "weight": "500",
+          "width": 205,
+          "height": 20,
+          "textWidth": 45.421875
+        },
+        {
+          "text": "Cafe POS",
+          "font": "\"Inter Comparison\", sans-serif",
+          "size": "13px",
+          "weight": "500",
+          "width": 205,
+          "height": 20,
+          "textWidth": 59.34375
+        },
+        {
+          "text": "Sales",
+          "font": "\"Inter Comparison\", sans-serif",
+          "size": "13px",
+          "weight": "500",
+          "width": 205,
+          "height": 20,
+          "textWidth": 33.703125
+        },
+        {
+          "text": "Analytics & Reports",
+          "font": "\"Inter Comparison\", sans-serif",
+          "size": "13px",
+          "weight": "500",
+          "width": 205,
+          "height": 20,
+          "textWidth": 121.46875
+        },
+        {
+          "text": "Daily Closing",
+          "font": "\"Inter Comparison\", sans-serif",
+          "size": "13px",
+          "weight": "500",
+          "width": 205,
+          "height": 20,
+          "textWidth": 81.1875
+        }
+      ],
+      "numbers": []
+    },
+    {
+      "route": "/settings",
+      "theme": "light",
+      "width": 1440,
+      "variant": "syne",
+      "filename": "settings-light-1440-syne.png",
+      "bodyFont": "\"Syne Variable\", Syne, sans-serif",
+      "canvas": "rgb(250, 250, 250)",
+      "overflow": 0,
+      "titles": [
+        {
+          "text": "Club Settings",
+          "font": "\"Syne Variable\", Syne, sans-serif",
+          "size": "24px",
+          "weight": "600",
+          "width": 542.984375,
+          "height": 32,
+          "textWidth": 161.34375
+        }
+      ],
+      "labels": [
+        {
+          "text": "Live Floor",
+          "font": "\"Syne Variable\", Syne, sans-serif",
+          "size": "13px",
+          "weight": "500",
+          "width": 205,
+          "height": 20,
+          "textWidth": 59.609375
+        },
+        {
+          "text": "Bookings",
+          "font": "\"Syne Variable\", Syne, sans-serif",
+          "size": "13px",
+          "weight": "500",
+          "width": 205,
+          "height": 20,
+          "textWidth": 56.28125
+        },
+        {
+          "text": "Customers",
+          "font": "\"Syne Variable\", Syne, sans-serif",
+          "size": "13px",
+          "weight": "500",
+          "width": 205,
+          "height": 20,
+          "textWidth": 67.265625
+        },
+        {
+          "text": "Waitlist",
+          "font": "\"Syne Variable\", Syne, sans-serif",
+          "size": "13px",
+          "weight": "500",
+          "width": 205,
+          "height": 20,
+          "textWidth": 47.234375
+        },
+        {
+          "text": "Cafe POS",
+          "font": "\"Syne Variable\", Syne, sans-serif",
+          "size": "13px",
+          "weight": "500",
+          "width": 205,
+          "height": 20,
+          "textWidth": 59.265625
+        },
+        {
+          "text": "Sales",
+          "font": "\"Syne Variable\", Syne, sans-serif",
+          "size": "13px",
+          "weight": "500",
+          "width": 205,
+          "height": 20,
+          "textWidth": 32.578125
+        },
+        {
+          "text": "Analytics & Reports",
+          "font": "\"Syne Variable\", Syne, sans-serif",
+          "size": "13px",
+          "weight": "500",
+          "width": 205,
+          "height": 20,
+          "textWidth": 118.96875
+        },
+        {
+          "text": "Daily Closing",
+          "font": "\"Syne Variable\", Syne, sans-serif",
+          "size": "13px",
+          "weight": "500",
+          "width": 205,
+          "height": 20,
+          "textWidth": 79.296875
+        }
+      ],
+      "numbers": []
+    },
+    {
+      "route": "/settings",
+      "theme": "light",
+      "width": 1440,
+      "variant": "inter",
+      "filename": "settings-light-1440-inter.png",
+      "bodyFont": "\"Inter Comparison\", sans-serif",
+      "canvas": "rgb(250, 250, 250)",
+      "overflow": 0,
+      "titles": [
+        {
+          "text": "Club Settings",
+          "font": "\"Inter Comparison\", sans-serif",
+          "size": "24px",
+          "weight": "600",
+          "width": 556.15625,
+          "height": 32,
+          "textWidth": 155.828125
+        }
+      ],
+      "labels": [
+        {
+          "text": "Live Floor",
+          "font": "\"Inter Comparison\", sans-serif",
+          "size": "13px",
+          "weight": "500",
+          "width": 205,
+          "height": 20,
+          "textWidth": 60.65625
+        },
+        {
+          "text": "Bookings",
+          "font": "\"Inter Comparison\", sans-serif",
+          "size": "13px",
+          "weight": "500",
+          "width": 205,
+          "height": 20,
+          "textWidth": 57.671875
+        },
+        {
+          "text": "Customers",
+          "font": "\"Inter Comparison\", sans-serif",
+          "size": "13px",
+          "weight": "500",
+          "width": 205,
+          "height": 20,
+          "textWidth": 67.734375
+        },
+        {
+          "text": "Waitlist",
+          "font": "\"Inter Comparison\", sans-serif",
+          "size": "13px",
+          "weight": "500",
+          "width": 205,
+          "height": 20,
+          "textWidth": 45.421875
+        },
+        {
+          "text": "Cafe POS",
+          "font": "\"Inter Comparison\", sans-serif",
+          "size": "13px",
+          "weight": "500",
+          "width": 205,
+          "height": 20,
+          "textWidth": 59.34375
+        },
+        {
+          "text": "Sales",
+          "font": "\"Inter Comparison\", sans-serif",
+          "size": "13px",
+          "weight": "500",
+          "width": 205,
+          "height": 20,
+          "textWidth": 33.703125
+        },
+        {
+          "text": "Analytics & Reports",
+          "font": "\"Inter Comparison\", sans-serif",
+          "size": "13px",
+          "weight": "500",
+          "width": 205,
+          "height": 20,
+          "textWidth": 121.46875
+        },
+        {
+          "text": "Daily Closing",
+          "font": "\"Inter Comparison\", sans-serif",
+          "size": "13px",
+          "weight": "500",
+          "width": 205,
+          "height": 20,
+          "textWidth": 81.1875
+        }
+      ],
+      "numbers": []
+    }
+  ]
+}

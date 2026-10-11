@@ -1,0 +1,2275 @@
+{
+  "generatedAt": "2026-10-11T15:29:45.741Z",
+  "theme": "dark",
+  "excluded": [
+    "Disabled buttons",
+    "Logout",
+    "Native print actions"
+  ],
+  "realtime": "Forced local SSE 503; REST fallback remains active. SSE correctness tested separately by the existing manager regression test.",
+  "method": "Actual mouse down/up. Computed paint and button position sampled after 60ms; navigation, dialogs, toast, selection and button state sampled 190ms after release. REST artificially delayed 700ms.",
+  "routeCount": 15,
+  "renderedButtonCount": 431,
+  "testedButtonCount": 189,
+  "failures": [],
+  "results": [
+    {
+      "route": "/dashboard",
+      "label": "Collapse sidebar",
+      "className": "ui-button ui-button-native ui-button-md cf-collapse-btn",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "button-state"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/dashboard",
+      "label": "Live Floor",
+      "className": "ui-button ui-button-native ui-button-md sb-item ",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "navigation",
+        "form",
+        "button-state"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/dashboard",
+      "label": "Bookings",
+      "className": "ui-button ui-button-native ui-button-md sb-item ",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "navigation",
+        "form",
+        "button-state"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/dashboard",
+      "label": "Customers",
+      "className": "ui-button ui-button-native ui-button-md sb-item ",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "navigation",
+        "form",
+        "button-state"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/dashboard",
+      "label": "Waitlist",
+      "className": "ui-button ui-button-native ui-button-md sb-item ",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "navigation",
+        "form",
+        "button-state"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/dashboard",
+      "label": "Cafe POS",
+      "className": "ui-button ui-button-native ui-button-md sb-item ",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "navigation",
+        "form",
+        "button-state"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/dashboard",
+      "label": "Sales",
+      "className": "ui-button ui-button-native ui-button-md sb-item ",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "navigation",
+        "form",
+        "button-state"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/dashboard",
+      "label": "Analytics & Reports",
+      "className": "ui-button ui-button-native ui-button-md sb-item ",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "navigation",
+        "form",
+        "button-state"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/dashboard",
+      "label": "Daily Closing",
+      "className": "ui-button ui-button-native ui-button-md sb-item ",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "navigation",
+        "form",
+        "button-state"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/dashboard",
+      "label": "Executive Overview",
+      "className": "ui-button ui-button-native ui-button-md sb-item active",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "button-state"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/dashboard",
+      "label": "Inventory & Stocks",
+      "className": "ui-button ui-button-native ui-button-md sb-item ",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "navigation",
+        "form",
+        "button-state"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/dashboard",
+      "label": "Tournaments",
+      "className": "ui-button ui-button-native ui-button-md sb-item ",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "navigation",
+        "form",
+        "button-state"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/dashboard",
+      "label": "Audit Log",
+      "className": "ui-button ui-button-native ui-button-md sb-item ",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "navigation",
+        "form",
+        "button-state"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/dashboard",
+      "label": "Pricing & Rules",
+      "className": "ui-button ui-button-native ui-button-md sb-item ",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "navigation",
+        "form",
+        "button-state"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/dashboard",
+      "label": "Advanced Table Controls",
+      "className": "ui-button ui-button-native ui-button-md sb-item ",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "navigation",
+        "form",
+        "button-state"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/dashboard",
+      "label": "Settings",
+      "className": "ui-button ui-button-native ui-button-md sb-item ",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "navigation",
+        "form",
+        "button-state"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/dashboard",
+      "label": "Dashboard",
+      "className": "ui-button ui-button-native ui-button-md",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "button-state"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/dashboard",
+      "label": "Open Live Floor",
+      "className": "ui-button ui-button-native ui-button-md cf-page-primary-action",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "navigation",
+        "form",
+        "button-state"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/dashboard",
+      "label": "Search Actions ⌘K",
+      "className": "ui-button ui-button-native ui-button-md cf-command-pill",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "dialog",
+        "form"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/dashboard",
+      "label": "Open notifications",
+      "className": "ui-button ui-button-native ui-button-md topbar-icon-btn cf-notification-btn",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "dialog",
+        "button-state"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/dashboard",
+      "label": "Switch to light mode",
+      "className": "ui-button ui-button-native ui-button-md topbar-icon-btn",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "button-state"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/dashboard",
+      "label": "Start Table",
+      "className": "ui-button ui-button-native ui-button-md ops-quick-action",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "navigation",
+        "form"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/dashboard",
+      "label": "Food POS",
+      "className": "ui-button ui-button-native ui-button-md ops-quick-action",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "navigation",
+        "form"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/dashboard",
+      "label": "Bookings",
+      "className": "ui-button ui-button-native ui-button-md ops-quick-action",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "navigation",
+        "form"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/dashboard",
+      "label": "Queue",
+      "className": "ui-button ui-button-native ui-button-md ops-quick-action",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "navigation",
+        "form"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/dashboard",
+      "label": "Closing",
+      "className": "ui-button ui-button-native ui-button-md ops-quick-action",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "navigation",
+        "form"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/dashboard",
+      "label": "Manage tables",
+      "className": "ui-button ui-button-native ui-button-md ops-link-btn",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "navigation",
+        "form"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/dashboard",
+      "label": "T1 Wiraka Available ₹320/hr Available Ready to start Start Table",
+      "className": "ui-button ui-button-native ui-button-md ops-table-card table-state-card",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "navigation",
+        "form"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/dashboard",
+      "label": "T2 Wiraka Available ₹320/hr Available Ready to start Start Table",
+      "className": "ui-button ui-button-native ui-button-md ops-table-card table-state-card",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "navigation",
+        "form"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/dashboard",
+      "label": "T3 English Available ₹270/hr Available Ready to start Start Table",
+      "className": "ui-button ui-button-native ui-button-md ops-table-card table-state-card",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "navigation",
+        "form"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/dashboard",
+      "label": "T4 English Available ₹270/hr Available Ready to start Start Table",
+      "className": "ui-button ui-button-native ui-button-md ops-table-card table-state-card",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "navigation",
+        "form"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/dashboard",
+      "label": "T5 Pool Available ₹170/hr Available Ready to start Start Table",
+      "className": "ui-button ui-button-native ui-button-md ops-table-card table-state-card",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "navigation",
+        "form"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/dashboard",
+      "label": "Shift can be closed No active table sessions remain. Verify payments in Daily Closing.",
+      "className": "ui-button ui-button-native ui-button-md ops-attention-inline",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "navigation",
+        "form"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/live-floor",
+      "label": "Dashboard",
+      "className": "ui-button ui-button-native ui-button-md",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "navigation",
+        "button-state"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/live-floor",
+      "label": "Start Table",
+      "className": "ui-button ui-button-native ui-button-md cf-page-primary-action",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "dialog",
+        "form",
+        "selection"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/live-floor",
+      "label": "Search Actions ⌘K",
+      "className": "ui-button ui-button-native ui-button-md cf-command-pill",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "dialog",
+        "form"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/live-floor",
+      "label": "Open notifications",
+      "className": "ui-button ui-button-native ui-button-md topbar-icon-btn cf-notification-btn",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "dialog",
+        "button-state"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/live-floor",
+      "label": "Switch to light mode",
+      "className": "ui-button ui-button-native ui-button-md topbar-icon-btn",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "button-state"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/live-floor",
+      "label": "New Booking",
+      "className": "ui-button ui-button-native ui-button-md lf-secondary-button",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "navigation"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/live-floor",
+      "label": "Add Customer",
+      "className": "ui-button ui-button-native ui-button-md lf-secondary-button",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "navigation"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/live-floor",
+      "label": "Start Table",
+      "className": "ui-button ui-button-native ui-button-md lf-primary-button",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "dialog",
+        "form",
+        "selection"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/live-floor",
+      "label": "Advanced controls",
+      "className": "ui-button ui-button-native ui-button-md lf-text-link",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "navigation"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/live-floor",
+      "label": "₹320/hr",
+      "className": "ui-button ui-button-native ui-button-md lf-inline-rate",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "form",
+        "button-state"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/live-floor",
+      "label": "Start Session",
+      "className": "ui-button ui-button-native ui-button-md",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "dialog",
+        "form",
+        "selection"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/live-floor",
+      "label": "₹320/hr",
+      "className": "ui-button ui-button-native ui-button-md lf-inline-rate",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "form",
+        "button-state"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/live-floor",
+      "label": "Start Session",
+      "className": "ui-button ui-button-native ui-button-md",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "dialog",
+        "form",
+        "selection"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/live-floor",
+      "label": "₹270/hr",
+      "className": "ui-button ui-button-native ui-button-md lf-inline-rate",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "form",
+        "button-state"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/live-floor",
+      "label": "Start Session",
+      "className": "ui-button ui-button-native ui-button-md",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "dialog",
+        "form",
+        "selection"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/live-floor",
+      "label": "₹270/hr",
+      "className": "ui-button ui-button-native ui-button-md lf-inline-rate",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "form",
+        "button-state"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/live-floor",
+      "label": "Start Session",
+      "className": "ui-button ui-button-native ui-button-md",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "dialog",
+        "form",
+        "selection"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/live-floor",
+      "label": "₹170/hr",
+      "className": "ui-button ui-button-native ui-button-md lf-inline-rate",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "form",
+        "button-state"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/live-floor",
+      "label": "Start Session",
+      "className": "ui-button ui-button-native ui-button-md",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "dialog",
+        "form",
+        "selection"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/inventory",
+      "label": "Dashboard",
+      "className": "ui-button ui-button-native ui-button-md",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "navigation",
+        "form",
+        "button-state"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/inventory",
+      "label": "Add Item",
+      "className": "ui-button ui-button-native ui-button-md cf-page-primary-action",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "button-state"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/inventory",
+      "label": "Search Actions ⌘K",
+      "className": "ui-button ui-button-native ui-button-md cf-command-pill",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "dialog",
+        "form"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/inventory",
+      "label": "Open notifications",
+      "className": "ui-button ui-button-native ui-button-md topbar-icon-btn cf-notification-btn",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "dialog",
+        "button-state"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/inventory",
+      "label": "Switch to light mode",
+      "className": "ui-button ui-button-native ui-button-md topbar-icon-btn",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "button-state"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/inventory",
+      "label": "Add Menu Item",
+      "className": "ui-button ui-button-native ui-button-md cf-action-btn primary",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "dialog",
+        "form"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/inventory",
+      "label": "MARK",
+      "className": "ui-button ui-button-native ui-button-md cf-action-btn warning",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "button-state"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/bookings",
+      "label": "Dashboard",
+      "className": "ui-button ui-button-native ui-button-md",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "navigation",
+        "form",
+        "selection",
+        "button-state"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/bookings",
+      "label": "New Booking",
+      "className": "ui-button ui-button-native ui-button-md cf-page-primary-action",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "dialog",
+        "form",
+        "button-state"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/bookings",
+      "label": "Search Actions ⌘K",
+      "className": "ui-button ui-button-native ui-button-md cf-command-pill",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "dialog",
+        "form"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/bookings",
+      "label": "Open notifications",
+      "className": "ui-button ui-button-native ui-button-md topbar-icon-btn cf-notification-btn",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "dialog",
+        "button-state"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/bookings",
+      "label": "Switch to light mode",
+      "className": "ui-button ui-button-native ui-button-md topbar-icon-btn",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "button-state"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/bookings",
+      "label": "New booking",
+      "className": "ui-button ui-button-native ui-button-md lf-primary-button",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "dialog",
+        "form"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/bookings",
+      "label": "Start Table",
+      "className": "ui-button ui-button-native ui-button-md table-state-primary",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "navigation",
+        "form",
+        "selection"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/bookings",
+      "label": "Start Table",
+      "className": "ui-button ui-button-native ui-button-md table-state-primary",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "navigation",
+        "form",
+        "selection"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/bookings",
+      "label": "Start Table",
+      "className": "ui-button ui-button-native ui-button-md table-state-primary",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "navigation",
+        "form",
+        "selection"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/bookings",
+      "label": "Start Table",
+      "className": "ui-button ui-button-native ui-button-md table-state-primary",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "navigation",
+        "form",
+        "selection"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/bookings",
+      "label": "Start Table",
+      "className": "ui-button ui-button-native ui-button-md table-state-primary",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "navigation",
+        "form",
+        "selection"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/bookings",
+      "label": "Booked",
+      "className": "ui-button ui-button-native ui-button-md active",
+      "status": "responsive",
+      "signals": [
+        "press-feedback"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/bookings",
+      "label": "Missed",
+      "className": "ui-button ui-button-native ui-button-md",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "button-state"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/bookings",
+      "label": "All",
+      "className": "ui-button ui-button-native ui-button-md",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "button-state"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/bookings",
+      "label": "New Booking",
+      "className": "ui-button ui-button-native ui-button-md lf-primary-button empty-action-button",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "dialog",
+        "form"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/customers",
+      "label": "Dashboard",
+      "className": "ui-button ui-button-native ui-button-md",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "navigation",
+        "form",
+        "button-state"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/customers",
+      "label": "Add Customer",
+      "className": "ui-button ui-button-native ui-button-md cf-page-primary-action",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "button-state"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/customers",
+      "label": "Search Actions ⌘K",
+      "className": "ui-button ui-button-native ui-button-md cf-command-pill",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "dialog",
+        "form"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/customers",
+      "label": "Open notifications",
+      "className": "ui-button ui-button-native ui-button-md topbar-icon-btn cf-notification-btn",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "dialog",
+        "button-state"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/customers",
+      "label": "Switch to light mode",
+      "className": "ui-button ui-button-native ui-button-md topbar-icon-btn",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "button-state"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/customers",
+      "label": "Add Customer",
+      "className": "ui-button ui-button-native ui-button-md lf-primary-button",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "toast",
+        "button-state"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/customers",
+      "label": "Add Customer",
+      "className": "ui-button ui-button-native ui-button-md lf-primary-button empty-action-button",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "button-state"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/sales",
+      "label": "Dashboard",
+      "className": "ui-button ui-button-native ui-button-md",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "navigation",
+        "form",
+        "button-state"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/sales",
+      "label": "Search Actions ⌘K",
+      "className": "ui-button ui-button-native ui-button-md cf-command-pill",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "dialog",
+        "form"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/sales",
+      "label": "Open notifications",
+      "className": "ui-button ui-button-native ui-button-md topbar-icon-btn cf-notification-btn",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "dialog",
+        "button-state"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/sales",
+      "label": "Switch to light mode",
+      "className": "ui-button ui-button-native ui-button-md topbar-icon-btn",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "button-state"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/analytics",
+      "label": "Dashboard",
+      "className": "ui-button ui-button-native ui-button-md",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "navigation",
+        "form",
+        "selection",
+        "button-state"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/analytics",
+      "label": "Export Reports",
+      "className": "ui-button ui-button-native ui-button-md cf-page-primary-action",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "button-state"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/analytics",
+      "label": "Search Actions ⌘K",
+      "className": "ui-button ui-button-native ui-button-md cf-command-pill",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "dialog",
+        "form"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/analytics",
+      "label": "Open notifications",
+      "className": "ui-button ui-button-native ui-button-md topbar-icon-btn cf-notification-btn",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "dialog",
+        "button-state"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/analytics",
+      "label": "Switch to light mode",
+      "className": "ui-button ui-button-native ui-button-md topbar-icon-btn",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "button-state"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/analytics",
+      "label": "Bills",
+      "className": "ui-button ui-button-native ui-button-md ui-tab-btn active",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "button-state"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/analytics",
+      "label": "Table Performance",
+      "className": "ui-button ui-button-native ui-button-md ui-tab-btn ",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "form",
+        "selection",
+        "button-state"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/analytics",
+      "label": "Regular Customers",
+      "className": "ui-button ui-button-native ui-button-md ui-tab-btn ",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "form",
+        "button-state"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/analytics",
+      "label": "Analytics",
+      "className": "ui-button ui-button-native ui-button-md ui-tab-btn ",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "form",
+        "selection",
+        "button-state"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/analytics",
+      "label": "Today",
+      "className": "ui-button ui-button-native ui-button-md ui-tab-btn active",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "button-state"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/analytics",
+      "label": "This Week",
+      "className": "ui-button ui-button-native ui-button-md ui-tab-btn ",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "button-state"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/analytics",
+      "label": "All Time",
+      "className": "ui-button ui-button-native ui-button-md ui-tab-btn ",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "button-state"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/analytics",
+      "label": "Export CSV",
+      "className": "ui-button ui-button-native ui-button-md type-sm",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "button-state"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/cafe-pos",
+      "label": "Dashboard",
+      "className": "ui-button ui-button-native ui-button-md",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "navigation",
+        "form",
+        "selection",
+        "button-state"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/cafe-pos",
+      "label": "Place Order",
+      "className": "ui-button ui-button-native ui-button-md cf-page-primary-action",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "button-state"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/cafe-pos",
+      "label": "Search Actions ⌘K",
+      "className": "ui-button ui-button-native ui-button-md cf-command-pill",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "dialog",
+        "form"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/cafe-pos",
+      "label": "Open notifications",
+      "className": "ui-button ui-button-native ui-button-md topbar-icon-btn cf-notification-btn",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "dialog",
+        "button-state"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/cafe-pos",
+      "label": "Switch to light mode",
+      "className": "ui-button ui-button-native ui-button-md topbar-icon-btn",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "button-state"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/cafe-pos",
+      "label": "New Order",
+      "className": "ui-button ui-button-native ui-button-md active",
+      "status": "responsive",
+      "signals": [
+        "press-feedback"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/cafe-pos",
+      "label": "Food Stats",
+      "className": "ui-button ui-button-native ui-button-md",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "form",
+        "selection",
+        "button-state"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/cafe-pos",
+      "label": "Order History",
+      "className": "ui-button ui-button-native ui-button-md",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "form",
+        "selection",
+        "button-state"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/cafe-pos",
+      "label": "Manage Menu",
+      "className": "ui-button ui-button-native ui-button-md",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "navigation",
+        "form",
+        "selection"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/cafe-pos",
+      "label": "All",
+      "className": "ui-button ui-button-native ui-button-md active",
+      "status": "responsive",
+      "signals": [
+        "press-feedback"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/cafe-pos",
+      "label": "Veg Snacks",
+      "className": "ui-button ui-button-native ui-button-md",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "button-state"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/cafe-pos",
+      "label": "Non Veg Snacks",
+      "className": "ui-button ui-button-native ui-button-md",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "button-state"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/cafe-pos",
+      "label": "Egg",
+      "className": "ui-button ui-button-native ui-button-md",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "button-state"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/cafe-pos",
+      "label": "Maggie",
+      "className": "ui-button ui-button-native ui-button-md",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "button-state"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/cafe-pos",
+      "label": "Hot Beverages",
+      "className": "ui-button ui-button-native ui-button-md",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "button-state"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/cafe-pos",
+      "label": "Cold Beverages",
+      "className": "ui-button ui-button-native ui-button-md",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "button-state"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/cafe-pos",
+      "label": "Cigarettes",
+      "className": "ui-button ui-button-native ui-button-md",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "button-state"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/cafe-pos",
+      "label": "Manage Inventory",
+      "className": "ui-button ui-button-native ui-button-md lf-secondary-button empty-action-button",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "navigation",
+        "form",
+        "selection"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/cafe-pos",
+      "label": "Cash",
+      "className": "ui-button ui-button-native ui-button-md active",
+      "status": "responsive",
+      "signals": [
+        "press-feedback"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/cafe-pos",
+      "label": "UPI",
+      "className": "ui-button ui-button-native ui-button-md",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "button-state"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/cafe-pos",
+      "label": "Card",
+      "className": "ui-button ui-button-native ui-button-md",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "button-state"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/waitlist",
+      "label": "Dashboard",
+      "className": "ui-button ui-button-native ui-button-md",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "navigation",
+        "button-state"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/waitlist",
+      "label": "Open Bookings",
+      "className": "ui-button ui-button-native ui-button-md cf-page-primary-action",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "navigation",
+        "button-state"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/waitlist",
+      "label": "Search Actions ⌘K",
+      "className": "ui-button ui-button-native ui-button-md cf-command-pill",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "dialog",
+        "form"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/waitlist",
+      "label": "Open notifications",
+      "className": "ui-button ui-button-native ui-button-md topbar-icon-btn cf-notification-btn",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "dialog",
+        "button-state"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/waitlist",
+      "label": "Switch to light mode",
+      "className": "ui-button ui-button-native ui-button-md topbar-icon-btn",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "button-state"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/waitlist",
+      "label": "Add Walk-in Guest",
+      "className": "ui-button ui-button-native ui-button-md cf-action-btn primary",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "dialog",
+        "form"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/legacy-table-controls",
+      "label": "Dashboard",
+      "className": "ui-button ui-button-native ui-button-md",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "navigation",
+        "form",
+        "selection",
+        "button-state"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/legacy-table-controls",
+      "label": "Start Table",
+      "className": "ui-button ui-button-native ui-button-md cf-page-primary-action",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "button-state"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/legacy-table-controls",
+      "label": "Search Actions ⌘K",
+      "className": "ui-button ui-button-native ui-button-md cf-command-pill",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "dialog",
+        "form"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/legacy-table-controls",
+      "label": "Open notifications",
+      "className": "ui-button ui-button-native ui-button-md topbar-icon-btn cf-notification-btn",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "dialog",
+        "button-state"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/legacy-table-controls",
+      "label": "Switch to light mode",
+      "className": "ui-button ui-button-native ui-button-md topbar-icon-btn",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "button-state"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/legacy-table-controls",
+      "label": "Start Table",
+      "className": "ui-button ui-button-native ui-button-md live-floor-primary",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "dialog",
+        "form",
+        "selection"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/legacy-table-controls",
+      "label": "Detailed",
+      "className": "ui-button ui-button-native ui-button-md active",
+      "status": "responsive",
+      "signals": [
+        "press-feedback"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/legacy-table-controls",
+      "label": "Compact",
+      "className": "ui-button ui-button-native ui-button-md",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "button-state"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/legacy-table-controls",
+      "label": "Start Table",
+      "className": "ui-button ui-button-native ui-button-md table-state-primary",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "dialog",
+        "form",
+        "selection"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/legacy-table-controls",
+      "label": "Start Table",
+      "className": "ui-button ui-button-native ui-button-md table-state-primary",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "dialog",
+        "form",
+        "selection"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/legacy-table-controls",
+      "label": "Start Table",
+      "className": "ui-button ui-button-native ui-button-md table-state-primary",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "dialog",
+        "form",
+        "selection"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/legacy-table-controls",
+      "label": "Start Table",
+      "className": "ui-button ui-button-native ui-button-md table-state-primary",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "dialog",
+        "form",
+        "selection"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/legacy-table-controls",
+      "label": "Start Table",
+      "className": "ui-button ui-button-native ui-button-md table-state-primary",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "dialog",
+        "form",
+        "selection"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/legacy-table-controls",
+      "label": "Open T1 history",
+      "className": "ui-button ui-button-native ui-button-md table-utility-btn",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "dialog",
+        "button-state"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/legacy-table-controls",
+      "label": "Toggle T1 maintenance controls",
+      "className": "ui-button ui-button-native ui-button-md table-utility-btn ",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "form",
+        "selection",
+        "button-state"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/legacy-table-controls",
+      "label": "Reserve table",
+      "className": "ui-button ui-button-native ui-button-md table-secondary-btn reserve ",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "form",
+        "selection",
+        "button-state"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/legacy-table-controls",
+      "label": "Start Table",
+      "className": "ui-button ui-button-native ui-button-md table-state-primary",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "dialog",
+        "form",
+        "selection"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/legacy-table-controls",
+      "label": "Add Walk-in",
+      "className": "ui-button ui-button-native ui-button-md primary-action-btn",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "button-state"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/legacy-table-controls",
+      "label": "Book table",
+      "className": "ui-button ui-button-native ui-button-md primary-action-btn",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "button-state"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/tournaments",
+      "label": "Dashboard",
+      "className": "ui-button ui-button-native ui-button-md",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "navigation",
+        "form",
+        "button-state"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/tournaments",
+      "label": "Create Bracket",
+      "className": "ui-button ui-button-native ui-button-md cf-page-primary-action",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "button-state"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/tournaments",
+      "label": "Search Actions ⌘K",
+      "className": "ui-button ui-button-native ui-button-md cf-command-pill",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "dialog",
+        "form"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/tournaments",
+      "label": "Open notifications",
+      "className": "ui-button ui-button-native ui-button-md topbar-icon-btn cf-notification-btn",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "dialog",
+        "button-state"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/tournaments",
+      "label": "Switch to light mode",
+      "className": "ui-button ui-button-native ui-button-md topbar-icon-btn",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "button-state"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/tournaments",
+      "label": "Create Bracket",
+      "className": "ui-button ui-button-native ui-button-md btn btn-primary-sm",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "toast",
+        "button-state"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/tournaments",
+      "label": "Start Table",
+      "className": "ui-button ui-button-native ui-button-md table-state-primary",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "navigation",
+        "form"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/tournaments",
+      "label": "Start Table",
+      "className": "ui-button ui-button-native ui-button-md table-state-primary",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "navigation",
+        "form"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/tournaments",
+      "label": "Start Table",
+      "className": "ui-button ui-button-native ui-button-md table-state-primary",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "navigation",
+        "form"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/tournaments",
+      "label": "Start Table",
+      "className": "ui-button ui-button-native ui-button-md table-state-primary",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "navigation",
+        "form"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/tournaments",
+      "label": "Start Table",
+      "className": "ui-button ui-button-native ui-button-md table-state-primary",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "navigation",
+        "form"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/daily-closing",
+      "label": "Dashboard",
+      "className": "ui-button ui-button-native ui-button-md",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "navigation",
+        "form",
+        "button-state"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/daily-closing",
+      "label": "Review Close",
+      "className": "ui-button ui-button-native ui-button-md cf-page-primary-action",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "button-state"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/daily-closing",
+      "label": "Search Actions ⌘K",
+      "className": "ui-button ui-button-native ui-button-md cf-command-pill",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "dialog",
+        "form"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/daily-closing",
+      "label": "Open notifications",
+      "className": "ui-button ui-button-native ui-button-md topbar-icon-btn cf-notification-btn",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "dialog",
+        "button-state"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/daily-closing",
+      "label": "Switch to light mode",
+      "className": "ui-button ui-button-native ui-button-md topbar-icon-btn",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "button-state"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/daily-closing",
+      "label": "Close Day",
+      "className": "ui-button ui-button-primary ui-button-md",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "dialog"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/pricing-rules",
+      "label": "Dashboard",
+      "className": "ui-button ui-button-native ui-button-md",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "navigation",
+        "form",
+        "selection",
+        "button-state"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/pricing-rules",
+      "label": "Add Rate Rule",
+      "className": "ui-button ui-button-native ui-button-md cf-page-primary-action",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "button-state"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/pricing-rules",
+      "label": "Search Actions ⌘K",
+      "className": "ui-button ui-button-native ui-button-md cf-command-pill",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "dialog",
+        "form"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/pricing-rules",
+      "label": "Open notifications",
+      "className": "ui-button ui-button-native ui-button-md topbar-icon-btn cf-notification-btn",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "dialog",
+        "button-state"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/pricing-rules",
+      "label": "Switch to light mode",
+      "className": "ui-button ui-button-native ui-button-md topbar-icon-btn",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "button-state"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/pricing-rules",
+      "label": "Peak Hour Rates",
+      "className": "ui-button ui-button-native ui-button-md ui-tab-btn active",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "button-state"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/pricing-rules",
+      "label": "Tax / GST",
+      "className": "ui-button ui-button-native ui-button-md ui-tab-btn ",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "form",
+        "button-state"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/pricing-rules",
+      "label": "Add Peak Rule",
+      "className": "ui-button ui-button-native ui-button-md btn btn-primary-sm",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "button-state"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/audit-log",
+      "label": "Dashboard",
+      "className": "ui-button ui-button-native ui-button-md",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "navigation",
+        "button-state"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/audit-log",
+      "label": "Refresh Audit",
+      "className": "ui-button ui-button-native ui-button-md cf-page-primary-action",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "button-state"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/audit-log",
+      "label": "Search Actions ⌘K",
+      "className": "ui-button ui-button-native ui-button-md cf-command-pill",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "dialog",
+        "form"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/audit-log",
+      "label": "Open notifications",
+      "className": "ui-button ui-button-native ui-button-md topbar-icon-btn cf-notification-btn",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "dialog",
+        "button-state"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/audit-log",
+      "label": "Switch to light mode",
+      "className": "ui-button ui-button-native ui-button-md topbar-icon-btn",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "button-state"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/settings",
+      "label": "Dashboard",
+      "className": "ui-button ui-button-native ui-button-md",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "navigation",
+        "form",
+        "button-state"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/settings",
+      "label": "Save Settings",
+      "className": "ui-button ui-button-native ui-button-md cf-page-primary-action",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "button-state"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/settings",
+      "label": "Search Actions ⌘K",
+      "className": "ui-button ui-button-native ui-button-md cf-command-pill",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "dialog",
+        "form"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/settings",
+      "label": "Open notifications",
+      "className": "ui-button ui-button-native ui-button-md topbar-icon-btn cf-notification-btn",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "dialog",
+        "button-state"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/settings",
+      "label": "Switch to light mode",
+      "className": "ui-button ui-button-native ui-button-md topbar-icon-btn",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "button-state"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/settings",
+      "label": "Open table floor",
+      "className": "ui-button ui-button-native ui-button-md btn btn-primary-sm",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "navigation",
+        "form"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/settings",
+      "label": "Save Table Rates",
+      "className": "ui-button ui-button-native ui-button-md btn btn-primary-sm",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "button-state"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/settings",
+      "label": "Add Package",
+      "className": "ui-button ui-button-native ui-button-md btn btn-outline",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "form",
+        "button-state"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/settings",
+      "label": "Save Tariffs",
+      "className": "ui-button ui-button-native ui-button-md btn btn-primary-sm",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "button-state"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/settings",
+      "label": "Save Minimum Session",
+      "className": "ui-button ui-button-native ui-button-md btn btn-primary-sm",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "button-state"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/settings",
+      "label": "Save Grace Period",
+      "className": "ui-button ui-button-native ui-button-md btn btn-primary-sm",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "button-state"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/settings",
+      "label": "Manage stock and availability in Inventory & Stocks",
+      "className": "ui-button ui-button-native ui-button-md btn btn-primary-sm",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "navigation",
+        "form"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/settings",
+      "label": "Update admin credentials",
+      "className": "ui-button ui-button-native ui-button-md btn btn-warning-sm",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "toast",
+        "button-state"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/settings",
+      "label": "Update staff credentials",
+      "className": "ui-button ui-button-native ui-button-md btn btn-primary-sm",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "toast",
+        "button-state"
+      ],
+      "clickError": ""
+    },
+    {
+      "route": "/settings",
+      "label": "Show protected actions",
+      "className": "ui-button ui-button-native ui-button-md btn btn-danger-sm",
+      "status": "responsive",
+      "signals": [
+        "press-feedback",
+        "form",
+        "button-state"
+      ],
+      "clickError": ""
+    }
+  ]
+}

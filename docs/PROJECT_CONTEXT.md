@@ -30,6 +30,17 @@ are mapped with `@theme inline` in `index.css`; do not add Tailwind v3 config.
   Exact tokens and live computed-font evidence: `docs/SNOOK_THEME.md`.
 - Fonts: self-hosted Syne Variable for interface text, DM Mono for primary
   numbers/timers. Do not synthesize heavy monospace weights.
+- Inter is a comparison only, pending the user's choice. Evidence is in
+  `docs/presentation-polish/font-comparison/`; do not treat that preview as
+  permission to switch application fonts.
+- Presentation contract: seven text sizes (11/13/14/16/20/24/32px) with matching
+  leading tokens; `presentation.css` loads last. Use shared Button, Input,
+  Select, Textarea and Table. The `native` Button adapter preserves existing
+  DOM content and native form semantics while adding common feedback.
+- Lucide is the single icon source. `ui/Icon.jsx` maps legacy semantic names
+  to self-hosted SVG glyphs at stroke 1.5; do not restore the external icon-font
+  stylesheet. Mobile touch targets remain 44px. Approved status borders and
+  saturated Live Floor fills are exceptions to generic neutral-card styling.
 - --success / --warning / --danger (+ -bg variants): status meaning 
   ONLY, never decorative
 - --text-primary / --text-secondary / --text-muted: content text
