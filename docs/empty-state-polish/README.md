@@ -41,7 +41,15 @@ their underlying data/actions are unchanged.
   regression passed: maximum one stream, forced-503 fallback, final subscribers 0.
 - Contrast scanner: **0 violations, 0 errors**, including loaded routes,
   login error, notification popover, command palette and first safe action.
-  [Actual output](contrast.json). Production deployment verification is pending.
+  [Actual output](contrast.json).
+- Merged and pushed source commit `dc328ea`. [Deployment proof](deployment.json)
+  verifies all **21 production JS/CSS assets** against the local build SHA256,
+  including `index-Ddyr75EL.js`. Backend health/readiness returned 200, and
+  unchanged revision `4d8a0b2` contains the required prior backend fix by ancestry.
+- [Anonymous production browser checks](production/measurements.json): both
+  themes at 1440/375/414px, Syne actually loaded, original canvas colors,
+  44px mobile actions, preserved icon/placeholder spacing, zero contrast
+  violations/page errors/overflow. No credential entry or production mutation.
 
 ## Safety and scope
 

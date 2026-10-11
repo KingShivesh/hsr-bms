@@ -1,0 +1,200 @@
+{
+  "base": "https://hsr-bms.vercel.app",
+  "method": "Anonymous login only. No credentials entered, no login attempt, no mutation.",
+  "samples": [
+    {
+      "theme": "dark",
+      "width": 1440,
+      "bodyFont": "\"Syne Variable\", Syne, sans-serif",
+      "canvas": "rgb(11, 11, 15)",
+      "fontLoaded": true,
+      "titleSize": "24px",
+      "buttonHeight": 36,
+      "overflow": 0,
+      "leadingIcons": [
+        {
+          "textStart": 905.796875,
+          "iconRight": 895.796875,
+          "gap": 10
+        },
+        {
+          "textStart": 905.796875,
+          "iconRight": 895.796875,
+          "gap": 10
+        }
+      ],
+      "placeholderPixels": [
+        {
+          "firstInk": 43,
+          "expectedInset": 40
+        },
+        {
+          "firstInk": 43,
+          "expectedInset": 40
+        }
+      ]
+    },
+    {
+      "theme": "dark",
+      "width": 375,
+      "bodyFont": "\"Syne Variable\", Syne, sans-serif",
+      "canvas": "rgb(11, 11, 15)",
+      "fontLoaded": true,
+      "titleSize": "24px",
+      "buttonHeight": 44,
+      "overflow": 0,
+      "leadingIcons": [
+        {
+          "textStart": 73,
+          "iconRight": 63,
+          "gap": 10
+        },
+        {
+          "textStart": 73,
+          "iconRight": 63,
+          "gap": 10
+        }
+      ],
+      "placeholderPixels": [
+        {
+          "firstInk": 42,
+          "expectedInset": 40
+        },
+        {
+          "firstInk": 42,
+          "expectedInset": 40
+        }
+      ]
+    },
+    {
+      "theme": "dark",
+      "width": 414,
+      "bodyFont": "\"Syne Variable\", Syne, sans-serif",
+      "canvas": "rgb(11, 11, 15)",
+      "fontLoaded": true,
+      "titleSize": "24px",
+      "buttonHeight": 44,
+      "overflow": 0,
+      "leadingIcons": [
+        {
+          "textStart": 73,
+          "iconRight": 63,
+          "gap": 10
+        },
+        {
+          "textStart": 73,
+          "iconRight": 63,
+          "gap": 10
+        }
+      ],
+      "placeholderPixels": [
+        {
+          "firstInk": 42,
+          "expectedInset": 40
+        },
+        {
+          "firstInk": 42,
+          "expectedInset": 40
+        }
+      ]
+    },
+    {
+      "theme": "light",
+      "width": 1440,
+      "bodyFont": "\"Syne Variable\", Syne, sans-serif",
+      "canvas": "rgb(250, 250, 250)",
+      "fontLoaded": true,
+      "titleSize": "24px",
+      "buttonHeight": 36,
+      "overflow": 0,
+      "leadingIcons": [
+        {
+          "textStart": 905.796875,
+          "iconRight": 895.796875,
+          "gap": 10
+        },
+        {
+          "textStart": 905.796875,
+          "iconRight": 895.796875,
+          "gap": 10
+        }
+      ],
+      "placeholderPixels": [
+        {
+          "firstInk": 43,
+          "expectedInset": 40
+        },
+        {
+          "firstInk": 43,
+          "expectedInset": 40
+        }
+      ]
+    },
+    {
+      "theme": "light",
+      "width": 375,
+      "bodyFont": "\"Syne Variable\", Syne, sans-serif",
+      "canvas": "rgb(250, 250, 250)",
+      "fontLoaded": true,
+      "titleSize": "24px",
+      "buttonHeight": 44,
+      "overflow": 0,
+      "leadingIcons": [
+        {
+          "textStart": 73,
+          "iconRight": 63,
+          "gap": 10
+        },
+        {
+          "textStart": 73,
+          "iconRight": 63,
+          "gap": 10
+        }
+      ],
+      "placeholderPixels": [
+        {
+          "firstInk": 42,
+          "expectedInset": 40
+        },
+        {
+          "firstInk": 42,
+          "expectedInset": 40
+        }
+      ]
+    },
+    {
+      "theme": "light",
+      "width": 414,
+      "bodyFont": "\"Syne Variable\", Syne, sans-serif",
+      "canvas": "rgb(250, 250, 250)",
+      "fontLoaded": true,
+      "titleSize": "24px",
+      "buttonHeight": 44,
+      "overflow": 0,
+      "leadingIcons": [
+        {
+          "textStart": 73,
+          "iconRight": 63,
+          "gap": 10
+        },
+        {
+          "textStart": 73,
+          "iconRight": 63,
+          "gap": 10
+        }
+      ],
+      "placeholderPixels": [
+        {
+          "firstInk": 42,
+          "expectedInset": 40
+        },
+        {
+          "firstInk": 42,
+          "expectedInset": 40
+        }
+      ]
+    }
+  ],
+  "violations": [],
+  "errors": []
+}
