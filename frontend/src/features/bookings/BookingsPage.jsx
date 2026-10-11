@@ -1,3 +1,4 @@
+import { Icon as HsrIcon, Button as HsrButton, Input as HsrInput, Select as HsrSelect, Textarea as HsrTextarea } from "../../components/ui/index.js";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   cancelBooking,
@@ -65,7 +66,7 @@ function BookingSkeleton() {
   return (
     <div className="page-skeleton compact" role="status" aria-live="polite" aria-label="Loading bookings">
       <div className="page-skeleton-status">
-        <i className="ti ti-loader-2" aria-hidden="true" />
+        <HsrIcon className="ti ti-loader-2" aria-hidden="true" />
         <span>Loading bookings...</span>
       </div>
       <div className="skeleton-grid">
@@ -89,14 +90,14 @@ function BookingModal({ form, setForm, saving, onClose, onSubmit }) {
             <span className="lf-eyebrow">Booking</span>
             <h3>Reserve a table</h3>
           </div>
-          <button type="button" className="lf-icon-button" onClick={onClose} aria-label="Close booking form">
-            <i className="ti ti-x" aria-hidden="true" />
-          </button>
+          <HsrButton native type="button" className="lf-icon-button" onClick={onClose} aria-label="Close booking form">
+            <HsrIcon className="ti ti-x" aria-hidden="true" />
+          </HsrButton>
         </div>
 
         <label className="lf-field">
           <span>Customer name</span>
-          <input
+          <HsrInput
             required
             value={form.customer_name}
             onChange={(event) => setForm((prev) => ({ ...prev, customer_name: event.target.value }))}
@@ -106,7 +107,7 @@ function BookingModal({ form, setForm, saving, onClose, onSubmit }) {
 
         <label className="lf-field">
           <span>Phone</span>
-          <input
+          <HsrInput
             value={form.phone}
             onChange={(event) => setForm((prev) => ({ ...prev, phone: event.target.value }))}
             placeholder="Optional"
@@ -116,7 +117,7 @@ function BookingModal({ form, setForm, saving, onClose, onSubmit }) {
         <div className="op2-form-grid">
           <label className="lf-field">
             <span>Table</span>
-            <select
+            <HsrSelect
               value={form.table_id}
               onChange={(event) => {
                 const table = HSR_TABLES.find((row) => row.id.toUpperCase() === event.target.value);
@@ -133,25 +134,25 @@ function BookingModal({ form, setForm, saving, onClose, onSubmit }) {
                   T{table.num} · {table.label}
                 </option>
               ))}
-            </select>
+            </HsrSelect>
           </label>
           <label className="lf-field">
             <span>Table type</span>
-            <select
+            <HsrSelect
               value={form.table_type}
               onChange={(event) => setForm((prev) => ({ ...prev, table_type: event.target.value }))}
             >
               <option value="ANY">Any</option>
               <option value="SNOOKER">Snooker</option>
               <option value="POOL">Pool</option>
-            </select>
+            </HsrSelect>
           </label>
         </div>
 
         <div className="op2-form-grid">
           <label className="lf-field">
             <span>Date and time</span>
-            <input
+            <HsrInput
               required
               type="datetime-local"
               value={form.booking_time}
@@ -160,7 +161,7 @@ function BookingModal({ form, setForm, saving, onClose, onSubmit }) {
           </label>
           <label className="lf-field">
             <span>Duration</span>
-            <input
+            <HsrInput
               type="number"
               min="30"
               step="15"
@@ -172,7 +173,7 @@ function BookingModal({ form, setForm, saving, onClose, onSubmit }) {
 
         <label className="lf-field">
           <span>Notes</span>
-          <textarea
+          <HsrTextarea
             value={form.notes}
             onChange={(event) => setForm((prev) => ({ ...prev, notes: event.target.value }))}
             placeholder="Advance paid, preferred table, reminder note"
@@ -180,11 +181,11 @@ function BookingModal({ form, setForm, saving, onClose, onSubmit }) {
         </label>
 
         <div className="op2-modal-actions">
-          <button type="button" className="lf-secondary-button" onClick={onClose}>Discard Booking</button>
-          <button type="submit" className="lf-primary-button" disabled={saving}>
-            <i className="ti ti-calendar-plus" aria-hidden="true" />
+          <HsrButton native type="button" className="lf-secondary-button" onClick={onClose}>Discard Booking</HsrButton>
+          <HsrButton native type="submit" className="lf-primary-button" disabled={saving}>
+            <HsrIcon className="ti ti-calendar-plus" aria-hidden="true" />
             {saving ? "Creating..." : "Create booking"}
-          </button>
+          </HsrButton>
         </div>
       </form>
     </div>
@@ -392,10 +393,10 @@ export default function BookingsPage({ onNavigate }) {
           <h1>Reservation desk</h1>
           <p>Plan table commitments, protect peak hours and spot no-shows before they become counter confusion.</p>
         </div>
-        <button type="button" className="lf-primary-button" onClick={() => setShowModal(true)}>
-          <i className="ti ti-calendar-plus" aria-hidden="true" />
+        <HsrButton native type="button" className="lf-primary-button" onClick={() => setShowModal(true)}>
+          <HsrIcon className="ti ti-calendar-plus" aria-hidden="true" />
           New booking
-        </button>
+        </HsrButton>
       </div>
 
       <div className="op2-metric-grid">
@@ -460,11 +461,11 @@ export default function BookingsPage({ onNavigate }) {
             <h2>Booking list</h2>
           </div>
           <div className="op2-controls">
-            <input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search booking..." />
+            <HsrInput value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search booking..." />
             {["booked", "missed", "all"].map((status) => (
-              <button type="button" key={status} className={filter === status ? "active" : ""} onClick={() => setFilter(status)}>
+              <HsrButton native type="button" key={status} className={filter === status ? "active" : ""} onClick={() => setFilter(status)}>
                 {status}
-              </button>
+              </HsrButton>
             ))}
           </div>
         </div>
@@ -483,22 +484,22 @@ export default function BookingsPage({ onNavigate }) {
                   <time>{shortDate(booking.booking_time)}</time>
                   <em data-status={booking.status}>{booking.status}</em>
                   <div className="op2-row-actions">
-                    <button
+                    <HsrButton native
                       type="button"
                       className="lf-primary-button"
                       disabled={busy === `checkin-${booking.id}` || booking.status !== "booked" || !target}
                       onClick={() => checkInBooking(booking)}
                     >
                       {busy === `checkin-${booking.id}` ? "Checking in..." : target ? `Check in T${target.table.num}` : "No table"}
-                    </button>
-                    <button
+                    </HsrButton>
+                    <HsrButton native
                       type="button"
                       className="lf-danger-button"
                       disabled={busy === `cancel-${booking.id}` || booking.status !== "booked"}
                       onClick={() => cancelExistingBooking(booking)}
                     >
                       {busy === `cancel-${booking.id}` ? "Cancelling..." : "Cancel Booking"}
-                    </button>
+                    </HsrButton>
                   </div>
                 </article>
               );
@@ -506,13 +507,13 @@ export default function BookingsPage({ onNavigate }) {
           </div>
         ) : (
           <div className="op2-empty">
-            <i className="ti ti-calendar-check" aria-hidden="true" />
+            <HsrIcon className="ti ti-calendar-check" aria-hidden="true" />
             <strong>No bookings found</strong>
             <span>Create a reservation or adjust the filter.</span>
-            <button type="button" className="lf-primary-button empty-action-button" onClick={() => setShowModal(true)}>
-              <i className="ti ti-calendar-plus" aria-hidden="true" />
+            <HsrButton native type="button" className="lf-primary-button empty-action-button" onClick={() => setShowModal(true)}>
+              <HsrIcon className="ti ti-calendar-plus" aria-hidden="true" />
               New Booking
-            </button>
+            </HsrButton>
           </div>
         )}
       </section>

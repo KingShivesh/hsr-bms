@@ -1,3 +1,5 @@
+import { formatCurrency as polishCurrency, formatDateTime as polishDateTime } from "../../utils/format.js";
+import { Icon as HsrIcon, Button as HsrButton, Input as HsrInput } from "../../components/ui/index.js";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { quoteSession, stopSession } from "../../api/index.js";
 import { Alert, Badge, Button, Drawer } from "../../components/ui/index.js";
@@ -17,9 +19,7 @@ const DISCOUNT_OPTIONS = [
   { id: "rupee", label: "₹ off" },
 ];
 
-function money(value) {
-  return `₹${Number(value || 0).toLocaleString("en-IN")}`;
-}
+function money(value) { return polishCurrency(value); }
 
 function sanitizeRupeeDiscount(value) {
   const digits = String(value ?? "").replace(/\D/g, "");
@@ -27,17 +27,7 @@ function sanitizeRupeeDiscount(value) {
   return String(Math.min(parseInt(digits, 10), 50));
 }
 
-function formatDateTime(ms) {
-  if (!ms) return "-";
-  const date = new Date(Number(ms));
-  if (Number.isNaN(date.getTime())) return "-";
-  return date.toLocaleString("en-IN", {
-    day: "2-digit",
-    month: "short",
-    hour: "2-digit",
-    minute: "2-digit",
-  });
-}
+function formatDateTime(ms) { return polishDateTime(ms); }
 
 function splitSummary(rec) {
   const rows = Array.isArray(rec?.player_breakdown) ? rec.player_breakdown : [];
@@ -194,7 +184,7 @@ export default function CheckoutPanel({ table, open, onClose, onComplete }) {
       {receipt ? (
         <div className="checkout-success">
           <div className="checkout-success-mark">
-            <i className="ti ti-circle-check" aria-hidden="true" />
+            <HsrIcon className="ti ti-circle-check" aria-hidden="true" />
           </div>
           <div>
             <span className="lf-eyebrow">Receipt</span>
@@ -233,7 +223,7 @@ export default function CheckoutPanel({ table, open, onClose, onComplete }) {
                   <p>{quote.nm || `${quote.tbl || tableId.toUpperCase()} · Guest`} · {quote.tariff_mode && quote.tariff_mode !== "hourly" ? tariffDescription(quote) : `${quote.dur || 0} billable min`}</p>
                 </div>
                 <div className="checkout-freeze-pill">
-                  <i className="ti ti-snowflake" aria-hidden="true" />
+                  <HsrIcon className="ti ti-snowflake" aria-hidden="true" />
                   Frozen {formatDateTime(quote.session_ended_at || closedAtMs)}
                 </div>
               </div>
@@ -276,19 +266,19 @@ export default function CheckoutPanel({ table, open, onClose, onComplete }) {
                 </div>
                 <div className="checkout-button-grid">
                   {DISCOUNT_OPTIONS.map((option) => (
-                    <button
+                    <HsrButton native
                       key={option.id}
                       type="button"
                       className={discountType === option.id ? "is-active" : ""}
                       onClick={() => handleDiscountType(option.id)}
                     >
                       {option.label}
-                    </button>
+                    </HsrButton>
                   ))}
                 </div>
                 {discountType === "rupee" && (
                   <div className="checkout-inline-form">
-                    <input
+                    <HsrInput
                       type="text"
                       inputMode="numeric"
                       value={discountValue}
@@ -303,7 +293,7 @@ export default function CheckoutPanel({ table, open, onClose, onComplete }) {
                 {discountType !== "none" && (
                   <label className="checkout-field">
                     <span>Reason</span>
-                    <input
+                    <HsrInput
                       value={discountReason}
                       onChange={(event) => setDiscountReason(event.target.value)}
                       placeholder="Owner approved / service issue"
@@ -319,15 +309,15 @@ export default function CheckoutPanel({ table, open, onClose, onComplete }) {
                 </div>
                 <div className="checkout-payment-grid">
                   {PAYMENT_METHODS.map((method) => (
-                    <button
+                    <HsrButton native
                       key={method.id}
                       type="button"
                       className={paymentMethod === method.id ? "is-active" : ""}
                       onClick={() => handlePaymentChange(method.id)}
                     >
-                      <i className={`ti ${method.icon}`} aria-hidden="true" />
+                      <HsrIcon className={`ti ${method.icon}`} aria-hidden="true" />
                       <span>{method.label}</span>
-                    </button>
+                    </HsrButton>
                   ))}
                 </div>
               </section>

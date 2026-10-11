@@ -1,3 +1,5 @@
+import { formatCurrency as polishCurrency } from "../../utils/format.js";
+import { Icon as HsrIcon, Button as HsrButton, Select as HsrSelect, Input as HsrInput, Textarea as HsrTextarea } from "../ui/index.js";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   addMenuItem,
@@ -29,9 +31,7 @@ import { useToast } from "../toastContext.js";
 import { useConfirm } from "../confirmContext.js";
 import { useRealtimeSubscription } from "../../realtime/useRealtimeSubscription.js";
 
-function money(value = 0) {
-  return `₹${Number(value || 0).toLocaleString("en-IN")}`;
-}
+function money(value = 0) { return polishCurrency(value); }
 
 function asArray(value) {
   if (Array.isArray(value)) return value;
@@ -151,7 +151,7 @@ function WorkspaceLoading() {
     <div className="cf-page">
       <div className="page-skeleton compact" role="status" aria-live="polite" aria-label="Loading workspace data">
         <div className="page-skeleton-status">
-          <i className="ti ti-loader-2" aria-hidden="true" />
+          <HsrIcon className="ti ti-loader-2" aria-hidden="true" />
           <span>Loading workspace data...</span>
         </div>
         <div className="skeleton-line skeleton-title" />
@@ -170,21 +170,21 @@ function LoadErrorBanner({ message, onRetry }) {
   if (!message) return null;
   return (
     <div className="load-error-banner" role="alert">
-      <i className="ti ti-alert-circle" aria-hidden="true" />
+      <HsrIcon className="ti ti-alert-circle" aria-hidden="true" />
       <span>{message}</span>
-      <button type="button" onClick={onRetry}>
+      <HsrButton native type="button" onClick={onRetry}>
         Retry
-      </button>
+      </HsrButton>
     </div>
   );
 }
 
 function ActionButton({ tone = "default", icon, children, className = "", ...props }) {
   return (
-    <button type="button" className={["cf-action-btn", tone, className].filter(Boolean).join(" ")} {...props}>
-      {icon && <i className={`ti ${icon}`} aria-hidden="true" />}
+    <HsrButton native type="button" className={["cf-action-btn", tone, className].filter(Boolean).join(" ")} {...props}>
+      {icon && <HsrIcon className={`ti ${icon}`} aria-hidden="true" />}
       <span>{children}</span>
-    </button>
+    </HsrButton>
   );
 }
 
@@ -257,9 +257,9 @@ function Modal({ title, onClose, children }) {
       >
         <div className="cf-modal-head">
           <h3 id={titleId}>{title}</h3>
-          <button ref={closeRef} type="button" onClick={onClose} aria-label="Close">
-            <i className="ti ti-x" aria-hidden="true" />
-          </button>
+          <HsrButton native ref={closeRef} type="button" onClick={onClose} aria-label="Close">
+            <HsrIcon className="ti ti-x" aria-hidden="true" />
+          </HsrButton>
         </div>
         {children}
       </div>
@@ -283,7 +283,7 @@ function Stat({ label, value }) {
 function EmptyState({ icon = "ti-info-circle", title, detail }) {
   return (
     <div className="cf-empty">
-      <i className={`ti ${icon}`} aria-hidden="true" />
+      <HsrIcon className={`ti ${icon}`} aria-hidden="true" />
       <strong>{title}</strong>
       <span>{detail}</span>
     </div>
@@ -304,7 +304,7 @@ function RowList({ rows, emptyTitle = "Nothing pending", emptyDetail = "New acti
     <div className="cf-row-list">
       {rows.map((row) => (
         <div className={`cf-row ${row.tone || ""}`} key={row.id}>
-          <i className={`ti ${row.icon}`} aria-hidden="true" />
+          <HsrIcon className={`ti ${row.icon}`} aria-hidden="true" />
           <div>
             <strong>{row.title}</strong>
             <span>{row.detail}</span>
@@ -380,7 +380,7 @@ function WaitlistView({ waitlist, bookings, activeSessions, maintenance, actions
               detail: `${entry.party_size} player(s) · ${entry.preferred_type || "Any table"} · ${entry.wait_mins || 0} min wait`,
               action: (
                 <div className="cf-row-actions">
-                  <select
+                  <HsrSelect
                     value={seatTarget[entry.id] || entry.recommended_table?.id || availableTables[0]?.id || ""}
                     onChange={(event) => setSeatTarget((prev) => ({ ...prev, [entry.id]: event.target.value }))}
                     disabled={busy}
@@ -391,7 +391,7 @@ function WaitlistView({ waitlist, bookings, activeSessions, maintenance, actions
                         T{table.num} · {table.label}
                       </option>
                     ))}
-                  </select>
+                  </HsrSelect>
                   <ActionButton tone="success" icon="ti-armchair" onClick={() => seatEntry(entry)} disabled={busy}>
                     {activeAction === `wait-seat-${entry.id}` ? "Seating..." : "Seat"}
                   </ActionButton>
@@ -420,7 +420,7 @@ function WaitlistView({ waitlist, bookings, activeSessions, maintenance, actions
         <Modal title="Add Walk-in Guest" onClose={() => setShowAdd(false)}>
           <form className="cf-form" onSubmit={submitWaitlist}>
             <FormField label="Customer full name">
-              <input
+              <HsrInput
                 required
                 value={form.customer_name}
                 onChange={(event) => setForm((prev) => ({ ...prev, customer_name: event.target.value }))}
@@ -428,7 +428,7 @@ function WaitlistView({ waitlist, bookings, activeSessions, maintenance, actions
               />
             </FormField>
             <FormField label="Phone">
-              <input
+              <HsrInput
                 value={form.phone}
                 onChange={(event) => setForm((prev) => ({ ...prev, phone: event.target.value }))}
                 placeholder="Optional"
@@ -436,7 +436,7 @@ function WaitlistView({ waitlist, bookings, activeSessions, maintenance, actions
             </FormField>
             <div className="cf-form-grid">
               <FormField label="Players">
-                <input
+                <HsrInput
                   type="number"
                   min="1"
                   value={form.party_size}
@@ -444,18 +444,18 @@ function WaitlistView({ waitlist, bookings, activeSessions, maintenance, actions
                 />
               </FormField>
               <FormField label="Preferred table">
-                <select
+                <HsrSelect
                   value={form.preferred_type}
                   onChange={(event) => setForm((prev) => ({ ...prev, preferred_type: event.target.value }))}
                 >
                   <option value="ANY">Any</option>
                   <option value="SNOOKER">Snooker</option>
                   <option value="POOL">Pool</option>
-                </select>
+                </HsrSelect>
               </FormField>
             </div>
             <FormField label="Notes">
-              <textarea
+              <HsrTextarea
                 value={form.notes}
                 onChange={(event) => setForm((prev) => ({ ...prev, notes: event.target.value }))}
                 placeholder="Preference, regular customer, callback note"
@@ -463,10 +463,10 @@ function WaitlistView({ waitlist, bookings, activeSessions, maintenance, actions
             </FormField>
             <div className="cf-modal-actions">
               <ActionButton onClick={() => setShowAdd(false)}>Discard Walk-in</ActionButton>
-              <button className="cf-action-btn primary" type="submit" disabled={busy}>
-                <i className="ti ti-user-plus" aria-hidden="true" />
+              <HsrButton native className="cf-action-btn primary" type="submit" disabled={busy}>
+                <HsrIcon className="ti ti-user-plus" aria-hidden="true" />
                 <span>{activeAction === "wait-add" ? "Adding..." : "Add Walk-in"}</span>
-              </button>
+              </HsrButton>
             </div>
           </form>
         </Modal>
@@ -520,14 +520,14 @@ function ReservationsView({ bookings, tableState, actions, busy, activeAction })
         </div>
         <div className="cf-toolbar-actions">
           {["all", "booked", "missed"].map((status) => (
-            <button
+            <HsrButton native
               type="button"
               key={status}
               className={filter === status ? "active" : ""}
               onClick={() => setFilter(status)}
             >
               {status}
-            </button>
+            </HsrButton>
           ))}
           <ActionButton tone="primary" icon="ti-calendar-plus" onClick={() => setShowAdd(true)}>
             New Reservation
@@ -600,7 +600,7 @@ function ReservationsView({ bookings, tableState, actions, busy, activeAction })
         <Modal title="New Reservation" onClose={() => setShowAdd(false)}>
           <form className="cf-form" onSubmit={submitBooking}>
             <FormField label="Customer full name">
-              <input
+              <HsrInput
                 required
                 value={form.customer_name}
                 onChange={(event) => setForm((prev) => ({ ...prev, customer_name: event.target.value }))}
@@ -608,7 +608,7 @@ function ReservationsView({ bookings, tableState, actions, busy, activeAction })
               />
             </FormField>
             <FormField label="Phone">
-              <input
+              <HsrInput
                 value={form.phone}
                 onChange={(event) => setForm((prev) => ({ ...prev, phone: event.target.value }))}
                 placeholder="Optional"
@@ -616,7 +616,7 @@ function ReservationsView({ bookings, tableState, actions, busy, activeAction })
             </FormField>
             <div className="cf-form-grid">
               <FormField label="Table">
-                <select
+                <HsrSelect
                   value={form.table_id}
                   onChange={(event) => {
                     const table = HSR_TABLES.find((row) => row.id.toUpperCase() === event.target.value);
@@ -633,22 +633,22 @@ function ReservationsView({ bookings, tableState, actions, busy, activeAction })
                       T{table.num} · {table.label}
                     </option>
                   ))}
-                </select>
+                </HsrSelect>
               </FormField>
               <FormField label="Table type">
-                <select
+                <HsrSelect
                   value={form.table_type}
                   onChange={(event) => setForm((prev) => ({ ...prev, table_type: event.target.value }))}
                 >
                   <option value="ANY">Any</option>
                   <option value="SNOOKER">Snooker</option>
                   <option value="POOL">Pool</option>
-                </select>
+                </HsrSelect>
               </FormField>
             </div>
             <div className="cf-form-grid">
               <FormField label="Date and time">
-                <input
+                <HsrInput
                   required
                   type="datetime-local"
                   value={form.booking_time}
@@ -656,7 +656,7 @@ function ReservationsView({ bookings, tableState, actions, busy, activeAction })
                 />
               </FormField>
               <FormField label="Duration">
-                <input
+                <HsrInput
                   type="number"
                   min="30"
                   step="15"
@@ -666,7 +666,7 @@ function ReservationsView({ bookings, tableState, actions, busy, activeAction })
               </FormField>
             </div>
             <FormField label="Notes">
-              <textarea
+              <HsrTextarea
                 value={form.notes}
                 onChange={(event) => setForm((prev) => ({ ...prev, notes: event.target.value }))}
                 placeholder="Advance, preference, phone reminder"
@@ -674,10 +674,10 @@ function ReservationsView({ bookings, tableState, actions, busy, activeAction })
             </FormField>
             <div className="cf-modal-actions">
               <ActionButton onClick={() => setShowAdd(false)}>Discard Booking</ActionButton>
-              <button className="cf-action-btn primary" type="submit" disabled={busy}>
-                <i className="ti ti-calendar-plus" aria-hidden="true" />
+              <HsrButton native className="cf-action-btn primary" type="submit" disabled={busy}>
+                <HsrIcon className="ti ti-calendar-plus" aria-hidden="true" />
                 <span>{activeAction === "booking-create" ? "Creating..." : "Create Booking"}</span>
-              </button>
+              </HsrButton>
             </div>
           </form>
         </Modal>
@@ -908,7 +908,7 @@ function InventoryView({ menu, maintenance, actions, busy, activeAction, showToa
           {menu.length > 0 && (
             <div className={`cf-bulk-bar${selectedCount || bulkResult ? " is-active" : ""}`} aria-live="polite">
               <label className="cf-select-all">
-                <input
+                <HsrInput
                   type="checkbox"
                   checked={allVisibleSelected}
                   onChange={(event) => toggleAllVisible(event.target.checked)}
@@ -974,7 +974,7 @@ function InventoryView({ menu, maintenance, actions, busy, activeAction, showToa
                 key={item.name}
               >
                 <label className="cf-row-select">
-                  <input
+                  <HsrInput
                     type="checkbox"
                     checked={selectedItems.has(item.name)}
                     onChange={(event) => toggleItemSelection(item.name, event.target.checked)}
@@ -1040,7 +1040,7 @@ function InventoryView({ menu, maintenance, actions, busy, activeAction, showToa
           title="Table Maintenance"
           action={
             <form className="cf-inline-form" onSubmit={submitMaintenance}>
-              <select
+              <HsrSelect
                 value={maintenanceForm.table_id}
                 onChange={(event) => setMaintenanceForm((prev) => ({ ...prev, table_id: event.target.value }))}
               >
@@ -1049,16 +1049,16 @@ function InventoryView({ menu, maintenance, actions, busy, activeAction, showToa
                     T{table.num}
                   </option>
                 ))}
-              </select>
-              <input
+              </HsrSelect>
+              <HsrInput
                 value={maintenanceForm.reason}
                 onChange={(event) => setMaintenanceForm((prev) => ({ ...prev, reason: event.target.value }))}
                 placeholder="Reason"
               />
-              <button className="cf-action-btn warning" type="submit" disabled={busy}>
-                <i className="ti ti-tool" aria-hidden="true" />
+              <HsrButton native className="cf-action-btn warning" type="submit" disabled={busy}>
+                <HsrIcon className="ti ti-tool" aria-hidden="true" />
                 <span>{activeAction === "maintenance-set" ? "Saving..." : "Mark"}</span>
-              </button>
+              </HsrButton>
             </form>
           }
         >
@@ -1090,7 +1090,7 @@ function InventoryView({ menu, maintenance, actions, busy, activeAction, showToa
         <Modal title="Add Menu Item" onClose={() => setShowAdd(false)}>
           <form className="cf-form" onSubmit={submitMenuItem}>
             <FormField label="Item name">
-              <input
+              <HsrInput
                 required
                 value={menuForm.name}
                 onChange={(event) => setMenuForm((prev) => ({ ...prev, name: event.target.value }))}
@@ -1099,7 +1099,7 @@ function InventoryView({ menu, maintenance, actions, busy, activeAction, showToa
             </FormField>
             <div className="cf-form-grid">
               <FormField label="Price">
-                <input
+                <HsrInput
                   required
                   type="number"
                   min="0"
@@ -1108,22 +1108,22 @@ function InventoryView({ menu, maintenance, actions, busy, activeAction, showToa
                 />
               </FormField>
               <FormField label="Category">
-                <select
+                <HsrSelect
                   value={menuForm.category}
                   onChange={(event) => setMenuForm((prev) => ({ ...prev, category: event.target.value }))}
                 >
                   {categories.map((category) => (
                     <option value={category} key={category}>{category}</option>
                   ))}
-                </select>
+                </HsrSelect>
               </FormField>
             </div>
             <div className="cf-modal-actions">
               <ActionButton onClick={() => setShowAdd(false)}>Discard Menu Item</ActionButton>
-              <button className="cf-action-btn primary" type="submit" disabled={busy}>
-                <i className="ti ti-package-plus" aria-hidden="true" />
+              <HsrButton native className="cf-action-btn primary" type="submit" disabled={busy}>
+                <HsrIcon className="ti ti-package-plus" aria-hidden="true" />
                 <span>{activeAction === "menu-add" ? "Adding..." : "Add Menu Item"}</span>
-              </button>
+              </HsrButton>
             </div>
           </form>
         </Modal>
@@ -1132,7 +1132,7 @@ function InventoryView({ menu, maintenance, actions, busy, activeAction, showToa
         <Modal title="Edit Menu Item" onClose={() => setEditing(null)}>
           <form className="cf-form" onSubmit={submitEdit}>
             <FormField label="Item name">
-              <input
+              <HsrInput
                 required
                 value={editing.newName}
                 onChange={(event) => setEditing((prev) => ({ ...prev, newName: event.target.value }))}
@@ -1140,7 +1140,7 @@ function InventoryView({ menu, maintenance, actions, busy, activeAction, showToa
             </FormField>
             <div className="cf-form-grid">
               <FormField label="Price">
-                <input
+                <HsrInput
                   required
                   type="number"
                   min="0"
@@ -1149,22 +1149,22 @@ function InventoryView({ menu, maintenance, actions, busy, activeAction, showToa
                 />
               </FormField>
               <FormField label="Category">
-                <select
+                <HsrSelect
                   value={editing.category}
                   onChange={(event) => setEditing((prev) => ({ ...prev, category: event.target.value }))}
                 >
                   {categories.map((category) => (
                     <option value={category} key={category}>{category}</option>
                   ))}
-                </select>
+                </HsrSelect>
               </FormField>
             </div>
             <div className="cf-modal-actions">
               <ActionButton onClick={() => setEditing(null)}>Discard Changes</ActionButton>
-              <button className="cf-action-btn primary" type="submit" disabled={busy}>
-                <i className="ti ti-device-floppy" aria-hidden="true" />
+              <HsrButton native className="cf-action-btn primary" type="submit" disabled={busy}>
+                <HsrIcon className="ti ti-device-floppy" aria-hidden="true" />
                 <span>{activeAction === `menu-edit-${editing.oldName}` ? "Saving..." : "Save Menu Item"}</span>
-              </button>
+              </HsrButton>
             </div>
           </form>
         </Modal>

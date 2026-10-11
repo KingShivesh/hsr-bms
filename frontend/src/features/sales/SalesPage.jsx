@@ -1,3 +1,5 @@
+import { formatCurrency as polishCurrency } from "../../utils/format.js";
+import { Icon as HsrIcon, Button as HsrButton, Input as HsrInput, Table as HsrTable } from "../../components/ui/index.js";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { getFoodOrders, getHistory } from "../../api/index.js";
 import RetryNotice from "../../components/RetryNotice.jsx";
@@ -19,9 +21,7 @@ function asArray(value) {
   return Array.isArray(value) ? value : [];
 }
 
-function money(value = 0) {
-  return `₹${Number(value || 0).toLocaleString("en-IN")}`;
-}
+function money(value = 0) { return polishCurrency(value); }
 
 function billTotal(row) {
   return Number(row?.tot ?? row?.total ?? row?.amount ?? 0);
@@ -53,7 +53,7 @@ function SalesSkeleton() {
   return (
     <div className="page-skeleton compact" role="status" aria-live="polite" aria-label="Loading sales">
       <div className="page-skeleton-status">
-        <i className="ti ti-loader-2" aria-hidden="true" />
+        <HsrIcon className="ti ti-loader-2" aria-hidden="true" />
         <span>Loading sales register...</span>
       </div>
       <div className="skeleton-line skeleton-title" />
@@ -179,10 +179,10 @@ export default function SalesPage() {
           <h1>Sales register</h1>
           <p>Completed table sessions, counter orders, payment mix and receipt-level detail.</p>
         </div>
-        <button type="button" className="lf-secondary-button" onClick={() => window.print()}>
-          <i className="ti ti-printer" aria-hidden="true" />
+        <HsrButton native type="button" className="lf-secondary-button" onClick={() => window.print()}>
+          <HsrIcon className="ti ti-printer" aria-hidden="true" />
           Print register
-        </button>
+        </HsrButton>
       </div>
 
       {error && (
@@ -209,7 +209,7 @@ export default function SalesPage() {
             <h2>Recent sales</h2>
           </div>
           <div className="op2-controls">
-            <input
+            <HsrInput
               value={query}
               onChange={(event) => setQuery(event.target.value)}
               placeholder="Search customer, table, payment..."
@@ -219,7 +219,7 @@ export default function SalesPage() {
 
         {rows.length ? (
           <div className="sales-table-wrap">
-            <table className="sales-table">
+            <HsrTable className="sales-table">
               <thead>
                 <tr>
                   <th>Receipt</th>
@@ -228,8 +228,8 @@ export default function SalesPage() {
                   <th>Payment</th>
                   <th>Duration</th>
                   <th>Table</th>
-                  <th>Food</th>
-                  <th>Total</th>
+                  <th data-type="number">Food</th>
+                  <th data-type="number">Total</th>
                 </tr>
               </thead>
               <tbody>
@@ -243,17 +243,17 @@ export default function SalesPage() {
                     <td>{String(row.tbl || "-").toUpperCase()}</td>
                     <td><em>{paymentMethod(row)}</em></td>
                     <td>{Number(row.dur || 0)}m</td>
-                    <td>{money(billTableCharge(row))}</td>
-                    <td>{money(billFoodCharge(row))}</td>
-                    <td><strong>{money(billTotal(row))}</strong></td>
+                    <td data-type="number">{money(billTableCharge(row))}</td>
+                    <td data-type="number">{money(billFoodCharge(row))}</td>
+                    <td data-type="number"><strong>{money(billTotal(row))}</strong></td>
                   </tr>
                 ))}
               </tbody>
-            </table>
+            </HsrTable>
           </div>
         ) : (
           <div className="op2-empty">
-            <i className="ti ti-receipt" aria-hidden="true" />
+            <HsrIcon className="ti ti-receipt" aria-hidden="true" />
             <strong>No sales found</strong>
             <span>Completed sessions and food orders will appear here after checkout.</span>
           </div>

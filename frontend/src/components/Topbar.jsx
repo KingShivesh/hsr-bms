@@ -1,3 +1,4 @@
+import { Button as HsrButton, Icon as HsrIcon } from "./ui/index.js";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { getAuditLogs, getBookings, getTableState, getWaitlist } from "../api/index.js";
 import { useTheme } from "../hooks/useTheme.js";
@@ -222,12 +223,12 @@ export default function Topbar({
     <header className="topbar cf-topbar">
       <div className="cf-title-block">
         <div className="topbar-breadcrumb">
-          <button type="button" onClick={() => onNavigate?.("dashboard")}>
+          <HsrButton native type="button" onClick={() => onNavigate?.("dashboard")}>
             Dashboard
-          </button>
+          </HsrButton>
           {title !== "Executive Overview" && (
             <>
-              <i className="ti ti-chevron-right" aria-hidden="true" />
+              <HsrIcon className="ti ti-chevron-right" aria-hidden="true" />
               <span>{title}</span>
             </>
           )}
@@ -237,26 +238,26 @@ export default function Topbar({
       </div>
       <div className="topbar-right">
         {primaryAction && (
-          <button
+          <HsrButton native
             type="button"
             className="cf-page-primary-action"
             onClick={runPrimaryAction}
           >
-            <i className={`ti ${primaryAction.icon}`} aria-hidden="true" />
+            <HsrIcon className={`ti ${primaryAction.icon}`} aria-hidden="true" />
             <span>{primaryAction.label}</span>
-          </button>
+          </HsrButton>
         )}
-        <button
+        <HsrButton native
           type="button"
           className="cf-command-pill"
           onClick={() => window.dispatchEvent(new Event("command:open"))}
         >
-          <i className="ti ti-command" aria-hidden="true" />
+          <HsrIcon className="ti ti-command" aria-hidden="true" />
           <span>Search Actions</span>
           <kbd>⌘K</kbd>
-        </button>
+        </HsrButton>
         <div className="cf-notification-wrap" ref={notificationRef}>
-          <button
+          <HsrButton native
             type="button"
             className="topbar-icon-btn cf-notification-btn"
             onClick={() => setNotificationsOpen((open) => !open)}
@@ -265,9 +266,9 @@ export default function Topbar({
             aria-expanded={notificationsOpen}
             aria-haspopup="dialog"
           >
-            <i className="ti ti-bell" aria-hidden="true" />
+            <HsrIcon className="ti ti-bell" aria-hidden="true" />
             {notificationRows.length > 0 && <span className="cf-notification-dot">{notificationRows.length}</span>}
-          </button>
+          </HsrButton>
           {notificationsOpen && (
             <div className="cf-notification-popover" role="dialog" aria-label="Notifications">
               <div className="cf-notification-head">
@@ -275,9 +276,9 @@ export default function Topbar({
                   <strong>Notifications</strong>
                   <span>Maintenance, waitlist, missed bookings and audit activity</span>
                 </div>
-                <button type="button" onClick={() => setNotificationsOpen(false)} aria-label="Close notifications">
-                  <i className="ti ti-x" aria-hidden="true" />
-                </button>
+                <HsrButton native type="button" onClick={() => setNotificationsOpen(false)} aria-label="Close notifications">
+                  <HsrIcon className="ti ti-x" aria-hidden="true" />
+                </HsrButton>
               </div>
               <div className="cf-notification-stats">
                 <div><span>Alerts</span><strong>{notificationRows.length}</strong></div>
@@ -286,20 +287,20 @@ export default function Topbar({
               </div>
               {notificationsLoading && (
                 <div className="cf-notification-state">
-                  <i className="ti ti-loader-2" aria-hidden="true" />
+                  <HsrIcon className="ti ti-loader-2" aria-hidden="true" />
                   <span>Loading notifications...</span>
                 </div>
               )}
               {notificationsError && (
                 <div className="cf-notification-state error">
-                  <i className="ti ti-alert-triangle" aria-hidden="true" />
+                  <HsrIcon className="ti ti-alert-triangle" aria-hidden="true" />
                   <span>{notificationsError}</span>
                 </div>
               )}
               {!notificationsLoading && !notificationsError && (
                 <div className="cf-notification-list">
                   {notificationRows.length ? notificationRows.map((item) => (
-                    <button
+                    <HsrButton native
                       type="button"
                       className={`cf-notification-row ${item.tone}`}
                       key={item.id}
@@ -308,15 +309,15 @@ export default function Topbar({
                         onNavigate?.(item.page);
                       }}
                     >
-                      <i className={`ti ${item.icon}`} aria-hidden="true" />
+                      <HsrIcon className={`ti ${item.icon}`} aria-hidden="true" />
                       <div>
                         <strong>{item.title}</strong>
                         <span>{item.detail || "No detail"}</span>
                       </div>
-                    </button>
+                    </HsrButton>
                   )) : (
                     <div className="cf-notification-empty">
-                      <i className="ti ti-shield-check" aria-hidden="true" />
+                      <HsrIcon className="ti ti-shield-check" aria-hidden="true" />
                       <strong>No live notifications</strong>
                       <span>Waitlist, booking, maintenance and audit alerts will appear here.</span>
                     </div>
@@ -327,21 +328,21 @@ export default function Topbar({
           )}
         </div>
         <div className={`topbar-user-chip ${role === "staff" ? "staff" : "admin"}`}>
-          <i className={`ti ${role === "staff" ? "ti-user" : "ti-shield-lock"}`} aria-hidden="true" />
+          <HsrIcon className={`ti ${role === "staff" ? "ti-user" : "ti-shield-lock"}`} aria-hidden="true" />
           <strong>{displayLabel}</strong>
         </div>
         <div className="topbar-date">
-          <i className="ti ti-clock" aria-hidden="true" />
+          <HsrIcon className="ti ti-clock" aria-hidden="true" />
           <span>{dt} · {clock}</span>
         </div>
-        <button
+        <HsrButton native
           className="topbar-icon-btn"
           onClick={toggleTheme}
           title={dark ? "Switch to light mode" : "Switch to dark mode"}
           aria-label={dark ? "Switch to light mode" : "Switch to dark mode"}
         >
-          <i className={`ti ${dark ? "ti-sun" : "ti-moon"}`} aria-hidden="true" />
-        </button>
+          <HsrIcon className={`ti ${dark ? "ti-sun" : "ti-moon"}`} aria-hidden="true" />
+        </HsrButton>
       </div>
     </header>
   );

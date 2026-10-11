@@ -1,4 +1,9 @@
-import { forwardRef } from "react";
+import { Children, forwardRef, isValidElement } from "react";
+import Icon from "./Icon.jsx";
+
+function textLabel(children) {
+  return Children.toArray(children).map(child => isValidElement(child) ? textLabel(child.props.children) : typeof child === "string" || typeof child === "number" ? child : "").join(" ").trim();
+}
 
 export const IconButton = forwardRef(function IconButton({
   label,
@@ -29,9 +34,12 @@ export const IconButton = forwardRef(function IconButton({
       disabled={disabled || loading}
       aria-label={label}
       aria-busy={loading || undefined}
+      data-loading={loading || undefined}
+      title={props.title || label}
+      data-tooltip={props.title || label}
       {...props}
     >
-      <i className={`ti ${loading ? "ti-loader-2 ui-button-spinner" : icon}`} aria-hidden="true" />
+      <Icon className={`ti ${loading ? "ti-loader-2 ui-button-spinner" : icon}`} />
       {children}
     </button>
   );
@@ -46,12 +54,13 @@ const Button = forwardRef(function Button({
   loading = false,
   className = "",
   disabled,
-  type = "button",
+  type,
+  native = false,
   ...props
 }, ref) {
   const classes = [
     "ui-button",
-    `ui-button-${variant}`,
+    native ? "ui-button-native" : `ui-button-${variant}`,
     `ui-button-${size}`,
     loading ? "is-loading" : "",
     className,
@@ -59,20 +68,22 @@ const Button = forwardRef(function Button({
 
   return (
     <button
-      type={type}
+      type={type ?? (native ? undefined : "button")}
       ref={ref}
       className={classes}
       disabled={disabled || loading}
       aria-busy={loading || undefined}
+      aria-label={props["aria-label"] || (loading ? textLabel(children) : undefined)}
+      data-loading={loading || undefined}
+      data-tooltip={props.title || props["aria-label"]}
       {...props}
     >
-      {loading ? (
-        <i className="ti ti-loader-2 ui-button-spinner" aria-hidden="true" />
-      ) : icon ? (
-        <i className={`ti ${icon}`} aria-hidden="true" />
-      ) : null}
-      {children && <span>{children}</span>}
-      {iconRight && !loading ? <i className={`ti ${iconRight}`} aria-hidden="true" /> : null}
+      {native ? children : <span className="ui-button-content">
+        {icon && <Icon className={`ti ${icon}`} />}
+        {children && <span>{children}</span>}
+        {iconRight && <Icon className={`ti ${iconRight}`} />}
+      </span>}
+      {loading && <Icon className="ti ti-loader-2 ui-button-spinner" />}
     </button>
   );
 });

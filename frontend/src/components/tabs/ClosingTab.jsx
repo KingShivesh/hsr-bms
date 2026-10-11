@@ -1,3 +1,5 @@
+import { formatCurrency as polishCurrency } from "../../utils/format.js";
+import { Icon as HsrIcon, Input as HsrInput, Textarea as HsrTextarea, Table as HsrTable } from "../ui/index.js";
 import { useEffect, useState } from "react";
 import { closeDay, getClosingInsights, getClosingReport } from "../../api/index.js";
 import { useToast } from "../toastContext.js";
@@ -5,14 +7,12 @@ import { useConfirm } from "../confirmContext.js";
 import RetryNotice from "../RetryNotice.jsx";
 import { Button } from "../ui/index.js";
 
-function money(value) {
-  return `₹${Number(value || 0).toLocaleString("en-IN")}`;
-}
+function money(value) { return polishCurrency(value); }
 
 function ClosingMetric({ label, value, icon, tone = "neutral" }) {
   return (
     <div className={`closing-metric ${tone}`}>
-      <i className={`ti ${icon}`} aria-hidden="true" />
+      <HsrIcon className={`ti ${icon}`} aria-hidden="true" />
       <div>
         <span>{label}</span>
         <strong>{value}</strong>
@@ -24,7 +24,7 @@ function ClosingMetric({ label, value, icon, tone = "neutral" }) {
 function ChecklistRow({ ok, label, detail }) {
   return (
     <div className={`closing-check-row ${ok ? "ok" : "warn"}`}>
-      <i className={`ti ${ok ? "ti-circle-check" : "ti-alert-circle"}`} aria-hidden="true" />
+      <HsrIcon className={`ti ${ok ? "ti-circle-check" : "ti-alert-circle"}`} aria-hidden="true" />
       <div>
         <strong>{label}</strong>
         {detail && <span>{detail}</span>}
@@ -147,7 +147,7 @@ export default function ClosingTab() {
     return (
       <div className="page-skeleton compact" role="status" aria-live="polite" aria-label="Loading closing checklist">
         <div className="page-skeleton-status">
-          <i className="ti ti-loader-2" aria-hidden="true" />
+          <HsrIcon className="ti ti-loader-2" aria-hidden="true" />
           <span>Loading closing checklist...</span>
         </div>
         <div className="skeleton-line skeleton-title" />
@@ -285,7 +285,7 @@ export default function ClosingTab() {
           <div className="closing-cash-grid">
             <label className="table-field-stack">
               <span>Opening float</span>
-              <input
+              <HsrInput
                 className="table-mini-input"
                 type="number"
                 min="0"
@@ -296,7 +296,7 @@ export default function ClosingTab() {
             </label>
             <label className="table-field-stack">
               <span>Counted cash</span>
-              <input
+              <HsrInput
                 className="table-mini-input"
                 type="number"
                 min="0"
@@ -310,7 +310,7 @@ export default function ClosingTab() {
             Expected cash {money(expectedCash)}
             {variancePreview !== null && ` · Variance ${money(variancePreview)}`}
           </div>
-          <textarea
+          <HsrTextarea
             className="table-notes-textarea closing-notes-input"
             rows={2}
             placeholder="Closing notes"
@@ -326,7 +326,7 @@ export default function ClosingTab() {
           <div className="section-heading">Open Tables</div>
           {data.open_tables.length === 0 ? (
             <div className="closing-empty-line">
-              <i className="ti ti-circle-check" aria-hidden="true" />
+              <HsrIcon className="ti ti-circle-check" aria-hidden="true" />
               No active tables.
             </div>
           ) : (
@@ -351,12 +351,12 @@ export default function ClosingTab() {
               <div className="empty-state-title">No table sessions today</div>
             </div>
           ) : (
-            <table className="data-table">
+            <HsrTable className="data-table">
               <thead>
                 <tr>
                   <th>Table</th>
-                  <th>Sessions</th>
-                  <th>Revenue</th>
+                  <th data-type="number">Sessions</th>
+                  <th data-type="number">Revenue</th>
                 </tr>
               </thead>
               <tbody>
@@ -366,11 +366,11 @@ export default function ClosingTab() {
                     <tr key={table}>
                       <td style={{ fontWeight: "var(--weight-heavy)" }}>{table}</td>
                       <td>{stats.sessions}</td>
-                      <td style={{ color: "var(--success)", fontWeight: "var(--weight-heavy)" }}>{money(stats.revenue)}</td>
+                      <td data-type="number" style={{ color: "var(--success)", fontWeight: "var(--weight-heavy)" }}>{money(stats.revenue)}</td>
                     </tr>
                   ))}
               </tbody>
-            </table>
+            </HsrTable>
           )}
         </div>
 
@@ -381,11 +381,11 @@ export default function ClosingTab() {
               <div className="empty-state-title">No table food today</div>
             </div>
           ) : (
-            <table className="data-table">
+            <HsrTable className="data-table">
               <thead>
                 <tr>
                   <th>Item</th>
-                  <th>Qty</th>
+                  <th data-type="number">Qty</th>
                 </tr>
               </thead>
               <tbody>
@@ -399,7 +399,7 @@ export default function ClosingTab() {
                     </tr>
                   ))}
               </tbody>
-            </table>
+            </HsrTable>
           )}
         </div>
       </div>
@@ -408,30 +408,32 @@ export default function ClosingTab() {
         <div className="section-heading">Corrections Today</div>
         {corrections.length === 0 ? (
           <div className="closing-empty-line">
-            <i className="ti ti-circle-check" aria-hidden="true" />
+            <HsrIcon className="ti ti-circle-check" aria-hidden="true" />
             No resets, daily clears, or full data clears today.
           </div>
         ) : (
-          <table className="data-table">
+          <HsrTable className="data-table">
             <thead>
               <tr>
                 <th>Time</th>
                 <th>Action</th>
                 <th>Detail</th>
-                <th>Amount</th>
+                <th data-type="number">Amount</th>
               </tr>
             </thead>
             <tbody>
               {corrections.map((row, index) => (
                 <tr key={`${row.action}-${row.date}-${index}`}>
-                  <td style={{ color: "var(--text-secondary)", fontSize: "var(--text-sm)" }}>{row.date}</td>
+                  <td className="type-sm" style={{
+  color: "var(--text-secondary)"
+}}>{row.date}</td>
                   <td style={{ color: "var(--danger)", fontWeight: "var(--weight-heavy)" }}>{row.action.replaceAll("_", " ")}</td>
                   <td>{row.detail}</td>
                   <td style={{ fontWeight: "var(--weight-heavy)" }}>{row.amount || "-"}</td>
                 </tr>
               ))}
             </tbody>
-          </table>
+          </HsrTable>
         )}
       </div>
 

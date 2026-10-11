@@ -1,3 +1,4 @@
+import { Icon as HsrIcon } from "../../components/ui/index.js";
 import { useRef } from "react";
 import TableCard from "./TableCard.jsx";
 
@@ -20,7 +21,7 @@ export default function TableGrid({
   if (!tables.length) {
     return (
       <div className="lf-empty-inline">
-        <i className="ti ti-table-off" aria-hidden="true" />
+        <HsrIcon className="ti ti-table-off" aria-hidden="true" />
         <span>No tables returned by the backend.</span>
       </div>
     );

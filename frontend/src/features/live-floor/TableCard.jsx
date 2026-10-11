@@ -1,3 +1,5 @@
+import { formatDuration as polishDuration } from "../../utils/format.js";
+import { Input as HsrInput, Button as HsrButton, Icon as HsrIcon } from "../../components/ui/index.js";
 import { useEffect, useRef, useState } from "react";
 import { TableAttentionBadge } from "../../components/TableStateUI.jsx";
 import { tableStateAttributes, getTableAttention, getTableStatusByKey } from "../../config/tableStatus.js";
@@ -5,14 +7,7 @@ import TableStatusBadge from "./TableStatusBadge.jsx";
 import { tariffDescription } from "../sessions/tariffs.js";
 import SessionIdentity from "../sessions/SessionIdentity.jsx";
 
-function formatTimer(seconds = 0) {
-  const total = Math.max(0, Math.floor(Number(seconds) || 0));
-  const hrs = Math.floor(total / 3600);
-  const mins = Math.floor((total % 3600) / 60);
-  const secs = total % 60;
-  if (hrs > 0) return `${String(hrs).padStart(2, "0")}:${String(mins).padStart(2, "0")}:${String(secs).padStart(2, "0")}`;
-  return `${String(mins).padStart(2, "0")}:${String(secs).padStart(2, "0")}`;
-}
+function formatTimer(seconds = 0) { return polishDuration(seconds); }
 
 function bookingTime(booking) {
   if (!booking?.booking_time) return "";
@@ -165,7 +160,7 @@ export default function TableCard({
             <div className="lf-rate-editor" onClick={(event) => event.stopPropagation()}>
               <label>
                 <span className="sr-only">Hourly rate for {String(table.id || "").toUpperCase()}</span>
-                <input
+                <HsrInput
                   type="text"
                   inputMode="numeric"
                   value={rateDraft}
@@ -200,14 +195,14 @@ export default function TableCard({
               {rateError && <em>{rateError}</em>}
             </div>
           ) : canEditRate ? (
-            <button
+            <HsrButton native
               type="button"
               className="lf-inline-rate"
               onClick={beginRateEdit}
               title={`Edit ₹${shownRate}/hr`}
             >
               ₹{shownRate}/hr
-            </button>
+            </HsrButton>
           ) : (
             <b className={session ? "table-state-timer" : ""} data-timer={status.timerStyle} title={session ? formatTimer(elapsed) : statusKey === "reserved" ? customer || "Reserved guest" : `₹${shownRate}/hr`}>
               {session ? formatTimer(elapsed) : statusKey === "reserved" ? customer || "Reserved guest" : `₹${shownRate}/hr`}
@@ -228,7 +223,7 @@ export default function TableCard({
 
       {!session && isAvailable && (
         <div className="lf-table-ready">
-          <i className="ti ti-circle-check" aria-hidden="true" />
+          <HsrIcon className="ti ti-circle-check" aria-hidden="true" />
           <span>Ready for next session</span>
         </div>
       )}
@@ -240,22 +235,22 @@ export default function TableCard({
       <div className="lf-card-actions" onClick={(event) => event.stopPropagation()}>
         {session ? (
           <>
-            <button type="button" data-variant={session.paused ? "primary" : "secondary"} disabled={busy} onClick={() => onPause?.(table)}>
-              <i className={`ti ${session.paused ? "ti-player-play" : "ti-player-pause"}`} aria-hidden="true" />
+            <HsrButton native type="button" data-variant={session.paused ? "primary" : "secondary"} disabled={busy} onClick={() => onPause?.(table)}>
+              <HsrIcon className={`ti ${session.paused ? "ti-player-play" : "ti-player-pause"}`} aria-hidden="true" />
               {busy ? "Working..." : session.paused ? "Resume" : "Pause"}
-            </button>
-            <button type="button" disabled={busy} onClick={() => onFood?.(table)}>
-              <i className="ti ti-tools-kitchen-2" aria-hidden="true" /> Food
-            </button>
-            <button type="button" data-variant="danger" disabled={busy} onClick={handleAction}>
-              <i className="ti ti-receipt" aria-hidden="true" /> End
-            </button>
+            </HsrButton>
+            <HsrButton native type="button" disabled={busy} onClick={() => onFood?.(table)}>
+              <HsrIcon className="ti ti-tools-kitchen-2" aria-hidden="true" /> Food
+            </HsrButton>
+            <HsrButton native type="button" data-variant="danger" disabled={busy} onClick={handleAction}>
+              <HsrIcon className="ti ti-receipt" aria-hidden="true" /> End
+            </HsrButton>
           </>
         ) : (
-          <button type="button" data-variant="primary" disabled={isMaintenance || busy} onClick={handleAction}>
-            <i className={`ti ${isAvailable ? "ti-player-play" : statusKey === "reserved" ? "ti-calendar-check" : "ti-lock"}`} aria-hidden="true" />
+          <HsrButton native type="button" data-variant="primary" disabled={isMaintenance || busy} onClick={handleAction}>
+            <HsrIcon className={`ti ${isAvailable ? "ti-player-play" : statusKey === "reserved" ? "ti-calendar-check" : "ti-lock"}`} aria-hidden="true" />
             {isAvailable ? "Start Session" : statusKey === "reserved" ? "Check In" : "Unavailable"}
-          </button>
+          </HsrButton>
         )}
       </div>
     </article>

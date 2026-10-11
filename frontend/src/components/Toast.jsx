@@ -1,3 +1,4 @@
+import { Icon as HsrIcon, Button as HsrButton } from "./ui/index.js";
 import { useCallback, useRef, useState } from "react";
 import { ToastContext } from "./toastContext.js";
 
@@ -55,12 +56,12 @@ export function ToastProvider({ children }) {
       <div className="app-toast-container" aria-live="polite">
         {toasts.map((t) => (
           <div key={t.id} className={`app-toast app-toast-${t.type} ${t.exiting ? "is-exiting" : ""}`}>
-            <i className={`app-toast-icon ti ${TOAST_ICONS[t.type] || "ti-info-circle-filled"}`} aria-hidden="true" />
+            <HsrIcon className={`app-toast-icon ti ${TOAST_ICONS[t.type] || "ti-info-circle-filled"}`} aria-hidden="true" />
             <span className="app-toast-message">{t.message}</span>
             {t.actionLabel && (
-              <button type="button" className="app-toast-action" onClick={() => handleAction(t)}>
+              <HsrButton native type="button" className="app-toast-action" onClick={() => handleAction(t)}>
                 {t.actionLabel}
-              </button>
+              </HsrButton>
             )}
           </div>
         ))}

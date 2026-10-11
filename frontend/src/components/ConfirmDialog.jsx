@@ -1,10 +1,11 @@
+import { Icon as HsrIcon } from "./ui/index.js";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { ConfirmContext } from "./confirmContext.js";
 import Button from "./ui/Button.jsx";
 
 const DEFAULT_CONFIRM = {
   title: "Review action",
-  message: "Are you sure you want to continue?",
+  message: "Review the details before confirming this action.",
   confirmLabel: "Confirm Action",
   cancelLabel: "Cancel",
   tone: "danger",
@@ -87,7 +88,7 @@ export function ConfirmProvider({ children }) {
             aria-describedby="app-confirm-message"
           >
             <div className="app-confirm-icon" aria-hidden="true">
-              <i className={`ti ${dialog.tone === "warning" ? "ti-alert-triangle" : "ti-trash"}`} />
+              <HsrIcon className={`ti ${dialog.tone === "warning" ? "ti-alert-triangle" : "ti-trash"}`} />
             </div>
             <div className="app-confirm-copy">
               <h3 id="app-confirm-title">{dialog.title}</h3>

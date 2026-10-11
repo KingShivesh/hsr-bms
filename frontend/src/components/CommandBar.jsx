@@ -1,3 +1,4 @@
+import { Icon as HsrIcon, Input as HsrInput, Button as HsrButton } from "./ui/index.js";
 import { useEffect, useMemo, useRef, useState } from "react";
 import {
   getAuditLogs,
@@ -385,8 +386,8 @@ export default function CommandBar({ page, setPage, onNewSession, role = "admin"
           Search pages, live sessions, waitlist entries and actions. Use arrow keys to move and Enter to open.
         </p>
         <div className="command-input-wrap">
-          <i className="ti ti-search" aria-hidden="true" />
-          <input
+          <HsrIcon className="ti ti-search" aria-hidden="true" />
+          <HsrInput
             ref={inputRef}
             aria-label="Search commands"
             aria-controls="command-results"
@@ -419,7 +420,7 @@ export default function CommandBar({ page, setPage, onNewSession, role = "admin"
             <div className="command-empty">No matching command</div>
           ) : (
             filtered.map((cmd, index) => (
-              <button
+              <HsrButton native
                 id={`command-result-${cmd.id}`}
                 key={cmd.id}
                 type="button"
@@ -429,10 +430,10 @@ export default function CommandBar({ page, setPage, onNewSession, role = "admin"
                 onMouseEnter={() => setActiveIndex(index)}
                 onClick={() => runCommand(cmd)}
               >
-                <i className={`ti ${cmd.icon}`} aria-hidden="true" />
+                <HsrIcon className={`ti ${cmd.icon}`} aria-hidden="true" />
                 <span>{cmd.label}</span>
                 <small>{cmd.hint}</small>
-              </button>
+              </HsrButton>
             ))
           )}
         </div>

@@ -1,3 +1,4 @@
+import { Icon as HsrIcon, Button as HsrButton } from "../../components/ui/index.js";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { getLiveFloor, getRates, saveRates, pauseSession } from "../../api/index.js";
@@ -216,25 +217,25 @@ export default function LiveFloor({ role = "admin", onNavigate, newSessionReques
           <h1>Command Center</h1>
           <p>Start tables, monitor running value, attach orders and checkout from the same operating view.</p>
           <div className="lf-state-row" aria-label="Live floor summary">
-            <span><i className="ti ti-player-play" aria-hidden="true" /> {summary.active_tables || 0} active</span>
-            <span><i className="ti ti-circle" aria-hidden="true" /> {summary.idle_tables || 0} available</span>
-            <span><i className="ti ti-calendar-event" aria-hidden="true" /> {reservedTables} reserved</span>
-            <span><i className="ti ti-alert-circle" aria-hidden="true" /> {attentionCount} attention</span>
+            <span><HsrIcon className="ti ti-player-play" aria-hidden="true" /> {summary.active_tables || 0} active</span>
+            <span><HsrIcon className="ti ti-circle" aria-hidden="true" /> {summary.idle_tables || 0} available</span>
+            <span><HsrIcon className="ti ti-calendar-event" aria-hidden="true" /> {reservedTables} reserved</span>
+            <span><HsrIcon className="ti ti-alert-circle" aria-hidden="true" /> {attentionCount} attention</span>
           </div>
         </div>
         <div className="lf-hero-actions">
-          <button type="button" className="lf-secondary-button" onClick={() => onNavigate?.("reservations")}>
-            <i className="ti ti-calendar-plus" aria-hidden="true" />
+          <HsrButton native type="button" className="lf-secondary-button" onClick={() => onNavigate?.("reservations")}>
+            <HsrIcon className="ti ti-calendar-plus" aria-hidden="true" />
             New Booking
-          </button>
-          <button type="button" className="lf-secondary-button" onClick={() => onNavigate?.("members")}>
-            <i className="ti ti-user-plus" aria-hidden="true" />
+          </HsrButton>
+          <HsrButton native type="button" className="lf-secondary-button" onClick={() => onNavigate?.("members")}>
+            <HsrIcon className="ti ti-user-plus" aria-hidden="true" />
             Add Customer
-          </button>
-          <button type="button" className="lf-primary-button" onClick={() => openNewSession()}>
-            <i className="ti ti-plus" aria-hidden="true" />
+          </HsrButton>
+          <HsrButton native type="button" className="lf-primary-button" onClick={() => openNewSession()}>
+            <HsrIcon className="ti ti-plus" aria-hidden="true" />
             Start Table
-          </button>
+          </HsrButton>
         </div>
       </div>
 
@@ -253,10 +254,10 @@ export default function LiveFloor({ role = "admin", onNavigate, newSessionReques
           {!!floor?.attention?.length && (
             <div className="lf-attention-strip">
               {floor.attention.slice(0, 3).map((item) => (
-                <button type="button" key={`${item.type}-${item.table_id}`} onClick={() => setSelectedTableId(item.table_id)}>
-                  <i className={`ti ${item.tone === "danger" ? "ti-alert-triangle" : "ti-alert-circle"}`} aria-hidden="true" />
+                <HsrButton native type="button" key={`${item.type}-${item.table_id}`} onClick={() => setSelectedTableId(item.table_id)}>
+                  <HsrIcon className={`ti ${item.tone === "danger" ? "ti-alert-triangle" : "ti-alert-circle"}`} aria-hidden="true" />
                   <span>{item.title}</span>
-                </button>
+                </HsrButton>
               ))}
             </div>
           )}
@@ -268,7 +269,7 @@ export default function LiveFloor({ role = "admin", onNavigate, newSessionReques
                   <span className="lf-eyebrow">Command board</span>
                   <h2>{summary.active_tables ? `${summary.active_tables} running · ${summary.idle_tables} ready` : `${summary.idle_tables || tables.length} tables ready`}</h2>
                 </div>
-                <button type="button" className="lf-text-link" onClick={() => onNavigate?.("tables")}>Advanced controls</button>
+                <HsrButton native type="button" className="lf-text-link" onClick={() => onNavigate?.("tables")}>Advanced controls</HsrButton>
               </div>
               <TableGrid
                 tables={tables}

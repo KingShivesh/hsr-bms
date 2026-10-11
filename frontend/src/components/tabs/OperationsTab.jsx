@@ -1,3 +1,4 @@
+import { Button as HsrButton, Input as HsrInput } from "../ui/index.js";
 import { useState, useEffect } from "react";
 import {
   getPeakHours,
@@ -14,13 +15,13 @@ import RetryNotice from "../RetryNotice.jsx";
 
 function TabBtn({ active, onClick, children }) {
   return (
-    <button
+    <HsrButton native
       type="button"
       onClick={onClick}
       className={`ui-tab-btn ${active ? "active" : ""}`}
     >
       {children}
-    </button>
+    </HsrButton>
   );
 }
 
@@ -160,15 +161,15 @@ function PeakHoursView() {
       {currentRate && (
         <div
           style={{
-            display: "flex",
-            alignItems: "center",
-            gap: "10px",
-            padding: "10px 14px",
-            background: currentRate.is_peak ? "var(--warning-bg)" : "var(--success-bg)",
-            border: `1px solid ${currentRate.is_peak ? "color-mix(in srgb, var(--warning) 28%, var(--border))" : "color-mix(in srgb, var(--success) 28%, var(--border))"}`,
-            borderRadius: "var(--radius-sm)",
-            marginBottom: "16px",
-          }}
+  display: "flex",
+  alignItems: "center",
+  gap: "8px",
+  padding: "8px 12px",
+  background: currentRate.is_peak ? "var(--warning-bg)" : "var(--success-bg)",
+  border: `1px solid ${currentRate.is_peak ? "color-mix(in srgb, var(--warning) 28%, var(--border))" : "color-mix(in srgb, var(--success) 28%, var(--border))"}`,
+  borderRadius: "var(--radius-sm)",
+  marginBottom: "16px"
+}}
         >
           <div
             style={{
@@ -178,12 +179,11 @@ function PeakHoursView() {
               background: currentRate.is_peak ? "var(--warning)" : "var(--success)",
             }}
           />
-          <div
+          <div className="type-sm"
             style={{
-              fontSize: "var(--text-sm)",
-              fontWeight: "var(--weight-medium)",
-              color: currentRate.is_peak ? "var(--warning-foreground)" : "var(--success-foreground)",
-            }}
+  fontWeight: "var(--weight-medium)",
+  color: currentRate.is_peak ? "var(--warning-foreground)" : "var(--success-foreground)"
+}}
           >
             {currentRate.is_peak
               ? `${currentRate.label} active — ${currentRate.multiplier}× rate`
@@ -203,7 +203,7 @@ function PeakHoursView() {
       >
         <div>
           <label className="form-label">Label</label>
-          <input
+          <HsrInput
             className="input-field"
             style={{ margin: 0, width: "140px" }}
             value={label}
@@ -212,7 +212,7 @@ function PeakHoursView() {
         </div>
         <div>
           <label className="form-label">Start Hour</label>
-          <input
+          <HsrInput
             type="number"
             min="0"
             max="23"
@@ -224,7 +224,7 @@ function PeakHoursView() {
         </div>
         <div>
           <label className="form-label">End Hour</label>
-          <input
+          <HsrInput
             type="number"
             min="1"
             max="24"
@@ -236,7 +236,7 @@ function PeakHoursView() {
         </div>
         <div>
           <label className="form-label">Multiplier</label>
-          <input
+          <HsrInput
             type="number"
             min="1"
             max="5"
@@ -247,10 +247,12 @@ function PeakHoursView() {
             onChange={(e) => setMultiplier(e.target.value)}
           />
         </div>
-        <button
+        <HsrButton native
           type="button"
           className="btn btn-primary-sm"
-          style={{ marginBottom: "1px" }}
+          style={{
+  marginBottom: "0px"
+}}
           onClick={handleSaveRule}
           disabled={!!activeAction}
         >
@@ -261,19 +263,24 @@ function PeakHoursView() {
               : editingId
                 ? "Save Peak Rule"
                 : "Add Peak Rule"}
-        </button>
+        </HsrButton>
         {editingId && (
-          <button
+          <HsrButton native
             className="btn"
-            style={{ marginBottom: "1px" }}
+            style={{
+  marginBottom: "0px"
+}}
             onClick={cancelEdit}
             disabled={!!activeAction}
           >
             Discard Rule Edits
-          </button>
+          </HsrButton>
         )}
       </div>
-      <div style={{ fontSize: "var(--text-sm)", color: "var(--text-muted)", marginTop: "8px" }}>
+      <div className="type-sm" style={{
+  color: "var(--text-muted)",
+  marginTop: "8px"
+}}>
         Example: Start 18, End 22, Multiplier 1.5 = 50% surcharge from 6pm to
         10pm
       </div>
@@ -297,22 +304,22 @@ function PeakHoursView() {
                 </div>
                 <em>{rule.multiplier}x</em>
                 <div className="operations-rule-actions">
-                  <button
+                  <HsrButton native
                     type="button"
                     className="btn"
                     onClick={() => startEdit(rule)}
                     disabled={!!activeAction}
                   >
                     Edit Rule
-                  </button>
-                  <button
+                  </HsrButton>
+                  <HsrButton native
                     type="button"
                     className="btn btn-danger-sm"
                     onClick={() => handleDelete(rule.id)}
                     disabled={!!activeAction}
                   >
                     {activeAction === `peak-delete-${rule.id}` ? "Deleting..." : "Delete Rule"}
-                  </button>
+                  </HsrButton>
                 </div>
               </div>
             ))}
@@ -375,17 +382,16 @@ function GSTView() {
         />
       )}
       {flash && (
-        <div
+        <div className="type-sm"
           style={{
-            background: "var(--success-bg)",
-            border: "1px solid color-mix(in srgb, var(--success) 28%, var(--border))",
-            borderRadius: "var(--radius-sm)",
-            padding: "8px 12px",
-            marginBottom: "12px",
-            fontSize: "var(--text-sm)",
-            color: "var(--success-foreground)",
-            fontWeight: "var(--weight-medium)",
-          }}
+  background: "var(--success-bg)",
+  border: "1px solid color-mix(in srgb, var(--success) 28%, var(--border))",
+  borderRadius: "var(--radius-sm)",
+  padding: "8px 12px",
+  marginBottom: "12px",
+  color: "var(--success-foreground)",
+  fontWeight: "var(--weight-medium)"
+}}
         >
           {flash}
         </div>
@@ -395,7 +401,7 @@ function GSTView() {
         <div>
           <label className="form-label">GST Percentage</label>
           <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-            <input
+            <HsrInput
               type="number"
               min="0"
               max="100"
@@ -405,30 +411,33 @@ function GSTView() {
               value={gst}
               onChange={(e) => setGst(e.target.value)}
             />
-            <span style={{ fontSize: "var(--text-sm)", color: "var(--text-secondary)" }}>%</span>
+            <span className="type-sm" style={{
+  color: "var(--text-secondary)"
+}}>%</span>
           </div>
         </div>
-        <button
+        <HsrButton native
           className="btn btn-primary-sm"
-          style={{ marginBottom: "1px" }}
+          style={{
+  marginBottom: "0px"
+}}
           onClick={handleSave}
           disabled={saving}
         >
           {saving ? "Saving..." : "Save GST"}
-        </button>
+        </HsrButton>
       </div>
 
       {parseFloat(gst) > 0 && (
-        <div
+        <div className="type-sm"
           style={{
-            marginTop: "12px",
-            padding: "10px 14px",
-            background: "var(--accent-bg)",
-            border: "1px solid color-mix(in srgb, var(--accent) 28%, var(--border))",
-            borderRadius: "var(--radius-sm)",
-            fontSize: "var(--text-sm)",
-            color: "var(--accent-text)",
-          }}
+  marginTop: "12px",
+  padding: "8px 12px",
+  background: "var(--accent-bg)",
+  border: "1px solid color-mix(in srgb, var(--accent) 28%, var(--border))",
+  borderRadius: "var(--radius-sm)",
+  color: "var(--accent-text)"
+}}
         >
           A bill of ₹500 will have ₹{Math.round((500 * parseFloat(gst)) / 100)}{" "}
           GST added → Total ₹{500 + Math.round((500 * parseFloat(gst)) / 100)}
@@ -436,7 +445,10 @@ function GSTView() {
       )}
 
       {parseFloat(gst) === 0 && (
-        <div style={{ marginTop: "8px", fontSize: "var(--text-sm)", color: "var(--text-muted)" }}>
+        <div className="type-sm" style={{
+  marginTop: "8px",
+  color: "var(--text-muted)"
+}}>
           GST is currently disabled. Set a percentage above to enable it.
         </div>
       )}
@@ -455,7 +467,11 @@ export default function OperationsTab() {
 
   return (
     <div style={{ maxWidth: "780px" }}>
-      <div style={{ display: "flex", gap: "6px", marginBottom: "20px" }}>
+      <div style={{
+  display: "flex",
+  gap: "4px",
+  marginBottom: "20px"
+}}>
         {TABS.map((t) => (
           <TabBtn
             key={t.id}

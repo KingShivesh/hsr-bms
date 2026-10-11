@@ -1,3 +1,4 @@
+import { Input as HsrInput } from "./index.js";
 export default function Checkbox({
   checked = false,
   disabled = false,
@@ -9,7 +10,7 @@ export default function Checkbox({
 }) {
   return (
     <label className={["ui-checkbox", checked ? "is-checked" : "", disabled ? "is-disabled" : "", className].filter(Boolean).join(" ")}>
-      <input
+      <HsrInput
         type="checkbox"
         checked={checked}
         disabled={disabled}

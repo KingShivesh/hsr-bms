@@ -1,3 +1,4 @@
+import { Icon as HsrIcon, Button as HsrButton } from "./components/ui/index.js";
 import { lazy, Suspense, useState, useEffect, useRef } from "react";
 import {
   BrowserRouter,
@@ -100,7 +101,7 @@ function BackendStatusBanner({ backendStatus, onRetry }) {
   if (backendStatus.state !== "offline" && !connecting) return null;
   return (
     <div className={`backend-status-banner ${connecting ? "is-connecting" : "is-offline"}`} role="status">
-      <i className={`ti ${connecting ? "ti-loader-2" : "ti-alert-triangle"}`} aria-hidden="true" />
+      <HsrIcon className={`ti ${connecting ? "ti-loader-2" : "ti-alert-triangle"}`} aria-hidden="true" />
       <div className="backend-status-copy">
         <span>{backendStatus.message}</span>
         {connecting && (
@@ -109,9 +110,9 @@ function BackendStatusBanner({ backendStatus, onRetry }) {
         {backendStatus.requestId && <code>{backendStatus.requestId}</code>}
       </div>
       {!connecting && (
-        <button type="button" onClick={onRetry}>
+        <HsrButton native type="button" onClick={onRetry}>
           Retry
-        </button>
+        </HsrButton>
       )}
       {connecting && <div className="backend-status-progress" aria-hidden="true" />}
     </div>
@@ -122,7 +123,7 @@ function PageSkeleton() {
   return (
     <div className="page-skeleton" role="status" aria-live="polite" aria-label="Loading page">
       <div className="page-skeleton-status">
-        <i className="ti ti-loader-2" aria-hidden="true" />
+        <HsrIcon className="ti ti-loader-2" aria-hidden="true" />
         <span>Loading page...</span>
       </div>
       <div className="skeleton-line skeleton-title" />

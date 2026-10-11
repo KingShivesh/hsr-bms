@@ -7,20 +7,6 @@ export function useEscapeKey(onClose, active = true) {
     function handleKeyDown(event) {
       if (event.key !== "Escape") return;
 
-      const activeEl = document.activeElement;
-      const isInput =
-        activeEl &&
-        (activeEl.tagName === "INPUT" ||
-          activeEl.tagName === "TEXTAREA" ||
-          activeEl.tagName === "SELECT");
-
-      if (isInput && activeEl.value && String(activeEl.value).trim().length > 0) {
-        activeEl.blur();
-        event.stopPropagation();
-        event.stopImmediatePropagation?.();
-        return;
-      }
-
       event.preventDefault();
       event.stopPropagation();
       onClose();

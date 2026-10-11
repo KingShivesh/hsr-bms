@@ -1,3 +1,4 @@
+import { Icon as HsrIcon } from "./index.js";
 const TONE_ICONS = {
   available: "ti-circle",
   running: "ti-player-play",
@@ -29,7 +30,7 @@ export default function Badge({
 
   return (
     <span className={classes} title={title || (typeof children === "string" ? children : undefined)} {...props}>
-      {dot ? <span className="ui-badge-dot" aria-hidden="true" /> : <i className={`ti ${iconName}`} aria-hidden="true" />}
+      {dot ? <span className="ui-badge-dot" aria-hidden="true" /> : <HsrIcon className={`ti ${iconName}`} aria-hidden="true" />}
       <span>{children}</span>
     </span>
   );

@@ -1,3 +1,5 @@
+import { formatCurrency as polishCurrency } from "../../utils/format.js";
+import { Icon as HsrIcon, Input as HsrInput, Select as HsrSelect, Textarea as HsrTextarea, Button as HsrButton } from "../ui/index.js";
 import { useEffect, useMemo, useState } from "react";
 import {
   closeTournament,
@@ -35,16 +37,15 @@ function Panel({ title, children, action }) {
 function StatusPill({ status }) {
   const done = status === "completed";
   return (
-    <span
+    <span className="type-xs"
       style={{
-        fontSize: "var(--text-xs)",
-        padding: "2px 8px",
-        borderRadius: "999px",
-        fontWeight: "var(--weight-bold)",
-        background: done ? "var(--success-bg)" : "var(--accent-bg)",
-        color: done ? "var(--success)" : "var(--accent)",
-        border: `1px solid ${done ? "color-mix(in srgb, var(--success) 28%, var(--border))" : "color-mix(in srgb, var(--accent) 28%, var(--border))"}`,
-      }}
+  padding: "0px 8px",
+  borderRadius: "999px",
+  fontWeight: "var(--weight-bold)",
+  background: done ? "var(--success-bg)" : "var(--accent-bg)",
+  color: done ? "var(--success)" : "var(--accent)",
+  border: `1px solid ${done ? "color-mix(in srgb, var(--success) 28%, var(--border))" : "color-mix(in srgb, var(--accent) 28%, var(--border))"}`
+}}
     >
       {done ? "COMPLETED" : "ACTIVE"}
     </span>
@@ -241,7 +242,7 @@ export default function TournamentTab({ onNavigate }) {
     return (
       <div className="page-skeleton compact" role="status" aria-live="polite" aria-label="Loading tournaments">
         <div className="page-skeleton-status">
-          <i className="ti ti-loader-2" aria-hidden="true" />
+          <HsrIcon className="ti ti-loader-2" aria-hidden="true" />
           <span>Loading tournaments...</span>
         </div>
         <div className="skeleton-grid">
@@ -275,17 +276,16 @@ export default function TournamentTab({ onNavigate }) {
       )}
       <div>
         {flash && (
-          <div
+          <div className="type-sm"
             style={{
-              background: "var(--success-bg)",
-              border: "1px solid color-mix(in srgb, var(--success) 28%, var(--border))",
-              borderRadius: "var(--radius-sm)",
-              padding: "10px 14px",
-              color: "var(--success)",
-              fontSize: "var(--text-sm)",
-              fontWeight: "var(--weight-semibold)",
-              marginBottom: "14px",
-            }}
+  background: "var(--success-bg)",
+  border: "1px solid color-mix(in srgb, var(--success) 28%, var(--border))",
+  borderRadius: "var(--radius-sm)",
+  padding: "8px 12px",
+  color: "var(--success)",
+  fontWeight: "var(--weight-semibold)",
+  marginBottom: "12px"
+}}
           >
             {flash}
           </div>
@@ -293,13 +293,13 @@ export default function TournamentTab({ onNavigate }) {
 
         <Panel title="Create Tournament">
           <label className="form-label">Name</label>
-          <input
+          <HsrInput
             className="input-field"
             value={name}
             onChange={(e) => setName(e.target.value)}
           />
           <label className="form-label">Game</label>
-          <select
+          <HsrSelect
             className="input-field"
             value={gameType}
             onChange={(e) => setGameType(e.target.value)}
@@ -307,16 +307,16 @@ export default function TournamentTab({ onNavigate }) {
             {GAME_TYPES.map((g) => (
               <option key={g}>{g}</option>
             ))}
-          </select>
+          </HsrSelect>
           <label className="form-label">Entry Fee</label>
-          <input
+          <HsrInput
             type="number"
             className="input-field"
             value={entryFee}
             onChange={(e) => setEntryFee(e.target.value)}
           />
           <label className="form-label">Players</label>
-          <textarea
+          <HsrTextarea
             className="input-field"
             rows={7}
             placeholder={"One player per line\nRahul\nArjun\nVikram"}
@@ -324,44 +324,52 @@ export default function TournamentTab({ onNavigate }) {
             onChange={(e) => setPlayersText(e.target.value)}
             style={{ resize: "vertical" }}
           />
-          <button type="button" className="btn btn-primary-sm" onClick={handleCreate} disabled={!!activeAction}>
+          <HsrButton native type="button" className="btn btn-primary-sm" onClick={handleCreate} disabled={!!activeAction}>
             {activeAction === "tournament-create" ? "Creating..." : "Create Bracket"}
-          </button>
+          </HsrButton>
         </Panel>
 
         <Panel title="Events">
           {tournaments.length === 0 ? (
-            <div style={{ color: "var(--text-muted)", fontSize: "var(--text-sm)", padding: "10px 0" }}>
+            <div className="type-sm" style={{
+  color: "var(--text-muted)",
+  padding: "8px 0"
+}}>
               No tournaments yet
             </div>
           ) : (
             tournaments.map((t) => (
-              <button
+              <HsrButton native
                 key={t.id}
                 onClick={() => handleSelect(t.id)}
                 disabled={!!activeAction}
                 style={{
-                  width: "100%",
-                  textAlign: "left",
-                  background: selected?.id === t.id ? "var(--accent)" : "var(--surface)",
-                  color: selected?.id === t.id ? "var(--text-on-accent)" : "var(--text-primary)",
-                  border: selected?.id === t.id ? "1px solid var(--accent-border)" : "1px solid var(--border)",
-                  borderRadius: "var(--radius-sm)",
-                  padding: "10px 12px",
-                  marginBottom: "8px",
-                  cursor: "pointer",
-                }}
+  width: "100%",
+  textAlign: "left",
+  background: selected?.id === t.id ? "var(--accent)" : "var(--surface)",
+  color: selected?.id === t.id ? "var(--text-on-accent)" : "var(--text-primary)",
+  border: selected?.id === t.id ? "1px solid var(--accent-border)" : "1px solid var(--border)",
+  borderRadius: "var(--radius-sm)",
+  padding: "8px 12px",
+  marginBottom: "8px",
+  cursor: "pointer"
+}}
               >
                 <div style={{ display: "flex", justifyContent: "space-between" }}>
-                  <span style={{ fontWeight: "var(--weight-bold)", fontSize: "var(--text-sm)" }}>
+                  <span className="type-sm" style={{
+  fontWeight: "var(--weight-bold)"
+}}>
                     {activeAction === `tournament-select-${t.id}` ? "Loading..." : t.name}
                   </span>
                   <StatusPill status={t.status} />
                 </div>
-                <div style={{ color: selected?.id === t.id ? "var(--text-muted)" : "var(--text-secondary)", fontSize: "var(--text-xs)", marginTop: "4px" }}>
+                <div className="type-xs" style={{
+  color: selected?.id === t.id ? "var(--text-muted)" : "var(--text-secondary)",
+  marginTop: "4px"
+}}>
                   {t.game_type} · ₹{t.entry_fee || 0}
                 </div>
-              </button>
+              </HsrButton>
             ))
           )}
         </Panel>
@@ -382,7 +390,11 @@ export default function TournamentTab({ onNavigate }) {
 
         {!selected ? (
           <Panel title="Bracket">
-            <div style={{ color: "var(--text-muted)", padding: "36px", textAlign: "center" }}>
+            <div style={{
+  color: "var(--text-muted)",
+  padding: "32px",
+  textAlign: "center"
+}}>
               Create or select a tournament
             </div>
           </Panel>
@@ -393,25 +405,25 @@ export default function TournamentTab({ onNavigate }) {
               <div style={{ display: "flex", gap: "8px", alignItems: "center" }}>
                 <StatusPill status={selected.status} />
                 {selected.status !== "completed" && (
-                  <button type="button" className="btn btn-warning-sm" onClick={handleClose} disabled={!!activeAction}>
+                  <HsrButton native type="button" className="btn btn-warning-sm" onClick={handleClose} disabled={!!activeAction}>
                     {activeAction === "tournament-close" ? "Closing..." : "Close Tournament"}
-                  </button>
+                  </HsrButton>
                 )}
               </div>
             }
           >
             <div
               style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(4,1fr)",
-                gap: "12px",
-                marginBottom: "18px",
-              }}
+  display: "grid",
+  gridTemplateColumns: "repeat(4,1fr)",
+  gap: "12px",
+  marginBottom: "16px"
+}}
             >
               {[
                 ["Game", selected.game_type],
                 ["Players", selected.players.length],
-                ["Pot", `₹${(selected.entry_fee * selected.players.length).toLocaleString("en-IN")}`],
+                ["Pot", polishCurrency(selected.entry_fee * selected.players.length)],
                 ["Winner", selected.winner_name || "—"],
               ].map(([label, value]) => (
                 <div
@@ -423,7 +435,10 @@ export default function TournamentTab({ onNavigate }) {
                     background: "var(--surface)",
                   }}
                 >
-                  <div style={{ color: "var(--text-secondary)", fontSize: "var(--text-xs)", marginBottom: "4px" }}>
+                  <div className="type-xs" style={{
+  color: "var(--text-secondary)",
+  marginBottom: "4px"
+}}>
                     {label}
                   </div>
                   <div style={{ color: "var(--text-primary)", fontWeight: "var(--weight-bold)" }}>{value}</div>
@@ -431,17 +446,21 @@ export default function TournamentTab({ onNavigate }) {
               ))}
             </div>
 
-            <div style={{ display: "flex", gap: "14px", overflowX: "auto", paddingBottom: "8px" }}>
+            <div style={{
+  display: "flex",
+  gap: "12px",
+  overflowX: "auto",
+  paddingBottom: "8px"
+}}>
               {rounds.map(([roundNo, matches]) => (
                 <div key={roundNo} style={{ minWidth: "260px" }}>
-                  <div
+                  <div className="type-sm"
                     style={{
-                      fontSize: "var(--text-sm)",
-                      textTransform: "uppercase",
-                      color: "var(--text-secondary)",
-                      fontWeight: "var(--weight-bold)",
-                      marginBottom: "10px",
-                    }}
+  textTransform: "uppercase",
+  color: "var(--text-secondary)",
+  fontWeight: "var(--weight-bold)",
+  marginBottom: "8px"
+}}
                   >
                     Round {roundNo}
                   </div>
@@ -449,47 +468,55 @@ export default function TournamentTab({ onNavigate }) {
                     <div
                       key={m.id}
                       style={{
-                        border: "1px solid var(--border)",
-                        borderRadius: "var(--radius-sm)",
-                        padding: "10px",
-                        marginBottom: "10px",
-                        background: m.status === "completed" ? "var(--surface-muted)" : "var(--surface)",
-                      }}
+  border: "1px solid var(--border)",
+  borderRadius: "var(--radius-sm)",
+  padding: "8px",
+  marginBottom: "8px",
+  background: m.status === "completed" ? "var(--surface-muted)" : "var(--surface)"
+}}
                     >
-                      <div style={{ fontSize: "var(--text-xs)", color: "var(--text-muted)", marginBottom: "8px" }}>
+                      <div className="type-xs" style={{
+  color: "var(--text-muted)",
+  marginBottom: "8px"
+}}>
                         Match {m.match_no}
                       </div>
                       {[m.player1, m.player2].filter(Boolean).map((p) => {
                         const won = m.winner === p;
                         return (
-                          <button
+                          <HsrButton native
                             key={p}
                             disabled={!!activeAction || m.status === "completed" || selected.status === "completed"}
                             onClick={() => handleWinner(m, p)}
                             style={{
-                              width: "100%",
-                              display: "flex",
-                              justifyContent: "space-between",
-                              alignItems: "center",
-                              border: won ? "1px solid color-mix(in srgb, var(--success) 28%, var(--border))" : "1px solid var(--border)",
-                              background: won ? "var(--success-bg)" : "var(--surface)",
-                              color: won ? "var(--success)" : "var(--text-primary)",
-                              borderRadius: "var(--radius-sm)",
-                              padding: "8px 10px",
-                              marginBottom: "6px",
-                              cursor: activeAction ? "wait" : m.status === "completed" ? "default" : "pointer",
-                              fontWeight: won ? 700 : 500,
-                            }}
+  width: "100%",
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "center",
+  border: won ? "1px solid color-mix(in srgb, var(--success) 28%, var(--border))" : "1px solid var(--border)",
+  background: won ? "var(--success-bg)" : "var(--surface)",
+  color: won ? "var(--success)" : "var(--text-primary)",
+  borderRadius: "var(--radius-sm)",
+  padding: "8px 8px",
+  marginBottom: "4px",
+  cursor: activeAction ? "wait" : m.status === "completed" ? "default" : "pointer",
+  fontWeight: won ? 700 : 500
+}}
                           >
                             <span>{p}</span>
-                            <span style={{ fontSize: "var(--text-xs)", color: won ? "var(--success)" : "var(--text-muted)" }}>
+                            <span className="type-xs" style={{
+  color: won ? "var(--success)" : "var(--text-muted)"
+}}>
                               {activeAction === `winner-${m.id}-${p}` ? "Saving..." : won ? "Winner" : m.status === "completed" ? "" : "Pick"}
                             </span>
-                          </button>
+                          </HsrButton>
                         );
                       })}
                       {!m.player2 && (
-                        <div style={{ color: "var(--text-muted)", fontSize: "var(--text-sm)", padding: "4px 2px" }}>
+                        <div className="type-sm" style={{
+  color: "var(--text-muted)",
+  padding: "4px 0px"
+}}>
                           Bye advanced automatically
                         </div>
                       )}

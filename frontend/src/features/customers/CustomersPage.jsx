@@ -1,3 +1,5 @@
+import { formatCurrency as polishCurrency } from "../../utils/format.js";
+import { Icon as HsrIcon, Input as HsrInput, Button as HsrButton } from "../../components/ui/index.js";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   addMember,
@@ -38,15 +40,13 @@ function memberRestorePayload(member = {}) {
   };
 }
 
-function money(value = 0) {
-  return `₹${Number(value || 0).toLocaleString("en-IN")}`;
-}
+function money(value = 0) { return polishCurrency(value); }
 
 function CustomerSkeleton() {
   return (
     <div className="page-skeleton compact" role="status" aria-live="polite" aria-label="Loading customers">
       <div className="page-skeleton-status">
-        <i className="ti ti-loader-2" aria-hidden="true" />
+        <HsrIcon className="ti ti-loader-2" aria-hidden="true" />
         <span>Loading customers...</span>
       </div>
       <div className="skeleton-grid">
@@ -213,7 +213,7 @@ export default function CustomersPage() {
           <p>Track regulars, spend, visits and duplicate profiles without leaving the operating system.</p>
         </div>
         <form className="op2-inline-form" onSubmit={handleAdd}>
-          <input
+          <HsrInput
             ref={newCustomerInputRef}
             value={newName}
             onChange={(event) => setNewName(event.target.value)}
@@ -221,10 +221,10 @@ export default function CustomersPage() {
             aria-label="Customer name"
             disabled={!!busy}
           />
-          <button type="submit" className="lf-primary-button" disabled={!!busy}>
-            <i className="ti ti-user-plus" aria-hidden="true" />
+          <HsrButton native type="submit" className="lf-primary-button" disabled={!!busy}>
+            <HsrIcon className="ti ti-user-plus" aria-hidden="true" />
             {busy === "add" ? "Adding..." : "Add Customer"}
-          </button>
+          </HsrButton>
         </form>
       </div>
 
@@ -250,19 +250,19 @@ export default function CustomersPage() {
                     <strong>{group.primary.name}</strong>
                     <span>{group.primary.id} · {money(group.primary.spent)}</span>
                   </div>
-                  <i className="ti ti-arrows-join" aria-hidden="true" />
+                  <HsrIcon className="ti ti-arrows-join" aria-hidden="true" />
                   <div>
                     <strong>{match.name}</strong>
                     <span>{match.id} · {match.score}% match</span>
                   </div>
-                  <button
+                  <HsrButton native
                     type="button"
                     className="lf-secondary-button"
                     disabled={!!busy}
                     onClick={() => handleMerge(group.primary, match)}
                   >
                     {busy === `merge-${group.primary.id}-${match.id}` ? "Merging..." : "Merge Profiles"}
-                  </button>
+                  </HsrButton>
                 </article>
               )),
             )}
@@ -277,7 +277,7 @@ export default function CustomersPage() {
             <h2>All customers</h2>
           </div>
           <div className="op2-controls">
-            <input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search customer..." />
+            <HsrInput value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search customer..." />
           </div>
         </div>
 
@@ -314,7 +314,7 @@ export default function CustomersPage() {
                     <div><span>Last visit</span><strong>{member.lst || "-"}</strong></div>
                   </div>
                   <div className="op2-card-actions">
-                    <button
+                    <HsrButton native
                       type="button"
                       className="lf-secondary-button"
                       disabled={!!busy}
@@ -323,10 +323,10 @@ export default function CustomersPage() {
                         handleUpgrade(id, tier);
                       }}
                     >
-                      <i className={`ti ${premium ? "ti-arrow-down" : "ti-arrow-up"}`} aria-hidden="true" />
+                      <HsrIcon className={`ti ${premium ? "ti-arrow-down" : "ti-arrow-up"}`} aria-hidden="true" />
                       {busy === `upgrade-${id}` ? "Saving..." : premium ? "Downgrade Tier" : "Upgrade Tier"}
-                    </button>
-                    <button
+                    </HsrButton>
+                    <HsrButton native
                       type="button"
                       className="lf-danger-button"
                       disabled={!!busy}
@@ -335,9 +335,9 @@ export default function CustomersPage() {
                         handleDelete(member);
                       }}
                     >
-                      <i className="ti ti-trash" aria-hidden="true" />
+                      <HsrIcon className="ti ti-trash" aria-hidden="true" />
                       {busy === `delete-${id}` ? "Deleting..." : "Delete Customer"}
-                    </button>
+                    </HsrButton>
                   </div>
                 </article>
               );
@@ -345,13 +345,13 @@ export default function CustomersPage() {
           </div>
         ) : (
           <div className="op2-empty">
-            <i className="ti ti-users" aria-hidden="true" />
+            <HsrIcon className="ti ti-users" aria-hidden="true" />
             <strong>No customers found</strong>
             <span>Add a customer or change the search query.</span>
-            <button type="button" className="lf-primary-button empty-action-button" onClick={() => newCustomerInputRef.current?.focus()}>
-              <i className="ti ti-user-plus" aria-hidden="true" />
+            <HsrButton native type="button" className="lf-primary-button empty-action-button" onClick={() => newCustomerInputRef.current?.focus()}>
+              <HsrIcon className="ti ti-user-plus" aria-hidden="true" />
               Add Customer
-            </button>
+            </HsrButton>
           </div>
         )}
       </section>
@@ -380,7 +380,7 @@ export default function CustomersPage() {
               <div><span>Tier</span><strong>{memberTier(selectedCustomer)}</strong></div>
             </div>
             <div className="customer-profile-note">
-              <i className="ti ti-info-circle" aria-hidden="true" />
+              <HsrIcon className="ti ti-info-circle" aria-hidden="true" />
               <span>Spend and visits update automatically when a table checkout is completed.</span>
             </div>
             <div className="checkout-actions">

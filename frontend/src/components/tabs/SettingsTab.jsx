@@ -1,3 +1,4 @@
+import { Button as HsrButton, Icon as HsrIcon, Input as HsrInput, SkeletonGrid } from "../ui/index.js";
 import { useState, useEffect } from "react";
 import {
   getRates,
@@ -13,6 +14,7 @@ import {
 } from "../../api/index.js";
 import { useToast } from "../toastContext.js";
 import TariffSettings from "../../features/sessions/TariffSettings.jsx";
+import RetryNotice from "../RetryNotice.jsx";
 
 function SettingsCard({ title, description, children }) {
   return (
@@ -54,12 +56,16 @@ export default function SettingsTab({ role = "admin", onOpenTables, onNavigate }
   const [dangerPin, setDangerPin] = useState("");
   const [dangerConfirm, setDangerConfirm] = useState("");
   const [dangerBusy, setDangerBusy] = useState("");
+  const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState("");
+  const [saving, setSaving] = useState("");
 
   useEffect(() => {
     fetchAll();
   }, []);
 
   async function fetchAll() {
+    setLoadError("");
     try {
       const [rRes, msRes, graceRes] = await Promise.all([
         getRates(),
@@ -72,7 +78,9 @@ export default function SettingsTab({ role = "admin", onOpenTables, onNavigate }
       setMinSession(msRes.data.min_session || 0);
       setBookingGraceMinutes(graceRes.data.booking_grace_minutes || 10);
     } catch (e) {
-      console.error(e);
+      setLoadError(e.userMessage || "Club settings could not load.");
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -83,6 +91,7 @@ export default function SettingsTab({ role = "admin", onOpenTables, onNavigate }
   }
 
   async function handleSaveRates() {
+    setSaving("rates");
     try {
       await saveRates(
         parseInt(wr, 10) || 320,
@@ -91,26 +100,34 @@ export default function SettingsTab({ role = "admin", onOpenTables, onNavigate }
       );
       showFlash("Rates saved");
     } catch {
-      showToast("Failed to save rates", "error");
+      showToast("Table rates could not be saved. Try again.", "error");
+    } finally {
+      setSaving("");
     }
   }
 
   async function handleSaveMinSession() {
+    setSaving("minimum");
     try {
       await saveMinSession(parseInt(minSession) || 0);
       showFlash("Minimum session time saved");
     } catch {
-      showToast("Failed to save", "error");
+      showToast("Minimum session time could not be saved. Try again.", "error");
+    } finally {
+      setSaving("");
     }
   }
 
   async function handleSaveBookingGrace() {
+    setSaving("grace");
     try {
       await saveBookingGrace(parseInt(bookingGraceMinutes) || 10);
       fetchAll();
       showFlash("Booking grace period saved");
     } catch {
-      showToast("Failed to save booking grace period", "error");
+      showToast("Booking grace period could not be saved. Try again.", "error");
+    } finally {
+      setSaving("");
     }
   }
 
@@ -123,13 +140,16 @@ export default function SettingsTab({ role = "admin", onOpenTables, onNavigate }
       showToast("Password must be at least 8 characters", "error");
       return;
     }
+    setSaving("admin-auth");
     try {
       await changeAuth(newUser, newPass);
-      showToast("Credentials updated. Please login again.", "success");
+      showToast("Admin credentials updated. Sign in with the new password.", "success");
       localStorage.removeItem("token");
       setTimeout(() => window.location.reload(), 700);
     } catch (error) {
       showToast(credentialErrorMessage(error, "Failed to update credentials"), "error");
+    } finally {
+      setSaving("");
     }
   }
 
@@ -142,12 +162,15 @@ export default function SettingsTab({ role = "admin", onOpenTables, onNavigate }
       showToast("Password must be at least 8 characters", "error");
       return;
     }
+    setSaving("staff-auth");
     try {
       await changeStaffAuth(newStaffUser, newStaffPass);
       setNewStaffPass("");
       showFlash("Staff credentials updated");
     } catch (error) {
       showToast(credentialErrorMessage(error, "Failed to update staff credentials"), "error");
+    } finally {
+      setSaving("");
     }
   }
 
@@ -185,6 +208,9 @@ export default function SettingsTab({ role = "admin", onOpenTables, onNavigate }
     }
   }
 
+  if (loading) return <SkeletonGrid count={4} label="Fetching club settings" />;
+  if (loadError) return <RetryNotice message={loadError} detail="Saved settings are unavailable. Retry before making changes." onRetry={() => { setLoading(true); fetchAll(); }} />;
+
   return (
     <div className="settings-page-shell">
       {flash && <div className="settings-flash">{flash}</div>}
@@ -198,14 +224,14 @@ export default function SettingsTab({ role = "admin", onOpenTables, onNavigate }
             <strong>Session controls live on the table floor</strong>
             <span>Start, reserve, pause, close and review active tables from one focused screen.</span>
           </div>
-          <button
+          <HsrButton native
             className="btn btn-primary-sm"
             type="button"
             onClick={onOpenTables}
           >
-            <i className="ti ti-billiard" aria-hidden="true" />
+            <HsrIcon className="ti ti-billiard" aria-hidden="true" />
             Open table floor
-          </button>
+          </HsrButton>
         </div>
       </SettingsCard>
 
@@ -217,7 +243,7 @@ export default function SettingsTab({ role = "admin", onOpenTables, onNavigate }
         <div className="settings-form-grid">
           <div>
             <label className="form-label">Wiraka Rate T1/T2 (₹/hour)</label>
-            <input
+            <HsrInput
               type="number"
               className="input-field"
               value={wr}
@@ -226,7 +252,7 @@ export default function SettingsTab({ role = "admin", onOpenTables, onNavigate }
           </div>
           <div>
             <label className="form-label">Pool Rate T5 (₹/hour)</label>
-            <input
+            <HsrInput
               type="number"
               className="input-field"
               value={pr}
@@ -235,7 +261,7 @@ export default function SettingsTab({ role = "admin", onOpenTables, onNavigate }
           </div>
           <div>
             <label className="form-label">English Rate T3/T4 (₹/hour)</label>
-            <input
+            <HsrInput
               type="number"
               className="input-field"
               value={sr}
@@ -243,10 +269,10 @@ export default function SettingsTab({ role = "admin", onOpenTables, onNavigate }
             />
           </div>
         </div>
-        <button className="btn btn-primary-sm" onClick={handleSaveRates}>
-          <i className="ti ti-device-floppy" aria-hidden="true" />
+        <HsrButton native className="btn btn-primary-sm" onClick={handleSaveRates} loading={saving === "rates"} disabled={!!saving}>
+          <HsrIcon className="ti ti-device-floppy" aria-hidden="true" />
           Save Table Rates
-        </button>
+        </HsrButton>
       </SettingsCard>
 
       {role === "admin" && <TariffSettings />}
@@ -259,7 +285,7 @@ export default function SettingsTab({ role = "admin", onOpenTables, onNavigate }
         <div className="settings-inline-row">
           <div className="settings-inline-field">
             <label className="form-label">Minimum minutes</label>
-            <input
+            <HsrInput
               type="number"
               min="0"
               className="input-field"
@@ -267,13 +293,15 @@ export default function SettingsTab({ role = "admin", onOpenTables, onNavigate }
               onChange={(e) => setMinSession(e.target.value)}
             />
           </div>
-          <button
+          <HsrButton native
             className="btn btn-primary-sm"
             onClick={handleSaveMinSession}
+            loading={saving === "minimum"}
+            disabled={!!saving}
           >
-            <i className="ti ti-device-floppy" aria-hidden="true" />
+            <HsrIcon className="ti ti-device-floppy" aria-hidden="true" />
             Save Minimum Session
-          </button>
+          </HsrButton>
         </div>
         {minSession > 0 && (
           <div className="settings-inline-note info">
@@ -289,7 +317,7 @@ export default function SettingsTab({ role = "admin", onOpenTables, onNavigate }
         <div className="settings-inline-row">
           <div className="settings-inline-field">
             <label className="form-label">Grace minutes after booking time</label>
-            <input
+            <HsrInput
               type="number"
               min="1"
               max="120"
@@ -298,13 +326,15 @@ export default function SettingsTab({ role = "admin", onOpenTables, onNavigate }
               onChange={(e) => setBookingGraceMinutes(e.target.value)}
             />
           </div>
-          <button
+          <HsrButton native
             className="btn btn-primary-sm"
             onClick={handleSaveBookingGrace}
+            loading={saving === "grace"}
+            disabled={!!saving}
           >
-            <i className="ti ti-device-floppy" aria-hidden="true" />
+            <HsrIcon className="ti ti-device-floppy" aria-hidden="true" />
             Save Grace Period
-          </button>
+          </HsrButton>
         </div>
         <div className="settings-inline-note muted">
           Bookings become missed after {bookingGraceMinutes || 10} minutes if no matching table session has started.
@@ -321,14 +351,14 @@ export default function SettingsTab({ role = "admin", onOpenTables, onNavigate }
             <strong>Use the dedicated inventory workspace</strong>
             <span>Edit menu items, prices, categories, bulk stock state and table maintenance from one operational screen.</span>
           </div>
-          <button
+          <HsrButton native
             className="btn btn-primary-sm"
             type="button"
             onClick={() => onNavigate?.("inventory")}
           >
-            <i className="ti ti-arrow-right" aria-hidden="true" />
+            <HsrIcon className="ti ti-arrow-right" aria-hidden="true" />
             Manage stock and availability in Inventory & Stocks
-          </button>
+          </HsrButton>
         </div>
       </SettingsCard>
 
@@ -342,7 +372,7 @@ export default function SettingsTab({ role = "admin", onOpenTables, onNavigate }
             <div className="settings-credentials-grid">
               <div>
                 <label className="form-label">New Admin Username</label>
-                <input
+                <HsrInput
                   type="text"
                   className="input-field"
                   placeholder="Enter new username"
@@ -352,7 +382,7 @@ export default function SettingsTab({ role = "admin", onOpenTables, onNavigate }
               </div>
               <div>
                 <label className="form-label">New Admin Password</label>
-                <input
+                <HsrInput
                   type="password"
                   className="input-field"
                   placeholder="Min 8 characters"
@@ -362,14 +392,16 @@ export default function SettingsTab({ role = "admin", onOpenTables, onNavigate }
                 />
               </div>
             </div>
-            <button
+            <HsrButton native
               className="btn btn-warning-sm"
               onClick={handleChangeAuth}
+              loading={saving === "admin-auth"}
+              disabled={!!saving}
               data-testid="change-auth-button"
             >
-              <i className="ti ti-key" aria-hidden="true" />
+              <HsrIcon className="ti ti-key" aria-hidden="true" />
               Update admin credentials
-            </button>
+            </HsrButton>
           </SettingsCard>
 
           <SettingsCard
@@ -379,7 +411,7 @@ export default function SettingsTab({ role = "admin", onOpenTables, onNavigate }
             <div className="settings-credentials-grid">
               <div>
                 <label className="form-label">Staff Username</label>
-                <input
+                <HsrInput
                   type="text"
                   className="input-field"
                   value={newStaffUser}
@@ -388,7 +420,7 @@ export default function SettingsTab({ role = "admin", onOpenTables, onNavigate }
               </div>
               <div>
                 <label className="form-label">Staff Password</label>
-                <input
+                <HsrInput
                   type="password"
                   className="input-field"
                   placeholder="Min 8 characters"
@@ -398,14 +430,16 @@ export default function SettingsTab({ role = "admin", onOpenTables, onNavigate }
                 />
               </div>
             </div>
-            <button
+            <HsrButton native
               className="btn btn-primary-sm"
               onClick={handleChangeStaffAuth}
+              loading={saving === "staff-auth"}
+              disabled={!!saving}
               data-testid="change-staff-auth-button"
             >
-              <i className="ti ti-users" aria-hidden="true" />
+              <HsrIcon className="ti ti-users" aria-hidden="true" />
               Update staff credentials
-            </button>
+            </HsrButton>
           </SettingsCard>
 
           <SettingsCard
@@ -413,14 +447,14 @@ export default function SettingsTab({ role = "admin", onOpenTables, onNavigate }
             description="Protected reset tools for setup and emergency recovery only"
           >
             <div className="settings-danger-zone">
-              <button
+              <HsrButton native
                 className="btn btn-danger-sm"
                 type="button"
                 onClick={() => setDangerOpen((open) => !open)}
               >
-                <i className="ti ti-shield-lock" aria-hidden="true" />
+                <HsrIcon className="ti ti-shield-lock" aria-hidden="true" />
                 {dangerOpen ? "Hide protected actions" : "Show protected actions"}
-              </button>
+              </HsrButton>
               {dangerOpen && (
                 <div className="settings-danger-panel">
                   <div className="settings-inline-note muted">
@@ -429,7 +463,7 @@ export default function SettingsTab({ role = "admin", onOpenTables, onNavigate }
                   <div className="settings-credentials-grid">
                     <div>
                       <label className="form-label">Manager PIN</label>
-                      <input
+                      <HsrInput
                         type="password"
                         className="input-field"
                         placeholder="Required if manager PIN is enabled"
@@ -439,7 +473,7 @@ export default function SettingsTab({ role = "admin", onOpenTables, onNavigate }
                     </div>
                     <div>
                       <label className="form-label">Confirmation word</label>
-                      <input
+                      <HsrInput
                         type="text"
                         className="input-field"
                         placeholder="RESET or CLEAR"
@@ -449,24 +483,24 @@ export default function SettingsTab({ role = "admin", onOpenTables, onNavigate }
                     </div>
                   </div>
                   <div className="settings-data-actions">
-                    <button
+                    <HsrButton native
                       className="btn btn-warning-sm"
                       onClick={handleResetDaily}
                       disabled={dangerBusy === "reset"}
                       data-testid="reset-daily-button"
                     >
-                      <i className="ti ti-refresh" aria-hidden="true" />
+                      <HsrIcon className="ti ti-refresh" aria-hidden="true" />
                       {dangerBusy === "reset" ? "Resetting..." : "Reset daily stats"}
-                    </button>
-                    <button
+                    </HsrButton>
+                    <HsrButton native
                       className="btn btn-danger-sm"
                       onClick={handleClearAll}
                       disabled={dangerBusy === "clear"}
                       data-testid="clear-all-button"
                     >
-                      <i className="ti ti-alert-triangle" aria-hidden="true" />
+                      <HsrIcon className="ti ti-alert-triangle" aria-hidden="true" />
                       {dangerBusy === "clear" ? "Clearing..." : "Clear all data"}
-                    </button>
+                    </HsrButton>
                   </div>
                 </div>
               )}

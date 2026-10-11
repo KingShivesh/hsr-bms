@@ -6,6 +6,7 @@
 
 .lf-table-card-head strong {
   font-size: var(--text-2xl);
+  line-height: var(--leading-2xl);
 }
 
 .lf-table-card.table-state-card.is-selected,
@@ -41,7 +42,7 @@
 .table-state-attention {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 4px;
   min-height: 28px;
   padding: 0 var(--space-2);
   border: 1px solid var(--border);
@@ -51,7 +52,7 @@
   font-size: var(--text-xs);
   font-style: normal;
   font-weight: var(--weight-bold);
-  line-height: 1;
+  line-height: var(--leading-xs);
   white-space: nowrap;
 }
 
@@ -91,7 +92,7 @@
 }
 
 .table-state-dot[data-dot="muted"] {
-  border-radius: 2px;
+  border-radius: var(--radius-md);
   opacity: 0.7;
 }
 
@@ -107,7 +108,7 @@
   color: var(--text-primary) !important;
   font-size: var(--text-3xl) !important;
   font-weight: var(--weight-medium) !important;
-  line-height: 1 !important;
+  line-height: var(--leading-3xl) !important;
   font-variant-numeric: tabular-nums;
 }
 
@@ -142,12 +143,14 @@
 .ops-table-card:not([data-border="accent"]):not([data-border="warning"]) .ops-table-main > span {
   font-family: var(--font-mono);
   font-size: var(--text-lg) !important;
+  line-height: var(--leading-lg) !important;
   color: var(--text-secondary) !important;
 }
 
 .lf-inline-rate {
   min-height: var(--btn-h-lg);
   font-size: var(--text-xl) !important;
+  line-height: var(--leading-xl) !important;
   color: var(--text-secondary) !important;
 }
 
@@ -208,17 +211,20 @@
 .op2-table-state-summary > span {
   color: var(--text-muted);
   font-size: var(--text-xs);
+  line-height: var(--leading-xs);
   font-weight: var(--weight-semibold);
   text-transform: uppercase;
 }
 
 .op2-table-state-summary .table-state-timer {
   font-size: var(--text-2xl) !important;
+  line-height: var(--leading-2xl) !important;
 }
 
 .table-status-card .table-state-timer,
 .table-status-card .table-state-rate {
   font-size: var(--text-2xl) !important;
+  line-height: var(--leading-2xl) !important;
 }
 
 @keyframes table-state-pulse {
@@ -302,6 +308,7 @@
   cursor: pointer;
   font-weight: var(--weight-bold);
   font-size: var(--text-sm);
+  line-height: var(--leading-sm);
   font: inherit;
   border-radius: var(--radius-sm);
   border: 1px solid var(--accent);
@@ -329,6 +336,7 @@
 .table-state-timer {
   color: var(--text-primary) !important;
   font-size: var(--text-3xl) !important;
+  line-height: var(--leading-3xl) !important;
   font-weight: var(--weight-medium) !important;
   font-variant-numeric: tabular-nums;
 }
@@ -373,8 +381,9 @@
 .ops-table-card .table-state-attention {
   max-width: 100%;
   min-height: 24px;
-  padding-inline: 6px;
-  font-size: 10px;
+  padding-inline: 4px;
+  font-size: var(--text-xs);
+  line-height: var(--leading-xs);
 }
 
 .ops-table-card .ops-table-main {
@@ -387,10 +396,12 @@
 .ops-table-card .ops-table-main strong {
   color: var(--text-secondary);
   font-size: var(--text-sm);
+  line-height: var(--leading-sm);
 }
 
 .ops-table-card .table-state-timer {
   font-size: var(--text-2xl) !important;
+  line-height: var(--leading-2xl) !important;
 }
 
 .table-floor-tile.table-state-card,
@@ -500,7 +511,7 @@
 .lf-table-card.table-state-card {
   min-height: 290px;
   padding: 16px;
-  border-radius: 10px;
+  border-radius: var(--radius-md);
   transition: background-color 150ms ease, transform 100ms ease;
 }
 .lf-table-card.table-state-card:not([data-table-state="maintenance"]) {
@@ -515,9 +526,9 @@
   color: #ffffff !important;
 }
 .lf-table-card .lf-table-card-head { gap: 8px; align-items: start; }
-.lf-table-card .lf-table-kicker { font-size: var(--text-sm); }
-.lf-table-card .lf-table-card-head strong { font-size: var(--text-lg); }
-.lf-table-card .table-state-card-flags { gap: 6px; }
+.lf-table-card .lf-table-kicker { font-size: var(--text-sm); line-height: var(--leading-sm); }
+.lf-table-card .lf-table-card-head strong { font-size: var(--text-lg); line-height: var(--leading-lg); }
+.lf-table-card .table-state-card-flags { gap: 4px; }
 .lf-table-card:not([data-table-state="maintenance"]) .table-state-badge {
   background: rgb(0 0 0 / 14%);
   border-color: rgb(255 255 255 / 65%);
@@ -531,11 +542,12 @@
 .lf-table-card.table-state-card .table-state-attention i { color: inherit !important; }
 .lf-table-card.table-state-card .table-state-timer {
   font-size: var(--text-3xl) !important;
+  line-height: var(--leading-3xl) !important;
   font-weight: var(--weight-heavy) !important;
 }
 .lf-table-card.table-state-card .table-state-timer[data-timer="frozen"] { opacity: 1; }
 .lf-table-card .lf-table-money { background: transparent; border: 0; padding: 0; }
-.lf-table-card .lf-table-money strong { font-size: var(--text-2xl); }
+.lf-table-card .lf-table-money strong { font-size: var(--text-2xl); line-height: var(--leading-2xl); }
 .lf-table-card .lf-table-money small { display: block; overflow-wrap: anywhere; }
 .lf-table-card .lf-table-ready { background: transparent; padding: 0; }
 .lf-table-card[data-table-state="available"] .lf-table-card-body,
@@ -557,17 +569,18 @@
 .lf-card-actions button {
   min-height: 44px;
   min-width: 44px;
-  padding: 8px 6px;
+  padding: 8px 4px;
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 4px;
   border: 1px solid rgb(255 255 255 / 70%);
-  border-radius: 6px;
+  border-radius: var(--radius-sm);
   background: rgb(0 0 0 / 15%);
   color: #ffffff;
   font: inherit;
   font-size: var(--text-sm);
+  line-height: var(--leading-sm);
   font-weight: var(--weight-bold);
   cursor: pointer;
   transition: background-color 120ms ease;

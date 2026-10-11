@@ -1,3 +1,4 @@
+import { Button as HsrButton, Icon as HsrIcon, Input as HsrInput, Select as HsrSelect } from "../../components/ui/index.js";
 import { useEffect, useMemo, useState } from "react";
 import { addFood, getMenu } from "../../api/index.js";
 import RetryNotice from "../../components/RetryNotice.jsx";
@@ -86,9 +87,9 @@ export default function ProductSelector({ tableId, players = [], onAdded, onClos
           <span className="lf-eyebrow">Session order</span>
           <h3>Add food to {String(tableId || "").toUpperCase()}</h3>
         </div>
-        <button type="button" className="lf-icon-button" onClick={onClose} aria-label="Close order selector">
-          <i className="ti ti-x" aria-hidden="true" />
-        </button>
+        <HsrButton native type="button" className="lf-icon-button" onClick={onClose} aria-label="Close order selector">
+          <HsrIcon className="ti ti-x" aria-hidden="true" />
+        </HsrButton>
       </div>
 
       {loading && (
@@ -104,12 +105,12 @@ export default function ProductSelector({ tableId, players = [], onAdded, onClos
         <>
           <label className="lf-field">
             <span>Search menu</span>
-            <input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Fries, tea, cigarettes..." />
+            <HsrInput value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Fries, tea, cigarettes..." />
           </label>
 
           <div className="order-item-grid">
             {items.slice(0, 24).map((item) => (
-              <button
+              <HsrButton native
                 type="button"
                 key={item.name}
                 className={`order-item ${selectedItem?.name === item.name ? "is-selected" : ""}`}
@@ -118,29 +119,29 @@ export default function ProductSelector({ tableId, players = [], onAdded, onClos
               >
                 <strong>{item.name}</strong>
                 <span>₹{item.price.toLocaleString("en-IN")} · {item.category}</span>
-              </button>
+              </HsrButton>
             ))}
           </div>
 
           <form className="order-add-row" onSubmit={handleSubmit}>
             <label className="lf-field">
               <span>Quantity</span>
-              <input type="number" min="1" value={qty} onChange={(event) => setQty(Math.max(1, Number(event.target.value) || 1))} />
+              <HsrInput type="number" min="1" value={qty} onChange={(event) => setQty(Math.max(1, Number(event.target.value) || 1))} />
             </label>
             {!!players.length && (
               <label className="lf-field">
                 <span>Attach to player</span>
-                <select value={playerName} onChange={(event) => setPlayerName(event.target.value)}>
+                <HsrSelect value={playerName} onChange={(event) => setPlayerName(event.target.value)}>
                   <option value="">Session tab</option>
                   {players.map((player) => (
                     <option key={player} value={player}>{player}</option>
                   ))}
-                </select>
+                </HsrSelect>
               </label>
             )}
-            <button type="submit" className="lf-primary-button" disabled={saving || !selectedItem}>
+            <HsrButton native type="submit" className="lf-primary-button" disabled={saving || !selectedItem}>
               {saving ? "Adding..." : "Add Food to Session"}
-            </button>
+            </HsrButton>
           </form>
         </>
       )}

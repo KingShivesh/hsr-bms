@@ -1,3 +1,4 @@
+import { Button as HsrButton, Icon as HsrIcon } from "./ui/index.js";
 import { useState } from "react";
 import { APP_NAME } from "../config/hsrTables.js";
 
@@ -80,27 +81,27 @@ export default function Sidebar({ page, setPage, onLogout, activeTables, role = 
             <div className="sb-logo-sub">Bengaluru Pro Edition</div>
           </div>
         </div>
-        <button
+        <HsrButton native
           type="button"
           className="cf-collapse-btn"
           onClick={() => setCollapsedPersisted(!collapsed)}
           aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
         >
-          <i className={`ti ${collapsed ? "ti-chevron-right" : "ti-chevron-left"}`} aria-hidden="true" />
-        </button>
-        <button
+          <HsrIcon className={`ti ${collapsed ? "ti-chevron-right" : "ti-chevron-left"}`} aria-hidden="true" />
+        </HsrButton>
+        <HsrButton native
           type="button"
           className="sb-mobile-toggle"
           onClick={() => setMobileOpen((open) => !open)}
           aria-label={mobileOpen ? "Collapse navigation" : "Expand navigation"}
         >
-          <i className={`ti ${mobileOpen ? "ti-x" : "ti-menu-2"}`} aria-hidden="true" />
-        </button>
+          <HsrIcon className={`ti ${mobileOpen ? "ti-x" : "ti-menu-2"}`} aria-hidden="true" />
+        </HsrButton>
       </div>
 
       <div className="cf-quick-shell cf-quick-shell-compact">
         <div className="cf-role-scope">
-          <i className={`ti ${role === "admin" ? "ti-shield-check" : "ti-user-check"}`} aria-hidden="true" />
+          <HsrIcon className={`ti ${role === "admin" ? "ti-shield-check" : "ti-user-check"}`} aria-hidden="true" />
           <span>{role === "admin" ? "Admin access" : "Staff access"}</span>
         </div>
       </div>
@@ -110,7 +111,7 @@ export default function Sidebar({ page, setPage, onLogout, activeTables, role = 
           <div className="cf-nav-group" key={group.title}>
             <div className="sb-section">{group.title}</div>
             {group.items.map((item) => (
-              <button
+              <HsrButton native
                 type="button"
                 key={item.id}
                 className={`sb-item ${page === item.id ? "active" : ""}`}
@@ -118,10 +119,10 @@ export default function Sidebar({ page, setPage, onLogout, activeTables, role = 
                 aria-label={item.label}
                 aria-current={page === item.id ? "page" : undefined}
               >
-                <i className={`ti ${item.icon}`} aria-hidden="true" />
+                <HsrIcon className={`ti ${item.icon}`} aria-hidden="true" />
                 <span className="sb-label">{item.label}</span>
                 {item.badge && <span className="sb-badge" data-tone={item.badgeTone || "success"}>{item.badge}</span>}
-              </button>
+              </HsrButton>
             ))}
           </div>
         ))}
@@ -135,15 +136,15 @@ export default function Sidebar({ page, setPage, onLogout, activeTables, role = 
             <small>Signed in</small>
           </span>
         </div>
-        <button
+        <HsrButton native
           type="button"
           className="sb-item"
           onClick={onLogout}
           aria-label="Logout"
         >
-          <i className="ti ti-logout" aria-hidden="true" />
+          <HsrIcon className="ti ti-logout" aria-hidden="true" />
           <span className="sb-label">Logout</span>
-        </button>
+        </HsrButton>
       </div>
     </aside>
   );

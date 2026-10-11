@@ -1,3 +1,4 @@
+import { Icon as HsrIcon, Input as HsrInput, Button as HsrButton, Select as HsrSelect, Table as HsrTable } from "../ui/index.js";
 import { useCallback, useEffect, useRef, useState } from "react";
 import {
   getMenu,
@@ -30,7 +31,7 @@ function EmptyState({ icon = "ti-info-circle", title, detail, action }) {
   return (
     <div className="empty-state">
       <div className="empty-state-icon">
-        <i className={`ti ${icon}`} aria-hidden="true" />
+        <HsrIcon className={`ti ${icon}`} aria-hidden="true" />
       </div>
       <div className="empty-state-title">{title}</div>
       {detail && <div className="empty-state-detail">{detail}</div>}
@@ -46,7 +47,7 @@ function FoodPosSkeleton() {
   return (
     <div className="cafe-pos-page page-skeleton food-pos-skeleton" role="status" aria-live="polite" aria-label="Loading Food and Cafe POS">
       <div className="page-skeleton-status">
-        <i className="ti ti-loader-2" aria-hidden="true" />
+        <HsrIcon className="ti ti-loader-2" aria-hidden="true" />
         <span>Loading Food & Cafe POS...</span>
       </div>
       <div className="segmented-control page-tabs cafe-pos-tabs skeleton-tabs">
@@ -507,7 +508,7 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
             </div>
             <label className="food-price-field">
               <span>MRP</span>
-              <input
+              <HsrInput
                 className="input-field"
                 type="number"
                 min="1"
@@ -523,16 +524,16 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
               />
             </label>
             <div className="app-confirm-actions">
-              <button
+              <HsrButton native
                 type="button"
                 className="app-confirm-btn secondary"
                 onClick={() => setCigaretteDraft({ name: "", mrp: "" })}
               >
                 Discard Item
-              </button>
-              <button type="submit" className="app-confirm-btn primary">
+              </HsrButton>
+              <HsrButton native type="submit" className="app-confirm-btn primary">
                 Add Cigarette
-              </button>
+              </HsrButton>
             </div>
           </form>
         </div>
@@ -540,11 +541,11 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
 
       {loadError && (
         <div className="load-error-banner" role="alert">
-          <i className="ti ti-alert-circle" aria-hidden="true" />
+          <HsrIcon className="ti ti-alert-circle" aria-hidden="true" />
           <span>{loadError}</span>
-          <button type="button" onClick={() => fetchAll({ showLoading: true })}>
+          <HsrButton native type="button" onClick={() => fetchAll({ showLoading: true })}>
             Retry
-          </button>
+          </HsrButton>
         </div>
       )}
 
@@ -555,18 +556,18 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
           ["stats", "Food Stats"],
           ["history", "Order History"],
         ].map(([id, label]) => (
-          <button
+          <HsrButton native
             key={id}
             onClick={() => setActiveTab(id)}
             className={activeTab === id ? "active" : ""}
           >
             {label}
-          </button>
+          </HsrButton>
         ))}
         {role === "admin" && (
-          <button type="button" onClick={() => onNavigate?.("inventory")}>
+          <HsrButton native type="button" onClick={() => onNavigate?.("inventory")}>
             Manage Menu
-          </button>
+          </HsrButton>
         )}
       </div>
 
@@ -577,8 +578,8 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
           <div className="cafe-products-region">
             <div className="food-menu-toolbar">
               <label className="food-menu-search">
-                <i className="ti ti-search" aria-hidden="true" />
-                <input
+                <HsrIcon className="ti ti-search" aria-hidden="true" />
+                <HsrInput
                   type="search"
                   value={menuSearch}
                   onChange={(event) => setMenuSearch(event.target.value)}
@@ -586,14 +587,14 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
                   aria-label="Search menu items"
                 />
                 {menuSearch.trim() && (
-                  <button
+                  <HsrButton native
                     type="button"
                     className="food-search-clear"
                     onClick={() => setMenuSearch("")}
                     aria-label="Clear menu search"
                   >
-                    <i className="ti ti-x" aria-hidden="true" />
-                  </button>
+                    <HsrIcon className="ti ti-x" aria-hidden="true" />
+                  </HsrButton>
                 )}
               </label>
               <span className="food-menu-count">
@@ -602,14 +603,14 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
             </div>
             <div className="segmented-control category-tabs">
               {CATEGORIES.map((cat) => (
-                <button
+                <HsrButton native
                   key={cat}
                   onClick={() => setActiveCat(cat)}
                   className={activeCat === cat ? "active" : ""}
                   aria-pressed={activeCat === cat}
                 >
                   {cat}
-                </button>
+                </HsrButton>
               ))}
             </div>
 
@@ -617,7 +618,7 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
               {filteredMenu.map(([name, v]) => {
                 const inCart = cart.find((i) => i.item === name);
                 return (
-                  <button
+                  <HsrButton native
                     type="button"
                     key={name}
                     onClick={() => addToCart(name)}
@@ -625,7 +626,7 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
                     aria-label={`Add ${name} to order`}
                   >
                     <span className="food-card-media" aria-hidden="true">
-                      <i className={`ti ${isCigarette(name) ? "ti-smoking" : "ti-tools-kitchen-2"}`} />
+                      <HsrIcon className={`ti ${isCigarette(name) ? "ti-smoking" : "ti-tools-kitchen-2"}`} />
                     </span>
                     <div className="food-menu-name">
                       {name}
@@ -641,7 +642,7 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
                         × {inCart.qty} in cart
                       </div>
                     )}
-                  </button>
+                  </HsrButton>
                 );
               })}
               {filteredMenu.length === 0 && (
@@ -651,15 +652,15 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
                     title={menuSearch.trim() ? "No matching items" : "No items in this category"}
                     detail={menuSearch.trim() ? "Clear the search or try a shorter item name." : role === "admin" ? "Try another category or manage menu items from Inventory & Stocks." : "Try another category or ask an admin to update the menu."}
                     action={menuSearch.trim() ? (
-                      <button type="button" className="lf-secondary-button empty-action-button" onClick={() => setMenuSearch("")}>
-                        <i className="ti ti-x" aria-hidden="true" />
+                      <HsrButton native type="button" className="lf-secondary-button empty-action-button" onClick={() => setMenuSearch("")}>
+                        <HsrIcon className="ti ti-x" aria-hidden="true" />
                         Clear Search
-                      </button>
+                      </HsrButton>
                     ) : role === "admin" ? (
-                      <button type="button" className="lf-secondary-button empty-action-button" onClick={() => onNavigate?.("inventory")}>
-                        <i className="ti ti-package" aria-hidden="true" />
+                      <HsrButton native type="button" className="lf-secondary-button empty-action-button" onClick={() => onNavigate?.("inventory")}>
+                        <HsrIcon className="ti ti-package" aria-hidden="true" />
                         Manage Inventory
-                      </button>
+                      </HsrButton>
                     ) : null}
                   />
                 </div>
@@ -686,20 +687,20 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
                   </p>
                 </div>
                 {cart.length > 0 && (
-                  <button
+                  <HsrButton native
                     type="button"
                     className="food-clear-cart"
                     onClick={() => setCart([])}
                     disabled={placing}
                   >
                     Clear Order
-                  </button>
+                  </HsrButton>
                 )}
               </div>
 
               <div className="cafe-order-mode">
                 <div className="cafe-counter-badge">
-                  <i className={`ti ${orderTarget === "table" ? "ti-billiard" : "ti-shopping-bag"}`} aria-hidden="true" />
+                  <HsrIcon className={`ti ${orderTarget === "table" ? "ti-billiard" : "ti-shopping-bag"}`} aria-hidden="true" />
                   <span>{orderTarget === "table" ? "Table / session order" : "Counter order"}</span>
                 </div>
                 <Checkbox
@@ -728,9 +729,9 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
                           {selectedPlayer ? ` · ${selectedPlayer}` : ""}
                         </strong>
                       </div>
-                      <button type="button" onClick={() => onNavigate?.("tables")}>
+                      <HsrButton native type="button" onClick={() => onNavigate?.("tables")}>
                         Back to table
-                      </button>
+                      </HsrButton>
                     </div>
                   )}
                   <div className="food-table-target-note">
@@ -738,7 +739,7 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
                       ? `${activeSessions.length} running table${activeSessions.length === 1 ? "" : "s"} available for food billing`
                       : "No running table sessions. Use Counter order or start a table first."}
                   </div>
-                  <select
+                  <HsrSelect
                     className="input-field"
                     value={selectedTable}
                     onChange={(e) => {
@@ -752,8 +753,8 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
                         {session.table_id.toUpperCase()} · {session.customer_name}
                       </option>
                     ))}
-                  </select>
-                  <select
+                  </HsrSelect>
+                  <HsrSelect
                     className="input-field"
                     value={selectedPlayer}
                     onChange={(e) => setSelectedPlayer(e.target.value)}
@@ -765,11 +766,11 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
                         {player}
                       </option>
                     ))}
-                  </select>
+                  </HsrSelect>
                 </div>
               ) : (
                 <>
-                  <input
+                  <HsrInput
                     className="input-field"
                     placeholder="Customer name"
                     value={customerName}
@@ -778,13 +779,13 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
 
                   <div className="food-payment-toggle" aria-label="Payment method">
                     {["Cash", "UPI", "Card"].map((method) => (
-                      <button
+                      <HsrButton native
                         key={method}
                         type="button"
                         className={paymentMethod === method ? "active" : ""}
                         onClick={() => setPaymentMethod(method)}
                       >
-                        <i
+                        <HsrIcon
                           className={`ti ${
                             method === "Cash"
                               ? "ti-cash"
@@ -795,7 +796,7 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
                           aria-hidden="true"
                         />
                         {method}
-                      </button>
+                      </HsrButton>
                     ))}
                   </div>
                 </>
@@ -807,10 +808,10 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
                   title="Cart is empty"
                   detail="Click menu items to add them to this order."
                   action={filteredMenu.length > 0 ? (
-                    <button type="button" className="lf-secondary-button empty-action-button" onClick={() => document.querySelector(".food-menu-card")?.focus()}>
-                      <i className="ti ti-arrow-left" aria-hidden="true" />
+                    <HsrButton native type="button" className="lf-secondary-button empty-action-button" onClick={() => document.querySelector(".food-menu-card")?.focus()}>
+                      <HsrIcon className="ti ti-arrow-left" aria-hidden="true" />
                       Choose Items
-                    </button>
+                    </HsrButton>
                   ) : null}
                 />
               ) : (
@@ -836,10 +837,10 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
                           className="cart-line-actions"
                         >
                           <div className="cart-qty-control" aria-label={`Quantity for ${i.item}`}>
-                            <button type="button" onClick={() => adjustCartQty(i, -1)} aria-label={`Decrease ${i.item} quantity`}>
-                              <i className="ti ti-minus" aria-hidden="true" />
-                            </button>
-                            <input
+                            <HsrButton native type="button" onClick={() => adjustCartQty(i, -1)} aria-label={`Decrease ${i.item} quantity`}>
+                              <HsrIcon className="ti ti-minus" aria-hidden="true" />
+                            </HsrButton>
+                            <HsrInput
                               type="number"
                               min="1"
                               inputMode="numeric"
@@ -847,21 +848,21 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
                               onChange={(e) => updateCartQty(i, e.target.value)}
                               aria-label={`${i.item} quantity`}
                             />
-                            <button type="button" onClick={() => adjustCartQty(i, 1)} aria-label={`Increase ${i.item} quantity`}>
-                              <i className="ti ti-plus" aria-hidden="true" />
-                            </button>
+                            <HsrButton native type="button" onClick={() => adjustCartQty(i, 1)} aria-label={`Increase ${i.item} quantity`}>
+                              <HsrIcon className="ti ti-plus" aria-hidden="true" />
+                            </HsrButton>
                           </div>
                           <span className="cart-line-price">
                             ₹{price * i.qty}
                           </span>
-                          <button
+                          <HsrButton native
                             type="button"
                             onClick={() => removeFromCart(i)}
                             className="icon-danger-btn"
                             aria-label={`Remove ${i.item || "item"} from cart`}
                           >
-                            <i className="ti ti-x" aria-hidden="true" />
-                          </button>
+                            <HsrIcon className="ti ti-x" aria-hidden="true" />
+                          </HsrButton>
                         </div>
                       </div>
                     );
@@ -880,13 +881,13 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
                     <strong>₹{cartTotalValue}</strong>
                   </div>
 
-                  <button
+                  <HsrButton native
                     onClick={placeOrder}
                     disabled={!canPlaceOrder}
                     className="primary-action-btn"
                   >
                     {placing ? "Placing..." : placeOrderLabel}
-                  </button>
+                  </HsrButton>
                 </>
               )}
 
@@ -933,13 +934,13 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
             />
           ) : (
             <div className="history-section">
-              <table className="data-table">
+              <HsrTable className="data-table">
                 <thead>
                   <tr>
                     <th>Rank</th>
                     <th>Item</th>
                     <th>Units Sold</th>
-                    <th>Revenue</th>
+                    <th data-type="number">Revenue</th>
                     <th>Performance</th>
                   </tr>
                 </thead>
@@ -949,14 +950,16 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
                     const pct = Math.round((s.qty / maxQty) * 100);
                     return (
                       <tr key={i}>
-                        <td style={{ color: "var(--text-muted)", fontSize: "var(--text-sm)" }}>
+                        <td className="type-sm" style={{
+  color: "var(--text-muted)"
+}}>
                           #{i + 1}
                         </td>
                         <td style={{ fontWeight: "var(--weight-medium)" }}>{s.name}</td>
                         <td style={{ color: "var(--accent)", fontWeight: "var(--weight-semibold)" }}>
                           {s.qty}
                         </td>
-                        <td style={{ color: "var(--success)", fontWeight: "var(--weight-semibold)" }}>
+                        <td data-type="number" style={{ color: "var(--success)", fontWeight: "var(--weight-semibold)" }}>
                           ₹{s.revenue.toLocaleString("en-IN")}
                         </td>
                         <td>
@@ -989,12 +992,11 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
                                 }}
                               />
                             </div>
-                            <span
+                            <span className="type-xs"
                               style={{
-                                fontSize: "var(--text-xs)",
-                                color: "var(--text-muted)",
-                                width: "32px",
-                              }}
+  color: "var(--text-muted)",
+  width: "32px"
+}}
                             >
                               {pct}%
                             </span>
@@ -1004,7 +1006,7 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
                     );
                   })}
                 </tbody>
-              </table>
+              </HsrTable>
             </div>
           )}
         </div>
@@ -1026,35 +1028,39 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
             />
           ) : (
             <div className="history-section">
-              <table className="data-table">
+              <HsrTable className="data-table">
                 <thead>
                   <tr>
                     <th>Date</th>
                     <th>Customer</th>
                     <th>Items</th>
                     <th>Payment</th>
-                    <th>Total</th>
+                    <th data-type="number">Total</th>
                     <th>Action</th>
                   </tr>
                 </thead>
                 <tbody>
                   {orders.map((o, i) => (
                     <tr key={o.id || i}>
-                      <td style={{ color: "var(--text-muted)", fontSize: "var(--text-sm)" }}>
+                      <td className="type-sm" style={{
+  color: "var(--text-muted)"
+}}>
                         {o.date}
                       </td>
                       <td style={{ fontWeight: "var(--weight-medium)" }}>{o.customer_name}</td>
-                      <td style={{ fontSize: "var(--text-sm)", color: "var(--text-secondary)" }}>
+                      <td className="type-sm" style={{
+  color: "var(--text-secondary)"
+}}>
                         {o.items.map((x) => `${x.item} x${x.qty}`).join(", ")}
                       </td>
                       <td style={{ fontWeight: "var(--weight-bold)", color: o.payment_method === "UPI" ? "var(--accent)" : "var(--success)" }}>
                         {o.payment_method || "Cash"}
                       </td>
-                      <td style={{ fontWeight: "var(--weight-semibold)", color: "var(--success)" }}>
+                      <td data-type="number" style={{ fontWeight: "var(--weight-semibold)", color: "var(--success)" }}>
                         ₹{o.total}
                       </td>
                       <td>
-                        <button
+                        <HsrButton native
                           type="button"
                           className="btn btn-danger-sm food-order-cancel"
 	                          onClick={() => handleCancelFoodOrder(o)}
@@ -1063,12 +1069,12 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
 	                          {busyAction === `order-cancel-${o.id}`
                               ? "Cancelling..."
                               : "Cancel Food Order"}
-	                        </button>
+	                        </HsrButton>
                       </td>
                     </tr>
                   ))}
                 </tbody>
-              </table>
+              </HsrTable>
             </div>
           )}
         </div>

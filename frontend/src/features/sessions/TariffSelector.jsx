@@ -1,3 +1,4 @@
+import { Select as HsrSelect } from "../../components/ui/index.js";
 import { useEffect, useState } from "react";
 import { getTariffs } from "../../api/index.js";
 import { tableRateGroup } from "./tariffs.js";
@@ -21,19 +22,19 @@ export default function TariffSelector({ tableId, value, onChange, catalog }) {
     <div className="tariff-selector">
       <label className="lf-field">
         <span>Tariff</span>
-        <select aria-label="Tariff" value={value.tariff_mode} onChange={event => onChange({ tariff_mode: event.target.value, package_id: "" })}>
+        <HsrSelect aria-label="Tariff" value={value.tariff_mode} onChange={event => onChange({ tariff_mode: event.target.value, package_id: "" })}>
           <option value="hourly">Hourly</option>
           <option value="frame" disabled={!framePrice}>Per frame{framePrice ? ` · ₹${framePrice}` : " · Not configured"}</option>
           <option value="package" disabled={!packages.length}>Fixed package{packages.length ? "" : " · Not configured"}</option>
-        </select>
+        </HsrSelect>
       </label>
       {value.tariff_mode === "package" && (
         <label className="lf-field">
           <span>Package</span>
-          <select aria-label="Package" required value={packageAvailable ? value.package_id : ""} onChange={event => onChange({ ...value, package_id: event.target.value })}>
+          <HsrSelect aria-label="Package" required value={packageAvailable ? value.package_id : ""} onChange={event => onChange({ ...value, package_id: event.target.value })}>
             <option value="">Select package</option>
             {packages.map(row => <option key={row.id} value={row.id}>{row.name} · ₹{row.price}</option>)}
-          </select>
+          </HsrSelect>
         </label>
       )}
       {error && <p role="status" className="lf-muted-copy">{error}</p>}

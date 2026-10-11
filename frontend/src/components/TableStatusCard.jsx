@@ -1,14 +1,9 @@
+import { formatDuration as polishDuration } from "../utils/format.js";
 import { TableAttentionBadge, TablePrimaryAction, TableStateBadge } from "./TableStateUI.jsx";
 import { getTableLabel, getTableRate } from "../config/hsrTables.js";
 import { tableStateAttributes, getTableAttention, getTableStatus, getTableStatusByKey } from "../config/tableStatus.js";
 
-function formatTimer(seconds = 0) {
-  const total = Math.max(0, Math.floor(Number(seconds) || 0));
-  const hours = Math.floor(total / 3600);
-  const minutes = String(Math.floor((total % 3600) / 60)).padStart(2, "0");
-  const remainder = String(total % 60).padStart(2, "0");
-  return hours ? `${hours}:${minutes}:${remainder}` : `${minutes}:${remainder}`;
-}
+function formatTimer(seconds = 0) { return polishDuration(seconds); }
 
 export default function TableStatusCard({
   table,

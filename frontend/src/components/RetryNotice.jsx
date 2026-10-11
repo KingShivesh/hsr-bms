@@ -1,13 +1,14 @@
+import { Icon as HsrIcon } from "./ui/index.js";
 import Button from "./ui/Button.jsx";
 
 export default function RetryNotice({
-  message = "Something could not load.",
-  detail = "Check the backend connection and try again.",
+  message = "We couldn't load this view.",
+  detail = "Check your connection, then try again.",
   onRetry,
 }) {
   return (
     <div className="retry-notice" role="alert">
-      <i className="ti ti-alert-circle" aria-hidden="true" />
+      <HsrIcon className="ti ti-alert-circle" aria-hidden="true" />
       <div>
         <strong>{message}</strong>
         {detail && <span>{detail}</span>}

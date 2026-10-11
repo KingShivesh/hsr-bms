@@ -1,3 +1,4 @@
+import { Icon as HsrIcon } from "./index.js";
 export function Alert({ tone = "neutral", icon, title, children, className = "" }) {
   const fallbackIcon = {
     success: "ti-circle-check",
@@ -8,7 +9,7 @@ export function Alert({ tone = "neutral", icon, title, children, className = "" 
 
   return (
     <div className={["ui-alert", `ui-alert-${tone}`, className].filter(Boolean).join(" ")} role={tone === "danger" ? "alert" : "status"}>
-      <i className={`ti ${icon || fallbackIcon}`} aria-hidden="true" />
+      <HsrIcon className={`ti ${icon || fallbackIcon}`} aria-hidden="true" />
       <div>
         {title && <strong>{title}</strong>}
         {children && <p>{children}</p>}

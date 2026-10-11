@@ -1,3 +1,4 @@
+import { Icon as HsrIcon, Input as HsrInput, Button as HsrButton } from "./ui/index.js";
 import { useState } from "react";
 import { login } from "../api/index.js";
 import { APP_NAME, TABLE_RANGE, TOTAL_TABLES } from "../config/hsrTables.js";
@@ -94,9 +95,10 @@ export default function Login({ onLogin }) {
             <div>
               <div className="login-card-eyebrow">Secure staff access</div>
               <h1>Welcome back</h1>
+              <p className="login-greeting">Let's run the floor.</p>
             </div>
             <div className="login-lock">
-              <i className="ti ti-lock" aria-hidden="true" />
+              <HsrIcon className="ti ti-lock" aria-hidden="true" />
             </div>
           </div>
 
@@ -104,8 +106,8 @@ export default function Login({ onLogin }) {
             <div className="form-group">
               <label className="form-label" htmlFor="login-username">Username</label>
               <div className="login-input-wrap">
-                <i className="ti ti-user" aria-hidden="true" />
-                <input
+                <HsrIcon className="ti ti-user" aria-hidden="true" />
+                <HsrInput
                   type="text"
                   id="login-username"
                   autoComplete="username"
@@ -121,8 +123,8 @@ export default function Login({ onLogin }) {
             <div className="form-group">
               <label className="form-label" htmlFor="login-password">Password</label>
               <div className="login-input-wrap">
-                <i className="ti ti-key" aria-hidden="true" />
-                <input
+                <HsrIcon className="ti ti-key" aria-hidden="true" />
+                <HsrInput
                   type="password"
                   id="login-password"
                   autoComplete="current-password"
@@ -135,15 +137,16 @@ export default function Login({ onLogin }) {
                 />
               </div>
             </div>
-            <button
+            <HsrButton native
               type="submit"
               className="btn-login cf-btn-login"
               disabled={loading}
+              loading={loading}
               data-testid="login-button"
             >
-              <span>{loading ? "Signing in..." : "Sign in"}</span>
-              <i className="ti ti-arrow-right" aria-hidden="true" />
-            </button>
+              <span>Sign in</span>
+              <HsrIcon className="ti ti-arrow-right" aria-hidden="true" />
+            </HsrButton>
             <div className="error-message" role="alert">{error}</div>
           </form>
 

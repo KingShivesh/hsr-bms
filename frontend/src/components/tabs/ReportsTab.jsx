@@ -1,3 +1,5 @@
+import { formatCurrency as polishCurrency } from "../../utils/format.js";
+import { Button as HsrButton, Icon as HsrIcon, Input as HsrInput, Table as HsrTable } from "../ui/index.js";
 import { useCallback, useEffect, useState } from "react";
 import {
   getSummary,
@@ -83,13 +85,13 @@ function formatDatePickerLabel(value) {
 
 function TabBtn({ active, onClick, children }) {
   return (
-    <button
+    <HsrButton native
       type="button"
       onClick={onClick}
       className={`ui-tab-btn ${active ? "active" : ""}`}
     >
       {children}
-    </button>
+    </HsrButton>
   );
 }
 
@@ -110,7 +112,7 @@ function EmptyState({ icon = "ti-chart-bar", title, detail }) {
   return (
     <div className="empty-state">
       <div className="empty-state-icon">
-        <i className={`ti ${icon}`} aria-hidden="true" />
+        <HsrIcon className={`ti ${icon}`} aria-hidden="true" />
       </div>
       <div className="empty-state-title">{title}</div>
       {detail && <div className="empty-state-detail">{detail}</div>}
@@ -122,7 +124,7 @@ function LoadingState({ title = "Loading report..." }) {
   return (
     <div className="page-skeleton compact" role="status" aria-live="polite" aria-label={title}>
       <div className="page-skeleton-status">
-        <i className="ti ti-loader-2" aria-hidden="true" />
+        <HsrIcon className="ti ti-loader-2" aria-hidden="true" />
         <span>{title}</span>
       </div>
       <div className="skeleton-line skeleton-title" />
@@ -144,7 +146,7 @@ function ReportEmptyTable({ title, detail, columns, rows = 4 }) {
           <span>No data in range</span>
           <strong>{title}</strong>
         </div>
-        <i className="ti ti-chart-dots" aria-hidden="true" />
+        <HsrIcon className="ti ti-chart-dots" aria-hidden="true" />
       </div>
       <p>{detail}</p>
       <div className="report-empty-table" aria-hidden="true">
@@ -173,7 +175,7 @@ function ReportEmptyList({ title, detail, rows }) {
           <span>No traffic pattern yet</span>
           <strong>{title}</strong>
         </div>
-        <i className="ti ti-clock-hour-4" aria-hidden="true" />
+        <HsrIcon className="ti ti-clock-hour-4" aria-hidden="true" />
       </div>
       <p>{detail}</p>
       <div className="report-empty-list" aria-hidden="true">
@@ -224,18 +226,25 @@ function HistoryView({ history, period, onPeriodChange, selectedDate, onDateChan
     <div className="history-section">
       <div
         style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          marginBottom: "14px",
-          flexWrap: "wrap",
-          gap: "10px",
-        }}
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "center",
+  marginBottom: "12px",
+  flexWrap: "wrap",
+  gap: "8px"
+}}
       >
-        <div style={{ fontSize: "var(--text-sm)", fontWeight: "var(--weight-semibold)", color: "var(--venue-text, var(--text))" }}>
+        <div className="type-sm" style={{
+  fontWeight: "var(--weight-semibold)",
+  color: "var(--venue-text, var(--text))"
+}}>
           Bills
         </div>
-        <div style={{ display: "flex", gap: "6px", flexWrap: "wrap" }}>
+        <div style={{
+  display: "flex",
+  gap: "4px",
+  flexWrap: "wrap"
+}}>
           {PERIODS.map((p) => (
             <TabBtn
               key={p.id}
@@ -246,9 +255,9 @@ function HistoryView({ history, period, onPeriodChange, selectedDate, onDateChan
             </TabBtn>
           ))}
           <label className={`reports-date-picker ${selectedDate ? "has-value" : ""}`}>
-            <i className="ti ti-calendar" aria-hidden="true" />
+            <HsrIcon className="ti ti-calendar" aria-hidden="true" />
             <span>{formatDatePickerLabel(selectedDate)}</span>
-            <input
+            <HsrInput
               className="reports-date-filter"
               type="date"
               value={selectedDate}
@@ -259,25 +268,24 @@ function HistoryView({ history, period, onPeriodChange, selectedDate, onDateChan
               }}
             />
           </label>
-          <button
+          <HsrButton native className="type-sm"
             onClick={onExport}
             disabled={exporting}
             style={{
-              fontSize: "var(--text-sm)",
-              padding: "6px 14px",
-              borderRadius: "var(--radius-sm)",
-              cursor: exporting ? "wait" : "pointer",
-              background: "var(--success-bg)",
-              color: "var(--success-foreground)",
-              border: "1px solid color-mix(in srgb, var(--success) 28%, var(--border))",
-              fontWeight: "var(--weight-medium)",
-            }}
+  padding: "4px 12px",
+  borderRadius: "var(--radius-sm)",
+  cursor: exporting ? "wait" : "pointer",
+  background: "var(--success-bg)",
+  color: "var(--success-foreground)",
+  border: "1px solid color-mix(in srgb, var(--success) 28%, var(--border))",
+  fontWeight: "var(--weight-medium)"
+}}
           >
             {exporting ? "Exporting..." : "Export CSV"}
-          </button>
+          </HsrButton>
         </div>
       </div>
-      <input
+      <HsrInput
         type="text"
         className="input-field"
         placeholder="Search by customer or table..."
@@ -288,14 +296,14 @@ function HistoryView({ history, period, onPeriodChange, selectedDate, onDateChan
       />
       {suspiciousCount > 0 && (
         <div className="report-integrity-banner" role="status">
-          <i className="ti ti-alert-triangle" aria-hidden="true" />
+          <HsrIcon className="ti ti-alert-triangle" aria-hidden="true" />
           <span>
             {suspiciousCount} table bill{suspiciousCount > 1 ? "s" : ""} need review because the amount is ₹0 despite recorded play time.
           </span>
         </div>
       )}
       <div style={{ overflowX: "auto" }}>
-        <table className="data-table">
+        <HsrTable className="data-table">
           <thead>
             <tr>
               <th>Date</th>
@@ -303,9 +311,9 @@ function HistoryView({ history, period, onPeriodChange, selectedDate, onDateChan
               <th>Customer</th>
               <th>Billing</th>
               <th>Duration</th>
-              <th>Play</th>
-              <th>Food</th>
-              <th>Total</th>
+              <th data-type="number">Play</th>
+              <th data-type="number">Food</th>
+              <th data-type="number">Total</th>
             </tr>
           </thead>
           <tbody>
@@ -313,7 +321,9 @@ function HistoryView({ history, period, onPeriodChange, selectedDate, onDateChan
               <tr>
                 <td
                   colSpan="8"
-                  style={{ padding: "18px" }}
+                  style={{
+  padding: "16px"
+}}
                 >
                   <EmptyState
                     icon="ti-receipt"
@@ -325,36 +335,40 @@ function HistoryView({ history, period, onPeriodChange, selectedDate, onDateChan
             ) : (
               filtered.map((r, i) => (
                 <tr key={i} className={isSuspiciousBill(r) ? "data-row-warning" : ""}>
-                  <td style={{ color: "var(--text-muted)", fontSize: "var(--text-sm)" }}>{formatBillDate(r)}</td>
+                  <td className="type-sm" style={{
+  color: "var(--text-muted)"
+}}>{formatBillDate(r)}</td>
                   <td>
-                    <span
+                    <span className="type-sm"
                       style={{
-                        background: "var(--surface-muted)",
-                        color: "var(--text-primary)",
-                        padding: "2px 8px",
-                        borderRadius: "var(--radius-sm)",
-                        fontSize: "var(--text-sm)",
-                        fontWeight: "var(--weight-semibold)",
-                      }}
+  background: "var(--surface-muted)",
+  color: "var(--text-primary)",
+  padding: "0px 8px",
+  borderRadius: "var(--radius-sm)",
+  fontWeight: "var(--weight-semibold)"
+}}
                     >
                       {r.tbl || r.table_id}
                     </span>
                   </td>
                   <td style={{ fontWeight: "var(--weight-medium)" }}>{billCustomerName(r)}</td>
-                  <td style={{ color: "var(--text-secondary)", fontSize: "var(--text-sm)", fontWeight: "var(--weight-bold)" }}>
+                  <td className="type-sm" style={{
+  color: "var(--text-secondary)",
+  fontWeight: "var(--weight-bold)"
+}}>
                     {labelBillingMode(r.billing_mode)}
                   </td>
                   <td style={{ color: "var(--text-secondary)" }}>{r.dur}m</td>
-                  <td style={{ color: "var(--success)", fontWeight: "var(--weight-medium)" }}>
+                  <td data-type="number" style={{ color: "var(--success)", fontWeight: "var(--weight-medium)" }}>
                     ₹{r.ply}
                   </td>
-                  <td style={{ color: "var(--warning)" }}>₹{r.famt || 0}</td>
-                  <td style={{ fontWeight: "var(--weight-bold)" }}>₹{billTotal(r)}</td>
+                  <td data-type="number" style={{ color: "var(--warning)" }}>₹{r.famt || 0}</td>
+                  <td data-type="number" style={{ fontWeight: "var(--weight-bold)" }}>₹{billTotal(r)}</td>
                 </tr>
               ))
             )}
           </tbody>
-        </table>
+        </HsrTable>
       </div>
     </div>
   );
@@ -387,15 +401,24 @@ function TopCustomersView() {
           marginBottom: "16px",
         }}
       >
-        <div style={{ fontSize: "var(--text-base)", fontWeight: "var(--weight-semibold)", color: "var(--venue-text, var(--text))" }}>
+        <div className="type-base" style={{
+  fontWeight: "var(--weight-semibold)",
+  color: "var(--venue-text, var(--text))"
+}}>
           Regular Customers{" "}
           {data && (
-            <span style={{ fontSize: "var(--text-sm)", color: "var(--text-muted)", fontWeight: "var(--weight-regular)" }}>
+            <span className="type-sm" style={{
+  color: "var(--text-muted)",
+  fontWeight: "var(--weight-regular)"
+}}>
               — {data.label}
             </span>
           )}
         </div>
-        <div style={{ display: "flex", gap: "6px" }}>
+        <div style={{
+  display: "flex",
+  gap: "4px"
+}}>
           {[
             ["month", "This Month"],
             ["week", "This Week"],
@@ -420,14 +443,14 @@ function TopCustomersView() {
         />
       ) : (
         <div className="history-section">
-          <table className="data-table">
+          <HsrTable className="data-table">
             <thead>
               <tr>
                 <th>Rank</th>
                 <th>Customer</th>
-                <th>Visits</th>
-                <th>Play</th>
-                <th>Food</th>
+                <th data-type="number">Visits</th>
+                <th data-type="number">Play</th>
+                <th data-type="number">Food</th>
                 <th>Total Spent</th>
               </tr>
             </thead>
@@ -435,29 +458,14 @@ function TopCustomersView() {
               {data.customers.map((c, i) => (
                 <tr key={i}>
                   <td>
-                    <span
+                    <span className="type-sm"
                       style={{
-                        fontSize: "var(--text-sm)",
-                        fontWeight: "var(--weight-bold)",
-                        padding: "2px 8px",
-                        borderRadius: "var(--radius-sm)",
-                        background:
-                          i === 0
-                            ? "var(--warning-bg)"
-                            : i === 1
-                              ? "var(--surface-muted)"
-                              : i === 2
-                                ? "var(--warning-bg)"
-                                : "var(--surface-muted)",
-                        color:
-                          i === 0
-                            ? "var(--warning)"
-                            : i === 1
-                              ? "var(--text-secondary)"
-                              : i === 2
-                                ? "var(--warning)"
-                                : "var(--text-secondary)",
-                      }}
+  fontWeight: "var(--weight-bold)",
+  padding: "0px 8px",
+  borderRadius: "var(--radius-sm)",
+  background: i === 0 ? "var(--warning-bg)" : i === 1 ? "var(--surface-muted)" : i === 2 ? "var(--warning-bg)" : "var(--surface-muted)",
+  color: i === 0 ? "var(--warning)" : i === 1 ? "var(--text-secondary)" : i === 2 ? "var(--warning)" : "var(--text-secondary)"
+}}
                     >
                       #{i + 1}
                     </span>
@@ -466,19 +474,19 @@ function TopCustomersView() {
                   <td style={{ color: "var(--accent)", fontWeight: "var(--weight-medium)" }}>
                     {c.visits}
                   </td>
-                  <td style={{ color: "var(--text-secondary)" }}>
+                  <td data-type="number" style={{ color: "var(--text-secondary)" }}>
                     ₹{c.play.toLocaleString("en-IN")}
                   </td>
-                  <td style={{ color: "var(--warning)" }}>
+                  <td data-type="number" style={{ color: "var(--warning)" }}>
                     ₹{c.food.toLocaleString("en-IN")}
                   </td>
-                  <td style={{ fontWeight: "var(--weight-bold)", color: "var(--success)" }}>
+                  <td data-type="number" style={{ fontWeight: "var(--weight-bold)", color: "var(--success)" }}>
                     ₹{c.spent.toLocaleString("en-IN")}
                   </td>
                 </tr>
               ))}
             </tbody>
-          </table>
+          </HsrTable>
         </div>
       )}
     </div>
@@ -499,13 +507,12 @@ function UtilizationView() {
 
   return (
     <div>
-      <div
+      <div className="type-base"
         style={{
-          fontSize: "var(--text-base)",
-          fontWeight: "var(--weight-semibold)",
-          color: "var(--text-primary)",
-          marginBottom: "16px",
-        }}
+  fontWeight: "var(--weight-semibold)",
+  color: "var(--text-primary)",
+  marginBottom: "16px"
+}}
       >
         Table Performance
       </div>
@@ -526,7 +533,7 @@ function UtilizationView() {
         />
         <StatCard
           label="Total Revenue"
-          value={`₹${data.reduce((a, d) => a + d.revenue, 0).toLocaleString("en-IN")}`}
+          value={polishCurrency(data.reduce((a, d) => a + d.revenue, 0))}
           color="var(--success)"
         />
         <StatCard
@@ -542,12 +549,12 @@ function UtilizationView() {
       </div>
 
       <div className="history-section">
-        <table className="data-table">
+        <HsrTable className="data-table">
           <thead>
             <tr>
               <th>Table</th>
               <th>Type</th>
-              <th>Sessions</th>
+              <th data-type="number">Sessions</th>
               <th>Avg Duration</th>
               <th>Food Revenue</th>
               <th>Total Revenue</th>
@@ -559,16 +566,15 @@ function UtilizationView() {
               <tr key={i}>
                 <td style={{ fontWeight: "var(--weight-semibold)" }}>{d.table}</td>
                 <td>
-                  <span
+                  <span className="type-xs"
                     style={{
-                      fontSize: "var(--text-xs)",
-                      fontWeight: "var(--weight-semibold)",
-                      padding: "2px 8px",
-                      borderRadius: "var(--radius-sm)",
-                      background: d.type === "POOL" ? "var(--success-bg)" : "var(--danger-bg)",
-                      color: d.type === "POOL" ? "var(--success)" : "var(--danger)",
-                      border: `1px solid ${d.type === "POOL" ? "color-mix(in srgb, var(--success) 28%, var(--border))" : "color-mix(in srgb, var(--danger) 24%, var(--border))"}`,
-                    }}
+  fontWeight: "var(--weight-semibold)",
+  padding: "0px 8px",
+  borderRadius: "var(--radius-sm)",
+  background: d.type === "POOL" ? "var(--success-bg)" : "var(--danger-bg)",
+  color: d.type === "POOL" ? "var(--success)" : "var(--danger)",
+  border: `1px solid ${d.type === "POOL" ? "color-mix(in srgb, var(--success) 28%, var(--border))" : "color-mix(in srgb, var(--danger) 24%, var(--border))"}`
+}}
                   >
                     {d.type}
                   </span>
@@ -577,10 +583,10 @@ function UtilizationView() {
                   {d.sessions}
                 </td>
                 <td style={{ color: "var(--text-secondary)" }}>{d.avg_dur}m</td>
-                <td style={{ color: "var(--warning)" }}>
+                <td data-type="number" style={{ color: "var(--warning)" }}>
                   ₹{d.food_rev.toLocaleString("en-IN")}
                 </td>
-                <td style={{ fontWeight: "var(--weight-bold)", color: "var(--success)" }}>
+                <td data-type="number" style={{ fontWeight: "var(--weight-bold)", color: "var(--success)" }}>
                   ₹{d.revenue.toLocaleString("en-IN")}
                 </td>
                 <td>
@@ -608,8 +614,11 @@ function UtilizationView() {
                         }}
                       />
                     </div>
-                    <span
-                      style={{ fontSize: "var(--text-xs)", color: "var(--text-muted)", width: "36px" }}
+                    <span className="type-xs"
+                      style={{
+  color: "var(--text-muted)",
+  width: "36px"
+}}
                     >
                       {d.utilization_pct}%
                     </span>
@@ -618,7 +627,7 @@ function UtilizationView() {
               </tr>
             ))}
           </tbody>
-        </table>
+        </HsrTable>
       </div>
     </div>
   );
@@ -666,23 +675,29 @@ function ClosingReportView({ onNavigate }) {
         }}
       >
         <div>
-          <div style={{ fontSize: "var(--text-base)", fontWeight: "var(--weight-semibold)", color: "var(--venue-text, var(--text))" }}>
+          <div className="type-base" style={{
+  fontWeight: "var(--weight-semibold)",
+  color: "var(--venue-text, var(--text))"
+}}>
             Daily Closing Report
           </div>
-          <div style={{ fontSize: "var(--text-sm)", color: "var(--text-muted)", marginTop: "2px" }}>
+          <div className="type-sm" style={{
+  color: "var(--text-muted)",
+  marginTop: "0px"
+}}>
             {data.date}
           </div>
         </div>
         <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
-          <button className="btn btn-primary-sm" onClick={printReport}>
+          <HsrButton native className="btn btn-primary-sm" onClick={printReport}>
             Print Report
-          </button>
-          <button
+          </HsrButton>
+          <HsrButton native
             className="btn btn-primary-sm"
             onClick={() => onNavigate?.("closing")}
           >
             Open Daily Closing
-          </button>
+          </HsrButton>
         </div>
       </div>
 
@@ -697,7 +712,7 @@ function ClosingReportView({ onNavigate }) {
       >
         <StatCard
           label="Total Revenue"
-          value={`₹${data.total_revenue.toLocaleString("en-IN")}`}
+          value={polishCurrency(data.total_revenue)}
           color="var(--success)"
         />
         <StatCard
@@ -712,12 +727,12 @@ function ClosingReportView({ onNavigate }) {
         />
         <StatCard
           label="Play Revenue"
-          value={`₹${data.play_revenue.toLocaleString("en-IN")}`}
+          value={polishCurrency(data.play_revenue)}
           color="var(--text-primary)"
         />
         <StatCard
           label="Food Revenue"
-          value={`₹${data.food_revenue.toLocaleString("en-IN")}`}
+          value={polishCurrency(data.food_revenue)}
           color="var(--warning)"
         />
         <StatCard label="Peak Hour" value={data.peak_hour} color="var(--danger)" />
@@ -726,22 +741,21 @@ function ClosingReportView({ onNavigate }) {
       {/* Table breakdown */}
       {Object.keys(data.table_breakdown).length > 0 && (
         <div className="history-section" style={{ marginBottom: "16px" }}>
-          <div
+          <div className="type-sm"
             style={{
-              fontSize: "var(--text-sm)",
-              fontWeight: "var(--weight-semibold)",
-              color: "var(--text-primary)",
-              marginBottom: "12px",
-            }}
+  fontWeight: "var(--weight-semibold)",
+  color: "var(--text-primary)",
+  marginBottom: "12px"
+}}
           >
             Table Breakdown
           </div>
-          <table className="data-table">
+          <HsrTable className="data-table">
             <thead>
               <tr>
                 <th>Table</th>
-                <th>Sessions</th>
-                <th>Revenue</th>
+                <th data-type="number">Sessions</th>
+                <th data-type="number">Revenue</th>
               </tr>
             </thead>
             <tbody>
@@ -751,30 +765,29 @@ function ClosingReportView({ onNavigate }) {
                   <tr key={i}>
                     <td style={{ fontWeight: "var(--weight-semibold)" }}>{tbl}</td>
                     <td style={{ color: "var(--accent)" }}>{stats.sessions}</td>
-                    <td style={{ fontWeight: "var(--weight-semibold)", color: "var(--success)" }}>
+                    <td data-type="number" style={{ fontWeight: "var(--weight-semibold)", color: "var(--success)" }}>
                       ₹{stats.revenue.toLocaleString("en-IN")}
                     </td>
                   </tr>
                 ))}
             </tbody>
-          </table>
+          </HsrTable>
         </div>
       )}
 
       {/* Food breakdown */}
       {Object.keys(data.food_breakdown).length > 0 && (
         <div className="history-section" style={{ marginBottom: "16px" }}>
-          <div
+          <div className="type-sm"
             style={{
-              fontSize: "var(--text-sm)",
-              fontWeight: "var(--weight-semibold)",
-              color: "var(--text-primary)",
-              marginBottom: "12px",
-            }}
+  fontWeight: "var(--weight-semibold)",
+  color: "var(--text-primary)",
+  marginBottom: "12px"
+}}
           >
             Food Sold Today
           </div>
-          <table className="data-table">
+          <HsrTable className="data-table">
             <thead>
               <tr>
                 <th>Item</th>
@@ -791,32 +804,31 @@ function ClosingReportView({ onNavigate }) {
                   </tr>
                 ))}
             </tbody>
-          </table>
+          </HsrTable>
         </div>
       )}
 
       {/* All transactions today */}
       {data.transactions.length > 0 && (
         <div className="history-section">
-          <div
+          <div className="type-sm"
             style={{
-              fontSize: "var(--text-sm)",
-              fontWeight: "var(--weight-semibold)",
-              color: "var(--text-primary)",
-              marginBottom: "12px",
-            }}
+  fontWeight: "var(--weight-semibold)",
+  color: "var(--text-primary)",
+  marginBottom: "12px"
+}}
           >
             All Sessions Today
           </div>
-          <table className="data-table">
+          <HsrTable className="data-table">
             <thead>
               <tr>
                 <th>Table</th>
                 <th>Customer</th>
                 <th>Duration</th>
-                <th>Play</th>
-                <th>Food</th>
-                <th>Total</th>
+                <th data-type="number">Play</th>
+                <th data-type="number">Food</th>
+                <th data-type="number">Total</th>
               </tr>
             </thead>
             <tbody>
@@ -825,13 +837,13 @@ function ClosingReportView({ onNavigate }) {
                   <td style={{ fontWeight: "var(--weight-semibold)" }}>{t.tbl}</td>
                   <td style={{ fontWeight: "var(--weight-medium)" }}>{t.nm}</td>
                   <td style={{ color: "var(--text-secondary)" }}>{t.dur}m</td>
-                  <td style={{ color: "var(--success)" }}>₹{t.ply}</td>
-                  <td style={{ color: "var(--warning)" }}>₹{t.famt}</td>
-                  <td style={{ fontWeight: "var(--weight-bold)" }}>₹{t.tot}</td>
+                  <td data-type="number" style={{ color: "var(--success)" }}>₹{t.ply}</td>
+                  <td data-type="number" style={{ color: "var(--warning)" }}>₹{t.famt}</td>
+                  <td data-type="number" style={{ fontWeight: "var(--weight-bold)" }}>₹{t.tot}</td>
                 </tr>
               ))}
             </tbody>
-          </table>
+          </HsrTable>
         </div>
       )}
 
@@ -872,19 +884,22 @@ function ClosingInsightsView() {
     <div style={{ maxWidth: "760px" }}>
       <div
         style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(3,1fr)",
-          gap: "12px",
-          marginBottom: "18px",
-        }}
+  display: "grid",
+  gridTemplateColumns: "repeat(3,1fr)",
+  gap: "12px",
+  marginBottom: "16px"
+}}
       >
-        <StatCard label="Revenue" value={`₹${data.metrics.revenue.toLocaleString("en-IN")}`} color="var(--success)" />
+        <StatCard label="Revenue" value={polishCurrency(data.metrics.revenue)} color="var(--success)" />
         <StatCard label="Sessions" value={data.metrics.sessions} color="var(--accent)" />
-        <StatCard label="Food" value={`₹${data.metrics.food.toLocaleString("en-IN")}`} color="var(--warning)" />
+        <StatCard label="Food" value={polishCurrency(data.metrics.food)} color="var(--warning)" />
       </div>
 
       <div className="history-section">
-        <div style={{ fontSize: "var(--text-base)", fontWeight: "var(--weight-bold)", marginBottom: "14px" }}>
+        <div className="type-base" style={{
+  fontWeight: "var(--weight-bold)",
+  marginBottom: "12px"
+}}>
           Smart Closing Insights
         </div>
         {data.insights.map((insight, i) => {
@@ -893,18 +908,23 @@ function ClosingInsightsView() {
             <div
               key={i}
               style={{
-                background: bg,
-                color: fg,
-                border: `1px solid ${border}`,
-                borderRadius: "var(--radius-sm)",
-                padding: "12px 14px",
-                marginBottom: "10px",
-              }}
+  background: bg,
+  color: fg,
+  border: `1px solid ${border}`,
+  borderRadius: "var(--radius-sm)",
+  padding: "12px 12px",
+  marginBottom: "8px"
+}}
             >
-              <div style={{ fontWeight: "var(--weight-heavy)", fontSize: "var(--text-sm)", marginBottom: "4px" }}>
+              <div className="type-sm" style={{
+  fontWeight: "var(--weight-heavy)",
+  marginBottom: "4px"
+}}>
                 {insight.title}
               </div>
-              <div style={{ fontSize: "var(--text-sm)", color: "var(--text-secondary)" }}>{insight.detail}</div>
+              <div className="type-sm" style={{
+  color: "var(--text-secondary)"
+}}>{insight.detail}</div>
             </div>
           );
         })}
@@ -924,23 +944,28 @@ function AuditLogView() {
 
   return (
     <div className="history-section">
-      <div style={{ fontSize: "var(--text-base)", fontWeight: "var(--weight-bold)", marginBottom: "14px" }}>
+      <div className="type-base" style={{
+  fontWeight: "var(--weight-bold)",
+  marginBottom: "12px"
+}}>
         Anti-Leakage Audit Log
       </div>
-      <table className="data-table">
+      <HsrTable className="data-table">
         <thead>
           <tr>
             <th>Date</th>
             <th>Severity</th>
             <th>Action</th>
             <th>Detail</th>
-            <th>Amount</th>
+            <th data-type="number">Amount</th>
           </tr>
         </thead>
         <tbody>
           {rows.length === 0 ? (
             <tr>
-              <td colSpan="5" style={{ padding: "18px" }}>
+              <td colSpan="5" style={{
+  padding: "16px"
+}}>
                 <EmptyState
                   icon="ti-shield-check"
                   title="No audit events yet"
@@ -951,18 +976,20 @@ function AuditLogView() {
           ) : (
             rows.map((r) => (
               <tr key={r.id}>
-                <td style={{ color: "var(--text-secondary)", fontSize: "var(--text-sm)" }}>{r.date}</td>
+                <td className="type-sm" style={{
+  color: "var(--text-secondary)"
+}}>{r.date}</td>
                 <td style={{ fontWeight: "var(--weight-bold)", color: r.severity === "critical" ? "var(--danger)" : r.severity === "warning" ? "var(--warning)" : "var(--accent)" }}>
                   {r.severity}
                 </td>
                 <td style={{ fontWeight: "var(--weight-semibold)" }}>{r.action}</td>
                 <td>{r.detail}</td>
-                <td>{r.amount ? `₹${r.amount.toLocaleString("en-IN")}` : "—"}</td>
+                <td data-type="number">{r.amount ? polishCurrency(r.amount) : "—"}</td>
               </tr>
             ))
           )}
         </tbody>
-      </table>
+      </HsrTable>
     </div>
   );
 }
@@ -1011,7 +1038,7 @@ function AdvancedAnalyticsView() {
         />
         <StatCard
           label="Avg Spend / Customer"
-          value={`₹${data.avg_spend_per_customer.toLocaleString("en-IN")}`}
+          value={polishCurrency(data.avg_spend_per_customer)}
           color="var(--text-primary)"
           context={hasSpendData ? "Closed spend per customer" : "Awaiting closed bills"}
           empty={!hasSpendData}
@@ -1029,12 +1056,12 @@ function AdvancedAnalyticsView() {
               rows={5}
             />
           ) : (
-            <table className="data-table">
+            <HsrTable className="data-table">
               <thead>
                 <tr>
                   <th>Table</th>
-                  <th>Sessions</th>
-                  <th>Revenue</th>
+                  <th data-type="number">Sessions</th>
+                  <th data-type="number">Revenue</th>
                   <th>Avg Duration</th>
                   <th>Revenue / Session</th>
                 </tr>
@@ -1044,13 +1071,13 @@ function AdvancedAnalyticsView() {
                   <tr key={row.table}>
                     <td style={{ fontWeight: "var(--weight-bold)" }}>{row.table}</td>
                     <td>{row.sessions}</td>
-                    <td style={{ color: "var(--success)", fontWeight: "var(--weight-bold)" }}>₹{row.revenue.toLocaleString("en-IN")}</td>
+                    <td data-type="number" style={{ color: "var(--success)", fontWeight: "var(--weight-bold)" }}>₹{row.revenue.toLocaleString("en-IN")}</td>
                     <td>{row.avg_duration}m</td>
-                    <td>₹{row.revenue_per_session.toLocaleString("en-IN")}</td>
+                    <td data-type="number">₹{row.revenue_per_session.toLocaleString("en-IN")}</td>
                   </tr>
                 ))}
               </tbody>
-            </table>
+            </HsrTable>
           )}
         </div>
 
@@ -1070,7 +1097,9 @@ function AdvancedAnalyticsView() {
                   <strong>{row.sessions} sessions</strong>
                 </div>
               ))}
-              <div className="empty-state-detail" style={{ marginTop: "10px" }}>
+              <div className="empty-state-detail" style={{
+  marginTop: "8px"
+}}>
                 These are lower-traffic slots based on recent checkout history.
               </div>
             </>
@@ -1165,7 +1194,7 @@ export default function ReportsTab({ onNavigate }) {
       <div className="reports-summary-grid">
         <StatCard
           label="Today's Revenue"
-          value={`₹${summary.sale.toLocaleString("en-IN")}`}
+          value={polishCurrency(summary.sale)}
           color="var(--success)"
         />
         <StatCard

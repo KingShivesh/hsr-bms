@@ -1,3 +1,5 @@
+import { formatDuration as polishDuration } from "../../utils/format.js";
+import { Icon as HsrIcon, Button as HsrButton, Select as HsrSelect } from "../../components/ui/index.js";
 import { useMemo, useState } from "react";
 import { transferSession } from "../../api/index.js";
 import { useToast } from "../../components/toastContext.js";
@@ -6,13 +8,7 @@ import FrameControls from "./FrameControls.jsx";
 import { tariffDescription } from "./tariffs.js";
 import SessionIdentity from "./SessionIdentity.jsx";
 
-function formatTimer(seconds = 0) {
-  const total = Math.max(0, Math.floor(Number(seconds) || 0));
-  const hrs = Math.floor(total / 3600);
-  const mins = Math.floor((total % 3600) / 60);
-  const secs = total % 60;
-  return `${String(hrs).padStart(2, "0")}:${String(mins).padStart(2, "0")}:${String(secs).padStart(2, "0")}`;
-}
+function formatTimer(seconds = 0) { return polishDuration(seconds); }
 
 function formatClock(ms) {
   if (!ms) return "-";
@@ -49,7 +45,7 @@ export default function SessionWorkspace({
       showToast(success, "success");
       await onRefresh?.();
     } catch (err) {
-      showToast(err.userMessage || "Action failed. Please retry.", "error");
+      showToast(err.userMessage || "The session could not be updated. Try again.", "error");
     } finally {
       setBusy("");
     }
@@ -74,7 +70,7 @@ export default function SessionWorkspace({
 
       {!session && (
         <div className="session-empty-panel">
-          <i className="ti ti-player-play" aria-hidden="true" />
+          <HsrIcon className="ti ti-player-play" aria-hidden="true" />
           <h3>{table.status_key === "maintenance" ? "Table unavailable" : "No active session"}</h3>
           <p>{table.maintenance?.reason || table.booking?.customer_name || `Rate: ₹${table.rate}/hr`}</p>
         </div>
@@ -84,14 +80,14 @@ export default function SessionWorkspace({
         <>
           <div className="session-tabs" role="tablist" aria-label="Session sections">
             {tabs.map((tab) => (
-              <button
+              <HsrButton native
                 type="button"
                 key={tab}
                 className={activeTab === tab ? "is-active" : ""}
                 onClick={() => setActiveTab(tab)}
               >
                 {tab}
-              </button>
+              </HsrButton>
             ))}
           </div>
 
@@ -159,10 +155,10 @@ export default function SessionWorkspace({
             <div className="session-list-panel">
               <h3>Activity</h3>
               <div className="session-activity-list">
-                <div><i className="ti ti-player-play" aria-hidden="true" /><span>Session started at {formatClock(session.start_time)}</span></div>
-                {session.paused && <div><i className="ti ti-player-pause" aria-hidden="true" /><span>Session currently paused</span></div>}
+                <div><HsrIcon className="ti ti-player-play" aria-hidden="true" /><span>Session started at {formatClock(session.start_time)}</span></div>
+                {session.paused && <div><HsrIcon className="ti ti-player-pause" aria-hidden="true" /><span>Session currently paused</span></div>}
                 {(session.food_items || []).map((item, index) => (
-                  <div key={`${item.item}-activity-${index}`}><i className="ti ti-tools-kitchen-2" aria-hidden="true" /><span>{item.item} added · Qty {item.qty}</span></div>
+                  <div key={`${item.item}-activity-${index}`}><HsrIcon className="ti ti-tools-kitchen-2" aria-hidden="true" /><span>{item.item} added · Qty {item.qty}</span></div>
                 ))}
               </div>
             </div>
@@ -172,19 +168,19 @@ export default function SessionWorkspace({
           <div className="session-action-bar">
             <label className="session-transfer">
               <span>Transfer</span>
-              <select value={transferTarget} onChange={(event) => setTransferTarget(event.target.value)}>
+              <HsrSelect value={transferTarget} onChange={(event) => setTransferTarget(event.target.value)}>
                 <option value="">Select table</option>
                 {availableTargets.map((row) => (
                   <option key={row.id} value={row.id}>{String(row.id).toUpperCase()} · {row.type}</option>
                 ))}
-              </select>
-              <button
+              </HsrSelect>
+              <HsrButton native
                 type="button"
                 disabled={!transferTarget || busy === "transfer"}
                 onClick={() => runAction("transfer", () => transferSession(table.id, transferTarget), "Session transferred")}
               >
                 {busy === "transfer" ? "Moving..." : "Move Session"}
-              </button>
+              </HsrButton>
             </label>
           </div>
         </>

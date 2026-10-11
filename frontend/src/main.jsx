@@ -8,6 +8,7 @@ import "@fontsource/dm-mono/500.css";
 import "./style.css";
 import "./design-tokens.css";
 import "./table-states.css";
+import "./presentation.css";
 import App from "./App.jsx";
 
 window.HSRTheme.sync();

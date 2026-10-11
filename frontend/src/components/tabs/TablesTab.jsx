@@ -1,3 +1,6 @@
+import { formatDuration as polishDuration, formatDateTime as polishDateTime } from "../../utils/format.js";
+import { SkeletonBlock } from "../ui/index.js";
+import { Icon as HsrIcon, Input as HsrInput, Select as HsrSelect, Button as HsrButton, Table as HsrTable, Textarea as HsrTextarea } from "../ui/index.js";
 import { useState, useEffect, useRef, useMemo } from "react";
 import {
   startSession,
@@ -37,13 +40,7 @@ import { tariffDescription } from "../../features/sessions/tariffs.js";
 const TABLES = HSR_TABLES;
 const tableKey = (tableId) => String(tableId || "").trim().toLowerCase();
 
-function fmt(secs) {
-  if (!secs) return "00:00";
-  const h = Math.floor(secs / 3600);
-  const m = String(Math.floor((secs % 3600) / 60)).padStart(2, "0");
-  const s = String(secs % 60).padStart(2, "0");
-  return h > 0 ? `${h}:${m}:${s}` : `${m}:${s}`;
-}
+function fmt(secs) { return polishDuration(secs); }
 
 function fmtClock(ms) {
   if (!ms) return "--:--";
@@ -53,15 +50,7 @@ function fmtClock(ms) {
   });
 }
 
-function fmtDateTime(ms) {
-  if (!ms) return "--";
-  return new Date(ms).toLocaleString("en-IN", {
-    day: "2-digit",
-    month: "short",
-    hour: "2-digit",
-    minute: "2-digit",
-  });
-}
+function fmtDateTime(ms) { return polishDateTime(ms); }
 
 function isFullName(name) {
   return name.trim().length > 0;
@@ -172,8 +161,8 @@ function CustomerInput({ value, onChange, placeholder }) {
 
   return (
     <div className="table-player-field">
-      <i className="ti ti-user table-player-icon" aria-hidden="true" />
-      <input
+      <HsrIcon className="ti ti-user table-player-icon" aria-hidden="true" />
+      <HsrInput
         placeholder={placeholder || undefined}
         value={value || ""}
         onChange={(e) => onChange(e.target.value)}
@@ -186,52 +175,49 @@ function CustomerInput({ value, onChange, placeholder }) {
       {show && (
         <div
           style={{
-            position: "absolute",
-            top: "100%",
-            left: 0,
-            right: 0,
-            zIndex: 300,
-            background: "var(--surface)",
-            border: "1px solid var(--border)",
-            borderRadius: "var(--radius-sm)",
-            marginTop: "3px",
-            boxShadow: "var(--shadow-md)",
-            overflow: "hidden",
-          }}
+  position: "absolute",
+  top: "100%",
+  left: 0,
+  right: 0,
+  zIndex: 300,
+  background: "var(--surface)",
+  border: "1px solid var(--border)",
+  borderRadius: "var(--radius-sm)",
+  marginTop: "4px",
+  boxShadow: "var(--shadow-md)",
+  overflow: "hidden"
+}}
         >
           {suggestions.map((m, i) => (
-            <div
+            <div className="type-sm"
               key={i}
               onMouseDown={() => {
                 onChange(m.nm);
                 setShow(false);
               }}
               style={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-                padding: "8px 10px",
-                cursor: "pointer",
-                fontSize: "var(--text-sm)",
-                borderBottom:
-                  i < suggestions.length - 1 ? "1px solid var(--border)" : "none",
-                background: "var(--surface)",
-              }}
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "center",
+  padding: "8px 8px",
+  cursor: "pointer",
+  borderBottom: i < suggestions.length - 1 ? "1px solid var(--border)" : "none",
+  background: "var(--surface)"
+}}
               onMouseEnter={(e) =>
                 (e.currentTarget.style.background = "var(--surface-muted)")
               }
               onMouseLeave={(e) => (e.currentTarget.style.background = "var(--surface)")}
             >
               <span style={{ color: "var(--text-primary)", fontWeight: "var(--weight-medium)" }}>{m.nm}</span>
-              <span
+              <span className="type-xs"
                 style={{
-                  fontSize: "var(--text-xs)",
-                  color: "var(--accent-text)",
-                  background: "var(--accent-bg)",
-                  border: "1px solid color-mix(in srgb, var(--accent) 28%, var(--border))",
-                  padding: "1px 6px",
-                  borderRadius: "var(--radius-sm)",
-                }}
+  color: "var(--accent-text)",
+  background: "var(--accent-bg)",
+  border: "1px solid color-mix(in srgb, var(--accent) 28%, var(--border))",
+  padding: "0px 4px",
+  borderRadius: "var(--radius-sm)"
+}}
               >
                 {m.id}
               </span>
@@ -288,24 +274,24 @@ function QueuePanel({
             {queue.length} waiting · {TABLES.length - activeCount} table{TABLES.length - activeCount === 1 ? "" : "s"} idle
           </div>
         </div>
-        <i className="ti ti-list-check" aria-hidden="true" />
+        <HsrIcon className="ti ti-list-check" aria-hidden="true" />
       </div>
 
       <form className="queue-form" onSubmit={submit}>
-        <input
+        <HsrInput
           className="table-mini-input"
           placeholder="Customer name"
           value={customerName}
           onChange={(e) => setCustomerName(e.target.value)}
           required
         />
-        <input
+        <HsrInput
           className="table-mini-input"
           placeholder="Phone optional"
           value={phone}
           onChange={(e) => setPhone(e.target.value)}
         />
-        <input
+        <HsrInput
           className="table-mini-input"
           type="number"
           min="1"
@@ -313,7 +299,7 @@ function QueuePanel({
           onChange={(e) => setPartySize(e.target.value)}
           aria-label="Party size"
         />
-        <select
+        <HsrSelect
           className="table-mini-input"
           value={preferredType}
           onChange={(e) => setPreferredType(e.target.value)}
@@ -321,23 +307,23 @@ function QueuePanel({
           <option value="ANY">Any table</option>
           <option value="POOL">Pool</option>
           <option value="SNOOKER">Snooker</option>
-        </select>
-        <input
+        </HsrSelect>
+        <HsrInput
           className="table-mini-input queue-notes-input"
           placeholder="Notes optional"
           value={notes}
           onChange={(e) => setNotes(e.target.value)}
         />
-        <button className="primary-action-btn" type="submit" disabled={!!busyActions["queue-add"]}>
+        <HsrButton native className="primary-action-btn" type="submit" disabled={!!busyActions["queue-add"]}>
           {busyActions["queue-add"] ? "Adding..." : "Add Walk-in"}
-        </button>
+        </HsrButton>
       </form>
 
       <div className="queue-list">
         {queue.length === 0 ? (
           <div className="empty-state compact">
             <div className="empty-state-icon">
-              <i className="ti ti-users-plus" aria-hidden="true" />
+              <HsrIcon className="ti ti-users-plus" aria-hidden="true" />
             </div>
             <div className="empty-state-title">No one waiting</div>
             <div className="empty-state-detail">
@@ -358,23 +344,23 @@ function QueuePanel({
                   {entry.notes && <div className="queue-note">{entry.notes}</div>}
                 </div>
                 <div className="queue-actions">
-                  <button
+                  <HsrButton native
                     type="button"
                     className="queue-seat-btn"
                     disabled={!table || !!busyActions[`seat-queue:${entry.id}`]}
                     onClick={() => table && onSeat(entry, table.id)}
                   >
                     {busyActions[`seat-queue:${entry.id}`] ? "Seating..." : table ? `Seat T${table.num}` : "Waiting"}
-                  </button>
-                  <button
+                  </HsrButton>
+                  <HsrButton native
                     type="button"
                     className="icon-danger-btn"
                     onClick={() => onCancel(entry.id)}
                     disabled={!!busyActions[`cancel-queue:${entry.id}`]}
                     aria-label={`Cancel queue entry for ${entry.customer_name}`}
                   >
-                    {busyActions[`cancel-queue:${entry.id}`] ? "..." : <i className="ti ti-x" aria-hidden="true" />}
-                  </button>
+                    {busyActions[`cancel-queue:${entry.id}`] ? "..." : <HsrIcon className="ti ti-x" aria-hidden="true" />}
+                  </HsrButton>
                 </div>
               </div>
             );
@@ -439,29 +425,29 @@ function BookingPanel({ bookings, onCreate, onCancel, busyActions = {}, showToas
             {activeBookings.length} active · {missedBookings.length} missed
           </div>
         </div>
-        <i className="ti ti-calendar" aria-hidden="true" />
+        <HsrIcon className="ti ti-calendar" aria-hidden="true" />
       </div>
       <div className="booking-grace-note">
-        <i className="ti ti-clock-exclamation" aria-hidden="true" />
+        <HsrIcon className="ti ti-clock-exclamation" aria-hidden="true" />
         <span>
           No-shows are auto-released after the grace period.
         </span>
       </div>
       <form className="booking-form" onSubmit={submit}>
-        <input
+        <HsrInput
           className="table-mini-input"
           placeholder="Full customer name"
           value={customerName}
           onChange={(e) => setCustomerName(e.target.value)}
           required
         />
-        <input
+        <HsrInput
           className="table-mini-input"
           placeholder="Phone optional"
           value={phone}
           onChange={(e) => setPhone(e.target.value)}
         />
-        <select
+        <HsrSelect
           className="table-mini-input"
           value={tableId}
           onChange={(e) => setTableId(e.target.value)}
@@ -472,15 +458,15 @@ function BookingPanel({ bookings, onCreate, onCancel, busyActions = {}, showToas
               T{t.num} · {t.type}
             </option>
           ))}
-        </select>
-        <input
+        </HsrSelect>
+        <HsrInput
           className="table-mini-input"
           type="datetime-local"
           value={bookingTime}
           onChange={(e) => setBookingTime(e.target.value)}
           required
         />
-        <input
+        <HsrInput
           className="table-mini-input"
           type="number"
           min="30"
@@ -489,20 +475,20 @@ function BookingPanel({ bookings, onCreate, onCancel, busyActions = {}, showToas
           onChange={(e) => setDurationMins(e.target.value)}
           aria-label="Duration minutes"
         />
-        <input
+        <HsrInput
           className="table-mini-input booking-notes-input"
           placeholder="Notes optional"
           value={notes}
           onChange={(e) => setNotes(e.target.value)}
         />
-        <button className="primary-action-btn" type="submit" disabled={!!busyActions["booking-create"]}>
+        <HsrButton native className="primary-action-btn" type="submit" disabled={!!busyActions["booking-create"]}>
           {busyActions["booking-create"] ? "Booking..." : "Book table"}
-        </button>
+        </HsrButton>
       </form>
       <div className="booking-list">
         {bookings.length === 0 ? (
           <div className="empty-state compact">
-            <div className="empty-state-icon"><i className="ti ti-calendar-plus" aria-hidden="true" /></div>
+            <div className="empty-state-icon"><HsrIcon className="ti ti-calendar-plus" aria-hidden="true" /></div>
             <div className="empty-state-title">No upcoming bookings</div>
             <div className="empty-state-detail">Future reservations and event blocks will appear here.</div>
           </div>
@@ -536,15 +522,15 @@ function BookingPanel({ bookings, onCreate, onCancel, busyActions = {}, showToas
                   )}
                 </div>
                 <div className="booking-actions">
-                  <button
+                  <HsrButton native
                     className="icon-danger-btn"
                     type="button"
                     onClick={() => onCancel(booking.id)}
                     disabled={!!busyActions[`cancel-booking:${booking.id}`]}
                     aria-label="Cancel booking"
                   >
-                    {busyActions[`cancel-booking:${booking.id}`] ? "..." : <i className="ti ti-x" aria-hidden="true" />}
-                  </button>
+                    {busyActions[`cancel-booking:${booking.id}`] ? "..." : <HsrIcon className="ti ti-x" aria-hidden="true" />}
+                  </HsrButton>
                 </div>
               </div>
             );
@@ -580,25 +566,25 @@ function HistoryModal({ tableId, tableNum, onClose }) {
             <strong>Table {tableNum}</strong>
             <span>Sessions and audit trail</span>
           </div>
-          <button type="button" onClick={onClose} aria-label="Close history">
+          <HsrButton native type="button" onClick={onClose} aria-label="Close history">
             ×
-          </button>
+          </HsrButton>
         </div>
         {loading ? (
-          <div className="table-history-empty">Loading...</div>
+          <SkeletonBlock rows={8} label="Fetching table history" />
         ) : (
           <>
             <div className="table-history-title">Last sessions</div>
             {history.length === 0 ? (
               <div className="table-history-empty">No sessions yet</div>
             ) : (
-              <table className="data-table table-history-table">
+              <HsrTable className="data-table table-history-table">
                 <thead>
                   <tr>
                     <th>Date</th>
                     <th>Customer</th>
                     <th>Duration</th>
-                    <th>Total</th>
+                    <th data-type="number">Total</th>
                     <th>Payment</th>
                   </tr>
                 </thead>
@@ -608,24 +594,24 @@ function HistoryModal({ tableId, tableNum, onClose }) {
                       <td>{row.date?.split(",")[0]}</td>
                       <td>{row.nm}</td>
                       <td>{row.dur}m</td>
-                      <td>₹{row.tot}</td>
+                      <td data-type="number">₹{row.tot}</td>
                       <td>{row.payment_method || "Cash"}</td>
                     </tr>
                   ))}
                 </tbody>
-              </table>
+              </HsrTable>
             )}
             <div className="table-history-title">Audit trail</div>
             {audit.length === 0 ? (
               <div className="table-history-empty">No table audit yet</div>
             ) : (
-              <table className="data-table table-history-table">
+              <HsrTable className="data-table table-history-table">
                 <thead>
                   <tr>
                     <th>Time</th>
                     <th>Action</th>
                     <th>Detail</th>
-                    <th>Amount</th>
+                    <th data-type="number">Amount</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -634,11 +620,11 @@ function HistoryModal({ tableId, tableNum, onClose }) {
                       <td>{row.date}</td>
                       <td>{String(row.action || "").replaceAll("_", " ")}</td>
                       <td>{row.detail}</td>
-                      <td>{row.amount ? `₹${row.amount}` : "-"}</td>
+                      <td data-type="number">{row.amount ? `₹${row.amount}` : "-"}</td>
                     </tr>
                   ))}
                 </tbody>
-              </table>
+              </HsrTable>
             )}
           </>
         )}
@@ -669,34 +655,34 @@ function ResetConfirmModal({ tableId, loading, onClose, onConfirm }) {
               This clears the running session without creating a bill.
             </p>
           </div>
-          <button
+          <HsrButton native
             type="button"
             className="quick-session-close"
             onClick={onClose}
             aria-label="Close reset confirmation"
             disabled={loading}
           >
-            <i className="ti ti-x" aria-hidden="true" />
-          </button>
+            <HsrIcon className="ti ti-x" aria-hidden="true" />
+          </HsrButton>
         </div>
         <div className="frame-loser-form">
           <label className="form-label" htmlFor={`reset-pin-${tableId}`}>
             Manager PIN, if required
           </label>
-          <input
+          <HsrInput
             id={`reset-pin-${tableId}`}
             className="frame-loser-input"
             value={pin}
             onChange={(event) => setPin(event.target.value)}
             autoFocus
           />
-          <button
+          <HsrButton native
             type="submit"
             className="frame-loser-submit"
             disabled={loading}
           >
             {loading ? "Resetting..." : "Reset Table"}
-          </button>
+          </HsrButton>
         </div>
       </form>
     </div>
@@ -796,9 +782,9 @@ function CheckoutQuoteScreen({
               </div>
             )}
           </div>
-          <button type="button" className="checkout-bill-close secondary" onClick={onClose}>
+          <HsrButton native type="button" className="checkout-bill-close secondary" onClick={onClose}>
             Back to Checkout
-          </button>
+          </HsrButton>
         </div>
 
         <CheckoutStepRail quote={quote} />
@@ -871,7 +857,7 @@ function CheckoutQuoteScreen({
           <div className="checkout-discount-box">
             <div className="table-discount-options">
               {DISCOUNT_OPTIONS.map((option) => (
-                <button
+                <HsrButton native
                   key={option.id}
                   type="button"
                   className={quote.discountType === option.id ? "active" : ""}
@@ -884,13 +870,13 @@ function CheckoutQuoteScreen({
                   }
                 >
                   {option.label}
-                </button>
+                </HsrButton>
               ))}
             </div>
             {quote.discountType === "rupee" && (
               <div className="checkout-rupee-discount">
                 <div className="checkout-rupee-discount-row">
-                  <input
+                  <HsrInput
                     className="table-mini-input"
                     type="text"
                     inputMode="numeric"
@@ -902,14 +888,14 @@ function CheckoutQuoteScreen({
                     placeholder="Max ₹50"
                     aria-label="Rupee discount amount"
                   />
-                  <button
+                  <HsrButton native
                     type="button"
                     className="checkout-rupee-apply-btn"
                     disabled={quote.loading || !quote.discountValue}
                     onClick={() => onDiscountChange("rupee", quote.discountValue, true)}
                   >
                     Apply Discount
-                  </button>
+                  </HsrButton>
                 </div>
                 <span className="checkout-rupee-hint">Enter the rupee amount, then apply.</span>
               </div>
@@ -917,7 +903,7 @@ function CheckoutQuoteScreen({
             {quote.discountType !== "none" && (
               <label className="table-field-stack checkout-discount-reason">
                 <span>Discount reason</span>
-                <input
+                <HsrInput
                   className="table-mini-input"
                   type="text"
                   value={quote.discountReason || ""}
@@ -943,13 +929,13 @@ function CheckoutQuoteScreen({
           </div>
           <div className="table-payment-grid checkout-payment-grid">
             {PAYMENT_METHODS.map((method) => (
-              <button
+              <HsrButton native
                 key={method}
                 type="button"
                 className={`table-payment-btn ${quote.paymentMethod === method ? "active" : ""}`}
                 onClick={() => onPaymentChange(method)}
               >
-                <i
+                <HsrIcon
                   className={`ti ${
                     method === "Cash"
                       ? "ti-cash"
@@ -962,7 +948,7 @@ function CheckoutQuoteScreen({
                   aria-hidden="true"
                 />
                 <span>{method}</span>
-              </button>
+              </HsrButton>
             ))}
           </div>
           {quote.paymentMethod === "Split" && (
@@ -970,7 +956,7 @@ function CheckoutQuoteScreen({
               {["Cash", "UPI", "Card"].map((method) => (
                 <label className="table-field-stack" key={method}>
                   <span>{method}</span>
-                  <input
+                  <HsrInput
                     className="table-mini-input"
                     type="number"
                     min="0"
@@ -1000,17 +986,17 @@ function CheckoutQuoteScreen({
             <strong>₹{total}</strong>
             <em>{quote.paymentMethod || "Cash"} · {discountAmount ? `₹${discountAmount} discount` : "No discount"}</em>
           </div>
-          <button type="button" className="btn checkout-cancel-btn" onClick={onClose}>
+          <HsrButton native type="button" className="btn checkout-cancel-btn" onClick={onClose}>
             Keep table open
-          </button>
-          <button
+          </HsrButton>
+          <HsrButton native
             type="button"
             className="checkout-bill-close"
             onClick={onFinalize}
             disabled={quote.loading || quote.finalizing || rec.checkout_blocked}
           >
             {quote.finalizing ? "Closing..." : `Close table · ₹${total}`}
-          </button>
+          </HsrButton>
         </div>
       </div>
     </div>
@@ -1052,9 +1038,9 @@ function CheckoutBillScreen({ bill, onClose }) {
               </div>
             )}
           </div>
-          <button type="button" className="checkout-bill-close" onClick={onClose}>
+          <HsrButton native type="button" className="checkout-bill-close" onClick={onClose}>
             Close Receipt
-          </button>
+          </HsrButton>
         </div>
 
         <div className="checkout-bill-summary">
@@ -1267,10 +1253,10 @@ function LiveFloorCommand({
               : "All tables idle. Start from the floor or quick session."}
           </div>
         </div>
-        <button type="button" className="live-floor-primary" onClick={onQuickStart}>
-          <i className="ti ti-player-play" aria-hidden="true" />
+        <HsrButton native type="button" className="live-floor-primary" onClick={onQuickStart}>
+          <HsrIcon className="ti ti-player-play" aria-hidden="true" />
           Start Table
-        </button>
+        </HsrButton>
       </div>
 
       <div className="live-floor-stats" aria-label="Floor status summary">
@@ -1302,7 +1288,7 @@ function LiveFloorCommand({
             activeTables.map((table) => {
               const session = sessions[table.id];
               return (
-                <button
+                <HsrButton native
                   type="button"
                   key={table.id}
                   className={`live-session-chip ${selectedTableId === table.id ? "active" : ""}`}
@@ -1311,7 +1297,7 @@ function LiveFloorCommand({
                   <strong>T{table.num}</strong>
                   <span>{fmt(session?.elapsed)} · ₹{runningTotalForSession(session, peakRate, gstPercent)}</span>
                   <em>{billingModeLabel(session?.billingMode)}</em>
-                </button>
+                </HsrButton>
               );
             })
           )}
@@ -1321,16 +1307,16 @@ function LiveFloorCommand({
             ["detailed", "Detailed", "ti-layout-grid"],
             ["compact", "Compact", "ti-layout-list"],
           ].map(([mode, label, icon]) => (
-            <button
+            <HsrButton native
               key={mode}
               type="button"
               className={viewMode === mode ? "active" : ""}
               onClick={() => onViewModeChange(mode)}
               aria-pressed={viewMode === mode}
             >
-              <i className={`ti ${icon}`} aria-hidden="true" />
+              <HsrIcon className={`ti ${icon}`} aria-hidden="true" />
               <span>{compact && mode === "detailed" ? "Detail" : label}</span>
-            </button>
+            </HsrButton>
           ))}
         </div>
       </div>
@@ -1410,7 +1396,7 @@ function SessionWorkspace({
 
       {session && (
         <div className="session-workspace-actions">
-          <button
+          <HsrButton native
             type="button"
             className="session-action secondary"
             onClick={() => onAddFood?.({
@@ -1418,28 +1404,28 @@ function SessionWorkspace({
               playerName: foodPlayer,
             })}
           >
-            <i className="ti ti-tools-kitchen-2" aria-hidden="true" />
+            <HsrIcon className="ti ti-tools-kitchen-2" aria-hidden="true" />
             Add Food
-          </button>
-          <button
+          </HsrButton>
+          <HsrButton native
             type="button"
             className="session-action secondary"
             onClick={() => onPause(table.id)}
             disabled={pauseBusy}
           >
-            <i className={`ti ${session.paused ? "ti-player-play" : "ti-player-pause"}`} aria-hidden="true" />
+            <HsrIcon className={`ti ${session.paused ? "ti-player-play" : "ti-player-pause"}`} aria-hidden="true" />
             {pauseBusy ? "Saving..." : session.paused ? "Resume Session" : "Pause Session"}
-          </button>
-          <button
+          </HsrButton>
+          <HsrButton native
             type="button"
             className="session-action primary"
             onClick={() => onStop(table.id)}
             disabled={quoteBusy}
             title="Open checkout"
           >
-            <i className="ti ti-receipt-refund" aria-hidden="true" />
+            <HsrIcon className="ti ti-receipt-refund" aria-hidden="true" />
             {quoteBusy ? "Loading..." : "Open Checkout"}
-          </button>
+          </HsrButton>
         </div>
       )}
     </section>
@@ -1536,40 +1522,44 @@ function TableCard({
       >
         <div style={{ textAlign: "center", padding: "16px 0" }}>
           <TableStateBadge statusKey={status.key} />
-          <div
+          <div className="type-3xl"
             style={{
-              fontSize: "var(--text-3xl)",
-              fontWeight: "var(--weight-heavy)",
-              color: "var(--text-muted)",
-              marginBottom: "8px",
-            }}
+  fontWeight: "var(--weight-heavy)",
+  color: "var(--text-muted)",
+  marginBottom: "8px"
+}}
           >
             {String(table.num).padStart(2, "0")}
           </div>
-          <div style={{ fontSize: "var(--text-sm)", color: "var(--text-secondary)", marginBottom: "4px" }}>
+          <div className="type-sm" style={{
+  color: "var(--text-secondary)",
+  marginBottom: "4px"
+}}>
             {maintenance.reason}
           </div>
-          <div
-            style={{ fontSize: "var(--text-xs)", color: "var(--text-muted)", marginBottom: "16px" }}
+          <div className="type-xs"
+            style={{
+  color: "var(--text-muted)",
+  marginBottom: "16px"
+}}
           >
             Since {maintenance.since}
           </div>
-          <button
+          <HsrButton native className="type-sm"
             onClick={() => onClearMaintenance(table.id)}
             disabled={clearMaintenanceBusy}
             style={{
-              background: "var(--accent)",
-              color: "var(--text-on-accent)",
-              border: "none",
-              borderRadius: "var(--radius-sm)",
-              padding: "8px 16px",
-              fontSize: "var(--text-sm)",
-              fontWeight: "var(--weight-semibold)",
-              cursor: clearMaintenanceBusy ? "wait" : "pointer",
-            }}
+  background: "var(--accent)",
+  color: "var(--text-on-accent)",
+  border: "none",
+  borderRadius: "var(--radius-sm)",
+  padding: "8px 16px",
+  fontWeight: "var(--weight-semibold)",
+  cursor: clearMaintenanceBusy ? "wait" : "pointer"
+}}
           >
             {clearMaintenanceBusy ? "Saving..." : "Mark Available"}
-          </button>
+          </HsrButton>
         </div>
       </div>
     );
@@ -1625,37 +1615,37 @@ function TableCard({
               ₹{rate}/hr · {getTableLabel(table)}
             </span>
             <div className="table-utility-cluster">
-              <button
+              <HsrButton native
                 type="button"
                 onClick={() => setShowHistory(true)}
                 title="History"
                 aria-label={`Open T${table.num} history`}
                 className="table-utility-btn"
               >
-                <i className="ti ti-clock" aria-hidden="true" />
-              </button>
-              <button
+                <HsrIcon className="ti ti-clock" aria-hidden="true" />
+              </HsrButton>
+              <HsrButton native
                 type="button"
                 onClick={() => setMaintOpen((p) => !p)}
                 title="Maintenance"
                 aria-label={`Toggle T${table.num} maintenance controls`}
                 className={`table-utility-btn ${maintOpen ? "active" : ""}`}
               >
-                <i className="ti ti-tool" aria-hidden="true" />
-              </button>
+                <HsrIcon className="ti ti-tool" aria-hidden="true" />
+              </HsrButton>
             </div>
           </div>
 
           {/* Maintenance panel */}
           {maintOpen && (
             <div className="table-inline-panel maintenance">
-              <input
+              <HsrInput
                 placeholder="Reason"
                 value={maintReason}
                 onChange={(e) => setMaintReason(e.target.value)}
                 className="table-mini-input"
               />
-              <button
+              <HsrButton native
                 onClick={async () => {
                     const success = await onMaintenance(table.id, maintReason);
                     if (success) {
@@ -1666,7 +1656,7 @@ function TableCard({
                   disabled={maintenanceBusy}
                 >
                   {maintenanceBusy ? "Saving..." : "Set maintenance"}
-                </button>
+                </HsrButton>
               </div>
             )}
 
@@ -1685,41 +1675,41 @@ function TableCard({
           {occupied && <FrameControls tableId={table.id} session={session} onRefresh={onRefresh} />}
           {occupied && (
             <div className="table-session-actions">
-              <button
+              <HsrButton native
                 onClick={() => onPause(table.id)}
                 data-testid={`pause-${table.id}`}
                 className={`table-control-btn ${paused ? "resume" : "pause"}`}
                 disabled={pauseBusy}
               >
-                <i className={`ti ${paused ? "ti-player-play" : "ti-player-pause"}`} aria-hidden="true" />
+                <HsrIcon className={`ti ${paused ? "ti-player-play" : "ti-player-pause"}`} aria-hidden="true" />
                 <span>{pauseBusy ? "Saving..." : paused ? "Resume" : "Pause"}</span>
-              </button>
-              <button
+              </HsrButton>
+              <HsrButton native
                 onClick={() => setResetOpen(true)}
                 data-testid={`reset-${table.id}`}
                 className="table-control-btn reset"
                 disabled={resetBusy}
               >
-                <i className="ti ti-refresh" aria-hidden="true" />
+                <HsrIcon className="ti ti-refresh" aria-hidden="true" />
                 <span>{resetBusy ? "Resetting..." : "Reset Table"}</span>
-              </button>
+              </HsrButton>
             </div>
           )}
 
           {occupied && (
             <>
-              <button
+              <HsrButton native
                 onClick={() => setTransferOpen((prev) => !prev)}
                 className={`table-notes-btn ${transferOpen ? "active" : ""}`}
               >
-                <i className="ti ti-arrows-exchange" aria-hidden="true" />
+                <HsrIcon className="ti ti-arrows-exchange" aria-hidden="true" />
                 <span>{transferOpen ? "Close transfer" : "Transfer table"}</span>
-              </button>
+              </HsrButton>
               {transferOpen && (
                 <div className="table-inline-panel">
                   <label className="table-field-stack">
                     <span>Move to</span>
-                    <select
+                    <HsrSelect
                       className="table-mini-input"
                       value={transferTarget}
                       onChange={(event) => setTransferTarget(event.target.value)}
@@ -1730,9 +1720,9 @@ function TableCard({
                           T{target.num} · {getTableLabel(target)}
                         </option>
                       ))}
-                    </select>
+                    </HsrSelect>
                   </label>
-                  <button
+                  <HsrButton native
                     type="button"
                     className="table-mini-primary reserve"
                     disabled={!transferTarget || transferBusy}
@@ -1745,27 +1735,27 @@ function TableCard({
                     }}
                   >
                     {transferBusy ? "Moving..." : "Transfer"}
-                  </button>
+                  </HsrButton>
                 </div>
               )}
-              <button
+              <HsrButton native
                 onClick={() => setNotesOpen((p) => !p)}
                 className={`table-notes-btn ${notesOpen || session?.notes ? "active" : ""}`}
               >
-                <i className="ti ti-note" aria-hidden="true" />
+                <HsrIcon className="ti ti-note" aria-hidden="true" />
                 <span>{notesOpen ? "Close notes" : "Notes"}</span>
                 {session?.notes && <span className="notes-dot">Saved</span>}
-              </button>
+              </HsrButton>
               {notesOpen && (
                 <div className="table-notes-panel">
-                  <textarea
+                  <HsrTextarea
                     placeholder="e.g. Tournament match..."
                     value={notes}
                     onChange={(e) => setNotes(e.target.value)}
                     rows={2}
                     className="table-notes-textarea"
                   />
-                  <button
+                  <HsrButton native
                     onClick={async () => {
                       const success = await onSaveNotes(table.id, notes);
                       if (success) {
@@ -1776,7 +1766,7 @@ function TableCard({
                     disabled={notesBusy}
                   >
                     {notesBusy ? "Saving..." : "Save Notes"}
-                  </button>
+                  </HsrButton>
                 </div>
               )}
             </>
@@ -1785,19 +1775,19 @@ function TableCard({
           {/* Reserve */}
           {!occupied && !booking && (
             <>
-              <button
+              <HsrButton native
                 onClick={() => setReserveOpen((p) => !p)}
                 data-testid={`reserve-${table.id}`}
                 className={`table-secondary-btn reserve ${reserveOpen ? "active" : ""}`}
               >
-                <i className="ti ti-calendar-plus" aria-hidden="true" />
+                <HsrIcon className="ti ti-calendar-plus" aria-hidden="true" />
                 <span>{reserveOpen ? "Close reservation" : "Reserve table"}</span>
-              </button>
+              </HsrButton>
               {reserveOpen && (
                 <div className="table-inline-panel">
                   <label className="table-field-stack">
                     <span>Reservation name</span>
-                    <input
+                    <HsrInput
                       type="text"
                       value={resvName}
                       onChange={(e) => setResvName(e.target.value)}
@@ -1806,14 +1796,14 @@ function TableCard({
                   </label>
                   <label className="table-field-stack">
                     <span>Time</span>
-                    <input
+                    <HsrInput
                       type="time"
                       value={resvTime}
                       onChange={(e) => setResvTime(e.target.value)}
                       className="table-mini-input"
                     />
                   </label>
-                  <button
+                  <HsrButton native
                     onClick={async () => {
                       const success = await onReserve(table.id, resvName, resvTime);
                       if (success) {
@@ -1826,7 +1816,7 @@ function TableCard({
                     disabled={reserveBusy}
                   >
                     {reserveBusy ? "Reserving..." : "Reserve Table"}
-                  </button>
+                  </HsrButton>
                 </div>
               )}
             </>
@@ -1843,13 +1833,13 @@ function TableCard({
                   {reservation.time}
                 </div>
               </div>
-              <button
+              <HsrButton native
                 onClick={() => onCancelReserve(table.id)}
                 className="table-reservation-cancel"
                 disabled={cancelReserveBusy}
               >
                 {cancelReserveBusy ? "Cancelling..." : "Cancel Reservation"}
-              </button>
+              </HsrButton>
             </div>
           )}
           <TablePrimaryAction

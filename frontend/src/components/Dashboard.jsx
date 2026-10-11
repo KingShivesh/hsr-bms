@@ -1,3 +1,7 @@
+import { formatCurrency as polishCurrency, formatDuration as polishDuration, formatDateTime as polishDateTime } from "../utils/format.js";
+import { SkeletonGrid, SkeletonBlock } from "./ui/index.js";
+import RetryNotice from "./RetryNotice.jsx";
+import { Button as HsrButton, Icon as HsrIcon, Select as HsrSelect, Table as HsrTable } from "./ui/index.js";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   Area,
@@ -25,29 +29,11 @@ const TABLES = HSR_TABLES;
 const tableKey = (tableId) => String(tableId || "").trim().toLowerCase();
 const PIE_COLORS = ["var(--chart-1)", "var(--chart-2)", "var(--chart-3)", "var(--chart-4)"];
 
-function money(value = 0) {
-  return `₹${Number(value || 0).toLocaleString("en-IN")}`;
-}
+function money(value = 0) { return polishCurrency(value); }
 
-function fmtTime(secs = 0) {
-  if (!secs || secs <= 0) return "00:00";
-  const h = Math.floor(secs / 3600);
-  const m = String(Math.floor((secs % 3600) / 60)).padStart(2, "0");
-  const s = String(Math.floor(secs % 60)).padStart(2, "0");
-  return h > 0 ? `${h}:${m}:${s}` : `${m}:${s}`;
-}
+function fmtTime(secs = 0) { return polishDuration(secs); }
 
-function fmtShortDateTime(value) {
-  if (!value) return "-";
-  const date = new Date(value);
-  if (Number.isNaN(date.getTime())) return String(value);
-  return date.toLocaleString("en-IN", {
-    day: "2-digit",
-    month: "short",
-    hour: "2-digit",
-    minute: "2-digit",
-  });
-}
+function fmtShortDateTime(value) { return polishDateTime(value); }
 
 function fmtSyncAge(value) {
   if (!value) return "Not synced yet";
@@ -148,41 +134,41 @@ function BusinessPulse({
       </div>
 
       <div className="ops-command-deck">
-        <button type="button" className="primary" onClick={() => onNavigate("tables")}>
-          <i className="ti ti-player-play" aria-hidden="true" />
+        <HsrButton native type="button" className="primary" onClick={() => onNavigate("tables")}>
+          <HsrIcon className="ti ti-player-play" aria-hidden="true" />
           <span>
             <b>Open Floor</b>
             <small>{activeCount}/{TOTAL_TABLES} active tables</small>
           </span>
-        </button>
-        <button type="button" onClick={() => onNavigate("food")}>
-          <i className="ti ti-tools-kitchen-2" aria-hidden="true" />
+        </HsrButton>
+        <HsrButton native type="button" onClick={() => onNavigate("food")}>
+          <HsrIcon className="ti ti-tools-kitchen-2" aria-hidden="true" />
           <span>
             <b>Cafe POS</b>
             <small>{foodAttachment}% food attachment</small>
           </span>
-        </button>
-        <button type="button" onClick={() => onNavigate("waitlist")}>
-          <i className="ti ti-user-clock" aria-hidden="true" />
+        </HsrButton>
+        <HsrButton native type="button" onClick={() => onNavigate("waitlist")}>
+          <HsrIcon className="ti ti-user-clock" aria-hidden="true" />
           <span>
             <b>Waitlist</b>
             <small>{waitlistCount} waiting now</small>
           </span>
-        </button>
-        <button type="button" onClick={() => onNavigate("reservations")}>
-          <i className="ti ti-calendar-event" aria-hidden="true" />
+        </HsrButton>
+        <HsrButton native type="button" onClick={() => onNavigate("reservations")}>
+          <HsrIcon className="ti ti-calendar-event" aria-hidden="true" />
           <span>
             <b>Bookings</b>
             <small>Manage table slots</small>
           </span>
-        </button>
-        <button type="button" className="danger" onClick={() => onNavigate("closing")}>
-          <i className="ti ti-lock-check" aria-hidden="true" />
+        </HsrButton>
+        <HsrButton native type="button" className="danger" onClick={() => onNavigate("closing")}>
+          <HsrIcon className="ti ti-lock-check" aria-hidden="true" />
           <span>
             <b>Close Shift</b>
             <small>{openTables ? `${openTables} blockers` : "Ready check"}</small>
           </span>
-        </button>
+        </HsrButton>
       </div>
     </section>
   );
@@ -191,13 +177,13 @@ function BusinessPulse({
 function DashboardRangeFilter({ dateRange, onDateRangeChange }) {
   return (
     <label className="ops-range-filter">
-      <i className="ti ti-calendar" aria-hidden="true" />
+      <HsrIcon className="ti ti-calendar" aria-hidden="true" />
       <span>Register Range</span>
-      <select value={dateRange} onChange={(event) => onDateRangeChange(event.target.value)}>
+      <HsrSelect value={dateRange} onChange={(event) => onDateRangeChange(event.target.value)}>
         <option value="today">Today</option>
         <option value="week">Last 7 days</option>
         <option value="all">All time</option>
-      </select>
+      </HsrSelect>
     </label>
   );
 }
@@ -206,7 +192,7 @@ function DashboardSyncStatus({ syncing, lastFetchedAt, loadError }) {
   const tone = loadError ? "error" : syncing ? "syncing" : "ok";
   return (
     <span className={`ops-sync-status ${tone}`} role="status" aria-live="polite">
-      <i
+      <HsrIcon
         className={`ti ${loadError ? "ti-wifi-off" : syncing ? "ti-loader-2" : "ti-refresh"}`}
         aria-hidden="true"
       />
@@ -248,15 +234,15 @@ function QuickOperations({ onNavigate }) {
     <section className="ops-quick-section" aria-label="Quick actions">
       <div className="ops-quick-actions">
         {actions.map((action) => (
-          <button
+          <HsrButton native
             type="button"
             key={action.label}
             className="ops-quick-action"
             onClick={() => onNavigate(action.page)}
           >
-            <i className={`ti ${action.icon}`} aria-hidden="true" />
+            <HsrIcon className={`ti ${action.icon}`} aria-hidden="true" />
             <span>{action.label}</span>
-          </button>
+          </HsrButton>
         ))}
       </div>
     </section>
@@ -268,12 +254,12 @@ function KpiCard({ label, value, sub, icon, trend, empty = false }) {
     <article className={`ops-kpi ${empty ? "is-empty" : ""}`}>
       <div className="ops-kpi-top">
         <span>{label}</span>
-        <i className={`ti ${icon}`} aria-hidden="true" />
+        <HsrIcon className={`ti ${icon}`} aria-hidden="true" />
       </div>
       <strong>{value}</strong>
       {trend && (
         <em className={`ops-kpi-trend ${trend.tone || "neutral"}`}>
-          <i className={`ti ${trend.icon || "ti-minus"}`} aria-hidden="true" />
+          <HsrIcon className={`ti ${trend.icon || "ti-minus"}`} aria-hidden="true" />
           {trend.label}
         </em>
       )}
@@ -332,12 +318,12 @@ function KeyMetricsSection({
         <article className={`ops-kpi ops-kpi-lead ${!hasClosedSessions ? "is-empty" : ""}`}>
           <div className="ops-kpi-top">
             <span>{dateRange === "today" ? "Today Revenue" : `${periodLabel} Revenue`}</span>
-            <i className="ti ti-cash" aria-hidden="true" />
+            <HsrIcon className="ti ti-cash" aria-hidden="true" />
           </div>
           <div className="ops-kpi-lead-value">
             <strong>{money(ownerTotal)}</strong>
             <em className={`ops-kpi-trend ${revenueTrend.tone || "neutral"}`}>
-              <i className={`ti ${revenueTrend.icon || "ti-minus"}`} aria-hidden="true" />
+              <HsrIcon className={`ti ${revenueTrend.icon || "ti-minus"}`} aria-hidden="true" />
               {revenueTrend.label}
             </em>
           </div>
@@ -397,9 +383,9 @@ function LiveFloor({ tables, elapsed, onNavigate }) {
             <span className={`ops-floor-health-pill ${pausedCount || longRunningCount ? "warning" : "ok"}`}>
               {floorSignal}
             </span>
-            <button type="button" className="ops-link-btn" onClick={() => onNavigate("tables")}>
+            <HsrButton native type="button" className="ops-link-btn" onClick={() => onNavigate("tables")}>
               Manage tables
-            </button>
+            </HsrButton>
           </div>
         }
       />
@@ -412,7 +398,7 @@ function LiveFloor({ tables, elapsed, onNavigate }) {
           const attention = getTableAttention({ session, elapsedSeconds: elapsedSecs });
           const runningTotal = table.running_total || session?.running_total || 0;
           return (
-            <button
+            <HsrButton native
               type="button"
               key={table.id}
               className="ops-table-card table-state-card"
@@ -449,10 +435,10 @@ function LiveFloor({ tables, elapsed, onNavigate }) {
                 )}
               </div>
               <span className="table-state-primary table-state-primary-static">
-                <i className={`ti ${status.primaryAction.icon}`} aria-hidden="true" />
+                <HsrIcon className={`ti ${status.primaryAction.icon}`} aria-hidden="true" />
                 {status.primaryAction.label}
               </span>
-            </button>
+            </HsrButton>
           );
         })}
       </div>
@@ -471,13 +457,13 @@ function AttentionPanel({ actions, onNavigate }) {
       detail: "No urgent owner actions right now.",
     };
     return (
-      <button type="button" className="ops-attention-inline" onClick={() => onNavigate("closing")}>
-        <i className="ti ti-circle-check" aria-hidden="true" />
+      <HsrButton native type="button" className="ops-attention-inline" onClick={() => onNavigate("closing")}>
+        <HsrIcon className="ti ti-circle-check" aria-hidden="true" />
         <span>
           <b>{readyItem.title}</b>
           {readyItem.detail && <small>{readyItem.detail}</small>}
         </span>
-      </button>
+      </HsrButton>
     );
   }
 
@@ -486,18 +472,18 @@ function AttentionPanel({ actions, onNavigate }) {
       <SectionHead title="Attention" />
       <div className="ops-attention-list">
         {uniqueItems.map((item) => (
-          <button
+          <HsrButton native
             type="button"
             className={`ops-attention-row ${item.tone || item.type || "info"}`}
             key={item.title}
             onClick={() => onNavigate(item.page || "tables")}
           >
-            <i className={`ti ${item.icon}`} aria-hidden="true" />
+            <HsrIcon className={`ti ${item.icon}`} aria-hidden="true" />
             <span>
               <b>{item.title}</b>
               {item.detail && <small>{item.detail}</small>}
             </span>
-          </button>
+          </HsrButton>
         ))}
       </div>
     </section>
@@ -515,9 +501,9 @@ function CloseReadiness({ digest, activeCount, onNavigate }) {
         eyebrow="End of day"
         title={closed ? "Day Already Closed" : ready ? "Ready To Close" : "Closing Blocked"}
         action={
-          <button type="button" className="ops-link-btn" onClick={() => onNavigate("closing")}>
+          <HsrButton native type="button" className="ops-link-btn" onClick={() => onNavigate("closing")}>
             View closing
-          </button>
+          </HsrButton>
         }
       />
       <div className="ops-close-grid">
@@ -585,7 +571,7 @@ function Insights({ digest }) {
         {insights.length ? (
           insights.map((insight, index) => (
             <div className={`ops-insight ${insight.type || "info"}`} key={`${insight.title}-${index}`}>
-              <i className="ti ti-bulb" aria-hidden="true" />
+              <HsrIcon className="ti ti-bulb" aria-hidden="true" />
               <div>
                 <strong>{insight.title}</strong>
                 <span>{insight.detail}</span>
@@ -594,7 +580,7 @@ function Insights({ digest }) {
           ))
         ) : (
           <div className="ops-insight positive">
-            <i className="ti ti-check" aria-hidden="true" />
+            <HsrIcon className="ti ti-check" aria-hidden="true" />
             <div>
               <strong>No unusual activity</strong>
               <span>Run a few sessions and insights will populate here.</span>
@@ -618,9 +604,9 @@ function QueueBookings({ waitlist, bookings, onNavigate }) {
         eyebrow="Reception"
         title="Queue & Bookings"
         action={
-          <button type="button" className="ops-link-btn" onClick={() => onNavigate("tables")}>
+          <HsrButton native type="button" className="ops-link-btn" onClick={() => onNavigate("tables")}>
             Manage
-          </button>
+          </HsrButton>
         }
       />
       <div className="ops-mini-metrics">
@@ -640,7 +626,7 @@ function QueueBookings({ waitlist, bookings, onNavigate }) {
       <div className="ops-compact-list">
         {waitlist.slice(0, 2).map((entry) => (
           <div key={`queue-${entry.id}`}>
-            <i className="ti ti-user-clock" aria-hidden="true" />
+            <HsrIcon className="ti ti-user-clock" aria-hidden="true" />
             <span>
               <b>{entry.customer_name}</b>
               <small>
@@ -651,7 +637,7 @@ function QueueBookings({ waitlist, bookings, onNavigate }) {
         ))}
         {nextBookings.map((booking) => (
           <div key={`booking-${booking.id}`}>
-            <i className="ti ti-calendar-event" aria-hidden="true" />
+            <HsrIcon className="ti ti-calendar-event" aria-hidden="true" />
             <span>
               <b>{booking.customer_name}</b>
               <small>
@@ -662,7 +648,7 @@ function QueueBookings({ waitlist, bookings, onNavigate }) {
         ))}
         {!waitlist.length && !nextBookings.length && (
           <div className="ops-empty-line">
-            <i className="ti ti-circle-check" aria-hidden="true" />
+            <HsrIcon className="ti ti-circle-check" aria-hidden="true" />
             <span>
               <b>No queue pressure</b>
               <small>Walk-ins can be seated directly.</small>
@@ -683,9 +669,9 @@ function PopularFood({ foodStats, foodOrders, onNavigate }) {
         eyebrow="Cafe"
         title="Food Demand"
         action={
-          <button type="button" className="ops-link-btn" onClick={() => onNavigate("food")}>
+          <HsrButton native type="button" className="ops-link-btn" onClick={() => onNavigate("food")}>
             POS
-          </button>
+          </HsrButton>
         }
       />
       {topItems.length ? (
@@ -705,7 +691,7 @@ function PopularFood({ foodStats, foodOrders, onNavigate }) {
         </div>
       ) : (
         <div className="ops-empty-line">
-          <i className="ti ti-tools-kitchen-2" aria-hidden="true" />
+          <HsrIcon className="ti ti-tools-kitchen-2" aria-hidden="true" />
           <span>
             <b>No food trend yet</b>
             <small>Orders will create a top-sellers list here.</small>
@@ -757,7 +743,7 @@ function RecentActivity({ auditLogs, runningTables, foodOrders }) {
         {rows.length ? (
           rows.map((row) => (
             <div className={row.tone} key={row.id}>
-              <i className={`ti ${row.icon}`} aria-hidden="true" />
+              <HsrIcon className={`ti ${row.icon}`} aria-hidden="true" />
               <span>
                 <b>{row.title}</b>
                 <small>{row.detail}</small>
@@ -766,7 +752,7 @@ function RecentActivity({ auditLogs, runningTables, foodOrders }) {
           ))
         ) : (
           <div className="ops-empty-line">
-            <i className="ti ti-history" aria-hidden="true" />
+            <HsrIcon className="ti ti-history" aria-hidden="true" />
             <span>
               <b>No recent activity</b>
               <small>Session and checkout activity will appear here.</small>
@@ -825,31 +811,31 @@ function TodayTimeline({ runningTables, foodOrders, bookings, auditLogs, onNavig
         eyebrow="Today timeline"
         title="Live Activity Feed"
         action={
-          <button type="button" className="ops-link-btn" onClick={() => onNavigate(role === "admin" ? "reports" : "tables")}>
+          <HsrButton native type="button" className="ops-link-btn" onClick={() => onNavigate(role === "admin" ? "reports" : "tables")}>
             Full history
-          </button>
+          </HsrButton>
         }
       />
       <div className="ops-today-list">
         {rows.length ? (
           rows.map((row) => (
-            <button
+            <HsrButton native
               type="button"
               key={row.id}
               className={`ops-today-row ${row.tone}`}
               onClick={() => onNavigate(row.page)}
             >
-              <i className={`ti ${row.icon}`} aria-hidden="true" />
+              <HsrIcon className={`ti ${row.icon}`} aria-hidden="true" />
               <span>
                 <b>{row.title}</b>
                 <small>{row.detail}</small>
               </span>
               <time>{row.time}</time>
-            </button>
+            </HsrButton>
           ))
         ) : (
           <div className="ops-empty-line">
-            <i className="ti ti-history" aria-hidden="true" />
+            <HsrIcon className="ti ti-history" aria-hidden="true" />
             <span>
               <b>No activity yet</b>
               <small>Start a table or place an order to build the day timeline.</small>
@@ -926,9 +912,9 @@ function OwnerIntelligence({ utilization, foodAttachment, longRunningCount, wait
         eyebrow="Owner intelligence"
         title="What To Act On"
         action={
-          <button type="button" className="ops-link-btn" onClick={() => onNavigate("reports")}>
+          <HsrButton native type="button" className="ops-link-btn" onClick={() => onNavigate("reports")}>
             Reports
-          </button>
+          </HsrButton>
         }
       />
       <div className="ops-intel-summary">
@@ -944,7 +930,7 @@ function OwnerIntelligence({ utilization, foodAttachment, longRunningCount, wait
       <div className="ops-intel-list">
         {recommendations.map((item) => (
           <div className={`ops-intel-row ${item.tone}`} key={item.title}>
-            <i className={`ti ${item.icon}`} aria-hidden="true" />
+            <HsrIcon className={`ti ${item.icon}`} aria-hidden="true" />
             <span>
               <b>{item.title}</b>
               <small>{item.detail}</small>
@@ -988,14 +974,14 @@ function DashboardDataTable({ rows, sort, onSortChange, page, onPageChange, page
     <section className="ops-panel ops-data-table-panel">
       <SectionHead eyebrow="Operations table" title="Live Work Register" />
       <div className="ops-data-table-wrap">
-        <table className="ops-data-table">
+        <HsrTable className="ops-data-table">
           <thead>
             <tr>
               {columns.map((column) => (
                 <th key={column.id}>
-                  <button type="button" onClick={() => changeSort(column.id)}>
+                  <HsrButton native type="button" onClick={() => changeSort(column.id)}>
                     {column.label}
-                    <i
+                    <HsrIcon
                       className={`ti ${
                         sort.key === column.id
                           ? sort.direction === "asc"
@@ -1005,7 +991,7 @@ function DashboardDataTable({ rows, sort, onSortChange, page, onPageChange, page
                       }`}
                       aria-hidden="true"
                     />
-                  </button>
+                  </HsrButton>
                 </th>
               ))}
             </tr>
@@ -1028,7 +1014,7 @@ function DashboardDataTable({ rows, sort, onSortChange, page, onPageChange, page
               <tr>
                 <td colSpan={columns.length}>
                   <div className="ops-empty-line">
-                    <i className="ti ti-search" aria-hidden="true" />
+                    <HsrIcon className="ti ti-search" aria-hidden="true" />
                     <span>
                       <b>No matching records</b>
                       <small>Clear the search field or wait for live activity.</small>
@@ -1038,17 +1024,17 @@ function DashboardDataTable({ rows, sort, onSortChange, page, onPageChange, page
               </tr>
             )}
           </tbody>
-        </table>
+        </HsrTable>
       </div>
       <div className="ops-table-pagination">
         <span>{sorted.length} records · page {safePage} of {totalPages}</span>
         <div>
-          <button type="button" disabled={safePage <= 1} onClick={() => onPageChange(safePage - 1)}>
+          <HsrButton native type="button" disabled={safePage <= 1} onClick={() => onPageChange(safePage - 1)}>
             Previous
-          </button>
-          <button type="button" disabled={safePage >= totalPages} onClick={() => onPageChange(safePage + 1)}>
+          </HsrButton>
+          <HsrButton native type="button" disabled={safePage >= totalPages} onClick={() => onPageChange(safePage + 1)}>
             Next
-          </button>
+          </HsrButton>
         </div>
       </div>
     </section>
@@ -1070,9 +1056,9 @@ function Charts({ analytics, pieData }) {
                 </linearGradient>
               </defs>
               <CartesianGrid strokeDasharray="3 3" vertical={false} opacity={0.18} />
-              <XAxis dataKey="date" tick={{ fontSize: "var(--text-sm)", fill: "var(--text-secondary)" }} axisLine={false} tickLine={false} />
+              <XAxis dataKey="date" tick={{ className: "type-sm", fill: "var(--text-secondary)" }} axisLine={false} tickLine={false} />
               <YAxis
-                tick={{ fontSize: "var(--text-sm)", fill: "var(--text-secondary)" }}
+                tick={{ className: "type-sm", fill: "var(--text-secondary)" }}
                 axisLine={false}
                 tickLine={false}
                 tickFormatter={(v) => (v >= 1000 ? `₹${Math.round(v / 1000)}k` : `₹${v}`)}
@@ -1082,7 +1068,7 @@ function Charts({ analytics, pieData }) {
             </AreaChart>
           </ResponsiveContainer>
         ) : (
-          <div className="ops-empty-chart">Loading chart...</div>
+          <SkeletonBlock rows={4} label="Fetching revenue history" />
         )}
       </section>
 
@@ -1297,6 +1283,9 @@ export default function Dashboard({ metrics, onNavigate, role = "admin" }) {
     return items.slice(0, 5);
   }, [runningTables, foodAttachment, liveData]);
 
+  if (!liveData && !loadError) return <div className="ops-dashboard"><SkeletonGrid count={3} label="Fetching today's register" /><SkeletonBlock rows={5} label="Fetching live tables" /></div>;
+  if (!liveData && loadError) return <RetryNotice message={loadError} detail="The register is unavailable. Retry to see current figures." onRetry={fetchDashboard} />;
+
   return (
     <div className="ops-dashboard ops-dashboard-minimal" data-realtime-state={realtimeState}>
       <KeyMetricsSection
@@ -1321,7 +1310,7 @@ export default function Dashboard({ metrics, onNavigate, role = "admin" }) {
 
       {loadError && (
         <div className="ops-dashboard-error" role="status">
-          <i className="ti ti-alert-circle" aria-hidden="true" />
+          <HsrIcon className="ti ti-alert-circle" aria-hidden="true" />
           <span>{loadError}</span>
         </div>
       )}
