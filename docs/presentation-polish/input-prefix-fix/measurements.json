@@ -1,5 +1,6 @@
 {
-  "method": "Anonymous production login only. No credentials entered, no login attempt, no mutation.",
+  "base": "http://127.0.0.1:5180",
+  "method": "Anonymous login only. No credentials entered, no login attempt, no mutation.",
   "samples": [
     {
       "theme": "dark",
@@ -21,6 +22,16 @@
           "iconRight": 895.796875,
           "gap": 10
         }
+      ],
+      "placeholderPixels": [
+        {
+          "firstInk": 43,
+          "expectedInset": 40
+        },
+        {
+          "firstInk": 43,
+          "expectedInset": 40
+        }
       ]
     },
     {
@@ -43,6 +54,16 @@
           "iconRight": 63,
           "gap": 10
         }
+      ],
+      "placeholderPixels": [
+        {
+          "firstInk": 42,
+          "expectedInset": 40
+        },
+        {
+          "firstInk": 42,
+          "expectedInset": 40
+        }
       ]
     },
     {
@@ -64,6 +85,16 @@
           "textStart": 73,
           "iconRight": 63,
           "gap": 10
+        }
+      ],
+      "placeholderPixels": [
+        {
+          "firstInk": 42,
+          "expectedInset": 40
+        },
+        {
+          "firstInk": 42,
+          "expectedInset": 40
         }
       ]
     },
@@ -87,6 +118,16 @@
           "iconRight": 895.796875,
           "gap": 10
         }
+      ],
+      "placeholderPixels": [
+        {
+          "firstInk": 43,
+          "expectedInset": 40
+        },
+        {
+          "firstInk": 43,
+          "expectedInset": 40
+        }
       ]
     },
     {
@@ -109,6 +150,16 @@
           "iconRight": 63,
           "gap": 10
         }
+      ],
+      "placeholderPixels": [
+        {
+          "firstInk": 42,
+          "expectedInset": 40
+        },
+        {
+          "firstInk": 42,
+          "expectedInset": 40
+        }
       ]
     },
     {
@@ -130,6 +181,16 @@
           "textStart": 73,
           "iconRight": 63,
           "gap": 10
+        }
+      ],
+      "placeholderPixels": [
+        {
+          "firstInk": 42,
+          "expectedInset": 40
+        },
+        {
+          "firstInk": 42,
+          "expectedInset": 40
         }
       ]
     }

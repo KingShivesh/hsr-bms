@@ -104,10 +104,12 @@ production credential entry or mutation was performed.
 
 Final pixel inspection caught login prefix icons overlapping placeholder text
 after shared input padding took precedence. The explicit leading-icon inset
-now uses the shared 40px spacing token. [Correction comparison](input-prefix-fix/index.html)
+now uses the shared 40px spacing token with physical left padding. [Correction comparison](input-prefix-fix/index.html)
 preserves the before-production pixels and corrected light/dark screenshots.
-The new regression assertion measures 10px clearance in all six viewport/theme
-samples. Fonts, colors, button heights and contrast remain unchanged.
+The regression assertion measures 10px clearance and actual placeholder ink
+beginning at 42-43px inside each field in all six viewport/theme samples.
+Geometry alone was insufficient, so placeholder paint is checked separately.
+Fonts, colors, button heights and contrast remain unchanged.
 
 ## Reproduce
 
