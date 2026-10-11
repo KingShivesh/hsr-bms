@@ -1,54 +1,61 @@
 {
   "verified": true,
   "backendFixCommit": "e38c9ad",
-  "localHead": "f1cf95a1233bd68aa8007241c8fdcf333f636fdc",
+  "localHead": "8aceaacdc490b3ff62b189de3eaee14c48a1b061",
   "observations": [
     {
-      "at": "2026-10-11T22:23:28.385Z",
+      "at": "2026-10-11T22:34:35.570Z",
       "frontendMatches": true,
       "backendContainsFix": true,
       "frontendStatus": 200,
       "assets": [
         {
-          "name": "BookingsPage-B-WCEhwE.js",
+          "name": "BookingsPage-4TYNIjpA.js",
           "status": 200,
-          "sha256": "aea5ccc41a02e07ca79940cf84ddb945442354d73e155e75050d505bbb6deb76",
-          "expectedSha256": "aea5ccc41a02e07ca79940cf84ddb945442354d73e155e75050d505bbb6deb76",
+          "sha256": "3cc828f0c4116906074c29ef4c7e03ad000563ad574d99a50039994c2ef09cc9",
+          "expectedSha256": "3cc828f0c4116906074c29ef4c7e03ad000563ad574d99a50039994c2ef09cc9",
           "matches": true
         },
         {
-          "name": "ClosingTab-DOZdgMeF.js",
+          "name": "ClosingTab-Da_qwMMM.js",
           "status": 200,
-          "sha256": "0ca1d8459d0e75ffeb5fc8e7eee7660fe3a8fab0e38c49e64f7ea6b6bd77d3b5",
-          "expectedSha256": "0ca1d8459d0e75ffeb5fc8e7eee7660fe3a8fab0e38c49e64f7ea6b6bd77d3b5",
+          "sha256": "910f3949085ec7f7225a37b4a59d0fc6e8982345aa4774a7039a975e4b74dad0",
+          "expectedSha256": "910f3949085ec7f7225a37b4a59d0fc6e8982345aa4774a7039a975e4b74dad0",
           "matches": true
         },
         {
-          "name": "ClubSuiteTab-hKss6ZQe.js",
+          "name": "ClubSuiteTab-Fiksr6vV.js",
           "status": 200,
-          "sha256": "a20d431bcff0717381b105c1a3ae476193cedc69992e4f7fbedca1c8fde02b72",
-          "expectedSha256": "a20d431bcff0717381b105c1a3ae476193cedc69992e4f7fbedca1c8fde02b72",
+          "sha256": "338d0a4952608e7b37589da4cc18a27df95636975148f3aed509eefb4c55a576",
+          "expectedSha256": "338d0a4952608e7b37589da4cc18a27df95636975148f3aed509eefb4c55a576",
           "matches": true
         },
         {
-          "name": "CustomersPage-lwD-JeA7.js",
+          "name": "CustomersPage-BCCa8_mh.js",
           "status": 200,
-          "sha256": "d008a3ba9af9b2c47869439f403192860091ccdeaf3c3b6fe974c71568deff8b",
-          "expectedSha256": "d008a3ba9af9b2c47869439f403192860091ccdeaf3c3b6fe974c71568deff8b",
+          "sha256": "e0fb00f9e1e61621ec9564fae4402be3572e5055b1c5104b842003fba74421bb",
+          "expectedSha256": "e0fb00f9e1e61621ec9564fae4402be3572e5055b1c5104b842003fba74421bb",
           "matches": true
         },
         {
-          "name": "Dashboard-BVn78DaK.js",
+          "name": "Dashboard-D-PCTFl0.js",
           "status": 200,
-          "sha256": "4bd24c39b9452568195398e7656e95a508eb87f36e4d17092a96a1fc8c69ff26",
-          "expectedSha256": "4bd24c39b9452568195398e7656e95a508eb87f36e4d17092a96a1fc8c69ff26",
+          "sha256": "29854e1a2361b040ce4326c4f3dabd05c2b9a5d29939dbb3dc78d52b10a9fa87",
+          "expectedSha256": "29854e1a2361b040ce4326c4f3dabd05c2b9a5d29939dbb3dc78d52b10a9fa87",
           "matches": true
         },
         {
-          "name": "FoodTab-DrDPc0rq.js",
+          "name": "FoodTab-CE_kT-4t.js",
           "status": 200,
-          "sha256": "746b2dc6d5978b96462cb7897ff348c4fc9a861b06bdb2e44bbbf4bc6c823124",
-          "expectedSha256": "746b2dc6d5978b96462cb7897ff348c4fc9a861b06bdb2e44bbbf4bc6c823124",
+          "sha256": "f493211e246cd2a2c9af538bacb877b6e797cfc13310630fd7db76ca4db8c23d",
+          "expectedSha256": "f493211e246cd2a2c9af538bacb877b6e797cfc13310630fd7db76ca4db8c23d",
+          "matches": true
+        },
+        {
+          "name": "FrameControls-D7Vj0ESU.js",
+          "status": 200,
+          "sha256": "4d669f43cf18c48d8445129a3696f071ad12cf7ca5dfe8ad30e8c97c2b67460e",
+          "expectedSha256": "4d669f43cf18c48d8445129a3696f071ad12cf7ca5dfe8ad30e8c97c2b67460e",
           "matches": true
         },
         {
@@ -59,80 +66,73 @@
           "matches": true
         },
         {
-          "name": "FrameControls-Dyv6WAOe.js",
+          "name": "LiveFloor-CyQSwIH-.js",
           "status": 200,
-          "sha256": "d6c4f63e964c856ccaf8820f5bd1618b85508f74971797e44ba4079c0ecb97c6",
-          "expectedSha256": "d6c4f63e964c856ccaf8820f5bd1618b85508f74971797e44ba4079c0ecb97c6",
+          "sha256": "8c2bf2c6901d9088bda27d2def596af9f12a0588dd41c5f022afa4eb8e260555",
+          "expectedSha256": "8c2bf2c6901d9088bda27d2def596af9f12a0588dd41c5f022afa4eb8e260555",
           "matches": true
         },
         {
-          "name": "LiveFloor-D8cRGCBV.js",
+          "name": "OperationsTab-By7WNZw_.js",
           "status": 200,
-          "sha256": "4786e817fefe83620c64a0788ad85d0fc1c6f9584264feb4d66f9958119de9fb",
-          "expectedSha256": "4786e817fefe83620c64a0788ad85d0fc1c6f9584264feb4d66f9958119de9fb",
+          "sha256": "b4075712fd555ae7b5a8aba9716fbf356c33dbb79c237e816902ad2b54ff4f81",
+          "expectedSha256": "b4075712fd555ae7b5a8aba9716fbf356c33dbb79c237e816902ad2b54ff4f81",
           "matches": true
         },
         {
-          "name": "OperationsTab-CA3aS6Fj.js",
+          "name": "ReportsTab-Bms5-xpb.js",
           "status": 200,
-          "sha256": "89628ebb291e1f4926d9247cf44814d2f1ba9aaa9aa3293826e81ca75ddf4f21",
-          "expectedSha256": "89628ebb291e1f4926d9247cf44814d2f1ba9aaa9aa3293826e81ca75ddf4f21",
+          "sha256": "e4a0444ddd45600c157e413faca867301f3d404477c305b553b0eeea33dc2e51",
+          "expectedSha256": "e4a0444ddd45600c157e413faca867301f3d404477c305b553b0eeea33dc2e51",
           "matches": true
         },
         {
-          "name": "ReportsTab-Dx074Jkk.js",
+          "name": "SalesPage-DTMGzejd.js",
           "status": 200,
-          "sha256": "5c77c62efc66179d57c49a85dce95cd862595ac7038b5157cadb26d867b4cfdf",
-          "expectedSha256": "5c77c62efc66179d57c49a85dce95cd862595ac7038b5157cadb26d867b4cfdf",
+          "sha256": "72c66c129994b249a2015b81033922e73a6161e3b6a8e67f693e8ad3cbfdf83a",
+          "expectedSha256": "72c66c129994b249a2015b81033922e73a6161e3b6a8e67f693e8ad3cbfdf83a",
           "matches": true
         },
         {
-          "name": "SalesPage-CiOm-aEH.js",
+          "name": "SettingsTab-CEKLu9Qo.js",
           "status": 200,
-          "sha256": "8c8519da3f6c0c4f044f64e26ebfeb3a79cfc276db7f5089abcfcd5c318a534c",
-          "expectedSha256": "8c8519da3f6c0c4f044f64e26ebfeb3a79cfc276db7f5089abcfcd5c318a534c",
+          "sha256": "0d416db2426654a9cd0458d44192210c0c59f39ef7ff21ae5cf39a36ffbd043d",
+          "expectedSha256": "0d416db2426654a9cd0458d44192210c0c59f39ef7ff21ae5cf39a36ffbd043d",
           "matches": true
         },
         {
-          "name": "SettingsTab-CkKy97-K.js",
+          "name": "TableStateUI-D0iXKvGD.js",
           "status": 200,
-          "sha256": "f8da82f2f3ddccc9a98a17b656b5716411aa6b8878f136090740f740fb2d51ac",
-          "expectedSha256": "f8da82f2f3ddccc9a98a17b656b5716411aa6b8878f136090740f740fb2d51ac",
+          "sha256": "1b45cb9df15a031996710b63ad88276749d2043d1153ba9ca7fe2618b137889a",
+          "expectedSha256": "1b45cb9df15a031996710b63ad88276749d2043d1153ba9ca7fe2618b137889a",
           "matches": true
         },
         {
-          "name": "TableStateUI-DMToVgxG.js",
+          "name": "TablesTab-D5n2LL58.js",
           "status": 200,
-          "sha256": "a5fabf2b48917bb2bff228bff94bba5a814a67abd3f992c4666adcab30ef6fc7",
-          "expectedSha256": "a5fabf2b48917bb2bff228bff94bba5a814a67abd3f992c4666adcab30ef6fc7",
+          "sha256": "d3e9df17e2a393568561d4d992406232fe83a1360a4ed0d74db1f4b320f5f23a",
+          "expectedSha256": "d3e9df17e2a393568561d4d992406232fe83a1360a4ed0d74db1f4b320f5f23a",
           "matches": true
         },
         {
-          "name": "TablesTab-xc3V4vdj.js",
+          "name": "TournamentTab-CLJoqg9q.js",
           "status": 200,
-          "sha256": "4ccdc94dd996aa08fd97f07cfeb3145eb42722266107911407f55db3f22a6483",
-          "expectedSha256": "4ccdc94dd996aa08fd97f07cfeb3145eb42722266107911407f55db3f22a6483",
+          "sha256": "52f928aa141dfb49b60c59938c3e0289fa2e368fee818dc2b8a954345c6d7951",
+          "expectedSha256": "52f928aa141dfb49b60c59938c3e0289fa2e368fee818dc2b8a954345c6d7951",
           "matches": true
         },
         {
-          "name": "TournamentTab-D2AoaXO8.js",
+          "name": "index-BuaZteZW.css",
           "status": 200,
-          "sha256": "b913ef5627b9a33a50d7f16d1fa07ea70165210e6d02e3111be9602f2f106b1e",
-          "expectedSha256": "b913ef5627b9a33a50d7f16d1fa07ea70165210e6d02e3111be9602f2f106b1e",
+          "sha256": "4875e8d28d6295298ffc1b301bab624bb723df98a03f96e74b4d71eaa47ac560",
+          "expectedSha256": "4875e8d28d6295298ffc1b301bab624bb723df98a03f96e74b4d71eaa47ac560",
           "matches": true
         },
         {
-          "name": "index-BLgfA7vE.css",
+          "name": "index-Dabp6f7U.js",
           "status": 200,
-          "sha256": "be9e34ea537855bd2d0aec280aca61386f98785d414e541542191e5874f1c438",
-          "expectedSha256": "be9e34ea537855bd2d0aec280aca61386f98785d414e541542191e5874f1c438",
-          "matches": true
-        },
-        {
-          "name": "index-BljHRHAv.js",
-          "status": 200,
-          "sha256": "dfe44521f2e54f66fe5d16838159af66d9f6bcd0ef7fd779ee86dcd797fed457",
-          "expectedSha256": "dfe44521f2e54f66fe5d16838159af66d9f6bcd0ef7fd779ee86dcd797fed457",
+          "sha256": "4c5f00ffd360dfd0b83ebdc630a93e81cb05d3bb82c3db8883208be0c3430e22",
+          "expectedSha256": "4c5f00ffd360dfd0b83ebdc630a93e81cb05d3bb82c3db8883208be0c3430e22",
           "matches": true
         },
         {
@@ -150,10 +150,10 @@
           "matches": true
         },
         {
-          "name": "useRealtimeSubscription-DR_2jPPU.js",
+          "name": "useRealtimeSubscription-BTym6krJ.js",
           "status": 200,
-          "sha256": "4eac794c084f85af0d5f06ad24c8eb64429bf47f865bbf7c6875ee5439437485",
-          "expectedSha256": "4eac794c084f85af0d5f06ad24c8eb64429bf47f865bbf7c6875ee5439437485",
+          "sha256": "2a881d406d8b184f14f4ce7fab3ef45693df7cd26eb4dd6f183e0981f0a80e86",
+          "expectedSha256": "2a881d406d8b184f14f4ce7fab3ef45693df7cd26eb4dd6f183e0981f0a80e86",
           "matches": true
         }
       ],

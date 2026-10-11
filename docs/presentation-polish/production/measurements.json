@@ -1,5 +1,6 @@
 {
-  "method": "Anonymous production login only. No credentials entered, no login attempt, no mutation.",
+  "base": "https://hsr-bms.vercel.app",
+  "method": "Anonymous login only. No credentials entered, no login attempt, no mutation.",
   "samples": [
     {
       "theme": "dark",
@@ -9,7 +10,29 @@
       "fontLoaded": true,
       "titleSize": "24px",
       "buttonHeight": 36,
-      "overflow": 0
+      "overflow": 0,
+      "leadingIcons": [
+        {
+          "textStart": 905.796875,
+          "iconRight": 895.796875,
+          "gap": 10
+        },
+        {
+          "textStart": 905.796875,
+          "iconRight": 895.796875,
+          "gap": 10
+        }
+      ],
+      "placeholderPixels": [
+        {
+          "firstInk": 43,
+          "expectedInset": 40
+        },
+        {
+          "firstInk": 43,
+          "expectedInset": 40
+        }
+      ]
     },
     {
       "theme": "dark",
@@ -19,7 +42,29 @@
       "fontLoaded": true,
       "titleSize": "24px",
       "buttonHeight": 44,
-      "overflow": 0
+      "overflow": 0,
+      "leadingIcons": [
+        {
+          "textStart": 73,
+          "iconRight": 63,
+          "gap": 10
+        },
+        {
+          "textStart": 73,
+          "iconRight": 63,
+          "gap": 10
+        }
+      ],
+      "placeholderPixels": [
+        {
+          "firstInk": 42,
+          "expectedInset": 40
+        },
+        {
+          "firstInk": 42,
+          "expectedInset": 40
+        }
+      ]
     },
     {
       "theme": "dark",
@@ -29,7 +74,29 @@
       "fontLoaded": true,
       "titleSize": "24px",
       "buttonHeight": 44,
-      "overflow": 0
+      "overflow": 0,
+      "leadingIcons": [
+        {
+          "textStart": 73,
+          "iconRight": 63,
+          "gap": 10
+        },
+        {
+          "textStart": 73,
+          "iconRight": 63,
+          "gap": 10
+        }
+      ],
+      "placeholderPixels": [
+        {
+          "firstInk": 42,
+          "expectedInset": 40
+        },
+        {
+          "firstInk": 42,
+          "expectedInset": 40
+        }
+      ]
     },
     {
       "theme": "light",
@@ -39,7 +106,29 @@
       "fontLoaded": true,
       "titleSize": "24px",
       "buttonHeight": 36,
-      "overflow": 0
+      "overflow": 0,
+      "leadingIcons": [
+        {
+          "textStart": 905.796875,
+          "iconRight": 895.796875,
+          "gap": 10
+        },
+        {
+          "textStart": 905.796875,
+          "iconRight": 895.796875,
+          "gap": 10
+        }
+      ],
+      "placeholderPixels": [
+        {
+          "firstInk": 43,
+          "expectedInset": 40
+        },
+        {
+          "firstInk": 43,
+          "expectedInset": 40
+        }
+      ]
     },
     {
       "theme": "light",
@@ -49,7 +138,29 @@
       "fontLoaded": true,
       "titleSize": "24px",
       "buttonHeight": 44,
-      "overflow": 0
+      "overflow": 0,
+      "leadingIcons": [
+        {
+          "textStart": 73,
+          "iconRight": 63,
+          "gap": 10
+        },
+        {
+          "textStart": 73,
+          "iconRight": 63,
+          "gap": 10
+        }
+      ],
+      "placeholderPixels": [
+        {
+          "firstInk": 42,
+          "expectedInset": 40
+        },
+        {
+          "firstInk": 42,
+          "expectedInset": 40
+        }
+      ]
     },
     {
       "theme": "light",
@@ -59,7 +170,29 @@
       "fontLoaded": true,
       "titleSize": "24px",
       "buttonHeight": 44,
-      "overflow": 0
+      "overflow": 0,
+      "leadingIcons": [
+        {
+          "textStart": 73,
+          "iconRight": 63,
+          "gap": 10
+        },
+        {
+          "textStart": 73,
+          "iconRight": 63,
+          "gap": 10
+        }
+      ],
+      "placeholderPixels": [
+        {
+          "firstInk": 42,
+          "expectedInset": 40
+        },
+        {
+          "firstInk": 42,
+          "expectedInset": 40
+        }
+      ]
     }
   ],
   "violations": [],

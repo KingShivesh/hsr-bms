@@ -92,7 +92,8 @@ interface text, subject to the user's explicit choice. **No switch applied.**
 The presentation source commit `ab959cd` and evidence commit `f1cf95a` are
 merged and pushed to main. [Deployment proof](deployment.json) confirms all
 21 production JS/CSS assets match the local production build byte-for-byte,
-including `index-BljHRHAv.js`. Backend health and readiness returned 200; the
+including the final corrected `index-Dabp6f7U.js` from commit `8aceaac`.
+Backend health and readiness returned 200; the
 unchanged backend revision `4d8a0b2` contains the required existing fixes by
 commit ancestry. No backend source changed in this pass.
 
