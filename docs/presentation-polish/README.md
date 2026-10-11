@@ -87,8 +87,6 @@ interface text, subject to the user's explicit choice. **No switch applied.**
   all QA origins, and the scanner waits for all visible skeletons to disappear.
   Error-state-only previews are not accepted as route coverage.
 
-## Reproduce
-
 ## Production verification
 
 The presentation source commit `ab959cd` and evidence commit `f1cf95a` are
@@ -103,6 +101,13 @@ login in both themes at 1440px, 375px and 414px. Syne is actually loaded; canvas
 colors remain `#0B0B0F` / `#FAFAFA`; the title is 24px; buttons measure 36px
 desktop / 44px mobile. Zero overflow, contrast violations or page errors. No
 production credential entry or mutation was performed.
+
+Final pixel inspection caught login prefix icons overlapping placeholder text
+after shared input padding took precedence. The explicit leading-icon inset
+now uses the shared 40px spacing token. [Correction comparison](input-prefix-fix/index.html)
+preserves the before-production pixels and corrected light/dark screenshots.
+The new regression assertion measures 10px clearance in all six viewport/theme
+samples. Fonts, colors, button heights and contrast remain unchanged.
 
 ## Reproduce
 

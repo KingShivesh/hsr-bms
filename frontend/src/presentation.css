@@ -79,6 +79,7 @@ h3 { font-size: var(--text-lg); line-height: var(--leading-lg); font-weight: 500
   transition: border-color 80ms var(--ease-out), box-shadow 80ms var(--ease-out); max-width: 100%;
 }
 .ui-input:not([type="checkbox"]):not([type="radio"]), .ui-select { height: 36px; padding-block: 0; }
+.login-input-wrap .ui-input { padding-inline-start: var(--space-10); }
 .ui-textarea { resize: vertical; min-height: 80px; }
 .ui-input::placeholder, .ui-textarea::placeholder { color: var(--text-muted); opacity: 1; }
 .ui-input:focus, .ui-select:focus, .ui-textarea:focus { border-color: var(--border-focus) !important; box-shadow: var(--focus); outline: none; }
