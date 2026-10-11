@@ -9,6 +9,7 @@ from database import get_db
 from hsr_config import TABLES, TABLE_RATES, get_ist_now
 from validators import require_full_name
 from realtime import queue_realtime_event
+from session_identity import active_session_filter
 
 router = APIRouter()
 
@@ -29,7 +30,7 @@ def _available_tables(db: Session, preferred_type: str = "ANY") -> list[dict]:
     active_ids = {
         (s.table_id or "").lower()
         for s in db.query(models.ActiveSession).filter(
-            models.ActiveSession.customer_name != ""
+            active_session_filter()
         ).all()
     }
     maintenance_ids = {(m.table_id or "").lower() for m in db.query(models.TableMaintenance).all()}

@@ -3,13 +3,14 @@ import time
 
 from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException
 from pydantic import BaseModel
-from sqlalchemy import func
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
 import models
-from database import get_mutation_db
-from hsr_config import IST_TZ, TABLE_RATES, get_ist_now
+import json
+from pricing import snapshot_tariff
+from database import get_db, get_mutation_db
+from hsr_config import IST_TZ, TABLE_RATES, get_ist_now, rate_for_table
 from validators import require_full_name
 from realtime import queue_realtime_event
 
@@ -24,6 +25,23 @@ class BookingBody(BaseModel):
     booking_time: str
     duration_mins: int = 60
     notes: str = ""
+    member_id: str | None = None
+
+
+def eligible_booking(booking, table_id):
+    if booking.status != "booked" or booking.session_key:
+        return False
+    if (booking.table_id or "ANY").lower() not in ("any", table_id):
+        return False
+    expected_type = "POOL" if table_id == "t5" else "SNOOKER"
+    if (booking.table_type or "ANY").upper() not in ("ANY", expected_type):
+        return False
+    return abs((_parse_time(booking.booking_time) - get_ist_now()).total_seconds()) <= 30 * 60
+
+
+def booking_prices(db, tariff_mode="hourly", package_id=""):
+    settings = db.query(models.Settings).first()
+    return {table: {"rate": rate_for_table(table, 0, settings), "tariff": snapshot_tariff(settings, table, tariff_mode, package_id)} for table in TABLE_RATES}
 
 
 def _parse_time(value: str) -> datetime:
@@ -49,20 +67,23 @@ def _format_booking(b: models.Booking) -> dict:
         "status": b.status,
         "created_at": b.created_at,
         "released_at": b.released_at or "",
+        "member_id": b.member_id,
+        "session_key": b.session_key,
+        "has_saved_price": bool(b.pricing_json),
     }
 
 
 def _booking_has_started(db: Session, booking: models.Booking) -> bool:
-    if booking.table_id and booking.table_id != "ANY":
-        active = db.query(models.ActiveSession).filter(
-            func.lower(models.ActiveSession.table_id) == booking.table_id.lower(),
-            models.ActiveSession.customer_name.ilike(booking.customer_name),
-        ).first()
-        if active:
-            return True
-    return bool(db.query(models.ActiveSession).filter(
-        models.ActiveSession.customer_name.ilike(booking.customer_name)
-    ).first())
+    return bool(booking.session_key or db.query(models.ActiveSession).filter(models.ActiveSession.booking_id == booking.id).first())
+
+
+@router.get("/start-options/{table_id}")
+def start_options(table_id: str, db: Session = Depends(get_db)):
+    table_id = table_id.lower()
+    if table_id not in TABLE_RATES:
+        raise HTTPException(404, "Unknown table")
+    rows = db.query(models.Booking).filter(models.Booking.status == "booked").order_by(models.Booking.booking_time).all()
+    return [{**_format_booking(row), "start_price": json.loads(row.pricing_json).get(table_id) if row.pricing_json else None} for row in rows if eligible_booking(row, table_id)]
 
 
 def _release_missed_bookings(db: Session) -> None:
@@ -109,6 +130,11 @@ def create_booking(
     db: Session = Depends(get_mutation_db),
 ):
     name = require_full_name(body.customer_name, "Booking customer name")
+    if body.member_id:
+        member = db.query(models.Member).filter(models.Member.customer_id == body.member_id).first()
+        if not member:
+            raise HTTPException(404, "Member not found")
+        name = member.name
     booking_dt = _parse_time(body.booking_time)
     if booking_dt < get_ist_now() - timedelta(minutes=5):
         raise HTTPException(status_code=400, detail="Booking time cannot be in the past")
@@ -148,6 +174,8 @@ def create_booking(
         status="booked",
         created_at=get_ist_now().strftime("%d/%m/%Y, %H:%M"),
         ts=time.time() * 1000,
+        member_id=body.member_id,
+        pricing_json=json.dumps(booking_prices(db)),
     )
     db.add(booking)
     try:
@@ -170,6 +198,8 @@ def restore_booking(
     booking = db.query(models.Booking).filter(models.Booking.id == booking_id).first()
     if not booking:
         raise HTTPException(status_code=404, detail="Booking not found")
+    if booking.session_key:
+        raise HTTPException(409, "A started booking cannot be restored")
     if booking.status != "cancelled":
         return _format_booking(booking)
 
@@ -211,6 +241,8 @@ def cancel_booking(
 ):
     booking = db.query(models.Booking).filter(models.Booking.id == booking_id).first()
     if booking:
+        if booking.session_key:
+            raise HTTPException(409, "A started booking cannot be cancelled")
         booking.status = "cancelled"
         db.commit()
         queue_realtime_event(background_tasks, "reservation.changed", "reservations", "bookings")

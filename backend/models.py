@@ -43,6 +43,10 @@ class Transaction(Base):
     ts             = Column(Float)
     table_id       = Column(String)
     customer_name  = Column(String)
+    player_type    = Column(String(20), default="guest", server_default="guest", nullable=False)
+    member_id      = Column(String, nullable=True)
+    booking_id     = Column(Integer, nullable=True)
+    player_count   = Column(Integer, default=2)
     duration       = Column(Integer)
     play_charge    = Column(Integer)
     food_charge    = Column(Integer)
@@ -74,6 +78,10 @@ class ActiveSession(Base):
     table_id      = Column(String,  primary_key=True, index=True)
     start_time    = Column(Float)
     customer_name = Column(String)
+    player_type   = Column(String(20), default="guest", server_default="guest", nullable=False)
+    member_id     = Column(String, nullable=True)
+    booking_id    = Column(Integer, nullable=True)
+    player_count  = Column(Integer, default=2)
     rate          = Column(Integer)
     food_total    = Column(Integer, default=0)
     food_items    = Column(Text,    default="[]")
@@ -186,6 +194,9 @@ class Booking(Base):
     created_at     = Column(String)
     ts             = Column(Float)
     released_at    = Column(String, default="")
+    member_id      = Column(String, nullable=True)
+    session_key    = Column(String, nullable=True)
+    pricing_json   = Column(Text, nullable=True)
 
 class StaffRoleSetting(Base):
     __tablename__ = "staff_role_settings"

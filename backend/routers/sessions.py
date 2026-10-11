@@ -1,5 +1,5 @@
 from fastapi import APIRouter, BackgroundTasks, HTTPException, Depends
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, field_validator, model_validator
 from sqlalchemy import func, or_
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
@@ -15,6 +15,8 @@ from jose import JWTError, jwt
 from hsr_config import TABLE_RATES, format_ist_now, get_ist_now, rate_for_table
 from live_state import build_live_floor_state, build_table_state, serialize_session as serialize_live_session, session_elapsed_ms, session_started_at
 from realtime import queue_realtime_event
+from session_identity import is_active_session
+from routers.bookings import eligible_booking, booking_prices
 
 router = APIRouter()
 MAX_SESSION_DURATION_MINUTES = 12 * 60
@@ -24,14 +26,33 @@ GENERIC_SESSION_PLAYER_NAMES = {"player one", "player two", "walk in customer"}
 
 class StartSession(BaseModel):
     table_id:      str
-    customer_name: str
-    rate:          int
+    customer_name: str | None = Field(default=None, max_length=80)
+    rate:          int = 0
+    player_type: Literal["guest", "member", "booking"] = "guest"
+    member_id: str | None = None
+    booking_id: int | None = None
+    player_count: int = Field(default=2, ge=1, le=20)
     split:         bool = False
     split_name:    str  = ""
     billing_mode:  str  = "single"
     players:       list[str] = Field(default_factory=list)
     tariff_mode:   Literal["hourly", "frame", "package"] = "hourly"
     package_id:    str = Field(default="", max_length=100)
+
+    @field_validator("customer_name", mode="before")
+    @classmethod
+    def trim_name(cls, value):
+        return value.strip() or None if isinstance(value, str) else value
+
+    @model_validator(mode="after")
+    def validate_identity(self):
+        if self.player_type == "member" and (not self.member_id or self.booking_id is not None):
+            raise ValueError("Select a member; do not supply a booking ID")
+        if self.player_type == "booking" and (self.booking_id is None or self.member_id is not None):
+            raise ValueError("Select a booking; its member is resolved by the server")
+        if self.player_type == "guest" and (self.member_id is not None or self.booking_id is not None):
+            raise ValueError("Guest sessions cannot supply a member or booking ID")
+        return self
 
 class FoodItem(BaseModel):
     item: str
@@ -76,7 +97,7 @@ def active_session_for_table(db: Session, table_id: str, *, lock: bool = False):
         func.lower(models.ActiveSession.table_id) == normalized
     )
     rows = (query.with_for_update() if lock else query).all()
-    return next((row for row in rows if normalize_person_name(row.customer_name)), None) or (rows[0] if rows else None)
+    return next((row for row in rows if is_active_session(row)), None) or (rows[0] if rows else None)
 
 def maintenance_for_table(db: Session, table_id: str):
     normalized = normalize_table_id(table_id)
@@ -97,20 +118,6 @@ def booking_datetime_from_clock(clock_value: str) -> datetime:
         booking_dt = booking_dt + timedelta(days=1)
     return booking_dt
 
-def complete_matching_booking(db: Session, table_id: str, customer_name: str) -> None:
-    table_code = normalize_table_id(table_id).upper()
-    booking = (
-        db.query(models.Booking)
-        .filter(
-            models.Booking.status == "booked",
-            models.Booking.customer_name.ilike(customer_name),
-            models.Booking.table_id.in_([table_code, "ANY"]),
-        )
-        .order_by(models.Booking.booking_time.asc())
-        .first()
-    )
-    if booking:
-        booking.status = "completed"
 
 def is_generic_session_player(name: str) -> bool:
     return normalize_person_name(name).lower() in GENERIC_SESSION_PLAYER_NAMES
@@ -266,7 +273,7 @@ def build_player_breakdown(
 ) -> list[dict]:
     bill_players = players or ([display_customer] if display_customer else [])
     if billing_mode == "single":
-        bill_players = [display_customer or (bill_players[0] if bill_players else "Customer")]
+        bill_players = [display_customer or (bill_players[0] if bill_players else "Guest")]
 
     food_by_player = player_food_totals(food_items, bill_players, display_customer)
     billed_food_total = sum(food_by_player.values())
@@ -374,6 +381,10 @@ def transaction_checkout_response(
         "ts": t.ts,
         "tbl": t.table_id,
         "nm": t.customer_name,
+        "player_type": t.player_type,
+        "member_id": t.member_id,
+        "booking_id": t.booking_id,
+        "player_count": t.player_count,
         "dur": t.duration,
         "ply": t.play_charge,
         "actual_dur": actual_minutes if actual_minutes is not None else t.duration,
@@ -593,29 +604,54 @@ def start_session(
     body: StartSession,
     background_tasks: BackgroundTasks,
     db: Session = Depends(get_mutation_db),
+    user: dict = Depends(get_current_claims),
 ):
     table_id = require_known_table_id(body.table_id)
     billing_mode = normalize_billing_mode(body.billing_mode, body.split)
     fallback_players = default_players_for_mode(billing_mode)
-    customer_name = normalize_person_name(body.customer_name) or fallback_players[0]
-    players = clean_players(customer_name, body.players, body.split_name)
+    customer_name = body.customer_name
+    member_id = None
+    booking = None
+    if body.player_type == "member":
+        member = db.query(models.Member).filter(models.Member.customer_id == body.member_id).with_for_update().first()
+        if not member:
+            raise HTTPException(404, "Member not found")
+        customer_name, member_id = member.name, member.customer_id
+    elif body.player_type == "booking":
+        booking = db.query(models.Booking).filter(models.Booking.id == body.booking_id).with_for_update().first()
+        if not booking:
+            raise HTTPException(404, "Booking not found")
+        if booking.status != "booked" or booking.session_key:
+            raise HTTPException(409, "Booking already started or no longer available")
+        if not eligible_booking(booking, table_id):
+            raise HTTPException(409, "Booking must match this table and be within 30 minutes")
+        customer_name, member_id = booking.customer_name, booking.member_id
+        if member_id and not db.query(models.Member).filter(models.Member.customer_id == member_id).first():
+            raise HTTPException(404, "Booking member not found")
+    players = clean_players("" if billing_mode != "single" and body.players else customer_name, body.players, body.split_name)
     if billing_mode != "single" and len(players) < 2:
         players = clean_players(players[0] if players else fallback_players[0], fallback_players[1:], "")
     if billing_mode != "single" and len(players) < 2:
         raise HTTPException(status_code=400, detail="Enter at least two players for Sharing or LP.")
     if billing_mode == "single":
-        players = [customer_name]
+        players = [customer_name] if customer_name else []
     split_name = ", ".join(players[1:])
     settings = db.query(models.Settings).first()
     rate = rate_for_table(table_id, body.rate, settings)
-    tariff = snapshot_tariff(settings, table_id, body.tariff_mode, body.package_id)
+    if booking and booking.pricing_json:
+        saved = json.loads(booking.pricing_json).get(table_id)
+        if not saved:
+            raise HTTPException(409, "No booking price for this table")
+        rate, tariff = saved["rate"], saved["tariff"]
+    else:
+        tariff = snapshot_tariff(settings, table_id, "hourly" if booking else body.tariff_mode, "" if booking else body.package_id)
     maint = maintenance_for_table(db, table_id)
     if maint:
         raise HTTPException(status_code=400, detail=f"Table is under maintenance: {maint.reason}")
 
     existing = active_session_for_table(db, table_id, lock=True)
-    if existing and normalize_person_name(existing.customer_name):
-        raise HTTPException(status_code=400, detail="Session already running")
+    if is_active_session(existing):
+        raise HTTPException(status_code=409, detail="Session already running")
 
     sess = existing or models.ActiveSession(table_id=table_id)
     sess.table_id      = table_id
@@ -625,6 +661,10 @@ def start_session(
     sess.total_paused_ms = 0
     sess.rate_multiplier, sess.rate_label = get_peak_multiplier(db)
     sess.customer_name = customer_name
+    sess.player_type = body.player_type
+    sess.member_id = member_id
+    sess.booking_id = booking.id if booking else None
+    sess.player_count = body.player_count
     sess.rate          = rate
     for key, value in tariff.items():
         setattr(sess, key, value)
@@ -641,17 +681,22 @@ def start_session(
     sess.session_key   = new_session_key(table_id)
     if not existing:
         db.add(sess)
-    first_frame = create_frame_for_session(db, sess, 1) if body.tariff_mode == "frame" else None
-    complete_matching_booking(db, table_id, customer_name)
+    first_frame = create_frame_for_session(db, sess, 1) if sess.tariff_mode == "frame" else None
+    if booking:
+        booking.status, booking.session_key = "completed", sess.session_key
     record_session_event(
         db,
         event_type="session_started",
         table_id=table_id,
         session_key=sess.session_key,
-        detail=f"{table_id.upper()} started as {billing_mode}, {body.tariff_mode}",
+        actor=user["username"],
+        detail=f"{table_id.upper()} started as {billing_mode}, {sess.tariff_mode}",
         payload={
             **tariff,
             "billing_mode": billing_mode,
+            "player_type": body.player_type,
+            "member_id": member_id,
+            "booking_id": sess.booking_id,
             "players": players,
             "rate": rate,
             "rate_multiplier": sess.rate_multiplier,
@@ -662,8 +707,9 @@ def start_session(
     log_action(
         db,
         "session_start",
-        f"{table_id.upper()} started as {billing_mode}, {body.tariff_mode}",
+        f"{table_id.upper()} started as {billing_mode}, {sess.tariff_mode}",
         table_id=table_id,
+        staff=user["username"],
     )
     try:
         db.commit()
@@ -671,7 +717,9 @@ def start_session(
         db.rollback()
         raise HTTPException(status_code=409, detail="Session already running")
     queue_realtime_event(background_tasks, "table.updated", "floor", "live-floor")
-    return {"ok": True, "frames": [serialize_frame(first_frame)] if first_frame else []}
+    if booking:
+        queue_realtime_event(background_tasks, "reservation.changed", "reservations", "bookings")
+    return {"ok": True, "session_key": sess.session_key, "player_type": sess.player_type, "frames": [serialize_frame(first_frame)] if first_frame else []}
 
 @router.post("/pause/{table_id}")
 def pause_session(
@@ -788,6 +836,8 @@ def quote_session(
         display_customer = recorded_lp_players[0] if recorded_lp_players else "LP Session"
     else:
         display_customer = payer or sess.customer_name
+    if sess.customer_name is None:
+        display_customer = None
     share_count = len(players) if billing_mode == "sharing" else 1
     split_per_head = math.ceil(total / share_count) if share_count > 1 else total
     player_breakdown = build_player_breakdown(
@@ -816,6 +866,9 @@ def quote_session(
         **session_tariff(sess, frames),
         "checkout_blocked": (sess.tariff_mode == "frame" or billing_mode == "lp") and any(frame.status == "open" for frame in frames),
         "nm": display_customer,
+        "player_type": sess.player_type,
+        "member_id": sess.member_id,
+        "booking_id": sess.booking_id,
         "dur": minutes,
         "actual_dur": actual_minutes,
         "duration_capped": duration_capped,
@@ -949,6 +1002,8 @@ def stop_session(
         display_customer = recorded_lp_players[0] if recorded_lp_players else "LP Session"
     else:
         display_customer = payer or sess.customer_name
+    if sess.customer_name is None:
+        display_customer = None
     share_count = len(players) if billing_mode == "sharing" else 1
     split_per_head = math.ceil(total / share_count) if share_count > 1 else total
     player_breakdown = build_player_breakdown(
@@ -1011,6 +1066,10 @@ def stop_session(
         ts            = time.time() * 1000,
         table_id      = table_id.upper(),
         customer_name = display_customer,
+        player_type = sess.player_type,
+        member_id = sess.member_id,
+        booking_id = sess.booking_id,
+        player_count = sess.player_count,
         duration      = minutes,
         play_charge   = play,
         food_charge   = food,
@@ -1048,11 +1107,9 @@ def stop_session(
                 queue_realtime_event(background_tasks, "table.updated", "floor", "live-floor")
             return transaction_checkout_response(db, existing_transaction, idempotent=True)
         raise HTTPException(status_code=409, detail="Session was already checked out. Refresh the table.")
-    if player_breakdown:
-        for item in player_breakdown:
-            update_member_on_checkout(item["name"], item["total"], db)
-    else:
-        update_member_on_checkout(display_customer, total, db)
+    if sess.member_id:
+        member_amount = total if billing_mode == "single" else sum(item["total"] for item in player_breakdown if normalize_person_name(item["name"]).casefold() == normalize_person_name(sess.customer_name).casefold())
+        update_member_on_checkout(sess.member_id, member_amount, db)
 
     archive_closed_frames(db, transaction=t, frames=frames)
     if discount_amount > 0:
@@ -1235,7 +1292,7 @@ def reset_session(
         log_action(
             db,
             "session_reset",
-            f"{table_id.upper()} reset while assigned to {sess.customer_name}",
+            f"{table_id.upper()} reset while assigned to {sess.customer_name or 'Guest'}",
             severity="critical",
             amount=math.ceil((elapsed_ms / 1000) / 60),
             table_id=table_id,
@@ -1247,7 +1304,7 @@ def reset_session(
             event_type="session_reset",
             table_id=table_id,
             session_key=ensure_session_key(db, sess),
-            detail=f"{table_id.upper()} reset while assigned to {sess.customer_name}",
+            detail=f"{table_id.upper()} reset while assigned to {sess.customer_name or 'Guest'}",
             amount=math.ceil((elapsed_ms / 1000) / 60),
             payload={
                 "customer_name": sess.customer_name,
@@ -1452,7 +1509,7 @@ def reserve(
     if not name:
         raise HTTPException(status_code=400, detail="Reservation name is required.")
     sess = active_session_for_table(db, table_id)
-    if sess and normalize_person_name(sess.customer_name):
+    if is_active_session(sess):
         raise HTTPException(status_code=400, detail="Table is already running.")
     booking_dt = booking_datetime_from_clock(body.time)
     duration = 60
@@ -1477,9 +1534,10 @@ def reserve(
         status="booked",
         created_at=get_ist_now().strftime("%d/%m/%Y, %H:%M"),
         ts=time.time() * 1000,
+        pricing_json=json.dumps(booking_prices(db, "hourly", "")),
     )
     db.add(booking)
-    if sess and not normalize_person_name(sess.customer_name):
+    if sess and not is_active_session(sess):
         db.delete(sess)
     db.commit()
     db.refresh(booking)
@@ -1504,7 +1562,7 @@ def cancel_reserve(
     )
     if booking:
         booking.status = "cancelled"
-    if sess and not normalize_person_name(sess.customer_name):
+    if sess and not is_active_session(sess):
         db.delete(sess)
     if booking or sess:
         db.commit()
@@ -1517,7 +1575,7 @@ def get_active(db: Session = Depends(get_db)):
     sessions = db.query(models.ActiveSession).all()
     result = []
     for s in sessions:
-        if not s.customer_name:
+        if not is_active_session(s):
             continue
         result.append(serialize_live_session(db, s))
     return result

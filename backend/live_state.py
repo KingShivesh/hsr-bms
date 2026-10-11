@@ -10,6 +10,7 @@ from sqlalchemy import func, or_
 from sqlalchemy.orm import Session
 
 import models
+from session_identity import is_active_session
 from audit import get_controls
 from hsr_config import TABLES, TABLE_RATES, get_ist_now, get_ist_today_str, rate_for_table
 from pricing import calc_checkout, session_tariff, tariff_catalog
@@ -43,7 +44,7 @@ def valid_duration(duration: int | None) -> bool:
 def valid_transaction(t: models.Transaction) -> bool:
     if not valid_duration(t.duration):
         return False
-    return bool((t.customer_name or "").strip() or (t.total or 0) > 0)
+    return bool((t.customer_name or "").strip() or (t.total or 0) > 0 or t.session_key)
 
 
 def today_transactions(db: Session, day: str | None = None) -> list[models.Transaction]:
@@ -220,6 +221,10 @@ def serialize_session(db: Session, session: models.ActiveSession, *, now_ms: flo
         "table_id": normalize_table_id(session.table_id),
         **session_tariff(session, frame_rows),
         "customer_name": session.customer_name,
+        "player_type": session.player_type,
+        "member_id": session.member_id,
+        "booking_id": session.booking_id,
+        "player_count": session.player_count,
         "rate": session.rate or 0,
         "start_time": session.start_time,
         "session_started_at": session_started_at(db, session),
@@ -307,7 +312,7 @@ def build_table_state(db: Session) -> dict:
     }
     sessions = [
         row for row in db.query(models.ActiveSession).all()
-        if (row.customer_name or "").strip()
+        if is_active_session(row)
     ]
     sessions_by_table = {
         normalize_table_id(session.table_id): serialize_session(

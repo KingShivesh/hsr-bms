@@ -9,6 +9,7 @@ from collections import defaultdict
 import models, io, json, time, csv
 from audit import get_controls
 from live_state import dashboard_payload
+from session_identity import active_session_filter
 from hsr_config import (
     CSV_PREFIX,
     POOL_TABLES,
@@ -41,7 +42,7 @@ def valid_report_transaction(t: models.Transaction) -> bool:
         t.tariff_mode in {"frame", "package"} and isinstance(t.duration, int) and t.duration > 0
     ):
         return False
-    if not (t.customer_name or "").strip() and (t.total or 0) <= 0:
+    if not (t.customer_name or "").strip() and (t.total or 0) <= 0 and not t.session_key:
         return False
     return True
 
@@ -150,6 +151,9 @@ def transaction_report_row(t: models.Transaction, frames_by_txn: dict[int, list[
         "ts": t.ts,
         "tbl": t.table_id,
         "nm": t.customer_name,
+        "player_type": t.player_type,
+        "member_id": t.member_id,
+        "booking_id": t.booking_id,
         "dur": t.duration,
         "tariff_mode": t.tariff_mode or "hourly",
         "tariff_price": t.tariff_price,
@@ -284,7 +288,7 @@ def top_customers(
 
     customer_stats = defaultdict(lambda: {"visits": 0, "spent": 0, "play": 0, "food": 0})
     for t in txns:
-        nm = t.customer_name
+        nm = t.customer_name or "Walk-in Guest"
         customer_stats[nm]["visits"] += 1
         customer_stats[nm]["spent"]  += t.total
         customer_stats[nm]["play"]   += t.play_charge
@@ -364,7 +368,7 @@ def closing_report(db: Session = Depends(get_db)):
         models.AuditLog.action.in_(["session_reset", "daily_reset", "clear_all"]),
     ).order_by(models.AuditLog.ts.desc()).all()
     active_sessions = db.query(models.ActiveSession).filter(
-        models.ActiveSession.customer_name != ""
+        active_session_filter()
     ).all()
     active_table_ids = {s.table_id.lower() for s in active_sessions}
     day_close = db.query(models.DayClose).filter(
@@ -575,7 +579,7 @@ def closing_insights(db: Session = Depends(get_db)):
         })
 
     active_sessions = db.query(models.ActiveSession).filter(
-        models.ActiveSession.customer_name != ""
+        active_session_filter()
     ).all()
     flagged = []
     for s in active_sessions:
@@ -677,8 +681,8 @@ def advanced_analytics(db: Session = Depends(get_db), _: dict = Depends(require_
     food_sessions = 0
 
     for t in txns:
-      customer_visits[t.customer_name] += 1
-      customer_spend[t.customer_name] += t.total
+      customer_visits[t.customer_name or "Walk-in Guest"] += 1
+      customer_spend[t.customer_name or "Walk-in Guest"] += t.total
       if t.food_charge > 0:
           food_sessions += 1
       table_profit[t.table_id]["sessions"] += 1

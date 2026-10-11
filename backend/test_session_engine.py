@@ -387,6 +387,8 @@ class SessionEngineTests(unittest.TestCase):
             db.commit()
         try:
             with engine.begin() as connection:
+                from migrations import downgrade
+                downgrade(connection, keep=2)
                 for column in columns:
                     connection.execute(text(f"ALTER TABLE active_sessions DROP COLUMN {column}"))
             ensure_runtime_columns()
@@ -400,6 +402,132 @@ class SessionEngineTests(unittest.TestCase):
                 self.assertIsNone(session.started_at)
         finally:
             ensure_runtime_columns()
+
+    def test_anonymous_guest_stays_active_and_checks_out_without_member_pollution(self):
+        self.start(customer_name=None)
+        active = self.call("GET", "/sessions/active")
+        self.assertEqual(len(active), 1)
+        self.assertIsNone(active[0]["customer_name"])
+        self.assertEqual(active[0]["player_type"], "guest")
+        self.assertEqual(active[0]["player_count"], 2)
+        floor = self.call("GET", "/sessions/live-floor")
+        self.assertEqual(floor["tables"][0]["status_key"], "running")
+        self.assertEqual(len(self.call("GET", "/reports/closing-report")["open_tables"]), 1)
+        self.call("POST", "/sessions/t1/reserve", expected=400, json={"name": "QA Booking", "time": "23:00"})
+        self.now += 60 * 60 * 1000
+        bill = self.call("POST", "/sessions/stop/t1")
+        self.assertIsNone(bill["nm"])
+        self.assertEqual(bill["player_type"], "guest")
+        self.assertEqual(self.call("GET", "/members"), [])
+        top = self.call("GET", "/reports/top-customers")
+        self.assertEqual(top["customers"][0]["name"], "Walk-in Guest")
+        with SessionLocal() as db:
+            self.assertIsNone(db.query(models.Transaction).first().customer_name)
+
+    def test_guest_name_trims_and_limits_without_creating_members(self):
+        for table, value, expected in (("t1", "", None), ("t2", "   ", None), ("t3", "  Rahul's group  ", "Rahul's group"), ("t4", "x" * 80, "x" * 80)):
+            self.start(table, customer_name=value)
+            with SessionLocal() as db:
+                self.assertEqual(db.get(models.ActiveSession, table).customer_name, expected)
+        self.call("POST", "/sessions/start", expected=422, json={"table_id": "t5", "customer_name": "x" * 81})
+        self.call("POST", "/sessions/stop/t3")
+        self.assertEqual(self.call("GET", "/members"), [])
+
+    def test_missing_guest_name_is_valid_and_identity_ids_are_validated(self):
+        self.call("POST", "/sessions/start", json={"table_id": "t1"})
+        self.call("POST", "/sessions/start", expected=422, json={"table_id": "t2", "player_type": "guest", "member_id": "CUS001"})
+        self.call("POST", "/sessions/start", expected=422, json={"table_id": "t2", "player_type": "member"})
+        self.call("POST", "/sessions/start", expected=404, json={"table_id": "t2", "player_type": "member", "member_id": "missing"})
+        self.call("POST", "/sessions/start", expected=422, json={"table_id": "t2", "player_count": 21})
+
+    def test_member_lookup_resolves_phone_and_server_snapshot(self):
+        with SessionLocal() as db:
+            db.add(models.Member(customer_id="CUSQA", name="QA Vikram Singh", phone="+91 98765 43210"))
+            db.commit()
+        self.assertEqual(self.call("GET", "/members/search?q=98"), [])
+        self.assertEqual(self.call("GET", "/members/search?q=987654")[0]["id"], "CUSQA")
+        self.assertEqual(self.call("GET", "/members/search?q=Vik")[0]["phone"], "+91 98765 43210")
+        self.start(player_type="member", member_id="CUSQA", customer_name="Forged Name")
+        with SessionLocal() as db:
+            session = db.get(models.ActiveSession, "t1")
+            self.assertEqual((session.member_id, session.customer_name), ("CUSQA", "QA Vikram Singh"))
+            db.query(models.Member).first().name = "QA Renamed Member"
+            db.commit()
+        self.now += 60 * 60 * 1000
+        bill = self.call("POST", "/sessions/stop/t1")
+        self.assertEqual(bill["nm"], "QA Vikram Singh")
+        self.assertEqual(bill["member_id"], "CUSQA")
+        with SessionLocal() as db:
+            member = db.query(models.Member).first()
+            self.assertEqual(member.visits, 1)
+            self.assertEqual(member.spent, bill["tot"])
+
+    def test_booked_start_links_once_and_keeps_saved_rate(self):
+        from hsr_config import get_ist_now
+        booking = self.call("POST", "/bookings", json={"customer_name": "QA Booked Guest", "table_id": "T1", "booking_time": get_ist_now().isoformat()})
+        with SessionLocal() as db:
+            db.query(models.Settings).first().wr = 999
+            db.commit()
+        self.assertEqual(self.call("GET", "/bookings/start-options/t1")[0]["id"], booking["id"])
+        started = self.start(player_type="booking", booking_id=booking["id"], customer_name="Forged Booking")
+        with SessionLocal() as db:
+            row = db.get(models.Booking, booking["id"])
+            session = db.get(models.ActiveSession, "t1")
+            self.assertEqual((row.status, row.session_key), ("completed", started["session_key"]))
+            self.assertEqual((session.customer_name, session.rate, session.booking_id), ("QA Booked Guest", 320, booking["id"]))
+        self.call("POST", "/sessions/stop/t1")
+        self.call("POST", "/sessions/start", expected=409, json={"table_id": "t1", "player_type": "booking", "booking_id": booking["id"]})
+        self.call("DELETE", f"/bookings/{booking['id']}", expected=409)
+        self.call("POST", f"/bookings/{booking['id']}/restore", expected=409)
+
+    def test_booking_must_match_table_type_and_time_and_not_match_guest_by_name(self):
+        from hsr_config import get_ist_now
+        from datetime import timedelta
+        booking = self.call("POST", "/bookings", json={"customer_name": "QA Distant Guest", "table_id": "T2", "booking_time": (get_ist_now() + timedelta(hours=2)).isoformat()})
+        self.assertEqual(self.call("GET", "/bookings/start-options/t2"), [])
+        self.call("POST", "/sessions/start", expected=409, json={"table_id": "t2", "player_type": "booking", "booking_id": booking["id"]})
+        self.start(customer_name="QA Distant Guest")
+        with SessionLocal() as db:
+            self.assertEqual(db.get(models.Booking, booking["id"]).status, "booked")
+
+    def test_concurrent_anonymous_start_has_one_success_and_one_conflict(self):
+        def start():
+            with TestClient(app) as client:
+                return client.post("/sessions/start", headers=dict(self.client.headers), json={"table_id": "t1"}).status_code
+        with ThreadPoolExecutor(max_workers=2) as pool:
+            statuses = list(pool.map(lambda _: start(), range(2)))
+        self.assertEqual(sorted(statuses), [200, 409])
+        with SessionLocal() as db:
+            self.assertEqual(db.query(models.ActiveSession).count(), 1)
+            self.assertEqual(db.query(models.AuditLog).filter_by(action="session_start").count(), 1)
+
+    def test_staff_actor_and_metadata_only_event(self):
+        from realtime import event_broker
+        self.client.headers["Authorization"] = f"Bearer {create_token('qa-staff', 'staff')}"
+        self.start(customer_name=None)
+        with SessionLocal() as db:
+            self.assertEqual(db.query(models.AuditLog).filter_by(action="session_start").first().staff, "qa-staff")
+            self.assertEqual(db.query(models.SessionEvent).filter_by(event_type="session_started").first().actor, "qa-staff")
+        event = event_broker.replay[-1].data()
+        self.assertEqual(set(event), {"type", "topic", "resources", "occurred_at"})
+
+    def test_anonymous_pause_transfer_food_and_zero_value_receipt(self):
+        self.start(customer_name=None)
+        self.call("POST", "/sessions/pause/t1")
+        self.call("POST", "/sessions/transfer/t1", json={"target_table_id": "t2"})
+        self.call("POST", "/sessions/pause/t2")
+        bill = self.call("POST", "/sessions/stop/t2")
+        self.assertIsNone(bill["nm"])
+        history = self.call("GET", "/reports/history")
+        self.assertEqual(len(history), 1)
+
+    def test_session_nickname_is_not_an_extra_sharing_payer(self):
+        self.start(customer_name="QA Rahul's group", billing_mode="sharing", players=["QA Rahul", "QA Vikram"])
+        self.now += 60 * 60 * 1000
+        bill = self.call("POST", "/sessions/stop/t1")
+        self.assertEqual(bill["share_count"], 2)
+        self.assertEqual(bill["players"], ["QA Rahul", "QA Vikram"])
+        self.assertEqual(self.call("GET", "/members"), [])
 
     def test_health_identifies_the_render_release(self):
         revision = "a" * 40

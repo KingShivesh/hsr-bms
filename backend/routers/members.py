@@ -1,6 +1,7 @@
 from fastapi import APIRouter, HTTPException, Depends
 from pydantic import BaseModel
 from sqlalchemy.orm import Session
+from sqlalchemy import func, or_
 from database import get_db
 from deps import require_admin
 from hsr_config import get_ist_today_str
@@ -119,12 +120,21 @@ def _member_payload(member: models.Member):
 
 @router.get("/search")
 def search_members(q: str = "", db: Session = Depends(get_db)):
-    if not q or len(q) < 2:
+    q = q.strip()
+    if len(q) < 3:
         return []
+    escaped = q.replace("\\", "\\\\").replace("%", "\\%").replace("_", "\\_")
+    digits = "".join(char for char in q if char.isdigit())
+    phone = models.Member.phone
+    for separator in (" ", "-", "(", ")", "+"):
+        phone = func.replace(phone, separator, "")
+    clauses = [models.Member.name.ilike(f"%{escaped}%", escape="\\")]
+    if len(digits) >= 3:
+        clauses.append(phone.like(f"%{digits}%"))
     matches = db.query(models.Member).filter(
-        models.Member.name.ilike(f"%{q}%")
-    ).limit(6).all()
-    return [{"id": m.customer_id, "nm": m.name} for m in matches]
+        or_(*clauses)
+    ).order_by(models.Member.name, models.Member.customer_id).limit(8).all()
+    return [{"id": m.customer_id, "nm": m.name, "phone": m.phone or "", "vis": m.visits or 0, "typ": m.member_type or "Regular"} for m in matches]
 
 @router.get("/")
 def get_members(db: Session = Depends(get_db), _: dict = Depends(require_admin)):
@@ -209,8 +219,8 @@ def merge_members(body: MergeMembers, db: Session = Depends(get_db), _: dict = D
     ):
         primary.last_visit = duplicate.last_visit
 
-    for t in db.query(models.Transaction).filter(models.Transaction.customer_name.ilike(duplicate.name)).all():
-        t.customer_name = primary.name
+    for model in (models.ActiveSession, models.Transaction, models.Booking):
+        db.query(model).filter(model.member_id == duplicate.customer_id).update({model.member_id: primary.customer_id}, synchronize_session=False)
 
     db.delete(duplicate)
     db.commit()
@@ -260,24 +270,12 @@ def delete_member(customer_id: str, db: Session = Depends(get_db), _: dict = Dep
     db.commit()
     return {"ok": True}
 
-def update_member_on_checkout(name: str, amount: int, db: Session):
-    clean_name = " ".join((name or "").strip().split())
-    if not clean_name or clean_name.lower() in {"lp session", "walk in customer", "player one", "player two"}:
-        return
+def update_member_on_checkout(member_id: str, amount: int, db: Session):
     member = db.query(models.Member).filter(
-        models.Member.name.ilike(clean_name)
+        models.Member.customer_id == member_id
     ).first()
     if not member:
-        member = models.Member(
-            customer_id=_next_customer_id(db),
-            name=clean_name,
-            visits=0,
-            spent=0,
-            member_type="Regular",
-            last_visit="-",
-        )
-        db.add(member)
-        db.flush()
+        return
     member.visits += 1
     member.spent += max(0, int(amount or 0))
     member.loyalty_points = (getattr(member, "loyalty_points", 0) or 0) + max(0, int(amount or 0)) // 100

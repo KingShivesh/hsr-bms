@@ -103,6 +103,8 @@ def ensure_runtime_columns():
                 if column not in existing:
                     conn.execute(text(f"ALTER TABLE {table} ADD COLUMN {column} {ddl}"))
         ensure_runtime_indexes(conn, existing_tables)
+        from migrations import migrate
+        migrate(conn)
 
 def ensure_runtime_indexes(conn, existing_tables: set[str]):
     indexes = {
