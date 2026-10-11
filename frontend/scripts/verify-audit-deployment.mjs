@@ -6,6 +6,7 @@ const backendFix = process.env.DEPLOY_EXPECTED_BACKEND_COMMIT || "aa8b5cf";
 const outputPath = process.env.DEPLOY_REPORT_PATH || "../docs/full-stack-audit/deployment.json";
 const base = "https://hsr-bms.vercel.app";
 const api = "https://hsr-bms-backend.onrender.com";
+// Build dist with the production VITE_API_URL; localhost configuration changes bundle bytes.
 const sha = bytes => createHash("sha256").update(bytes).digest("hex");
 const expected = (await fs.readdir("dist/assets")).filter(name => /\.(js|css)$/.test(name));
 const expectedFiles = await Promise.all(expected.map(async name => ({ name, sha256: sha(await fs.readFile(`dist/assets/${name}`)) })));
