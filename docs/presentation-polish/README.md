@@ -89,6 +89,23 @@ interface text, subject to the user's explicit choice. **No switch applied.**
 
 ## Reproduce
 
+## Production verification
+
+The presentation source commit `ab959cd` and evidence commit `f1cf95a` are
+merged and pushed to main. [Deployment proof](deployment.json) confirms all
+21 production JS/CSS assets match the local production build byte-for-byte,
+including `index-BljHRHAv.js`. Backend health and readiness returned 200; the
+unchanged backend revision `4d8a0b2` contains the required existing fixes by
+commit ancestry. No backend source changed in this pass.
+
+[Public production measurements](production/measurements.json) cover anonymous
+login in both themes at 1440px, 375px and 414px. Syne is actually loaded; canvas
+colors remain `#0B0B0F` / `#FAFAFA`; the title is 24px; buttons measure 36px
+desktop / 44px mobile. Zero overflow, contrast violations or page errors. No
+production credential entry or mutation was performed.
+
+## Reproduce
+
 Use a disposable local database, never production. Start the backend and two
 frontend origins: the untouched baseline and the changed application. Set
 `POLISH_APP_URL`, `POLISH_API_URL` and `POLISH_STAGE=before|after` for
