@@ -1,0 +1,813 @@
+{
+  "stage": "after",
+  "screenshots": [
+    {
+      "file": "floor-light-1440.png",
+      "name": "floor",
+      "theme": "light",
+      "width": 1440,
+      "overflow": 0,
+      "font": "\"Syne Variable\", Syne, sans-serif",
+      "accent": "#006b3c",
+      "controls": []
+    },
+    {
+      "file": "floor-light-375.png",
+      "name": "floor",
+      "theme": "light",
+      "width": 375,
+      "overflow": 0,
+      "font": "\"Syne Variable\", Syne, sans-serif",
+      "accent": "#006b3c",
+      "controls": []
+    },
+    {
+      "file": "floor-light-414.png",
+      "name": "floor",
+      "theme": "light",
+      "width": 414,
+      "overflow": 0,
+      "font": "\"Syne Variable\", Syne, sans-serif",
+      "accent": "#006b3c",
+      "controls": []
+    },
+    {
+      "file": "checkout-light-1440.png",
+      "name": "checkout",
+      "theme": "light",
+      "width": 1440,
+      "overflow": 0,
+      "font": "\"Syne Variable\", Syne, sans-serif",
+      "accent": "#006b3c",
+      "dialog": {
+        "x": 880,
+        "y": 0,
+        "width": 560,
+        "height": 1000,
+        "top": 0,
+        "right": 1440,
+        "bottom": 1000,
+        "left": 880
+      },
+      "controls": [
+        {
+          "label": "",
+          "height": 36
+        },
+        {
+          "label": "Reset",
+          "height": 36
+        },
+        {
+          "label": "Apply Change",
+          "height": 36
+        },
+        {
+          "label": "Search LP Member",
+          "height": 46
+        },
+        {
+          "label": "Add phone for receipt",
+          "height": 46
+        },
+        {
+          "label": "Skip",
+          "height": 46
+        },
+        {
+          "label": "No discount",
+          "height": 46
+        },
+        {
+          "label": "5%",
+          "height": 46
+        },
+        {
+          "label": "10%",
+          "height": 46
+        },
+        {
+          "label": "₹ off",
+          "height": 46
+        },
+        {
+          "label": "Cash",
+          "height": 44
+        },
+        {
+          "label": "UPI",
+          "height": 44
+        },
+        {
+          "label": "Card",
+          "height": 44
+        },
+        {
+          "label": "Split",
+          "height": 44
+        },
+        {
+          "label": "Keep Table Open",
+          "height": 36
+        },
+        {
+          "label": "Close table · ₹485",
+          "height": 36
+        }
+      ]
+    },
+    {
+      "file": "checkout-light-375.png",
+      "name": "checkout",
+      "theme": "light",
+      "width": 375,
+      "overflow": 0,
+      "font": "\"Syne Variable\", Syne, sans-serif",
+      "accent": "#006b3c",
+      "dialog": {
+        "x": 0,
+        "y": 0,
+        "width": 375,
+        "height": 844,
+        "top": 0,
+        "right": 375,
+        "bottom": 844,
+        "left": 0
+      },
+      "controls": [
+        {
+          "label": "",
+          "height": 44
+        },
+        {
+          "label": "Reset",
+          "height": 44
+        },
+        {
+          "label": "Apply Change",
+          "height": 44
+        },
+        {
+          "label": "Search LP Member",
+          "height": 44
+        },
+        {
+          "label": "Add phone for receipt",
+          "height": 44
+        },
+        {
+          "label": "Skip",
+          "height": 44
+        },
+        {
+          "label": "No discount",
+          "height": 44
+        },
+        {
+          "label": "5%",
+          "height": 44
+        },
+        {
+          "label": "10%",
+          "height": 44
+        },
+        {
+          "label": "₹ off",
+          "height": 44
+        },
+        {
+          "label": "Cash",
+          "height": 44
+        },
+        {
+          "label": "UPI",
+          "height": 44
+        },
+        {
+          "label": "Card",
+          "height": 44
+        },
+        {
+          "label": "Split",
+          "height": 44
+        },
+        {
+          "label": "Keep Table Open",
+          "height": 44
+        },
+        {
+          "label": "Close table · ₹485",
+          "height": 44
+        }
+      ]
+    },
+    {
+      "file": "checkout-light-414.png",
+      "name": "checkout",
+      "theme": "light",
+      "width": 414,
+      "overflow": 0,
+      "font": "\"Syne Variable\", Syne, sans-serif",
+      "accent": "#006b3c",
+      "dialog": {
+        "x": 0,
+        "y": 0,
+        "width": 414,
+        "height": 844,
+        "top": 0,
+        "right": 414,
+        "bottom": 844,
+        "left": 0
+      },
+      "controls": [
+        {
+          "label": "",
+          "height": 44
+        },
+        {
+          "label": "Reset",
+          "height": 44
+        },
+        {
+          "label": "Apply Change",
+          "height": 44
+        },
+        {
+          "label": "Search LP Member",
+          "height": 44
+        },
+        {
+          "label": "Add phone for receipt",
+          "height": 44
+        },
+        {
+          "label": "Skip",
+          "height": 44
+        },
+        {
+          "label": "No discount",
+          "height": 44
+        },
+        {
+          "label": "5%",
+          "height": 44
+        },
+        {
+          "label": "10%",
+          "height": 44
+        },
+        {
+          "label": "₹ off",
+          "height": 44
+        },
+        {
+          "label": "Cash",
+          "height": 44
+        },
+        {
+          "label": "UPI",
+          "height": 44
+        },
+        {
+          "label": "Card",
+          "height": 44
+        },
+        {
+          "label": "Split",
+          "height": 44
+        },
+        {
+          "label": "Keep Table Open",
+          "height": 44
+        },
+        {
+          "label": "Close table · ₹485",
+          "height": 44
+        }
+      ]
+    },
+    {
+      "file": "receipt-light-1440.png",
+      "name": "receipt",
+      "theme": "light",
+      "width": 1440,
+      "overflow": 0,
+      "font": "\"Syne Variable\", Syne, sans-serif",
+      "accent": "#006b3c",
+      "dialog": {
+        "x": 880,
+        "y": 0,
+        "width": 560,
+        "height": 1000,
+        "top": 0,
+        "right": 1440,
+        "bottom": 1000,
+        "left": 880
+      },
+      "controls": [
+        {
+          "label": "",
+          "height": 36
+        },
+        {
+          "label": "Print",
+          "height": 36
+        },
+        {
+          "label": "Close Receipt",
+          "height": 36
+        }
+      ]
+    },
+    {
+      "file": "alerts-light-1440.png",
+      "name": "alerts",
+      "theme": "light",
+      "width": 1440,
+      "overflow": 0,
+      "font": "\"Syne Variable\", Syne, sans-serif",
+      "accent": "#006b3c",
+      "controls": []
+    },
+    {
+      "file": "alerts-light-375.png",
+      "name": "alerts",
+      "theme": "light",
+      "width": 375,
+      "overflow": 0,
+      "font": "\"Syne Variable\", Syne, sans-serif",
+      "accent": "#006b3c",
+      "controls": []
+    },
+    {
+      "file": "alerts-light-414.png",
+      "name": "alerts",
+      "theme": "light",
+      "width": 414,
+      "overflow": 0,
+      "font": "\"Syne Variable\", Syne, sans-serif",
+      "accent": "#006b3c",
+      "controls": []
+    },
+    {
+      "file": "floor-dark-1440.png",
+      "name": "floor",
+      "theme": "dark",
+      "width": 1440,
+      "overflow": 0,
+      "font": "\"Syne Variable\", Syne, sans-serif",
+      "accent": "#00ff7f",
+      "controls": []
+    },
+    {
+      "file": "floor-dark-375.png",
+      "name": "floor",
+      "theme": "dark",
+      "width": 375,
+      "overflow": 0,
+      "font": "\"Syne Variable\", Syne, sans-serif",
+      "accent": "#00ff7f",
+      "controls": []
+    },
+    {
+      "file": "floor-dark-414.png",
+      "name": "floor",
+      "theme": "dark",
+      "width": 414,
+      "overflow": 0,
+      "font": "\"Syne Variable\", Syne, sans-serif",
+      "accent": "#00ff7f",
+      "controls": []
+    },
+    {
+      "file": "checkout-dark-1440.png",
+      "name": "checkout",
+      "theme": "dark",
+      "width": 1440,
+      "overflow": 0,
+      "font": "\"Syne Variable\", Syne, sans-serif",
+      "accent": "#00ff7f",
+      "dialog": {
+        "x": 880,
+        "y": 0,
+        "width": 560,
+        "height": 1000,
+        "top": 0,
+        "right": 1440,
+        "bottom": 1000,
+        "left": 880
+      },
+      "controls": [
+        {
+          "label": "",
+          "height": 36
+        },
+        {
+          "label": "Reset",
+          "height": 36
+        },
+        {
+          "label": "Apply Change",
+          "height": 36
+        },
+        {
+          "label": "Search LP Member",
+          "height": 46
+        },
+        {
+          "label": "Add phone for receipt",
+          "height": 46
+        },
+        {
+          "label": "Skip",
+          "height": 46
+        },
+        {
+          "label": "No discount",
+          "height": 46
+        },
+        {
+          "label": "5%",
+          "height": 46
+        },
+        {
+          "label": "10%",
+          "height": 46
+        },
+        {
+          "label": "₹ off",
+          "height": 46
+        },
+        {
+          "label": "Cash",
+          "height": 44
+        },
+        {
+          "label": "UPI",
+          "height": 44
+        },
+        {
+          "label": "Card",
+          "height": 44
+        },
+        {
+          "label": "Split",
+          "height": 44
+        },
+        {
+          "label": "Keep Table Open",
+          "height": 36
+        },
+        {
+          "label": "Close table · ₹485",
+          "height": 36
+        }
+      ]
+    },
+    {
+      "file": "checkout-dark-375.png",
+      "name": "checkout",
+      "theme": "dark",
+      "width": 375,
+      "overflow": 0,
+      "font": "\"Syne Variable\", Syne, sans-serif",
+      "accent": "#00ff7f",
+      "dialog": {
+        "x": 0,
+        "y": 0,
+        "width": 375,
+        "height": 844,
+        "top": 0,
+        "right": 375,
+        "bottom": 844,
+        "left": 0
+      },
+      "controls": [
+        {
+          "label": "",
+          "height": 44
+        },
+        {
+          "label": "Reset",
+          "height": 44
+        },
+        {
+          "label": "Apply Change",
+          "height": 44
+        },
+        {
+          "label": "Search LP Member",
+          "height": 44
+        },
+        {
+          "label": "Add phone for receipt",
+          "height": 44
+        },
+        {
+          "label": "Skip",
+          "height": 44
+        },
+        {
+          "label": "No discount",
+          "height": 44
+        },
+        {
+          "label": "5%",
+          "height": 44
+        },
+        {
+          "label": "10%",
+          "height": 44
+        },
+        {
+          "label": "₹ off",
+          "height": 44
+        },
+        {
+          "label": "Cash",
+          "height": 44
+        },
+        {
+          "label": "UPI",
+          "height": 44
+        },
+        {
+          "label": "Card",
+          "height": 44
+        },
+        {
+          "label": "Split",
+          "height": 44
+        },
+        {
+          "label": "Keep Table Open",
+          "height": 44
+        },
+        {
+          "label": "Close table · ₹485",
+          "height": 44
+        }
+      ]
+    },
+    {
+      "file": "checkout-dark-414.png",
+      "name": "checkout",
+      "theme": "dark",
+      "width": 414,
+      "overflow": 0,
+      "font": "\"Syne Variable\", Syne, sans-serif",
+      "accent": "#00ff7f",
+      "dialog": {
+        "x": 0,
+        "y": 0,
+        "width": 414,
+        "height": 844,
+        "top": 0,
+        "right": 414,
+        "bottom": 844,
+        "left": 0
+      },
+      "controls": [
+        {
+          "label": "",
+          "height": 44
+        },
+        {
+          "label": "Reset",
+          "height": 44
+        },
+        {
+          "label": "Apply Change",
+          "height": 44
+        },
+        {
+          "label": "Search LP Member",
+          "height": 44
+        },
+        {
+          "label": "Add phone for receipt",
+          "height": 44
+        },
+        {
+          "label": "Skip",
+          "height": 44
+        },
+        {
+          "label": "No discount",
+          "height": 44
+        },
+        {
+          "label": "5%",
+          "height": 44
+        },
+        {
+          "label": "10%",
+          "height": 44
+        },
+        {
+          "label": "₹ off",
+          "height": 44
+        },
+        {
+          "label": "Cash",
+          "height": 44
+        },
+        {
+          "label": "UPI",
+          "height": 44
+        },
+        {
+          "label": "Card",
+          "height": 44
+        },
+        {
+          "label": "Split",
+          "height": 44
+        },
+        {
+          "label": "Keep Table Open",
+          "height": 44
+        },
+        {
+          "label": "Close table · ₹485",
+          "height": 44
+        }
+      ]
+    },
+    {
+      "file": "receipt-dark-1440.png",
+      "name": "receipt",
+      "theme": "dark",
+      "width": 1440,
+      "overflow": 0,
+      "font": "\"Syne Variable\", Syne, sans-serif",
+      "accent": "#00ff7f",
+      "dialog": {
+        "x": 880,
+        "y": 0,
+        "width": 560,
+        "height": 1000,
+        "top": 0,
+        "right": 1440,
+        "bottom": 1000,
+        "left": 880
+      },
+      "controls": [
+        {
+          "label": "",
+          "height": 36
+        },
+        {
+          "label": "Print",
+          "height": 36
+        },
+        {
+          "label": "Close Receipt",
+          "height": 36
+        }
+      ]
+    },
+    {
+      "file": "alerts-dark-1440.png",
+      "name": "alerts",
+      "theme": "dark",
+      "width": 1440,
+      "overflow": 0,
+      "font": "\"Syne Variable\", Syne, sans-serif",
+      "accent": "#00ff7f",
+      "controls": []
+    },
+    {
+      "file": "alerts-dark-375.png",
+      "name": "alerts",
+      "theme": "dark",
+      "width": 375,
+      "overflow": 0,
+      "font": "\"Syne Variable\", Syne, sans-serif",
+      "accent": "#00ff7f",
+      "controls": []
+    },
+    {
+      "file": "alerts-dark-414.png",
+      "name": "alerts",
+      "theme": "dark",
+      "width": 414,
+      "overflow": 0,
+      "font": "\"Syne Variable\", Syne, sans-serif",
+      "accent": "#00ff7f",
+      "controls": []
+    },
+    {
+      "file": "session-edits-light-1440.png",
+      "name": "session-edits",
+      "theme": "light",
+      "width": 1440,
+      "overflow": 0,
+      "font": "\"Syne Variable\", Syne, sans-serif",
+      "accent": "#006b3c",
+      "controls": []
+    },
+    {
+      "file": "session-edits-light-375.png",
+      "name": "session-edits",
+      "theme": "light",
+      "width": 375,
+      "overflow": 0,
+      "font": "\"Syne Variable\", Syne, sans-serif",
+      "accent": "#006b3c",
+      "controls": []
+    },
+    {
+      "file": "session-edits-light-414.png",
+      "name": "session-edits",
+      "theme": "light",
+      "width": 414,
+      "overflow": 0,
+      "font": "\"Syne Variable\", Syne, sans-serif",
+      "accent": "#006b3c",
+      "controls": []
+    },
+    {
+      "file": "session-edits-dark-1440.png",
+      "name": "session-edits",
+      "theme": "dark",
+      "width": 1440,
+      "overflow": 0,
+      "font": "\"Syne Variable\", Syne, sans-serif",
+      "accent": "#00ff7f",
+      "controls": []
+    },
+    {
+      "file": "session-edits-dark-375.png",
+      "name": "session-edits",
+      "theme": "dark",
+      "width": 375,
+      "overflow": 0,
+      "font": "\"Syne Variable\", Syne, sans-serif",
+      "accent": "#00ff7f",
+      "controls": []
+    },
+    {
+      "file": "session-edits-dark-414.png",
+      "name": "session-edits",
+      "theme": "dark",
+      "width": 414,
+      "overflow": 0,
+      "font": "\"Syne Variable\", Syne, sans-serif",
+      "accent": "#00ff7f",
+      "controls": []
+    }
+  ],
+  "checks": [
+    {
+      "theme": "light",
+      "name": "one-tap start",
+      "identityFieldsSent": 0,
+      "modalOpened": false,
+      "visiblePending": true
+    },
+    {
+      "theme": "light",
+      "name": "staff earlier start preview",
+      "reasonRequired": true,
+      "deltaVisible": true
+    },
+    {
+      "theme": "light",
+      "name": "staff edit closes atomically",
+      "receiptSaved": true
+    },
+    {
+      "theme": "light",
+      "name": "urgent reminder",
+      "persistent": true,
+      "acknowledged": true
+    },
+    {
+      "theme": "dark",
+      "name": "one-tap start",
+      "identityFieldsSent": 0,
+      "modalOpened": false,
+      "visiblePending": true
+    },
+    {
+      "theme": "dark",
+      "name": "staff earlier start preview",
+      "reasonRequired": true,
+      "deltaVisible": true
+    },
+    {
+      "theme": "dark",
+      "name": "staff edit closes atomically",
+      "receiptSaved": true
+    },
+    {
+      "theme": "dark",
+      "name": "urgent reminder",
+      "persistent": true,
+      "acknowledged": true
+    }
+  ],
+  "contrast": [],
+  "errors": []
+}

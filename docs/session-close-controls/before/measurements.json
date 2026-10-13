@@ -1,0 +1,751 @@
+{
+  "stage": "before",
+  "screenshots": [
+    {
+      "file": "floor-light-1440.png",
+      "name": "floor",
+      "theme": "light",
+      "width": 1440,
+      "overflow": 0,
+      "font": "\"Syne Variable\", Syne, sans-serif",
+      "accent": "#006b3c",
+      "controls": []
+    },
+    {
+      "file": "floor-light-375.png",
+      "name": "floor",
+      "theme": "light",
+      "width": 375,
+      "overflow": 0,
+      "font": "\"Syne Variable\", Syne, sans-serif",
+      "accent": "#006b3c",
+      "controls": []
+    },
+    {
+      "file": "floor-light-414.png",
+      "name": "floor",
+      "theme": "light",
+      "width": 414,
+      "overflow": 0,
+      "font": "\"Syne Variable\", Syne, sans-serif",
+      "accent": "#006b3c",
+      "controls": []
+    },
+    {
+      "file": "checkout-light-1440.png",
+      "name": "checkout",
+      "theme": "light",
+      "width": 1440,
+      "overflow": 0,
+      "font": "\"Syne Variable\", Syne, sans-serif",
+      "accent": "#006b3c",
+      "dialog": {
+        "x": 880,
+        "y": 0,
+        "width": 560,
+        "height": 1000,
+        "top": 0,
+        "right": 1440,
+        "bottom": 1000,
+        "left": 880
+      },
+      "controls": [
+        {
+          "label": "",
+          "height": 36
+        },
+        {
+          "label": "No discount",
+          "height": 46
+        },
+        {
+          "label": "5%",
+          "height": 46
+        },
+        {
+          "label": "10%",
+          "height": 46
+        },
+        {
+          "label": "₹ off",
+          "height": 46
+        },
+        {
+          "label": "Cash",
+          "height": 44
+        },
+        {
+          "label": "UPI",
+          "height": 44
+        },
+        {
+          "label": "Card",
+          "height": 44
+        },
+        {
+          "label": "Keep Table Open",
+          "height": 36
+        },
+        {
+          "label": "Close table · ₹245",
+          "height": 36
+        }
+      ]
+    },
+    {
+      "file": "checkout-light-375.png",
+      "name": "checkout",
+      "theme": "light",
+      "width": 375,
+      "overflow": 0,
+      "font": "\"Syne Variable\", Syne, sans-serif",
+      "accent": "#006b3c",
+      "dialog": {
+        "x": 0,
+        "y": 0,
+        "width": 375,
+        "height": 844,
+        "top": 0,
+        "right": 375,
+        "bottom": 844,
+        "left": 0
+      },
+      "controls": [
+        {
+          "label": "",
+          "height": 44
+        },
+        {
+          "label": "No discount",
+          "height": 44
+        },
+        {
+          "label": "5%",
+          "height": 44
+        },
+        {
+          "label": "10%",
+          "height": 44
+        },
+        {
+          "label": "₹ off",
+          "height": 44
+        },
+        {
+          "label": "Cash",
+          "height": 44
+        },
+        {
+          "label": "UPI",
+          "height": 44
+        },
+        {
+          "label": "Card",
+          "height": 44
+        },
+        {
+          "label": "Keep Table Open",
+          "height": 44
+        },
+        {
+          "label": "Close table · ₹245",
+          "height": 44
+        }
+      ]
+    },
+    {
+      "file": "checkout-light-414.png",
+      "name": "checkout",
+      "theme": "light",
+      "width": 414,
+      "overflow": 0,
+      "font": "\"Syne Variable\", Syne, sans-serif",
+      "accent": "#006b3c",
+      "dialog": {
+        "x": 0,
+        "y": 0,
+        "width": 414,
+        "height": 844,
+        "top": 0,
+        "right": 414,
+        "bottom": 844,
+        "left": 0
+      },
+      "controls": [
+        {
+          "label": "",
+          "height": 44
+        },
+        {
+          "label": "No discount",
+          "height": 44
+        },
+        {
+          "label": "5%",
+          "height": 44
+        },
+        {
+          "label": "10%",
+          "height": 44
+        },
+        {
+          "label": "₹ off",
+          "height": 44
+        },
+        {
+          "label": "Cash",
+          "height": 44
+        },
+        {
+          "label": "UPI",
+          "height": 44
+        },
+        {
+          "label": "Card",
+          "height": 44
+        },
+        {
+          "label": "Keep Table Open",
+          "height": 44
+        },
+        {
+          "label": "Close table · ₹245",
+          "height": 44
+        }
+      ]
+    },
+    {
+      "file": "start-light-1440.png",
+      "name": "start",
+      "theme": "light",
+      "width": 1440,
+      "overflow": 0,
+      "font": "\"Syne Variable\", Syne, sans-serif",
+      "accent": "#006b3c",
+      "dialog": {
+        "x": 400,
+        "y": 182,
+        "width": 640,
+        "height": 636,
+        "top": 182,
+        "right": 1040,
+        "bottom": 818,
+        "left": 400
+      },
+      "controls": [
+        {
+          "label": "",
+          "height": 44
+        },
+        {
+          "label": "Guest",
+          "height": 44
+        },
+        {
+          "label": "Member",
+          "height": 44
+        },
+        {
+          "label": "SingleOne payer",
+          "height": 60
+        },
+        {
+          "label": "SharingSplit payment",
+          "height": 60
+        },
+        {
+          "label": "LPLoser pays",
+          "height": 60
+        },
+        {
+          "label": "Cancel",
+          "height": 44
+        },
+        {
+          "label": "Start Session",
+          "height": 44
+        }
+      ]
+    },
+    {
+      "file": "start-light-375.png",
+      "name": "start",
+      "theme": "light",
+      "width": 375,
+      "overflow": 0,
+      "font": "\"Syne Variable\", Syne, sans-serif",
+      "accent": "#006b3c",
+      "dialog": {
+        "x": 16,
+        "y": 32,
+        "width": 343,
+        "height": 780,
+        "top": 32,
+        "right": 359,
+        "bottom": 812,
+        "left": 16
+      },
+      "controls": [
+        {
+          "label": "",
+          "height": 44
+        },
+        {
+          "label": "Guest",
+          "height": 44
+        },
+        {
+          "label": "Member",
+          "height": 44
+        },
+        {
+          "label": "SingleOne payer",
+          "height": 60
+        },
+        {
+          "label": "SharingSplit payment",
+          "height": 60
+        },
+        {
+          "label": "LPLoser pays",
+          "height": 60
+        },
+        {
+          "label": "Cancel",
+          "height": 44
+        },
+        {
+          "label": "Start Session",
+          "height": 44
+        }
+      ]
+    },
+    {
+      "file": "start-light-414.png",
+      "name": "start",
+      "theme": "light",
+      "width": 414,
+      "overflow": 0,
+      "font": "\"Syne Variable\", Syne, sans-serif",
+      "accent": "#006b3c",
+      "dialog": {
+        "x": 16,
+        "y": 32,
+        "width": 382,
+        "height": 780,
+        "top": 32,
+        "right": 398,
+        "bottom": 812,
+        "left": 16
+      },
+      "controls": [
+        {
+          "label": "",
+          "height": 44
+        },
+        {
+          "label": "Guest",
+          "height": 44
+        },
+        {
+          "label": "Member",
+          "height": 44
+        },
+        {
+          "label": "SingleOne payer",
+          "height": 60
+        },
+        {
+          "label": "SharingSplit payment",
+          "height": 60
+        },
+        {
+          "label": "LPLoser pays",
+          "height": 60
+        },
+        {
+          "label": "Cancel",
+          "height": 44
+        },
+        {
+          "label": "Start Session",
+          "height": 44
+        }
+      ]
+    },
+    {
+      "file": "floor-dark-1440.png",
+      "name": "floor",
+      "theme": "dark",
+      "width": 1440,
+      "overflow": 0,
+      "font": "\"Syne Variable\", Syne, sans-serif",
+      "accent": "#00ff7f",
+      "controls": []
+    },
+    {
+      "file": "floor-dark-375.png",
+      "name": "floor",
+      "theme": "dark",
+      "width": 375,
+      "overflow": 0,
+      "font": "\"Syne Variable\", Syne, sans-serif",
+      "accent": "#00ff7f",
+      "controls": []
+    },
+    {
+      "file": "floor-dark-414.png",
+      "name": "floor",
+      "theme": "dark",
+      "width": 414,
+      "overflow": 0,
+      "font": "\"Syne Variable\", Syne, sans-serif",
+      "accent": "#00ff7f",
+      "controls": []
+    },
+    {
+      "file": "checkout-dark-1440.png",
+      "name": "checkout",
+      "theme": "dark",
+      "width": 1440,
+      "overflow": 0,
+      "font": "\"Syne Variable\", Syne, sans-serif",
+      "accent": "#00ff7f",
+      "dialog": {
+        "x": 880,
+        "y": 0,
+        "width": 560,
+        "height": 1000,
+        "top": 0,
+        "right": 1440,
+        "bottom": 1000,
+        "left": 880
+      },
+      "controls": [
+        {
+          "label": "",
+          "height": 36
+        },
+        {
+          "label": "No discount",
+          "height": 46
+        },
+        {
+          "label": "5%",
+          "height": 46
+        },
+        {
+          "label": "10%",
+          "height": 46
+        },
+        {
+          "label": "₹ off",
+          "height": 46
+        },
+        {
+          "label": "Cash",
+          "height": 44
+        },
+        {
+          "label": "UPI",
+          "height": 44
+        },
+        {
+          "label": "Card",
+          "height": 44
+        },
+        {
+          "label": "Keep Table Open",
+          "height": 36
+        },
+        {
+          "label": "Close table · ₹245",
+          "height": 36
+        }
+      ]
+    },
+    {
+      "file": "checkout-dark-375.png",
+      "name": "checkout",
+      "theme": "dark",
+      "width": 375,
+      "overflow": 0,
+      "font": "\"Syne Variable\", Syne, sans-serif",
+      "accent": "#00ff7f",
+      "dialog": {
+        "x": 0,
+        "y": 0,
+        "width": 375,
+        "height": 844,
+        "top": 0,
+        "right": 375,
+        "bottom": 844,
+        "left": 0
+      },
+      "controls": [
+        {
+          "label": "",
+          "height": 44
+        },
+        {
+          "label": "No discount",
+          "height": 44
+        },
+        {
+          "label": "5%",
+          "height": 44
+        },
+        {
+          "label": "10%",
+          "height": 44
+        },
+        {
+          "label": "₹ off",
+          "height": 44
+        },
+        {
+          "label": "Cash",
+          "height": 44
+        },
+        {
+          "label": "UPI",
+          "height": 44
+        },
+        {
+          "label": "Card",
+          "height": 44
+        },
+        {
+          "label": "Keep Table Open",
+          "height": 44
+        },
+        {
+          "label": "Close table · ₹245",
+          "height": 44
+        }
+      ]
+    },
+    {
+      "file": "checkout-dark-414.png",
+      "name": "checkout",
+      "theme": "dark",
+      "width": 414,
+      "overflow": 0,
+      "font": "\"Syne Variable\", Syne, sans-serif",
+      "accent": "#00ff7f",
+      "dialog": {
+        "x": 0,
+        "y": 0,
+        "width": 414,
+        "height": 844,
+        "top": 0,
+        "right": 414,
+        "bottom": 844,
+        "left": 0
+      },
+      "controls": [
+        {
+          "label": "",
+          "height": 44
+        },
+        {
+          "label": "No discount",
+          "height": 44
+        },
+        {
+          "label": "5%",
+          "height": 44
+        },
+        {
+          "label": "10%",
+          "height": 44
+        },
+        {
+          "label": "₹ off",
+          "height": 44
+        },
+        {
+          "label": "Cash",
+          "height": 44
+        },
+        {
+          "label": "UPI",
+          "height": 44
+        },
+        {
+          "label": "Card",
+          "height": 44
+        },
+        {
+          "label": "Keep Table Open",
+          "height": 44
+        },
+        {
+          "label": "Close table · ₹245",
+          "height": 44
+        }
+      ]
+    },
+    {
+      "file": "start-dark-1440.png",
+      "name": "start",
+      "theme": "dark",
+      "width": 1440,
+      "overflow": 0,
+      "font": "\"Syne Variable\", Syne, sans-serif",
+      "accent": "#00ff7f",
+      "dialog": {
+        "x": 400,
+        "y": 182,
+        "width": 640,
+        "height": 636,
+        "top": 182,
+        "right": 1040,
+        "bottom": 818,
+        "left": 400
+      },
+      "controls": [
+        {
+          "label": "",
+          "height": 44
+        },
+        {
+          "label": "Guest",
+          "height": 44
+        },
+        {
+          "label": "Member",
+          "height": 44
+        },
+        {
+          "label": "SingleOne payer",
+          "height": 60
+        },
+        {
+          "label": "SharingSplit payment",
+          "height": 60
+        },
+        {
+          "label": "LPLoser pays",
+          "height": 60
+        },
+        {
+          "label": "Cancel",
+          "height": 44
+        },
+        {
+          "label": "Start Session",
+          "height": 44
+        }
+      ]
+    },
+    {
+      "file": "start-dark-375.png",
+      "name": "start",
+      "theme": "dark",
+      "width": 375,
+      "overflow": 0,
+      "font": "\"Syne Variable\", Syne, sans-serif",
+      "accent": "#00ff7f",
+      "dialog": {
+        "x": 16,
+        "y": 32,
+        "width": 343,
+        "height": 780,
+        "top": 32,
+        "right": 359,
+        "bottom": 812,
+        "left": 16
+      },
+      "controls": [
+        {
+          "label": "",
+          "height": 44
+        },
+        {
+          "label": "Guest",
+          "height": 44
+        },
+        {
+          "label": "Member",
+          "height": 44
+        },
+        {
+          "label": "SingleOne payer",
+          "height": 60
+        },
+        {
+          "label": "SharingSplit payment",
+          "height": 60
+        },
+        {
+          "label": "LPLoser pays",
+          "height": 60
+        },
+        {
+          "label": "Cancel",
+          "height": 44
+        },
+        {
+          "label": "Start Session",
+          "height": 44
+        }
+      ]
+    },
+    {
+      "file": "start-dark-414.png",
+      "name": "start",
+      "theme": "dark",
+      "width": 414,
+      "overflow": 0,
+      "font": "\"Syne Variable\", Syne, sans-serif",
+      "accent": "#00ff7f",
+      "dialog": {
+        "x": 16,
+        "y": 32,
+        "width": 382,
+        "height": 780,
+        "top": 32,
+        "right": 398,
+        "bottom": 812,
+        "left": 16
+      },
+      "controls": [
+        {
+          "label": "",
+          "height": 44
+        },
+        {
+          "label": "Guest",
+          "height": 44
+        },
+        {
+          "label": "Member",
+          "height": 44
+        },
+        {
+          "label": "SingleOne payer",
+          "height": 60
+        },
+        {
+          "label": "SharingSplit payment",
+          "height": 60
+        },
+        {
+          "label": "LPLoser pays",
+          "height": 60
+        },
+        {
+          "label": "Cancel",
+          "height": 44
+        },
+        {
+          "label": "Start Session",
+          "height": 44
+        }
+      ]
+    }
+  ],
+  "checks": [],
+  "errors": []
+}

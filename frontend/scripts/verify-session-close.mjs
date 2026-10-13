@@ -68,7 +68,7 @@ try {
       assert.ok(await dialog.getByRole("button", { name: "Apply Change", exact: true }).isDisabled());
       const started = await page.evaluate(() => {
         const ms = Date.now() - 90 * 60000, date = new Date(ms);
-        return new Date(ms - date.getTimezoneOffset() * 60000).toISOString().slice(0,19);
+        return new Date(ms - date.getTimezoneOffset() * 60000).toISOString().slice(0,19).replace(/:00$/, "");
       });
       await dialog.getByLabel("Started at", { exact: true }).fill(started);
       await dialog.getByLabel("Time adjustment reason", { exact: true }).selectOption("staff_forgot_to_start");
