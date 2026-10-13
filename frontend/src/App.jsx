@@ -14,6 +14,7 @@ import Topbar from "./components/Topbar.jsx";
 import CommandBar from "./components/CommandBar.jsx";
 import RouteErrorBoundary from "./components/RouteErrorBoundary.jsx";
 import { ToastProvider } from "./components/Toast.jsx";
+import SessionAlertsProvider from "./features/sessions/SessionAlertsProvider.jsx";
 import { ConfirmProvider } from "./components/ConfirmDialog.jsx";
 import { useConfirm } from "./components/confirmContext.js";
 import { getBackendHealth, getMe, getSummary, logout } from "./api/index.js";
@@ -385,6 +386,7 @@ function AppInner() {
 
   return (
     <ToastProvider>
+    <SessionAlertsProvider onNavigate={goToPage}>
       <div className="shell">
         <Sidebar
           page={page}
@@ -472,6 +474,7 @@ function AppInner() {
           role={role}
         />
       </div>
+    </SessionAlertsProvider>
     </ToastProvider>
   );
 }

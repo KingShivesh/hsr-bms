@@ -223,6 +223,7 @@ def serialize_session(db: Session, session: models.ActiveSession, *, now_ms: flo
         "customer_name": session.customer_name,
         "player_type": session.player_type,
         "member_id": session.member_id,
+        "session_key": session.session_key,
         "booking_id": session.booking_id,
         "player_count": session.player_count,
         "rate": session.rate or 0,

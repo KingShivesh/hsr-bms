@@ -3,6 +3,8 @@ import os
 import re
 import time
 import uuid
+import asyncio
+from contextlib import asynccontextmanager, suppress
 
 from fastapi import Depends, FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
@@ -20,7 +22,19 @@ MAX_REQUEST_BYTES = int(os.getenv("MAX_REQUEST_BYTES", str(1024 * 1024)))
 logging.basicConfig(level=os.getenv("LOG_LEVEL", "INFO"))
 logger = logging.getLogger("hsr-bms")
 
+@asynccontextmanager
+async def lifespan(app):
+    from session_alerts import alert_loop
+    task = asyncio.create_task(alert_loop())
+    try:
+        yield
+    finally:
+        task.cancel()
+        with suppress(asyncio.CancelledError):
+            await task
+
 app = FastAPI(
+    lifespan=lifespan,
     title=APP_NAME,
     docs_url=None if is_production_env() else "/docs",
     redoc_url=None if is_production_env() else "/redoc",

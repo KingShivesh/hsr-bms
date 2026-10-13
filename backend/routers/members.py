@@ -1,5 +1,5 @@
 from fastapi import APIRouter, HTTPException, Depends
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from sqlalchemy.orm import Session
 from sqlalchemy import func, or_
 from database import get_db
@@ -7,6 +7,7 @@ from deps import require_admin
 from hsr_config import get_ist_today_str
 import models
 from validators import require_full_name
+from typing import Literal
 
 router = APIRouter()
 MERGE_SCORE_THRESHOLD = 88
@@ -15,7 +16,7 @@ class AddMember(BaseModel):
     name: str
 
 class RestoreMember(BaseModel):
-    name: str
+    name: str | None = None
     phone: str = ""
     visits: int = 0
     spent: int = 0
@@ -23,6 +24,8 @@ class RestoreMember(BaseModel):
     member_type: str = "Regular"
     last_visit: str = "-"
     notes: str = ""
+    hourly_rate: int | None = Field(default=None, ge=1, le=5000)
+    record_type: Literal["lp_member", "walk_in"] = "lp_member"
 
 class MergeMembers(BaseModel):
     primary_id: str
@@ -115,7 +118,14 @@ def _member_payload(member: models.Member):
         "lst": member.last_visit,
         "pts": getattr(member, "loyalty_points", 0) or 0,
         "phone": getattr(member, "phone", "") or "",
+        "record_type": member.record_type,
+        "hourly_rate": member.hourly_rate,
+        "notes": member.notes or "",
     }
+
+def _lookup_payload(member: models.Member):
+    return {"id": member.customer_id, "nm": member.name, "phone": member.phone or "", "vis": member.visits or 0,
+            "typ": member.member_type or "Regular", "record_type": member.record_type, "hourly_rate": member.hourly_rate}
 
 
 @router.get("/search")
@@ -132,9 +142,15 @@ def search_members(q: str = "", db: Session = Depends(get_db)):
     if len(digits) >= 3:
         clauses.append(phone.like(f"%{digits}%"))
     matches = db.query(models.Member).filter(
-        or_(*clauses)
+        models.Member.record_type == "lp_member", or_(*clauses)
     ).order_by(models.Member.name, models.Member.customer_id).limit(8).all()
-    return [{"id": m.customer_id, "nm": m.name, "phone": m.phone or "", "vis": m.visits or 0, "typ": m.member_type or "Regular"} for m in matches]
+    return [_lookup_payload(m) for m in matches]
+
+@router.get("/recent")
+def recent_members(db: Session = Depends(get_db)):
+    last_played = db.query(models.Transaction.member_id, func.max(models.Transaction.ts).label("last_ts")).filter(models.Transaction.member_id.isnot(None)).group_by(models.Transaction.member_id).subquery()
+    members = db.query(models.Member).join(last_played, models.Member.customer_id == last_played.c.member_id).filter(models.Member.record_type == "lp_member").order_by(last_played.c.last_ts.desc()).limit(5).all()
+    return [_lookup_payload(member) for member in members]
 
 @router.get("/")
 def get_members(db: Session = Depends(get_db), _: dict = Depends(require_admin)):
@@ -232,6 +248,7 @@ def upgrade_member(customer_id: str, db: Session = Depends(get_db), _: dict = De
     if not m:
         raise HTTPException(status_code=404, detail="Member not found")
     m.member_type = "Regular" if m.member_type == "Premium" else "Premium"
+    m.record_type = "lp_member"
     db.commit()
     return {"ok": True, "typ": m.member_type}
 
@@ -243,13 +260,13 @@ def restore_member(
     _: dict = Depends(require_admin),
 ):
     name = " ".join((body.name or "").strip().split())
-    if not name:
+    if not name and not body.phone.strip():
         raise HTTPException(status_code=400, detail="Member name is required")
     member = db.query(models.Member).filter(models.Member.customer_id == customer_id).first()
     if not member:
-        member = models.Member(customer_id=customer_id)
+        member = models.Member(customer_id=customer_id, record_type=body.record_type)
         db.add(member)
-    member.name = name
+    member.name = name or None
     member.phone = body.phone or ""
     member.visits = max(0, int(body.visits or 0))
     member.spent = max(0, int(body.spent or 0))
@@ -257,6 +274,8 @@ def restore_member(
     member.member_type = body.member_type or _member_tier(member.spent)
     member.last_visit = body.last_visit or "-"
     member.notes = body.notes or ""
+    if "hourly_rate" in body.model_fields_set:
+        member.hourly_rate = body.hourly_rate
     db.commit()
     db.refresh(member)
     return _member_payload(member)
@@ -279,5 +298,6 @@ def update_member_on_checkout(member_id: str, amount: int, db: Session):
     member.visits += 1
     member.spent += max(0, int(amount or 0))
     member.loyalty_points = (getattr(member, "loyalty_points", 0) or 0) + max(0, int(amount or 0)) // 100
-    member.member_type = _member_tier(member.spent)
+    if member.record_type == "lp_member":
+        member.member_type = _member_tier(member.spent)
     member.last_visit = get_ist_today_str()

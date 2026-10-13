@@ -1,0 +1,106 @@
+import { useCallback, useEffect, useRef, useState } from "react";
+import { acknowledgeSessionAlert, getSessionAlerts, acknowledgeWeeklySummary } from "../../api/index.js";
+import { useToast } from "../../components/toastContext.js";
+import { useRealtimeSubscription } from "../../realtime/useRealtimeSubscription.js";
+import { SessionAlertsContext } from "./alertsContext.js";
+import { formatCurrency } from "../../utils/format.js";
+import "./start-session.css";
+
+export default function SessionAlertsProvider({ children, onNavigate }) {
+  const { showToast, dismissToast } = useToast();
+  const [alerts, setAlerts] = useState([]);
+  const [urgentKeys, setUrgentKeys] = useState(new Set());
+  const [ownerSummaries, setOwnerSummaries] = useState([]);
+  const seen = useRef(new Set());
+  const toastIds = useRef(new Map());
+  const audio = useRef(null);
+  const version = useRef(0);
+  const refreshTimer = useRef(null);
+  const pulseTimer = useRef(null);
+  const config = useRef({});
+  const navigate = useRef(onNavigate);
+  useEffect(() => { navigate.current = onNavigate; }, [onNavigate]);
+
+  const acknowledge = useCallback(async id => {
+    version.current += 1;
+    try {
+      await acknowledgeSessionAlert(id);
+      version.current += 1;
+      setAlerts(current => current.filter(row => row.id !== id));
+      dismissToast(toastIds.current.get(id));
+      toastIds.current.delete(id);
+    } catch (error) { showToast(error.userMessage || "Could not acknowledge reminder.", "error"); }
+  }, [dismissToast, showToast]);
+
+  const load = useCallback(async () => {
+    const request = ++version.current;
+    try {
+      const { data } = await getSessionAlerts();
+      if (request !== version.current) return;
+      config.current = data.config;
+      const rows = data.alerts || [];
+      setAlerts(rows);
+      setOwnerSummaries(data.owner_summaries || []);
+      const activeIds = new Set(rows.map(row => row.id));
+      for (const [id, toastId] of toastIds.current) {
+        if (!activeIds.has(id)) { dismissToast(toastId); toastIds.current.delete(id); }
+      }
+      const latest = new Map();
+      for (const row of rows) if (!row.paused && !seen.current.has(row.id)) latest.set(row.session_key, row);
+      for (const row of latest.values()) {
+        for (const item of rows.filter(item => item.session_key === row.session_key)) seen.current.add(item.id);
+        if (data.config.soundEnabled && audio.current?.state === "running") {
+          const oscillator = audio.current.createOscillator();
+          const gain = audio.current.createGain();
+          oscillator.frequency.value = row.intensity === "urgent" ? 660 : 440;
+          gain.gain.setValueAtTime(row.intensity === "urgent" ? 0.12 : 0.04, audio.current.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.001, audio.current.currentTime + 0.4);
+          oscillator.connect(gain); gain.connect(audio.current.destination);
+          oscillator.start(); oscillator.stop(audio.current.currentTime + 0.4);
+        }
+        if (row.intensity === "subtle") continue;
+        const id = showToast(`${row.table_id.toUpperCase()} — ${row.threshold_minutes} min played · ${formatCurrency(row.accrued_amount)} accrued${row.intensity === "urgent" ? " · Check table now" : ""}`, "warning", {
+          duration: row.intensity === "urgent" ? null : 10000,
+          actionLabel: "View", onAction: () => { navigate.current?.("live-floor", { tableId: row.table_id }); return acknowledge(row.id); },
+          secondaryActionLabel: "Dismiss", onSecondaryAction: () => acknowledge(row.id),
+        });
+        toastIds.current.set(row.id, id);
+        if (row.intensity === "urgent") {
+          setUrgentKeys(current => new Set([...current, row.session_key]));
+          window.clearTimeout(pulseTimer.current);
+          pulseTimer.current = window.setTimeout(() => setUrgentKeys(new Set()), 5000);
+        }
+      }
+      seen.current = new Set([...seen.current].filter(id => activeIds.has(id)));
+    } catch {
+      // A transient reminder read must never interrupt table operation.
+    }
+  }, [acknowledge, dismissToast, showToast]);
+  const scheduleLoad = useCallback(() => {
+    window.clearTimeout(refreshTimer.current);
+    refreshTimer.current = window.setTimeout(load, 150);
+  }, [load]);
+  const state = useRealtimeSubscription({ topics: ["floor"], onEvent: scheduleLoad });
+  useEffect(() => {
+    load();
+    const timer = window.setInterval(load, state === "connected" ? 60000 : 15000);
+    window.addEventListener("hsr:data-changed", scheduleLoad);
+    return () => { version.current += 1; window.clearInterval(timer); window.removeEventListener("hsr:data-changed", scheduleLoad); window.clearTimeout(refreshTimer.current); };
+  }, [load, scheduleLoad, state]);
+  useEffect(() => {
+    function enableSound() {
+      const Context = window.AudioContext || window.webkitAudioContext;
+      if (!Context) return;
+      audio.current ||= new Context();
+      audio.current.resume().catch(() => {});
+    }
+    window.addEventListener("pointerdown", enableSound);
+    window.addEventListener("keydown", enableSound);
+    return () => { window.removeEventListener("pointerdown", enableSound); window.removeEventListener("keydown", enableSound); audio.current?.close(); window.clearTimeout(pulseTimer.current); };
+  }, []);
+  async function acknowledgeSummary(week) {
+    try { await acknowledgeWeeklySummary(week); setOwnerSummaries(current => current.filter(row => row.week_start !== week)); }
+    catch (error) { showToast(error.userMessage || "Could not acknowledge summary.", "error"); }
+  }
+  return <SessionAlertsContext.Provider value={{ alerts, acknowledge, urgentKeys, ownerSummaries, acknowledgeSummary }}>{children}</SessionAlertsContext.Provider>;
+}

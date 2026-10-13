@@ -14,6 +14,7 @@ import {
 } from "../../api/index.js";
 import { useToast } from "../toastContext.js";
 import TariffSettings from "../../features/sessions/TariffSettings.jsx";
+import SessionControlsSettings from "../../features/sessions/SessionControlsSettings.jsx";
 import RetryNotice from "../RetryNotice.jsx";
 
 function SettingsCard({ title, description, children }) {
@@ -276,6 +277,7 @@ export default function SettingsTab({ role = "admin", onOpenTables, onNavigate }
       </SettingsCard>
 
       {role === "admin" && <TariffSettings />}
+      {role === "admin" && <SessionControlsSettings />}
 
       {/* Min session */}
       <SettingsCard

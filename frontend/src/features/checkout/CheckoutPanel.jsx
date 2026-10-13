@@ -1,15 +1,17 @@
 import { formatCurrency as polishCurrency, formatDateTime as polishDateTime } from "../../utils/format.js";
 import { Icon as HsrIcon, Button as HsrButton, Input as HsrInput } from "../../components/ui/index.js";
-import { useCallback, useEffect, useMemo, useState } from "react";
-import { quoteSession, stopSession } from "../../api/index.js";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { quoteSession, previewCheckout, closeWithProposal } from "../../api/index.js";
 import { Alert, Badge, Button, Drawer } from "../../components/ui/index.js";
 import { useToast } from "../../components/toastContext.js";
 import { tariffDescription } from "../sessions/tariffs.js";
+import { CustomerAtClose, AdjustSessionTime } from "./CheckoutControls.jsx";
 
 const PAYMENT_METHODS = [
   { id: "Cash", label: "Cash", icon: "ti-cash" },
   { id: "UPI", label: "UPI", icon: "ti-qrcode" },
   { id: "Card", label: "Card", icon: "ti-credit-card" },
+  { id: "Split", label: "Split", icon: "ti-arrows-split" },
 ];
 
 const DISCOUNT_OPTIONS = [
@@ -46,6 +48,12 @@ export default function CheckoutPanel({ table, open, onClose, onComplete }) {
   const [loading, setLoading] = useState(false);
   const [finalizing, setFinalizing] = useState(false);
   const [error, setError] = useState("");
+  const [paymentSplit, setPaymentSplit] = useState({ Cash: "", UPI: "", Card: "" });
+  const [proposal, setProposal] = useState({ customer: null, time_override: null });
+  const proposalRef = useRef(proposal);
+  const requestVersion = useRef(0);
+  const quoteRef = useRef(null);
+  const finalizingRef = useRef(false);
 
   const tableId = table?.id || "";
   const sessionKey = quote?.session_key || table?.session?.session_key || "";
@@ -62,10 +70,18 @@ export default function CheckoutPanel({ table, open, onClose, onComplete }) {
     nextCheckoutToken = "",
   }) => {
     if (!tableId) return;
+    const version = ++requestVersion.current;
     setLoading(true);
     setError("");
     try {
-      const res = await quoteSession(
+      const current = quoteRef.current;
+      const res = current ? await previewCheckout(tableId, {
+        ...proposalRef.current, session_key: current.session_key,
+        closed_at_ms: nextClosedAtMs || current.session_ended_at,
+        checkout_token_value: nextCheckoutToken || current.checkout_token,
+        payment_method: nextPaymentMethod, discount_type: nextDiscountType,
+        discount_value: nextDiscountType === "rupee" ? Number(nextDiscountValue) || 0 : 0,
+      }) : await quoteSession(
         tableId,
         nextPaymentMethod,
         nextDiscountType,
@@ -73,12 +89,15 @@ export default function CheckoutPanel({ table, open, onClose, onComplete }) {
         nextClosedAtMs,
         nextCheckoutToken,
       );
+      if (version !== requestVersion.current) return;
+      quoteRef.current = res.data;
       setQuote(res.data || {});
       setClosedAtMs(res.data.session_ended_at);
     } catch (err) {
+      if (version !== requestVersion.current) return;
       setError(err.userMessage || err.response?.data?.detail || "Could not prepare checkout.");
     } finally {
-      setLoading(false);
+      if (version === requestVersion.current) setLoading(false);
     }
   }, [tableId]);
 
@@ -91,13 +110,33 @@ export default function CheckoutPanel({ table, open, onClose, onComplete }) {
     setReceipt(null);
     setError("");
     setClosedAtMs("");
+    setPaymentSplit({ Cash: "", UPI: "", Card: "" });
+    quoteRef.current = null;
+    setQuote(null);
+    proposalRef.current = { customer: null, time_override: null };
+    setProposal(proposalRef.current);
     loadQuote({
       nextPaymentMethod: "Cash",
       nextDiscountType: "none",
       nextDiscountValue: 0,
       nextClosedAtMs: "",
     });
+    return () => { requestVersion.current += 1; };
   }, [open, tableId, loadQuote]);
+
+  function updateProposal(key, value) {
+    const next = { ...proposalRef.current, [key]: value };
+    proposalRef.current = next;
+    setProposal(next);
+    if (next.customer?.phone && next.customer.phone.length !== 10) {
+      requestVersion.current += 1;
+      setLoading(false);
+      setError("Enter a 10-digit phone number, or choose Skip.");
+      return;
+    }
+    loadQuote({ nextPaymentMethod: paymentMethod, nextDiscountType: discountType,
+      nextDiscountValue: discountValue, nextClosedAtMs: closedAtMs, nextCheckoutToken: quote?.checkout_token });
+  }
 
   function handlePaymentChange(method) {
     setPaymentMethod(method);
@@ -137,33 +176,33 @@ export default function CheckoutPanel({ table, open, onClose, onComplete }) {
   }
 
   async function handleFinalize() {
-    if (!quote || quote.checkout_blocked) return;
+    if (!quote || quote.checkout_blocked || loading || error || finalizingRef.current) return;
     if (discountAmount > 0 && !discountReason.trim()) {
       setError("Enter a reason for the discount before closing.");
       return;
     }
+    if (paymentMethod === "Split" && Object.values(paymentSplit).reduce((sum, value) => sum + (Number(value) || 0), 0) !== finalTotal) {
+      setError("Split payments must match the final bill."); return;
+    }
     setFinalizing(true);
+    finalizingRef.current = true;
     setError("");
     try {
-      const res = await stopSession(
-        tableId,
-        paymentMethod,
-        quote.payer_name || "",
-        discountType,
-        discountType === "rupee" ? parseInt(sanitizeRupeeDiscount(discountValue), 10) || 0 : 0,
-        closedAtMs,
-        discountReason.trim(),
-        [],
-        sessionKey,
-        quote.checkout_token,
-      );
+      const res = await closeWithProposal(tableId, {
+        ...proposalRef.current, payment_method: paymentMethod, discount_type: discountType,
+        discount_value: discountType === "rupee" ? Number(discountValue) || 0 : 0,
+        closed_at_ms: closedAtMs, checkout_token_value: quote.checkout_token, session_key: sessionKey,
+        payment_split: paymentMethod === "Split" ? Object.entries(paymentSplit).filter(([, amount]) => Number(amount) > 0).map(([method, amount]) => ({ method, amount: Number(amount) })) : [],
+      }, discountReason.trim());
       setReceipt(res.data || {});
       showToast(`${String(tableId).toUpperCase()} closed via ${paymentMethod}`, "success");
+      if (res.data.time_edit && res.data.edit_count_today === res.data.edit_soft_cap) showToast(`You've edited ${res.data.edit_count_today} sessions today. Is the timer working correctly?`, "warning", { duration: 10000 });
       await onComplete?.();
     } catch (err) {
       setError(err.userMessage || err.response?.data?.detail || "Could not close table.");
     } finally {
       setFinalizing(false);
+      finalizingRef.current = false;
     }
   }
 
@@ -178,7 +217,7 @@ export default function CheckoutPanel({ table, open, onClose, onComplete }) {
       open={open}
       title={receipt ? "Payment Complete" : `Checkout ${String(tableId).toUpperCase()}`}
       description={receipt ? "Receipt is ready for staff handoff." : "Bill is frozen while payment is collected."}
-      onClose={receipt ? handleDone : onClose}
+      onClose={finalizing ? undefined : receipt ? handleDone : onClose}
       className="checkout-panel"
     >
       {receipt ? (
@@ -201,6 +240,7 @@ export default function CheckoutPanel({ table, open, onClose, onComplete }) {
             <span>Started {formatDateTime(receipt.session_started_at)}</span>
             <span>Ended {formatDateTime(receipt.session_ended_at)}</span>
           </div>
+          {receipt.time_edit?.receipt_warning && <p>Session time adjusted.{receipt.time_edit.category === "correction" ? ` Reason: ${receipt.time_edit.reason_label}.` : ""}</p>}
           <div className="checkout-actions">
             <Button variant="secondary" icon="ti-printer" onClick={() => window.print()}>
               Print
@@ -229,12 +269,17 @@ export default function CheckoutPanel({ table, open, onClose, onComplete }) {
               </div>
 
               {quote.checkout_blocked && <Alert tone="warning">Close the open frame before checkout.</Alert>}
+              {quote.time_edit && <Alert tone="warning" title="Duration adjusted">{quote.dur} min (adjusted from {quote.time_edit.original_duration} min) · {quote.time_edit.reason_label} · {quote.time_edit.staff}</Alert>}
+              {quote.rate_delta !== 0 && <Alert tone="info">Member rate {money(quote.original_rate)}/hr → {money(quote.rate)}/hr · Bill change {money(quote.rate_delta)}</Alert>}
               <div className="checkout-summary-grid">
                 <div><span>Table</span><strong>{money(quote.ply)}</strong></div>
                 <div><span>Food</span><strong>{money(quote.famt)}</strong></div>
                 <div><span>Before discount</span><strong>{money(rawTotal)}</strong></div>
                 <div><span>Discount</span><strong>{money(discountAmount)}</strong></div>
               </div>
+
+              {quote.can_edit_time && <AdjustSessionTime quote={quote} value={proposal.time_override} onChange={value => updateProposal("time_override", value)} disabled={finalizing || loading} />}
+              <CustomerAtClose value={proposal.customer} onChange={value => updateProposal("customer", value)} disabled={finalizing} />
 
               {!!splitRows.length && (
                 <section className="checkout-section">
@@ -270,6 +315,7 @@ export default function CheckoutPanel({ table, open, onClose, onComplete }) {
                       key={option.id}
                       type="button"
                       className={discountType === option.id ? "is-active" : ""}
+                      disabled={finalizing || (quote.can_discount === false && option.id !== "none")}
                       onClick={() => handleDiscountType(option.id)}
                     >
                       {option.label}
@@ -314,19 +360,21 @@ export default function CheckoutPanel({ table, open, onClose, onComplete }) {
                       type="button"
                       className={paymentMethod === method.id ? "is-active" : ""}
                       onClick={() => handlePaymentChange(method.id)}
+                      disabled={finalizing}
                     >
                       <HsrIcon className={`ti ${method.icon}`} aria-hidden="true" />
                       <span>{method.label}</span>
                     </HsrButton>
                   ))}
                 </div>
+                {paymentMethod === "Split" && <div className="checkout-summary-grid">{["Cash", "UPI", "Card"].map(method => <label className="checkout-field" key={method}><span>{method} amount</span><HsrInput type="number" min={0} step={1} value={paymentSplit[method]} disabled={finalizing} onChange={event => { setPaymentSplit(current => ({ ...current, [method]: event.target.value })); setError(""); }} /></label>)}</div>}
               </section>
 
               <div className="checkout-actions checkout-actions-sticky">
                 <Button variant="secondary" onClick={onClose} disabled={finalizing}>
                   Keep Table Open
                 </Button>
-                <Button variant="primary" loading={finalizing || loading} disabled={quote.checkout_blocked} onClick={handleFinalize}>
+                <Button variant="primary" loading={finalizing || loading} disabled={quote.checkout_blocked || !!error || (quote.pin_required && !proposal.time_override?.manager_pin)} onClick={handleFinalize}>
                   Close table · {money(finalTotal)}
                 </Button>
               </div>

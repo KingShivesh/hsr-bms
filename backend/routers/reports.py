@@ -21,6 +21,40 @@ from hsr_config import (
 )
 
 router = APIRouter()
+
+@router.get("/session-edits")
+def session_edits(from_date: str = "", to_date: str = "", staff: str = "", reason: str = "", category: str = "", export: bool = False, db: Session = Depends(get_db), _: dict = Depends(require_admin)):
+    from hsr_config import IST_TZ
+    query = db.query(models.SessionEvent).filter(models.SessionEvent.event_type == "session_time_edited")
+    for value, is_end in ((from_date, False), (to_date, True)):
+        if not value:
+            continue
+        try:
+            date = datetime.strptime(value, "%Y-%m-%d").replace(tzinfo=IST_TZ)
+        except ValueError:
+            raise HTTPException(422, "Use YYYY-MM-DD for report dates")
+        if is_end:
+            query = query.filter(models.SessionEvent.ts < (date + timedelta(days=1)).timestamp() * 1000)
+        else:
+            query = query.filter(models.SessionEvent.ts >= date.timestamp() * 1000)
+    if staff:
+        query = query.filter(models.SessionEvent.actor == staff)
+    rows = []
+    for event in query.order_by(models.SessionEvent.ts.desc()).all():
+        metadata = json.loads(event.payload_json or "{}")
+        if reason and metadata.get("reason") != reason or category and metadata.get("category") != category:
+            continue
+        rows.append({"id": event.id, "date": event.date, "table": event.table_id, **metadata})
+    if not export:
+        return rows
+    stream = io.StringIO()
+    writer = csv.writer(stream)
+    fields = ["date", "table", "staff", "original_duration", "new_duration", "reason_label", "category", "notes", "delta", "late_edit"]
+    writer.writerow(fields)
+    for row in rows:
+        values = [row.get(field, "") for field in fields]
+        writer.writerow(["'" + value if isinstance(value, str) and value.startswith(("=", "+", "-", "@")) else value for value in values])
+    return StreamingResponse(iter([stream.getvalue()]), media_type="text/csv", headers={"Content-Disposition": 'attachment; filename="session-edits.csv"'})
 MAX_REPORT_DURATION_MINUTES = 12 * 60
 REPORT_TABLES = [table_id.upper() for table_id in TABLE_RATES]
 
@@ -151,6 +185,8 @@ def transaction_report_row(t: models.Transaction, frames_by_txn: dict[int, list[
         "ts": t.ts,
         "tbl": t.table_id,
         "nm": t.customer_name,
+        "time_edit": json.loads(t.time_edit_json or "{}") or None,
+        "customer_phone": t.customer_phone,
         "player_type": t.player_type,
         "member_id": t.member_id,
         "booking_id": t.booking_id,

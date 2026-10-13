@@ -162,6 +162,17 @@ export const getSessionBookings = (table_id) => api.get(`/bookings/start-options
 export const pauseSession = (table_id) =>
   api.post(`/sessions/pause/${tableKey(table_id)}`);
 
+export const startGuestSession = (table_id) => api.post("/sessions/start", { table_id: tableKey(table_id) });
+export const previewCheckout = (table_id, body) => api.post(`/sessions/checkout-preview/${tableKey(table_id)}`, body);
+export const closeWithProposal = (table_id, body, discount_reason = "") => api.post(`/sessions/stop/${tableKey(table_id)}?discount_reason=${encodeURIComponent(discount_reason)}`, body);
+export const getRecentMembers = () => api.get("/members/recent");
+export const getSessionAlerts = () => api.get("/sessions/alerts");
+export const acknowledgeWeeklySummary = (week) => api.post(`/sessions/weekly-summary/${encodeURIComponent(week)}/acknowledge`);
+export const acknowledgeSessionAlert = (id) => api.post(`/sessions/alerts/${id}/acknowledge`);
+export const getSessionControls = () => api.get("/settings/session-controls");
+export const saveSessionControls = (body) => api.post("/settings/session-controls", body);
+export const getSessionEdits = (params) => api.get("/reports/session-edits", { params });
+
 const sessionCheckoutParams = (
   payment_method = "Cash",
   payer_name = "",

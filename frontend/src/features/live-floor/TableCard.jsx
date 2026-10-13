@@ -6,6 +6,7 @@ import { tableStateAttributes, getTableAttention, getTableStatusByKey } from "..
 import TableStatusBadge from "./TableStatusBadge.jsx";
 import { tariffDescription } from "../sessions/tariffs.js";
 import SessionIdentity from "../sessions/SessionIdentity.jsx";
+import { useSessionAlerts } from "../sessions/alertsContext.js";
 
 function formatTimer(seconds = 0) { return polishDuration(seconds); }
 
@@ -43,6 +44,8 @@ export default function TableCard({
   const statusKey = table.status_key || "available";
   const status = getTableStatusByKey(statusKey);
   const session = table.session;
+  const { alerts, acknowledge, urgentKeys } = useSessionAlerts();
+  const reminder = alerts.filter(row => row.session_key === session?.session_key).at(-1);
   const elapsed = session && !session.paused ? (session.elapsed_seconds || 0) + tick : table.elapsed_seconds || 0;
   const isAvailable = statusKey === "available";
   const isMaintenance = statusKey === "maintenance";
@@ -122,6 +125,7 @@ export default function TableCard({
       className={`lf-table-card table-state-card ${selected ? "is-selected" : ""}`}
       {...tableStateAttributes(status.key)}
       data-attention={attention ? "true" : "false"}
+      data-overtime-pulse={urgentKeys.has(session?.session_key) ? "true" : undefined}
       onClick={() => !isMaintenance && onSelect?.(table)}
       tabIndex={isMaintenance ? -1 : 0}
       role="group"
@@ -143,6 +147,7 @@ export default function TableCard({
         </div>
         <div className="table-state-card-flags">
           <TableAttentionBadge attention={attention} />
+          {reminder && <HsrButton native type="button" className="session-reminder-badge" onClick={event => { event.stopPropagation(); acknowledge(reminder.id); }}>{reminder.intensity === "urgent" ? "Overtime" : `${reminder.threshold_minutes}m check-in`}</HsrButton>}
           <TableStatusBadge statusKey={statusKey} label={table.status_label} />
         </div>
       </div>

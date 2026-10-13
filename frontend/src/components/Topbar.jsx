@@ -2,6 +2,7 @@ import { Button as HsrButton, Icon as HsrIcon } from "./ui/index.js";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { getAuditLogs, getBookings, getTableState, getWaitlist } from "../api/index.js";
 import { useTheme } from "../hooks/useTheme.js";
+import { useSessionAlerts } from "../features/sessions/alertsContext.js";
 
 const PAGE_DESCRIPTIONS = {
   "Executive Overview": "For owners: see today's revenue, floor pressure and what needs attention first.",
@@ -108,6 +109,8 @@ export default function Topbar({
   username = "",
   onNavigate,
 }) {
+  const { alerts, acknowledge, ownerSummaries, acknowledgeSummary } = useSessionAlerts();
+  const reminders = alerts.filter(row => row.intensity !== "subtle");
   const notificationRef = useRef(null);
   const [dt, setDt] = useState("");
   const [clock, setClock] = useState("");
@@ -267,7 +270,7 @@ export default function Topbar({
             aria-haspopup="dialog"
           >
             <HsrIcon className="ti ti-bell" aria-hidden="true" />
-            {notificationRows.length > 0 && <span className="cf-notification-dot">{notificationRows.length}</span>}
+            {notificationRows.length + reminders.length + ownerSummaries.length > 0 && <span className="cf-notification-dot">{notificationRows.length + reminders.length + ownerSummaries.length}</span>}
           </HsrButton>
           {notificationsOpen && (
             <div className="cf-notification-popover" role="dialog" aria-label="Notifications">
@@ -280,6 +283,8 @@ export default function Topbar({
                   <HsrIcon className="ti ti-x" aria-hidden="true" />
                 </HsrButton>
               </div>
+              {reminders.map(row => <HsrButton native key={`session-${row.id}`} type="button" className={`cf-notification-row ${row.intensity === "urgent" ? "danger" : "warning"}`} onClick={() => { acknowledge(row.id); setNotificationsOpen(false); onNavigate?.("live-floor", { tableId: row.table_id }); }}><HsrIcon className="ti ti-clock" aria-hidden="true" /><div><strong>{row.table_id.toUpperCase()} · {row.threshold_minutes}m played</strong><span>{row.intensity === "urgent" ? "Overtime — check table" : "Session check-in"}</span></div></HsrButton>)}
+              {ownerSummaries.map(row => <HsrButton native key={row.week_start} type="button" className="cf-notification-row" onClick={() => { acknowledgeSummary(row.week_start); setNotificationsOpen(false); onNavigate?.("reports"); }}><HsrIcon className="ti ti-clipboard-list" aria-hidden="true" /><div><strong>Last week: {row.count} sessions edited ({row.percentage}%)</strong><span>Amount change ₹{row.delta.toLocaleString("en-IN")} · Top reason: {row.top_reason}</span></div></HsrButton>)}
               <div className="cf-notification-stats">
                 <div><span>Alerts</span><strong>{notificationRows.length}</strong></div>
                 <div><span>Audit</span><strong>{notificationData.auditLogs.length}</strong></div>

@@ -37,6 +37,8 @@ function memberRestorePayload(member = {}) {
     member_type: member.typ || member.member_type || member.type || "Regular",
     last_visit: member.lst || member.last_visit || "-",
     notes: member.notes || "",
+    record_type: member.record_type || "lp_member",
+    hourly_rate: member.hourly_rate ?? null,
   };
 }
 

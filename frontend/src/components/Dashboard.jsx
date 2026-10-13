@@ -19,11 +19,13 @@ import {
 } from "recharts";
 import {
   getDashboardLive,
+  startGuestSession,
 } from "../api/index.js";
 import { TableAttentionBadge, TableStateBadge } from "./TableStateUI.jsx";
 import { HSR_TABLES, TOTAL_TABLES, getTableLabel } from "../config/hsrTables.js";
 import { tableActionNavigation, tableStateAttributes, getTableAttention, getTableStatusByKey } from "../config/tableStatus.js";
 import { useRealtimeSubscription } from "../realtime/useRealtimeSubscription.js";
+import { useToast } from "./toastContext.js";
 
 const TABLES = HSR_TABLES;
 const tableKey = (tableId) => String(tableId || "").trim().toLowerCase();
@@ -363,6 +365,19 @@ function KeyMetricsSection({
 }
 
 function LiveFloor({ tables, elapsed, onNavigate }) {
+  const { showToast } = useToast();
+  const [starting, setStarting] = useState({});
+  const pending = useRef(new Set());
+  async function start(table) {
+    if (pending.current.has(table.id)) return;
+    pending.current.add(table.id);
+    setStarting(current => ({ ...current, [table.id]: true }));
+    try {
+      await startGuestSession(table.id);
+      showToast(`${table.id.toUpperCase()} session started`, "success");
+    } catch (error) { showToast(error.userMessage || "Could not start session.", "error"); }
+    finally { pending.current.delete(table.id); setStarting(current => ({ ...current, [table.id]: false })); }
+  }
   const activeCount = tables.filter((table) => Boolean(table.session)).length;
   const idleCount = Math.max(TOTAL_TABLES - activeCount, 0);
   const pausedCount = tables.filter((table) => table.session?.paused).length;
@@ -404,8 +419,9 @@ function LiveFloor({ tables, elapsed, onNavigate }) {
               className="ops-table-card table-state-card"
               {...tableStateAttributes(status.key)}
               data-attention={attention ? "true" : "false"}
-              onClick={() => onNavigate(...tableActionNavigation(table.id, status.key))}
-              disabled={status.key === "maintenance"}
+              onClick={() => status.key === "available" ? start(table) : onNavigate(...tableActionNavigation(table.id, status.key))}
+              disabled={status.key === "maintenance" || !!starting[table.id]}
+              loading={!!starting[table.id]}
             >
               <div className="ops-table-top">
                 <strong>T{table.num}</strong>
@@ -436,7 +452,7 @@ function LiveFloor({ tables, elapsed, onNavigate }) {
               </div>
               <span className="table-state-primary table-state-primary-static">
                 <HsrIcon className={`ti ${status.primaryAction.icon}`} aria-hidden="true" />
-                {status.primaryAction.label}
+                {status.key === "available" ? "Start Session" : status.primaryAction.label}
               </span>
             </HsrButton>
           );

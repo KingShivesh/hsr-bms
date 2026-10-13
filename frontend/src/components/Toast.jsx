@@ -1,5 +1,5 @@
 import { Icon as HsrIcon, Button as HsrButton } from "./ui/index.js";
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { ToastContext } from "./toastContext.js";
 
 const TOAST_ICONS = {
@@ -7,9 +7,24 @@ const TOAST_ICONS = {
   error: "ti-alert-circle-filled",
 };
 
+function ToastStack({ toasts, className = "", onAction, onSecondaryAction }) {
+  return <div className={`app-toast-container ${className}`} aria-live="polite">
+    {toasts.map(t => <div key={t.id} className={`app-toast app-toast-${t.type} ${t.exiting ? "is-exiting" : ""}`}>
+      <HsrIcon className={`app-toast-icon ti ${TOAST_ICONS[t.type] || "ti-info-circle-filled"}`} aria-hidden="true" />
+      <span className="app-toast-message">{t.message}</span>
+      {t.actionLabel && <HsrButton native type="button" className="app-toast-action" onClick={() => onAction(t)}>{t.actionLabel}</HsrButton>}
+      {t.secondaryActionLabel && <HsrButton native type="button" className="app-toast-action" onClick={() => onSecondaryAction(t)}>{t.secondaryActionLabel}</HsrButton>}
+    </div>)}
+  </div>;
+}
+
 export function ToastProvider({ children }) {
   const [toasts, setToasts] = useState([]);
   const timers = useRef(new Map());
+  useEffect(() => {
+    const activeTimers = timers.current;
+    return () => { for (const timer of activeTimers.values()) { clearTimeout(timer.exitTimer); clearTimeout(timer.removeTimer); } activeTimers.clear(); };
+  }, []);
 
   const removeToast = useCallback((id, delay = 190) => {
     const timerSet = timers.current.get(id);
@@ -28,7 +43,7 @@ export function ToastProvider({ children }) {
 
   const showToast = useCallback((message, type = "success", options = {}) => {
     const id = Date.now() + Math.random();
-    const duration = options.duration ?? (type === "error" ? 5000 : 3000);
+    const duration = options.duration === null ? null : options.duration ?? (type === "error" ? 5000 : 3000);
     setToasts((prev) => [
       ...prev,
       {
@@ -37,10 +52,12 @@ export function ToastProvider({ children }) {
         type,
         actionLabel: options.actionLabel,
         onAction: options.onAction,
+        secondaryActionLabel: options.secondaryActionLabel,
+        onSecondaryAction: options.onSecondaryAction,
         exiting: false,
       },
     ]);
-    const exitTimer = setTimeout(() => removeToast(id), duration);
+    const exitTimer = duration === null ? null : setTimeout(() => removeToast(id), duration);
     timers.current.set(id, { exitTimer });
     return id;
   }, [removeToast]);
@@ -51,21 +68,10 @@ export function ToastProvider({ children }) {
   }, [removeToast]);
 
   return (
-    <ToastContext.Provider value={{ showToast }}>
+    <ToastContext.Provider value={{ showToast, dismissToast: removeToast }}>
       {children}
-      <div className="app-toast-container" aria-live="polite">
-        {toasts.map((t) => (
-          <div key={t.id} className={`app-toast app-toast-${t.type} ${t.exiting ? "is-exiting" : ""}`}>
-            <HsrIcon className={`app-toast-icon ti ${TOAST_ICONS[t.type] || "ti-info-circle-filled"}`} aria-hidden="true" />
-            <span className="app-toast-message">{t.message}</span>
-            {t.actionLabel && (
-              <HsrButton native type="button" className="app-toast-action" onClick={() => handleAction(t)}>
-                {t.actionLabel}
-              </HsrButton>
-            )}
-          </div>
-        ))}
-      </div>
+      <ToastStack toasts={toasts.filter(t => t.type !== "warning")} onAction={handleAction} onSecondaryAction={t => { removeToast(t.id, 120); t.onSecondaryAction?.(); }} />
+      <ToastStack className="app-session-alert-container" toasts={toasts.filter(t => t.type === "warning")} onAction={handleAction} onSecondaryAction={t => { removeToast(t.id, 120); t.onSecondaryAction?.(); }} />
     </ToastContext.Provider>
   );
 }

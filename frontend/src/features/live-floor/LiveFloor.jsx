@@ -1,7 +1,7 @@
 import { Icon as HsrIcon, Button as HsrButton } from "../../components/ui/index.js";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import { getLiveFloor, getRates, saveRates, pauseSession } from "../../api/index.js";
+import { getLiveFloor, getRates, saveRates, pauseSession, startGuestSession } from "../../api/index.js";
 import RetryNotice from "../../components/RetryNotice.jsx";
 import { Modal, Drawer } from "../../components/ui/index.js";
 import { useToast } from "../../components/toastContext.js";
@@ -204,6 +204,20 @@ export default function LiveFloor({ role = "admin", onNavigate, newSessionReques
       setBusyTables((current) => ({ ...current, [table.id]: false }));
     }
   }
+  async function quickStart(tableId) {
+    if (pendingTablesRef.current.has(tableId)) return;
+    pendingTablesRef.current.add(tableId);
+    setBusyTables(current => ({ ...current, [tableId]: true }));
+    try {
+      await startGuestSession(tableId);
+      showToast(`${tableId.toUpperCase()} session started`, "success");
+      await loadFloor();
+    } catch (err) { showToast(err.userMessage || "Could not start session.", "error"); }
+    finally {
+      pendingTablesRef.current.delete(tableId);
+      setBusyTables(current => ({ ...current, [tableId]: false }));
+    }
+  }
   const upcomingBookings = tables.filter((table) => table.booking).length;
   const reservedTables = tables.filter((table) => table.status_key === "reserved").length;
   const pausedTables = tables.filter((table) => table.status_key === "paused").length;
@@ -279,7 +293,7 @@ export default function LiveFloor({ role = "admin", onNavigate, newSessionReques
                   setCheckoutTableId("");
                   setSelectedTableId(table.id);
                 }}
-                onStartSession={openNewSession}
+                onStartSession={quickStart}
                 onCheckout={(table) => {
                   setSelectedTableId("");
                   setCheckoutTableId(table.id);

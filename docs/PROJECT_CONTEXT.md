@@ -151,6 +151,15 @@ dead/reachable component findings, and the full routing migration.
   session after their checks pass; do not leave verified work unshipped.
 
 ## Deferred / Follow-up
+- Session-close controls: `docs/SESSION_CLOSE_CONTROLS.md`. The owner explicitly
+  approved trusted staff editing time, including starts before record creation.
+  Preserve server-side permission checks, required/derived reasons, real PIN
+  verification for large time deltas, and atomic close/audit. Do not persist a
+  checkout preview or bypass existing signed freeze/rounding/tax/frame rules.
+  Half-hour reminders use active elapsed time, not charge-minimum rounding; their
+  unique thresholds and acknowledgment live in the DB. Keep financial/customer
+  data out of the general SSE invalidation channel. Credit settlement, WhatsApp,
+  individual employee permissions and strict legacy-start retirement remain OPEN.
 - Session identity repair: `docs/session-start-audit/README.md`. A NULL guest name
   is valid; use the shared session_identity predicate, never customer-name truthiness
   to decide occupancy. Member statistics require explicit member_id; never create

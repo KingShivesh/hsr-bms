@@ -4,6 +4,7 @@ import { Icon as HsrIcon, Input as HsrInput, Select as HsrSelect, Button as HsrB
 import { useState, useEffect, useRef, useMemo } from "react";
 import {
   startSession,
+  startGuestSession,
   pauseSession,
   stopSession,
   quoteSession,
@@ -2210,6 +2211,10 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0, onOpenF
   }
 
   async function handleStop(id, paymentMethod = "Cash") {
+    if (onNavigate) {
+      onNavigate("live-floor", { tableId: id, tableAction: "checkout" });
+      return true;
+    }
     if (!sessions[id]) {
       showToast("No active session", "error");
       return false;
@@ -2723,7 +2728,13 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0, onOpenF
                 onNameChange={(val) =>
                   setNames((prev) => ({ ...prev, [selectedTable.id]: val }))
                 }
-                onStart={(table) => { setSelectedTableId(table.id); setQuickSessionOpen(true); }}
+                onStart={table => runBusyAction(`start:${table.id}`, async () => {
+                  try {
+                    await startGuestSession(table.id);
+                    showToast(`${table.id.toUpperCase()} session started`, "success");
+                    await fetchActive();
+                  } catch (error) { showToast(error.userMessage || "Could not start session.", "error"); }
+                })}
                 onPause={handlePause}
                 onReset={handleReset}
                 onStop={handleStop}

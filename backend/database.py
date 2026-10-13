@@ -33,6 +33,7 @@ def ensure_runtime_columns():
     """Add lightweight columns that were introduced after initial installs."""
     columns = {
         "settings": {
+            "session_controls_json": "TEXT DEFAULT '{}'",
             "auth_version": "INTEGER NOT NULL DEFAULT 0",
             "staff_auth_version": "INTEGER NOT NULL DEFAULT 0",
             "tariffs_json": "TEXT DEFAULT '{}'",
@@ -45,6 +46,7 @@ def ensure_runtime_columns():
             "released_at": "VARCHAR(255) DEFAULT ''",
         },
         "active_sessions": {
+            "customer_phone": "VARCHAR(255)",
             "tariff_mode": "VARCHAR(50) DEFAULT 'hourly'",
             "tariff_price": "INTEGER",
             "tariff_label": "VARCHAR(255) DEFAULT ''",
@@ -62,6 +64,8 @@ def ensure_runtime_columns():
             "session_key": "VARCHAR(255) DEFAULT ''",
         },
         "transactions": {
+            "customer_phone": "VARCHAR(255)",
+            "time_edit_json": "TEXT DEFAULT '{}'",
             "tariff_mode": "VARCHAR(50) DEFAULT 'hourly'",
             "tariff_price": "INTEGER",
             "tariff_label": "VARCHAR(255) DEFAULT ''",
@@ -81,6 +85,8 @@ def ensure_runtime_columns():
             "payment_method": "VARCHAR(50) DEFAULT 'Cash'",
         },
         "members": {
+            "record_type": "VARCHAR(20) NOT NULL DEFAULT 'lp_member'",
+            "hourly_rate": "INTEGER",
             "phone": "VARCHAR(255) DEFAULT ''",
             "loyalty_points": "INTEGER DEFAULT 0",
             "notes": "TEXT DEFAULT ''",

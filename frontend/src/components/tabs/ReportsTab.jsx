@@ -16,6 +16,7 @@ import { CSV_PREFIX } from "../../config/hsrTables.js";
 import { MetricCard } from "../ui/index.js";
 import { useToast } from "../toastContext.js";
 import RetryNotice from "../RetryNotice.jsx";
+import SessionEditsReport from "../../features/sessions/SessionEditsReport.jsx";
 
 const PERIODS = [
   { id: "today", label: "Today" },
@@ -27,6 +28,7 @@ const REPORT_TABS = [
   { id: "tables", label: "Table Performance" },
   { id: "customers", label: "Regular Customers" },
   { id: "advanced", label: "Analytics" },
+  { id: "session-edits", label: "Session Edits" },
 ];
 const DEFAULT_REPORT_TAB = "history";
 const BILL_DATE_FORMATTER = new Intl.DateTimeFormat("en-IN", {
@@ -1239,6 +1241,7 @@ export default function ReportsTab({ onNavigate }) {
       {activeTab === "closing" && <ClosingReportView onNavigate={onNavigate} />}
       {activeTab === "insights" && <ClosingInsightsView />}
       {activeTab === "advanced" && <AdvancedAnalyticsView />}
+      {activeTab === "session-edits" && <SessionEditsReport />}
       {activeTab === "audit" && <AuditLogView />}
     </div>
   );

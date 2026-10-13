@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Boolean, Float, Text
+from sqlalchemy import Column, Integer, String, Boolean, Float, Text, UniqueConstraint
 from database import Base
 
 class Settings(Base): #This tells SQLAlchemy This class should become a database table.
@@ -17,6 +17,7 @@ class Settings(Base): #This tells SQLAlchemy This class should become a database
     gst_percent  = Column(Float,   default=0)
     booking_grace_minutes = Column(Integer, default=10)
     tariffs_json = Column(Text, default='{}')
+    session_controls_json = Column(Text, default='{}')
 
 class Member(Base):
     __tablename__ = "members"
@@ -28,6 +29,8 @@ class Member(Base):
     spent       = Column(Integer, default=0)
     loyalty_points = Column(Integer, default=0)
     member_type = Column(String,  default="Regular")
+    record_type = Column(String, default="lp_member", nullable=False)
+    hourly_rate = Column(Integer, nullable=True)
     last_visit  = Column(String,  default="-")
     notes       = Column(Text,    default="")
 
@@ -47,6 +50,8 @@ class Transaction(Base):
     member_id      = Column(String, nullable=True)
     booking_id     = Column(Integer, nullable=True)
     player_count   = Column(Integer, default=2)
+    customer_phone = Column(String, nullable=True)
+    time_edit_json = Column(Text, default='{}')
     duration       = Column(Integer)
     play_charge    = Column(Integer)
     food_charge    = Column(Integer)
@@ -82,6 +87,7 @@ class ActiveSession(Base):
     member_id     = Column(String, nullable=True)
     booking_id    = Column(Integer, nullable=True)
     player_count  = Column(Integer, default=2)
+    customer_phone = Column(String, nullable=True)
     rate          = Column(Integer)
     food_total    = Column(Integer, default=0)
     food_items    = Column(Text,    default="[]")
@@ -141,6 +147,24 @@ class SessionEvent(Base):
     detail       = Column(Text, default="")
     amount       = Column(Integer, default=0)
     payload_json = Column(Text, default="{}")
+
+class SessionAlert(Base):
+    __tablename__ = "session_alerts"
+    __table_args__ = (UniqueConstraint("session_key", "alert_type", "threshold_minutes", name="uq_session_alert_threshold"),)
+    id = Column(Integer, primary_key=True)
+    session_key = Column(String, nullable=False, index=True)
+    table_id = Column(String, nullable=False)
+    alert_type = Column(String, nullable=False)
+    threshold_minutes = Column(Integer, nullable=False)
+    intensity = Column(String, nullable=False)
+    fired_at = Column(Float, nullable=False)
+    acknowledged_at = Column(Float, nullable=True)
+
+class SessionWeeklySummary(Base):
+    __tablename__ = "session_weekly_summaries"
+    week_start = Column(String, primary_key=True)
+    payload_json = Column(Text, nullable=False)
+    acknowledged_at = Column(Float, nullable=True)
 
 class MenuItem(Base):
     __tablename__ = "menu_items"

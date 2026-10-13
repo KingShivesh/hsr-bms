@@ -17,12 +17,44 @@ from live_state import build_live_floor_state, build_table_state, serialize_sess
 from realtime import queue_realtime_event
 from session_identity import is_active_session
 from routers.bookings import eligible_booking, booking_prices
+from session_controls import CheckoutProposal, checkout_context, controls
 
 router = APIRouter()
 MAX_SESSION_DURATION_MINUTES = 12 * 60
 PAYMENT_METHODS = {"Cash", "UPI", "Card", "Split"}
 DISCOUNT_TYPES = {"none", "percent_5", "percent_10", "rupee"}
 GENERIC_SESSION_PLAYER_NAMES = {"player one", "player two", "walk in customer"}
+
+@router.get("/alerts")
+def get_session_alerts(db: Session = Depends(get_db), user: dict = Depends(get_current_claims)):
+    sessions = {session.session_key: session for session in db.query(models.ActiveSession).all() if is_active_session(session)}
+    totals = {key: serialize_live_session(db, session)["running_total"] for key, session in sessions.items()}
+    rows = db.query(models.SessionAlert).filter(models.SessionAlert.session_key.in_(list(sessions)), models.SessionAlert.acknowledged_at.is_(None)).order_by(models.SessionAlert.id).all()
+    summaries = db.query(models.SessionWeeklySummary).filter(models.SessionWeeklySummary.acknowledged_at.is_(None)).order_by(models.SessionWeeklySummary.week_start.desc()).limit(8).all() if user["role"] == "admin" else []
+    return {"config": controls(db.query(models.Settings).first()), "owner_summaries": [json.loads(row.payload_json) for row in summaries], "alerts": [
+        {"id": row.id, "session_key": row.session_key, "table_id": sessions[row.session_key].table_id,
+         "threshold_minutes": row.threshold_minutes, "intensity": row.intensity, "alert_type": row.alert_type,
+         "paused": bool(sessions[row.session_key].paused), "fired_at": row.fired_at, "accrued_amount": totals[row.session_key]}
+        for row in rows]}
+
+@router.post("/weekly-summary/{week_start}/acknowledge")
+def acknowledge_weekly_summary(week_start: str, db: Session = Depends(get_mutation_db), _: dict = Depends(require_admin)):
+    row = db.get(models.SessionWeeklySummary, week_start)
+    if not row:
+        raise HTTPException(404, "Summary not found")
+    row.acknowledged_at = time.time() * 1000
+    db.commit()
+    return {"ok": True}
+
+@router.post("/alerts/{alert_id}/acknowledge")
+def acknowledge_alert(alert_id: int, background_tasks: BackgroundTasks, db: Session = Depends(get_mutation_db)):
+    row = db.query(models.SessionAlert).filter(models.SessionAlert.id == alert_id).with_for_update().first()
+    if not row:
+        raise HTTPException(404, "Alert not found")
+    row.acknowledged_at = row.acknowledged_at or time.time() * 1000
+    db.commit()
+    queue_realtime_event(background_tasks, "session.alert", "floor", "session-alerts")
+    return {"ok": True}
 
 class StartSession(BaseModel):
     table_id:      str
@@ -381,6 +413,10 @@ def transaction_checkout_response(
         "ts": t.ts,
         "tbl": t.table_id,
         "nm": t.customer_name,
+        "customer_phone": t.customer_phone,
+        "time_edit": json.loads(t.time_edit_json or "{}") or None,
+        "edit_count_today": db.query(models.SessionEvent).filter(models.SessionEvent.event_type == "session_time_edited", models.SessionEvent.actor == (json.loads(t.time_edit_json or "{}").get("staff", "")), models.SessionEvent.date.like(get_ist_now().strftime("%d/%m/%Y") + "%")).count() if t.time_edit_json not in {None, "", "{}"} else 0,
+        "edit_soft_cap": controls(db.query(models.Settings).first())["dailyEditSoftCap"],
         "player_type": t.player_type,
         "member_id": t.member_id,
         "booking_id": t.booking_id,
@@ -661,6 +697,7 @@ def start_session(
     sess.total_paused_ms = 0
     sess.rate_multiplier, sess.rate_label = get_peak_multiplier(db)
     sess.customer_name = customer_name
+    sess.customer_phone = None
     sess.player_type = body.player_type
     sess.member_id = member_id
     sess.booking_id = booking.id if booking else None
@@ -773,6 +810,7 @@ def quote_session(
     discount_value: int = 0,
     closed_at_ms:   float | None = None,
     checkout_token_value: str = "",
+    proposal: CheckoutProposal | None = None,
     db: Session = Depends(get_db),
     user: dict = Depends(get_current_claims),
 ):
@@ -784,9 +822,15 @@ def quote_session(
     settings   = db.query(models.Settings).first()
     min_mins   = settings.min_session if settings else 0
     ensure_session_key(db, sess)
+    if proposal and proposal.session_key != sess.session_key:
+        raise HTTPException(409, "This checkout is stale. Refresh the table.")
+    if proposal and payment_method not in PAYMENT_METHODS:
+        raise HTTPException(422, "Choose Cash, UPI or Card; credit settlement is not configured")
     quoted_at_ms = checkout_clock_ms(sess, closed_at_ms, token=checkout_token_value, issuing=True)
-    started_at = session_started_at(db, sess)
-    elapsed_ms = session_elapsed_ms(sess, quoted_at_ms)
+    frames = active_session_frames(db, sess)
+    context = checkout_context(db, sess, quoted_at_ms, settings, frames, user, proposal)
+    started_at = context["started_at"]
+    elapsed_ms = context["elapsed_ms"]
     elapsed_ms = max(0, elapsed_ms)
 
     hourly = (sess.tariff_mode or "hourly") == "hourly"
@@ -796,16 +840,7 @@ def quote_session(
     if duration_capped:
         minutes = MAX_SESSION_DURATION_MINUTES
 
-    frames = active_session_frames(db, sess)
-    checkout = calc_checkout(
-        db,
-        minutes=minutes,
-        hourly_rate=sess.rate,
-        food_total=sess.food_total,
-        peak_multiplier=sess.rate_multiplier,
-        peak_label=sess.rate_label,
-        **session_tariff(sess, frames),
-    )
+    checkout = context["checkout"]
     play      = checkout["play"]
     food      = checkout["food"]
     raw_total = checkout["total"]
@@ -865,9 +900,16 @@ def quote_session(
         "tbl": normalize_table_id(table_id).upper(),
         **session_tariff(sess, frames),
         "checkout_blocked": (sess.tariff_mode == "frame" or billing_mode == "lp") and any(frame.status == "open" for frame in frames),
-        "nm": display_customer,
+        "nm": context["name"],
+        "customer_phone": context["phone"],
+        "can_edit_time": context["can_edit_time"],
+        "can_discount": user["role"] == "admin",
+        "paused_minutes": context["paused_minutes"],
+        "original_rate": context["original_rate"], "rate": context["rate"],
+        "original_total": context["original_total"], "rate_delta": context["rate_delta"],
+        "time_edit": context["time_edit"], "pin_required": context["pin_required"],
         "player_type": sess.player_type,
-        "member_id": sess.member_id,
+        "member_id": context["member_id"],
         "booking_id": sess.booking_id,
         "dur": minutes,
         "actual_dur": actual_minutes,
@@ -899,6 +941,12 @@ def quote_session(
         "checkout_token": checkout_token(sess, quoted_at_ms),
     }
 
+@router.post("/checkout-preview/{table_id}")
+def preview_checkout(table_id: str, body: CheckoutProposal, db: Session = Depends(get_db), user: dict = Depends(get_current_claims)):
+    return quote_session(table_id, payment_method=body.payment_method, discount_type=body.discount_type,
+        discount_value=body.discount_value, closed_at_ms=body.closed_at_ms,
+        checkout_token_value=body.checkout_token_value, proposal=body, db=db, user=user)
+
 @router.post("/stop/{table_id}")
 def stop_session(
     table_id:       str,
@@ -912,11 +960,12 @@ def stop_session(
     payment_split_json: str = "",
     session_key: str = "",
     checkout_token_value: str = "",
+    proposal: CheckoutProposal | None = None,
     db: Session = Depends(get_mutation_db),
     user: dict = Depends(get_current_claims),
 ):
     table_id = require_known_table_id(table_id)
-    expected_session_key = (session_key or "").strip()
+    expected_session_key = proposal.session_key if proposal else (session_key or "").strip()
     sess = active_session_for_table(db, table_id, lock=True)
     if not sess:
         existing_transaction = transaction_for_session_key(db, expected_session_key)
@@ -924,6 +973,14 @@ def stop_session(
             return transaction_checkout_response(db, existing_transaction, idempotent=True)
         raise HTTPException(status_code=404, detail="No active session")
     actual_session_key = ensure_session_key(db, sess)
+    if proposal:
+        if proposal.session_key != actual_session_key:
+            raise HTTPException(409, "This checkout is stale. Refresh the table.")
+        payment_method, discount_type, discount_value = proposal.payment_method, proposal.discount_type, proposal.discount_value
+        closed_at_ms, checkout_token_value = proposal.closed_at_ms, proposal.checkout_token_value
+        payment_split_json = json.dumps(proposal.payment_split) if proposal.payment_split else ""
+        if payment_method not in PAYMENT_METHODS:
+            raise HTTPException(422, "Choose Cash, UPI or Card; credit settlement is not configured")
     if expected_session_key and expected_session_key != actual_session_key:
         raise HTTPException(status_code=409, detail="This checkout is stale. Refresh the table and try again.")
     existing_transaction = transaction_for_session_key(db, actual_session_key)
@@ -939,8 +996,10 @@ def stop_session(
     settings   = db.query(models.Settings).first()
     min_mins   = settings.min_session if settings else 0
     closed_at_ms = checkout_clock_ms(sess, closed_at_ms, token=checkout_token_value)
-    started_at = session_started_at(db, sess)
-    elapsed_ms = session_elapsed_ms(sess, closed_at_ms)
+    frames = active_session_frames(db, sess)
+    context = checkout_context(db, sess, closed_at_ms, settings, frames, user, proposal, enforce_pin=True)
+    started_at = context["started_at"]
+    elapsed_ms = context["elapsed_ms"]
     elapsed_ms = max(0, elapsed_ms)
 
     hourly = (sess.tariff_mode or "hourly") == "hourly"
@@ -949,18 +1008,21 @@ def stop_session(
     duration_capped = hourly and minutes > MAX_SESSION_DURATION_MINUTES
     if duration_capped:
         minutes = MAX_SESSION_DURATION_MINUTES
-    frames = active_session_frames(db, sess)
     if (sess.tariff_mode == "frame" or sess.billing_mode == "lp") and any(frame.status == "open" for frame in frames):
         raise HTTPException(409, "Close the open frame before checkout.")
-    checkout = calc_checkout(
-        db,
-        minutes=minutes,
-        hourly_rate=sess.rate,
-        food_total=sess.food_total,
-        peak_multiplier=sess.rate_multiplier,
-        peak_label=sess.rate_label,
-        **session_tariff(sess, frames),
-    )
+    checkout = context["checkout"]
+
+    if proposal and proposal.customer is not None:
+        sess.customer_name, sess.customer_phone, sess.member_id = context["name"], context["phone"], context["member_id"]
+        if context["phone"] and not context["member_id"]:
+            from routers.members import _next_customer_id
+            member = models.Member(customer_id=_next_customer_id(db), name=context["name"], phone=context["phone"], record_type="walk_in")
+            db.add(member)
+            db.flush()
+            sess.member_id = member.customer_id
+        sess.player_type = "member" if proposal.customer.member_id else "guest"
+        if sess.billing_mode == "single":
+            sess.players_json = json.dumps([sess.customer_name] if sess.customer_name else [])
 
     play            = checkout["play"]
     food            = checkout["food"]
@@ -1070,6 +1132,8 @@ def stop_session(
         member_id = sess.member_id,
         booking_id = sess.booking_id,
         player_count = sess.player_count,
+        customer_phone = sess.customer_phone,
+        time_edit_json = json.dumps(context["time_edit"] or {}),
         duration      = minutes,
         play_charge   = play,
         food_charge   = food,
@@ -1112,6 +1176,13 @@ def stop_session(
         update_member_on_checkout(sess.member_id, member_amount, db)
 
     archive_closed_frames(db, transaction=t, frames=frames)
+    if context["time_edit"]:
+        metadata = {**context["time_edit"], "transaction_id": t.id}
+        record_session_event(db, event_type="session_time_edited", table_id=table_id,
+            session_key=actual_session_key, actor=user["username"], amount=metadata["delta"],
+            detail=f"{metadata['category']}: {metadata['reason_label']}", payload=metadata)
+        log_action(db, "session_time_edited", f"{table_id.upper()} {metadata['reason_label']}; {metadata['original_duration']} -> {metadata['new_duration']} min; delta {metadata['delta']}" + ("; Late Edit" if metadata["late_edit"] else ""),
+            table_id=table_id, staff=user["username"], amount=metadata["delta"], severity="warning")
     if discount_amount > 0:
         record_session_event(
             db,
@@ -1181,6 +1252,8 @@ def stop_session(
         raise HTTPException(status_code=409, detail="Session was already checked out. Refresh the table.")
 
     queue_realtime_event(background_tasks, "table.updated", "floor", "live-floor")
+    if context["time_edit"]:
+        queue_realtime_event(background_tasks, "session.time_edited", "floor", "live-floor")
 
     return transaction_checkout_response(
         db,

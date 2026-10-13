@@ -1,5 +1,5 @@
 from fastapi import APIRouter, BackgroundTasks, HTTPException, Depends
-from pydantic import BaseModel, Field, model_validator
+from pydantic import BaseModel, Field, model_validator, ConfigDict
 from typing import Literal
 import json
 from pricing import tariff_catalog
@@ -11,8 +11,35 @@ from audit import log_action, require_manager_pin
 from deps import require_admin
 from hsr_config import get_ist_today_str
 from realtime import queue_realtime_event
+from session_controls import controls, DEFAULTS
 
 router = APIRouter()
+
+class SessionControls(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+    halfHourAlertsEnabled: bool = True
+    halfHourAlertStartAt: int = Field(default=30, ge=30, le=360, multiple_of=30)
+    overtimeThresholdMinutes: int = Field(default=180, ge=60, le=1440)
+    soundEnabled: bool = True
+    allowOwnerEditTime: bool = True
+    allowStaffEditTime: bool = True
+    showEditWarningOnReceipt: bool = False
+    amountChangeThreshold: int = Field(default=500, ge=0, le=100000)
+    dailyEditSoftCap: int = Field(default=5, ge=1, le=100)
+    lateEditWindowHours: int = Field(default=24, ge=1, le=168)
+
+@router.get("/session-controls")
+def get_session_controls(db: Session = Depends(get_db)):
+    return controls(get_or_create_settings(db))
+
+@router.post("/session-controls")
+def save_session_controls(body: SessionControls, background_tasks: BackgroundTasks, db: Session = Depends(get_db), user: dict = Depends(require_admin)):
+    settings = get_or_create_settings(db)
+    settings.session_controls_json = json.dumps({**DEFAULTS, **body.model_dump()})
+    log_action(db, "session_controls_updated", "Session reminders and time-edit permissions updated", staff=user["username"])
+    db.commit()
+    queue_realtime_event(background_tasks, "session.alert", "floor", "session-alerts")
+    return {"ok": True}
 
 
 def get_or_create_settings(db: Session) -> models.Settings:
