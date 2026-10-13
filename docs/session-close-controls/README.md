@@ -104,3 +104,19 @@ Production deployment confirmation is recorded in `deployment.json` after merge:
 every deployed JS/CSS asset must match its local SHA256 and Render's health
 revision must contain source commit `cba6f1e`, with both health and readiness 200.
 Until that file says `verified: true`, a push is not proof of a live deployment.
+
+Confirmed live on 2026-10-13: frontend source `43e4e2e`, all **19** JS/CSS assets
+match SHA256; entry `index-HGPpw919.js`, CSS `index-D1g-VnvD.css`. Render revision
+`ecce8a5cb5583fb3a56fd0edce4f811a6bbfee1f` contains backend source `cba6f1e`;
+health/readiness are both 200. Render did not need a new backend release for the
+frontend-only rollout/reload guards.
+
+`production-login/` has six anonymous production samples, both themes at
+1440/375/414px: Syne actually loaded, approved canvas colors retained, zero
+overflow/contrast errors, mobile 44px buttons. No credentials were entered and no
+login or business mutation was attempted. Authenticated feature interactions were
+verified only against disposable local data, not claimed as production mutations.
+
+QA cleanup: stopped the task's local servers; all rows in the dedicated SQLite
+fixture removed (zero residue); disposable PostgreSQL container removed. Existing
+user servers/work and the uncommitted presentation branch were left untouched.
