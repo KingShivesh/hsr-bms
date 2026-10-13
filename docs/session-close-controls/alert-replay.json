@@ -1,0 +1,19 @@
+{
+  "checks": [
+    {
+      "theme": "light",
+      "normalToastNotReplayed": true,
+      "unreadBellRetained": true,
+      "urgentRestoredOnce": true,
+      "actualBusinessWrites": 0
+    },
+    {
+      "theme": "dark",
+      "normalToastNotReplayed": true,
+      "unreadBellRetained": true,
+      "urgentRestoredOnce": true,
+      "actualBusinessWrites": 0
+    }
+  ],
+  "fixture": "UI-only REST response, no server writes"
+}

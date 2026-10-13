@@ -64,6 +64,12 @@ cannot be enabled until a real provider and delivery verification exist.
   acknowledged. Warning toasts sit bottom-right and below open checkout dialogs.
 - Sounds require an initial browser interaction and supported/unmuted audio.
   Closed/suspended browsers cannot promise immediate sound or visual delivery.
+- Per-tab seen IDs prevent repeat normal toasts/chimes on reload. Unacknowledged
+  urgent reminders restore visibly without a repeat sound. If browser storage is
+  unavailable, server threshold/acknowledgment uniqueness still holds.
+- During staggered deployment, an old quote response uses legacy frozen checkout
+  and retains payment/split parameters; new identity/time controls stay hidden
+  until the backend returns their capability marker.
 - The task is single-process, matching the documented SSE single-worker runtime.
   Before scaling workers, replace the in-process event broker with shared delivery.
 - Session Edits is admin-only, filterable by date/staff/reason/category, CSV-safe.

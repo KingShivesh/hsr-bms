@@ -57,6 +57,18 @@ bottom-right initially covered checkout buttons. Reminder toasts now have their
 own stack below modal overlays. Mobile customer choices now wrap into full-width
 44px actions. No forced-click workaround was used.
 
+Follow-up rollout checks (`rollout-compatibility.json`): four UI-only cases retain
+UPI/split payment, signed freeze and session key against old backend responses,
+with new identity/time controls withheld until their capability is present.
+All close requests were intercepted; zero business writes. The backend was
+already serving `ecce8a5` when this guard was checked, so this is forward rollout
+protection rather than evidence of a live failed payment.
+
+Reload checks (`alert-replay.json`): in both themes normal reminders do not replay
+their toast after a same-tab refresh; unread bell entries remain. Unacknowledged
+urgent reminders restore exactly one persistent toast, without a repeat chime.
+The seen set is bounded to current unread IDs in per-tab, per-login storage.
+
 ## Backend and production parity
 
 On a disposable loopback PostgreSQL 16 DB, with a **fresh virtualenv installed only

@@ -1,7 +1,7 @@
 import { formatCurrency as polishCurrency, formatDateTime as polishDateTime } from "../../utils/format.js";
 import { Icon as HsrIcon, Button as HsrButton, Input as HsrInput } from "../../components/ui/index.js";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { quoteSession, previewCheckout, closeWithProposal } from "../../api/index.js";
+import { quoteSession, stopSession, previewCheckout, closeWithProposal } from "../../api/index.js";
 import { Alert, Badge, Button, Drawer } from "../../components/ui/index.js";
 import { useToast } from "../../components/toastContext.js";
 import { tariffDescription } from "../sessions/tariffs.js";
@@ -75,7 +75,7 @@ export default function CheckoutPanel({ table, open, onClose, onComplete }) {
     setError("");
     try {
       const current = quoteRef.current;
-      const res = current ? await previewCheckout(tableId, {
+      const res = current?.can_edit_time != null ? await previewCheckout(tableId, {
         ...proposalRef.current, session_key: current.session_key,
         closed_at_ms: nextClosedAtMs || current.session_ended_at,
         checkout_token_value: nextCheckoutToken || current.checkout_token,
@@ -187,12 +187,14 @@ export default function CheckoutPanel({ table, open, onClose, onComplete }) {
     setFinalizing(true);
     finalizingRef.current = true;
     setError("");
+    const splitParts = paymentMethod === "Split" ? Object.entries(paymentSplit).filter(([, amount]) => Number(amount) > 0).map(([method, amount]) => ({ method, amount: Number(amount) })) : [];
     try {
-      const res = await closeWithProposal(tableId, {
+      const res = quote.can_edit_time == null ? await stopSession(tableId, paymentMethod, quote.payer_name || "", discountType,
+        discountType === "rupee" ? Number(discountValue) || 0 : 0, closedAtMs, discountReason.trim(), splitParts, sessionKey, quote.checkout_token) : await closeWithProposal(tableId, {
         ...proposalRef.current, payment_method: paymentMethod, discount_type: discountType,
         discount_value: discountType === "rupee" ? Number(discountValue) || 0 : 0,
         closed_at_ms: closedAtMs, checkout_token_value: quote.checkout_token, session_key: sessionKey,
-        payment_split: paymentMethod === "Split" ? Object.entries(paymentSplit).filter(([, amount]) => Number(amount) > 0).map(([method, amount]) => ({ method, amount: Number(amount) })) : [],
+        payment_split: splitParts,
       }, discountReason.trim());
       setReceipt(res.data || {});
       showToast(`${String(tableId).toUpperCase()} closed via ${paymentMethod}`, "success");
@@ -270,7 +272,7 @@ export default function CheckoutPanel({ table, open, onClose, onComplete }) {
 
               {quote.checkout_blocked && <Alert tone="warning">Close the open frame before checkout.</Alert>}
               {quote.time_edit && <Alert tone="warning" title="Duration adjusted">{quote.dur} min (adjusted from {quote.time_edit.original_duration} min) · {quote.time_edit.reason_label} · {quote.time_edit.staff}</Alert>}
-              {quote.rate_delta !== 0 && <Alert tone="info">Member rate {money(quote.original_rate)}/hr → {money(quote.rate)}/hr · Bill change {money(quote.rate_delta)}</Alert>}
+              {Number.isFinite(quote.rate_delta) && quote.rate_delta !== 0 && <Alert tone="info">Member rate {money(quote.original_rate)}/hr → {money(quote.rate)}/hr · Bill change {money(quote.rate_delta)}</Alert>}
               <div className="checkout-summary-grid">
                 <div><span>Table</span><strong>{money(quote.ply)}</strong></div>
                 <div><span>Food</span><strong>{money(quote.famt)}</strong></div>
@@ -279,7 +281,7 @@ export default function CheckoutPanel({ table, open, onClose, onComplete }) {
               </div>
 
               {quote.can_edit_time && <AdjustSessionTime quote={quote} value={proposal.time_override} onChange={value => updateProposal("time_override", value)} disabled={finalizing || loading} />}
-              <CustomerAtClose value={proposal.customer} onChange={value => updateProposal("customer", value)} disabled={finalizing} />
+              {quote.can_edit_time != null && <CustomerAtClose value={proposal.customer} onChange={value => updateProposal("customer", value)} disabled={finalizing} />}
 
               {!!splitRows.length && (
                 <section className="checkout-section">

@@ -6,12 +6,19 @@ import { SessionAlertsContext } from "./alertsContext.js";
 import { formatCurrency } from "../../utils/format.js";
 import "./start-session.css";
 
+function readSeenAlerts() {
+  try {
+    const ids = JSON.parse(sessionStorage.getItem(`hsr:seen-alerts:${localStorage.getItem("username")}`) || "[]");
+    return new Set(Array.isArray(ids) ? ids.filter(Number.isInteger) : []);
+  } catch { return new Set(); }
+}
+
 export default function SessionAlertsProvider({ children, onNavigate }) {
   const { showToast, dismissToast } = useToast();
   const [alerts, setAlerts] = useState([]);
   const [urgentKeys, setUrgentKeys] = useState(new Set());
   const [ownerSummaries, setOwnerSummaries] = useState([]);
-  const seen = useRef(new Set());
+  const seen = useRef(readSeenAlerts());
   const toastIds = useRef(new Map());
   const audio = useRef(null);
   const version = useRef(0);
@@ -46,10 +53,11 @@ export default function SessionAlertsProvider({ children, onNavigate }) {
         if (!activeIds.has(id)) { dismissToast(toastId); toastIds.current.delete(id); }
       }
       const latest = new Map();
-      for (const row of rows) if (!row.paused && !seen.current.has(row.id)) latest.set(row.session_key, row);
+      for (const row of rows) if (!row.paused && (!seen.current.has(row.id) || (row.intensity === "urgent" && !toastIds.current.has(row.id)))) latest.set(row.session_key, row);
       for (const row of latest.values()) {
+        const firstDelivery = !seen.current.has(row.id);
         for (const item of rows.filter(item => item.session_key === row.session_key)) seen.current.add(item.id);
-        if (data.config.soundEnabled && audio.current?.state === "running") {
+        if (firstDelivery && data.config.soundEnabled && audio.current?.state === "running") {
           const oscillator = audio.current.createOscillator();
           const gain = audio.current.createGain();
           oscillator.frequency.value = row.intensity === "urgent" ? 660 : 440;
@@ -65,13 +73,14 @@ export default function SessionAlertsProvider({ children, onNavigate }) {
           secondaryActionLabel: "Dismiss", onSecondaryAction: () => acknowledge(row.id),
         });
         toastIds.current.set(row.id, id);
-        if (row.intensity === "urgent") {
+        if (row.intensity === "urgent" && firstDelivery) {
           setUrgentKeys(current => new Set([...current, row.session_key]));
           window.clearTimeout(pulseTimer.current);
           pulseTimer.current = window.setTimeout(() => setUrgentKeys(new Set()), 5000);
         }
       }
       seen.current = new Set([...seen.current].filter(id => activeIds.has(id)));
+      try { sessionStorage.setItem(`hsr:seen-alerts:${localStorage.getItem("username")}`, JSON.stringify([...seen.current])); } catch { /* Reminders still work without browser storage. */ }
     } catch {
       // A transient reminder read must never interrupt table operation.
     }
