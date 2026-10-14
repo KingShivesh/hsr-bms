@@ -63,6 +63,22 @@ Raw observations: [before measurements](before/measurements.json),
 | Visual / contrast | 24 session-flow captures plus before/after and mobile feedback captures. Both themes. Whole-app scanner: 17 routes, 0 violations, 0 errors. [Contrast](contrast.json) |
 | Build safeguards | Lint, production build, theme guard, backend syntax, shared-stream/watchdog test, scanner real-violation fixture pass. |
 
+Final sampled pending-state DOM updates: 2.3-4.0ms on the local production build,
+with zero button dimension changes. This is not a claim about every physical
+display's paint cadence.
+
+## Shipped
+
+`76e5ef762b7a315c2fb56f5f814e7cffab1770f5` was fast-forward merged and pushed to
+`main`. Production verification at 2026-10-14 14:25 UTC confirmed all 21 JS/CSS
+assets match the production-targeted build byte-for-byte, including entry
+`index-BYJuUkPM.js`. Backend `/health` and `/ready` returned 200; database ready.
+The unchanged backend revision `23e06de` contains the required session-food/credit
+backend commit `d8acfaa`. [Exact hashes and ancestry](deployment.json).
+
+Temporary QA servers were stopped. Guarded local cleanup confirmed **0 rows in
+all disposable database tables**. No production mutation or new account occurred.
+
 ![Matched before and after](comparison/comparison.png)
 
 The image uses identical frozen data and an 800ms request deliberately rejected
