@@ -10,6 +10,7 @@ import SessionWorkspace from "../sessions/SessionWorkspace.jsx";
 import TableGrid from "./TableGrid.jsx";
 import StartSessionModal from "../sessions/StartSessionModal.jsx";
 import ProductSelector from "../orders/ProductSelector.jsx";
+import SessionOrders from "../orders/SessionOrders.jsx";
 import CheckoutPanel from "../checkout/CheckoutPanel.jsx";
 
 function todayLabel() {
@@ -63,6 +64,7 @@ export default function LiveFloor({ role = "admin", onNavigate, newSessionReques
   const [newSessionTableId, setNewSessionTableId] = useState(requestedTable);
   const [checkoutTableId, setCheckoutTableId] = useState(requestedAction === "checkout" ? requestedTable : "");
   const [foodTableId, setFoodTableId] = useState("");
+  const [ordersTableId, setOrdersTableId] = useState("");
   const [busyTables, setBusyTables] = useState({});
   const pendingTablesRef = useRef(new Set());
   const floorRefreshTimerRef = useRef(null);
@@ -112,6 +114,7 @@ export default function LiveFloor({ role = "admin", onNavigate, newSessionReques
       if (
         event.type === "table.updated" ||
         event.type === "table.maintenance_changed" ||
+        event.type === "session.orders.updated" ||
         event.type === "system.sync_required"
       ) {
         scheduleFloorRefresh();
@@ -188,6 +191,7 @@ export default function LiveFloor({ role = "admin", onNavigate, newSessionReques
   );
   const checkoutTable = tables.find((table) => table.id === checkoutTableId);
   const foodTable = tables.find((table) => table.id === foodTableId);
+  const ordersTable = tables.find((table) => table.id === ordersTableId);
 
   async function togglePause(table) {
     if (pendingTablesRef.current.has(table.id)) return;
@@ -299,7 +303,8 @@ export default function LiveFloor({ role = "admin", onNavigate, newSessionReques
                   setCheckoutTableId(table.id);
                 }}
                 onPause={togglePause}
-                onFood={(table) => setFoodTableId(table.id)}
+          onFood={(table) => setFoodTableId(table.id)}
+          onOrders={(table) => setOrdersTableId(table.id)}
                 busyTables={busyTables}
                 onReviewBooking={(table) => openNewSession(table.id)}
                 onSaveRate={saveInlineRate}
@@ -331,9 +336,12 @@ export default function LiveFloor({ role = "admin", onNavigate, newSessionReques
         }}
       />}
       <Modal open={!!foodTable?.session} portal title={`Session food · ${String(foodTableId).toUpperCase()}`} onClose={() => setFoodTableId("")} className="lf-food-modal" size="lg">
-        <ProductSelector tableId={foodTableId} players={foodTable?.session?.players || []} onClose={() => setFoodTableId("")} onAdded={async () => { await loadFloor(); setFoodTableId(""); }} />
+        <ProductSelector tableId={foodTableId} sessionKey={foodTable?.session?.session_key} players={foodTable?.session?.players || []} onClose={() => setFoodTableId("")} onAdded={async () => { await loadFloor(); setFoodTableId(""); }} />
       </Modal>
       <CheckoutPanel table={checkoutTable} open={!!checkoutTable} onClose={() => setCheckoutTableId("")} onComplete={loadFloor} />
+      <Drawer portal open={!!ordersTable?.session} title={`Canteen orders · ${String(ordersTableId).toUpperCase()}`} onClose={() => setOrdersTableId("")}>
+        {ordersTable?.session && <SessionOrders table={ordersTable} onChanged={loadFloor} onAdd={() => { setOrdersTableId(""); setFoodTableId(ordersTableId); }} />}
+      </Drawer>
     </section>
   );
 }

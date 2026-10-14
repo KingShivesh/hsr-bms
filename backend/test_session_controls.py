@@ -97,21 +97,21 @@ class SessionControlsTests(unittest.TestCase):
             self.call("POST", "/sessions/checkout-preview/t1", expected=422, json={**body, "time_override": override})
 
     def test_customer_preview_creates_nothing_and_skip_is_anonymous(self):
-        body = self.proposal(customer={"name": "QA Walk-in", "phone": "9876500001"})
+        body = self.proposal(customer={"name": "QA Walk-in"})
         self.call("POST", "/sessions/checkout-preview/t1", json=body)
         with SessionLocal() as db:
             self.assertEqual(db.query(models.Member).count(), 0)
-        body["customer"] = {"name": None, "phone": None}
+        body["customer"] = {"name": None}
         receipt = self.call("POST", "/sessions/stop/t1", json=body)
         self.assertIsNone(receipt["nm"])
         with SessionLocal() as db:
             self.assertEqual(db.query(models.Member).count(), 0)
 
-    def test_phone_capture_links_existing_without_downgrade(self):
+    def test_explicit_member_links_existing_without_downgrade(self):
         with SessionLocal() as db:
             db.add(models.Member(customer_id="CUSQA", name="QA Member", phone="+91 98765 00001", record_type="lp_member"))
             db.commit()
-        body = self.proposal(customer={"phone": "9876500001", "recalculate_rate": False})
+        body = self.proposal(customer={"member_id": "CUSQA", "recalculate_rate": False})
         receipt = self.call("POST", "/sessions/stop/t1", json=body)
         self.assertEqual(receipt["member_id"], "CUSQA")
         with SessionLocal() as db:
@@ -119,28 +119,29 @@ class SessionControlsTests(unittest.TestCase):
             self.assertEqual(db.query(models.Member).one().record_type, "lp_member")
 
     def test_phone_only_profile_delete_undo_preserves_type(self):
-        body = self.proposal(customer={"phone": "9876500001"})
-        receipt = self.call("POST", "/sessions/stop/t1", json=body)
-        self.call("DELETE", f"/members/{receipt['member_id']}")
-        restored = self.call("POST", f"/members/{receipt['member_id']}/restore", json={"name": None, "phone": "9876500001", "record_type": "walk_in"})
+        with SessionLocal() as db:
+            db.add(models.Member(customer_id="CUSQA", name=None, phone="9876500001", record_type="walk_in"))
+            db.commit()
+        self.call("DELETE", "/members/CUSQA")
+        restored = self.call("POST", "/members/CUSQA/restore", json={"name": None, "phone": "9876500001", "record_type": "walk_in"})
         self.assertEqual(restored["record_type"], "walk_in")
         self.assertIsNone(restored["nm"])
 
-    def test_phone_only_creates_lightweight_record_on_close(self):
-        body = self.proposal(customer={"phone": "9876500001"})
+    def test_name_only_never_creates_member_record(self):
+        body = self.proposal(customer={"name": "QA Name-only"})
         receipt = self.call("POST", "/sessions/stop/t1", json=body)
-        self.assertIsNone(receipt["nm"])
+        self.assertEqual(receipt["nm"], "QA Name-only")
+        self.assertEqual(receipt["player_type"], "walk_in")
+        self.assertIsNone(receipt["member_id"])
         with SessionLocal() as db:
-            member = db.query(models.Member).one()
-            self.assertEqual(member.record_type, "walk_in")
-            self.assertIsNone(member.name)
+            self.assertEqual(db.query(models.Member).count(), 0)
         self.start()
         self.now += 60000
         quote = self.quote()
         body.update(session_key=quote["session_key"], closed_at_ms=quote["session_ended_at"], checkout_token_value=quote["checkout_token"])
         self.call("POST", "/sessions/stop/t1", json=body)
         with SessionLocal() as db:
-            self.assertEqual(db.query(models.Member).count(), 1)
+            self.assertEqual(db.query(models.Member).count(), 0)
 
     def test_configured_member_rate_recalculates_from_scratch(self):
         with SessionLocal() as db:
@@ -161,13 +162,14 @@ class SessionControlsTests(unittest.TestCase):
         duplicate = self.call("POST", "/sessions/stop/t1", json=body)
         self.assertEqual(receipt["session_key"], duplicate["session_key"])
 
-    def test_split_payments_preserve_existing_validation(self):
-        body = self.proposal(30, payment_method="Split", payment_split=[{"method": "Cash", "amount": 100}, {"method": "UPI", "amount": 60}])
-        invalid = {**body, "payment_split": [{"method": "Cash", "amount": 1}]}
-        self.call("POST", "/sessions/stop/t1", expected=400, json=invalid)
+    def test_close_has_one_payment_method_only(self):
+        body = self.proposal(30)
+        for method in ["Card", "Split", "invented"]:
+            self.call("POST", "/sessions/stop/t1", expected=422, json={**body, "payment_method": method})
+        self.call("POST", "/sessions/stop/t1", expected=422, json={**body, "payment_split": [{"method": "Cash", "amount": 160}]})
         receipt = self.call("POST", "/sessions/stop/t1", json=body)
         self.assertEqual(receipt["tot"], 160)
-        self.assertEqual(receipt["payment_method"], "Split")
+        self.assertEqual(receipt["payment_method"], "Cash")
 
     def test_thresholds_are_exact_durable_and_suppressed_while_paused(self):
         self.start()

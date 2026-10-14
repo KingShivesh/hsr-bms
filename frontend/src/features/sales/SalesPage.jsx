@@ -132,7 +132,7 @@ export default function SalesPage() {
     const tableRevenue = history.reduce((sum, row) => sum + billTableCharge(row), 0);
     const attachedFood = history.reduce((sum, row) => sum + billFoodCharge(row), 0);
     const counterFood = foodOrders.reduce((sum, row) => sum + Number(row.total || 0), 0);
-    const payment = { Cash: 0, UPI: 0, Card: 0 };
+    const payment = { Cash: 0, UPI: 0, Card: 0, Credit: 0 };
     history.forEach((row) => {
       const method = paymentMethod(row);
       payment[method in payment ? method : "Cash"] += billTotal(row);
@@ -200,6 +200,7 @@ export default function SalesPage() {
         <div><span>Cash</span><strong>{money(summary.payment.Cash)}</strong><em>Collected in cash</em></div>
         <div><span>UPI</span><strong>{money(summary.payment.UPI)}</strong><em>Digital payments</em></div>
         <div><span>Card</span><strong>{money(summary.payment.Card)}</strong><em>Card payments</em></div>
+        <div><span>Credit</span><strong>{money(summary.payment.Credit)}</strong><em>Outstanding, not collected</em></div>
       </div>
 
       <div className="op2-panel">

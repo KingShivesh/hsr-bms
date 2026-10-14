@@ -3,7 +3,8 @@ import json
 import math
 
 from fastapi import HTTPException
-from pydantic import BaseModel, Field, field_validator
+from pydantic import BaseModel, Field, field_validator, ConfigDict
+from typing import Literal
 
 import models
 from deps import verify_password
@@ -25,6 +26,7 @@ DEFAULTS = {
     "allowOwnerEditTime": True, "allowStaffEditTime": True,
     "showEditWarningOnReceipt": False, "amountChangeThreshold": 500,
     "dailyEditSoftCap": 5, "lateEditWindowHours": 24,
+    "upiId": "",
 }
 
 def controls(settings):
@@ -35,12 +37,12 @@ def can_edit_time(user, settings):
     return (user.get("role") == "admin" and config["allowOwnerEditTime"]) or (user.get("role") == "staff" and config["allowStaffEditTime"])
 
 class CustomerProposal(BaseModel):
+    model_config = ConfigDict(extra="forbid")
     member_id: str | None = None
     name: str | None = Field(default=None, max_length=80)
-    phone: str | None = Field(default=None, pattern=r"^[0-9]{10}$")
     recalculate_rate: bool = True
 
-    @field_validator("name", "phone", mode="before")
+    @field_validator("name", mode="before")
     @classmethod
     def trim(cls, value):
         return value.strip() or None if isinstance(value, str) else value
@@ -60,15 +62,17 @@ class TimeOverride(BaseModel):
         return value
 
 class CheckoutProposal(BaseModel):
+    model_config = ConfigDict(extra="forbid")
     customer: CustomerProposal | None = None
     time_override: TimeOverride | None = None
     session_key: str = Field(min_length=1)
     closed_at_ms: float | None = None
     checkout_token_value: str = ""
-    payment_method: str = "Cash"
+    payment_method: Literal["UPI", "Cash", "Credit"] = "Cash"
+    payment_reference: str = Field(default="", max_length=120)
+    expected_total: int | None = Field(default=None, ge=0)
     discount_type: str = "none"
     discount_value: int = 0
-    payment_split: list[dict] = Field(default_factory=list, max_length=3)
 
 def resolve_customer(db, session, customer):
     if customer is None:
@@ -78,16 +82,6 @@ def resolve_customer(db, session, customer):
         if not member or member.record_type != "lp_member":
             raise HTTPException(404, "Loyalty member not found")
         return member.name, member.phone or None, member.customer_id, member
-    if customer.phone:
-        phone = models.Member.phone
-        from sqlalchemy import func
-        for separator in (" ", "-", "(", ")", "+"):
-            phone = func.replace(phone, separator, "")
-        matches = db.query(models.Member).filter(phone.in_([customer.phone, "91" + customer.phone])).all()
-        if len(matches) > 1:
-            raise HTTPException(409, "Multiple profiles share this phone; select the correct member")
-        member = matches[0] if matches else None
-        return customer.name or (member.name if member else None), customer.phone, member.customer_id if member else None, member
     return customer.name, None, None, None
 
 def checkout_context(db, session, end_ms, settings, frames, user, proposal=None, *, enforce_pin=False):

@@ -1,0 +1,23 @@
+.lf-table-card .session-charge-lines { display: grid; gap: var(--space-1); margin-block: var(--space-2); color: inherit; }
+.lf-table-card .session-charge-lines > div { display: flex; justify-content: space-between; gap: var(--space-2); }
+.lf-table-card .session-charge-lines b { font-family: var(--font-mono); font-size: var(--text-sm); }
+.lf-table-card .session-canteen-summary { display: grid; gap: var(--space-1); width: 100%; min-height: 44px; padding: var(--space-2); margin-top: var(--space-2); color: #ffffff; background: transparent; border: 1px solid currentColor; border-radius: 4px; text-align: left; font-size: var(--text-sm); line-height: var(--leading-sm); white-space: normal; overflow-wrap: anywhere; }
+.lf-table-card .session-canteen-summary > span { display: block; font-size: var(--text-sm); line-height: var(--leading-sm); }
+.lf-table-card .session-canteen-summary .session-order-dot { display: inline-block; width: 8px; height: 8px; margin-right: var(--space-1); border: 1px solid currentColor; border-radius: 50%; background: var(--warning); }
+.session-orders { display: grid; gap: var(--space-4); }
+.session-order-line { padding-block: var(--space-4); border-bottom: 1px solid var(--border); }
+.session-order-line-head { display: flex; justify-content: space-between; align-items: start; gap: var(--space-2); overflow-wrap: anywhere; }
+.session-order-line-head > strong { min-width: 0; }
+.session-order-line-head b { flex-shrink: 0; font-family: var(--font-mono); }
+.session-order-line p { color: var(--text-secondary); margin-block: var(--space-2); }
+.session-order-edit { display: grid; grid-template-columns: minmax(64px, 1fr) auto auto; gap: var(--space-2); align-items: end; }
+.session-order-edit label { display: grid; gap: var(--space-1); }
+.session-order-cancel { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-top: var(--space-4); align-items: center; }
+.session-order-cancel > span { width: 100%; }
+.checkout-panel .checkout-payment-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.checkout-upi { margin-top: var(--space-3); overflow-wrap: anywhere; }
+@media (max-width: 480px) {
+  .session-order-edit { grid-template-columns: minmax(64px, 1fr) auto; }
+  .session-order-edit > button:last-child { grid-column: 1 / -1; }
+}
+.lf-table-card .lf-table-money { display: grid; align-items: stretch; gap: var(--space-2); }

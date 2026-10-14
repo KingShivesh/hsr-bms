@@ -57,7 +57,7 @@ function isFullName(name) {
   return name.trim().length > 0;
 }
 
-const PAYMENT_METHODS = ["Cash", "UPI", "Card", "Split"];
+const PAYMENT_METHODS = ["UPI", "Cash", "Credit"];
 const DISCOUNT_OPTIONS = [
   { id: "none", label: "No discount" },
   { id: "percent_5", label: "5%" },
@@ -749,12 +749,6 @@ function CheckoutQuoteScreen({
   const rawTotal = rec.raw_total ?? total;
   const discountAmount = rec.discount_amount || 0;
   const frozenAt = rec.session_ended_at || quote.closedAtMs || "";
-  const splitRows = quote.paymentSplit || { Cash: "", UPI: "", Card: "" };
-  const splitTotal = ["Cash", "UPI", "Card"].reduce(
-    (sum, method) => sum + (parseInt(splitRows[method], 10) || 0),
-    0,
-  );
-  const splitRemaining = total - splitTotal;
 
   return (
     <div className="checkout-bill-screen" role="dialog" aria-modal="true">
@@ -935,6 +929,8 @@ function CheckoutQuoteScreen({
                 type="button"
                 className={`table-payment-btn ${quote.paymentMethod === method ? "active" : ""}`}
                 onClick={() => onPaymentChange(method)}
+                disabled={method === "Credit" && !rec.member_id}
+                title={method === "Credit" && !rec.member_id ? "Link a member to charge to credit." : method}
               >
                 <HsrIcon
                   className={`ti ${
@@ -942,9 +938,7 @@ function CheckoutQuoteScreen({
                       ? "ti-cash"
                       : method === "UPI"
                         ? "ti-qrcode"
-                        : method === "Card"
-                          ? "ti-credit-card"
-                          : "ti-arrows-split"
+                        : "ti-credit-card"
                   }`}
                   aria-hidden="true"
                 />
@@ -952,33 +946,6 @@ function CheckoutQuoteScreen({
               </HsrButton>
             ))}
           </div>
-          {quote.paymentMethod === "Split" && (
-            <div className="checkout-split-payment-box">
-              {["Cash", "UPI", "Card"].map((method) => (
-                <label className="table-field-stack" key={method}>
-                  <span>{method}</span>
-                  <HsrInput
-                    className="table-mini-input"
-                    type="number"
-                    min="0"
-                    inputMode="numeric"
-                    value={splitRows[method] || ""}
-                    onChange={(event) =>
-                      onPaymentChange("Split", {
-                        ...splitRows,
-                        [method]: event.target.value,
-                      })
-                    }
-                  />
-                </label>
-              ))}
-              <div className={`checkout-split-payment-total ${splitRemaining === 0 ? "ok" : "warn"}`}>
-                {splitRemaining === 0
-                  ? "Split matches final bill"
-                  : `Remaining ₹${splitRemaining}`}
-              </div>
-            </div>
-          )}
         </section>
 
         <div className="checkout-final-actions">

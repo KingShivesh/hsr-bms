@@ -64,6 +64,8 @@ def ensure_runtime_columns():
             "session_key": "VARCHAR(255) DEFAULT ''",
         },
         "transactions": {
+            "payment_status": "VARCHAR(20) NOT NULL DEFAULT 'paid'",
+            "payment_reference": "VARCHAR(120) DEFAULT ''",
             "customer_phone": "VARCHAR(255)",
             "time_edit_json": "TEXT DEFAULT '{}'",
             "tariff_mode": "VARCHAR(50) DEFAULT 'hourly'",
@@ -85,6 +87,7 @@ def ensure_runtime_columns():
             "payment_method": "VARCHAR(50) DEFAULT 'Cash'",
         },
         "members": {
+            "current_balance": "INTEGER NOT NULL DEFAULT 0",
             "record_type": "VARCHAR(20) NOT NULL DEFAULT 'lp_member'",
             "hourly_rate": "INTEGER",
             "phone": "VARCHAR(255) DEFAULT ''",

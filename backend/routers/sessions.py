@@ -18,10 +18,11 @@ from realtime import queue_realtime_event
 from session_identity import is_active_session
 from routers.bookings import eligible_booking, booking_prices
 from session_controls import CheckoutProposal, checkout_context, controls
+from session_food import session_food_lines, store_session_food
 
 router = APIRouter()
 MAX_SESSION_DURATION_MINUTES = 12 * 60
-PAYMENT_METHODS = {"Cash", "UPI", "Card", "Split"}
+PAYMENT_METHODS = {"Cash", "UPI", "Credit"}
 DISCOUNT_TYPES = {"none", "percent_5", "percent_10", "rupee"}
 GENERIC_SESSION_PLAYER_NAMES = {"player one", "player two", "walk in customer"}
 
@@ -90,7 +91,19 @@ class FoodItem(BaseModel):
     item: str
     qty:  int = Field(ge=1, le=100)
     mrp:  int | None = Field(default=None, ge=1, le=100000)
+    session_key: str | None = None
     player_name: str = ""
+
+class SessionFoodUpdate(BaseModel):
+    session_key: str = Field(min_length=1)
+    quantity: int | None = Field(default=None, ge=1, le=100)
+    served: bool | None = None
+
+    @model_validator(mode="after")
+    def has_change(self):
+        if self.quantity is None and self.served is None:
+            raise ValueError("Choose a quantity or served status")
+        return self
 
 class Reservation(BaseModel):
     name: str
@@ -200,38 +213,6 @@ def distribute_amount(amount: int, count: int) -> list[int]:
     base = amount // count
     remainder = amount % count
     return [base + (1 if index < remainder else 0) for index in range(count)]
-
-def parse_payment_split(raw: str | None, total: int, fallback_method: str) -> tuple[str, list[dict]]:
-    fallback_method = fallback_method if fallback_method in {"Cash", "UPI", "Card"} else "Cash"
-    if not raw:
-        return fallback_method, [{"method": fallback_method, "amount": total}]
-
-    try:
-        parsed = json.loads(raw)
-    except json.JSONDecodeError:
-        raise HTTPException(status_code=400, detail="Invalid payment split")
-    if not isinstance(parsed, list):
-        raise HTTPException(status_code=400, detail="Invalid payment split")
-
-    split_rows = []
-    for row in parsed:
-        if not isinstance(row, dict):
-            continue
-        method = str(row.get("method") or "").strip()
-        amount = int(row.get("amount") or 0)
-        if method not in {"Cash", "UPI", "Card"}:
-            raise HTTPException(status_code=400, detail="Invalid split payment method")
-        if amount < 0:
-            raise HTTPException(status_code=400, detail="Split amount cannot be negative")
-        if amount > 0:
-            split_rows.append({"method": method, "amount": amount})
-
-    if not split_rows:
-        raise HTTPException(status_code=400, detail="Enter at least one payment amount")
-    if sum(row["amount"] for row in split_rows) != total:
-        raise HTTPException(status_code=400, detail="Split payments must match the final bill")
-    stored_method = split_rows[0]["method"] if len(split_rows) == 1 else "Split"
-    return stored_method, split_rows
 
 def calculate_discount(raw_total: int, discount_type: str | None, discount_value: int | None) -> tuple[str, int, int]:
     normalized_type = (discount_type or "none").strip().lower()
@@ -438,6 +419,8 @@ def transaction_checkout_response(
         "peak_surcharge": checkout.get("peak_surcharge", t.peak_surcharge) if checkout else t.peak_surcharge,
         "peak_label": checkout.get("peak_label", "") if checkout else "",
         "payment_method": t.payment_method,
+        "payment_status": t.payment_status,
+        "payment_reference": t.payment_reference or "",
         "payment_split": payment_split,
         "discount_reason": t.discount_reason,
         "billing_mode": t.billing_mode,
@@ -824,11 +807,15 @@ def quote_session(
     ensure_session_key(db, sess)
     if proposal and proposal.session_key != sess.session_key:
         raise HTTPException(409, "This checkout is stale. Refresh the table.")
-    if proposal and payment_method not in PAYMENT_METHODS:
-        raise HTTPException(422, "Choose Cash, UPI or Card; credit settlement is not configured")
+    if payment_method not in PAYMENT_METHODS:
+        raise HTTPException(422, "Choose UPI, Cash or Credit")
     quoted_at_ms = checkout_clock_ms(sess, closed_at_ms, token=checkout_token_value, issuing=True)
     frames = active_session_frames(db, sess)
     context = checkout_context(db, sess, quoted_at_ms, settings, frames, user, proposal)
+    if payment_method == "Credit" and not context["member_id"]:
+        raise HTTPException(422, "Credit requires a linked member")
+    if payment_method == "Credit" and not db.query(models.Member).filter_by(customer_id=context["member_id"], record_type="lp_member").first():
+        raise HTTPException(422, "Credit requires a linked member")
     started_at = context["started_at"]
     elapsed_ms = context["elapsed_ms"]
     elapsed_ms = max(0, elapsed_ms)
@@ -844,8 +831,6 @@ def quote_session(
     play      = checkout["play"]
     food      = checkout["food"]
     raw_total = checkout["total"]
-    if payment_method not in PAYMENT_METHODS:
-        payment_method = "Cash"
     discount_type, discount_amount, total = calculate_discount(
         raw_total,
         discount_type,
@@ -853,7 +838,7 @@ def quote_session(
     )
     assert_discount_allowed(discount_type, discount_amount, user)
 
-    food_items = json.loads(sess.food_items or "[]")
+    food_items = session_food_lines(sess)
     food_str   = ", ".join(f"{x['item']} x{x['qty']}" for x in food_items) or "None"
     billing_mode = normalize_billing_mode(getattr(sess, "billing_mode", "single"), sess.split)
     players = json.loads(getattr(sess, "players_json", "[]") or "[]")
@@ -908,7 +893,7 @@ def quote_session(
         "original_rate": context["original_rate"], "rate": context["rate"],
         "original_total": context["original_total"], "rate_delta": context["rate_delta"],
         "time_edit": context["time_edit"], "pin_required": context["pin_required"],
-        "player_type": sess.player_type,
+        "player_type": ("member" if context["member_id"] else "walk_in" if context["name"] else "guest") if proposal and proposal.customer is not None else sess.player_type,
         "member_id": context["member_id"],
         "booking_id": sess.booking_id,
         "dur": minutes,
@@ -927,6 +912,8 @@ def quote_session(
         "peak_surcharge": checkout["peak_surcharge"],
         "peak_label": checkout["peak_label"],
         "payment_method": payment_method,
+        "payment_methods": ["UPI", "Cash", "Credit"],
+        "upi_id": controls(settings)["upiId"],
         "billing_mode": billing_mode,
         "session_key": ensure_session_key(db, sess),
         "session_started_at": started_at,
@@ -978,9 +965,10 @@ def stop_session(
             raise HTTPException(409, "This checkout is stale. Refresh the table.")
         payment_method, discount_type, discount_value = proposal.payment_method, proposal.discount_type, proposal.discount_value
         closed_at_ms, checkout_token_value = proposal.closed_at_ms, proposal.checkout_token_value
-        payment_split_json = json.dumps(proposal.payment_split) if proposal.payment_split else ""
-        if payment_method not in PAYMENT_METHODS:
-            raise HTTPException(422, "Choose Cash, UPI or Card; credit settlement is not configured")
+    if payment_method not in PAYMENT_METHODS:
+        raise HTTPException(422, "Choose UPI, Cash or Credit")
+    if payment_split_json:
+        raise HTTPException(422, "Choose one payment method for session close")
     if expected_session_key and expected_session_key != actual_session_key:
         raise HTTPException(status_code=409, detail="This checkout is stale. Refresh the table and try again.")
     existing_transaction = transaction_for_session_key(db, actual_session_key)
@@ -1014,21 +1002,13 @@ def stop_session(
 
     if proposal and proposal.customer is not None:
         sess.customer_name, sess.customer_phone, sess.member_id = context["name"], context["phone"], context["member_id"]
-        if context["phone"] and not context["member_id"]:
-            from routers.members import _next_customer_id
-            member = models.Member(customer_id=_next_customer_id(db), name=context["name"], phone=context["phone"], record_type="walk_in")
-            db.add(member)
-            db.flush()
-            sess.member_id = member.customer_id
-        sess.player_type = "member" if proposal.customer.member_id else "guest"
+        sess.player_type = "member" if context["member_id"] else "walk_in" if context["name"] else "guest"
         if sess.billing_mode == "single":
             sess.players_json = json.dumps([sess.customer_name] if sess.customer_name else [])
 
     play            = checkout["play"]
     food            = checkout["food"]
     raw_total       = checkout["total"]
-    if payment_method not in PAYMENT_METHODS:
-        payment_method = "Cash"
     discount_type, discount_amount, total = calculate_discount(
         raw_total,
         discount_type,
@@ -1036,15 +1016,18 @@ def stop_session(
     )
     assert_discount_allowed(discount_type, discount_amount, user)
     discount_reason = normalize_person_name(discount_reason)
+    if proposal and proposal.expected_total is not None and proposal.expected_total != total:
+        raise HTTPException(409, "The canteen bill changed on another device. Reopen checkout to review the latest total.")
     if discount_amount > 0 and not discount_reason:
         raise HTTPException(status_code=400, detail="Enter a reason for the discount.")
-    payment_method, payment_split = parse_payment_split(
-        payment_split_json,
-        total,
-        payment_method,
-    )
+    credit_member = None
+    if payment_method == "Credit":
+        credit_member = db.query(models.Member).filter(models.Member.customer_id == sess.member_id, models.Member.record_type == "lp_member").with_for_update().first() if sess.member_id else None
+        if not credit_member:
+            raise HTTPException(422, "Credit requires a linked member")
+    payment_split = [] if credit_member else [{"method": payment_method, "amount": total}]
 
-    food_items = json.loads(sess.food_items or "[]")
+    food_items = session_food_lines(sess)
     food_str   = ", ".join(f"{x['item']} x{x['qty']}" for x in food_items) or "None"
     billing_mode = normalize_billing_mode(getattr(sess, "billing_mode", "single"), sess.split)
     players = json.loads(getattr(sess, "players_json", "[]") or "[]")
@@ -1106,11 +1089,6 @@ def stop_session(
     if discount_amount > 0:
         discount_note = f"Discount ₹{discount_amount} applied; original total ₹{raw_total}; reason: {discount_reason}"
         notes = f"{notes} | {discount_note}" if notes else discount_note
-    if payment_method == "Split":
-        payment_note = "Payment split: " + ", ".join(
-            f"{row['method']} ₹{row['amount']}" for row in payment_split
-        )
-        notes = f"{notes} | {payment_note}" if notes else payment_note
     if len(player_breakdown) > 1 or any(item["food"] for item in player_breakdown):
         settlement_note = "Settlement: " + "; ".join(
             f"{item['name']} ₹{item['total']} (table ₹{item['table']}, food ₹{item['food']})"
@@ -1138,7 +1116,7 @@ def stop_session(
         play_charge   = play,
         food_charge   = food,
         food_items    = food_str,
-        food_json     = sess.food_items,
+        food_json     = json.dumps(food_items),
         total         = total,
         notes         = notes,
         split         = billing_mode != "single",
@@ -1149,6 +1127,8 @@ def stop_session(
         gst_amt       = checkout["gst_amt"],
         peak_surcharge = checkout["peak_surcharge"],
         payment_method = payment_method,
+        payment_status = "credit" if credit_member else "paid",
+        payment_reference = (proposal.payment_reference.strip() if proposal and payment_method == "UPI" else ""),
         payment_split_json = json.dumps(payment_split),
         discount_reason = discount_reason,
         session_key    = actual_session_key,
@@ -1171,6 +1151,13 @@ def stop_session(
                 queue_realtime_event(background_tasks, "table.updated", "floor", "live-floor")
             return transaction_checkout_response(db, existing_transaction, idempotent=True)
         raise HTTPException(status_code=409, detail="Session was already checked out. Refresh the table.")
+    if credit_member:
+        credit_member.current_balance = (credit_member.current_balance or 0) + total
+        db.add(models.CreditLedger(transaction_id=t.id, member_id=credit_member.customer_id,
+            amount=total, balance_after=credit_member.current_balance, actor=user["username"], created_at=t.ts))
+        log_action(db, "credit_charge", f"{table_id.upper()} charged to member credit", amount=total, table_id=table_id, staff=user["username"])
+    else:
+        db.add(models.Payment(transaction_id=t.id, method=payment_method, amount=total, reference=t.payment_reference, created_at=t.ts))
     if sess.member_id:
         member_amount = total if billing_mode == "single" else sum(item["total"] for item in player_breakdown if normalize_person_name(item["name"]).casefold() == normalize_person_name(sess.customer_name).casefold())
         update_member_on_checkout(sess.member_id, member_amount, db)
@@ -1252,6 +1239,7 @@ def stop_session(
         raise HTTPException(status_code=409, detail="Session was already checked out. Refresh the table.")
 
     queue_realtime_event(background_tasks, "table.updated", "floor", "live-floor")
+    queue_realtime_event(background_tasks, "order.placed", "orders", "orders", "sales", "closing-report")
     if context["time_edit"]:
         queue_realtime_event(background_tasks, "session.time_edited", "floor", "live-floor")
 
@@ -1496,6 +1484,8 @@ def add_food(
     sess = active_session_for_table(db, table_id, lock=True)
     if not sess:
         raise HTTPException(status_code=404, detail="No active session")
+    if body.session_key and body.session_key != sess.session_key:
+        raise HTTPException(409, "This order is for an earlier session. Refresh the table.")
     menu_item = db.query(models.MenuItem).filter(
         models.MenuItem.name == body.item
     ).first()
@@ -1512,7 +1502,7 @@ def add_food(
     else:
         unit_price = menu_item.price
     price           = unit_price * body.qty
-    items           = json.loads(sess.food_items or "[]")
+    items = session_food_lines(sess, include_cancelled=True)
     player_name = " ".join((body.player_name or "").strip().split())
     if player_name:
         players = json.loads(getattr(sess, "players_json", "[]") or "[]")
@@ -1522,12 +1512,11 @@ def add_food(
         if player_name.lower() not in player_lookup:
             raise HTTPException(status_code=400, detail="Select a valid player for this table.")
         player_name = player_lookup[player_name.lower()]
-    line = {"item": item_name, "qty": body.qty, "price": price}
+    line = {"id": uuid.uuid4().hex, "item": item_name, "qty": body.qty, "price": price, "unit_price": unit_price, "served": False}
     if player_name:
         line["player_name"] = player_name
     items.append(line)
-    sess.food_items  = json.dumps(items)
-    sess.food_total += price
+    store_session_food(sess, items)
     record_session_event(
         db,
         event_type="food_added",
@@ -1551,7 +1540,57 @@ def add_food(
         table_id=table_id,
     )
     db.commit()
+    queue_realtime_event(background_tasks, "session.orders.updated", "floor", "live-floor", "session-orders")
     queue_realtime_event(background_tasks, "table.updated", "floor", "live-floor")
+    return {"ok": True, "food_total": sess.food_total, "item": line}
+
+def change_session_food(db, table_id, order_id, session_key, *, quantity=None, served=None, cancel=False, actor):
+    table_id = require_known_table_id(table_id)
+    sess = active_session_for_table(db, table_id, lock=True)
+    if not sess or sess.session_key != session_key:
+        raise HTTPException(409, "This order is for an earlier session. Refresh the table.")
+    rows = session_food_lines(sess, include_cancelled=True)
+    line = next((row for row in rows if row["id"] == order_id), None)
+    if not line:
+        raise HTTPException(404, "Session order not found")
+    if line.get("cancelled_at"):
+        if cancel:
+            return sess, False
+        raise HTTPException(409, "This order was cancelled")
+    before = dict(line)
+    if quantity is not None:
+        unit = line.get("unit_price", line["price"] // line["qty"])
+        line.update(qty=quantity, price=unit * quantity, unit_price=unit)
+    if served is not None:
+        line["served"] = served
+    if cancel:
+        line["cancelled_at"] = time.time() * 1000
+    if before == line:
+        return sess, False
+    store_session_food(sess, rows)
+    record_session_event(db, event_type="food_cancelled" if cancel else "food_updated", table_id=table_id,
+        session_key=sess.session_key, actor=actor, detail=f"{line['item']} {'cancelled' if cancel else 'updated'}", payload={"before": before, "after": line})
+    log_action(db, "food_cancel" if cancel else "food_update", f"{table_id.upper()} {line['item']} {'cancelled' if cancel else 'updated'}", table_id=table_id, staff=actor)
+    return sess, True
+
+@router.patch("/{table_id}/food/{order_id}")
+def update_session_food(table_id: str, order_id: str, body: SessionFoodUpdate, background_tasks: BackgroundTasks,
+    db: Session = Depends(get_mutation_db), user: dict = Depends(get_current_claims)):
+    sess, changed = change_session_food(db, table_id, order_id, body.session_key, quantity=body.quantity, served=body.served, actor=user["username"])
+    db.commit()
+    if changed:
+        queue_realtime_event(background_tasks, "session.orders.updated", "floor", "live-floor", "session-orders")
+        queue_realtime_event(background_tasks, "table.updated", "floor", "live-floor")
+    return {"ok": True, "food_total": sess.food_total}
+
+@router.delete("/{table_id}/food/{order_id}")
+def cancel_session_food(table_id: str, order_id: str, session_key: str, background_tasks: BackgroundTasks,
+    db: Session = Depends(get_mutation_db), user: dict = Depends(get_current_claims)):
+    sess, changed = change_session_food(db, table_id, order_id, session_key, cancel=True, actor=user["username"])
+    db.commit()
+    if changed:
+        queue_realtime_event(background_tasks, "session.orders.updated", "floor", "live-floor", "session-orders")
+        queue_realtime_event(background_tasks, "table.updated", "floor", "live-floor")
     return {"ok": True, "food_total": sess.food_total}
 
 @router.post("/{table_id}/notes")

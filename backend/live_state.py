@@ -11,6 +11,7 @@ from sqlalchemy.orm import Session
 
 import models
 from session_identity import is_active_session
+from session_food import session_food_lines
 from audit import get_controls
 from hsr_config import TABLES, TABLE_RATES, get_ist_now, get_ist_today_str, rate_for_table
 from pricing import calc_checkout, session_tariff, tariff_catalog
@@ -238,7 +239,12 @@ def serialize_session(db: Session, session: models.ActiveSession, *, now_ms: flo
         "elapsed_seconds": int(elapsed_ms / 1000),
         "paused": bool(session.paused),
         "food_total": session.food_total or 0,
-        "food_items": safe_json(session.food_items, []),
+        "food_items": session_food_lines(session),
+        "canteen_items": [{"id": row["id"], "name": row["item"], "quantity": row["qty"], "served": row["served"]} for row in session_food_lines(session)],
+        "canteen_total": session.food_total or 0,
+        "grand_total": charge["total"],
+        "tax_estimate": charge["gst_amt"],
+        "peak_estimate": charge["peak_surcharge"],
         "reservation": safe_json(session.reservation, None) if session.reservation else None,
         "notes": session.notes or "",
         "split": bool(session.split),

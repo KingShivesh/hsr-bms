@@ -31,5 +31,5 @@ try {
     await context.close();
   }
 } finally { await browser.close(); }
-await fs.writeFile("../docs/session-close-controls/alert-replay.json", JSON.stringify({ checks, fixture: "UI-only REST response, no server writes" }, null, 2));
+await fs.writeFile(process.env.SESSION_ALERT_REPORT_PATH || "../docs/session-close-controls/alert-replay.json", JSON.stringify({ checks, fixture: "UI-only REST response, no server writes" }, null, 2));
 console.log(JSON.stringify(checks));

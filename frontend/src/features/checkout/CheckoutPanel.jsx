@@ -8,10 +8,9 @@ import { tariffDescription } from "../sessions/tariffs.js";
 import { CustomerAtClose, AdjustSessionTime } from "./CheckoutControls.jsx";
 
 const PAYMENT_METHODS = [
-  { id: "Cash", label: "Cash", icon: "ti-cash" },
   { id: "UPI", label: "UPI", icon: "ti-qrcode" },
-  { id: "Card", label: "Card", icon: "ti-credit-card" },
-  { id: "Split", label: "Split", icon: "ti-arrows-split" },
+  { id: "Cash", label: "Cash", icon: "ti-cash" },
+  { id: "Credit", label: "Credit", icon: "ti-credit-card" },
 ];
 
 const DISCOUNT_OPTIONS = [
@@ -48,7 +47,7 @@ export default function CheckoutPanel({ table, open, onClose, onComplete }) {
   const [loading, setLoading] = useState(false);
   const [finalizing, setFinalizing] = useState(false);
   const [error, setError] = useState("");
-  const [paymentSplit, setPaymentSplit] = useState({ Cash: "", UPI: "", Card: "" });
+  const [paymentReference, setPaymentReference] = useState("");
   const [proposal, setProposal] = useState({ customer: null, time_override: null });
   const proposalRef = useRef(proposal);
   const requestVersion = useRef(0);
@@ -90,6 +89,10 @@ export default function CheckoutPanel({ table, open, onClose, onComplete }) {
         nextCheckoutToken,
       );
       if (version !== requestVersion.current) return;
+      if (!current && res.data.can_edit_time != null) {
+        proposalRef.current = { ...proposalRef.current, customer: res.data.member_id ? { member_id: res.data.member_id, recalculate_rate: false } : { name: res.data.nm || null, recalculate_rate: false } };
+        setProposal(proposalRef.current);
+      }
       quoteRef.current = res.data;
       setQuote(res.data || {});
       setClosedAtMs(res.data.session_ended_at);
@@ -110,7 +113,7 @@ export default function CheckoutPanel({ table, open, onClose, onComplete }) {
     setReceipt(null);
     setError("");
     setClosedAtMs("");
-    setPaymentSplit({ Cash: "", UPI: "", Card: "" });
+    setPaymentReference("");
     quoteRef.current = null;
     setQuote(null);
     proposalRef.current = { customer: null, time_override: null };
@@ -128,13 +131,9 @@ export default function CheckoutPanel({ table, open, onClose, onComplete }) {
     const next = { ...proposalRef.current, [key]: value };
     proposalRef.current = next;
     setProposal(next);
-    if (next.customer?.phone && next.customer.phone.length !== 10) {
-      requestVersion.current += 1;
-      setLoading(false);
-      setError("Enter a 10-digit phone number, or choose Skip.");
-      return;
-    }
-    loadQuote({ nextPaymentMethod: paymentMethod, nextDiscountType: discountType,
+    const nextMethod = key === "customer" && !value?.member_id && paymentMethod === "Credit" ? "Cash" : paymentMethod;
+    setPaymentMethod(nextMethod);
+    loadQuote({ nextPaymentMethod: nextMethod, nextDiscountType: discountType,
       nextDiscountValue: discountValue, nextClosedAtMs: closedAtMs, nextCheckoutToken: quote?.checkout_token });
   }
 
@@ -181,20 +180,19 @@ export default function CheckoutPanel({ table, open, onClose, onComplete }) {
       setError("Enter a reason for the discount before closing.");
       return;
     }
-    if (paymentMethod === "Split" && Object.values(paymentSplit).reduce((sum, value) => sum + (Number(value) || 0), 0) !== finalTotal) {
-      setError("Split payments must match the final bill."); return;
+    if (paymentMethod === "Credit" && (!proposalRef.current.customer?.member_id || !quote.payment_methods?.includes("Credit"))) {
+      setError("Link a member to charge to credit."); return;
     }
     setFinalizing(true);
     finalizingRef.current = true;
     setError("");
-    const splitParts = paymentMethod === "Split" ? Object.entries(paymentSplit).filter(([, amount]) => Number(amount) > 0).map(([method, amount]) => ({ method, amount: Number(amount) })) : [];
     try {
       const res = quote.can_edit_time == null ? await stopSession(tableId, paymentMethod, quote.payer_name || "", discountType,
-        discountType === "rupee" ? Number(discountValue) || 0 : 0, closedAtMs, discountReason.trim(), splitParts, sessionKey, quote.checkout_token) : await closeWithProposal(tableId, {
+        discountType === "rupee" ? Number(discountValue) || 0 : 0, closedAtMs, discountReason.trim(), [], sessionKey, quote.checkout_token) : await closeWithProposal(tableId, {
         ...proposalRef.current, payment_method: paymentMethod, discount_type: discountType,
         discount_value: discountType === "rupee" ? Number(discountValue) || 0 : 0,
         closed_at_ms: closedAtMs, checkout_token_value: quote.checkout_token, session_key: sessionKey,
-        payment_split: splitParts,
+        ...(quote.payment_methods ? { payment_reference: paymentReference, expected_total: finalTotal } : {}),
       }, discountReason.trim());
       setReceipt(res.data || {});
       showToast(`${String(tableId).toUpperCase()} closed via ${paymentMethod}`, "success");
@@ -217,7 +215,7 @@ export default function CheckoutPanel({ table, open, onClose, onComplete }) {
     <Drawer
       portal
       open={open}
-      title={receipt ? "Payment Complete" : `Checkout ${String(tableId).toUpperCase()}`}
+      title={receipt ? receipt.payment_status === "credit" ? "Charged to Credit" : "Payment Complete" : `Checkout ${String(tableId).toUpperCase()}`}
       description={receipt ? "Receipt is ready for staff handoff." : "Bill is frozen while payment is collected."}
       onClose={finalizing ? undefined : receipt ? handleDone : onClose}
       className="checkout-panel"
@@ -361,15 +359,21 @@ export default function CheckoutPanel({ table, open, onClose, onComplete }) {
                       key={method.id}
                       type="button"
                       className={paymentMethod === method.id ? "is-active" : ""}
+                      aria-pressed={paymentMethod === method.id}
+                      title={method.id === "Credit" && !proposal.customer?.member_id ? "Link a member to charge to credit." : method.id === "Credit" && !quote.payment_methods?.includes("Credit") ? "Credit is not available yet." : method.label}
                       onClick={() => handlePaymentChange(method.id)}
-                      disabled={finalizing}
+                      disabled={finalizing || (method.id === "Credit" && (!proposal.customer?.member_id || !quote.payment_methods?.includes("Credit")))}
                     >
                       <HsrIcon className={`ti ${method.icon}`} aria-hidden="true" />
                       <span>{method.label}</span>
                     </HsrButton>
                   ))}
                 </div>
-                {paymentMethod === "Split" && <div className="checkout-summary-grid">{["Cash", "UPI", "Card"].map(method => <label className="checkout-field" key={method}><span>{method} amount</span><HsrInput type="number" min={0} step={1} value={paymentSplit[method]} disabled={finalizing} onChange={event => { setPaymentSplit(current => ({ ...current, [method]: event.target.value })); setError(""); }} /></label>)}</div>}
+                {paymentMethod === "UPI" && <div className="checkout-upi">
+                  {quote.upi_id ? <p>Club UPI ID <strong>{quote.upi_id}</strong></p> : <p>Collect payment using the club's counter QR.</p>}
+                  {quote.payment_methods && <label className="checkout-field"><span>UPI reference (optional)</span><HsrInput maxLength={120} value={paymentReference} disabled={finalizing} onChange={event => setPaymentReference(event.target.value)} /></label>}
+                </div>}
+                {paymentMethod === "Credit" && <p>Charge {money(finalTotal)} to {quote.nm || "the linked member"}. Payment remains outstanding.</p>}
               </section>
 
               <div className="checkout-actions checkout-actions-sticky">

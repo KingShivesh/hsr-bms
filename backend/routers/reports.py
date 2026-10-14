@@ -207,6 +207,8 @@ def transaction_report_row(t: models.Transaction, frames_by_txn: dict[int, list[
         "payer_name": getattr(t, "payer_name", "") or "",
         "split_names": t.split_names or "",
         "payment_method": t.payment_method or "Cash",
+        "payment_status": t.payment_status,
+        "payment_reference": t.payment_reference or "",
         "payment_split": payment_split,
         "discount_reason": getattr(t, "discount_reason", "") or "",
         "session_key": getattr(t, "session_key", "") or "",
@@ -380,7 +382,7 @@ def closing_report(db: Session = Depends(get_db)):
     food_revenue   = sum(t.food_charge for t in txns)
     total_sessions = len(txns)
     avg_duration   = round(sum(t.duration for t in txns) / total_sessions) if total_sessions else 0
-    payment_breakdown = {"Cash": 0, "UPI": 0, "Card": 0}
+    payment_breakdown = {"Cash": 0, "UPI": 0, "Card": 0, "Credit": 0}
     for t in txns:
         add_payment_breakdown(
             payment_breakdown,
@@ -462,6 +464,7 @@ def closing_report(db: Session = Depends(get_db)):
         "cash_total": payment_breakdown["Cash"],
         "upi_total": payment_breakdown["UPI"],
         "card_total": payment_breakdown["Card"],
+        "credit_total": payment_breakdown["Credit"],
         "payment_breakdown": payment_breakdown,
         "day_close": {
             "closed": bool(day_close),

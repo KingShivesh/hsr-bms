@@ -366,18 +366,17 @@ class SessionEngineTests(unittest.TestCase):
         with SessionLocal() as db:
             self.assertEqual(db.query(models.ClosedSessionFrame).first().session_started_at, started)
 
-    def test_existing_split_payment_recording_still_matches_the_bill(self):
+    def test_session_close_rejects_multiple_payment_parts(self):
         self.start()
         self.now += 60 * 60_000
         quote = self.quote()
-        self.call("POST", "/sessions/stop/t1", expected=400, params={
+        self.call("POST", "/sessions/stop/t1", expected=422, params={
             "session_key": quote["session_key"], "payment_split_json": json.dumps([{"method": "Cash", "amount": 1}]),
         })
         bill = self.call("POST", "/sessions/stop/t1", params={
             "session_key": quote["session_key"],
-            "payment_split_json": json.dumps([{"method": "Cash", "amount": 200}, {"method": "UPI", "amount": 120}]),
         })
-        self.assertEqual(bill["payment_method"], "Split")
+        self.assertEqual(bill["payment_method"], "Cash")
         self.assertEqual(sum(row["amount"] for row in bill["payment_split"]), bill["tot"])
 
     def test_additive_schema_upgrade_preserves_legacy_rows(self):

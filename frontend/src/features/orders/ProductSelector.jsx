@@ -1,5 +1,5 @@
 import { Button as HsrButton, Icon as HsrIcon, Input as HsrInput, Select as HsrSelect } from "../../components/ui/index.js";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { addFood, getMenu } from "../../api/index.js";
 import RetryNotice from "../../components/RetryNotice.jsx";
 import { useEscapeKey } from "../../components/ui/index.js";
@@ -17,7 +17,7 @@ function itemAvailable(value) {
   return typeof value === "object" ? value.available !== false : true;
 }
 
-export default function ProductSelector({ tableId, players = [], onAdded, onClose }) {
+export default function ProductSelector({ tableId, sessionKey, players = [], onAdded, onClose }) {
   const { showToast } = useToast();
   useEscapeKey(onClose, true);
   const [menu, setMenu] = useState({});
@@ -27,6 +27,7 @@ export default function ProductSelector({ tableId, players = [], onAdded, onClos
   const [playerName, setPlayerName] = useState("");
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const pending = useRef(false);
   const [error, setError] = useState("");
 
   async function loadMenu() {
@@ -61,15 +62,17 @@ export default function ProductSelector({ tableId, players = [], onAdded, onClos
 
   async function handleSubmit(event) {
     event.preventDefault();
+    if (pending.current) return;
     if (!selectedItem) {
       showToast("Select an item first.", "error");
       return;
     }
     setSaving(true);
+    pending.current = true;
     try {
-      await addFood(tableId, selectedItem.name, qty, null, playerName);
+      await addFood(tableId, selectedItem.name, qty, null, playerName, sessionKey);
       showToast(`${selectedItem.name} added to ${String(tableId).toUpperCase()}`, "success");
-      onAdded?.();
+      await onAdded?.();
       setSelectedItem(null);
       setQty(1);
       setPlayerName("");
@@ -77,6 +80,7 @@ export default function ProductSelector({ tableId, players = [], onAdded, onClos
       showToast(err.userMessage || "Could not add food to session.", "error");
     } finally {
       setSaving(false);
+      pending.current = false;
     }
   }
 

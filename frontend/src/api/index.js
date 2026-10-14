@@ -252,8 +252,12 @@ export const resetSession = (table_id, manager_pin = "") =>
   api.post(
     `/sessions/reset/${tableKey(table_id)}?manager_pin=${encodeURIComponent(manager_pin)}`,
   );
-export const addFood = (table_id, item, qty, mrp = null, player_name = "") =>
-  api.post(`/sessions/${tableKey(table_id)}/food`, { item, qty, mrp, player_name });
+export const addFood = (table_id, item, qty, mrp = null, player_name = "", session_key = null) =>
+  api.post(`/sessions/${tableKey(table_id)}/food`, { item, qty, mrp, player_name, session_key });
+export const updateSessionFood = (table_id, order_id, session_key, changes) =>
+  api.patch(`/sessions/${tableKey(table_id)}/food/${encodeURIComponent(order_id)}`, { session_key, ...changes });
+export const cancelSessionFood = (table_id, order_id, session_key) =>
+  api.delete(`/sessions/${tableKey(table_id)}/food/${encodeURIComponent(order_id)}`, { params: { session_key } });
 export const startFrame = (table_id) =>
   api.post(`/sessions/${tableKey(table_id)}/frames/start`);
 export const closeFrame = (table_id, loser_name, frame_id = null) =>

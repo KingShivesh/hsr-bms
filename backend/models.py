@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Boolean, Float, Text, UniqueConstraint
+from sqlalchemy import Column, Integer, String, Boolean, Float, Text, UniqueConstraint, ForeignKey
 from database import Base
 
 class Settings(Base): #This tells SQLAlchemy This class should become a database table.
@@ -31,6 +31,7 @@ class Member(Base):
     member_type = Column(String,  default="Regular")
     record_type = Column(String, default="lp_member", nullable=False)
     hourly_rate = Column(Integer, nullable=True)
+    current_balance = Column(Integer, default=0, server_default="0", nullable=False)
     last_visit  = Column(String,  default="-")
     notes       = Column(Text,    default="")
 
@@ -67,6 +68,8 @@ class Transaction(Base):
     gst_amt        = Column(Integer, default=0)
     peak_surcharge = Column(Integer, default=0)
     payment_method = Column(String,  default="Cash")   # Cash / UPI
+    payment_status = Column(String, default="paid", server_default="paid", nullable=False)
+    payment_reference = Column(String, default="")
     payment_split_json = Column(Text, default="[]")
     discount_reason = Column(Text, default="")
     session_key    = Column(String,  default="", index=True)
@@ -77,6 +80,26 @@ class Transaction(Base):
     tariff_label   = Column(String, default="")
     package_id     = Column(String, default="")
     frame_count    = Column(Integer, default=0)
+
+class Payment(Base):
+    __tablename__ = "payments"
+    id = Column(Integer, primary_key=True)
+    transaction_id = Column(Integer, ForeignKey("transactions.id"), unique=True, nullable=False)
+    method = Column(String, nullable=False)
+    amount = Column(Integer, nullable=False)
+    reference = Column(String, default="")
+    created_at = Column(Float, nullable=False)
+
+class CreditLedger(Base):
+    __tablename__ = "credit_ledger"
+    id = Column(Integer, primary_key=True)
+    transaction_id = Column(Integer, ForeignKey("transactions.id"), unique=True, nullable=False)
+    member_id = Column(String, ForeignKey("members.customer_id"), nullable=False, index=True)
+    entry_type = Column(String, default="debit", nullable=False)
+    amount = Column(Integer, nullable=False)
+    balance_after = Column(Integer, nullable=False)
+    actor = Column(String, nullable=False)
+    created_at = Column(Float, nullable=False)
 
 class ActiveSession(Base):
     __tablename__ = "active_sessions"

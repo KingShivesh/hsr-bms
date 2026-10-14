@@ -379,6 +379,7 @@ export default function CustomersPage() {
             <div className="checkout-summary-grid">
               <div><span>Visits</span><strong>{selectedCustomer.vis || 0}</strong></div>
               <div><span>Spent</span><strong>{money(selectedCustomer.spt)}</strong></div>
+              <div><span>Credit outstanding</span><strong>{money(selectedCustomer.current_balance || 0)}</strong></div>
               <div><span>Customer ID</span><strong>{memberId(selectedCustomer) || "-"}</strong></div>
               <div><span>Tier</span><strong>{memberTier(selectedCustomer)}</strong></div>
             </div>

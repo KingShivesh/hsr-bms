@@ -14,7 +14,7 @@ function localDateTime(ms) {
 }
 
 export function CustomerAtClose({ value, onChange, disabled }) {
-  const [path, setPath] = useState("skip");
+  const [path, setPath] = useState(value?.member_id ? "member" : value?.name ? "name" : "skip");
   const [query, setQuery] = useState("");
   const [rows, setRows] = useState([]);
   const [error, setError] = useState("");
@@ -33,12 +33,12 @@ export function CustomerAtClose({ value, onChange, disabled }) {
   }, [query, path]);
   function choosePath(next) {
     setPath(next); setQuery("");
-    onChange(next === "phone" ? { name: "", phone: "", recalculate_rate: false } : next === "skip" ? { name: null, phone: null, recalculate_rate: false } : null);
+    onChange({ name: next === "name" ? "" : null, recalculate_rate: false });
   }
   return <section className="checkout-section">
     <h4>Customer (optional)</h4>
     <div className="checkout-button-grid checkout-customer-paths" role="group" aria-label="Customer at close">
-      {[["member", "Search LP Member"], ["phone", "Add phone for receipt"], ["skip", "Skip"]].map(([key, label]) => <Button key={key} variant="secondary" disabled={disabled} aria-pressed={path === key} onClick={() => choosePath(key)}>{label}</Button>)}
+      {[["member", "Search LP Member"], ["name", "Add name"], ["skip", "Skip"]].map(([key, label]) => <Button key={key} variant="secondary" disabled={disabled} aria-pressed={path === key} onClick={() => choosePath(key)}>{label}</Button>)}
     </div>
     {path === "member" && <>
       <label className="checkout-field"><span>Search by phone or name</span><Input autoFocus value={query} disabled={disabled} onChange={event => setQuery(event.target.value)} /></label>
@@ -47,9 +47,8 @@ export function CustomerAtClose({ value, onChange, disabled }) {
         <strong>{member.nm || member.phone || "Member"}</strong><span>{member.phone || "No phone on file"} · {member.typ}</span><span>{member.hourly_rate ? `${formatCurrency(member.hourly_rate)}/hr` : "Club standard rate"}</span>
       </Button>)}
     </>}
-    {path === "phone" && <>
+    {path === "name" && <>
       <label className="checkout-field"><span>Name (optional)</span><Input maxLength={80} disabled={disabled} value={value?.name || ""} onChange={event => onChange({ ...value, name: event.target.value })} /></label>
-      <label className="checkout-field"><span>Phone (10 digits)</span><Input type="tel" inputMode="numeric" maxLength={10} disabled={disabled} value={value?.phone || ""} onChange={event => onChange({ ...value, phone: event.target.value.replace(/\D/g, "") })} /></label>
     </>}
   </section>;
 }

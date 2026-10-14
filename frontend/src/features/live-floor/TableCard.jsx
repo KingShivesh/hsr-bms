@@ -36,6 +36,7 @@ export default function TableCard({
   onCheckout,
   onPause,
   onFood,
+  onOrders,
   busy = false,
   onReviewBooking,
   onSaveRate,
@@ -52,6 +53,13 @@ export default function TableCard({
   const customer = session ? session.customer_name || "Guest" : table.booking?.customer_name || "";
   const runningTotal = Number(session?.running_total || table.running_total || 0);
   const foodTotal = Number(session?.food_total || 0);
+  const foodItems = session?.food_items || [];
+  const groupedItems = Array.from(foodItems.reduce((items, row) => {
+    items.set(row.item, { name: row.item, quantity: (items.get(row.item)?.quantity || 0) + row.qty });
+    return items;
+  }, new Map()).values());
+  const pendingItems = foodItems.filter(row => !row.served).length;
+  const foodSummary = groupedItems.slice(0, 3).map(row => `${row.quantity}× ${row.name}`).join(" · ") + (groupedItems.length > 3 ? ` · +${groupedItems.length - 3} more` : "");
   const shownRate = Number(table.rate || 0);
   const canEditRate = isAvailable && typeof onSaveRate === "function";
   const attention = getTableAttention({ session, elapsedSeconds: elapsed });
@@ -218,11 +226,20 @@ export default function TableCard({
 
       {session && (
         <div className="lf-table-money">
+          <div className="session-charge-lines">
+            <div><span>Table</span><b>₹{(Number(session.play_estimate || 0) + Number(session.peak_estimate || 0)).toLocaleString("en-IN")}</b></div>
+            {!!foodTotal && <div><span>Canteen</span><b>₹{foodTotal.toLocaleString("en-IN")}</b></div>}
+            {!!session.tax_estimate && <div><span>Tax</span><b>₹{Number(session.tax_estimate).toLocaleString("en-IN")}</b></div>}
+          </div>
           <div>
             <span>Running total</span>
             <strong>₹{runningTotal.toLocaleString("en-IN")}</strong>
           </div>
-          <small>{tariffDescription(session)} · Food ₹{foodTotal.toLocaleString("en-IN")}</small>
+          <small>{tariffDescription(session)}</small>
+          <HsrButton native type="button" className="session-canteen-summary" aria-label={`Canteen orders for ${String(table.id).toUpperCase()}`} onClick={event => { event.stopPropagation(); onOrders?.(table); }}>
+            <span>{pendingItems > 0 && <span className="session-order-dot" aria-hidden="true" />}{foodSummary || "No canteen orders"}</span>
+            {!!foodItems.length && <small>{pendingItems ? `${pendingItems} pending` : "All served"} · ₹{foodTotal.toLocaleString("en-IN")}</small>}
+          </HsrButton>
         </div>
       )}
 

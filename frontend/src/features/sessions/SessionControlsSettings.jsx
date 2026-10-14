@@ -14,7 +14,7 @@ export default function SessionControlsSettings() {
   const [retry, setRetry] = useState(0);
   useEffect(() => {
     let active = true;
-    getSessionControls().then(({ data }) => { if (active) { setValues(Object.fromEntries([...TOGGLES, ...NUMBERS].map(([key]) => [key, data[key]]))); setError(""); } })
+    getSessionControls().then(({ data }) => { if (active) { setValues({ ...Object.fromEntries([...TOGGLES, ...NUMBERS].map(([key]) => [key, data[key]])), upiId: data.upiId || "" }); setError(""); } })
       .catch(err => { if (active) setError(err.userMessage || "Session controls could not load."); });
     return () => { active = false; };
   }, [retry]);
@@ -31,6 +31,7 @@ export default function SessionControlsSettings() {
     {!values && !error ? <p role="status">Loading session controls...</p> : values && <form onSubmit={save}><fieldset disabled={busy} className="session-controls-settings">
       {TOGGLES.map(([key, label]) => <label className="session-control-toggle" key={key}><input type="checkbox" checked={values[key]} onChange={event => setValues(current => ({ ...current, [key]: event.target.checked }))} />{label}</label>)}
       {NUMBERS.map(([key, label, min, max, step]) => <label key={key}>{label}<Input type="number" required min={min} max={max} step={step} value={values[key]} onChange={event => setValues(current => ({ ...current, [key]: event.target.value === "" ? "" : Number(event.target.value) }))} /></label>)}
+      <label>Club UPI ID (optional)<Input maxLength={120} value={values.upiId} onChange={event => setValues(current => ({ ...current, upiId: event.target.value.trim() }))} /></label>
       <Button type="submit" loading={busy}>Save Session Controls</Button>
     </fieldset></form>}
   </section>;

@@ -15,14 +15,16 @@
 ## Existing dependencies, not implemented features
 
 The current app has admin/staff roles, not individual manager accounts; it has
-no credit ledger, member-rate catalog or WhatsApp sender. Do not invent balances,
-discounts, successful delivery or a credit payment option. Those integrations
-must be built and verified before claiming the full brief is complete.
+no member-rate catalog or WhatsApp sender. Credit charging was added in the
+focused follow-up documented in `SESSION_FOOD_CREDIT.md`: it is a real audited
+debit and outstanding balance, not a paid receipt. Repayment/credit-limit tooling,
+individual permissions and external message delivery are still separate work.
 
 This implementation can apply an explicitly configured member `hourly_rate` at
 checkout, but does not invent a default discount or a member-rate catalog UI.
 An unset rate uses the snapshotted club tariff. Frame/package calculations remain
-unchanged. Cash, UPI, Card and existing split-payment validation are retained.
+unchanged. Session close now offers only UPI, Cash and member-linked Credit.
+Historical Card/Split receipts and counter-food payments remain readable.
 
 Weekly owner summaries are delivered in-app, once per IST week. The minute job
 generates Monday's summary on Monday, or catches up after downtime. This does not
@@ -68,7 +70,7 @@ cannot be enabled until a real provider and delivery verification exist.
   urgent reminders restore visibly without a repeat sound. If browser storage is
   unavailable, server threshold/acknowledgment uniqueness still holds.
 - During staggered deployment, an old quote response uses legacy frozen checkout
-  and retains payment/split parameters; new identity/time controls stay hidden
+  and retains Cash/UPI payment parameters; new identity/time controls stay hidden
   until the backend returns their capability marker.
 - The task is single-process, matching the documented SSE single-worker runtime.
   Before scaling workers, replace the in-process event broker with shared delivery.

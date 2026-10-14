@@ -3,7 +3,7 @@
 from importlib import import_module
 from sqlalchemy import text
 
-STEPS = ("identity_001_columns", "identity_002_backfill", "identity_003_constraints")
+STEPS = ("identity_001_columns", "identity_002_backfill", "identity_003_constraints", "identity_004_walk_in")
 
 
 def migrate(conn):

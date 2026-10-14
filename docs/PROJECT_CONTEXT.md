@@ -158,7 +158,9 @@ dead/reachable component findings, and the full routing migration.
   checkout preview or bypass existing signed freeze/rounding/tax/frame rules.
   Half-hour reminders use active elapsed time, not charge-minimum rounding; their
   unique thresholds and acknowledgment live in the DB. Keep financial/customer
-  data out of the general SSE invalidation channel. Credit settlement, WhatsApp,
+  data out of the general SSE invalidation channel. Session credit charging now
+  has a real atomic debit ledger and outstanding balance; see SESSION_FOOD_CREDIT.md.
+  Credit repayment/limits, WhatsApp,
   individual employee permissions and strict legacy-start retirement remain OPEN.
 - Session identity repair: `docs/session-start-audit/README.md`. A NULL guest name
   is valid; use the shared session_identity predicate, never customer-name truthiness
@@ -166,7 +168,11 @@ dead/reachable component findings, and the full routing migration.
   members from guest checkout names. Bookings start by ID, not name heuristics.
   Three recorded identity migration stages have tested rollback; do not roll back
   to a name-only occupancy backend with anonymous sessions still active.
-  Credit ledger/limits/PIN overrides remain OPEN, not a fake zero-balance check.
+  Session Credit now requires an explicitly linked LP member and records an
+  outstanding debit, never a cash Payment. Credit limits/repayments remain OPEN.
+  Name-only checkout is `walk_in` plain text, never an implicit Member row.
+  Migration identity_004 extends both DB constraints and refuses destructive
+  rollback while walk-in session/receipt rows exist.
 - Full-stack integrity audit (2026-10-11): `docs/full-stack-audit/README.md`
   records reproduced security/billing fixes, tests and deferred tickets.
   Tokens now have credential versions and per-session revocation; legacy tokens

@@ -11,6 +11,7 @@ export default function TableGrid({
   onCheckout,
   onPause,
   onFood,
+  onOrders,
   busyTables = {},
   onReviewBooking,
   onSaveRate,
@@ -154,6 +155,7 @@ export default function TableGrid({
           onCheckout={onCheckout}
           onPause={onPause}
           onFood={onFood}
+          onOrders={onOrders}
           busy={!!busyTables[table.id]}
           onReviewBooking={onReviewBooking}
           onSaveRate={onSaveRate}

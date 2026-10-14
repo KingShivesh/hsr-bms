@@ -4,7 +4,7 @@ from typing import Literal
 import json
 from pricing import tariff_catalog
 from sqlalchemy.orm import Session
-from database import get_db
+from database import get_db, get_mutation_db
 from typing import Optional
 import models
 from audit import log_action, require_manager_pin
@@ -27,6 +27,7 @@ class SessionControls(BaseModel):
     amountChangeThreshold: int = Field(default=500, ge=0, le=100000)
     dailyEditSoftCap: int = Field(default=5, ge=1, le=100)
     lateEditWindowHours: int = Field(default=24, ge=1, le=168)
+    upiId: str = Field(default="", max_length=120, pattern=r"^$|^[A-Za-z0-9._-]+@[A-Za-z0-9._-]+$")
 
 @router.get("/session-controls")
 def get_session_controls(db: Session = Depends(get_db)):
@@ -272,11 +273,15 @@ def delete_menu_item(
 @router.post("/reset-daily")
 def reset_daily(
     manager_pin: str = "",
-    db: Session = Depends(get_db),
+    db: Session = Depends(get_mutation_db),
     _: dict = Depends(require_admin),
 ):
     require_manager_pin(db, manager_pin)
     today = get_ist_today_str()
+    ids = db.query(models.Transaction.id).filter(models.Transaction.date.like(f"{today}%")).subquery()
+    if db.query(models.CreditLedger).filter(models.CreditLedger.transaction_id.in_(db.query(ids.c.id))).first():
+        raise HTTPException(409, "Credit history cannot be erased by a daily reset")
+    db.query(models.Payment).filter(models.Payment.transaction_id.in_(db.query(ids.c.id))).delete(synchronize_session=False)
     deleted = db.query(models.Transaction).filter(
         models.Transaction.date.like(f"{today}%")
     ).delete(synchronize_session=False)
@@ -293,11 +298,14 @@ def reset_daily(
 @router.post("/clear-all")
 def clear_all(
     manager_pin: str = "",
-    db: Session = Depends(get_db),
+    db: Session = Depends(get_mutation_db),
     _: dict = Depends(require_admin),
 ):
     require_manager_pin(db, manager_pin)
+    if db.query(models.CreditLedger).first():
+        raise HTTPException(409, "Credit history cannot be erased by Clear All")
     tx_count = db.query(models.Transaction).count()
+    db.query(models.Payment).delete()
     db.query(models.Transaction).delete()
     db.query(models.ActiveSession).delete()
     db.query(models.Member).delete()

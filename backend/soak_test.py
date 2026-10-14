@@ -561,7 +561,9 @@ def main():
     login()
     seed_sample_members()
 
-    while time.time() < deadline:
+    first_cycle = True
+    while time.time() < deadline or first_cycle:
+        first_cycle = False
         try:
             run_cycle()
         except Exception as exc:

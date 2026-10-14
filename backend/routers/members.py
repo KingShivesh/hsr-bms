@@ -2,7 +2,7 @@ from fastapi import APIRouter, HTTPException, Depends
 from pydantic import BaseModel, Field
 from sqlalchemy.orm import Session
 from sqlalchemy import func, or_
-from database import get_db
+from database import get_db, get_mutation_db
 from deps import require_admin
 from hsr_config import get_ist_today_str
 import models
@@ -120,6 +120,7 @@ def _member_payload(member: models.Member):
         "phone": getattr(member, "phone", "") or "",
         "record_type": member.record_type,
         "hourly_rate": member.hourly_rate,
+        "current_balance": member.current_balance or 0,
         "notes": member.notes or "",
     }
 
@@ -213,13 +214,15 @@ def add_member(body: AddMember, db: Session = Depends(get_db), _: dict = Depends
     return {"ok": True, "id": customer_id}
 
 @router.post("/merge")
-def merge_members(body: MergeMembers, db: Session = Depends(get_db), _: dict = Depends(require_admin)):
+def merge_members(body: MergeMembers, db: Session = Depends(get_mutation_db), _: dict = Depends(require_admin)):
     if body.primary_id == body.duplicate_id:
         raise HTTPException(status_code=400, detail="Choose two different members")
     primary = db.query(models.Member).filter(models.Member.customer_id == body.primary_id).first()
     duplicate = db.query(models.Member).filter(models.Member.customer_id == body.duplicate_id).first()
     if not primary or not duplicate:
         raise HTTPException(status_code=404, detail="Member not found")
+    if db.query(models.CreditLedger).filter(models.CreditLedger.member_id.in_([primary.customer_id, duplicate.customer_id])).first():
+        raise HTTPException(409, "Members with credit history cannot be merged")
     if _similarity(primary.name, duplicate.name) < MERGE_SCORE_THRESHOLD:
         raise HTTPException(
             status_code=400,
@@ -281,10 +284,12 @@ def restore_member(
     return _member_payload(member)
 
 @router.delete("/{customer_id}")
-def delete_member(customer_id: str, db: Session = Depends(get_db), _: dict = Depends(require_admin)):
+def delete_member(customer_id: str, db: Session = Depends(get_mutation_db), _: dict = Depends(require_admin)):
     member = db.query(models.Member).filter(models.Member.customer_id == customer_id).first()
     if not member:
         raise HTTPException(status_code=404, detail="Member not found")
+    if db.query(models.CreditLedger).filter_by(member_id=customer_id).first():
+        raise HTTPException(409, "Members with credit history cannot be deleted")
     db.delete(member)
     db.commit()
     return {"ok": True}

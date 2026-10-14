@@ -6,6 +6,7 @@ from sqlalchemy import create_engine, inspect, text
 from sqlalchemy.exc import IntegrityError
 from migrations import migrate, downgrade
 from migrations import identity_001_columns, identity_002_backfill, identity_003_constraints
+from migrations import identity_004_walk_in
 
 
 class IdentityMigrationTests(unittest.TestCase):
@@ -43,7 +44,12 @@ class IdentityMigrationTests(unittest.TestCase):
                 self.assertEqual(conn.execute(text("SELECT customer_name FROM active_sessions WHERE table_id='t1'")).scalar(), "Existing player")
                 migrate(conn)
                 migrate(conn)
-                self.assertEqual(conn.execute(text("SELECT COUNT(*) FROM hsr_schema_migrations")).scalar(), 3)
+                self.assertEqual(conn.execute(text("SELECT COUNT(*) FROM hsr_schema_migrations")).scalar(), 4)
+                conn.execute(text("INSERT INTO active_sessions (table_id, customer_name, player_type) VALUES ('t3', 'QA Name-only', 'walk_in')"))
+                with self.assertRaises(RuntimeError):
+                    identity_004_walk_in.down(conn)
+                self.assertEqual(conn.execute(text("SELECT player_type FROM active_sessions WHERE table_id='t3'")).scalar(), "walk_in")
+                conn.execute(text("DELETE FROM active_sessions WHERE table_id='t3'"))
                 downgrade(conn)
                 if engine.dialect.name == "postgresql":
                     conn.execute(text("DROP SCHEMA hsr_identity_migration_qa CASCADE"))
