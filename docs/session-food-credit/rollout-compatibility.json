@@ -1,0 +1,34 @@
+{
+  "checks": [
+    {
+      "theme": "light",
+      "method": "UPI",
+      "legacyFrozenCheckout": true,
+      "identityHidden": true,
+      "preservedPayment": true
+    },
+    {
+      "theme": "light",
+      "method": "Cash",
+      "legacyFrozenCheckout": true,
+      "identityHidden": true,
+      "preservedPayment": true
+    },
+    {
+      "theme": "dark",
+      "method": "UPI",
+      "legacyFrozenCheckout": true,
+      "identityHidden": true,
+      "preservedPayment": true
+    },
+    {
+      "theme": "dark",
+      "method": "Cash",
+      "legacyFrozenCheckout": true,
+      "identityHidden": true,
+      "preservedPayment": true
+    }
+  ],
+  "actualBusinessWrites": 0,
+  "errors": []
+}

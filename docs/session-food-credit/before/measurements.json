@@ -1,0 +1,524 @@
+[
+  {
+    "stage": "before",
+    "theme": "light",
+    "width": 1440,
+    "name": "floor",
+    "file": "floor-light-1440.png",
+    "overflow": 0,
+    "font": "\"Syne Variable\", Syne, sans-serif",
+    "accent": "#006b3c",
+    "controls": []
+  },
+  {
+    "stage": "before",
+    "theme": "light",
+    "width": 375,
+    "name": "floor",
+    "file": "floor-light-375.png",
+    "overflow": 0,
+    "font": "\"Syne Variable\", Syne, sans-serif",
+    "accent": "#006b3c",
+    "controls": []
+  },
+  {
+    "stage": "before",
+    "theme": "light",
+    "width": 414,
+    "name": "floor",
+    "file": "floor-light-414.png",
+    "overflow": 0,
+    "font": "\"Syne Variable\", Syne, sans-serif",
+    "accent": "#006b3c",
+    "controls": []
+  },
+  {
+    "stage": "before",
+    "theme": "light",
+    "width": 1440,
+    "name": "checkout",
+    "file": "checkout-light-1440.png",
+    "overflow": 0,
+    "font": "\"Syne Variable\", Syne, sans-serif",
+    "accent": "#006b3c",
+    "controls": [
+      {
+        "text": "",
+        "height": 36
+      },
+      {
+        "text": "Reset",
+        "height": 36
+      },
+      {
+        "text": "Apply Change",
+        "height": 36
+      },
+      {
+        "text": "Search LP Member",
+        "height": 46
+      },
+      {
+        "text": "Add phone for receipt",
+        "height": 46
+      },
+      {
+        "text": "Skip",
+        "height": 46
+      },
+      {
+        "text": "No discount",
+        "height": 46
+      },
+      {
+        "text": "5%",
+        "height": 46
+      },
+      {
+        "text": "10%",
+        "height": 46
+      },
+      {
+        "text": "₹ off",
+        "height": 46
+      },
+      {
+        "text": "Cash",
+        "height": 44
+      },
+      {
+        "text": "UPI",
+        "height": 44
+      },
+      {
+        "text": "Card",
+        "height": 44
+      },
+      {
+        "text": "Split",
+        "height": 44
+      },
+      {
+        "text": "Keep Table Open",
+        "height": 36
+      },
+      {
+        "text": "Close table · ₹267",
+        "height": 36
+      }
+    ]
+  },
+  {
+    "stage": "before",
+    "theme": "light",
+    "width": 375,
+    "name": "checkout",
+    "file": "checkout-light-375.png",
+    "overflow": 0,
+    "font": "\"Syne Variable\", Syne, sans-serif",
+    "accent": "#006b3c",
+    "controls": [
+      {
+        "text": "",
+        "height": 44
+      },
+      {
+        "text": "Reset",
+        "height": 44
+      },
+      {
+        "text": "Apply Change",
+        "height": 44
+      },
+      {
+        "text": "Search LP Member",
+        "height": 44
+      },
+      {
+        "text": "Add phone for receipt",
+        "height": 44
+      },
+      {
+        "text": "Skip",
+        "height": 44
+      },
+      {
+        "text": "No discount",
+        "height": 44
+      },
+      {
+        "text": "5%",
+        "height": 44
+      },
+      {
+        "text": "10%",
+        "height": 44
+      },
+      {
+        "text": "₹ off",
+        "height": 44
+      },
+      {
+        "text": "Cash",
+        "height": 44
+      },
+      {
+        "text": "UPI",
+        "height": 44
+      },
+      {
+        "text": "Card",
+        "height": 44
+      },
+      {
+        "text": "Split",
+        "height": 44
+      },
+      {
+        "text": "Keep Table Open",
+        "height": 44
+      },
+      {
+        "text": "Close table · ₹267",
+        "height": 44
+      }
+    ]
+  },
+  {
+    "stage": "before",
+    "theme": "light",
+    "width": 414,
+    "name": "checkout",
+    "file": "checkout-light-414.png",
+    "overflow": 0,
+    "font": "\"Syne Variable\", Syne, sans-serif",
+    "accent": "#006b3c",
+    "controls": [
+      {
+        "text": "",
+        "height": 44
+      },
+      {
+        "text": "Reset",
+        "height": 44
+      },
+      {
+        "text": "Apply Change",
+        "height": 44
+      },
+      {
+        "text": "Search LP Member",
+        "height": 44
+      },
+      {
+        "text": "Add phone for receipt",
+        "height": 44
+      },
+      {
+        "text": "Skip",
+        "height": 44
+      },
+      {
+        "text": "No discount",
+        "height": 44
+      },
+      {
+        "text": "5%",
+        "height": 44
+      },
+      {
+        "text": "10%",
+        "height": 44
+      },
+      {
+        "text": "₹ off",
+        "height": 44
+      },
+      {
+        "text": "Cash",
+        "height": 44
+      },
+      {
+        "text": "UPI",
+        "height": 44
+      },
+      {
+        "text": "Card",
+        "height": 44
+      },
+      {
+        "text": "Split",
+        "height": 44
+      },
+      {
+        "text": "Keep Table Open",
+        "height": 44
+      },
+      {
+        "text": "Close table · ₹267",
+        "height": 44
+      }
+    ]
+  },
+  {
+    "stage": "before",
+    "theme": "dark",
+    "width": 1440,
+    "name": "floor",
+    "file": "floor-dark-1440.png",
+    "overflow": 0,
+    "font": "\"Syne Variable\", Syne, sans-serif",
+    "accent": "#00ff7f",
+    "controls": []
+  },
+  {
+    "stage": "before",
+    "theme": "dark",
+    "width": 375,
+    "name": "floor",
+    "file": "floor-dark-375.png",
+    "overflow": 0,
+    "font": "\"Syne Variable\", Syne, sans-serif",
+    "accent": "#00ff7f",
+    "controls": []
+  },
+  {
+    "stage": "before",
+    "theme": "dark",
+    "width": 414,
+    "name": "floor",
+    "file": "floor-dark-414.png",
+    "overflow": 0,
+    "font": "\"Syne Variable\", Syne, sans-serif",
+    "accent": "#00ff7f",
+    "controls": []
+  },
+  {
+    "stage": "before",
+    "theme": "dark",
+    "width": 1440,
+    "name": "checkout",
+    "file": "checkout-dark-1440.png",
+    "overflow": 0,
+    "font": "\"Syne Variable\", Syne, sans-serif",
+    "accent": "#00ff7f",
+    "controls": [
+      {
+        "text": "",
+        "height": 36
+      },
+      {
+        "text": "Reset",
+        "height": 36
+      },
+      {
+        "text": "Apply Change",
+        "height": 36
+      },
+      {
+        "text": "Search LP Member",
+        "height": 46
+      },
+      {
+        "text": "Add phone for receipt",
+        "height": 46
+      },
+      {
+        "text": "Skip",
+        "height": 46
+      },
+      {
+        "text": "No discount",
+        "height": 46
+      },
+      {
+        "text": "5%",
+        "height": 46
+      },
+      {
+        "text": "10%",
+        "height": 46
+      },
+      {
+        "text": "₹ off",
+        "height": 46
+      },
+      {
+        "text": "Cash",
+        "height": 44
+      },
+      {
+        "text": "UPI",
+        "height": 44
+      },
+      {
+        "text": "Card",
+        "height": 44
+      },
+      {
+        "text": "Split",
+        "height": 44
+      },
+      {
+        "text": "Keep Table Open",
+        "height": 36
+      },
+      {
+        "text": "Close table · ₹267",
+        "height": 36
+      }
+    ]
+  },
+  {
+    "stage": "before",
+    "theme": "dark",
+    "width": 375,
+    "name": "checkout",
+    "file": "checkout-dark-375.png",
+    "overflow": 0,
+    "font": "\"Syne Variable\", Syne, sans-serif",
+    "accent": "#00ff7f",
+    "controls": [
+      {
+        "text": "",
+        "height": 44
+      },
+      {
+        "text": "Reset",
+        "height": 44
+      },
+      {
+        "text": "Apply Change",
+        "height": 44
+      },
+      {
+        "text": "Search LP Member",
+        "height": 44
+      },
+      {
+        "text": "Add phone for receipt",
+        "height": 44
+      },
+      {
+        "text": "Skip",
+        "height": 44
+      },
+      {
+        "text": "No discount",
+        "height": 44
+      },
+      {
+        "text": "5%",
+        "height": 44
+      },
+      {
+        "text": "10%",
+        "height": 44
+      },
+      {
+        "text": "₹ off",
+        "height": 44
+      },
+      {
+        "text": "Cash",
+        "height": 44
+      },
+      {
+        "text": "UPI",
+        "height": 44
+      },
+      {
+        "text": "Card",
+        "height": 44
+      },
+      {
+        "text": "Split",
+        "height": 44
+      },
+      {
+        "text": "Keep Table Open",
+        "height": 44
+      },
+      {
+        "text": "Close table · ₹267",
+        "height": 44
+      }
+    ]
+  },
+  {
+    "stage": "before",
+    "theme": "dark",
+    "width": 414,
+    "name": "checkout",
+    "file": "checkout-dark-414.png",
+    "overflow": 0,
+    "font": "\"Syne Variable\", Syne, sans-serif",
+    "accent": "#00ff7f",
+    "controls": [
+      {
+        "text": "",
+        "height": 44
+      },
+      {
+        "text": "Reset",
+        "height": 44
+      },
+      {
+        "text": "Apply Change",
+        "height": 44
+      },
+      {
+        "text": "Search LP Member",
+        "height": 44
+      },
+      {
+        "text": "Add phone for receipt",
+        "height": 44
+      },
+      {
+        "text": "Skip",
+        "height": 44
+      },
+      {
+        "text": "No discount",
+        "height": 44
+      },
+      {
+        "text": "5%",
+        "height": 44
+      },
+      {
+        "text": "10%",
+        "height": 44
+      },
+      {
+        "text": "₹ off",
+        "height": 44
+      },
+      {
+        "text": "Cash",
+        "height": 44
+      },
+      {
+        "text": "UPI",
+        "height": 44
+      },
+      {
+        "text": "Card",
+        "height": 44
+      },
+      {
+        "text": "Split",
+        "height": 44
+      },
+      {
+        "text": "Keep Table Open",
+        "height": 44
+      },
+      {
+        "text": "Close table · ₹267",
+        "height": 44
+      }
+    ]
+  }
+]

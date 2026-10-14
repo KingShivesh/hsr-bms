@@ -1,0 +1,26 @@
+[
+  {
+    "theme": "light",
+    "stage": "before",
+    "origin": "ca1ee07 exact frontend snapshot / same current QA floor payload",
+    "orders": "2 Cold Drink, 1 Samosa, 120 rupees"
+  },
+  {
+    "theme": "light",
+    "stage": "after",
+    "origin": "feature frontend / same QA floor payload",
+    "orders": "2 Cold Drink, 1 Samosa, 120 rupees"
+  },
+  {
+    "theme": "dark",
+    "stage": "before",
+    "origin": "ca1ee07 exact frontend snapshot / same current QA floor payload",
+    "orders": "2 Cold Drink, 1 Samosa, 120 rupees"
+  },
+  {
+    "theme": "dark",
+    "stage": "after",
+    "origin": "feature frontend / same QA floor payload",
+    "orders": "2 Cold Drink, 1 Samosa, 120 rupees"
+  }
+]
