@@ -64,3 +64,17 @@ application table after stopping test servers. The dedicated Postgres container
 was removed. No production accounts or business records were created or changed.
 Production bundle/backend deployment proof is recorded separately; a push alone
 is not deployment proof.
+
+## Confirmed live
+
+`deployment.json` records successful bundle-hash and commit-ancestry verification:
+all 20 production JavaScript/CSS assets match the local production build byte for
+byte, including entry `index-eBZrhsu7.js` and floor `LiveFloor-CeA3W0UZ.js`.
+Render reports revision `23e06de9efc188b5166a946b47038a3261d571d0`, which contains
+the tested backend source `d8acfaa`. `/health` and `/ready` both return 200 and the
+database is ready. Main's fresh-runner parity check also succeeded:
+[run 38546636918](https://github.com/KingShivesh/hsr-bms/actions/runs/38546636918).
+
+No authenticated production checkout, member creation or order mutation was used
+for deployment proof. The final proof commit changes documentation only; it does
+not require a new application bundle or database change.

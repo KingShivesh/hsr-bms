@@ -119,3 +119,11 @@ Lane A verification debt is closed. The checklist below is retained as the brows
   current contract. Meta-K/Ctrl-K/arrows/Enter/Escape passed in both themes.
 - Cafe POS/Analytics page-local empty states are still open for a separate
   consolidation pass. This entry does not declare the whole brief complete.
+# Focused session follow-up (2026-10-14)
+
+Session canteen visibility, optional name-only checkout and UPI/Cash/member-Credit
+close shipped together. Both-theme/mobile screenshots, measured two-origin sync,
+forced-503 polling, financial/concurrent-close checks and live bundle/revision
+proof: `session-food-credit/README.md`. Colors/fonts and existing alerts/time-edit
+guardrails are retained. Credit repayments/limits remain separately scoped.
+
