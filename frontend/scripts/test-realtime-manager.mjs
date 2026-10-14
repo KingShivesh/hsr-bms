@@ -107,6 +107,26 @@ const stopFallbackTest = fallbackManager.subscribe({
 await waitFor(() => fallbackObserved && fetchAttempts >= 2, "503 did not enter fallback and retry");
 stopFallbackTest();
 
+let stalledAttempts = 0;
+const stalledEvents = [];
+const stalledStates = [];
+const stalled = new RealtimeConnectionManager({
+  apiUrl: "http://test.local", getToken: () => "test-token",
+  retryDelaysMs: [5], heartbeatTimeoutMs: 35,
+  fetchImpl: async () => {
+    stalledAttempts++;
+    return new Response(new ReadableStream({ start(controller) {
+      controller.enqueue(encoder.encode('event: system.connected\ndata: {}\n\nevent: system.heartbeat\ndata: {}\n\n'));
+    } }), { status: 200 });
+  },
+});
+const stopStalled = stalled.subscribe({ topics: ["floor"], onEvent: event => stalledEvents.push(event.type), onState: state => stalledStates.push(state) });
+await waitFor(() => stalledAttempts >= 2, "silent stream did not reconnect after missed heartbeats");
+assert.ok(stalledStates.includes("fallback"));
+assert.equal(stalledEvents.length, 0, "heartbeat must not refetch page data");
+stopStalled();
+await waitFor(() => stalled.snapshot().activeStreams === 0, "stalled stream leaked after unsubscribe");
+
 console.log(JSON.stringify({
   maxConcurrentStreams,
   topicUnion: ["floor", "inventory"],
@@ -114,4 +134,6 @@ console.log(JSON.stringify({
   fallback503: fallbackObserved,
   retryAttemptsObserved: fetchAttempts,
   finalSubscriberCount: manager.snapshot().subscriberCount,
+  stalledStreamReconnect: stalledAttempts >= 2,
+  heartbeatCausedRefetch: stalledEvents.length,
 }, null, 2));

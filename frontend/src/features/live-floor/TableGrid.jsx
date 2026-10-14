@@ -1,5 +1,6 @@
 import { Icon as HsrIcon } from "../../components/ui/index.js";
-import { useRef } from "react";
+import { Profiler, useRef } from "react";
+import { recordProfile } from "../../utils/profile.js";
 import TableCard from "./TableCard.jsx";
 
 export default function TableGrid({
@@ -145,11 +146,11 @@ export default function TableGrid({
       onKeyDown={handleKeyDown}
     >
       {tables.map((table) => (
+        <Profiler key={table.id} id={`TableCard:${table.id}`} onRender={recordProfile}>
         <TableCard
-          key={table.id}
           table={table}
           selected={selectedTableId === table.id}
-          tick={tick}
+          tick={table.session && !table.session.paused ? tick : 0}
           onSelect={onSelectTable}
           onStart={onStartSession}
           onCheckout={onCheckout}
@@ -161,6 +162,7 @@ export default function TableGrid({
           onSaveRate={onSaveRate}
           onInvalidRate={onInvalidRate}
         />
+        </Profiler>
       ))}
     </div>
   );

@@ -1,6 +1,7 @@
 import { formatCurrency as polishCurrency } from "../../utils/format.js";
 import { Icon as HsrIcon, Button as HsrButton, Input as HsrInput, Table as HsrTable } from "../../components/ui/index.js";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCachedState, hasCachedState } from "../../hooks/useCachedState.js";
 import { getFoodOrders, getHistory } from "../../api/index.js";
 import RetryNotice from "../../components/RetryNotice.jsx";
 import { Button, Drawer } from "../../components/ui/index.js";
@@ -53,7 +54,6 @@ function SalesSkeleton() {
   return (
     <div className="page-skeleton compact" role="status" aria-live="polite" aria-label="Loading sales">
       <div className="page-skeleton-status">
-        <HsrIcon className="ti ti-loader-2" aria-hidden="true" />
         <span>Loading sales register...</span>
       </div>
       <div className="skeleton-line skeleton-title" />
@@ -68,16 +68,16 @@ function SalesSkeleton() {
 }
 
 export default function SalesPage() {
-  const [history, setHistory] = useState([]);
-  const [foodOrders, setFoodOrders] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [history, setHistory] = useCachedState("sales-history", []);
+  const [foodOrders, setFoodOrders] = useCachedState("sales-food", []);
+  const [loading, setLoading] = useState(() => !hasCachedState("sales-history"));
   const [error, setError] = useState("");
   const [query, setQuery] = useState("");
   const [selected, setSelected] = useState(null);
   const salesRefreshTimerRef = useRef(null);
 
   const loadSales = useCallback(async ({ showLoading = false } = {}) => {
-    if (showLoading) setLoading(true);
+    if (showLoading && !hasCachedState("sales-history")) setLoading(true);
     setError("");
     try {
       const [historyRes, foodRes] = await Promise.all([getHistory(), getFoodOrders()]);
@@ -88,7 +88,7 @@ export default function SalesPage() {
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [setHistory, setFoodOrders]);
 
   const scheduleSalesRefresh = useCallback(() => {
     window.clearTimeout(salesRefreshTimerRef.current);

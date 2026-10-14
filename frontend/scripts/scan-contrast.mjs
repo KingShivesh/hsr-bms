@@ -33,7 +33,14 @@ try {
       await page.waitForFunction(() => ![...document.querySelectorAll(".page-skeleton,.ui-skeleton-stack,.ui-skeleton-grid,.lf-skeleton")].some(node => node.getClientRects().length));
       if (route === "/live-floor") await page.locator(".lf-table-card").last().waitFor();
       await page.evaluate(() => document.fonts.ready);
-      const check = async state => report.violations.push(...await scanRenderedContrast(page, { theme, route, state }));
+      const check = async state => {
+        // A lazy route can mount its modal after the click wait; sample settled pixels.
+        for (let pass = 0; pass < 2; pass++) await page.evaluate(async () => {
+          await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+          await Promise.all(document.getAnimations().filter(animation => animation.playState === "running" && animation.effect?.getComputedTiming().iterations !== Infinity).map(animation => animation.finished.catch(() => {})));
+        });
+        report.violations.push(...await scanRenderedContrast(page, { theme, route, state }));
+      };
       await check("default");
       if (route === "/login") {
         await page.route("**/auth/login", r => r.fulfill({ status: 401, contentType: "application/json", body: JSON.stringify({ detail: "QA invalid credentials" }) }));
@@ -56,7 +63,10 @@ try {
       await page.keyboard.press("Escape");
       const safe = page.getByRole("button", { name: /^(Start Table|New Booking|Add Customer|Add Walk-in|Advanced Controls|Review Close|Export Reports|Manage Inventory)$/i }).first();
       if (await safe.count() && await safe.isVisible() && await safe.isEnabled()) {
-        await safe.click(); await page.waitForTimeout(300); await check("safe-action");
+        await safe.click(); await page.waitForTimeout(300);
+        await page.waitForFunction(() => ![...document.querySelectorAll(".page-skeleton,.ui-skeleton-stack,.ui-skeleton-grid,.lf-skeleton")].some(node => node.getClientRects().length));
+        await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+        await check("safe-action");
       }
     }
     await context.close();

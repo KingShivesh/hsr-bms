@@ -5,7 +5,7 @@ import assert from "node:assert/strict";
 import { execFileSync } from "node:child_process";
 import { scanRenderedContrast } from "./rendered-contrast.mjs";
 const api = "http://127.0.0.1:8006";
-const directory = path.resolve("../docs/session-food-credit/verification");
+const directory = path.resolve(process.env.SESSION_FOOD_REPORT_PATH || "../docs/session-food-credit/verification");
 await fs.mkdir(directory, { recursive: true });
 const env = { ...process.env, DATABASE_URL: "sqlite:////tmp/hsr-session-close-ui.db", APP_ENV: "development", SECRET_KEY: "qa-session-close-secret-with-at-least-32-characters" };
 const seed = (...args) => execFileSync(process.env.PYTHON_BIN || "/tmp/hsr-controls-fresh-venv/bin/python", ["seed_session_close_qa.py", ...args], { cwd: path.resolve("../backend"), env, stdio: "pipe" });

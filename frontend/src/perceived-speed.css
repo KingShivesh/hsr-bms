@@ -1,0 +1,25 @@
+/* Feedback changes timing only; existing surfaces, fonts and state colors stay intact. */
+button, a, input, select, textarea, [role="button"] {
+  transition-duration: 80ms;
+  transition-timing-function: var(--ease-out);
+}
+.ui-button:not(.table-state-card):active:not(:disabled), button:active:not(:disabled), [role="button"]:active:not([aria-disabled="true"]) {
+  transform: translateY(0.5px);
+  filter: brightness(.94);
+  transition: transform 60ms var(--ease-out);
+}
+.ui-button-native[data-loading="true"] { position: relative; -webkit-text-fill-color: transparent; }
+.ui-button-native[data-loading="true"] > :not(.ui-button-spinner) { visibility: hidden; }
+.ui-button-native[data-loading="true"] > .ui-button-spinner { visibility: visible; -webkit-text-fill-color: initial; color: var(--button-busy-ink, var(--text-primary)); position: absolute; inset: 0; margin: auto; width: 16px; height: 16px; }
+.ui-button-native.lf-primary-button[data-loading="true"] > .ui-button-spinner { color: var(--text-on-accent); }
+.app-toast { animation-duration: 150ms; }
+.app-toast.is-exiting { animation-duration: 120ms; animation-timing-function: var(--ease-in, ease-in); }
+.cf-notification-panel { animation-duration: 100ms; }
+.ui-card.is-interactive { transition-duration: 80ms; }
+[role="tab"] { transition-duration: 120ms; }
+.route-page { animation: none; }
+.session-pending-note { grid-column: 1 / -1; color: inherit; font-size: var(--text-sm); }
+.session-pending-note::before { content: ""; display: inline-block; width: 7px; height: 7px; margin-right: 6px; border-radius: 50%; background: var(--warning); }
+@media (prefers-reduced-motion: reduce) {
+  button:active:not(:disabled), [role="button"]:active { transform: none; }
+}

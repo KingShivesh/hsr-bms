@@ -12,6 +12,8 @@ import StartSessionModal from "../sessions/StartSessionModal.jsx";
 import ProductSelector from "../orders/ProductSelector.jsx";
 import SessionOrders from "../orders/SessionOrders.jsx";
 import CheckoutPanel from "../checkout/CheckoutPanel.jsx";
+import { useCachedState, hasCachedState } from "../../hooks/useCachedState.js";
+import { changeFood, pauseTable } from "./optimistic.js";
 
 function todayLabel() {
   return new Date().toLocaleDateString("en-IN", {
@@ -55,9 +57,10 @@ export default function LiveFloor({ role = "admin", onNavigate, newSessionReques
   const [searchParams] = useSearchParams();
   const requestedTable = searchParams.get("table") || "";
   const requestedAction = searchParams.get("action") || "";
-  const [floor, setFloor] = useState(null);
+  const [floor, setFloor] = useCachedState("floor", null);
+  const [optimistic, setOptimistic] = useState({});
   const [selectedTableId, setSelectedTableId] = useState(requestedAction ? "" : requestedTable);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(() => !hasCachedState("floor"));
   const [error, setError] = useState("");
   const [tick, setTick] = useState(0);
   const [newSessionOpen, setNewSessionOpen] = useState(requestedAction === "start");
@@ -68,6 +71,9 @@ export default function LiveFloor({ role = "admin", onNavigate, newSessionReques
   const [busyTables, setBusyTables] = useState({});
   const pendingTablesRef = useRef(new Set());
   const floorRefreshTimerRef = useRef(null);
+  const loadVersion = useRef(0);
+  const tickRef = useRef(0);
+  useEffect(() => { tickRef.current = tick; }, [tick]);
 
   const openNewSession = useCallback((tableId = "") => {
     setNewSessionTableId(tableId);
@@ -75,10 +81,12 @@ export default function LiveFloor({ role = "admin", onNavigate, newSessionReques
   }, []);
 
   const loadFloor = useCallback(async ({ showLoading = false } = {}) => {
-    if (showLoading) setLoading(true);
+    const version = ++loadVersion.current;
+    if (showLoading && !hasCachedState("floor")) setLoading(true);
     setError("");
     try {
       const res = await getLiveFloor();
+      if (version !== loadVersion.current) return;
       const nextFloor = res.data?.floor || {
         tables: res.data?.tables || [],
         sessions: res.data?.active_sessions || [],
@@ -97,11 +105,12 @@ export default function LiveFloor({ role = "admin", onNavigate, newSessionReques
       });
       setTick(0);
     } catch (err) {
+      if (version !== loadVersion.current) return;
       setError(err.userMessage || "Unable to load table status.");
     } finally {
-      if (showLoading) setLoading(false);
+      if (showLoading && version === loadVersion.current) setLoading(false);
     }
-  }, []);
+  }, [setFloor]);
 
   const scheduleFloorRefresh = useCallback(() => {
     window.clearTimeout(floorRefreshTimerRef.current);
@@ -126,7 +135,7 @@ export default function LiveFloor({ role = "admin", onNavigate, newSessionReques
 
   useEffect(() => {
     loadFloor({ showLoading: true });
-    const onDataChanged = () => scheduleFloorRefresh();
+    const onDataChanged = event => { if (!event.detail?.path || /sessions|bookings|settings\/(rates|tariffs)|waitlist/.test(event.detail.path)) scheduleFloorRefresh(); };
     window.addEventListener("hsr:data-changed", onDataChanged);
     return () => {
       window.removeEventListener("hsr:data-changed", onDataChanged);
@@ -183,7 +192,13 @@ export default function LiveFloor({ role = "admin", onNavigate, newSessionReques
     }
   }, [loadFloor, showToast]);
 
-  const tables = useMemo(() => floor?.tables || [], [floor]);
+  const tables = useMemo(() => (floor?.tables || []).map(table => Object.values(optimistic).reduce((current, change) => change.tableId === table.id && (!change.sessionKey || change.sessionKey === current.session?.session_key) ? change.apply(current) : current, table)), [floor, optimistic]);
+  const beginChange = useCallback((key, tableId, sessionKey, apply) => {
+    loadVersion.current += 1;
+    setOptimistic(current => ({ ...current, [key]: { tableId, sessionKey, apply } }));
+    return () => setOptimistic(current => { const next = { ...current }; delete next[key]; return next; });
+  }, []);
+  const beginFoodChange = useCallback((tableId, sessionKey, key, update) => beginChange(key, tableId, sessionKey, table => changeFood(table, update)), [beginChange]);
   const summary = floor?.summary || {};
   const selectedTable = useMemo(
     () => tables.find((table) => table.id === selectedTableId) || null,
@@ -193,10 +208,13 @@ export default function LiveFloor({ role = "admin", onNavigate, newSessionReques
   const foodTable = tables.find((table) => table.id === foodTableId);
   const ordersTable = tables.find((table) => table.id === ordersTableId);
 
-  async function togglePause(table) {
+  const togglePause = useCallback(async (table) => {
+    const tick = tickRef.current;
     if (pendingTablesRef.current.has(table.id)) return;
     pendingTablesRef.current.add(table.id);
     setBusyTables((current) => ({ ...current, [table.id]: true }));
+    const elapsed = table.session?.paused ? table.elapsed_seconds || 0 : (table.session?.elapsed_seconds || 0) + tick;
+    const undo = beginChange(`pause:${table.id}`, table.id, table.session?.session_key, row => pauseTable(row, !table.session?.paused, elapsed, tick));
     try {
       await pauseSession(table.id);
       showToast(table.session?.paused ? "Session resumed" : "Session paused", "success");
@@ -204,24 +222,43 @@ export default function LiveFloor({ role = "admin", onNavigate, newSessionReques
     } catch (err) {
       showToast(err.userMessage || "Could not update session.", "error");
     } finally {
+      undo();
       pendingTablesRef.current.delete(table.id);
       setBusyTables((current) => ({ ...current, [table.id]: false }));
     }
-  }
-  async function quickStart(tableId) {
+  }, [beginChange, loadFloor, showToast]);
+  const quickStart = useCallback(async (tableId) => {
+    const tick = tickRef.current;
     if (pendingTablesRef.current.has(tableId)) return;
     pendingTablesRef.current.add(tableId);
     setBusyTables(current => ({ ...current, [tableId]: true }));
+    const undo = beginChange(`start:${tableId}`, tableId, null, row => row.session ? row : ({ ...row, status_key: "running", status_label: "Starting…", pending_label: "Starting session…", session: { paused: false, elapsed_seconds: -tick, food_items: [], customer_name: "Guest", pending: true } }));
     try {
       await startGuestSession(tableId);
       showToast(`${tableId.toUpperCase()} session started`, "success");
       await loadFloor();
     } catch (err) { showToast(err.userMessage || "Could not start session.", "error"); }
     finally {
+      undo();
       pendingTablesRef.current.delete(tableId);
       setBusyTables(current => ({ ...current, [tableId]: false }));
     }
-  }
+  }, [beginChange, loadFloor, showToast]);
+  const selectTable = useCallback(table => { setCheckoutTableId(""); setSelectedTableId(table.id); }, []);
+  const checkout = useCallback(table => { setSelectedTableId(""); setCheckoutTableId(table.id); }, []);
+  const food = useCallback(table => setFoodTableId(table.id), []);
+  const orders = useCallback(table => setOrdersTableId(table.id), []);
+  const booking = useCallback(table => openNewSession(table.id), [openNewSession]);
+  const invalidRate = useCallback(message => showToast(message, "error"), [showToast]);
+  const closing = useCallback((tableId, pending) => {
+    setBusyTables(current => ({ ...current, [tableId]: pending }));
+    setOptimistic(current => {
+      const next = { ...current };
+      if (pending) next[`close:${tableId}`] = { tableId, apply: table => ({ ...table, pending_label: "Closing…" }) };
+      else delete next[`close:${tableId}`];
+      return next;
+    });
+  }, []);
   const upcomingBookings = tables.filter((table) => table.booking).length;
   const reservedTables = tables.filter((table) => table.status_key === "reserved").length;
   const pausedTables = tables.filter((table) => table.status_key === "paused").length;
@@ -293,22 +330,16 @@ export default function LiveFloor({ role = "admin", onNavigate, newSessionReques
                 tables={tables}
                 selectedTableId={selectedTable?.id}
                 tick={tick}
-                onSelectTable={(table) => {
-                  setCheckoutTableId("");
-                  setSelectedTableId(table.id);
-                }}
+                onSelectTable={selectTable}
                 onStartSession={quickStart}
-                onCheckout={(table) => {
-                  setSelectedTableId("");
-                  setCheckoutTableId(table.id);
-                }}
+                onCheckout={checkout}
                 onPause={togglePause}
-          onFood={(table) => setFoodTableId(table.id)}
-          onOrders={(table) => setOrdersTableId(table.id)}
+                onFood={food}
+                onOrders={orders}
                 busyTables={busyTables}
-                onReviewBooking={(table) => openNewSession(table.id)}
+                onReviewBooking={booking}
                 onSaveRate={saveInlineRate}
-                onInvalidRate={(message) => showToast(message, "error")}
+                onInvalidRate={invalidRate}
               />
             </div>
 
@@ -328,6 +359,7 @@ export default function LiveFloor({ role = "admin", onNavigate, newSessionReques
 
       {newSessionOpen && <StartSessionModal
         tables={tables}
+        onStart={quickStart}
         initialTableId={newSessionTableId}
         onClose={() => setNewSessionOpen(false)}
         onCreated={async () => {
@@ -336,11 +368,14 @@ export default function LiveFloor({ role = "admin", onNavigate, newSessionReques
         }}
       />}
       <Modal open={!!foodTable?.session} portal title={`Session food · ${String(foodTableId).toUpperCase()}`} onClose={() => setFoodTableId("")} className="lf-food-modal" size="lg">
-        <ProductSelector tableId={foodTableId} sessionKey={foodTable?.session?.session_key} players={foodTable?.session?.players || []} onClose={() => setFoodTableId("")} onAdded={async () => { await loadFloor(); setFoodTableId(""); }} />
+        <ProductSelector tableId={foodTableId} sessionKey={foodTable?.session?.session_key} players={foodTable?.session?.players || []} onOptimistic={beginFoodChange} onClose={() => setFoodTableId("")} onAdded={data => {
+          if (data?.item) setFloor(current => ({ ...current, tables: current.tables.map(row => row.id !== foodTableId || row.session?.session_key !== foodTable?.session?.session_key ? row : ({ ...row, session: { ...row.session, food_items: [...(row.session.food_items || []).filter(item => item.id !== data.item.id), data.item], food_total: data.food_total } })) }));
+          setFoodTableId(""); scheduleFloorRefresh();
+        }} />
       </Modal>
-      <CheckoutPanel table={checkoutTable} open={!!checkoutTable} onClose={() => setCheckoutTableId("")} onComplete={loadFloor} />
+      <CheckoutPanel table={checkoutTable} open={!!checkoutTable} onClose={() => setCheckoutTableId("")} onComplete={loadFloor} onPendingChange={closing} />
       <Drawer portal open={!!ordersTable?.session} title={`Canteen orders · ${String(ordersTableId).toUpperCase()}`} onClose={() => setOrdersTableId("")}>
-        {ordersTable?.session && <SessionOrders table={ordersTable} onChanged={loadFloor} onAdd={() => { setOrdersTableId(""); setFoodTableId(ordersTableId); }} />}
+        {ordersTable?.session && <SessionOrders table={ordersTable} onOptimistic={beginFoodChange} onChanged={loadFloor} onAdd={() => { setOrdersTableId(""); setFoodTableId(ordersTableId); }} />}
       </Drawer>
     </section>
   );

@@ -242,7 +242,6 @@ export default function TournamentTab({ onNavigate }) {
     return (
       <div className="page-skeleton compact" role="status" aria-live="polite" aria-label="Loading tournaments">
         <div className="page-skeleton-status">
-          <HsrIcon className="ti ti-loader-2" aria-hidden="true" />
           <span>Loading tournaments...</span>
         </div>
         <div className="skeleton-grid">

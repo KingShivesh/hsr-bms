@@ -1,6 +1,7 @@
 import { formatCurrency as polishCurrency } from "../../utils/format.js";
 import { Icon as HsrIcon, Input as HsrInput, Button as HsrButton, EmptyState } from "../../components/ui/index.js";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCachedState, hasCachedState } from "../../hooks/useCachedState.js";
 import {
   addMember,
   deleteMember,
@@ -48,7 +49,6 @@ function CustomerSkeleton() {
   return (
     <div className="page-skeleton compact" role="status" aria-live="polite" aria-label="Loading customers">
       <div className="page-skeleton-status">
-        <HsrIcon className="ti ti-loader-2" aria-hidden="true" />
         <span>Loading customers...</span>
       </div>
       <div className="skeleton-grid">
@@ -64,18 +64,19 @@ function CustomerSkeleton() {
 export default function CustomersPage() {
   const { showToast } = useToast();
   const { requestConfirm } = useConfirm();
-  const [members, setMembers] = useState([]);
-  const [duplicates, setDuplicates] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [members, setMembers] = useCachedState("members", []);
+  const [duplicates, setDuplicates] = useCachedState("member-duplicates", []);
+  const [loading, setLoading] = useState(() => !hasCachedState("members"));
   const [error, setError] = useState("");
   const [query, setQuery] = useState("");
   const [newName, setNewName] = useState("");
   const [selectedCustomer, setSelectedCustomer] = useState(null);
   const [busy, setBusy] = useState("");
+  const [formError, setFormError] = useState("");
   const newCustomerInputRef = useRef(null);
 
   const loadCustomers = useCallback(async ({ showLoading = false } = {}) => {
-    if (showLoading) setLoading(true);
+    if (showLoading && !hasCachedState("members")) setLoading(true);
     setError("");
     try {
       const [memberRes, duplicateRes] = await Promise.all([getMembers(), getMemberDuplicates()]);
@@ -86,7 +87,7 @@ export default function CustomersPage() {
     } finally {
       if (showLoading) setLoading(false);
     }
-  }, []);
+  }, [setMembers, setDuplicates]);
 
   useEffect(() => {
     loadCustomers({ showLoading: true });
@@ -126,13 +127,18 @@ export default function CustomersPage() {
       return;
     }
     setBusy("add");
+    setFormError("");
+    const pendingId = `pending-${crypto.randomUUID()}`;
+    setMembers(current => [...current, { id: pendingId, nm: name, typ: "Regular", pending: true }]);
     try {
       await addMember(name);
       setNewName("");
       showToast("Customer added", "success");
       await loadCustomers();
     } catch (err) {
-      showToast(err.response?.data?.detail || "Could not add customer", "error");
+      setMembers(current => current.filter(row => memberId(row) !== pendingId));
+      setFormError(err.userMessage || "Could not add customer");
+      showToast(err.userMessage || "Could not add customer", "error");
     } finally {
       setBusy("");
     }
@@ -155,12 +161,13 @@ export default function CustomersPage() {
     const id = memberId(customer);
     const restorePayload = memberRestorePayload(customer);
     setBusy(`delete-${id}`);
+    setMembers(current => current.filter(row => memberId(row) !== id));
     try {
       await deleteMember(id);
       setSelectedCustomer((current) => (memberId(current || {}) === id ? null : current));
       showToast(`${restorePayload.name || "Customer"} deleted`, "success", {
         actionLabel: "Undo",
-        duration: 6000,
+        duration: 5000,
         onAction: async () => {
           setBusy(`restore-${id}`);
           try {
@@ -176,6 +183,7 @@ export default function CustomersPage() {
       });
       await loadCustomers();
     } catch (err) {
+      setMembers(current => current.some(row => memberId(row) === id) ? current : [...current, customer]);
       showToast(err.response?.data?.detail || "Could not delete customer", "error");
     } finally {
       setBusy("");
@@ -218,17 +226,22 @@ export default function CustomersPage() {
           <HsrInput
             ref={newCustomerInputRef}
             value={newName}
+            required
+            onBlur={() => setFormError(newName.trim() ? "" : "Enter customer name")}
+            aria-invalid={!!formError}
+            aria-describedby={formError ? "customer-form-error" : undefined}
             onChange={(event) => setNewName(event.target.value)}
             placeholder="Customer name"
             aria-label="Customer name"
             disabled={!!busy}
           />
-          <HsrButton native type="submit" className="lf-primary-button" disabled={!!busy}>
+          <HsrButton native type="submit" className="lf-primary-button" loading={busy === "add"} disabled={!!busy}>
             <HsrIcon className="ti ti-user-plus" aria-hidden="true" />
             {busy === "add" ? "Adding..." : "Add Customer"}
           </HsrButton>
         </form>
       </div>
+      {formError && <p id="customer-form-error" role="alert">{formError}</p>}
 
       <div className="op2-metric-grid">
         <div><span>Total customers</span><strong>{members.length}</strong><em>{duplicates.length} duplicate group(s)</em></div>
@@ -305,7 +318,7 @@ export default function CustomersPage() {
                 >
                   <div className="op2-customer-main">
                     <div>
-                      <strong>{memberName(member)}</strong>
+                      <strong>{memberName(member)}{member.pending ? " · Saving…" : ""}</strong>
                       <span>{id || "No ID"}</span>
                     </div>
                     <em data-tier={tier.toLowerCase()}>{tier}</em>
@@ -322,7 +335,7 @@ export default function CustomersPage() {
                       disabled={!!busy}
                       onClick={(event) => {
                         event.stopPropagation();
-                        handleUpgrade(id, tier);
+                        return handleUpgrade(id, tier);
                       }}
                     >
                       <HsrIcon className={`ti ${premium ? "ti-arrow-down" : "ti-arrow-up"}`} aria-hidden="true" />
@@ -334,7 +347,7 @@ export default function CustomersPage() {
                       disabled={!!busy}
                       onClick={(event) => {
                         event.stopPropagation();
-                        handleDelete(member);
+                        return handleDelete(member);
                       }}
                     >
                       <HsrIcon className="ti ti-trash" aria-hidden="true" />

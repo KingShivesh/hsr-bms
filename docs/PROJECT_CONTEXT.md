@@ -243,3 +243,22 @@ This gate was added after commit `a4ed36c` failed to start on Render because its
 production dialect imported psycopg v3 while `requirements.txt` only declared
 the older psycopg2 package. The previous SQLite checks could not detect that
 dependency mismatch.
+
+## Perceived Speed Guardrails
+
+- Preserve the approved Syne + DM Mono fonts and both theme palettes. Interaction
+  work changes timing and data reconciliation, not visual identity.
+- Shared buttons own promise-based pending feedback and a synchronous click lock.
+  Form submissions must also pass their existing `loading` state explicitly.
+- Short-lived page caches are memory-only, token/role scoped, bounded to 60
+  entries and 30 seconds. Never cache authentication, checkout quotes or receipts.
+- A read-only checkout preview is not a mutation. Do not announce it through
+  `hsr:data-changed` or refetch the floor/alerts/summary while typing a name.
+- SSE remains one shared connection per tab. Domain events invalidate the
+  in-flight read epoch; heartbeats do not refetch data. The server pings every
+  15 seconds; a 35-second silent stream falls back and reconnects with backoff.
+- Never suppress an uncorrelated SSE event as a self-echo: current events do not
+  carry a client request ID. Coalesce reads, but preserve remote invalidations.
+- Pending state may be optimistic; signed prices, permissions, payments and
+  receipts remain server-authoritative. Keep irreversible-action confirmations.
+- Evidence and repeatable checks: `docs/perceived-speed/README.md`.

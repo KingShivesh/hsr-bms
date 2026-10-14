@@ -1,5 +1,5 @@
 import { Icon as HsrIcon, Button as HsrButton } from "./ui/index.js";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { ToastContext } from "./toastContext.js";
 
 const TOAST_ICONS = {
@@ -26,7 +26,7 @@ export function ToastProvider({ children }) {
     return () => { for (const timer of activeTimers.values()) { clearTimeout(timer.exitTimer); clearTimeout(timer.removeTimer); } activeTimers.clear(); };
   }, []);
 
-  const removeToast = useCallback((id, delay = 190) => {
+  const removeToast = useCallback((id, delay = 120) => {
     const timerSet = timers.current.get(id);
     if (timerSet) {
       clearTimeout(timerSet.exitTimer);
@@ -62,13 +62,20 @@ export function ToastProvider({ children }) {
     return id;
   }, [removeToast]);
 
+  useEffect(() => {
+    const failed = event => showToast(event.detail, "error");
+    window.addEventListener("hsr:action-failed", failed);
+    return () => window.removeEventListener("hsr:action-failed", failed);
+  }, [showToast]);
+  const context = useMemo(() => ({ showToast, dismissToast: removeToast }), [showToast, removeToast]);
+
   const handleAction = useCallback(async (toast) => {
     removeToast(toast.id, 120);
     await toast.onAction?.();
   }, [removeToast]);
 
   return (
-    <ToastContext.Provider value={{ showToast, dismissToast: removeToast }}>
+    <ToastContext.Provider value={context}>
       {children}
       <ToastStack toasts={toasts.filter(t => t.type !== "warning")} onAction={handleAction} onSecondaryAction={t => { removeToast(t.id, 120); t.onSecondaryAction?.(); }} />
       <ToastStack className="app-session-alert-container" toasts={toasts.filter(t => t.type === "warning")} onAction={handleAction} onSecondaryAction={t => { removeToast(t.id, 120); t.onSecondaryAction?.(); }} />

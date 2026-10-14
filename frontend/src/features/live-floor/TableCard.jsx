@@ -1,6 +1,6 @@
 import { formatDuration as polishDuration } from "../../utils/format.js";
 import { Input as HsrInput, Button as HsrButton, Icon as HsrIcon } from "../../components/ui/index.js";
-import { useEffect, useRef, useState } from "react";
+import { memo, useEffect, useRef, useState } from "react";
 import { TableAttentionBadge } from "../../components/TableStateUI.jsx";
 import { tableStateAttributes, getTableAttention, getTableStatusByKey } from "../../config/tableStatus.js";
 import TableStatusBadge from "./TableStatusBadge.jsx";
@@ -17,6 +17,8 @@ function bookingTime(booking) {
   return parsed.toLocaleTimeString("en-IN", { hour: "2-digit", minute: "2-digit" });
 }
 
+export default memo(TableCard);
+
 function pairedRateNote(tableId) {
   const normalized = String(tableId || "").toLowerCase();
   if (normalized === "t1") return "Also updates T2";
@@ -27,7 +29,7 @@ function pairedRateNote(tableId) {
   return "Updates this rate group";
 }
 
-export default function TableCard({
+function TableCard({
   table,
   selected,
   tick = 0,
@@ -122,10 +124,10 @@ export default function TableCard({
   function handleAction(event) {
     event.stopPropagation();
     if (isMaintenance) return;
-    if (isAvailable) onStart?.(table.id);
-    else if (statusKey === "running" || statusKey === "paused") onCheckout?.(table);
-    else if (statusKey === "reserved") onReviewBooking?.(table);
-    else onSelect?.(table);
+    if (isAvailable) return onStart?.(table.id);
+    if (statusKey === "running" || statusKey === "paused") return onCheckout?.(table);
+    if (statusKey === "reserved") return onReviewBooking?.(table);
+    return onSelect?.(table);
   }
 
   return (
@@ -134,7 +136,7 @@ export default function TableCard({
       {...tableStateAttributes(status.key)}
       data-attention={attention ? "true" : "false"}
       data-overtime-pulse={urgentKeys.has(session?.session_key) ? "true" : undefined}
-      onClick={() => !isMaintenance && onSelect?.(table)}
+      onClick={() => !isMaintenance && !busy && onSelect?.(table)}
       tabIndex={isMaintenance ? -1 : 0}
       role="group"
       aria-disabled={isMaintenance}
@@ -142,7 +144,7 @@ export default function TableCard({
         if (event.target !== event.currentTarget) return;
         if (event.key === "Enter" || event.key === " ") {
           event.preventDefault();
-          if (!isMaintenance) onSelect?.(table);
+          if (!isMaintenance && !busy) onSelect?.(table);
         }
       }}
       aria-label={`${table.label || table.id} ${table.status_label || statusKey}`}
@@ -161,6 +163,7 @@ export default function TableCard({
       </div>
 
       <div className="lf-table-card-body">
+        {table.pending_label && <p className="session-pending-note" role="status">{table.pending_label}</p>}
         <div>
           <span>{session ? "Customer" : statusKey === "reserved" ? "Booking time" : "Availability"}</span>
           <b title={statusKey === "reserved" ? bookingTime(table.booking) : customer || "Walk-in ready"}>
@@ -236,7 +239,7 @@ export default function TableCard({
             <strong>₹{runningTotal.toLocaleString("en-IN")}</strong>
           </div>
           <small>{tariffDescription(session)}</small>
-          <HsrButton native type="button" className="session-canteen-summary" aria-label={`Canteen orders for ${String(table.id).toUpperCase()}`} onClick={event => { event.stopPropagation(); onOrders?.(table); }}>
+          <HsrButton native type="button" disabled={!!session.pending} className="session-canteen-summary" aria-label={`Canteen orders for ${String(table.id).toUpperCase()}`} onClick={event => { event.stopPropagation(); onOrders?.(table); }}>
             <span>{pendingItems > 0 && <span className="session-order-dot" aria-hidden="true" />}{foodSummary || "No canteen orders"}</span>
             {!!foodItems.length && <small>{pendingItems ? `${pendingItems} pending` : "All served"} · ₹{foodTotal.toLocaleString("en-IN")}</small>}
           </HsrButton>

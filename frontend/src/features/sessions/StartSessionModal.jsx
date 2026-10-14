@@ -5,13 +5,14 @@ import { useToast } from "../../components/toastContext.js";
 import "./start-session.css";
 
 // The global toolbar needs a table choice; the table card starts directly.
-export default function StartSessionModal({ tables, onCreated, onClose }) {
+export default function StartSessionModal({ tables, onCreated, onClose, onStart }) {
   const { showToast } = useToast();
   const [busy, setBusy] = useState("");
   const pending = useRef(false);
   async function start(table) {
     if (pending.current) return;
     pending.current = true; setBusy(table.id);
+    if (onStart) { onClose?.(); await onStart(table.id); return; }
     try {
       await startGuestSession(table.id);
       showToast(`${table.id.toUpperCase()} session started`, "success");

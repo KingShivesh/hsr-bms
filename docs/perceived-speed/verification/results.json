@@ -1,0 +1,138 @@
+{
+  "checks": [
+    {
+      "theme": "light",
+      "name": "pause immediate feedback + optimistic state + 409 rollback",
+      "width": 71,
+      "height": 44,
+      "start": 2431.7000000029802,
+      "feedbackMs": 3,
+      "busyWidth": 71,
+      "busyHeight": 44,
+      "requests": 1
+    },
+    {
+      "theme": "light",
+      "name": "start instant running state + rollback",
+      "width": 229,
+      "height": 44,
+      "start": 3798.10000000149,
+      "feedbackMs": 2.2999999970197678,
+      "busyWidth": 229,
+      "busyHeight": 44
+    },
+    {
+      "theme": "light",
+      "name": "food pending insert + rollback + retained selection",
+      "width": 158.359375,
+      "height": 36,
+      "start": 5665.20000000298,
+      "feedbackMs": 4,
+      "busyWidth": 158.359375,
+      "busyHeight": 36
+    },
+    {
+      "theme": "light",
+      "name": "serve instant + 409 rollback",
+      "pass": true
+    },
+    {
+      "theme": "light",
+      "name": "closing pending, no false payment success on rejection",
+      "pass": true
+    },
+    {
+      "theme": "light",
+      "name": "cached return while revalidating + same shell DOM",
+      "pass": true
+    },
+    {
+      "theme": "light",
+      "name": "optimistic customer create + 422 inline error + retained draft",
+      "pass": true
+    },
+    {
+      "theme": "light",
+      "name": "optimistic inventory availability + rollback",
+      "pass": true
+    },
+    {
+      "theme": "light",
+      "name": "optimistic inventory deletion + rollback",
+      "pass": true
+    },
+    {
+      "theme": "dark",
+      "name": "pause immediate feedback + optimistic state + 409 rollback",
+      "width": 71,
+      "height": 44,
+      "start": 2129.10000000149,
+      "feedbackMs": 3.5,
+      "busyWidth": 71,
+      "busyHeight": 44,
+      "requests": 1
+    },
+    {
+      "theme": "dark",
+      "name": "start instant running state + rollback",
+      "width": 229,
+      "height": 44,
+      "start": 3490.7000000029802,
+      "feedbackMs": 2.7000000029802322,
+      "busyWidth": 229,
+      "busyHeight": 44
+    },
+    {
+      "theme": "dark",
+      "name": "food pending insert + rollback + retained selection",
+      "width": 158.359375,
+      "height": 36,
+      "start": 5359.5,
+      "feedbackMs": 3.600000001490116,
+      "busyWidth": 158.359375,
+      "busyHeight": 36
+    },
+    {
+      "theme": "dark",
+      "name": "serve instant + 409 rollback",
+      "pass": true
+    },
+    {
+      "theme": "dark",
+      "name": "closing pending, no false payment success on rejection",
+      "pass": true
+    },
+    {
+      "theme": "dark",
+      "name": "cached return while revalidating + same shell DOM",
+      "pass": true
+    },
+    {
+      "theme": "dark",
+      "name": "optimistic customer create + 422 inline error + retained draft",
+      "pass": true
+    },
+    {
+      "theme": "dark",
+      "name": "optimistic inventory availability + rollback",
+      "pass": true
+    },
+    {
+      "theme": "dark",
+      "name": "optimistic inventory deletion + rollback",
+      "pass": true
+    }
+  ],
+  "screenshots": [
+    "pause-pending-light.png",
+    "floor-1440-light.png",
+    "floor-375-light.png",
+    "floor-414-light.png",
+    "pause-pending-dark.png",
+    "floor-1440-dark.png",
+    "floor-375-dark.png",
+    "floor-414-dark.png"
+  ],
+  "errors": [],
+  "productionMutations": 0
+}

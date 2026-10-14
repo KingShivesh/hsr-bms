@@ -17,7 +17,7 @@ function itemAvailable(value) {
   return typeof value === "object" ? value.available !== false : true;
 }
 
-export default function ProductSelector({ tableId, sessionKey, players = [], onAdded, onClose }) {
+export default function ProductSelector({ tableId, sessionKey, players = [], onAdded, onClose, onOptimistic }) {
   const { showToast } = useToast();
   useEscapeKey(onClose, true);
   const [menu, setMenu] = useState({});
@@ -69,16 +69,21 @@ export default function ProductSelector({ tableId, sessionKey, players = [], onA
     }
     setSaving(true);
     pending.current = true;
+    const optimisticRow = { id: crypto.randomUUID(), item: selectedItem.name, qty, price: selectedItem.price * qty, unit_price: selectedItem.price, served: false, pending: true, player_name: playerName };
+    const undo = onOptimistic?.(tableId, sessionKey, optimisticRow.id, rows => [...rows, optimisticRow]);
     try {
-      await addFood(tableId, selectedItem.name, qty, null, playerName, sessionKey);
+      const response = await addFood(tableId, selectedItem.name, qty, null, playerName, sessionKey);
       showToast(`${selectedItem.name} added to ${String(tableId).toUpperCase()}`, "success");
-      await onAdded?.();
+      await onAdded?.(response.data);
       setSelectedItem(null);
       setQty(1);
       setPlayerName("");
     } catch (err) {
-      showToast(err.userMessage || "Could not add food to session.", "error");
+      const message = err.userMessage || "Could not add food to session.";
+      setError(message);
+      showToast(message, "error");
     } finally {
+      undo?.();
       setSaving(false);
       pending.current = false;
     }
@@ -103,9 +108,9 @@ export default function ProductSelector({ tableId, sessionKey, players = [], onA
           <span />
         </div>
       )}
-      {error && <RetryNotice message="Unable to load menu" detail={error} onRetry={loadMenu} />}
+      {error && <RetryNotice message="Order could not complete" detail={error} onRetry={loadMenu} />}
 
-      {!loading && !error && (
+      {!loading && (
         <>
           <label className="lf-field">
             <span>Search menu</span>
@@ -143,7 +148,7 @@ export default function ProductSelector({ tableId, sessionKey, players = [], onA
                 </HsrSelect>
               </label>
             )}
-            <HsrButton native type="submit" className="lf-primary-button" disabled={saving || !selectedItem}>
+            <HsrButton native type="submit" className="lf-primary-button" loading={saving} disabled={!selectedItem}>
               {saving ? "Adding..." : "Add Food to Session"}
             </HsrButton>
           </form>

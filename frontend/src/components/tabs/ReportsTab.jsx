@@ -1,6 +1,7 @@
 import { formatCurrency as polishCurrency } from "../../utils/format.js";
 import { Button as HsrButton, Icon as HsrIcon, Input as HsrInput, Table as HsrTable } from "../ui/index.js";
 import { useCallback, useEffect, useState } from "react";
+import { useCachedState } from "../../hooks/useCachedState.js";
 import {
   getSummary,
   getHistory,
@@ -126,7 +127,6 @@ function LoadingState({ title = "Loading report..." }) {
   return (
     <div className="page-skeleton compact" role="status" aria-live="polite" aria-label={title}>
       <div className="page-skeleton-status">
-        <HsrIcon className="ti ti-loader-2" aria-hidden="true" />
         <span>{title}</span>
       </div>
       <div className="skeleton-line skeleton-title" />
@@ -1125,13 +1125,13 @@ export default function ReportsTab({ onNavigate }) {
   );
   const [period, setPeriod] = useState("today");
   const [selectedDate, setSelectedDate] = useState("");
-  const [summary, setSummary] = useState({
+  const [summary, setSummary] = useCachedState("reports-summary", {
     sale: 0,
     sessions: 0,
     avg_time: 0,
     top_table: "-",
   });
-  const [history, setHistory] = useState([]);
+  const [history, setHistory] = useCachedState("reports-history", []);
   const [exporting, setExporting] = useState(false);
   const [loadError, setLoadError] = useState("");
 
@@ -1143,7 +1143,7 @@ export default function ReportsTab({ onNavigate }) {
       console.error(e);
       setLoadError(e.userMessage || "Report summary could not load.");
     }
-  }, []);
+  }, [setSummary]);
 
   const fetchHistory = useCallback(async () => {
     try {
@@ -1153,7 +1153,7 @@ export default function ReportsTab({ onNavigate }) {
       console.error(e);
       setLoadError(e.userMessage || "Bill history could not load.");
     }
-  }, []);
+  }, [setHistory]);
 
   const refreshReports = useCallback(async () => {
     setLoadError("");

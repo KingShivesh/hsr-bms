@@ -1,0 +1,922 @@
+[
+  {
+    "id": "TableCard:t1",
+    "phase": "mount",
+    "actualDuration": 7.899999998509884,
+    "baseDuration": 7.100000001490116,
+    "startTime": 649.5,
+    "commitTime": 671.5
+  },
+  {
+    "id": "TableCard:t2",
+    "phase": "mount",
+    "actualDuration": 5.700000002980232,
+    "baseDuration": 5,
+    "startTime": 657.3999999985099,
+    "commitTime": 671.5
+  },
+  {
+    "id": "TableCard:t3",
+    "phase": "mount",
+    "actualDuration": 2.5999999940395355,
+    "baseDuration": 2.3999999910593033,
+    "startTime": 663.1000000014901,
+    "commitTime": 671.5
+  },
+  {
+    "id": "TableCard:t4",
+    "phase": "mount",
+    "actualDuration": 2.5,
+    "baseDuration": 2.2000000029802322,
+    "startTime": 665.6999999955297,
+    "commitTime": 671.5
+  },
+  {
+    "id": "TableCard:t5",
+    "phase": "mount",
+    "actualDuration": 2.600000001490116,
+    "baseDuration": 2.2000000029802322,
+    "startTime": 668.1999999955297,
+    "commitTime": 671.5
+  },
+  {
+    "id": "TableCard:t1",
+    "phase": "update",
+    "actualDuration": 9.699999995529652,
+    "baseDuration": 9.600000001490116,
+    "startTime": 740.3999999985099,
+    "commitTime": 766.7999999970198
+  },
+  {
+    "id": "TableCard:t2",
+    "phase": "update",
+    "actualDuration": 6.5,
+    "baseDuration": 6.5,
+    "startTime": 750.1999999955297,
+    "commitTime": 766.7999999970198
+  },
+  {
+    "id": "TableCard:t3",
+    "phase": "update",
+    "actualDuration": 3.5,
+    "baseDuration": 3.5,
+    "startTime": 756.6999999955297,
+    "commitTime": 766.7999999970198
+  },
+  {
+    "id": "TableCard:t4",
+    "phase": "update",
+    "actualDuration": 3.2000000029802322,
+    "baseDuration": 3.2000000029802322,
+    "startTime": 760.1999999955297,
+    "commitTime": 766.7999999970198
+  },
+  {
+    "id": "TableCard:t5",
+    "phase": "update",
+    "actualDuration": 3.2000000029802322,
+    "baseDuration": 3.2000000029802322,
+    "startTime": 763.3999999985099,
+    "commitTime": 766.7999999970198
+  },
+  {
+    "id": "TableCard:t1",
+    "phase": "update",
+    "actualDuration": 3.6999999955296516,
+    "baseDuration": 3.6999999955296516,
+    "startTime": 1583,
+    "commitTime": 1596.7999999970198
+  },
+  {
+    "id": "TableCard:t2",
+    "phase": "update",
+    "actualDuration": 3.300000011920929,
+    "baseDuration": 3.200000010430813,
+    "startTime": 1586.6999999955297,
+    "commitTime": 1596.7999999970198
+  },
+  {
+    "id": "TableCard:t3",
+    "phase": "update",
+    "actualDuration": 2.0999999940395355,
+    "baseDuration": 2.0999999940395355,
+    "startTime": 1590.1000000014901,
+    "commitTime": 1596.7999999970198
+  },
+  {
+    "id": "TableCard:t4",
+    "phase": "update",
+    "actualDuration": 2.2000000029802322,
+    "baseDuration": 2.2000000029802322,
+    "startTime": 1592.1999999955297,
+    "commitTime": 1596.7999999970198
+  },
+  {
+    "id": "TableCard:t5",
+    "phase": "update",
+    "actualDuration": 2.100000001490116,
+    "baseDuration": 2.100000001490116,
+    "startTime": 1594.3999999985099,
+    "commitTime": 1596.7999999970198
+  },
+  {
+    "id": "TableCard:t1",
+    "phase": "update",
+    "actualDuration": 4.199999995529652,
+    "baseDuration": 4.000000007450581,
+    "startTime": 2582,
+    "commitTime": 2595.60000000149
+  },
+  {
+    "id": "TableCard:t2",
+    "phase": "update",
+    "actualDuration": 3.600000001490116,
+    "baseDuration": 3.600000001490116,
+    "startTime": 2586.1999999955297,
+    "commitTime": 2595.60000000149
+  },
+  {
+    "id": "TableCard:t3",
+    "phase": "update",
+    "actualDuration": 1.8999999985098839,
+    "baseDuration": 1.8999999985098839,
+    "startTime": 2589.7999999970198,
+    "commitTime": 2595.60000000149
+  },
+  {
+    "id": "TableCard:t4",
+    "phase": "update",
+    "actualDuration": 1.7000000029802322,
+    "baseDuration": 1.7000000029802322,
+    "startTime": 2591.6999999955297,
+    "commitTime": 2595.60000000149
+  },
+  {
+    "id": "TableCard:t5",
+    "phase": "update",
+    "actualDuration": 1.8999999985098839,
+    "baseDuration": 1.7999999970197678,
+    "startTime": 2593.39999999851,
+    "commitTime": 2595.60000000149
+  },
+  {
+    "id": "TableCard:t1",
+    "phase": "update",
+    "actualDuration": 4.600000001490116,
+    "baseDuration": 4.600000001490116,
+    "startTime": 3923.5,
+    "commitTime": 3938.39999999851
+  },
+  {
+    "id": "TableCard:t2",
+    "phase": "update",
+    "actualDuration": 3.9000000059604645,
+    "baseDuration": 3.9000000059604645,
+    "startTime": 3928.1999999955297,
+    "commitTime": 3938.39999999851
+  },
+  {
+    "id": "TableCard:t3",
+    "phase": "update",
+    "actualDuration": 2,
+    "baseDuration": 2,
+    "startTime": 3932.10000000149,
+    "commitTime": 3938.39999999851
+  },
+  {
+    "id": "TableCard:t4",
+    "phase": "update",
+    "actualDuration": 2,
+    "baseDuration": 1.9000000059604645,
+    "startTime": 3934.1999999955297,
+    "commitTime": 3938.39999999851
+  },
+  {
+    "id": "TableCard:t5",
+    "phase": "update",
+    "actualDuration": 1.8000000044703484,
+    "baseDuration": 1.8000000044703484,
+    "startTime": 3936.1999999955297,
+    "commitTime": 3938.39999999851
+  },
+  {
+    "id": "TableCard:t1",
+    "phase": "update",
+    "actualDuration": 4.200000002980232,
+    "baseDuration": 4.200000002980232,
+    "startTime": 4001.10000000149,
+    "commitTime": 4015.89999999851
+  },
+  {
+    "id": "TableCard:t2",
+    "phase": "update",
+    "actualDuration": 4.100000001490116,
+    "baseDuration": 4.000000007450581,
+    "startTime": 4005.39999999851,
+    "commitTime": 4015.89999999851
+  },
+  {
+    "id": "TableCard:t3",
+    "phase": "update",
+    "actualDuration": 2,
+    "baseDuration": 2,
+    "startTime": 4009.5,
+    "commitTime": 4015.89999999851
+  },
+  {
+    "id": "TableCard:t4",
+    "phase": "update",
+    "actualDuration": 2.2999999970197678,
+    "baseDuration": 2.2999999970197678,
+    "startTime": 4011.5,
+    "commitTime": 4015.89999999851
+  },
+  {
+    "id": "TableCard:t5",
+    "phase": "update",
+    "actualDuration": 1.8000000044703484,
+    "baseDuration": 1.7000000029802322,
+    "startTime": 4013.7999999970198,
+    "commitTime": 4015.89999999851
+  },
+  {
+    "id": "TableCard:t1",
+    "phase": "update",
+    "actualDuration": 5.700000002980232,
+    "baseDuration": 5.700000002980232,
+    "startTime": 4583.19999999553,
+    "commitTime": 4604.79999999702
+  },
+  {
+    "id": "TableCard:t2",
+    "phase": "update",
+    "actualDuration": 6.600000001490116,
+    "baseDuration": 6.600000001490116,
+    "startTime": 4589,
+    "commitTime": 4604.79999999702
+  },
+  {
+    "id": "TableCard:t3",
+    "phase": "update",
+    "actualDuration": 3,
+    "baseDuration": 3,
+    "startTime": 4595.60000000149,
+    "commitTime": 4604.79999999702
+  },
+  {
+    "id": "TableCard:t4",
+    "phase": "update",
+    "actualDuration": 2.7999999970197678,
+    "baseDuration": 2.7999999970197678,
+    "startTime": 4598.60000000149,
+    "commitTime": 4604.79999999702
+  },
+  {
+    "id": "TableCard:t5",
+    "phase": "update",
+    "actualDuration": 2.899999998509884,
+    "baseDuration": 2.899999998509884,
+    "startTime": 4601.39999999851,
+    "commitTime": 4604.79999999702
+  },
+  {
+    "id": "TableCard:t1",
+    "phase": "update",
+    "actualDuration": 3.5,
+    "baseDuration": 3.5,
+    "startTime": 4805.60000000149,
+    "commitTime": 4820.89999999851
+  },
+  {
+    "id": "TableCard:t2",
+    "phase": "update",
+    "actualDuration": 3.5999999940395355,
+    "baseDuration": 3.5,
+    "startTime": 4809.10000000149,
+    "commitTime": 4820.89999999851
+  },
+  {
+    "id": "TableCard:t3",
+    "phase": "update",
+    "actualDuration": 2.5,
+    "baseDuration": 2.5,
+    "startTime": 4812.69999999553,
+    "commitTime": 4820.89999999851
+  },
+  {
+    "id": "TableCard:t4",
+    "phase": "update",
+    "actualDuration": 1.8000000044703484,
+    "baseDuration": 1.8000000044703484,
+    "startTime": 4815.19999999553,
+    "commitTime": 4820.89999999851
+  },
+  {
+    "id": "TableCard:t5",
+    "phase": "update",
+    "actualDuration": 1.8999999985098839,
+    "baseDuration": 1.8000000044703484,
+    "startTime": 4817.10000000149,
+    "commitTime": 4820.89999999851
+  },
+  {
+    "id": "TableCard:t1",
+    "phase": "update",
+    "actualDuration": 3.1999999955296516,
+    "baseDuration": 2.9999999925494194,
+    "startTime": 4844.5,
+    "commitTime": 4855.69999999553
+  },
+  {
+    "id": "TableCard:t2",
+    "phase": "update",
+    "actualDuration": 2.6000000089406967,
+    "baseDuration": 2.6000000089406967,
+    "startTime": 4847.69999999553,
+    "commitTime": 4855.69999999553
+  },
+  {
+    "id": "TableCard:t3",
+    "phase": "update",
+    "actualDuration": 1.5,
+    "baseDuration": 1.3999999985098839,
+    "startTime": 4850.39999999851,
+    "commitTime": 4855.69999999553
+  },
+  {
+    "id": "TableCard:t4",
+    "phase": "update",
+    "actualDuration": 1.3999999985098839,
+    "baseDuration": 1.3999999985098839,
+    "startTime": 4851.89999999851,
+    "commitTime": 4855.69999999553
+  },
+  {
+    "id": "TableCard:t5",
+    "phase": "update",
+    "actualDuration": 1.2999999970197678,
+    "baseDuration": 1.2999999970197678,
+    "startTime": 4853.29999999702,
+    "commitTime": 4855.69999999553
+  },
+  {
+    "id": "TableCard:t1",
+    "phase": "update",
+    "actualDuration": 3.6999999955296516,
+    "baseDuration": 3.600000001490116,
+    "startTime": 4973,
+    "commitTime": 4986.5
+  },
+  {
+    "id": "TableCard:t2",
+    "phase": "update",
+    "actualDuration": 4.800000004470348,
+    "baseDuration": 4.700000010430813,
+    "startTime": 4976.69999999553,
+    "commitTime": 4986.5
+  },
+  {
+    "id": "TableCard:t3",
+    "phase": "update",
+    "actualDuration": 1.6000000014901161,
+    "baseDuration": 1.5,
+    "startTime": 4981.5,
+    "commitTime": 4986.5
+  },
+  {
+    "id": "TableCard:t4",
+    "phase": "update",
+    "actualDuration": 1.5,
+    "baseDuration": 1.5,
+    "startTime": 4983.10000000149,
+    "commitTime": 4986.5
+  },
+  {
+    "id": "TableCard:t5",
+    "phase": "update",
+    "actualDuration": 1.5999999940395355,
+    "baseDuration": 1.5999999940395355,
+    "startTime": 4984.60000000149,
+    "commitTime": 4986.5
+  },
+  {
+    "id": "TableCard:t1",
+    "phase": "update",
+    "actualDuration": 3.5,
+    "baseDuration": 3.5,
+    "startTime": 5435.79999999702,
+    "commitTime": 5449.39999999851
+  },
+  {
+    "id": "TableCard:t2",
+    "phase": "update",
+    "actualDuration": 3.399999998509884,
+    "baseDuration": 3.399999998509884,
+    "startTime": 5439.29999999702,
+    "commitTime": 5449.39999999851
+  },
+  {
+    "id": "TableCard:t3",
+    "phase": "update",
+    "actualDuration": 1.9000000059604645,
+    "baseDuration": 1.8000000044703484,
+    "startTime": 5442.69999999553,
+    "commitTime": 5449.39999999851
+  },
+  {
+    "id": "TableCard:t4",
+    "phase": "update",
+    "actualDuration": 1.4999999925494194,
+    "baseDuration": 1.3999999985098839,
+    "startTime": 5444.60000000149,
+    "commitTime": 5449.39999999851
+  },
+  {
+    "id": "TableCard:t5",
+    "phase": "update",
+    "actualDuration": 1.5,
+    "baseDuration": 1.5,
+    "startTime": 5446.19999999553,
+    "commitTime": 5449.39999999851
+  },
+  {
+    "id": "TableCard:t1",
+    "phase": "update",
+    "actualDuration": 3.600000001490116,
+    "baseDuration": 3.600000001490116,
+    "startTime": 5580.5,
+    "commitTime": 5601.60000000149
+  },
+  {
+    "id": "TableCard:t2",
+    "phase": "update",
+    "actualDuration": 3.5999999940395355,
+    "baseDuration": 3.4999999925494194,
+    "startTime": 5584.10000000149,
+    "commitTime": 5601.60000000149
+  },
+  {
+    "id": "TableCard:t3",
+    "phase": "update",
+    "actualDuration": 1.6000000014901161,
+    "baseDuration": 1.6000000014901161,
+    "startTime": 5587.79999999702,
+    "commitTime": 5601.60000000149
+  },
+  {
+    "id": "TableCard:t4",
+    "phase": "update",
+    "actualDuration": 2.600000001490116,
+    "baseDuration": 2.600000001490116,
+    "startTime": 5589.39999999851,
+    "commitTime": 5601.60000000149
+  },
+  {
+    "id": "TableCard:t5",
+    "phase": "update",
+    "actualDuration": 1.6999999955296516,
+    "baseDuration": 1.5999999940395355,
+    "startTime": 5592,
+    "commitTime": 5601.60000000149
+  },
+  {
+    "id": "TableCard:t1",
+    "phase": "update",
+    "actualDuration": 3.100000001490116,
+    "baseDuration": 3,
+    "startTime": 5617.60000000149,
+    "commitTime": 5628.29999999702
+  },
+  {
+    "id": "TableCard:t2",
+    "phase": "update",
+    "actualDuration": 2.899999998509884,
+    "baseDuration": 2.7999999970197678,
+    "startTime": 5620.79999999702,
+    "commitTime": 5628.29999999702
+  },
+  {
+    "id": "TableCard:t3",
+    "phase": "update",
+    "actualDuration": 1.5,
+    "baseDuration": 1.5,
+    "startTime": 5623.69999999553,
+    "commitTime": 5628.29999999702
+  },
+  {
+    "id": "TableCard:t4",
+    "phase": "update",
+    "actualDuration": 1.5,
+    "baseDuration": 1.5,
+    "startTime": 5625.19999999553,
+    "commitTime": 5628.29999999702
+  },
+  {
+    "id": "TableCard:t5",
+    "phase": "update",
+    "actualDuration": 1.6000000014901161,
+    "baseDuration": 1.6000000014901161,
+    "startTime": 5626.69999999553,
+    "commitTime": 5628.29999999702
+  },
+  {
+    "id": "TableCard:t1",
+    "phase": "update",
+    "actualDuration": 3,
+    "baseDuration": 2.899999998509884,
+    "startTime": 5749.10000000149,
+    "commitTime": 5768.69999999553
+  },
+  {
+    "id": "TableCard:t2",
+    "phase": "update",
+    "actualDuration": 2.7999999970197678,
+    "baseDuration": 2.7999999970197678,
+    "startTime": 5752.10000000149,
+    "commitTime": 5768.69999999553
+  },
+  {
+    "id": "TableCard:t3",
+    "phase": "update",
+    "actualDuration": 1.5,
+    "baseDuration": 1.5,
+    "startTime": 5754.89999999851,
+    "commitTime": 5768.69999999553
+  },
+  {
+    "id": "TableCard:t4",
+    "phase": "update",
+    "actualDuration": 1.7000000029802322,
+    "baseDuration": 1.6000000014901161,
+    "startTime": 5756.39999999851,
+    "commitTime": 5768.69999999553
+  },
+  {
+    "id": "TableCard:t5",
+    "phase": "update",
+    "actualDuration": 1.3999999985098839,
+    "baseDuration": 1.3999999985098839,
+    "startTime": 5758.10000000149,
+    "commitTime": 5768.69999999553
+  },
+  {
+    "id": "TableCard:t1",
+    "phase": "update",
+    "actualDuration": 2.9999999925494194,
+    "baseDuration": 2.9999999925494194,
+    "startTime": 5877.60000000149,
+    "commitTime": 5896.10000000149
+  },
+  {
+    "id": "TableCard:t2",
+    "phase": "update",
+    "actualDuration": 2.8000000044703484,
+    "baseDuration": 2.7000000029802322,
+    "startTime": 5880.69999999553,
+    "commitTime": 5896.10000000149
+  },
+  {
+    "id": "TableCard:t3",
+    "phase": "update",
+    "actualDuration": 1.5,
+    "baseDuration": 1.5,
+    "startTime": 5883.60000000149,
+    "commitTime": 5896.10000000149
+  },
+  {
+    "id": "TableCard:t4",
+    "phase": "update",
+    "actualDuration": 1.5,
+    "baseDuration": 1.5,
+    "startTime": 5885.10000000149,
+    "commitTime": 5896.10000000149
+  },
+  {
+    "id": "TableCard:t5",
+    "phase": "update",
+    "actualDuration": 1.5,
+    "baseDuration": 1.5,
+    "startTime": 5886.60000000149,
+    "commitTime": 5896.10000000149
+  },
+  {
+    "id": "TableCard:t1",
+    "phase": "update",
+    "actualDuration": 0.6000000014901161,
+    "baseDuration": 0.5,
+    "startTime": 5909.29999999702,
+    "commitTime": 5911
+  },
+  {
+    "id": "TableCard:t2",
+    "phase": "update",
+    "actualDuration": 0.5,
+    "baseDuration": 0.3999999985098839,
+    "startTime": 5909.89999999851,
+    "commitTime": 5911
+  },
+  {
+    "id": "TableCard:t3",
+    "phase": "update",
+    "actualDuration": 0.20000000298023224,
+    "baseDuration": 0.20000000298023224,
+    "startTime": 5910.39999999851,
+    "commitTime": 5911
+  },
+  {
+    "id": "TableCard:t4",
+    "phase": "update",
+    "actualDuration": 0.19999999552965164,
+    "baseDuration": 0.19999999552965164,
+    "startTime": 5910.60000000149,
+    "commitTime": 5911
+  },
+  {
+    "id": "TableCard:t5",
+    "phase": "update",
+    "actualDuration": 0.20000000298023224,
+    "baseDuration": 0.20000000298023224,
+    "startTime": 5910.79999999702,
+    "commitTime": 5911
+  },
+  {
+    "id": "TableCard:t1",
+    "phase": "update",
+    "actualDuration": 3.899999998509884,
+    "baseDuration": 3.7999999970197678,
+    "startTime": 6027.89999999851,
+    "commitTime": 6048.89999999851
+  },
+  {
+    "id": "TableCard:t2",
+    "phase": "update",
+    "actualDuration": 3.5,
+    "baseDuration": 3.5,
+    "startTime": 6031.79999999702,
+    "commitTime": 6048.89999999851
+  },
+  {
+    "id": "TableCard:t3",
+    "phase": "update",
+    "actualDuration": 1.6000000014901161,
+    "baseDuration": 1.6000000014901161,
+    "startTime": 6035.29999999702,
+    "commitTime": 6048.89999999851
+  },
+  {
+    "id": "TableCard:t4",
+    "phase": "update",
+    "actualDuration": 1.5,
+    "baseDuration": 1.5,
+    "startTime": 6036.89999999851,
+    "commitTime": 6048.89999999851
+  },
+  {
+    "id": "TableCard:t5",
+    "phase": "update",
+    "actualDuration": 1.5,
+    "baseDuration": 1.5,
+    "startTime": 6038.39999999851,
+    "commitTime": 6048.89999999851
+  },
+  {
+    "id": "TableCard:t1",
+    "phase": "update",
+    "actualDuration": 3.5,
+    "baseDuration": 3.5,
+    "startTime": 6213.39999999851,
+    "commitTime": 6236
+  },
+  {
+    "id": "TableCard:t2",
+    "phase": "update",
+    "actualDuration": 3.1999999955296516,
+    "baseDuration": 3.1999999955296516,
+    "startTime": 6216.89999999851,
+    "commitTime": 6236
+  },
+  {
+    "id": "TableCard:t3",
+    "phase": "update",
+    "actualDuration": 1.8000000044703484,
+    "baseDuration": 1.8000000044703484,
+    "startTime": 6220.19999999553,
+    "commitTime": 6236
+  },
+  {
+    "id": "TableCard:t4",
+    "phase": "update",
+    "actualDuration": 1.7999999970197678,
+    "baseDuration": 1.6999999955296516,
+    "startTime": 6222,
+    "commitTime": 6236
+  },
+  {
+    "id": "TableCard:t5",
+    "phase": "update",
+    "actualDuration": 2.100000001490116,
+    "baseDuration": 2.100000001490116,
+    "startTime": 6223.79999999702,
+    "commitTime": 6236
+  },
+  {
+    "id": "TableCard:t1",
+    "phase": "update",
+    "actualDuration": 3.8000000044703484,
+    "baseDuration": 3.7000000029802322,
+    "startTime": 6290.29999999702,
+    "commitTime": 6314.79999999702
+  },
+  {
+    "id": "TableCard:t2",
+    "phase": "update",
+    "actualDuration": 4.299999997019768,
+    "baseDuration": 4.0999999940395355,
+    "startTime": 6294.10000000149,
+    "commitTime": 6314.79999999702
+  },
+  {
+    "id": "TableCard:t3",
+    "phase": "update",
+    "actualDuration": 1.7000000029802322,
+    "baseDuration": 1.7000000029802322,
+    "startTime": 6298.39999999851,
+    "commitTime": 6314.79999999702
+  },
+  {
+    "id": "TableCard:t4",
+    "phase": "update",
+    "actualDuration": 3.1999999955296516,
+    "baseDuration": 3.1999999955296516,
+    "startTime": 6300.10000000149,
+    "commitTime": 6314.79999999702
+  },
+  {
+    "id": "TableCard:t5",
+    "phase": "update",
+    "actualDuration": 1.7000000029802322,
+    "baseDuration": 1.7000000029802322,
+    "startTime": 6303.29999999702,
+    "commitTime": 6314.79999999702
+  },
+  {
+    "id": "TableCard:t1",
+    "phase": "update",
+    "actualDuration": 0.5,
+    "baseDuration": 0.5,
+    "startTime": 6435.29999999702,
+    "commitTime": 6438.10000000149
+  },
+  {
+    "id": "TableCard:t2",
+    "phase": "update",
+    "actualDuration": 0.4000000059604645,
+    "baseDuration": 0.4000000059604645,
+    "startTime": 6435.79999999702,
+    "commitTime": 6438.10000000149
+  },
+  {
+    "id": "TableCard:t3",
+    "phase": "update",
+    "actualDuration": 0.20000000298023224,
+    "baseDuration": 0.10000000149011612,
+    "startTime": 6436.29999999702,
+    "commitTime": 6438.10000000149
+  },
+  {
+    "id": "TableCard:t4",
+    "phase": "update",
+    "actualDuration": 0.10000000149011612,
+    "baseDuration": 0.10000000149011612,
+    "startTime": 6436.5,
+    "commitTime": 6438.10000000149
+  },
+  {
+    "id": "TableCard:t5",
+    "phase": "update",
+    "actualDuration": 0.20000000298023224,
+    "baseDuration": 0.20000000298023224,
+    "startTime": 6436.69999999553,
+    "commitTime": 6438.10000000149
+  },
+  {
+    "id": "TableCard:t1",
+    "phase": "update",
+    "actualDuration": 0.3999999985098839,
+    "baseDuration": 0.3999999985098839,
+    "startTime": 6441.39999999851,
+    "commitTime": 6444.10000000149
+  },
+  {
+    "id": "TableCard:t2",
+    "phase": "update",
+    "actualDuration": 0.4000000059604645,
+    "baseDuration": 0.4000000059604645,
+    "startTime": 6441.89999999851,
+    "commitTime": 6444.10000000149
+  },
+  {
+    "id": "TableCard:t3",
+    "phase": "update",
+    "actualDuration": 0.20000000298023224,
+    "baseDuration": 0.20000000298023224,
+    "startTime": 6442.39999999851,
+    "commitTime": 6444.10000000149
+  },
+  {
+    "id": "TableCard:t4",
+    "phase": "update",
+    "actualDuration": 0.19999999552965164,
+    "baseDuration": 0.19999999552965164,
+    "startTime": 6442.60000000149,
+    "commitTime": 6444.10000000149
+  },
+  {
+    "id": "TableCard:t5",
+    "phase": "update",
+    "actualDuration": 0.20000000298023224,
+    "baseDuration": 0.20000000298023224,
+    "startTime": 6442.79999999702,
+    "commitTime": 6444.10000000149
+  },
+  {
+    "id": "TableCard:t1",
+    "phase": "update",
+    "actualDuration": 0.3999999985098839,
+    "baseDuration": 0.3999999985098839,
+    "startTime": 6574.10000000149,
+    "commitTime": 6576.89999999851
+  },
+  {
+    "id": "TableCard:t2",
+    "phase": "update",
+    "actualDuration": 0.3999999985098839,
+    "baseDuration": 0.3999999985098839,
+    "startTime": 6574.60000000149,
+    "commitTime": 6576.89999999851
+  },
+  {
+    "id": "TableCard:t3",
+    "phase": "update",
+    "actualDuration": 0.29999999701976776,
+    "baseDuration": 0.29999999701976776,
+    "startTime": 6575,
+    "commitTime": 6576.89999999851
+  },
+  {
+    "id": "TableCard:t4",
+    "phase": "update",
+    "actualDuration": 0.30000000447034836,
+    "baseDuration": 0.30000000447034836,
+    "startTime": 6575.29999999702,
+    "commitTime": 6576.89999999851
+  },
+  {
+    "id": "TableCard:t5",
+    "phase": "update",
+    "actualDuration": 0.19999999552965164,
+    "baseDuration": 0.19999999552965164,
+    "startTime": 6575.60000000149,
+    "commitTime": 6576.89999999851
+  },
+  {
+    "id": "TableCard:t1",
+    "phase": "update",
+    "actualDuration": 3.899999998509884,
+    "baseDuration": 3.8000000044703484,
+    "startTime": 7160.79999999702,
+    "commitTime": 7179
+  },
+  {
+    "id": "TableCard:t2",
+    "phase": "update",
+    "actualDuration": 3.5,
+    "baseDuration": 3.5,
+    "startTime": 7164.69999999553,
+    "commitTime": 7179
+  },
+  {
+    "id": "TableCard:t3",
+    "phase": "update",
+    "actualDuration": 1.9000000059604645,
+    "baseDuration": 1.9000000059604645,
+    "startTime": 7168.19999999553,
+    "commitTime": 7179
+  },
+  {
+    "id": "TableCard:t4",
+    "phase": "update",
+    "actualDuration": 2,
+    "baseDuration": 2,
+    "startTime": 7170.10000000149,
+    "commitTime": 7179
+  },
+  {
+    "id": "TableCard:t5",
+    "phase": "update",
+    "actualDuration": 2,
+    "baseDuration": 2,
+    "startTime": 7172.10000000149,
+    "commitTime": 7179
+  }
+]

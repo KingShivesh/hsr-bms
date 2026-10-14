@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { acknowledgeSessionAlert, getSessionAlerts, acknowledgeWeeklySummary } from "../../api/index.js";
 import { useToast } from "../../components/toastContext.js";
 import { useRealtimeSubscription } from "../../realtime/useRealtimeSubscription.js";
@@ -26,17 +26,30 @@ export default function SessionAlertsProvider({ children, onNavigate }) {
   const pulseTimer = useRef(null);
   const config = useRef({});
   const navigate = useRef(onNavigate);
+  const pendingAcks = useRef(new Set());
+  const alertsRef = useRef([]);
+  useEffect(() => { alertsRef.current = alerts; }, [alerts]);
   useEffect(() => { navigate.current = onNavigate; }, [onNavigate]);
 
   const acknowledge = useCallback(async id => {
+    if (pendingAcks.current.has(id)) return;
+    pendingAcks.current.add(id);
+    const previous = alertsRef.current.find(row => row.id === id);
     version.current += 1;
+    setAlerts(current => current.filter(row => row.id !== id));
+    dismissToast(toastIds.current.get(id));
+    toastIds.current.delete(id);
     try {
       await acknowledgeSessionAlert(id);
       version.current += 1;
       setAlerts(current => current.filter(row => row.id !== id));
       dismissToast(toastIds.current.get(id));
       toastIds.current.delete(id);
-    } catch (error) { showToast(error.userMessage || "Could not acknowledge reminder.", "error"); }
+    } catch (error) {
+      version.current += 1;
+      if (previous) setAlerts(current => current.some(row => row.id === id) ? current : [...current, previous]);
+      showToast(error.userMessage || "Could not acknowledge reminder.", "error");
+    } finally { pendingAcks.current.delete(id); }
   }, [dismissToast, showToast]);
 
   const load = useCallback(async () => {
@@ -45,9 +58,9 @@ export default function SessionAlertsProvider({ children, onNavigate }) {
       const { data } = await getSessionAlerts();
       if (request !== version.current) return;
       config.current = data.config;
-      const rows = data.alerts || [];
-      setAlerts(rows);
-      setOwnerSummaries(data.owner_summaries || []);
+      const rows = (data.alerts || []).filter(row => !pendingAcks.current.has(row.id));
+      setAlerts(current => JSON.stringify(current) === JSON.stringify(rows) ? current : rows);
+      setOwnerSummaries(current => JSON.stringify(current) === JSON.stringify(data.owner_summaries || []) ? current : data.owner_summaries || []);
       const activeIds = new Set(rows.map(row => row.id));
       for (const [id, toastId] of toastIds.current) {
         if (!activeIds.has(id)) { dismissToast(toastId); toastIds.current.delete(id); }
@@ -93,8 +106,9 @@ export default function SessionAlertsProvider({ children, onNavigate }) {
   useEffect(() => {
     load();
     const timer = window.setInterval(load, state === "connected" ? 60000 : 15000);
-    window.addEventListener("hsr:data-changed", scheduleLoad);
-    return () => { version.current += 1; window.clearInterval(timer); window.removeEventListener("hsr:data-changed", scheduleLoad); window.clearTimeout(refreshTimer.current); };
+    const changed = event => { if (!event.detail?.path || /sessions|settings\/session-controls/.test(event.detail.path)) scheduleLoad(); };
+    window.addEventListener("hsr:data-changed", changed);
+    return () => { version.current += 1; window.clearInterval(timer); window.removeEventListener("hsr:data-changed", changed); window.clearTimeout(refreshTimer.current); };
   }, [load, scheduleLoad, state]);
   useEffect(() => {
     function enableSound() {
@@ -107,9 +121,10 @@ export default function SessionAlertsProvider({ children, onNavigate }) {
     window.addEventListener("keydown", enableSound);
     return () => { window.removeEventListener("pointerdown", enableSound); window.removeEventListener("keydown", enableSound); audio.current?.close(); window.clearTimeout(pulseTimer.current); };
   }, []);
-  async function acknowledgeSummary(week) {
+  const acknowledgeSummary = useCallback(async (week) => {
     try { await acknowledgeWeeklySummary(week); setOwnerSummaries(current => current.filter(row => row.week_start !== week)); }
     catch (error) { showToast(error.userMessage || "Could not acknowledge summary.", "error"); }
-  }
-  return <SessionAlertsContext.Provider value={{ alerts, acknowledge, urgentKeys, ownerSummaries, acknowledgeSummary }}>{children}</SessionAlertsContext.Provider>;
+  }, [showToast]);
+  const context = useMemo(() => ({ alerts, acknowledge, urgentKeys, ownerSummaries, acknowledgeSummary }), [alerts, acknowledge, urgentKeys, ownerSummaries, acknowledgeSummary]);
+  return <SessionAlertsContext.Provider value={context}>{children}</SessionAlertsContext.Provider>;
 }

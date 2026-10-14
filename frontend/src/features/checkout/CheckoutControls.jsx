@@ -13,7 +13,7 @@ function localDateTime(ms) {
   return new Date(ms - date.getTimezoneOffset() * 60000).toISOString().slice(0, 19);
 }
 
-export function CustomerAtClose({ value, onChange, disabled }) {
+export function CustomerAtClose({ value, onChange, onDraftChange, disabled }) {
   const [path, setPath] = useState(value?.member_id ? "member" : value?.name ? "name" : "skip");
   const [query, setQuery] = useState("");
   const [rows, setRows] = useState([]);
@@ -48,7 +48,7 @@ export function CustomerAtClose({ value, onChange, disabled }) {
       </Button>)}
     </>}
     {path === "name" && <>
-      <label className="checkout-field"><span>Name (optional)</span><Input maxLength={80} disabled={disabled} value={value?.name || ""} onChange={event => onChange({ ...value, name: event.target.value })} /></label>
+      <label className="checkout-field"><span>Name (optional)</span><Input maxLength={80} disabled={disabled} value={value?.name || ""} onChange={event => (onDraftChange || onChange)({ ...value, name: event.target.value })} onBlur={() => onChange(value)} onKeyDown={event => { if (event.key === "Enter") { event.preventDefault(); event.currentTarget.blur(); } }} /></label>
     </>}
   </section>;
 }

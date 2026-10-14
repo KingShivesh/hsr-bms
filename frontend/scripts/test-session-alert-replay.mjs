@@ -27,7 +27,16 @@ try {
     await page.reload();
     await page.getByText(/T1 — 180 min played/).waitFor();
     assert.equal(await page.getByText(/T1 — 180 min played/).count(), 1);
-    checks.push({ theme, normalToastNotReplayed: true, unreadBellRetained: true, urgentRestoredOnce: true, actualBusinessWrites: 0 });
+    await page.route(api + "/sessions/alerts/100180/acknowledge", async route => {
+      await new Promise(resolve => setTimeout(resolve, 800));
+      return route.fulfill({ status: 409, json: { detail: "QA acknowledgement rejected" } });
+    });
+    await page.getByRole("button", { name: "Dismiss", exact: true }).click();
+    await page.getByRole("button", { name: "Open notifications" }).click();
+    assert.equal(await page.getByRole("button", { name: /T1 · 180m played/ }).count(), 0);
+    await page.getByText("QA acknowledgement rejected", { exact: true }).waitFor();
+    await page.getByRole("button", { name: /T1 · 180m played/ }).waitFor();
+    checks.push({ theme, normalToastNotReplayed: true, unreadBellRetained: true, urgentRestoredOnce: true, optimisticAcknowledgeAndRollback: true, actualBusinessWrites: 0 });
     await context.close();
   }
 } finally { await browser.close(); }

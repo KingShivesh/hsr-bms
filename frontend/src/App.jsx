@@ -18,20 +18,21 @@ import SessionAlertsProvider from "./features/sessions/SessionAlertsProvider.jsx
 import { ConfirmProvider } from "./components/ConfirmDialog.jsx";
 import { useConfirm } from "./components/confirmContext.js";
 import { getBackendHealth, getMe, getSummary, logout } from "./api/index.js";
+import { loadPage } from "./routes.js";
 
-const Dashboard = lazy(() => import("./components/Dashboard.jsx"));
-const LiveFloor = lazy(() => import("./features/live-floor/LiveFloor.jsx"));
-const BookingsPage = lazy(() => import("./features/bookings/BookingsPage.jsx"));
-const CustomersPage = lazy(() => import("./features/customers/CustomersPage.jsx"));
-const SalesPage = lazy(() => import("./features/sales/SalesPage.jsx"));
-const TablesTab = lazy(() => import("./components/tabs/TablesTab.jsx"));
-const ReportsTab = lazy(() => import("./components/tabs/ReportsTab.jsx"));
-const ClosingTab = lazy(() => import("./components/tabs/ClosingTab.jsx"));
-const SettingsTab = lazy(() => import("./components/tabs/SettingsTab.jsx"));
-const FoodTab = lazy(() => import("./components/tabs/FoodTab.jsx"));
-const TournamentTab = lazy(() => import("./components/tabs/TournamentTab.jsx"));
-const OperationsTab = lazy(() => import("./components/tabs/OperationsTab.jsx"));
-const ClubSuiteTab = lazy(() => import("./components/tabs/ClubSuiteTab.jsx"));
+const Dashboard = lazy(() => loadPage("dashboard"));
+const LiveFloor = lazy(() => loadPage("live-floor"));
+const BookingsPage = lazy(() => loadPage("reservations"));
+const CustomersPage = lazy(() => loadPage("members"));
+const SalesPage = lazy(() => loadPage("billing"));
+const TablesTab = lazy(() => loadPage("tables"));
+const ReportsTab = lazy(() => loadPage("reports"));
+const ClosingTab = lazy(() => loadPage("closing"));
+const SettingsTab = lazy(() => loadPage("settings"));
+const FoodTab = lazy(() => loadPage("food"));
+const TournamentTab = lazy(() => loadPage("tournaments"));
+const OperationsTab = lazy(() => loadPage("operations"));
+const ClubSuiteTab = lazy(() => loadPage("inventory"));
 
 const DEFAULT_PAGE = "live-floor";
 const ROUTE_TO_PAGE = {
@@ -123,10 +124,6 @@ function BackendStatusBanner({ backendStatus, onRetry }) {
 function PageSkeleton() {
   return (
     <div className="page-skeleton" role="status" aria-live="polite" aria-label="Loading page">
-      <div className="page-skeleton-status">
-        <HsrIcon className="ti ti-loader-2" aria-hidden="true" />
-        <span>Loading page...</span>
-      </div>
       <div className="skeleton-line skeleton-title" />
       <div className="skeleton-grid">
         <div className="skeleton-card" />
@@ -191,14 +188,17 @@ function AppInner() {
     fetchCurrentUser();
     fetchMetrics();
     const iv = setInterval(fetchMetrics, 20000);
+    let refreshTimer;
+    const scheduleMetrics = () => { clearTimeout(refreshTimer); refreshTimer = setTimeout(fetchMetrics, 150); };
     const handleStorageChange = (event) => {
-      if (event.key === "hsr:last-data-change") fetchMetrics();
+      if (event.key === "hsr:last-data-change") scheduleMetrics();
     };
-    window.addEventListener("hsr:data-changed", fetchMetrics);
+    window.addEventListener("hsr:data-changed", scheduleMetrics);
     window.addEventListener("storage", handleStorageChange);
     return () => {
       clearInterval(iv);
-      window.removeEventListener("hsr:data-changed", fetchMetrics);
+      clearTimeout(refreshTimer);
+      window.removeEventListener("hsr:data-changed", scheduleMetrics);
       window.removeEventListener("storage", handleStorageChange);
     };
   }, [loggedIn]);
@@ -310,7 +310,7 @@ function AppInner() {
   async function fetchMetrics() {
     try {
       const res = await getSummary();
-      setMetrics(res.data);
+      setMetrics(current => JSON.stringify(current) === JSON.stringify(res.data) ? current : res.data);
     } catch (e) {
       console.error(e);
     }

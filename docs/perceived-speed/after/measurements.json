@@ -1,0 +1,1564 @@
+{
+  "phase": "after",
+  "localOnly": true,
+  "interactions": [
+    {
+      "theme": "light",
+      "action": "pause/resume with 800ms transport delay",
+      "frames": {
+        "label": "Pause",
+        "status": "running",
+        "width": 71,
+        "height": 44,
+        "start": 4643.89999999851,
+        "frames": [
+          {
+            "ms": 350.7,
+            "busy": "true",
+            "disabled": true,
+            "label": "Working...",
+            "status": "paused",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 354.5,
+            "busy": "true",
+            "disabled": true,
+            "label": "Working...",
+            "status": "paused",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 366.8,
+            "busy": "true",
+            "disabled": true,
+            "label": "Working...",
+            "status": "paused",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 383.2,
+            "busy": "true",
+            "disabled": true,
+            "label": "Working...",
+            "status": "paused",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 399.5,
+            "busy": "true",
+            "disabled": true,
+            "label": "Working...",
+            "status": "paused",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 416.1,
+            "busy": "true",
+            "disabled": true,
+            "label": "Working...",
+            "status": "paused",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 432.9,
+            "busy": "true",
+            "disabled": true,
+            "label": "Working...",
+            "status": "paused",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 449.1,
+            "busy": "true",
+            "disabled": true,
+            "label": "Working...",
+            "status": "paused",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 466.1,
+            "busy": "true",
+            "disabled": true,
+            "label": "Working...",
+            "status": "paused",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 482.9,
+            "busy": "true",
+            "disabled": true,
+            "label": "Working...",
+            "status": "paused",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 499.5,
+            "busy": "true",
+            "disabled": true,
+            "label": "Working...",
+            "status": "paused",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 516.2,
+            "busy": "true",
+            "disabled": true,
+            "label": "Working...",
+            "status": "paused",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 532.8,
+            "busy": "true",
+            "disabled": true,
+            "label": "Working...",
+            "status": "paused",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 548.5,
+            "busy": "true",
+            "disabled": true,
+            "label": "Working...",
+            "status": "paused",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 565.9,
+            "busy": "true",
+            "disabled": true,
+            "label": "Working...",
+            "status": "paused",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 582.8,
+            "busy": "true",
+            "disabled": true,
+            "label": "Working...",
+            "status": "paused",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 599.4,
+            "busy": "true",
+            "disabled": true,
+            "label": "Working...",
+            "status": "paused",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 616.1,
+            "busy": "true",
+            "disabled": true,
+            "label": "Working...",
+            "status": "paused",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 633.1,
+            "busy": "true",
+            "disabled": true,
+            "label": "Working...",
+            "status": "paused",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 649.6,
+            "busy": "true",
+            "disabled": true,
+            "label": "Working...",
+            "status": "paused",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 666.3,
+            "busy": "true",
+            "disabled": true,
+            "label": "Working...",
+            "status": "paused",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 683.2,
+            "busy": "true",
+            "disabled": true,
+            "label": "Working...",
+            "status": "paused",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 699.7,
+            "busy": "true",
+            "disabled": true,
+            "label": "Working...",
+            "status": "paused",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 716.3,
+            "busy": "true",
+            "disabled": true,
+            "label": "Working...",
+            "status": "paused",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 732.8,
+            "busy": "true",
+            "disabled": true,
+            "label": "Working...",
+            "status": "paused",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 749.2,
+            "busy": "true",
+            "disabled": true,
+            "label": "Working...",
+            "status": "paused",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 766.4,
+            "busy": "true",
+            "disabled": true,
+            "label": "Working...",
+            "status": "paused",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 783.1,
+            "busy": "true",
+            "disabled": true,
+            "label": "Working...",
+            "status": "paused",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 798.9,
+            "busy": "true",
+            "disabled": true,
+            "label": "Working...",
+            "status": "paused",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 816.5,
+            "busy": "true",
+            "disabled": true,
+            "label": "Working...",
+            "status": "paused",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 832.4,
+            "busy": "true",
+            "disabled": true,
+            "label": "Working...",
+            "status": "paused",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 849.6,
+            "busy": "true",
+            "disabled": true,
+            "label": "Working...",
+            "status": "paused",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 866.3,
+            "busy": "true",
+            "disabled": true,
+            "label": "Working...",
+            "status": "paused",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 883,
+            "busy": "true",
+            "disabled": true,
+            "label": "Working...",
+            "status": "paused",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 899,
+            "busy": "true",
+            "disabled": true,
+            "label": "Working...",
+            "status": "paused",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 916.3,
+            "busy": "true",
+            "disabled": true,
+            "label": "Working...",
+            "status": "paused",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 932.6,
+            "busy": "true",
+            "disabled": true,
+            "label": "Working...",
+            "status": "paused",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 949.8,
+            "busy": "true",
+            "disabled": true,
+            "label": "Working...",
+            "status": "paused",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 965.6,
+            "busy": "true",
+            "disabled": true,
+            "label": "Working...",
+            "status": "paused",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 982.4,
+            "busy": "true",
+            "disabled": true,
+            "label": "Working...",
+            "status": "paused",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 999.7,
+            "busy": "true",
+            "disabled": true,
+            "label": "Working...",
+            "status": "paused",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 1016.5,
+            "busy": "true",
+            "disabled": true,
+            "label": "Working...",
+            "status": "paused",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 1041.4,
+            "busy": "true",
+            "disabled": true,
+            "label": "Working...",
+            "status": "paused",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 1049.5,
+            "busy": "true",
+            "disabled": true,
+            "label": "Working...",
+            "status": "paused",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 1065.9,
+            "busy": "true",
+            "disabled": true,
+            "label": "Working...",
+            "status": "paused",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 1082.8,
+            "busy": "true",
+            "disabled": true,
+            "label": "Working...",
+            "status": "paused",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 1099.6,
+            "busy": "true",
+            "disabled": true,
+            "label": "Working...",
+            "status": "paused",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 1115.4,
+            "busy": "true",
+            "disabled": true,
+            "label": "Working...",
+            "status": "paused",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 1136.8,
+            "busy": "true",
+            "disabled": true,
+            "label": "Working...",
+            "status": "paused",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 1164.7,
+            "busy": null,
+            "disabled": false,
+            "label": "Resume",
+            "status": "paused",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 1173.1,
+            "busy": null,
+            "disabled": false,
+            "label": "Resume",
+            "status": "paused",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 1182.8,
+            "busy": null,
+            "disabled": false,
+            "label": "Resume",
+            "status": "paused",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 1199.1,
+            "busy": null,
+            "disabled": false,
+            "label": "Resume",
+            "status": "paused",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 1215.6,
+            "busy": null,
+            "disabled": false,
+            "label": "Resume",
+            "status": "paused",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 1232.5,
+            "busy": null,
+            "disabled": false,
+            "label": "Resume",
+            "status": "paused",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 1249.6,
+            "busy": null,
+            "disabled": false,
+            "label": "Resume",
+            "status": "paused",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 1266.1,
+            "busy": null,
+            "disabled": false,
+            "label": "Resume",
+            "status": "paused",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          }
+        ]
+      }
+    },
+    {
+      "theme": "light",
+      "action": "type nine-character optional name",
+      "requests": [
+        {
+          "theme": "light",
+          "path": "/sessions/quote/t1",
+          "method": "GET",
+          "status": 200,
+          "ms": 11
+        }
+      ]
+    },
+    {
+      "theme": "dark",
+      "action": "pause/resume with 800ms transport delay",
+      "frames": {
+        "label": "Resume",
+        "status": "paused",
+        "width": 71,
+        "height": 44,
+        "start": 4768.20000000298,
+        "frames": [
+          {
+            "ms": 74.7,
+            "busy": "true",
+            "disabled": true,
+            "label": "Working...",
+            "status": "running",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 76.7,
+            "busy": "true",
+            "disabled": true,
+            "label": "Working...",
+            "status": "running",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 92.7,
+            "busy": "true",
+            "disabled": true,
+            "label": "Working...",
+            "status": "running",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 109.2,
+            "busy": "true",
+            "disabled": true,
+            "label": "Working...",
+            "status": "running",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 125.7,
+            "busy": "true",
+            "disabled": true,
+            "label": "Working...",
+            "status": "running",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 141.9,
+            "busy": "true",
+            "disabled": true,
+            "label": "Working...",
+            "status": "running",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 159.4,
+            "busy": "true",
+            "disabled": true,
+            "label": "Working...",
+            "status": "running",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 175.4,
+            "busy": "true",
+            "disabled": true,
+            "label": "Working...",
+            "status": "running",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 192.4,
+            "busy": "true",
+            "disabled": true,
+            "label": "Working...",
+            "status": "running",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 209.3,
+            "busy": "true",
+            "disabled": true,
+            "label": "Working...",
+            "status": "running",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 225.9,
+            "busy": "true",
+            "disabled": true,
+            "label": "Working...",
+            "status": "running",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 242.7,
+            "busy": "true",
+            "disabled": true,
+            "label": "Working...",
+            "status": "running",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 259.1,
+            "busy": "true",
+            "disabled": true,
+            "label": "Working...",
+            "status": "running",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 275.8,
+            "busy": "true",
+            "disabled": true,
+            "label": "Working...",
+            "status": "running",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 292.5,
+            "busy": "true",
+            "disabled": true,
+            "label": "Working...",
+            "status": "running",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 309.4,
+            "busy": "true",
+            "disabled": true,
+            "label": "Working...",
+            "status": "running",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 325.6,
+            "busy": "true",
+            "disabled": true,
+            "label": "Working...",
+            "status": "running",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 342.8,
+            "busy": "true",
+            "disabled": true,
+            "label": "Working...",
+            "status": "running",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 359.3,
+            "busy": "true",
+            "disabled": true,
+            "label": "Working...",
+            "status": "running",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 376.2,
+            "busy": "true",
+            "disabled": true,
+            "label": "Working...",
+            "status": "running",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 392.9,
+            "busy": "true",
+            "disabled": true,
+            "label": "Working...",
+            "status": "running",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 409.3,
+            "busy": "true",
+            "disabled": true,
+            "label": "Working...",
+            "status": "running",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 426.1,
+            "busy": "true",
+            "disabled": true,
+            "label": "Working...",
+            "status": "running",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 442.8,
+            "busy": "true",
+            "disabled": true,
+            "label": "Working...",
+            "status": "running",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 459.1,
+            "busy": "true",
+            "disabled": true,
+            "label": "Working...",
+            "status": "running",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 476.2,
+            "busy": "true",
+            "disabled": true,
+            "label": "Working...",
+            "status": "running",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 492.6,
+            "busy": "true",
+            "disabled": true,
+            "label": "Working...",
+            "status": "running",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 509.2,
+            "busy": "true",
+            "disabled": true,
+            "label": "Working...",
+            "status": "running",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 525.6,
+            "busy": "true",
+            "disabled": true,
+            "label": "Working...",
+            "status": "running",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 542.5,
+            "busy": "true",
+            "disabled": true,
+            "label": "Working...",
+            "status": "running",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 559.1,
+            "busy": "true",
+            "disabled": true,
+            "label": "Working...",
+            "status": "running",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 576,
+            "busy": "true",
+            "disabled": true,
+            "label": "Working...",
+            "status": "running",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 592.7,
+            "busy": "true",
+            "disabled": true,
+            "label": "Working...",
+            "status": "running",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 609.9,
+            "busy": "true",
+            "disabled": true,
+            "label": "Working...",
+            "status": "running",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 626.3,
+            "busy": "true",
+            "disabled": true,
+            "label": "Working...",
+            "status": "running",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 642.5,
+            "busy": "true",
+            "disabled": true,
+            "label": "Working...",
+            "status": "running",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 659.4,
+            "busy": "true",
+            "disabled": true,
+            "label": "Working...",
+            "status": "running",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 676.1,
+            "busy": "true",
+            "disabled": true,
+            "label": "Working...",
+            "status": "running",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 692.9,
+            "busy": "true",
+            "disabled": true,
+            "label": "Working...",
+            "status": "running",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 709.1,
+            "busy": "true",
+            "disabled": true,
+            "label": "Working...",
+            "status": "running",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 725.9,
+            "busy": "true",
+            "disabled": true,
+            "label": "Working...",
+            "status": "running",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 742.8,
+            "busy": "true",
+            "disabled": true,
+            "label": "Working...",
+            "status": "running",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 759.1,
+            "busy": "true",
+            "disabled": true,
+            "label": "Working...",
+            "status": "running",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 776.2,
+            "busy": "true",
+            "disabled": true,
+            "label": "Working...",
+            "status": "running",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 792.8,
+            "busy": "true",
+            "disabled": true,
+            "label": "Working...",
+            "status": "running",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 809.5,
+            "busy": "true",
+            "disabled": true,
+            "label": "Working...",
+            "status": "running",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 826.1,
+            "busy": "true",
+            "disabled": true,
+            "label": "Working...",
+            "status": "running",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 841.6,
+            "busy": "true",
+            "disabled": true,
+            "label": "Working...",
+            "status": "running",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 858.4,
+            "busy": "true",
+            "disabled": true,
+            "label": "Working...",
+            "status": "running",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 892.2,
+            "busy": null,
+            "disabled": false,
+            "label": "Pause",
+            "status": "running",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 896.5,
+            "busy": null,
+            "disabled": false,
+            "label": "Pause",
+            "status": "running",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 909.3,
+            "busy": null,
+            "disabled": false,
+            "label": "Pause",
+            "status": "running",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 925.1,
+            "busy": null,
+            "disabled": false,
+            "label": "Pause",
+            "status": "running",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 942.6,
+            "busy": null,
+            "disabled": false,
+            "label": "Pause",
+            "status": "running",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 959.4,
+            "busy": null,
+            "disabled": false,
+            "label": "Pause",
+            "status": "running",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 976,
+            "busy": null,
+            "disabled": false,
+            "label": "Pause",
+            "status": "running",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 992.5,
+            "busy": null,
+            "disabled": false,
+            "label": "Pause",
+            "status": "running",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 1008.3,
+            "busy": null,
+            "disabled": false,
+            "label": "Pause",
+            "status": "running",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 1026,
+            "busy": null,
+            "disabled": false,
+            "label": "Pause",
+            "status": "running",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 1052.4,
+            "busy": null,
+            "disabled": false,
+            "label": "Pause",
+            "status": "running",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 1059.3,
+            "busy": null,
+            "disabled": false,
+            "label": "Pause",
+            "status": "running",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 1075.8,
+            "busy": null,
+            "disabled": false,
+            "label": "Pause",
+            "status": "running",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 1092.5,
+            "busy": null,
+            "disabled": false,
+            "label": "Pause",
+            "status": "running",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 1109.1,
+            "busy": null,
+            "disabled": false,
+            "label": "Pause",
+            "status": "running",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 1124.8,
+            "busy": null,
+            "disabled": false,
+            "label": "Pause",
+            "status": "running",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 1141.8,
+            "busy": null,
+            "disabled": false,
+            "label": "Pause",
+            "status": "running",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 1159.1,
+            "busy": null,
+            "disabled": false,
+            "label": "Pause",
+            "status": "running",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 1175.8,
+            "busy": null,
+            "disabled": false,
+            "label": "Pause",
+            "status": "running",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 1192.5,
+            "busy": null,
+            "disabled": false,
+            "label": "Pause",
+            "status": "running",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 1209.1,
+            "busy": null,
+            "disabled": false,
+            "label": "Pause",
+            "status": "running",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 1225.8,
+            "busy": null,
+            "disabled": false,
+            "label": "Pause",
+            "status": "running",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 1242.7,
+            "busy": null,
+            "disabled": false,
+            "label": "Pause",
+            "status": "running",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 1259.4,
+            "busy": null,
+            "disabled": false,
+            "label": "Pause",
+            "status": "running",
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          }
+        ]
+      }
+    },
+    {
+      "theme": "dark",
+      "action": "type nine-character optional name",
+      "requests": [
+        {
+          "theme": "dark",
+          "path": "/sessions/quote/t1",
+          "method": "GET",
+          "status": 200,
+          "ms": 10
+        }
+      ]
+    }
+  ],
+  "requests": [
+    {
+      "theme": "light",
+      "path": "/ready",
+      "method": "GET",
+      "status": 200,
+      "ms": 97
+    },
+    {
+      "theme": "light",
+      "path": "/auth/me",
+      "method": "GET",
+      "status": 200,
+      "ms": 98
+    },
+    {
+      "theme": "light",
+      "path": "/ready",
+      "method": "GET",
+      "status": 200,
+      "ms": 99
+    },
+    {
+      "theme": "light",
+      "path": "/auth/me",
+      "method": "GET",
+      "status": 200,
+      "ms": 99
+    },
+    {
+      "theme": "light",
+      "path": "/sessions/alerts",
+      "method": "GET",
+      "status": 200,
+      "ms": 100
+    },
+    {
+      "theme": "light",
+      "path": "/reports/summary",
+      "method": "GET",
+      "status": 200,
+      "ms": 99
+    },
+    {
+      "theme": "light",
+      "path": "/sessions/alerts",
+      "method": "GET",
+      "status": 200,
+      "ms": 7
+    },
+    {
+      "theme": "light",
+      "path": "/sessions/live-floor",
+      "method": "GET",
+      "status": 200,
+      "ms": 9
+    },
+    {
+      "theme": "light",
+      "path": "/sessions/pause/t1",
+      "method": "POST",
+      "status": 200,
+      "ms": 823
+    },
+    {
+      "theme": "light",
+      "path": "/sessions/live-floor",
+      "method": "GET",
+      "status": 200,
+      "ms": 9
+    },
+    {
+      "theme": "light",
+      "path": "/reports/summary",
+      "method": "GET",
+      "status": 200,
+      "ms": 17
+    },
+    {
+      "theme": "light",
+      "path": "/sessions/live-floor",
+      "method": "GET",
+      "status": 200,
+      "ms": 16
+    },
+    {
+      "theme": "light",
+      "path": "/sessions/alerts",
+      "method": "GET",
+      "status": 200,
+      "ms": 54
+    },
+    {
+      "theme": "light",
+      "path": "/sessions/quote/t1",
+      "method": "GET",
+      "status": 200,
+      "ms": 11
+    },
+    {
+      "theme": "dark",
+      "path": "/ready",
+      "method": "GET",
+      "status": 200,
+      "ms": 41
+    },
+    {
+      "theme": "dark",
+      "path": "/auth/me",
+      "method": "GET",
+      "status": 200,
+      "ms": 42
+    },
+    {
+      "theme": "dark",
+      "path": "/ready",
+      "method": "GET",
+      "status": 200,
+      "ms": 42
+    },
+    {
+      "theme": "dark",
+      "path": "/auth/me",
+      "method": "GET",
+      "status": 200,
+      "ms": 42
+    },
+    {
+      "theme": "dark",
+      "path": "/sessions/alerts",
+      "method": "GET",
+      "status": 200,
+      "ms": 61
+    },
+    {
+      "theme": "dark",
+      "path": "/reports/summary",
+      "method": "GET",
+      "status": 200,
+      "ms": 61
+    },
+    {
+      "theme": "dark",
+      "path": "/sessions/alerts",
+      "method": "GET",
+      "status": 200,
+      "ms": 8
+    },
+    {
+      "theme": "dark",
+      "path": "/sessions/live-floor",
+      "method": "GET",
+      "status": 200,
+      "ms": 8
+    },
+    {
+      "theme": "dark",
+      "path": "/sessions/pause/t1",
+      "method": "POST",
+      "status": 200,
+      "ms": 834
+    },
+    {
+      "theme": "dark",
+      "path": "/sessions/live-floor",
+      "method": "GET",
+      "status": 200,
+      "ms": 10
+    },
+    {
+      "theme": "dark",
+      "path": "/reports/summary",
+      "method": "GET",
+      "status": 200,
+      "ms": 17
+    },
+    {
+      "theme": "dark",
+      "path": "/sessions/live-floor",
+      "method": "GET",
+      "status": 200,
+      "ms": 18
+    },
+    {
+      "theme": "dark",
+      "path": "/sessions/alerts",
+      "method": "GET",
+      "status": 200,
+      "ms": 37
+    },
+    {
+      "theme": "dark",
+      "path": "/sessions/quote/t1",
+      "method": "GET",
+      "status": 200,
+      "ms": 10
+    }
+  ],
+  "screenshots": [
+    "floor-light-1440.png",
+    "floor-light-375.png",
+    "floor-light-414.png",
+    "floor-dark-1440.png",
+    "floor-dark-375.png",
+    "floor-dark-414.png"
+  ]
+}

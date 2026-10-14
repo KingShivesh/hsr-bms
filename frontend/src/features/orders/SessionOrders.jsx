@@ -4,7 +4,7 @@ import { updateSessionFood, cancelSessionFood } from "../../api/index.js";
 import { formatCurrency } from "../../utils/format.js";
 import "./session-orders.css";
 
-function OrderLine({ row, table, onChanged }) {
+function OrderLine({ row, table, onChanged, onOptimistic }) {
   const [quantity, setQuantity] = useState(row.qty);
   const [busy, setBusy] = useState(false);
   const [confirmCancel, setConfirmCancel] = useState(false);
@@ -14,12 +14,17 @@ function OrderLine({ row, table, onChanged }) {
   async function change(changes, cancel = false) {
     if (pending.current) return;
     pending.current = true; setBusy(true); setError("");
+    const undo = onOptimistic?.(table.id, table.session.session_key, `food:${row.id}`, rows => cancel ? rows.filter(item => item.id !== row.id) : rows.map(item => item.id !== row.id ? item : ({ ...item, ...changes, qty: changes.quantity ?? item.qty, price: (changes.quantity ?? item.qty) * (item.unit_price ?? item.price / item.qty), pending: true })));
     try {
       if (cancel) await cancelSessionFood(table.id, row.id, table.session.session_key);
       else await updateSessionFood(table.id, row.id, table.session.session_key, changes);
       await onChanged(); setConfirmCancel(false);
-    } catch (err) { setError(err.userMessage || "The order could not update."); }
-    finally { pending.current = false; setBusy(false); }
+    } catch (err) {
+      const message = err.userMessage || "The order could not update.";
+      setError(message);
+      window.dispatchEvent(new CustomEvent("hsr:action-failed", { detail: message }));
+    }
+    finally { undo?.(); pending.current = false; setBusy(false); }
   }
   return <section className="session-order-line" aria-label={row.item} aria-busy={busy}>
     <div className="session-order-line-head"><strong>{row.item}</strong><b>{formatCurrency(row.price)}</b></div>
@@ -36,12 +41,12 @@ function OrderLine({ row, table, onChanged }) {
   </section>;
 }
 
-export default function SessionOrders({ table, onChanged, onAdd }) {
+export default function SessionOrders({ table, onChanged, onAdd, onOptimistic }) {
   const rows = table.session.food_items || [];
   return <div className="session-orders">
     <div className="session-order-line-head"><strong>Canteen total</strong><b>{formatCurrency(table.session.food_total)}</b></div>
     {!rows.length && <p className="lf-muted-copy">No canteen orders</p>}
-    {rows.map(row => <OrderLine key={row.id} row={row} table={table} onChanged={onChanged} />)}
+    {rows.map(row => <OrderLine key={row.id} row={row} table={table} onChanged={onChanged} onOptimistic={onOptimistic} />)}
     <Button onClick={onAdd} icon="ti-plus">Add item</Button>
   </div>;
 }

@@ -1,0 +1,148 @@
+{
+  "baseline": "f535d69",
+  "delayMs": 800,
+  "rejection": 409,
+  "productionMutations": 0,
+  "results": [
+    {
+      "theme": "light",
+      "phase": "before",
+      "action": "Resume",
+      "pressed": {
+        "transform": "matrix(1, 0, 0, 1, 0, 0.491085)",
+        "filter": "none",
+        "active": true
+      },
+      "initialState": "paused",
+      "changes": [
+        {
+          "ms": 4.200000002980232,
+          "busy": null,
+          "disabled": true,
+          "state": "paused",
+          "spinner": false
+        },
+        {
+          "ms": 818.8999999985099,
+          "busy": null,
+          "disabled": false,
+          "state": "paused",
+          "spinner": false
+        }
+      ],
+      "rolledBack": true
+    },
+    {
+      "theme": "light",
+      "phase": "after",
+      "action": "Resume",
+      "pressed": {
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "filter": "brightness(0.94)",
+        "active": true
+      },
+      "initialState": "paused",
+      "changes": [
+        {
+          "ms": 1.0999999940395355,
+          "busy": null,
+          "disabled": false,
+          "state": "paused",
+          "spinner": false
+        },
+        {
+          "ms": 2.899999998509884,
+          "busy": "true",
+          "disabled": true,
+          "state": "running",
+          "spinner": true
+        },
+        {
+          "ms": 783.5,
+          "busy": "true",
+          "disabled": true,
+          "state": "running",
+          "spinner": true
+        },
+        {
+          "ms": 815.0999999940395,
+          "busy": null,
+          "disabled": false,
+          "state": "paused",
+          "spinner": false
+        }
+      ],
+      "rolledBack": true
+    },
+    {
+      "theme": "dark",
+      "phase": "before",
+      "action": "Resume",
+      "pressed": {
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "filter": "none",
+        "active": true
+      },
+      "initialState": "paused",
+      "changes": [
+        {
+          "ms": 2.100000001490116,
+          "busy": null,
+          "disabled": true,
+          "state": "paused",
+          "spinner": false
+        },
+        {
+          "ms": 816.8000000044703,
+          "busy": null,
+          "disabled": false,
+          "state": "paused",
+          "spinner": false
+        }
+      ],
+      "rolledBack": true
+    },
+    {
+      "theme": "dark",
+      "phase": "after",
+      "action": "Resume",
+      "pressed": {
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "filter": "brightness(0.94)",
+        "active": true
+      },
+      "initialState": "paused",
+      "changes": [
+        {
+          "ms": 1.0999999940395355,
+          "busy": null,
+          "disabled": false,
+          "state": "paused",
+          "spinner": false
+        },
+        {
+          "ms": 2.6999999955296516,
+          "busy": "true",
+          "disabled": true,
+          "state": "running",
+          "spinner": true
+        },
+        {
+          "ms": 757.6999999955297,
+          "busy": "true",
+          "disabled": true,
+          "state": "running",
+          "spinner": true
+        },
+        {
+          "ms": 812.0999999940395,
+          "busy": null,
+          "disabled": false,
+          "state": "paused",
+          "spinner": false
+        }
+      ],
+      "rolledBack": true
+    }
+  ]
+}

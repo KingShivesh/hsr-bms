@@ -1,3 +1,5 @@
+import { invalidateReads } from "../api/readEpoch.js";
+
 const DEFAULT_API_URL = import.meta.env?.VITE_API_URL || "http://localhost:8000";
 const DEFAULT_RETRY_DELAYS_MS = [1000, 2000, 5000, 10000, 30000];
 const DEFAULT_CONNECTION_GRACE_MS = 5000;
@@ -32,7 +34,9 @@ async function readEventStream(response, onEvent, signal) {
   const reader = response.body.getReader();
   const decoder = new TextDecoder();
   let buffer = "";
-
+  const cancel = () => { reader.cancel().catch(() => {}); };
+  signal.addEventListener("abort", cancel, { once: true });
+  try {
   while (!signal.aborted) {
     const { value, done } = await reader.read();
     buffer += decoder.decode(value || new Uint8Array(), { stream: !done });
@@ -43,6 +47,7 @@ async function readEventStream(response, onEvent, signal) {
     });
     if (done) break;
   }
+  } finally { signal.removeEventListener("abort", cancel); await reader.cancel().catch(() => {}); reader.releaseLock(); }
 }
 
 function defaultAuthExpired() {
@@ -58,6 +63,7 @@ export class RealtimeConnectionManager {
     onAuthExpired = defaultAuthExpired,
     retryDelaysMs = DEFAULT_RETRY_DELAYS_MS,
     connectionGraceMs = DEFAULT_CONNECTION_GRACE_MS,
+    heartbeatTimeoutMs = 35000,
     setTimeoutImpl = (...args) => globalThis.setTimeout(...args),
     clearTimeoutImpl = (...args) => globalThis.clearTimeout(...args),
   } = {}) {
@@ -67,6 +73,7 @@ export class RealtimeConnectionManager {
     this.onAuthExpired = onAuthExpired;
     this.retryDelaysMs = retryDelaysMs;
     this.connectionGraceMs = connectionGraceMs;
+    this.heartbeatTimeoutMs = heartbeatTimeoutMs;
     this.setTimeout = setTimeoutImpl;
     this.clearTimeout = clearTimeoutImpl;
     this.subscriptions = new Map();
@@ -76,6 +83,7 @@ export class RealtimeConnectionManager {
     this.controller = null;
     this.retryTimer = null;
     this.graceTimer = null;
+    this.heartbeatTimer = null;
     this.retryAttempt = 0;
     this.lastEventId = "";
     this.generation = 0;
@@ -115,8 +123,10 @@ export class RealtimeConnectionManager {
   clearTimers() {
     this.clearTimeout(this.retryTimer);
     this.clearTimeout(this.graceTimer);
+    this.clearTimeout(this.heartbeatTimer);
     this.retryTimer = null;
     this.graceTimer = null;
+    this.heartbeatTimer = null;
   }
 
   reconcile() {
@@ -144,6 +154,7 @@ export class RealtimeConnectionManager {
   }
 
   dispatch(event) {
+    invalidateReads();
     const eventTopic = event.data?.topic;
     const isSystemEvent = event.type.startsWith("system.");
     this.subscriptions.forEach((subscription) => {
@@ -215,6 +226,12 @@ export class RealtimeConnectionManager {
 
       await readEventStream(response, (event) => {
         if (generation !== this.generation) return;
+        this.clearTimeout(this.heartbeatTimer);
+        this.heartbeatTimer = this.setTimeout(() => {
+          if (generation !== this.generation) return;
+          controller.abort();
+          this.scheduleReconnect(generation, topicKey);
+        }, this.heartbeatTimeoutMs);
         if (event.id) this.lastEventId = event.id;
         if (event.type === "system.connected") {
           this.retryAttempt = 0;
@@ -224,9 +241,11 @@ export class RealtimeConnectionManager {
           return;
         }
         if (event.type === "system.auth_expired") {
+          controller.abort();
           this.onAuthExpired();
           return;
         }
+        if (event.type === "system.heartbeat") return;
         this.dispatch(event);
       }, controller.signal);
 
@@ -241,6 +260,8 @@ export class RealtimeConnectionManager {
       this.activeStreams = Math.max(0, this.activeStreams - 1);
       this.clearTimeout(this.graceTimer);
       this.graceTimer = null;
+      this.clearTimeout(this.heartbeatTimer);
+      this.heartbeatTimer = null;
       if (this.controller === controller) this.controller = null;
     }
   }

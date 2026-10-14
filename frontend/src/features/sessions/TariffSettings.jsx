@@ -50,7 +50,7 @@ export default function TariffSettings() {
             ))}
             <div className="tariff-settings-actions">
               <HsrButton native type="button" className="btn btn-outline" disabled={catalog.packages.length >= 20} onClick={() => setCatalog(current => ({ ...current, packages: [...current.packages, { id: crypto.randomUUID(), name: "", price: "", table_group: "any" }] }))}><HsrIcon className="ti ti-plus" aria-hidden="true" />Add Package</HsrButton>
-              <HsrButton native type="submit" className="btn btn-primary-sm">{busy ? "Saving..." : "Save Tariffs"}</HsrButton>
+              <HsrButton native type="submit" loading={busy} className="btn btn-primary-sm">{busy ? "Saving..." : "Save Tariffs"}</HsrButton>
             </div>
           </fieldset>
         </form>

@@ -3,6 +3,7 @@ import { SkeletonGrid, SkeletonBlock } from "./ui/index.js";
 import RetryNotice from "./RetryNotice.jsx";
 import { Button as HsrButton, Icon as HsrIcon, Select as HsrSelect, Table as HsrTable } from "./ui/index.js";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCachedState } from "../hooks/useCachedState.js";
 import {
   Area,
   AreaChart,
@@ -1122,7 +1123,8 @@ function Charts({ analytics, pieData }) {
 
 export default function Dashboard({ metrics, onNavigate, role = "admin" }) {
   const [dateRange, setDateRange] = useState("today");
-  const [liveData, setLiveData] = useState(null);
+  const [dashboardCache, setDashboardCache] = useCachedState("dashboard", null);
+  const liveData = dashboardCache?.period === dateRange ? dashboardCache.data : null;
   const [elapsed, setElapsed] = useState({});
   const [loadError, setLoadError] = useState("");
   const [lastFetchedAt, setLastFetchedAt] = useState(0);
@@ -1141,7 +1143,7 @@ export default function Dashboard({ metrics, onNavigate, role = "admin" }) {
           nextElapsed[id] = Number(table.session.elapsed_seconds || table.elapsed_seconds || 0);
         }
       });
-      setLiveData(payload);
+      setDashboardCache({ period: dateRange, data: payload });
       setElapsed(nextElapsed);
       setLastFetchedAt(Date.now());
       setLoadError("");
@@ -1151,7 +1153,7 @@ export default function Dashboard({ metrics, onNavigate, role = "admin" }) {
     } finally {
       setSyncing(false);
     }
-  }, [dateRange]);
+  }, [dateRange, setDashboardCache]);
 
   const scheduleDashboardRefresh = useCallback(() => {
     window.clearTimeout(dashboardRefreshTimerRef.current);

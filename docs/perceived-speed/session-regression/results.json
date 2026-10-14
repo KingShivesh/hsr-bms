@@ -1,0 +1,1343 @@
+{
+  "checks": [
+    {
+      "theme": "light",
+      "name": "quantity change",
+      "propagationMs": 270,
+      "actionIncludingInputAndScrollMs": 446
+    },
+    {
+      "theme": "light",
+      "name": "mark drink served",
+      "propagationMs": 214,
+      "actionIncludingInputAndScrollMs": 254
+    },
+    {
+      "theme": "light",
+      "name": "mark all served",
+      "propagationMs": 160,
+      "actionIncludingInputAndScrollMs": 310
+    },
+    {
+      "theme": "light",
+      "name": "cancel order",
+      "propagationMs": 233
+    },
+    {
+      "theme": "light",
+      "name": "add order through UI",
+      "propagationMs": 207,
+      "actionIncludingInputAndScrollMs": 793
+    },
+    {
+      "theme": "light",
+      "name": "10-order burst",
+      "mutations": 10,
+      "totalFloorRequestsBothSessions": 2,
+      "totalRestRequestsIncludingMutations": 14,
+      "refetchPaths": {
+        "/sessions/alerts": 2,
+        "/sessions/live-floor": 2
+      }
+    },
+    {
+      "theme": "light",
+      "name": "network drop/reconnect",
+      "recoveredMs": 646,
+      "method": "real stream reader cancelled with injected transport error during browser offline interval",
+      "connectionsBeforeDrop": 1,
+      "connectionsAfterReconnect": 2
+    },
+    {
+      "theme": "light",
+      "name": "503 with REST up",
+      "fallbackUpdateMs": 13968,
+      "confirmed503Responses": 5,
+      "successfulStreams": 0
+    },
+    {
+      "theme": "light",
+      "name": "name-only cash close",
+      "noPhoneInput": true,
+      "paymentOptions": [
+        "UPI",
+        "Cash",
+        "Credit"
+      ]
+    },
+    {
+      "theme": "light",
+      "name": "member credit UI close",
+      "receiptStatus": "credit"
+    },
+    {
+      "theme": "dark",
+      "name": "quantity change",
+      "propagationMs": 238,
+      "actionIncludingInputAndScrollMs": 529
+    },
+    {
+      "theme": "dark",
+      "name": "mark drink served",
+      "propagationMs": 192,
+      "actionIncludingInputAndScrollMs": 232
+    },
+    {
+      "theme": "dark",
+      "name": "mark all served",
+      "propagationMs": 191,
+      "actionIncludingInputAndScrollMs": 233
+    },
+    {
+      "theme": "dark",
+      "name": "cancel order",
+      "propagationMs": 228
+    },
+    {
+      "theme": "dark",
+      "name": "add order through UI",
+      "propagationMs": 204,
+      "actionIncludingInputAndScrollMs": 780
+    },
+    {
+      "theme": "dark",
+      "name": "10-order burst",
+      "mutations": 10,
+      "totalFloorRequestsBothSessions": 2,
+      "totalRestRequestsIncludingMutations": 14,
+      "refetchPaths": {
+        "/sessions/alerts": 2,
+        "/sessions/live-floor": 2
+      }
+    },
+    {
+      "theme": "dark",
+      "name": "network drop/reconnect",
+      "recoveredMs": 652,
+      "method": "real stream reader cancelled with injected transport error during browser offline interval",
+      "connectionsBeforeDrop": 1,
+      "connectionsAfterReconnect": 2
+    },
+    {
+      "theme": "dark",
+      "name": "503 with REST up",
+      "fallbackUpdateMs": 13995,
+      "confirmed503Responses": 5,
+      "successfulStreams": 0
+    },
+    {
+      "theme": "dark",
+      "name": "name-only cash close",
+      "noPhoneInput": true,
+      "paymentOptions": [
+        "UPI",
+        "Cash",
+        "Credit"
+      ]
+    },
+    {
+      "theme": "dark",
+      "name": "member credit UI close",
+      "receiptStatus": "credit"
+    }
+  ],
+  "screenshots": [
+    {
+      "file": "floor-orders-light-1440.png",
+      "theme": "light",
+      "name": "floor-orders",
+      "width": 1440,
+      "overflow": 0,
+      "font": "\"Syne Variable\", Syne, sans-serif",
+      "accent": "#006b3c",
+      "controls": []
+    },
+    {
+      "file": "floor-orders-light-375.png",
+      "theme": "light",
+      "name": "floor-orders",
+      "width": 375,
+      "overflow": 0,
+      "font": "\"Syne Variable\", Syne, sans-serif",
+      "accent": "#006b3c",
+      "controls": []
+    },
+    {
+      "file": "floor-orders-light-414.png",
+      "theme": "light",
+      "name": "floor-orders",
+      "width": 414,
+      "overflow": 0,
+      "font": "\"Syne Variable\", Syne, sans-serif",
+      "accent": "#006b3c",
+      "controls": []
+    },
+    {
+      "file": "orders-drawer-light-1440.png",
+      "theme": "light",
+      "name": "orders-drawer",
+      "width": 1440,
+      "overflow": 0,
+      "font": "\"Syne Variable\", Syne, sans-serif",
+      "accent": "#006b3c",
+      "controls": [
+        {
+          "label": "",
+          "height": 36
+        },
+        {
+          "label": "Update",
+          "height": 36
+        },
+        {
+          "label": "Served",
+          "height": 36
+        },
+        {
+          "label": "Cancel item",
+          "height": 36
+        },
+        {
+          "label": "Update",
+          "height": 36
+        },
+        {
+          "label": "Served",
+          "height": 36
+        },
+        {
+          "label": "Cancel item",
+          "height": 36
+        },
+        {
+          "label": "Add item",
+          "height": 36
+        }
+      ]
+    },
+    {
+      "file": "orders-drawer-light-375.png",
+      "theme": "light",
+      "name": "orders-drawer",
+      "width": 375,
+      "overflow": 0,
+      "font": "\"Syne Variable\", Syne, sans-serif",
+      "accent": "#006b3c",
+      "controls": [
+        {
+          "label": "",
+          "height": 44
+        },
+        {
+          "label": "Update",
+          "height": 44
+        },
+        {
+          "label": "Served",
+          "height": 44
+        },
+        {
+          "label": "Cancel item",
+          "height": 44
+        },
+        {
+          "label": "Update",
+          "height": 44
+        },
+        {
+          "label": "Served",
+          "height": 44
+        },
+        {
+          "label": "Cancel item",
+          "height": 44
+        },
+        {
+          "label": "Add item",
+          "height": 44
+        }
+      ]
+    },
+    {
+      "file": "orders-drawer-light-414.png",
+      "theme": "light",
+      "name": "orders-drawer",
+      "width": 414,
+      "overflow": 0,
+      "font": "\"Syne Variable\", Syne, sans-serif",
+      "accent": "#006b3c",
+      "controls": [
+        {
+          "label": "",
+          "height": 44
+        },
+        {
+          "label": "Update",
+          "height": 44
+        },
+        {
+          "label": "Served",
+          "height": 44
+        },
+        {
+          "label": "Cancel item",
+          "height": 44
+        },
+        {
+          "label": "Update",
+          "height": 44
+        },
+        {
+          "label": "Served",
+          "height": 44
+        },
+        {
+          "label": "Cancel item",
+          "height": 44
+        },
+        {
+          "label": "Add item",
+          "height": 44
+        }
+      ]
+    },
+    {
+      "file": "name-and-payment-light-1440.png",
+      "theme": "light",
+      "name": "name-and-payment",
+      "width": 1440,
+      "overflow": 0,
+      "font": "\"Syne Variable\", Syne, sans-serif",
+      "accent": "#006b3c",
+      "controls": [
+        {
+          "label": "",
+          "height": 36
+        },
+        {
+          "label": "Reset",
+          "height": 36
+        },
+        {
+          "label": "Apply Change",
+          "height": 36
+        },
+        {
+          "label": "Search LP Member",
+          "height": 46
+        },
+        {
+          "label": "Add name",
+          "height": 46
+        },
+        {
+          "label": "Skip",
+          "height": 46
+        },
+        {
+          "label": "No discount",
+          "height": 46
+        },
+        {
+          "label": "5%",
+          "height": 46
+        },
+        {
+          "label": "10%",
+          "height": 46
+        },
+        {
+          "label": "₹ off",
+          "height": 46
+        },
+        {
+          "label": "UPI",
+          "height": 44
+        },
+        {
+          "label": "Cash",
+          "height": 44
+        },
+        {
+          "label": "Credit",
+          "height": 44
+        },
+        {
+          "label": "Keep Table Open",
+          "height": 36
+        },
+        {
+          "label": "Close table · ₹685",
+          "height": 36
+        }
+      ]
+    },
+    {
+      "file": "name-and-payment-light-375.png",
+      "theme": "light",
+      "name": "name-and-payment",
+      "width": 375,
+      "overflow": 0,
+      "font": "\"Syne Variable\", Syne, sans-serif",
+      "accent": "#006b3c",
+      "controls": [
+        {
+          "label": "",
+          "height": 44
+        },
+        {
+          "label": "Reset",
+          "height": 44
+        },
+        {
+          "label": "Apply Change",
+          "height": 44
+        },
+        {
+          "label": "Search LP Member",
+          "height": 44
+        },
+        {
+          "label": "Add name",
+          "height": 44
+        },
+        {
+          "label": "Skip",
+          "height": 44
+        },
+        {
+          "label": "No discount",
+          "height": 44
+        },
+        {
+          "label": "5%",
+          "height": 44
+        },
+        {
+          "label": "10%",
+          "height": 44
+        },
+        {
+          "label": "₹ off",
+          "height": 44
+        },
+        {
+          "label": "UPI",
+          "height": 44
+        },
+        {
+          "label": "Cash",
+          "height": 44
+        },
+        {
+          "label": "Credit",
+          "height": 44
+        },
+        {
+          "label": "Keep Table Open",
+          "height": 44
+        },
+        {
+          "label": "Close table · ₹685",
+          "height": 44
+        }
+      ]
+    },
+    {
+      "file": "name-and-payment-light-414.png",
+      "theme": "light",
+      "name": "name-and-payment",
+      "width": 414,
+      "overflow": 0,
+      "font": "\"Syne Variable\", Syne, sans-serif",
+      "accent": "#006b3c",
+      "controls": [
+        {
+          "label": "",
+          "height": 44
+        },
+        {
+          "label": "Reset",
+          "height": 44
+        },
+        {
+          "label": "Apply Change",
+          "height": 44
+        },
+        {
+          "label": "Search LP Member",
+          "height": 44
+        },
+        {
+          "label": "Add name",
+          "height": 44
+        },
+        {
+          "label": "Skip",
+          "height": 44
+        },
+        {
+          "label": "No discount",
+          "height": 44
+        },
+        {
+          "label": "5%",
+          "height": 44
+        },
+        {
+          "label": "10%",
+          "height": 44
+        },
+        {
+          "label": "₹ off",
+          "height": 44
+        },
+        {
+          "label": "UPI",
+          "height": 44
+        },
+        {
+          "label": "Cash",
+          "height": 44
+        },
+        {
+          "label": "Credit",
+          "height": 44
+        },
+        {
+          "label": "Keep Table Open",
+          "height": 44
+        },
+        {
+          "label": "Close table · ₹685",
+          "height": 44
+        }
+      ]
+    },
+    {
+      "file": "member-credit-light-1440.png",
+      "theme": "light",
+      "name": "member-credit",
+      "width": 1440,
+      "overflow": 0,
+      "font": "\"Syne Variable\", Syne, sans-serif",
+      "accent": "#006b3c",
+      "controls": [
+        {
+          "label": "",
+          "height": 36
+        },
+        {
+          "label": "Reset",
+          "height": 36
+        },
+        {
+          "label": "Apply Change",
+          "height": 36
+        },
+        {
+          "label": "Search LP Member",
+          "height": 46
+        },
+        {
+          "label": "Add name",
+          "height": 46
+        },
+        {
+          "label": "Skip",
+          "height": 46
+        },
+        {
+          "label": "QA Close Member9876500001 · Regular₹240/hr",
+          "height": 46
+        },
+        {
+          "label": "No discount",
+          "height": 46
+        },
+        {
+          "label": "5%",
+          "height": 46
+        },
+        {
+          "label": "10%",
+          "height": 46
+        },
+        {
+          "label": "₹ off",
+          "height": 46
+        },
+        {
+          "label": "UPI",
+          "height": 44
+        },
+        {
+          "label": "Cash",
+          "height": 44
+        },
+        {
+          "label": "Credit",
+          "height": 44
+        },
+        {
+          "label": "Keep Table Open",
+          "height": 36
+        },
+        {
+          "label": "Close table · ₹728",
+          "height": 36
+        }
+      ]
+    },
+    {
+      "file": "member-credit-light-375.png",
+      "theme": "light",
+      "name": "member-credit",
+      "width": 375,
+      "overflow": 0,
+      "font": "\"Syne Variable\", Syne, sans-serif",
+      "accent": "#006b3c",
+      "controls": [
+        {
+          "label": "",
+          "height": 44
+        },
+        {
+          "label": "Reset",
+          "height": 44
+        },
+        {
+          "label": "Apply Change",
+          "height": 44
+        },
+        {
+          "label": "Search LP Member",
+          "height": 44
+        },
+        {
+          "label": "Add name",
+          "height": 44
+        },
+        {
+          "label": "Skip",
+          "height": 44
+        },
+        {
+          "label": "QA Close Member9876500001 · Regular₹240/hr",
+          "height": 46
+        },
+        {
+          "label": "No discount",
+          "height": 44
+        },
+        {
+          "label": "5%",
+          "height": 44
+        },
+        {
+          "label": "10%",
+          "height": 44
+        },
+        {
+          "label": "₹ off",
+          "height": 44
+        },
+        {
+          "label": "UPI",
+          "height": 44
+        },
+        {
+          "label": "Cash",
+          "height": 44
+        },
+        {
+          "label": "Credit",
+          "height": 44
+        },
+        {
+          "label": "Keep Table Open",
+          "height": 44
+        },
+        {
+          "label": "Close table · ₹728",
+          "height": 44
+        }
+      ]
+    },
+    {
+      "file": "member-credit-light-414.png",
+      "theme": "light",
+      "name": "member-credit",
+      "width": 414,
+      "overflow": 0,
+      "font": "\"Syne Variable\", Syne, sans-serif",
+      "accent": "#006b3c",
+      "controls": [
+        {
+          "label": "",
+          "height": 44
+        },
+        {
+          "label": "Reset",
+          "height": 44
+        },
+        {
+          "label": "Apply Change",
+          "height": 44
+        },
+        {
+          "label": "Search LP Member",
+          "height": 44
+        },
+        {
+          "label": "Add name",
+          "height": 44
+        },
+        {
+          "label": "Skip",
+          "height": 44
+        },
+        {
+          "label": "QA Close Member9876500001 · Regular₹240/hr",
+          "height": 46
+        },
+        {
+          "label": "No discount",
+          "height": 44
+        },
+        {
+          "label": "5%",
+          "height": 44
+        },
+        {
+          "label": "10%",
+          "height": 44
+        },
+        {
+          "label": "₹ off",
+          "height": 44
+        },
+        {
+          "label": "UPI",
+          "height": 44
+        },
+        {
+          "label": "Cash",
+          "height": 44
+        },
+        {
+          "label": "Credit",
+          "height": 44
+        },
+        {
+          "label": "Keep Table Open",
+          "height": 44
+        },
+        {
+          "label": "Close table · ₹728",
+          "height": 44
+        }
+      ]
+    },
+    {
+      "file": "floor-orders-dark-1440.png",
+      "theme": "dark",
+      "name": "floor-orders",
+      "width": 1440,
+      "overflow": 0,
+      "font": "\"Syne Variable\", Syne, sans-serif",
+      "accent": "#00ff7f",
+      "controls": []
+    },
+    {
+      "file": "floor-orders-dark-375.png",
+      "theme": "dark",
+      "name": "floor-orders",
+      "width": 375,
+      "overflow": 0,
+      "font": "\"Syne Variable\", Syne, sans-serif",
+      "accent": "#00ff7f",
+      "controls": []
+    },
+    {
+      "file": "floor-orders-dark-414.png",
+      "theme": "dark",
+      "name": "floor-orders",
+      "width": 414,
+      "overflow": 0,
+      "font": "\"Syne Variable\", Syne, sans-serif",
+      "accent": "#00ff7f",
+      "controls": []
+    },
+    {
+      "file": "orders-drawer-dark-1440.png",
+      "theme": "dark",
+      "name": "orders-drawer",
+      "width": 1440,
+      "overflow": 0,
+      "font": "\"Syne Variable\", Syne, sans-serif",
+      "accent": "#00ff7f",
+      "controls": [
+        {
+          "label": "",
+          "height": 36
+        },
+        {
+          "label": "Update",
+          "height": 36
+        },
+        {
+          "label": "Served",
+          "height": 36
+        },
+        {
+          "label": "Cancel item",
+          "height": 36
+        },
+        {
+          "label": "Update",
+          "height": 36
+        },
+        {
+          "label": "Served",
+          "height": 36
+        },
+        {
+          "label": "Cancel item",
+          "height": 36
+        },
+        {
+          "label": "Add item",
+          "height": 36
+        }
+      ]
+    },
+    {
+      "file": "orders-drawer-dark-375.png",
+      "theme": "dark",
+      "name": "orders-drawer",
+      "width": 375,
+      "overflow": 0,
+      "font": "\"Syne Variable\", Syne, sans-serif",
+      "accent": "#00ff7f",
+      "controls": [
+        {
+          "label": "",
+          "height": 44
+        },
+        {
+          "label": "Update",
+          "height": 44
+        },
+        {
+          "label": "Served",
+          "height": 44
+        },
+        {
+          "label": "Cancel item",
+          "height": 44
+        },
+        {
+          "label": "Update",
+          "height": 44
+        },
+        {
+          "label": "Served",
+          "height": 44
+        },
+        {
+          "label": "Cancel item",
+          "height": 44
+        },
+        {
+          "label": "Add item",
+          "height": 44
+        }
+      ]
+    },
+    {
+      "file": "orders-drawer-dark-414.png",
+      "theme": "dark",
+      "name": "orders-drawer",
+      "width": 414,
+      "overflow": 0,
+      "font": "\"Syne Variable\", Syne, sans-serif",
+      "accent": "#00ff7f",
+      "controls": [
+        {
+          "label": "",
+          "height": 44
+        },
+        {
+          "label": "Update",
+          "height": 44
+        },
+        {
+          "label": "Served",
+          "height": 44
+        },
+        {
+          "label": "Cancel item",
+          "height": 44
+        },
+        {
+          "label": "Update",
+          "height": 44
+        },
+        {
+          "label": "Served",
+          "height": 44
+        },
+        {
+          "label": "Cancel item",
+          "height": 44
+        },
+        {
+          "label": "Add item",
+          "height": 44
+        }
+      ]
+    },
+    {
+      "file": "name-and-payment-dark-1440.png",
+      "theme": "dark",
+      "name": "name-and-payment",
+      "width": 1440,
+      "overflow": 0,
+      "font": "\"Syne Variable\", Syne, sans-serif",
+      "accent": "#00ff7f",
+      "controls": [
+        {
+          "label": "",
+          "height": 36
+        },
+        {
+          "label": "Reset",
+          "height": 36
+        },
+        {
+          "label": "Apply Change",
+          "height": 36
+        },
+        {
+          "label": "Search LP Member",
+          "height": 46
+        },
+        {
+          "label": "Add name",
+          "height": 46
+        },
+        {
+          "label": "Skip",
+          "height": 46
+        },
+        {
+          "label": "No discount",
+          "height": 46
+        },
+        {
+          "label": "5%",
+          "height": 46
+        },
+        {
+          "label": "10%",
+          "height": 46
+        },
+        {
+          "label": "₹ off",
+          "height": 46
+        },
+        {
+          "label": "UPI",
+          "height": 44
+        },
+        {
+          "label": "Cash",
+          "height": 44
+        },
+        {
+          "label": "Credit",
+          "height": 44
+        },
+        {
+          "label": "Keep Table Open",
+          "height": 36
+        },
+        {
+          "label": "Close table · ₹685",
+          "height": 36
+        }
+      ]
+    },
+    {
+      "file": "name-and-payment-dark-375.png",
+      "theme": "dark",
+      "name": "name-and-payment",
+      "width": 375,
+      "overflow": 0,
+      "font": "\"Syne Variable\", Syne, sans-serif",
+      "accent": "#00ff7f",
+      "controls": [
+        {
+          "label": "",
+          "height": 44
+        },
+        {
+          "label": "Reset",
+          "height": 44
+        },
+        {
+          "label": "Apply Change",
+          "height": 44
+        },
+        {
+          "label": "Search LP Member",
+          "height": 44
+        },
+        {
+          "label": "Add name",
+          "height": 44
+        },
+        {
+          "label": "Skip",
+          "height": 44
+        },
+        {
+          "label": "No discount",
+          "height": 44
+        },
+        {
+          "label": "5%",
+          "height": 44
+        },
+        {
+          "label": "10%",
+          "height": 44
+        },
+        {
+          "label": "₹ off",
+          "height": 44
+        },
+        {
+          "label": "UPI",
+          "height": 44
+        },
+        {
+          "label": "Cash",
+          "height": 44
+        },
+        {
+          "label": "Credit",
+          "height": 44
+        },
+        {
+          "label": "Keep Table Open",
+          "height": 44
+        },
+        {
+          "label": "Close table · ₹685",
+          "height": 44
+        }
+      ]
+    },
+    {
+      "file": "name-and-payment-dark-414.png",
+      "theme": "dark",
+      "name": "name-and-payment",
+      "width": 414,
+      "overflow": 0,
+      "font": "\"Syne Variable\", Syne, sans-serif",
+      "accent": "#00ff7f",
+      "controls": [
+        {
+          "label": "",
+          "height": 44
+        },
+        {
+          "label": "Reset",
+          "height": 44
+        },
+        {
+          "label": "Apply Change",
+          "height": 44
+        },
+        {
+          "label": "Search LP Member",
+          "height": 44
+        },
+        {
+          "label": "Add name",
+          "height": 44
+        },
+        {
+          "label": "Skip",
+          "height": 44
+        },
+        {
+          "label": "No discount",
+          "height": 44
+        },
+        {
+          "label": "5%",
+          "height": 44
+        },
+        {
+          "label": "10%",
+          "height": 44
+        },
+        {
+          "label": "₹ off",
+          "height": 44
+        },
+        {
+          "label": "UPI",
+          "height": 44
+        },
+        {
+          "label": "Cash",
+          "height": 44
+        },
+        {
+          "label": "Credit",
+          "height": 44
+        },
+        {
+          "label": "Keep Table Open",
+          "height": 44
+        },
+        {
+          "label": "Close table · ₹685",
+          "height": 44
+        }
+      ]
+    },
+    {
+      "file": "member-credit-dark-1440.png",
+      "theme": "dark",
+      "name": "member-credit",
+      "width": 1440,
+      "overflow": 0,
+      "font": "\"Syne Variable\", Syne, sans-serif",
+      "accent": "#00ff7f",
+      "controls": [
+        {
+          "label": "",
+          "height": 36
+        },
+        {
+          "label": "Reset",
+          "height": 36
+        },
+        {
+          "label": "Apply Change",
+          "height": 36
+        },
+        {
+          "label": "Search LP Member",
+          "height": 46
+        },
+        {
+          "label": "Add name",
+          "height": 46
+        },
+        {
+          "label": "Skip",
+          "height": 46
+        },
+        {
+          "label": "QA Close Member9876500001 · Regular₹240/hr",
+          "height": 46
+        },
+        {
+          "label": "No discount",
+          "height": 46
+        },
+        {
+          "label": "5%",
+          "height": 46
+        },
+        {
+          "label": "10%",
+          "height": 46
+        },
+        {
+          "label": "₹ off",
+          "height": 46
+        },
+        {
+          "label": "UPI",
+          "height": 44
+        },
+        {
+          "label": "Cash",
+          "height": 44
+        },
+        {
+          "label": "Credit",
+          "height": 44
+        },
+        {
+          "label": "Keep Table Open",
+          "height": 36
+        },
+        {
+          "label": "Close table · ₹728",
+          "height": 36
+        }
+      ]
+    },
+    {
+      "file": "member-credit-dark-375.png",
+      "theme": "dark",
+      "name": "member-credit",
+      "width": 375,
+      "overflow": 0,
+      "font": "\"Syne Variable\", Syne, sans-serif",
+      "accent": "#00ff7f",
+      "controls": [
+        {
+          "label": "",
+          "height": 44
+        },
+        {
+          "label": "Reset",
+          "height": 44
+        },
+        {
+          "label": "Apply Change",
+          "height": 44
+        },
+        {
+          "label": "Search LP Member",
+          "height": 44
+        },
+        {
+          "label": "Add name",
+          "height": 44
+        },
+        {
+          "label": "Skip",
+          "height": 44
+        },
+        {
+          "label": "QA Close Member9876500001 · Regular₹240/hr",
+          "height": 46
+        },
+        {
+          "label": "No discount",
+          "height": 44
+        },
+        {
+          "label": "5%",
+          "height": 44
+        },
+        {
+          "label": "10%",
+          "height": 44
+        },
+        {
+          "label": "₹ off",
+          "height": 44
+        },
+        {
+          "label": "UPI",
+          "height": 44
+        },
+        {
+          "label": "Cash",
+          "height": 44
+        },
+        {
+          "label": "Credit",
+          "height": 44
+        },
+        {
+          "label": "Keep Table Open",
+          "height": 44
+        },
+        {
+          "label": "Close table · ₹728",
+          "height": 44
+        }
+      ]
+    },
+    {
+      "file": "member-credit-dark-414.png",
+      "theme": "dark",
+      "name": "member-credit",
+      "width": 414,
+      "overflow": 0,
+      "font": "\"Syne Variable\", Syne, sans-serif",
+      "accent": "#00ff7f",
+      "controls": [
+        {
+          "label": "",
+          "height": 44
+        },
+        {
+          "label": "Reset",
+          "height": 44
+        },
+        {
+          "label": "Apply Change",
+          "height": 44
+        },
+        {
+          "label": "Search LP Member",
+          "height": 44
+        },
+        {
+          "label": "Add name",
+          "height": 44
+        },
+        {
+          "label": "Skip",
+          "height": 44
+        },
+        {
+          "label": "QA Close Member9876500001 · Regular₹240/hr",
+          "height": 46
+        },
+        {
+          "label": "No discount",
+          "height": 44
+        },
+        {
+          "label": "5%",
+          "height": 44
+        },
+        {
+          "label": "10%",
+          "height": 44
+        },
+        {
+          "label": "₹ off",
+          "height": 44
+        },
+        {
+          "label": "UPI",
+          "height": 44
+        },
+        {
+          "label": "Cash",
+          "height": 44
+        },
+        {
+          "label": "Credit",
+          "height": 44
+        },
+        {
+          "label": "Keep Table Open",
+          "height": 44
+        },
+        {
+          "label": "Close table · ₹728",
+          "height": 44
+        }
+      ]
+    }
+  ],
+  "contrast": [],
+  "errors": [],
+  "productionMutations": 0
+}

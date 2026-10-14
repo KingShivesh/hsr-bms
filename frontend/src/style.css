@@ -3071,7 +3071,7 @@ body {
   line-height: var(--leading-base);
   color: var(--muted);
   cursor: pointer;
-  transition: all 0.15s;
+  transition: background-color 80ms var(--ease-out), color 80ms var(--ease-out), border-color 80ms var(--ease-out);
   border-right: 2px solid transparent;
   border-radius: var(--radius-sm);
   text-decoration: none;
@@ -3209,7 +3209,7 @@ body.dark .topbar-action-btn {
   border-radius: var(--radius-sm);
   cursor: pointer;
   font-weight: var(--weight-bold);
-  transition: all 0.15s;
+  transition: background-color 80ms var(--ease-out), color 80ms var(--ease-out), border-color 80ms var(--ease-out);
 }
 
 .btn-logout:hover {
@@ -3456,7 +3456,7 @@ body.dark .topbar-action-btn {
   padding: 8px 8px;
   text-align: center;
   border: 1px solid var(--border);
-  transition: all 0.2s;
+  transition: background-color 80ms var(--ease-out), color 80ms var(--ease-out), border-color 80ms var(--ease-out);
   cursor: pointer;
 }
 

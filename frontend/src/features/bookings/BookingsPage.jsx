@@ -1,5 +1,6 @@
 import { Icon as HsrIcon, Button as HsrButton, Input as HsrInput, Select as HsrSelect, Textarea as HsrTextarea, EmptyState, Button } from "../../components/ui/index.js";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCachedState, hasCachedState } from "../../hooks/useCachedState.js";
 import {
   cancelBooking,
   createBooking,
@@ -66,7 +67,6 @@ function BookingSkeleton() {
   return (
     <div className="page-skeleton compact" role="status" aria-live="polite" aria-label="Loading bookings">
       <div className="page-skeleton-status">
-        <HsrIcon className="ti ti-loader-2" aria-hidden="true" />
         <span>Loading bookings...</span>
       </div>
       <div className="skeleton-grid">
@@ -79,7 +79,7 @@ function BookingSkeleton() {
   );
 }
 
-function BookingModal({ form, setForm, saving, onClose, onSubmit }) {
+function BookingModal({ form, setForm, saving, onClose, onSubmit, error }) {
   useEscapeKey(onClose, true);
 
   return (
@@ -180,9 +180,10 @@ function BookingModal({ form, setForm, saving, onClose, onSubmit }) {
           />
         </label>
 
+        {error && <p role="alert">{error}</p>}
         <div className="op2-modal-actions">
           <HsrButton native type="button" className="lf-secondary-button" onClick={onClose}>Discard Booking</HsrButton>
-          <HsrButton native type="submit" className="lf-primary-button" disabled={saving}>
+          <HsrButton native type="submit" className="lf-primary-button" loading={saving}>
             <HsrIcon className="ti ti-calendar-plus" aria-hidden="true" />
             {saving ? "Creating..." : "Create booking"}
           </HsrButton>
@@ -194,19 +195,20 @@ function BookingModal({ form, setForm, saving, onClose, onSubmit }) {
 
 export default function BookingsPage({ onNavigate }) {
   const { showToast } = useToast();
-  const [bookings, setBookings] = useState([]);
-  const [tableState, setTableState] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [bookings, setBookings] = useCachedState("bookings", []);
+  const [tableState, setTableState] = useCachedState("bookings-tables", []);
+  const [loading, setLoading] = useState(() => !hasCachedState("bookings"));
   const [error, setError] = useState("");
   const [filter, setFilter] = useState("booked");
   const [query, setQuery] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [form, setForm] = useState(defaultForm);
   const [busy, setBusy] = useState("");
+  const [formError, setFormError] = useState("");
   const bookingRefreshTimerRef = useRef(null);
 
   const loadBookings = useCallback(async ({ showLoading = false } = {}) => {
-    if (showLoading) setLoading(true);
+    if (showLoading && !hasCachedState("bookings")) setLoading(true);
     setError("");
     try {
       const [bookingRes, tableRes] = await Promise.all([getBookings(), getTableState()]);
@@ -217,7 +219,7 @@ export default function BookingsPage({ onNavigate }) {
     } finally {
       if (showLoading) setLoading(false);
     }
-  }, []);
+  }, [setBookings, setTableState]);
 
   useEffect(() => {
     loadBookings({ showLoading: true });
@@ -313,6 +315,9 @@ export default function BookingsPage({ onNavigate }) {
   async function submitBooking(event) {
     event.preventDefault();
     setBusy("create");
+    setFormError("");
+    const pendingId = `pending-${crypto.randomUUID()}`;
+    setBookings(current => [...current, { ...form, id: pendingId, status: "booked", pending: true }]);
     try {
       await createBooking(form);
       showToast("Booking created", "success");
@@ -320,7 +325,9 @@ export default function BookingsPage({ onNavigate }) {
       setShowModal(false);
       await loadBookings();
     } catch (err) {
-      showToast(err.response?.data?.detail || err.userMessage || "Could not create booking", "error");
+      setBookings(current => current.filter(row => row.id !== pendingId));
+      setFormError(err.userMessage || "Could not create booking");
+      showToast(err.userMessage || "Could not create booking", "error");
     } finally {
       setBusy("");
     }
@@ -328,11 +335,12 @@ export default function BookingsPage({ onNavigate }) {
 
   async function cancelExistingBooking(booking) {
     setBusy(`cancel-${booking.id}`);
+    setBookings(current => current.map(row => row.id === booking.id ? { ...row, status: "cancelled", pending: true } : row));
     try {
       await cancelBooking(booking.id);
       showToast(`${booking.customer_name} booking cancelled`, "success", {
         actionLabel: "Undo",
-        duration: 6000,
+        duration: 5000,
         onAction: async () => {
           try {
             setBusy(`undo-cancel-${booking.id}`);
@@ -348,6 +356,7 @@ export default function BookingsPage({ onNavigate }) {
       });
       await loadBookings();
     } catch (err) {
+      setBookings(current => current.map(row => row.id === booking.id ? booking : row));
       showToast(err.response?.data?.detail || "Could not cancel booking", "error");
     } finally {
       setBusy("");
@@ -477,7 +486,7 @@ export default function BookingsPage({ onNavigate }) {
               return (
                 <article key={booking.id} className="op2-register-row">
                   <div>
-                    <strong>{booking.customer_name}</strong>
+                    <strong>{booking.customer_name}{booking.pending ? " · Saving…" : ""}</strong>
                     <span>{booking.phone || "No phone"} · {booking.table_id || "ANY"} · {booking.duration_mins || 60} min</span>
                     <small>{target ? `Can seat at T${target.table.num} now` : "No matching free table right now"}</small>
                   </div>
@@ -523,6 +532,7 @@ export default function BookingsPage({ onNavigate }) {
 
       {showModal && (
         <BookingModal
+          error={formError}
           form={form}
           setForm={setForm}
           saving={busy === "create"}

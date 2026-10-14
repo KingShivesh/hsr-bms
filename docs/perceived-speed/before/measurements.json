@@ -1,0 +1,2028 @@
+{
+  "phase": "before",
+  "localOnly": true,
+  "interactions": [
+    {
+      "theme": "light",
+      "action": "pause/resume with 800ms transport delay",
+      "frames": {
+        "label": "Pause",
+        "status": null,
+        "width": 71,
+        "height": 44,
+        "start": 3529.89999999851,
+        "frames": [
+          {
+            "ms": 459.3,
+            "busy": null,
+            "disabled": true,
+            "label": "Working...",
+            "status": null,
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 462.3,
+            "busy": null,
+            "disabled": true,
+            "label": "Working...",
+            "status": null,
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 487.1,
+            "busy": null,
+            "disabled": true,
+            "label": "Working...",
+            "status": null,
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 493.5,
+            "busy": null,
+            "disabled": true,
+            "label": "Working...",
+            "status": null,
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 510.2,
+            "busy": null,
+            "disabled": true,
+            "label": "Working...",
+            "status": null,
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 526.8,
+            "busy": null,
+            "disabled": true,
+            "label": "Working...",
+            "status": null,
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 543.4,
+            "busy": null,
+            "disabled": true,
+            "label": "Working...",
+            "status": null,
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 560.2,
+            "busy": null,
+            "disabled": true,
+            "label": "Working...",
+            "status": null,
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 576.8,
+            "busy": null,
+            "disabled": true,
+            "label": "Working...",
+            "status": null,
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 593.5,
+            "busy": null,
+            "disabled": true,
+            "label": "Working...",
+            "status": null,
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 610.1,
+            "busy": null,
+            "disabled": true,
+            "label": "Working...",
+            "status": null,
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 626.6,
+            "busy": null,
+            "disabled": true,
+            "label": "Working...",
+            "status": null,
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 643.3,
+            "busy": null,
+            "disabled": true,
+            "label": "Working...",
+            "status": null,
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 660.1,
+            "busy": null,
+            "disabled": true,
+            "label": "Working...",
+            "status": null,
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 676.7,
+            "busy": null,
+            "disabled": true,
+            "label": "Working...",
+            "status": null,
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 693.4,
+            "busy": null,
+            "disabled": true,
+            "label": "Working...",
+            "status": null,
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 710,
+            "busy": null,
+            "disabled": true,
+            "label": "Working...",
+            "status": null,
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 726.7,
+            "busy": null,
+            "disabled": true,
+            "label": "Working...",
+            "status": null,
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 743.3,
+            "busy": null,
+            "disabled": true,
+            "label": "Working...",
+            "status": null,
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 760,
+            "busy": null,
+            "disabled": true,
+            "label": "Working...",
+            "status": null,
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 776.8,
+            "busy": null,
+            "disabled": true,
+            "label": "Working...",
+            "status": null,
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 793.4,
+            "busy": null,
+            "disabled": true,
+            "label": "Working...",
+            "status": null,
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 810.1,
+            "busy": null,
+            "disabled": true,
+            "label": "Working...",
+            "status": null,
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 826.7,
+            "busy": null,
+            "disabled": true,
+            "label": "Working...",
+            "status": null,
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 843.4,
+            "busy": null,
+            "disabled": true,
+            "label": "Working...",
+            "status": null,
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 860.1,
+            "busy": null,
+            "disabled": true,
+            "label": "Working...",
+            "status": null,
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 876.7,
+            "busy": null,
+            "disabled": true,
+            "label": "Working...",
+            "status": null,
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 893.5,
+            "busy": null,
+            "disabled": true,
+            "label": "Working...",
+            "status": null,
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 910.1,
+            "busy": null,
+            "disabled": true,
+            "label": "Working...",
+            "status": null,
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 929,
+            "busy": null,
+            "disabled": true,
+            "label": "Working...",
+            "status": null,
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 943.5,
+            "busy": null,
+            "disabled": true,
+            "label": "Working...",
+            "status": null,
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 960.1,
+            "busy": null,
+            "disabled": true,
+            "label": "Working...",
+            "status": null,
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 976.8,
+            "busy": null,
+            "disabled": true,
+            "label": "Working...",
+            "status": null,
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 993.5,
+            "busy": null,
+            "disabled": true,
+            "label": "Working...",
+            "status": null,
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 1010.1,
+            "busy": null,
+            "disabled": true,
+            "label": "Working...",
+            "status": null,
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 1026.7,
+            "busy": null,
+            "disabled": true,
+            "label": "Working...",
+            "status": null,
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 1076.4,
+            "busy": null,
+            "disabled": true,
+            "label": "Working...",
+            "status": null,
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 1079.2,
+            "busy": null,
+            "disabled": true,
+            "label": "Working...",
+            "status": null,
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 1093.4,
+            "busy": null,
+            "disabled": true,
+            "label": "Working...",
+            "status": null,
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 1110.1,
+            "busy": null,
+            "disabled": true,
+            "label": "Working...",
+            "status": null,
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 1126.9,
+            "busy": null,
+            "disabled": true,
+            "label": "Working...",
+            "status": null,
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 1143.3,
+            "busy": null,
+            "disabled": true,
+            "label": "Working...",
+            "status": null,
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 1160.2,
+            "busy": null,
+            "disabled": true,
+            "label": "Working...",
+            "status": null,
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 1176.9,
+            "busy": null,
+            "disabled": true,
+            "label": "Working...",
+            "status": null,
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 1193.3,
+            "busy": null,
+            "disabled": true,
+            "label": "Working...",
+            "status": null,
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 1210,
+            "busy": null,
+            "disabled": true,
+            "label": "Working...",
+            "status": null,
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 1226.6,
+            "busy": null,
+            "disabled": true,
+            "label": "Working...",
+            "status": null,
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 1243.3,
+            "busy": null,
+            "disabled": true,
+            "label": "Working...",
+            "status": null,
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 1263.7,
+            "busy": null,
+            "disabled": true,
+            "label": "Working...",
+            "status": null,
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          }
+        ]
+      }
+    },
+    {
+      "theme": "light",
+      "action": "type nine-character optional name",
+      "requests": [
+        {
+          "theme": "light",
+          "path": "/sessions/quote/t1",
+          "method": "GET",
+          "status": 200,
+          "ms": 10
+        },
+        {
+          "theme": "light",
+          "path": "/sessions/checkout-preview/t1",
+          "method": "POST",
+          "status": 200,
+          "ms": 17
+        },
+        {
+          "theme": "light",
+          "path": "/reports/summary",
+          "method": "GET",
+          "status": 200,
+          "ms": 25
+        },
+        {
+          "theme": "light",
+          "path": "/sessions/checkout-preview/t1",
+          "method": "POST",
+          "status": 200,
+          "ms": 44
+        },
+        {
+          "theme": "light",
+          "path": "/sessions/checkout-preview/t1",
+          "method": "POST",
+          "status": 200,
+          "ms": 22
+        },
+        {
+          "theme": "light",
+          "path": "/sessions/live-floor",
+          "method": "GET",
+          "status": 200,
+          "ms": 12
+        },
+        {
+          "theme": "light",
+          "path": "/sessions/alerts",
+          "method": "GET",
+          "status": 200,
+          "ms": 49
+        },
+        {
+          "theme": "light",
+          "path": "/sessions/checkout-preview/t1",
+          "method": "POST",
+          "status": 200,
+          "ms": 7
+        },
+        {
+          "theme": "light",
+          "path": "/sessions/checkout-preview/t1",
+          "method": "POST",
+          "status": 200,
+          "ms": 8
+        },
+        {
+          "theme": "light",
+          "path": "/reports/summary",
+          "method": "GET",
+          "status": 200,
+          "ms": 15
+        },
+        {
+          "theme": "light",
+          "path": "/sessions/checkout-preview/t1",
+          "method": "POST",
+          "status": 200,
+          "ms": 14
+        },
+        {
+          "theme": "light",
+          "path": "/sessions/checkout-preview/t1",
+          "method": "POST",
+          "status": 200,
+          "ms": 29
+        },
+        {
+          "theme": "light",
+          "path": "/sessions/live-floor",
+          "method": "GET",
+          "status": 200,
+          "ms": 35
+        },
+        {
+          "theme": "light",
+          "path": "/sessions/alerts",
+          "method": "GET",
+          "status": 200,
+          "ms": 36
+        },
+        {
+          "theme": "light",
+          "path": "/sessions/checkout-preview/t1",
+          "method": "POST",
+          "status": 200,
+          "ms": 7
+        },
+        {
+          "theme": "light",
+          "path": "/reports/summary",
+          "method": "GET",
+          "status": 200,
+          "ms": 11
+        },
+        {
+          "theme": "light",
+          "path": "/sessions/checkout-preview/t1",
+          "method": "POST",
+          "status": 200,
+          "ms": 7
+        },
+        {
+          "theme": "light",
+          "path": "/sessions/live-floor",
+          "method": "GET",
+          "status": 200,
+          "ms": 19
+        },
+        {
+          "theme": "light",
+          "path": "/sessions/alerts",
+          "method": "GET",
+          "status": 200,
+          "ms": 28
+        },
+        {
+          "theme": "light",
+          "path": "/sessions/checkout-preview/t1",
+          "method": "POST",
+          "status": 200,
+          "ms": 14
+        }
+      ]
+    },
+    {
+      "theme": "dark",
+      "action": "pause/resume with 800ms transport delay",
+      "frames": {
+        "label": "Resume",
+        "status": null,
+        "width": 71,
+        "height": 44,
+        "start": 4704.89999999851,
+        "frames": [
+          {
+            "ms": 110.6,
+            "busy": null,
+            "disabled": true,
+            "label": "Working...",
+            "status": null,
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 113.4,
+            "busy": null,
+            "disabled": true,
+            "label": "Working...",
+            "status": null,
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 125.8,
+            "busy": null,
+            "disabled": true,
+            "label": "Working...",
+            "status": null,
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 141.9,
+            "busy": null,
+            "disabled": true,
+            "label": "Working...",
+            "status": null,
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 158.8,
+            "busy": null,
+            "disabled": true,
+            "label": "Working...",
+            "status": null,
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 175.7,
+            "busy": null,
+            "disabled": true,
+            "label": "Working...",
+            "status": null,
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 191.5,
+            "busy": null,
+            "disabled": true,
+            "label": "Working...",
+            "status": null,
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 209,
+            "busy": null,
+            "disabled": true,
+            "label": "Working...",
+            "status": null,
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 225.8,
+            "busy": null,
+            "disabled": true,
+            "label": "Working...",
+            "status": null,
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 241.5,
+            "busy": null,
+            "disabled": true,
+            "label": "Working...",
+            "status": null,
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 259,
+            "busy": null,
+            "disabled": true,
+            "label": "Working...",
+            "status": null,
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 275.2,
+            "busy": null,
+            "disabled": true,
+            "label": "Working...",
+            "status": null,
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 292.4,
+            "busy": null,
+            "disabled": true,
+            "label": "Working...",
+            "status": null,
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 308.8,
+            "busy": null,
+            "disabled": true,
+            "label": "Working...",
+            "status": null,
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 325.7,
+            "busy": null,
+            "disabled": true,
+            "label": "Working...",
+            "status": null,
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 342.3,
+            "busy": null,
+            "disabled": true,
+            "label": "Working...",
+            "status": null,
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 358.8,
+            "busy": null,
+            "disabled": true,
+            "label": "Working...",
+            "status": null,
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 375,
+            "busy": null,
+            "disabled": true,
+            "label": "Working...",
+            "status": null,
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 392.3,
+            "busy": null,
+            "disabled": true,
+            "label": "Working...",
+            "status": null,
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 408,
+            "busy": null,
+            "disabled": true,
+            "label": "Working...",
+            "status": null,
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 425.8,
+            "busy": null,
+            "disabled": true,
+            "label": "Working...",
+            "status": null,
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 441.5,
+            "busy": null,
+            "disabled": true,
+            "label": "Working...",
+            "status": null,
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 459.1,
+            "busy": null,
+            "disabled": true,
+            "label": "Working...",
+            "status": null,
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 475.6,
+            "busy": null,
+            "disabled": true,
+            "label": "Working...",
+            "status": null,
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 492.4,
+            "busy": null,
+            "disabled": true,
+            "label": "Working...",
+            "status": null,
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 508.3,
+            "busy": null,
+            "disabled": true,
+            "label": "Working...",
+            "status": null,
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 527,
+            "busy": null,
+            "disabled": true,
+            "label": "Working...",
+            "status": null,
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 541.9,
+            "busy": null,
+            "disabled": true,
+            "label": "Working...",
+            "status": null,
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 559,
+            "busy": null,
+            "disabled": true,
+            "label": "Working...",
+            "status": null,
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 575.6,
+            "busy": null,
+            "disabled": true,
+            "label": "Working...",
+            "status": null,
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 592.2,
+            "busy": null,
+            "disabled": true,
+            "label": "Working...",
+            "status": null,
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 609.1,
+            "busy": null,
+            "disabled": true,
+            "label": "Working...",
+            "status": null,
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 624.8,
+            "busy": null,
+            "disabled": true,
+            "label": "Working...",
+            "status": null,
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 642.4,
+            "busy": null,
+            "disabled": true,
+            "label": "Working...",
+            "status": null,
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 658.9,
+            "busy": null,
+            "disabled": true,
+            "label": "Working...",
+            "status": null,
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 675.1,
+            "busy": null,
+            "disabled": true,
+            "label": "Working...",
+            "status": null,
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 692.2,
+            "busy": null,
+            "disabled": true,
+            "label": "Working...",
+            "status": null,
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 709,
+            "busy": null,
+            "disabled": true,
+            "label": "Working...",
+            "status": null,
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 725.7,
+            "busy": null,
+            "disabled": true,
+            "label": "Working...",
+            "status": null,
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 741.5,
+            "busy": null,
+            "disabled": true,
+            "label": "Working...",
+            "status": null,
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 759,
+            "busy": null,
+            "disabled": true,
+            "label": "Working...",
+            "status": null,
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 775.1,
+            "busy": null,
+            "disabled": true,
+            "label": "Working...",
+            "status": null,
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 792.2,
+            "busy": null,
+            "disabled": true,
+            "label": "Working...",
+            "status": null,
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 808.4,
+            "busy": null,
+            "disabled": true,
+            "label": "Working...",
+            "status": null,
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 827.3,
+            "busy": null,
+            "disabled": true,
+            "label": "Working...",
+            "status": null,
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 841.5,
+            "busy": null,
+            "disabled": true,
+            "label": "Working...",
+            "status": null,
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 859,
+            "busy": null,
+            "disabled": true,
+            "label": "Working...",
+            "status": null,
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 875.7,
+            "busy": null,
+            "disabled": true,
+            "label": "Working...",
+            "status": null,
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 919.5,
+            "busy": null,
+            "disabled": true,
+            "label": "Working...",
+            "status": null,
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 922.5,
+            "busy": null,
+            "disabled": true,
+            "label": "Working...",
+            "status": null,
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 925.7,
+            "busy": null,
+            "disabled": true,
+            "label": "Working...",
+            "status": null,
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 944.3,
+            "busy": null,
+            "disabled": false,
+            "label": "Pause",
+            "status": null,
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 982,
+            "busy": null,
+            "disabled": false,
+            "label": "Pause",
+            "status": null,
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 983.4,
+            "busy": null,
+            "disabled": false,
+            "label": "Pause",
+            "status": null,
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 992.3,
+            "busy": null,
+            "disabled": false,
+            "label": "Pause",
+            "status": null,
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 1009,
+            "busy": null,
+            "disabled": false,
+            "label": "Pause",
+            "status": null,
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 1025.7,
+            "busy": null,
+            "disabled": false,
+            "label": "Pause",
+            "status": null,
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 1042.4,
+            "busy": null,
+            "disabled": false,
+            "label": "Pause",
+            "status": null,
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 1058.2,
+            "busy": null,
+            "disabled": false,
+            "label": "Pause",
+            "status": null,
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 1075.8,
+            "busy": null,
+            "disabled": false,
+            "label": "Pause",
+            "status": null,
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 1110.2,
+            "busy": null,
+            "disabled": false,
+            "label": "Pause",
+            "status": null,
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 1126.6,
+            "busy": null,
+            "disabled": false,
+            "label": "Pause",
+            "status": null,
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 1127.5,
+            "busy": null,
+            "disabled": false,
+            "label": "Pause",
+            "status": null,
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 1142.4,
+            "busy": null,
+            "disabled": false,
+            "label": "Pause",
+            "status": null,
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 1192.8,
+            "busy": null,
+            "disabled": false,
+            "label": "Pause",
+            "status": null,
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 1193.1,
+            "busy": null,
+            "disabled": false,
+            "label": "Pause",
+            "status": null,
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 1208.4,
+            "busy": null,
+            "disabled": false,
+            "label": "Pause",
+            "status": null,
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 1225.6,
+            "busy": null,
+            "disabled": false,
+            "label": "Pause",
+            "status": null,
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 1241.6,
+            "busy": null,
+            "disabled": false,
+            "label": "Pause",
+            "status": null,
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          },
+          {
+            "ms": 1258,
+            "busy": null,
+            "disabled": false,
+            "label": "Pause",
+            "status": null,
+            "width": 71,
+            "height": 44,
+            "transform": "none"
+          }
+        ]
+      }
+    },
+    {
+      "theme": "dark",
+      "action": "type nine-character optional name",
+      "requests": [
+        {
+          "theme": "dark",
+          "path": "/sessions/quote/t1",
+          "method": "GET",
+          "status": 200,
+          "ms": 10
+        },
+        {
+          "theme": "dark",
+          "path": "/sessions/checkout-preview/t1",
+          "method": "POST",
+          "status": 200,
+          "ms": 13
+        },
+        {
+          "theme": "dark",
+          "path": "/reports/summary",
+          "method": "GET",
+          "status": 200,
+          "ms": 43
+        },
+        {
+          "theme": "dark",
+          "path": "/sessions/checkout-preview/t1",
+          "method": "POST",
+          "status": 200,
+          "ms": 34
+        },
+        {
+          "theme": "dark",
+          "path": "/sessions/checkout-preview/t1",
+          "method": "POST",
+          "status": 200,
+          "ms": 8
+        },
+        {
+          "theme": "dark",
+          "path": "/sessions/live-floor",
+          "method": "GET",
+          "status": 200,
+          "ms": 11
+        },
+        {
+          "theme": "dark",
+          "path": "/sessions/alerts",
+          "method": "GET",
+          "status": 200,
+          "ms": 39
+        },
+        {
+          "theme": "dark",
+          "path": "/sessions/checkout-preview/t1",
+          "method": "POST",
+          "status": 200,
+          "ms": 7
+        },
+        {
+          "theme": "dark",
+          "path": "/sessions/checkout-preview/t1",
+          "method": "POST",
+          "status": 200,
+          "ms": 6
+        },
+        {
+          "theme": "dark",
+          "path": "/reports/summary",
+          "method": "GET",
+          "status": 200,
+          "ms": 11
+        },
+        {
+          "theme": "dark",
+          "path": "/sessions/checkout-preview/t1",
+          "method": "POST",
+          "status": 200,
+          "ms": 7
+        },
+        {
+          "theme": "dark",
+          "path": "/sessions/checkout-preview/t1",
+          "method": "POST",
+          "status": 200,
+          "ms": 11
+        },
+        {
+          "theme": "dark",
+          "path": "/sessions/live-floor",
+          "method": "GET",
+          "status": 200,
+          "ms": 18
+        },
+        {
+          "theme": "dark",
+          "path": "/sessions/alerts",
+          "method": "GET",
+          "status": 200,
+          "ms": 18
+        },
+        {
+          "theme": "dark",
+          "path": "/sessions/checkout-preview/t1",
+          "method": "POST",
+          "status": 200,
+          "ms": 14
+        },
+        {
+          "theme": "dark",
+          "path": "/reports/summary",
+          "method": "GET",
+          "status": 200,
+          "ms": 7
+        },
+        {
+          "theme": "dark",
+          "path": "/sessions/checkout-preview/t1",
+          "method": "POST",
+          "status": 200,
+          "ms": 6
+        },
+        {
+          "theme": "dark",
+          "path": "/sessions/checkout-preview/t1",
+          "method": "POST",
+          "status": 200,
+          "ms": 14
+        },
+        {
+          "theme": "dark",
+          "path": "/sessions/live-floor",
+          "method": "GET",
+          "status": 200,
+          "ms": 13
+        },
+        {
+          "theme": "dark",
+          "path": "/sessions/alerts",
+          "method": "GET",
+          "status": 200,
+          "ms": 17
+        }
+      ]
+    }
+  ],
+  "requests": [
+    {
+      "theme": "light",
+      "path": "/ready",
+      "method": "GET",
+      "status": 200,
+      "ms": 82
+    },
+    {
+      "theme": "light",
+      "path": "/auth/me",
+      "method": "GET",
+      "status": 200,
+      "ms": 107
+    },
+    {
+      "theme": "light",
+      "path": "/ready",
+      "method": "GET",
+      "status": 200,
+      "ms": 107
+    },
+    {
+      "theme": "light",
+      "path": "/auth/me",
+      "method": "GET",
+      "status": 200,
+      "ms": 110
+    },
+    {
+      "theme": "light",
+      "path": "/sessions/alerts",
+      "method": "GET",
+      "status": 200,
+      "ms": 136
+    },
+    {
+      "theme": "light",
+      "path": "/reports/summary",
+      "method": "GET",
+      "status": 200,
+      "ms": 136
+    },
+    {
+      "theme": "light",
+      "path": "/sessions/alerts",
+      "method": "GET",
+      "status": 200,
+      "ms": 155
+    },
+    {
+      "theme": "light",
+      "path": "/reports/summary",
+      "method": "GET",
+      "status": 200,
+      "ms": 155
+    },
+    {
+      "theme": "light",
+      "path": "/sessions/live-floor",
+      "method": "GET",
+      "status": 200,
+      "ms": 45
+    },
+    {
+      "theme": "light",
+      "path": "/sessions/live-floor",
+      "method": "GET",
+      "status": 200,
+      "ms": 50
+    },
+    {
+      "theme": "light",
+      "path": "/sessions/alerts",
+      "method": "GET",
+      "status": 200,
+      "ms": 99
+    },
+    {
+      "theme": "light",
+      "path": "/sessions/pause/t1",
+      "method": "POST",
+      "status": 200,
+      "ms": 847
+    },
+    {
+      "theme": "light",
+      "path": "/sessions/live-floor",
+      "method": "GET",
+      "status": 200,
+      "ms": 29
+    },
+    {
+      "theme": "light",
+      "path": "/reports/summary",
+      "method": "GET",
+      "status": 200,
+      "ms": 29
+    },
+    {
+      "theme": "light",
+      "path": "/sessions/live-floor",
+      "method": "GET",
+      "status": 200,
+      "ms": 14
+    },
+    {
+      "theme": "light",
+      "path": "/sessions/alerts",
+      "method": "GET",
+      "status": 200,
+      "ms": 15
+    },
+    {
+      "theme": "light",
+      "path": "/sessions/quote/t1",
+      "method": "GET",
+      "status": 200,
+      "ms": 10
+    },
+    {
+      "theme": "light",
+      "path": "/sessions/checkout-preview/t1",
+      "method": "POST",
+      "status": 200,
+      "ms": 17
+    },
+    {
+      "theme": "light",
+      "path": "/reports/summary",
+      "method": "GET",
+      "status": 200,
+      "ms": 25
+    },
+    {
+      "theme": "light",
+      "path": "/sessions/checkout-preview/t1",
+      "method": "POST",
+      "status": 200,
+      "ms": 44
+    },
+    {
+      "theme": "light",
+      "path": "/sessions/checkout-preview/t1",
+      "method": "POST",
+      "status": 200,
+      "ms": 22
+    },
+    {
+      "theme": "light",
+      "path": "/sessions/live-floor",
+      "method": "GET",
+      "status": 200,
+      "ms": 12
+    },
+    {
+      "theme": "light",
+      "path": "/sessions/alerts",
+      "method": "GET",
+      "status": 200,
+      "ms": 49
+    },
+    {
+      "theme": "light",
+      "path": "/sessions/checkout-preview/t1",
+      "method": "POST",
+      "status": 200,
+      "ms": 7
+    },
+    {
+      "theme": "light",
+      "path": "/sessions/checkout-preview/t1",
+      "method": "POST",
+      "status": 200,
+      "ms": 8
+    },
+    {
+      "theme": "light",
+      "path": "/reports/summary",
+      "method": "GET",
+      "status": 200,
+      "ms": 15
+    },
+    {
+      "theme": "light",
+      "path": "/sessions/checkout-preview/t1",
+      "method": "POST",
+      "status": 200,
+      "ms": 14
+    },
+    {
+      "theme": "light",
+      "path": "/sessions/checkout-preview/t1",
+      "method": "POST",
+      "status": 200,
+      "ms": 29
+    },
+    {
+      "theme": "light",
+      "path": "/sessions/live-floor",
+      "method": "GET",
+      "status": 200,
+      "ms": 35
+    },
+    {
+      "theme": "light",
+      "path": "/sessions/alerts",
+      "method": "GET",
+      "status": 200,
+      "ms": 36
+    },
+    {
+      "theme": "light",
+      "path": "/sessions/checkout-preview/t1",
+      "method": "POST",
+      "status": 200,
+      "ms": 7
+    },
+    {
+      "theme": "light",
+      "path": "/reports/summary",
+      "method": "GET",
+      "status": 200,
+      "ms": 11
+    },
+    {
+      "theme": "light",
+      "path": "/sessions/checkout-preview/t1",
+      "method": "POST",
+      "status": 200,
+      "ms": 7
+    },
+    {
+      "theme": "light",
+      "path": "/sessions/live-floor",
+      "method": "GET",
+      "status": 200,
+      "ms": 19
+    },
+    {
+      "theme": "light",
+      "path": "/sessions/alerts",
+      "method": "GET",
+      "status": 200,
+      "ms": 28
+    },
+    {
+      "theme": "light",
+      "path": "/sessions/checkout-preview/t1",
+      "method": "POST",
+      "status": 200,
+      "ms": 14
+    },
+    {
+      "theme": "dark",
+      "path": "/ready",
+      "method": "GET",
+      "status": 200,
+      "ms": 191
+    },
+    {
+      "theme": "dark",
+      "path": "/auth/me",
+      "method": "GET",
+      "status": 200,
+      "ms": 243
+    },
+    {
+      "theme": "dark",
+      "path": "/ready",
+      "method": "GET",
+      "status": 200,
+      "ms": 244
+    },
+    {
+      "theme": "dark",
+      "path": "/auth/me",
+      "method": "GET",
+      "status": 200,
+      "ms": 270
+    },
+    {
+      "theme": "dark",
+      "path": "/sessions/alerts",
+      "method": "GET",
+      "status": 200,
+      "ms": 286
+    },
+    {
+      "theme": "dark",
+      "path": "/sessions/live-floor",
+      "method": "GET",
+      "status": 200,
+      "ms": 106
+    },
+    {
+      "theme": "dark",
+      "path": "/reports/summary",
+      "method": "GET",
+      "status": 200,
+      "ms": 394
+    },
+    {
+      "theme": "dark",
+      "path": "/sessions/alerts",
+      "method": "GET",
+      "status": 200,
+      "ms": 395
+    },
+    {
+      "theme": "dark",
+      "path": "/sessions/live-floor",
+      "method": "GET",
+      "status": 200,
+      "ms": 417
+    },
+    {
+      "theme": "dark",
+      "path": "/reports/summary",
+      "method": "GET",
+      "status": 200,
+      "ms": 601
+    },
+    {
+      "theme": "dark",
+      "path": "/sessions/alerts",
+      "method": "GET",
+      "status": 200,
+      "ms": 265
+    },
+    {
+      "theme": "dark",
+      "path": "/sessions/pause/t1",
+      "method": "POST",
+      "status": 200,
+      "ms": 856
+    },
+    {
+      "theme": "dark",
+      "path": "/sessions/live-floor",
+      "method": "GET",
+      "status": 200,
+      "ms": 23
+    },
+    {
+      "theme": "dark",
+      "path": "/reports/summary",
+      "method": "GET",
+      "status": 200,
+      "ms": 42
+    },
+    {
+      "theme": "dark",
+      "path": "/sessions/live-floor",
+      "method": "GET",
+      "status": 200,
+      "ms": 13
+    },
+    {
+      "theme": "dark",
+      "path": "/sessions/alerts",
+      "method": "GET",
+      "status": 200,
+      "ms": 36
+    },
+    {
+      "theme": "dark",
+      "path": "/sessions/quote/t1",
+      "method": "GET",
+      "status": 200,
+      "ms": 10
+    },
+    {
+      "theme": "dark",
+      "path": "/sessions/checkout-preview/t1",
+      "method": "POST",
+      "status": 200,
+      "ms": 13
+    },
+    {
+      "theme": "dark",
+      "path": "/reports/summary",
+      "method": "GET",
+      "status": 200,
+      "ms": 43
+    },
+    {
+      "theme": "dark",
+      "path": "/sessions/checkout-preview/t1",
+      "method": "POST",
+      "status": 200,
+      "ms": 34
+    },
+    {
+      "theme": "dark",
+      "path": "/sessions/checkout-preview/t1",
+      "method": "POST",
+      "status": 200,
+      "ms": 8
+    },
+    {
+      "theme": "dark",
+      "path": "/sessions/live-floor",
+      "method": "GET",
+      "status": 200,
+      "ms": 11
+    },
+    {
+      "theme": "dark",
+      "path": "/sessions/alerts",
+      "method": "GET",
+      "status": 200,
+      "ms": 39
+    },
+    {
+      "theme": "dark",
+      "path": "/sessions/checkout-preview/t1",
+      "method": "POST",
+      "status": 200,
+      "ms": 7
+    },
+    {
+      "theme": "dark",
+      "path": "/sessions/checkout-preview/t1",
+      "method": "POST",
+      "status": 200,
+      "ms": 6
+    },
+    {
+      "theme": "dark",
+      "path": "/reports/summary",
+      "method": "GET",
+      "status": 200,
+      "ms": 11
+    },
+    {
+      "theme": "dark",
+      "path": "/sessions/checkout-preview/t1",
+      "method": "POST",
+      "status": 200,
+      "ms": 7
+    },
+    {
+      "theme": "dark",
+      "path": "/sessions/checkout-preview/t1",
+      "method": "POST",
+      "status": 200,
+      "ms": 11
+    },
+    {
+      "theme": "dark",
+      "path": "/sessions/live-floor",
+      "method": "GET",
+      "status": 200,
+      "ms": 18
+    },
+    {
+      "theme": "dark",
+      "path": "/sessions/alerts",
+      "method": "GET",
+      "status": 200,
+      "ms": 18
+    },
+    {
+      "theme": "dark",
+      "path": "/sessions/checkout-preview/t1",
+      "method": "POST",
+      "status": 200,
+      "ms": 14
+    },
+    {
+      "theme": "dark",
+      "path": "/reports/summary",
+      "method": "GET",
+      "status": 200,
+      "ms": 7
+    },
+    {
+      "theme": "dark",
+      "path": "/sessions/checkout-preview/t1",
+      "method": "POST",
+      "status": 200,
+      "ms": 6
+    },
+    {
+      "theme": "dark",
+      "path": "/sessions/checkout-preview/t1",
+      "method": "POST",
+      "status": 200,
+      "ms": 14
+    },
+    {
+      "theme": "dark",
+      "path": "/sessions/live-floor",
+      "method": "GET",
+      "status": 200,
+      "ms": 13
+    },
+    {
+      "theme": "dark",
+      "path": "/sessions/alerts",
+      "method": "GET",
+      "status": 200,
+      "ms": 17
+    }
+  ],
+  "screenshots": [
+    "floor-light-1440.png",
+    "floor-light-375.png",
+    "floor-light-414.png",
+    "floor-dark-1440.png",
+    "floor-dark-375.png",
+    "floor-dark-414.png"
+  ]
+}

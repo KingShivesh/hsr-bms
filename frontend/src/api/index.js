@@ -1,4 +1,5 @@
 import axios from "axios";
+import { readEpoch, invalidateReads } from "./readEpoch.js";
 
 const API_TIMEOUT_MS = Number(import.meta.env.VITE_API_TIMEOUT_MS || 45000);
 const DEV_BACKEND_WAKE_DELAY_MS = import.meta.env.DEV
@@ -8,11 +9,22 @@ const SAFE_RETRY_METHODS = new Set(["get", "head", "options"]);
 const RETRY_DELAYS_MS = [800, 1800];
 let lastBackendEventAt = 0;
 let lastDataChangeAt = 0;
+const inFlight = new Map();
 
 const api = axios.create({
   baseURL: import.meta.env.VITE_API_URL || "http://localhost:8000",
   timeout: API_TIMEOUT_MS,
 });
+
+// Collapse concurrent reads, not sequential refreshes. Never share auth or bill requests.
+function getResource(url, config = {}) {
+  if (config.signal || config.responseType || /\/(auth|ready)|quote|checkout|export/.test(url)) return api.get(url, config);
+  const key = JSON.stringify([localStorage.getItem("token"), localStorage.getItem("role"), readEpoch(), url, config.params]);
+  if (inFlight.has(key)) return inFlight.get(key);
+  const request = api.get(url, config).finally(() => { if (inFlight.get(key) === request) inFlight.delete(key); });
+  inFlight.set(key, request);
+  return request;
+}
 
 const tableKey = (table_id) => String(table_id || "").trim().toLowerCase();
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -42,7 +54,9 @@ function backendErrorMessage(err) {
   if (err.response.status >= 500) {
     return "Backend had a server error. Try again and check Render logs if it repeats.";
   }
-  return err.response.data?.detail || err.message || "Request failed";
+  const detail = err.response.data?.detail;
+  if (Array.isArray(detail)) return detail.map(row => row.msg || "Invalid value").join("; ");
+  return typeof detail === "string" ? detail : err.message || "Request failed";
 }
 
 function notifyBackendFailure(err) {
@@ -67,6 +81,9 @@ function notifyBackendFailure(err) {
 function notifyDataChanged(res) {
   const method = String(res.config?.method || "get").toLowerCase();
   if (SAFE_RETRY_METHODS.has(method)) return;
+  // Preview is a read-only POST; typing must not invalidate the whole application.
+  if (/checkout-preview|\/auth\//.test(res.config?.url || "")) return;
+  invalidateReads();
   const now = Date.now();
   if (now - lastDataChangeAt < 250) return;
   lastDataChangeAt = now;
@@ -166,7 +183,7 @@ export const startGuestSession = (table_id) => api.post("/sessions/start", { tab
 export const previewCheckout = (table_id, body) => api.post(`/sessions/checkout-preview/${tableKey(table_id)}`, body);
 export const closeWithProposal = (table_id, body, discount_reason = "") => api.post(`/sessions/stop/${tableKey(table_id)}?discount_reason=${encodeURIComponent(discount_reason)}`, body);
 export const getRecentMembers = () => api.get("/members/recent");
-export const getSessionAlerts = () => api.get("/sessions/alerts");
+export const getSessionAlerts = () => getResource("/sessions/alerts");
 export const acknowledgeWeeklySummary = (week) => api.post(`/sessions/weekly-summary/${encodeURIComponent(week)}/acknowledge`);
 export const acknowledgeSessionAlert = (id) => api.post(`/sessions/alerts/${id}/acknowledge`);
 export const getSessionControls = () => api.get("/settings/session-controls");
@@ -266,17 +283,17 @@ export const addReserve = (table_id, name, time) =>
   api.post(`/sessions/${tableKey(table_id)}/reserve`, { name, time });
 export const cancelReserve = (table_id) =>
   api.delete(`/sessions/${tableKey(table_id)}/reserve`);
-export const getActive = () => api.get("/sessions/active");
-export const getTableState = () => api.get("/sessions/tables");
-export const getLiveFloor = () => api.get("/sessions/live-floor");
+export const getActive = () => getResource("/sessions/active");
+export const getTableState = () => getResource("/sessions/tables");
+export const getLiveFloor = () => getResource("/sessions/live-floor");
 export const transferSession = (table_id, target_table_id) =>
   api.post(`/sessions/transfer/${tableKey(table_id)}`, {
     target_table_id: tableKey(target_table_id),
   });
 
 // Members
-export const getMembers = () => api.get("/members");
-export const addMember = (name) => api.post("/members", { name });
+export const getMembers = () => getResource("/members/");
+export const addMember = (name) => api.post("/members/", { name });
 export const upgradeMember = (customerId) =>
   api.post(`/members/${encodeURIComponent(customerId)}/upgrade`);
 export const deleteMember = (customerId) =>
@@ -285,12 +302,12 @@ export const restoreMember = (customerId, member) =>
   api.post(`/members/${encodeURIComponent(customerId)}/restore`, member);
 export const searchMembers = (q) =>
   api.get(`/members/search?q=${encodeURIComponent(q)}`);
-export const getMemberDuplicates = () => api.get("/members/duplicates");
+export const getMemberDuplicates = () => getResource("/members/duplicates");
 export const mergeMembers = (primary_id, duplicate_id) =>
   api.post("/members/merge", { primary_id, duplicate_id });
 
 // Reports
-export const getSummary = () => api.get("/reports/summary");
+export const getSummary = () => getResource("/reports/summary");
 export const getDashboardLive = (period = "today") =>
   api.get(`/reports/dashboard?period=${encodeURIComponent(period)}`);
 export const getHistory = () => api.get("/reports/history");
@@ -303,8 +320,8 @@ export const getRates = () => api.get("/settings/rates");
 export const getTariffs = () => api.get("/settings/tariffs");
 export const saveTariffs = (catalog) => api.post("/settings/tariffs", catalog);
 export const saveRates = (wr, pr, sr) => api.post("/settings/rates", { wr, pr, sr });
-export const getMenu = () => api.get("/settings/menu");
-export const getMenuFull = () => api.get("/settings/menu");
+export const getMenu = () => getResource("/settings/menu");
+export const getMenuFull = () => getResource("/settings/menu");
 export const addMenuItem = (name, price, category = "Snacks") =>
   api.post("/settings/menu", { name, price, category });
 export const updateMenuItem = (
@@ -334,7 +351,7 @@ export const saveBookingGrace = (booking_grace_minutes) =>
 // Food Orders
 export const placeFoodOrder = (customer_name, items, payment_method = "Cash") =>
   api.post("/food/order", { customer_name, items, payment_method });
-export const getFoodOrders = () => api.get("/food/orders");
+export const getFoodOrders = () => getResource("/food/orders");
 export const cancelFoodOrder = (orderId) => api.delete(`/food/orders/${orderId}`);
 export const restoreFoodOrder = (orderId, order) =>
   api.post(`/food/orders/${orderId}/restore`, order);
@@ -390,7 +407,7 @@ export const getAuditLogs = (limit = 50) =>
   api.get(`/operations/audit-logs?limit=${limit}`);
 
 // Waitlist / smart queue
-export const getWaitlist = () => api.get("/waitlist");
+export const getWaitlist = () => getResource("/waitlist");
 export const addWaitlistEntry = (entry) => api.post("/waitlist", entry);
 export const seatWaitlistEntry = (entryId, table_id) =>
   api.post(`/waitlist/${entryId}/seat`, { table_id: tableKey(table_id) });
@@ -398,7 +415,7 @@ export const cancelWaitlistEntry = (entryId) =>
   api.delete(`/waitlist/${entryId}`);
 
 // Bookings
-export const getBookings = () => api.get("/bookings");
+export const getBookings = () => getResource("/bookings");
 export const createBooking = (booking) => api.post("/bookings", booking);
 export const cancelBooking = (bookingId) => api.delete(`/bookings/${bookingId}`);
 export const restoreBooking = (bookingId) => api.post(`/bookings/${bookingId}/restore`);

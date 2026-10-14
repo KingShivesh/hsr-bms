@@ -35,7 +35,7 @@ function splitSummary(rec) {
   return rows.filter((row) => row?.name);
 }
 
-export default function CheckoutPanel({ table, open, onClose, onComplete }) {
+export default function CheckoutPanel({ table, open, onClose, onComplete, onPendingChange }) {
   const { showToast } = useToast();
   const [paymentMethod, setPaymentMethod] = useState("Cash");
   const [discountType, setDiscountType] = useState("none");
@@ -128,11 +128,13 @@ export default function CheckoutPanel({ table, open, onClose, onComplete }) {
   }, [open, tableId, loadQuote]);
 
   function updateProposal(key, value) {
+    const previousMember = proposalRef.current.customer?.member_id;
     const next = { ...proposalRef.current, [key]: value };
     proposalRef.current = next;
     setProposal(next);
     const nextMethod = key === "customer" && !value?.member_id && paymentMethod === "Credit" ? "Cash" : paymentMethod;
     setPaymentMethod(nextMethod);
+    if (key === "customer" && !previousMember && !value?.member_id) return;
     loadQuote({ nextPaymentMethod: nextMethod, nextDiscountType: discountType,
       nextDiscountValue: discountValue, nextClosedAtMs: closedAtMs, nextCheckoutToken: quote?.checkout_token });
   }
@@ -184,6 +186,7 @@ export default function CheckoutPanel({ table, open, onClose, onComplete }) {
       setError("Link a member to charge to credit."); return;
     }
     setFinalizing(true);
+    onPendingChange?.(tableId, true);
     finalizingRef.current = true;
     setError("");
     try {
@@ -202,6 +205,7 @@ export default function CheckoutPanel({ table, open, onClose, onComplete }) {
       setError(err.userMessage || err.response?.data?.detail || "Could not close table.");
     } finally {
       setFinalizing(false);
+      onPendingChange?.(tableId, false);
       finalizingRef.current = false;
     }
   }
@@ -252,7 +256,9 @@ export default function CheckoutPanel({ table, open, onClose, onComplete }) {
         </div>
       ) : (
         <div className="checkout-flow">
-          {loading && !quote && <div className="checkout-loading">Preparing frozen bill...</div>}
+          {loading && !quote && <div className="page-skeleton compact" role="status" aria-label="Preparing frozen bill"><div className="skeleton-line skeleton-title" /><div className="skeleton-panel" /></div>}
+          {loading && quote && <p role="status">Recalculating bill…</p>}
+          {finalizing && <p role="status">Closing table…</p>}
           {error && <Alert tone="danger" title="Checkout needs attention">{error}</Alert>}
           {quote && (
             <>
@@ -279,7 +285,7 @@ export default function CheckoutPanel({ table, open, onClose, onComplete }) {
               </div>
 
               {quote.can_edit_time && <AdjustSessionTime quote={quote} value={proposal.time_override} onChange={value => updateProposal("time_override", value)} disabled={finalizing || loading} />}
-              {quote.can_edit_time != null && <CustomerAtClose value={proposal.customer} onChange={value => updateProposal("customer", value)} disabled={finalizing} />}
+              {quote.can_edit_time != null && <CustomerAtClose value={proposal.customer} onDraftChange={value => { proposalRef.current = { ...proposalRef.current, customer: value }; setProposal(proposalRef.current); }} onChange={value => updateProposal("customer", value)} disabled={finalizing} />}
 
               {!!splitRows.length && (
                 <section className="checkout-section">

@@ -56,7 +56,7 @@ h3 { font-size: var(--text-lg); line-height: var(--leading-lg); font-weight: 500
   font-size: var(--text-xs); line-height: var(--leading-xs); font-weight: 500; white-space: nowrap;
   opacity: 0; visibility: hidden; transition: opacity 80ms var(--ease-out), visibility 80ms;
 }
-.ui-button[data-tooltip]:hover::after, .ui-button[data-tooltip]:focus-visible::after { opacity: 1; visibility: visible; transition-delay: 300ms; }
+.ui-button[data-tooltip]:hover::after, .ui-button[data-tooltip]:focus-visible::after { opacity: 1; visibility: visible; }
 .ui-button:not(.table-state-card):hover:not(:disabled) { filter: none; }
 .ui-button:active:not(:disabled) { transform: translateY(0.5px); transition: transform 60ms var(--ease-out); }
 .ui-button:focus-visible { outline: 2px solid var(--border-focus) !important; outline-offset: 2px; }

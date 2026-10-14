@@ -1,7 +1,8 @@
 import { PNG } from "pngjs";
 import { scanTextContrast } from "./contrast-dom.mjs";
 
-export async function scanRenderedContrast(page, metadata) {
+export async function scanRenderedContrast(page, metadata, attempt = 0) {
+  const stateBefore = await page.evaluate(() => `${location.pathname}${location.search}:${!!document.querySelector('[role="dialog"][aria-modal="true"]')}`);
   const candidates = await page.evaluate(scanTextContrast, { ...metadata, collect: true });
   if (candidates.some(c => c.gradient)) {
     // Hide glyph paint only, preserving currentColor fills and layout. Sample the
@@ -11,6 +12,11 @@ export async function scanRenderedContrast(page, metadata) {
     const viewport = await page.evaluate(() => ({ modal: !!document.querySelector('[role="dialog"][aria-modal="true"]'), x: scrollX, y: scrollY }));
     try { pixels = PNG.sync.read(await page.screenshot({ fullPage: !viewport.modal })); }
     finally { await hide.evaluate(el => el.remove()); }
+    const stateAfter = await page.evaluate(() => `${location.pathname}${location.search}:${!!document.querySelector('[role="dialog"][aria-modal="true"]')}`);
+    if (stateBefore !== stateAfter) {
+      if (attempt >= 2) throw new Error("Contrast surface changed during capture; retry after navigation settles");
+      return scanRenderedContrast(page, metadata, attempt + 1);
+    }
     const luminance = c => {
       const v = n => { n /= 255; return n <= 0.04045 ? n / 12.92 : ((n + 0.055) / 1.055) ** 2.4; };
       return 0.2126 * v(c.r) + 0.7152 * v(c.g) + 0.0722 * v(c.b);

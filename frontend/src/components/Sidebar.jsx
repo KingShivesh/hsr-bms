@@ -1,6 +1,7 @@
 import { Button as HsrButton, Icon as HsrIcon } from "./ui/index.js";
 import { useState } from "react";
 import { APP_NAME } from "../config/hsrTables.js";
+import { prefetchPage } from "../routes.js";
 
 export default function Sidebar({ page, setPage, onLogout, activeTables, role = "admin" }) {
   const [collapsed, setCollapsed] = useState(() => localStorage.getItem("sidebarCollapsed") === "true");
@@ -116,6 +117,8 @@ export default function Sidebar({ page, setPage, onLogout, activeTables, role = 
                 key={item.id}
                 className={`sb-item ${page === item.id ? "active" : ""}`}
                 onClick={() => navigate(item.id)}
+                onPointerEnter={() => prefetchPage(item.id)}
+                onFocus={() => prefetchPage(item.id)}
                 aria-label={item.label}
                 aria-current={page === item.id ? "page" : undefined}
               >

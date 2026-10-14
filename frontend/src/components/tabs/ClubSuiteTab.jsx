@@ -1,6 +1,7 @@
 import { formatCurrency as polishCurrency } from "../../utils/format.js";
 import { Icon as HsrIcon, Button as HsrButton, Select as HsrSelect, Input as HsrInput, Textarea as HsrTextarea, EmptyState, Button } from "../ui/index.js";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCachedState, hasCachedState } from "../../hooks/useCachedState.js";
 import {
   addMenuItem,
   addWaitlistEntry,
@@ -151,7 +152,6 @@ function WorkspaceLoading() {
     <div className="cf-page">
       <div className="page-skeleton compact" role="status" aria-live="polite" aria-label="Loading workspace data">
         <div className="page-skeleton-status">
-          <HsrIcon className="ti ti-loader-2" aria-hidden="true" />
           <span>Loading workspace data...</span>
         </div>
         <div className="skeleton-line skeleton-title" />
@@ -369,7 +369,7 @@ function WaitlistView({ waitlist, bookings, activeSessions, maintenance, actions
             rows={waitlist.map((entry) => ({
               id: `wait-${entry.id}`,
               icon: "ti-clock",
-              title: `${entry.position}. ${entry.customer_name}`,
+              title: `${entry.position}. ${entry.customer_name}${entry.pending ? " · Saving…" : ""}`,
               detail: `${entry.party_size} player(s) · ${entry.preferred_type || "Any table"} · ${entry.wait_mins || 0} min wait`,
               action: (
                 <div className="cf-row-actions">
@@ -456,7 +456,7 @@ function WaitlistView({ waitlist, bookings, activeSessions, maintenance, actions
             </FormField>
             <div className="cf-modal-actions">
               <ActionButton onClick={() => setShowAdd(false)}>Discard Walk-in</ActionButton>
-              <HsrButton native className="cf-action-btn primary" type="submit" disabled={busy}>
+              <HsrButton native className="cf-action-btn primary" type="submit" loading={busy}>
                 <HsrIcon className="ti ti-user-plus" aria-hidden="true" />
                 <span>{activeAction === "wait-add" ? "Adding..." : "Add Walk-in"}</span>
               </HsrButton>
@@ -667,7 +667,7 @@ function ReservationsView({ bookings, tableState, actions, busy, activeAction })
             </FormField>
             <div className="cf-modal-actions">
               <ActionButton onClick={() => setShowAdd(false)}>Discard Booking</ActionButton>
-              <HsrButton native className="cf-action-btn primary" type="submit" disabled={busy}>
+              <HsrButton native className="cf-action-btn primary" type="submit" loading={busy}>
                 <HsrIcon className="ti ti-calendar-plus" aria-hidden="true" />
                 <span>{activeAction === "booking-create" ? "Creating..." : "Create Booking"}</span>
               </HsrButton>
@@ -1048,7 +1048,7 @@ function InventoryView({ menu, maintenance, actions, busy, activeAction, showToa
                 onChange={(event) => setMaintenanceForm((prev) => ({ ...prev, reason: event.target.value }))}
                 placeholder="Reason"
               />
-              <HsrButton native className="cf-action-btn warning" type="submit" disabled={busy}>
+              <HsrButton native className="cf-action-btn warning" type="submit" loading={busy}>
                 <HsrIcon className="ti ti-tool" aria-hidden="true" />
                 <span>{activeAction === "maintenance-set" ? "Saving..." : "Mark"}</span>
               </HsrButton>
@@ -1113,7 +1113,7 @@ function InventoryView({ menu, maintenance, actions, busy, activeAction, showToa
             </div>
             <div className="cf-modal-actions">
               <ActionButton onClick={() => setShowAdd(false)}>Discard Menu Item</ActionButton>
-              <HsrButton native className="cf-action-btn primary" type="submit" disabled={busy}>
+              <HsrButton native className="cf-action-btn primary" type="submit" loading={busy}>
                 <HsrIcon className="ti ti-package-plus" aria-hidden="true" />
                 <span>{activeAction === "menu-add" ? "Adding..." : "Add Menu Item"}</span>
               </HsrButton>
@@ -1154,7 +1154,7 @@ function InventoryView({ menu, maintenance, actions, busy, activeAction, showToa
             </div>
             <div className="cf-modal-actions">
               <ActionButton onClick={() => setEditing(null)}>Discard Changes</ActionButton>
-              <HsrButton native className="cf-action-btn primary" type="submit" disabled={busy}>
+              <HsrButton native className="cf-action-btn primary" type="submit" loading={busy}>
                 <HsrIcon className="ti ti-device-floppy" aria-hidden="true" />
                 <span>{activeAction === `menu-edit-${editing.oldName}` ? "Saving..." : "Save Menu Item"}</span>
               </HsrButton>
@@ -1204,15 +1204,16 @@ function StaffView({ auditLogs }) {
 export default function ClubSuiteTab({ view }) {
   const { showToast } = useToast();
   const { requestConfirm } = useConfirm();
-  const [data, setData] = useState(() => emptyWorkspaceData());
+  const [data, setData] = useCachedState(`workspace:${view}`, () => emptyWorkspaceData());
+  const [optimistic, setOptimistic] = useState(null);
   const [busy, setBusy] = useState(false);
   const [activeAction, setActiveAction] = useState("");
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(() => !hasCachedState(`workspace:${view}`));
   const [loadError, setLoadError] = useState("");
   const realtimeRefreshTimerRef = useRef(null);
 
   const loadData = useCallback(async (shouldCommit = () => true, { showLoading = false } = {}) => {
-    if (showLoading) setLoading(true);
+    if (showLoading && !hasCachedState(`workspace:${view}`)) setLoading(true);
     setLoadError("");
     try {
       const loaders = WORKSPACE_LOADERS[view] || WORKSPACE_LOADERS.waitlist;
@@ -1221,7 +1222,7 @@ export default function ClubSuiteTab({ view }) {
       const failed = results
         .map((result, index) => (result.status === "rejected" ? loaders[index].label : ""))
         .filter(Boolean);
-      const nextData = emptyWorkspaceData();
+      const nextData = {};
       results.forEach((result, index) => {
         if (result.status !== "fulfilled") return;
         const key = loaders[index].key;
@@ -1234,7 +1235,7 @@ export default function ClubSuiteTab({ view }) {
         }
         nextData[key] = asArray(payload);
       });
-      setData(nextData);
+      setData(current => ({ ...current, ...nextData }));
       setLoadError(
         failed.length
           ? `Could not load ${failed.join(", ")}. Retry once the backend responds.`
@@ -1246,7 +1247,7 @@ export default function ClubSuiteTab({ view }) {
     } finally {
       if (shouldCommit()) setLoading(false);
     }
-  }, [view]);
+  }, [view, setData]);
 
   const scheduleRealtimeRefresh = useCallback(() => {
     window.clearTimeout(realtimeRefreshTimerRef.current);
@@ -1295,6 +1296,7 @@ export default function ClubSuiteTab({ view }) {
     successMessage = "",
     undoLabel = "",
     onUndo,
+    optimisticUpdate,
   } = {}) => {
     if (confirmText) {
       const confirmed = await requestConfirm({
@@ -1307,13 +1309,14 @@ export default function ClubSuiteTab({ view }) {
     }
     setBusy(true);
     setActiveAction(actionKey);
+    if (optimisticUpdate) setOptimistic(() => optimisticUpdate);
     try {
       await action();
       await loadData();
       if (successMessage && onUndo) {
         showToast(successMessage, "success", {
           actionLabel: undoLabel || "Undo",
-          duration: 6000,
+          duration: 5000,
           onAction: async () => {
             setBusy(true);
             setActiveAction(`${actionKey}-undo`);
@@ -1337,6 +1340,7 @@ export default function ClubSuiteTab({ view }) {
       showToast(error.response?.data?.detail || "Action failed", "error");
       return false;
     } finally {
+      setOptimistic(null);
       setBusy(false);
       setActiveAction("");
     }
@@ -1346,10 +1350,12 @@ export default function ClubSuiteTab({ view }) {
     addWaitlist: (body) => runAction(() => addWaitlistEntry(body), {
       actionKey: "wait-add",
       successMessage: "Guest added to queue",
+      optimisticUpdate: current => ({ ...current, waitlist: [...current.waitlist, { ...body, id: "pending-walk-in", position: current.waitlist.length + 1, wait_mins: 0, pending: true }] }),
     }),
     seatWaitlist: (entryId, tableId) => runAction(() => seatWaitlistEntry(entryId, tableId), {
       actionKey: `wait-seat-${entryId}`,
       successMessage: "Guest seated",
+      optimisticUpdate: current => ({ ...current, waitlist: current.waitlist.filter(row => row.id !== entryId) }),
     }),
     cancelWaitlist: (entryId) => runAction(
       () => cancelWaitlistEntry(entryId),
@@ -1359,11 +1365,13 @@ export default function ClubSuiteTab({ view }) {
         confirmLabel: "Cancel Queue Entry",
         actionKey: `wait-cancel-${entryId}`,
         successMessage: "Waitlist entry cancelled",
+        optimisticUpdate: current => ({ ...current, waitlist: current.waitlist.filter(row => row.id !== entryId) }),
       },
     ),
     createBooking: (body) => runAction(() => createBooking(body), {
       actionKey: "booking-create",
       successMessage: "Booking created",
+      optimisticUpdate: current => ({ ...current, bookings: [...current.bookings, { ...body, id: "pending-booking", status: "booked", pending: true }] }),
     }),
     cancelBooking: (bookingId) => runAction(
       () => cancelBooking(bookingId),
@@ -1373,6 +1381,7 @@ export default function ClubSuiteTab({ view }) {
         confirmLabel: "Cancel Booking",
         actionKey: `booking-cancel-${bookingId}`,
         successMessage: "Reservation cancelled",
+        optimisticUpdate: current => ({ ...current, bookings: current.bookings.map(row => row.id === bookingId ? { ...row, status: "cancelled" } : row) }),
       },
     ),
     cancelFoodOrder: (order) => runAction(
@@ -1380,6 +1389,7 @@ export default function ClubSuiteTab({ view }) {
       {
         actionKey: `food-cancel-${order.id}`,
         successMessage: "Food order cancelled",
+        optimisticUpdate: current => ({ ...current, foodOrders: current.foodOrders.filter(row => row.id !== order.id) }),
         undoLabel: "Undo",
         onUndo: () => restoreFoodOrder(order.id, foodOrderRestorePayload(order)),
       },
@@ -1387,12 +1397,14 @@ export default function ClubSuiteTab({ view }) {
     addMenuItem: (name, price, category) => runAction(() => addMenuItem(name, price, category), {
       actionKey: "menu-add",
       successMessage: "Menu item added",
+      optimisticUpdate: current => ({ ...current, menu: [...current.menu, { name, price, category, available: true, pending: true }] }),
     }),
     updateMenuItem: (oldName, newName, price, category) => runAction(
       () => updateMenuItem(oldName, newName, price, category),
       {
         actionKey: `menu-edit-${oldName}`,
         successMessage: "Menu item saved",
+        optimisticUpdate: current => ({ ...current, menu: current.menu.map(row => row.name === oldName ? { ...row, name: newName, price, category, pending: true } : row) }),
       },
     ),
     deleteMenuItem: (item) => runAction(
@@ -1400,6 +1412,7 @@ export default function ClubSuiteTab({ view }) {
       {
         actionKey: `menu-delete-${item.name}`,
         successMessage: "Menu item deleted",
+        optimisticUpdate: current => ({ ...current, menu: current.menu.filter(row => row.name !== item.name) }),
         undoLabel: "Undo",
         onUndo: () => restoreMenuItem(menuItemRestorePayload(item)),
       },
@@ -1407,6 +1420,7 @@ export default function ClubSuiteTab({ view }) {
     setItemAvailability: (name, available) => runAction(() => setItemAvailability(name, available), {
       actionKey: `stock-${name}`,
       successMessage: available ? "Item marked in stock" : "Item marked out of stock",
+      optimisticUpdate: current => ({ ...current, menu: current.menu.map(row => row.name === name ? { ...row, available, pending: true } : row) }),
     }),
     bulkSetItemAvailability: async (items, available) => {
       setBusy(true);
@@ -1445,8 +1459,8 @@ export default function ClubSuiteTab({ view }) {
   }), [loadData, runAction, showToast]);
 
   const props = useMemo(
-    () => ({ ...data, actions, busy, activeAction, showToast }),
-    [data, actions, busy, activeAction, showToast],
+    () => ({ ...(optimistic ? optimistic(data) : data), actions, busy, activeAction, showToast }),
+    [data, optimistic, actions, busy, activeAction, showToast],
   );
 
   if (loading) {

@@ -1,5 +1,6 @@
 import { Icon as HsrIcon, Input as HsrInput, Button as HsrButton, Select as HsrSelect, Table as HsrTable } from "../ui/index.js";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { useCachedState, hasCachedState } from "../../hooks/useCachedState.js";
 import {
   getMenu,
   getLiveFloor,
@@ -47,7 +48,6 @@ function FoodPosSkeleton() {
   return (
     <div className="cafe-pos-page page-skeleton food-pos-skeleton" role="status" aria-live="polite" aria-label="Loading Food and Cafe POS">
       <div className="page-skeleton-status">
-        <HsrIcon className="ti ti-loader-2" aria-hidden="true" />
         <span>Loading Food & Cafe POS...</span>
       </div>
       <div className="segmented-control page-tabs cafe-pos-tabs skeleton-tabs">
@@ -108,11 +108,11 @@ function FoodPosSkeleton() {
 
 export default function FoodTab({ onNavigate, role = "admin", orderContext, onOrderContextHandled }) {
   const { showToast } = useToast();
-  const [menu, setMenu] = useState({});
-  const [stats, setStats] = useState([]);
-  const [orders, setOrders] = useState([]);
-  const [activeSessions, setActiveSessions] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [menu, setMenu] = useCachedState("cafe-menu", {});
+  const [stats, setStats] = useCachedState("cafe-stats", []);
+  const [orders, setOrders] = useCachedState("cafe-orders", []);
+  const [activeSessions, setActiveSessions] = useCachedState("cafe-sessions", []);
+  const [loading, setLoading] = useState(() => !hasCachedState("cafe-menu"));
   const [loadError, setLoadError] = useState("");
   const [cart, setCart] = useState([]);
   const [customerName, setCustomerName] = useState("");
@@ -133,7 +133,7 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
   useEscapeKey(() => setCigaretteDraft({ name: "", mrp: "" }), !!cigaretteDraft.name);
 
   const fetchAll = useCallback(async ({ showLoading = false } = {}) => {
-    if (showLoading) setLoading(true);
+    if (showLoading && !hasCachedState("cafe-menu")) setLoading(true);
     setLoadError("");
     try {
       const requests = [
@@ -173,7 +173,7 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
     } finally {
       if (showLoading) setLoading(false);
     }
-  }, [showToast]);
+  }, [showToast, setActiveSessions, setMenu, setOrders, setStats]);
 
   useEffect(() => {
     fetchAll({ showLoading: true });
@@ -186,7 +186,7 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
     } catch {
       // The realtime hook keeps polling while disconnected; the global API banner handles failures.
     }
-  }, []);
+  }, [setMenu]);
 
   const refreshOrders = useCallback(async () => {
     try {
@@ -196,7 +196,7 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
     } catch {
       // The realtime hook keeps polling while disconnected; the global API banner handles failures.
     }
-  }, []);
+  }, [setOrders, setStats]);
 
   const scheduleMenuRefresh = useCallback(() => {
     window.clearTimeout(menuRefreshTimerRef.current);
@@ -394,12 +394,13 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
       total: Number(order.total || 0),
       payment_method: order.payment_method || "Cash",
     };
+    setOrders(current => current.filter(row => row.id !== orderId));
     try {
       await cancelFoodOrder(orderId);
-      await fetchAll();
+      fetchAll();
       showToast(`${order.customer_name || "Food"} order cancelled`, "success", {
         actionLabel: "Undo",
-        duration: 6000,
+        duration: 5000,
         onAction: async () => {
           setBusyAction(`order-restore-${orderId}`);
           try {
@@ -414,6 +415,7 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
         },
       });
     } catch (e) {
+      setOrders(current => current.some(row => row.id === orderId) ? current : [...current, order]);
       showToast(e.response?.data?.detail || "Failed to cancel food order", "error");
     } finally {
       busyActionRef.current = "";

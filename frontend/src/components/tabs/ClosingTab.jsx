@@ -147,7 +147,6 @@ export default function ClosingTab() {
     return (
       <div className="page-skeleton compact" role="status" aria-live="polite" aria-label="Loading closing checklist">
         <div className="page-skeleton-status">
-          <HsrIcon className="ti ti-loader-2" aria-hidden="true" />
           <span>Loading closing checklist...</span>
         </div>
         <div className="skeleton-line skeleton-title" />
