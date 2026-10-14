@@ -10,5 +10,13 @@ try {
   assert.equal(rows.some(row => row.text === "Clipped low contrast"), false);
   assert.equal(rows.some(row => row.text === "Visible good contrast"), false);
   assert.equal(rows.some(row => row.text === "Visible low contrast"), true);
-  console.log(JSON.stringify({ clippedTextExcluded: true, fixedModalPixelOffsetCorrect: true, realVisibleViolationDetected: true }));
+  await page.evaluate(() => {
+    const bounds = document.querySelector(".bad").getBoundingClientRect();
+    const cover = document.createElement("div");
+    cover.style.cssText = `position:fixed;z-index:999;left:${bounds.left}px;top:${bounds.top}px;width:${bounds.width}px;height:${bounds.height}px;background:#333`;
+    document.body.append(cover);
+  });
+  const covered = await scanRenderedContrast(page, { route: "fixture", theme: "light", state: "occluded-text" });
+  assert.equal(covered.some(row => row.text === "Visible low contrast"), false);
+  console.log(JSON.stringify({ clippedTextExcluded: true, fixedModalPixelOffsetCorrect: true, realVisibleViolationDetected: true, occludedTextExcluded: true }));
 } finally { await browser.close(); }

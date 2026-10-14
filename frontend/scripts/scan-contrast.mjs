@@ -23,9 +23,11 @@ try {
       }
     }, { theme, auth });
     const page = await context.newPage();
+    page.setDefaultTimeout(15000);
     page.on("pageerror", e => report.errors.push(e.message));
     page.on("requestfailed", r => { if (r.url().startsWith(apiUrl) && !r.url().includes("/events/stream") && r.failure()?.errorText !== "net::ERR_ABORTED") report.errors.push(`${r.url()}: ${r.failure()?.errorText}`); });
     for (const route of routes) {
+      console.log(`Contrast: ${theme} ${route}`);
       await page.goto(appUrl + route, { waitUntil: "domcontentloaded" });
       await page.waitForTimeout(1000);
       await page.waitForFunction(() => ![...document.querySelectorAll(".page-skeleton,.ui-skeleton-stack,.ui-skeleton-grid,.lf-skeleton")].some(node => node.getClientRects().length));
