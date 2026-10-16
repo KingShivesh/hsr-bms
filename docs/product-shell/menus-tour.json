@@ -1,0 +1,16 @@
+[
+  {
+    "theme": "light",
+    "menus": 3,
+    "tourSteps": 4,
+    "actualRegionHighlightedEachStep": true,
+    "skippedWithoutWrite": true
+  },
+  {
+    "theme": "dark",
+    "menus": 3,
+    "tourSteps": 4,
+    "actualRegionHighlightedEachStep": true,
+    "skippedWithoutWrite": true
+  }
+]

@@ -1,0 +1,24 @@
+[
+  {
+    "theme": "light",
+    "renderErrorCaught": true,
+    "truthfulMessage": true,
+    "configuredSupport": true,
+    "retryRecoveredWithoutReload": true
+  },
+  {
+    "theme": "dark",
+    "renderErrorCaught": true,
+    "truthfulMessage": true,
+    "configuredSupport": true,
+    "retryRecoveredWithoutReload": true
+  },
+  {
+    "publicStatusWithoutLogin": true,
+    "readinessFromRealBackend": true
+  },
+  {
+    "ownerLoginShowsSetup": true,
+    "commandPaletteDoesNotStackModals": true
+  }
+]
