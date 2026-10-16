@@ -1,0 +1,18 @@
+{
+  "rows": [
+    {
+      "theme": "light",
+      "publicStatus": true,
+      "ready": true,
+      "entry": "/assets/index-CkBsgI2a.js"
+    },
+    {
+      "theme": "dark",
+      "publicStatus": true,
+      "ready": true,
+      "entry": "/assets/index-CkBsgI2a.js"
+    }
+  ],
+  "productionMutations": 0,
+  "errors": []
+}

@@ -64,6 +64,14 @@ Support contact supplied by the owner: **shivanshg2510@gmail.com**.
 Final scanner output: `contrast.json`. Deployment byte hashes, readiness and
 backend ancestry: `deployment.json` (added only after live verification).
 
+Production confirmed after merge: **22/22 JS/CSS SHA-256 matches**, entry
+`index-CkBsgI2a.js`; backend revision `e014ff4caf9182797dc4e341f6c491fad80bfafa`,
+readiness HTTP 200 and database `ok`. Both product-shell branches are ancestors
+of main. Source commit: `383a53b`; visual-evidence commit: `e3ff181`.
+No production account was created and no production business records were changed.
+The isolated local QA database was cleared to **zero rows in every table** and
+the temporary Postgres test container and QA servers were removed/stopped.
+
 Final expanded scan: **27 route/query contexts, light + dark, 0 violations,
 0 errors**, including club/help/user menus and the real 404. The 404 support link
 initially inherited Bootstrap blue (4.31:1 light / 4.36:1 dark); shared empty-state
