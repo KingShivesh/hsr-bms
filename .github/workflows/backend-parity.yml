@@ -69,6 +69,9 @@ jobs:
       - name: Verify staged identity migration upgrade and rollback
         working-directory: backend
         run: HSR_TEST_DATABASE_URL="$DATABASE_URL" python test_identity_migrations.py
+      - name: Verify product-shell permissions and profile integrity on Postgres
+        working-directory: backend
+        run: HSR_TEST_DATABASE_URL="$DATABASE_URL" python test_product_shell.py
       - name: Run one full Postgres soak cycle
         id: postgres-soak
         continue-on-error: true

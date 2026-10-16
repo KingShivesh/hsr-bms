@@ -15,7 +15,7 @@ import models
 from database import Base, engine, ensure_runtime_columns
 from deps import get_current_user
 from hsr_config import APP_NAME, is_production_env, validate_runtime_config
-from routers import auth, bookings, challenges, events, food, members, operations, reports, sessions, settings, staff, tournaments, waitlist
+from routers import auth, bookings, challenges, events, food, members, operations, product, reports, sessions, settings, staff, tournaments, waitlist
 
 validate_runtime_config()
 MAX_REQUEST_BYTES = int(os.getenv("MAX_REQUEST_BYTES", str(1024 * 1024)))
@@ -141,6 +141,7 @@ app.include_router(sessions.router, prefix="/sessions", dependencies=protected)
 app.include_router(members.router, prefix="/members", dependencies=protected)
 app.include_router(reports.router, prefix="/reports", dependencies=protected)
 app.include_router(settings.router, prefix="/settings", dependencies=protected)
+app.include_router(product.router, prefix="/product", dependencies=protected)
 app.include_router(food.router, prefix="/food", dependencies=protected)
 app.include_router(operations.router, prefix="/operations", dependencies=protected)
 app.include_router(tournaments.router, prefix="/tournaments", dependencies=protected)

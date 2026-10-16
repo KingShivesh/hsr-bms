@@ -16,6 +16,32 @@ speed of new features.
 - Local dev: see backend/.env.example and frontend/.env.example for 
   setup; admin/admin123 is the seeded default login
 
+## Product shell and truthful account boundaries
+- `/product/context` exposes only club identity/payment configuration to authenticated
+  users. Profile/setup/account writes and account metadata require Owner access.
+  `club_profile` is a new additive singleton table; existing credential/session/
+  financial schemas are unchanged. GETs do not create profile or sample records.
+- Club Profile UPI is the existing `Settings.session_controls_json.upiId`, not a
+  second payment setting. Updates preserve the remaining controls, take the venue
+  mutation lock and reject stale profile versions with 409. PNG logos are bounded
+  and stored in the database, never Render's temporary filesystem.
+- This remains ONE club with shared Owner and Staff logins. Do not fabricate club
+  switching, individual employees, invitations, Manager/Counter permissions, paid
+  plans, quotas, invoices, telemetry or uptime history. These need separate builds.
+- The six setup steps use real profile/menu/payment data plus explicit rate,
+  access and first-shift review acknowledgements. "Add tables" becomes review of
+  the existing five tables; QR-code printing is not implemented and is not claimed.
+- Sample workspace data must remain isolated browser state. Never insert sample
+  members/bookings/orders into the live club database: there is no tenant sandbox.
+- Support contact, explicitly supplied by the owner: shivanshg2510@gmail.com.
+- Product chrome observes the existing realtime manager without a topic subscription.
+  It must not create a second stream. "Saved" requires a successful mutation, not
+  a preview, optimistic update or failed request. Status is a live readiness check,
+  not an invented uptime percentage. Activity shows the latest 200 stored events;
+  legacy/shared actor labels must not be presented as per-employee attribution.
+- Backend merge gate remains fresh-requirements install + production-shaped
+  Postgres import + disposable Postgres regressions, including `test_product_shell.py`.
+
 ## Design system (established, do not redefine ad hoc)
 CSS custom properties are centralized in `frontend/src/design-tokens.css`.
 The parser-time bootstrap in `frontend/index.html` owns theme resolution before

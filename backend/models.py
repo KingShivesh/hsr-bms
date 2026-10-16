@@ -1,6 +1,14 @@
 from sqlalchemy import Column, Integer, String, Boolean, Float, Text, UniqueConstraint, ForeignKey
 from database import Base
 
+class ClubProfile(Base):
+    """Single-venue identity; independent of credentials and financial settings."""
+    __tablename__ = "club_profile"
+    id = Column(Integer, primary_key=True)
+    version = Column(Integer, nullable=False, default=1)
+    profile_json = Column(Text, nullable=False, default='{}')
+    setup_json = Column(Text, nullable=False, default='{}')
+
 class Settings(Base): #This tells SQLAlchemy This class should become a database table.
     __tablename__ = "settings"
     id           = Column(Integer, primary_key=True, index=True)
