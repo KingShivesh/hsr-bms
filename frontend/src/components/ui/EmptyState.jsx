@@ -1,9 +1,11 @@
 import Icon from "./Icon.jsx";
+import Button from "./Button.jsx";
 export default function EmptyState({
   icon = "ti-circle-check",
   title = "Nothing here yet",
   description,
   action,
+  secondaryAction,
   className = "",
 }) {
   return (
@@ -16,6 +18,7 @@ export default function EmptyState({
         {description && <p>{description}</p>}
       </div>
       {action}
+      {secondaryAction === false ? null : secondaryAction || <Button variant="ghost" icon="ti-info-circle" onClick={() => window.dispatchEvent(new Event("product:help"))}>Learn more</Button>}
     </div>
   );
 }

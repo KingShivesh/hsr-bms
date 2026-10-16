@@ -6,6 +6,7 @@ import { Alert, Badge, Button, Drawer } from "../../components/ui/index.js";
 import { useToast } from "../../components/toastContext.js";
 import { tariffDescription } from "../sessions/tariffs.js";
 import { CustomerAtClose, AdjustSessionTime } from "./CheckoutControls.jsx";
+import ContextHelp from "../../product/ContextHelp.jsx";
 
 const PAYMENT_METHODS = [
   { id: "UPI", label: "UPI", icon: "ti-qrcode" },
@@ -256,6 +257,7 @@ export default function CheckoutPanel({ table, open, onClose, onComplete, onPend
         </div>
       ) : (
         <div className="checkout-flow">
+          <ContextHelp label="Help with checkout">Review the frozen quote before confirming. Cash and UPI record a payment; verify the transfer before confirming UPI. Credit requires a linked member and leaves the bill outstanding in their ledger. A time correction needs a reason and remains in the audit trail.</ContextHelp>
           {loading && !quote && <div className="page-skeleton compact" role="status" aria-label="Preparing frozen bill"><div className="skeleton-line skeleton-title" /><div className="skeleton-panel" /></div>}
           {loading && quote && <p role="status">Recalculating bill…</p>}
           {finalizing && <p role="status">Closing table…</p>}

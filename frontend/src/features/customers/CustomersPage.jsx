@@ -1,5 +1,6 @@
 import { formatCurrency as polishCurrency } from "../../utils/format.js";
 import { Icon as HsrIcon, Input as HsrInput, Button as HsrButton, EmptyState } from "../../components/ui/index.js";
+import ContextHelp from "../../product/ContextHelp.jsx";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useCachedState, hasCachedState } from "../../hooks/useCachedState.js";
 import {
@@ -396,6 +397,7 @@ export default function CustomersPage() {
               <div><span>Customer ID</span><strong>{memberId(selectedCustomer) || "-"}</strong></div>
               <div><span>Tier</span><strong>{memberTier(selectedCustomer)}</strong></div>
             </div>
+            <ContextHelp label="Help with member credit">Credit outstanding is the member's unpaid balance, not cash collected. Only an existing loyalty member can receive a Credit settlement. Closing a session on Credit updates the balance atomically with its bill; changing a guest name does not create a credit account.</ContextHelp>
             <div className="customer-profile-note">
               <HsrIcon className="ti ti-info-circle" aria-hidden="true" />
               <span>Spend and visits update automatically when a table checkout is completed.</span>

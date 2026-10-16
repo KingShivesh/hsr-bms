@@ -108,6 +108,12 @@ api.interceptors.request.use((cfg) => {
 
 api.interceptors.response.use(
   (res) => {
+    const method = String(res.config?.method || "get").toLowerCase();
+    const path = res.config?.url || "";
+    if (!SAFE_RETRY_METHODS.has(method) && !/checkout-preview|\/auth\/(login|logout)$/.test(path)) {
+      window.dispatchEvent(new CustomEvent("hsr:mutation-saved", { detail: { path, at: Date.now() } }));
+    }
+    if (method === "get") window.dispatchEvent(new CustomEvent("hsr:resource-loaded", { detail: { path, at: Date.now() } }));
     notifyDataChanged(res);
     return res;
   },
@@ -146,6 +152,12 @@ export const changeAuth = (username, password) =>
   api.post("/auth/change", { username, password });
 export const changeStaffAuth = (username, password) =>
   api.post("/auth/change-staff", { username, password });
+
+export const getProductContext = () => getResource("/product/context");
+export const saveClubProfile = (body) => api.put("/product/profile", body);
+export const getProductAccount = () => getResource("/product/account");
+export const getSetup = () => getResource("/product/setup");
+export const saveSetup = (body) => api.patch("/product/setup", body);
 
 // Sessions
 export const startSession = (

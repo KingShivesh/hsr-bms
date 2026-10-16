@@ -10,6 +10,7 @@ import "./design-tokens.css";
 import "./table-states.css";
 import "./presentation.css";
 import "./perceived-speed.css";
+import "./product/product-shell.css";
 import App from "./App.jsx";
 
 window.HSRTheme.sync();

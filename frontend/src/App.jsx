@@ -19,6 +19,10 @@ import { ConfirmProvider } from "./components/ConfirmDialog.jsx";
 import { useConfirm } from "./components/confirmContext.js";
 import { getBackendHealth, getMe, getSummary, logout } from "./api/index.js";
 import { loadPage } from "./routes.js";
+import ProductProvider, { SetupChecklist } from "./product/ProductProvider.jsx";
+import ProductSettings from "./product/ProductSettings.jsx";
+import ProductPages from "./product/ProductPages.jsx";
+import TrustSignals from "./product/TrustSignals.jsx";
 
 const Dashboard = lazy(() => loadPage("dashboard"));
 const LiveFloor = lazy(() => loadPage("live-floor"));
@@ -51,6 +55,10 @@ const ROUTE_TO_PAGE = {
   "/pricing-rules": "operations",
   "/audit-log": "staff",
   "/settings": "settings",
+  "/help": "help",
+  "/status": "status",
+  "/changelog": "changelog",
+  "/demo": "demo",
 };
 const PAGE_TO_ROUTE = Object.fromEntries(
   Object.entries(ROUTE_TO_PAGE).map(([route, page]) => [page, route]),
@@ -72,6 +80,11 @@ const PAGE_TITLES = {
   inventory: "Inventory & Stocks",
   staff: "Audit Log",
   settings: "Club Settings",
+  help: "Help & Documentation",
+  status: "Service Status",
+  changelog: "What’s New",
+  demo: "Sample Workspace",
+  "not-found": "Page Not Found",
 };
 
 const ADMIN_ONLY_PAGES = new Set([
@@ -204,7 +217,7 @@ function AppInner() {
   }, [loggedIn]);
 
   const routedPage = ROUTE_TO_PAGE[location.pathname] || null;
-  const page = routedPage || legacyPage;
+  const page = routedPage || (location.pathname === "/" || location.pathname === "/login" ? legacyPage : "not-found");
 
   useEffect(() => {
     if (location.pathname !== "/") return;
@@ -230,6 +243,7 @@ function AppInner() {
       const query = new URLSearchParams();
       if (options.tableId) query.set("table", options.tableId);
       if (options.tableAction) query.set("action", options.tableAction);
+      if (options.section) query.set("section", options.section);
       navigate(query.size ? `${route}?${query}` : route, { replace: options.replace });
       return;
     }
@@ -357,6 +371,7 @@ function AppInner() {
   }
 
   if (!loggedIn) {
+    if (location.pathname === "/status") return <main className="product-public"><ProductPages page="status" /></main>;
     if (location.pathname !== "/login") {
       return <Navigate to={routeForLoginRedirect(location.pathname)} replace />;
     }
@@ -369,7 +384,7 @@ function AppInner() {
             setUsername(nextUsername || "");
             setLoggedIn(true);
             const from = safeRouteFromSearch(location.search);
-            navigate(from || "/", {
+            navigate(from || (nextRole === "admin" ? "/dashboard" : "/"), {
               replace: true,
               state: from ? undefined : { page: DEFAULT_PAGE },
             });
@@ -381,12 +396,13 @@ function AppInner() {
 
   if (location.pathname === "/login") {
     const from = safeRouteFromSearch(location.search);
-    return <Navigate to={from || "/"} replace state={from ? undefined : { page: legacyPage }} />;
+    return <Navigate to={from || (role === "admin" ? "/dashboard" : "/")} replace state={from ? undefined : { page: legacyPage }} />;
   }
 
   return (
     <ToastProvider>
     <SessionAlertsProvider onNavigate={goToPage}>
+    <ProductProvider role={role} username={username} onNavigate={goToPage} onLogout={handleLogout} onNewSession={openNewSession}>
       <div className="shell">
         <Sidebar
           page={page}
@@ -405,6 +421,7 @@ function AppInner() {
             onNavigate={goToPage}
           />
           <BackendStatusBanner backendStatus={backendStatus} onRetry={() => checkBackend({ showWakeDelay: true })} />
+          <TrustSignals />
           <RouteErrorBoundary key={`${location.pathname}:${page}`}>
           <Suspense
             fallback={
@@ -415,7 +432,7 @@ function AppInner() {
           >
             <div className="page route-page" key={`${location.pathname}:${page}`}>
               {page === "dashboard" && (
-                <Dashboard metrics={metrics} onNavigate={goToPage} role={role} />
+                <><SetupChecklist /><Dashboard metrics={metrics} onNavigate={goToPage} role={role} /></>
               )}
               {page === "live-floor" && (
                 <LiveFloor
@@ -454,15 +471,16 @@ function AppInner() {
               ].includes(page) && <ClubSuiteTab view={page} />}
               {page === "reservations" && <BookingsPage onNavigate={goToPage} />}
               {page === "settings" && (
-                <SettingsTab
+                <ProductSettings><SettingsTab
                   role={role}
                   onNavigate={goToPage}
                   onOpenTables={() => {
                     goToPage("tables");
                     openNewSession();
                   }}
-                />
+                /></ProductSettings>
               )}
+              {["help", "status", "changelog", "demo", "not-found"].includes(page) && <ProductPages page={page} />}
             </div>
           </Suspense>
           </RouteErrorBoundary>
@@ -474,6 +492,7 @@ function AppInner() {
           role={role}
         />
       </div>
+    </ProductProvider>
     </SessionAlertsProvider>
     </ToastProvider>
   );
@@ -499,7 +518,11 @@ function AppRoutes() {
       <Route path="/pricing-rules" element={<AppInner />} />
       <Route path="/audit-log" element={<AppInner />} />
       <Route path="/settings" element={<AppInner />} />
-      <Route path="*" element={<Navigate to="/" replace />} />
+      <Route path="/help" element={<AppInner />} />
+      <Route path="/status" element={<AppInner />} />
+      <Route path="/changelog" element={<AppInner />} />
+      <Route path="/demo" element={<AppInner />} />
+      <Route path="*" element={<AppInner />} />
     </Routes>
   );
 }

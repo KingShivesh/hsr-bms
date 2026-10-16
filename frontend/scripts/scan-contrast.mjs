@@ -5,7 +5,7 @@ import { scanRenderedContrast } from "./rendered-contrast.mjs";
 const appUrl = process.env.CONTRAST_APP_URL || "http://127.0.0.1:5173";
 const apiUrl = process.env.CONTRAST_API_URL || process.env.VITE_API_URL || "http://127.0.0.1:8000";
 const source = await fs.readFile("src/App.jsx", "utf8");
-const routes = [...new Set([...source.matchAll(/<Route\s+path="([^"*][^"]*)"/g)].map(m => m[1]))];
+const routes = [...new Set([...source.matchAll(/<Route\s+path="([^"*][^"]*)"/g)].map(m => m[1]).concat(JSON.parse(process.env.CONTRAST_EXTRA_ROUTES || "[]")))];
 const response = await fetch(apiUrl + "/auth/login", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ username: process.env.CONTRAST_USERNAME || "admin", password: process.env.CONTRAST_PASSWORD || "admin123" }) });
 if (!response.ok) throw new Error(`QA login failed: ${response.status}`);
 const auth = await response.json();
@@ -57,6 +57,14 @@ try {
       if (await notification.count()) {
         await notification.click(); await page.waitForTimeout(300); await check("notification-popover");
         await page.keyboard.press("Escape");
+      }
+      for (const label of ["Help", "User menu", "Club menu"]) {
+        const trigger = page.getByRole("button", { name: label, exact: true });
+        if (await trigger.count() && await trigger.isVisible()) {
+          await trigger.click(); await page.getByRole("menu").waitFor();
+          await check(`${label.toLowerCase().replaceAll(" ", "-")}-popover`);
+          await page.keyboard.press("Escape");
+        }
       }
       await page.keyboard.press("Meta+k");
       await page.waitForTimeout(200); await check("command-palette");

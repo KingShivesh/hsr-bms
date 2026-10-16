@@ -1,3 +1,5 @@
+import EmptyState from "./EmptyState.jsx";
+
 export default function DataTable({ columns = [], rows = [], rowKey = "id", empty, className = "" }) {
   return (
     <div className={["ui-table-wrap", className].filter(Boolean).join(" ")}>
@@ -24,7 +26,7 @@ export default function DataTable({ columns = [], rows = [], rowKey = "id", empt
             ))
           ) : (
             <tr>
-              <td colSpan={columns.length}>{empty || "No matching records. Try a different filter."}</td>
+              <td colSpan={Math.max(1, columns.length)}>{typeof empty === "object" ? empty : <EmptyState title="No matching records" description={empty || "Try a different filter, or return after the first record has been created."} />}</td>
             </tr>
           )}
         </tbody>

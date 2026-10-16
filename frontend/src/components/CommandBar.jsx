@@ -304,12 +304,14 @@ export default function CommandBar({ page, setPage, onNewSession, role = "admin"
         target instanceof HTMLSelectElement ||
         target?.isContentEditable;
       if ((e.key === "k" && (e.metaKey || e.ctrlKey)) || (e.key === "/" && !typing)) {
+        if (document.querySelector('[aria-modal="true"]:not(.cf-command-dialog)')) return;
         e.preventDefault();
         openCommandPalette();
       }
       if (e.key === "Escape") closeCommandPalette();
     }
     function onOpenCommand() {
+      if (document.querySelector('[aria-modal="true"]:not(.cf-command-dialog)')) return;
       openCommandPalette();
     }
     window.addEventListener("keydown", onKeyDown);

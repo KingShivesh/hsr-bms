@@ -77,6 +77,7 @@ export class RealtimeConnectionManager {
     this.setTimeout = setTimeoutImpl;
     this.clearTimeout = clearTimeoutImpl;
     this.subscriptions = new Map();
+    this.stateObservers = new Set();
     this.nextSubscriptionId = 1;
     this.topicKey = "";
     this.state = "idle";
@@ -114,9 +115,27 @@ export class RealtimeConnectionManager {
     };
   }
 
+  observeState(callback) {
+    this.stateObservers.add(callback);
+    callback(this.state);
+    return () => this.stateObservers.delete(callback);
+  }
+
+  retry() {
+    if (!this.topicKey) return;
+    this.generation += 1;
+    this.clearTimers();
+    this.controller?.abort();
+    this.controller = null;
+    this.retryAttempt = 0;
+    this.setState("connecting");
+    this.startConnection(this.generation, this.topicKey);
+  }
+
   setState(state) {
     if (this.state === state) return;
     this.state = state;
+    this.stateObservers.forEach(callback => callback(state));
     this.subscriptions.forEach((subscription) => subscription.onState?.(state));
   }
 

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Button, Input, Select, Alert } from "../../components/ui/index.js";
 import { getRecentMembers, searchMembers } from "../../api/index.js";
 import { formatCurrency } from "../../utils/format.js";
+import ContextHelp from "../../product/ContextHelp.jsx";
 
 const REASONS = [
   ["correction", "Correction", [["staff_forgot_to_start", "Staff forgot to start"], ["staff_started_too_early", "Staff started too early"], ["pause_not_logged", "Pause not logged"]]],
@@ -63,6 +64,7 @@ export function AdjustSessionTime({ quote, value, onChange, disabled }) {
   }
   return <details className="checkout-section checkout-time-adjust">
     <summary>Adjust Time</summary>
+    <ContextHelp label="Help with time corrections">Enter the actual start and paused time, select a reason, then review the recalculated bill before closing. The original and corrected values are audited. Large changes require the configured manager PIN.</ContextHelp>
     <label className="checkout-field"><span>Started at</span><Input type="datetime-local" step="1" value={started} disabled={disabled} onChange={event => setStarted(event.target.value)} /></label>
     <label className="checkout-field"><span>Ended at (frozen)</span><Input type="datetime-local" step="1" readOnly value={localDateTime(quote.session_ended_at)} /></label>
     <label className="checkout-field"><span>Total paused minutes</span><Input type="number" min={0} step="any" disabled={disabled} value={paused} onChange={event => setPaused(event.target.value)} /></label>

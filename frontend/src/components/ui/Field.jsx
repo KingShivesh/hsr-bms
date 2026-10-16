@@ -1,12 +1,20 @@
-import { forwardRef } from "react";
+import { cloneElement, forwardRef, isValidElement, useId } from "react";
 import Icon from "./Icon.jsx";
 
 export function Field({ label, hint, error, children, className = "", htmlFor }) {
+  const fieldId = useId();
+  const labelId = `${fieldId}-label`;
+  const helpId = `${fieldId}-help`;
+  const control = isValidElement(children) ? cloneElement(children, {
+    ...(label && !children.props["aria-label"] ? { "aria-labelledby": labelId } : {}),
+    ...((hint || error) ? { "aria-describedby": [children.props["aria-describedby"], helpId].filter(Boolean).join(" ") } : {}),
+    ...(error ? { "aria-invalid": true } : {}),
+  }) : children;
   return (
     <label className={["ui-field", error ? "has-error" : "", className].filter(Boolean).join(" ")} htmlFor={htmlFor}>
-      {label && <span className="ui-field-label">{label}</span>}
-      {children}
-      {error ? <span className="ui-field-error">{error}</span> : hint ? <span className="ui-field-hint">{hint}</span> : null}
+      {label && <span id={labelId} className="ui-field-label">{label}</span>}
+      {control}
+      {error ? <span id={helpId} className="ui-field-error">{error}</span> : hint ? <span id={helpId} className="ui-field-hint">{hint}</span> : null}
     </label>
   );
 }

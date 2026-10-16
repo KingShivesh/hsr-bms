@@ -1,6 +1,6 @@
 import { Button as HsrButton, Icon as HsrIcon } from "./ui/index.js";
 import { useState } from "react";
-import { APP_NAME } from "../config/hsrTables.js";
+import { ClubMenu, ProductFooter } from "../product/ProductMenus.jsx";
 import { prefetchPage } from "../routes.js";
 
 export default function Sidebar({ page, setPage, onLogout, activeTables, role = "admin" }) {
@@ -75,13 +75,7 @@ export default function Sidebar({ page, setPage, onLogout, activeTables, role = 
       className={`sidebar cf-sidebar ${compact ? "collapsed" : ""} ${mobileOpen ? "mobile-open" : ""}`}
     >
       <div className="cf-sidebar-head">
-        <div className="sb-logo">
-          <div className="sb-logo-mark">HSR</div>
-          <div>
-            <div className="sb-logo-name">{APP_NAME}</div>
-            <div className="sb-logo-sub">Bengaluru Pro Edition</div>
-          </div>
-        </div>
+        <ClubMenu />
         <HsrButton native
           type="button"
           className="cf-collapse-btn"
@@ -103,7 +97,7 @@ export default function Sidebar({ page, setPage, onLogout, activeTables, role = 
       <div className="cf-quick-shell cf-quick-shell-compact">
         <div className="cf-role-scope">
           <HsrIcon className={`ti ${role === "admin" ? "ti-shield-check" : "ti-user-check"}`} aria-hidden="true" />
-          <span>{role === "admin" ? "Admin access" : "Staff access"}</span>
+          <span>{role === "admin" ? "Owner access" : "Staff access"}</span>
         </div>
       </div>
 
@@ -132,10 +126,11 @@ export default function Sidebar({ page, setPage, onLogout, activeTables, role = 
       </nav>
 
       <div className="sb-bottom">
+        <ProductFooter />
         <div className="cf-user-mini">
           <div>{role === "staff" ? "ST" : "AD"}</div>
           <span>
-            <b>{role === "staff" ? "Staff" : "Admin"}</b>
+            <b>{role === "staff" ? "Staff" : "Owner"}</b>
             <small>Signed in</small>
           </span>
         </div>

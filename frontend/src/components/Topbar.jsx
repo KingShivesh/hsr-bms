@@ -1,8 +1,11 @@
 import { Button as HsrButton, Icon as HsrIcon } from "./ui/index.js";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { getAuditLogs, getBookings, getTableState, getWaitlist } from "../api/index.js";
 import { useTheme } from "../hooks/useTheme.js";
 import { useSessionAlerts } from "../features/sessions/alertsContext.js";
+import { useLocation } from "react-router-dom";
+import { HelpMenu, UserMenu } from "../product/ProductMenus.jsx";
+import { useProduct } from "../product/context.js";
 
 const PAGE_DESCRIPTIONS = {
   "Executive Overview": "For owners: see today's revenue, floor pressure and what needs attention first.",
@@ -106,9 +109,10 @@ function buildNotificationRows({ auditLogs = [], waitlist = [], bookings = [], m
 export default function Topbar({
   title,
   role = "admin",
-  username = "",
   onNavigate,
 }) {
+  const product = useProduct();
+  const location = useLocation();
   const { alerts, acknowledge, ownerSummaries, acknowledgeSummary } = useSessionAlerts();
   const reminders = alerts.filter(row => row.intensity !== "subtle");
   const notificationRef = useRef(null);
@@ -124,9 +128,6 @@ export default function Topbar({
     maintenance: [],
   });
   const { dark, toggleTheme } = useTheme();
-  const displayName = username || role;
-  const displayLabel =
-    displayName.charAt(0).toUpperCase() + displayName.slice(1).toLowerCase();
 
   useEffect(() => {
     function tick() {
@@ -153,7 +154,9 @@ export default function Topbar({
   }, []);
 
   const notificationRows = useMemo(() => buildNotificationRows(notificationData), [notificationData]);
-  const primaryAction = PAGE_PRIMARY_ACTIONS[title];
+  const primaryAction = title === "Club Settings" ? null : PAGE_PRIMARY_ACTIONS[title];
+  const requestedSection = location.pathname === "/settings" ? new URLSearchParams(location.search).get("section") : "";
+  const section = ["operations", "club", "team", "activity", "account", "billing"].includes(requestedSection) ? requestedSection : "";
 
   function runPrimaryAction() {
     if (!primaryAction) return;
@@ -170,12 +173,12 @@ export default function Topbar({
     }
   }
 
-  async function loadNotifications() {
+  const loadNotifications = useCallback(async () => {
     setNotificationsLoading(true);
     setNotificationsError("");
     try {
       const [auditRes, waitlistRes, bookingRes, tableRes] = await Promise.all([
-        getAuditLogs(50),
+        role === "admin" ? getAuditLogs(50) : Promise.resolve({ data: [] }),
         getWaitlist(),
         getBookings(),
         getTableState(),
@@ -192,7 +195,7 @@ export default function Topbar({
     } finally {
       setNotificationsLoading(false);
     }
-  }
+  }, [role]);
 
   useEffect(() => {
     if (!notificationsOpen) return undefined;
@@ -220,21 +223,17 @@ export default function Topbar({
       document.removeEventListener("keydown", handleKeyDown);
       window.removeEventListener("hsr:data-changed", handleDataChanged);
     };
-  }, [notificationsOpen]);
+  }, [notificationsOpen, loadNotifications]);
 
   return (
     <header className="topbar cf-topbar">
       <div className="cf-title-block">
         <div className="topbar-breadcrumb">
-          <HsrButton native type="button" onClick={() => onNavigate?.("dashboard")}>
-            Dashboard
+          <HsrButton native type="button" onClick={() => onNavigate?.(role === "admin" ? "dashboard" : "live-floor")}>
+            {product?.profile?.name || "HSR Snooker Cafe"}
           </HsrButton>
-          {title !== "Executive Overview" && (
-            <>
-              <HsrIcon className="ti ti-chevron-right" aria-hidden="true" />
-              <span>{title}</span>
-            </>
-          )}
+          <HsrIcon className="ti ti-chevron-right" aria-hidden="true" />
+          {section ? <><HsrButton native onClick={() => onNavigate?.("settings")}>Settings</HsrButton><HsrIcon className="ti ti-chevron-right" /><span>{section.charAt(0).toUpperCase() + section.slice(1)}</span></> : <span aria-current="page">{title}</span>}
         </div>
         <div className="topbar-title">{title}</div>
         <p>{PAGE_DESCRIPTIONS[title] || "HSR Snooker Cafe management console"}</p>
@@ -332,10 +331,8 @@ export default function Topbar({
             </div>
           )}
         </div>
-        <div className={`topbar-user-chip ${role === "staff" ? "staff" : "admin"}`}>
-          <HsrIcon className={`ti ${role === "staff" ? "ti-user" : "ti-shield-lock"}`} aria-hidden="true" />
-          <strong>{displayLabel}</strong>
-        </div>
+        <HelpMenu />
+        <UserMenu />
         <div className="topbar-date">
           <HsrIcon className="ti ti-clock" aria-hidden="true" />
           <span>{dt} · {clock}</span>

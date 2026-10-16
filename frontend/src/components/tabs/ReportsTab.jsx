@@ -1,6 +1,7 @@
 import { formatCurrency as polishCurrency } from "../../utils/format.js";
 import { Button as HsrButton, Icon as HsrIcon, Input as HsrInput, Table as HsrTable } from "../ui/index.js";
 import { useCallback, useEffect, useState } from "react";
+import DataFreshness from "../../product/DataFreshness.jsx";
 import { useCachedState } from "../../hooks/useCachedState.js";
 import {
   getSummary,
@@ -1133,15 +1134,19 @@ export default function ReportsTab({ onNavigate }) {
   });
   const [history, setHistory] = useCachedState("reports-history", []);
   const [exporting, setExporting] = useState(false);
+  const [refreshedAt, setRefreshedAt] = useState(0);
+  const [refreshing, setRefreshing] = useState(false);
   const [loadError, setLoadError] = useState("");
 
   const fetchSummary = useCallback(async () => {
     try {
       const res = await getSummary();
       setSummary(res.data);
+      return true;
     } catch (e) {
       console.error(e);
       setLoadError(e.userMessage || "Report summary could not load.");
+      return false;
     }
   }, [setSummary]);
 
@@ -1149,20 +1154,27 @@ export default function ReportsTab({ onNavigate }) {
     try {
       const res = await getHistory();
       setHistory(res.data);
+      return true;
     } catch (e) {
       console.error(e);
       setLoadError(e.userMessage || "Bill history could not load.");
+      return false;
     }
   }, [setHistory]);
 
   const refreshReports = useCallback(async () => {
     setLoadError("");
-    await Promise.all([fetchSummary(), fetchHistory()]);
+    setRefreshing(true);
+    const results = await Promise.all([fetchSummary(), fetchHistory()]);
+    if (results.every(Boolean)) setRefreshedAt(Date.now());
+    setRefreshing(false);
   }, [fetchHistory, fetchSummary]);
 
   useEffect(() => {
     refreshReports();
     localStorage.removeItem("reportsDefaultTab");
+    const timer = setInterval(refreshReports, 60000);
+    return () => clearInterval(timer);
   }, [refreshReports]);
 
   async function handleExport() {
@@ -1192,6 +1204,7 @@ export default function ReportsTab({ onNavigate }) {
           onRetry={refreshReports}
         />
       )}
+      <DataFreshness at={refreshedAt} loading={refreshing} onRefresh={refreshReports} />
       {/* Summary cards — always visible */}
       <div className="reports-summary-grid">
         <StatCard

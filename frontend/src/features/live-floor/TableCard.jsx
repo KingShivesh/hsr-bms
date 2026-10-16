@@ -141,6 +141,12 @@ function TableCard({
       role="group"
       aria-disabled={isMaintenance}
       onKeyDown={(event) => {
+        if (!event.repeat && !event.ctrlKey && !event.metaKey && !event.altKey && !event.target.closest("input,textarea,select,[contenteditable=true]")) {
+          const key = event.key.toLowerCase();
+          const shortcut = key === "e" ? "end" : key === "o" ? "food" : key === "p" && !session?.paused ? "pause" : key === "r" && session?.paused ? "pause" : "";
+          const action = shortcut ? event.currentTarget.querySelector(`[data-session-shortcut="${shortcut}"]:not(:disabled)`) : null;
+          if (action) { event.preventDefault(); event.stopPropagation(); action.click(); return; }
+        }
         if (event.target !== event.currentTarget) return;
         if (event.key === "Enter" || event.key === " ") {
           event.preventDefault();
@@ -260,14 +266,14 @@ function TableCard({
       <div className="lf-card-actions" onClick={(event) => event.stopPropagation()}>
         {session ? (
           <>
-            <HsrButton native type="button" data-variant={session.paused ? "primary" : "secondary"} disabled={busy} onClick={() => onPause?.(table)}>
+            <HsrButton native type="button" data-session-shortcut="pause" data-variant={session.paused ? "primary" : "secondary"} disabled={busy} onClick={() => onPause?.(table)}>
               <HsrIcon className={`ti ${session.paused ? "ti-player-play" : "ti-player-pause"}`} aria-hidden="true" />
               {busy ? "Working..." : session.paused ? "Resume" : "Pause"}
             </HsrButton>
-            <HsrButton native type="button" disabled={busy} onClick={() => onFood?.(table)}>
+            <HsrButton native type="button" data-session-shortcut="food" disabled={busy} onClick={() => onFood?.(table)}>
               <HsrIcon className="ti ti-tools-kitchen-2" aria-hidden="true" /> Food
             </HsrButton>
-            <HsrButton native type="button" data-variant="danger" disabled={busy} onClick={handleAction}>
+            <HsrButton native type="button" data-session-shortcut="end" data-variant="danger" disabled={busy} onClick={handleAction}>
               <HsrIcon className="ti ti-receipt" aria-hidden="true" /> End
             </HsrButton>
           </>

@@ -278,6 +278,7 @@ function KeyMetricsSection({
   syncing,
   lastFetchedAt,
   loadError,
+  onRefresh,
   ownerTotal,
   sessionCount,
   liveTableTotal,
@@ -314,6 +315,7 @@ function KeyMetricsSection({
         </div>
         <div className="ops-metrics-actions">
           <DashboardSyncStatus syncing={syncing} lastFetchedAt={lastFetchedAt} loadError={loadError} />
+          <HsrButton native className="topbar-icon-btn" aria-label="Refresh dashboard" title="Refresh dashboard" disabled={syncing} onClick={onRefresh}><HsrIcon name="refresh" /></HsrButton>
           <DashboardRangeFilter dateRange={dateRange} onDateRangeChange={onDateRangeChange} />
         </div>
       </div>
@@ -1312,6 +1314,7 @@ export default function Dashboard({ metrics, onNavigate, role = "admin" }) {
         periodLabel={liveData?.period_label || (dateRange === "week" ? "Last 7 days" : dateRange === "all" ? "All time" : "Today")}
         syncing={syncing}
         lastFetchedAt={lastFetchedAt}
+        onRefresh={fetchDashboard}
         loadError={loadError}
         ownerTotal={ownerTotal}
         sessionCount={canonicalMetrics.sessions}

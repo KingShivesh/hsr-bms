@@ -127,6 +127,24 @@ assert.equal(stalledEvents.length, 0, "heartbeat must not refetch page data");
 stopStalled();
 await waitFor(() => stalled.snapshot().activeStreams === 0, "stalled stream leaked after unsubscribe");
 
+const observerStates = [];
+const observed = new RealtimeConnectionManager({ apiUrl: "http://test.local", fetchImpl, getToken: () => "test-token" });
+const beforeObserve = streams.length;
+const unobserve = observed.observeState(state => observerStates.push(state));
+assert.equal(streams.length, beforeObserve, "chrome state observer opened a stream");
+assert.equal(observed.snapshot().subscriberCount, 0);
+const stopObserved = observed.subscribe({ topics: ["floor"] });
+await waitFor(() => observed.state === "connected", "observed stream did not connect");
+for (let i = 0; i < 10; i++) observed.retry();
+await waitFor(() => observed.state === "connected", "manual retry did not reconnect");
+assert.equal(maxConcurrentStreams, 1, "manual retries overlapped physical streams");
+assert.equal(observed.snapshot().subscriberCount, 1, "observer became a topic subscriber");
+stopObserved();
+await waitFor(() => observed.activeStreams === 0, "observed stream leaked");
+assert.ok(observerStates.includes("connected") && observerStates.at(-1) === "idle");
+unobserve();
+assert.equal(observed.stateObservers.size, 0);
+
 console.log(JSON.stringify({
   maxConcurrentStreams,
   topicUnion: ["floor", "inventory"],
@@ -136,4 +154,7 @@ console.log(JSON.stringify({
   finalSubscriberCount: manager.snapshot().subscriberCount,
   stalledStreamReconnect: stalledAttempts >= 2,
   heartbeatCausedRefetch: stalledEvents.length,
+  chromeObserverExtraStreams: 0,
+  manualRetryBurstMaxStreams: maxConcurrentStreams,
+  observerCleanup: true,
 }, null, 2));
