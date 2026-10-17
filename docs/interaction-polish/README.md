@@ -63,6 +63,20 @@ not evidence that the action worked.
 - Implementation commit: `1e2701d`. The exact production bundle is verified in
   [deployment.json](deployment.json) after merge and push.
 
+## Production Sign-Off
+
+- Main fast-forwarded from `945e63c` to `20312c7`; no conflicts or changes to
+  unrelated worktrees. Implementation and evidence are separate commits.
+- Vercel reports a successful deployment for `20312c7`.
+- Production entry: `index-D1S5yNYe.js`. All 22 JS/CSS assets returned 200 and
+  matched the local production build's SHA-256 values exactly.
+- Backend `/health`: 200, revision
+  `e014ff4caf9182797dc4e341f6c491fad80bfafa`; required backend ancestor confirmed.
+- `/ready`: 200, `database: ok`. Backend source and dependencies were not changed
+  by this pass, so no PostgreSQL schema/dependency change was introduced.
+- Local QA cleanup confirmed zero rows in every disposable database table.
+  Temporary QA servers were stopped. Production business mutations: zero.
+
 Completed checks: lint, production build, theme-token guard, backend syntax,
 shared realtime-manager tests, 27-context contrast scan (0 violations / 0
 errors), 74 route/viewport samples, 12 dialog checks and 10 checkout checks.
