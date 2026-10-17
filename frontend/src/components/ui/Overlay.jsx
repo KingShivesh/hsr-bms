@@ -1,7 +1,8 @@
 import Button, { IconButton } from "./Button.jsx";
 import { createPortal } from "react-dom";
-import { useEffect, useId, useRef } from "react";
+import { useId, useRef } from "react";
 import { useEscapeKey } from "./useEscapeKey.js";
+import { useDialogFocus } from "./useDialogFocus.js";
 
 export function Modal({
   open,
@@ -16,24 +17,8 @@ export function Modal({
 }) {
   const titleId = useId();
   const dialogRef = useRef(null);
-  useEffect(() => {
-    if (!open) return;
-    const previous = document.activeElement;
-    const dialog = dialogRef.current;
-    const selector = 'button:not(:disabled),a[href],input:not(:disabled),select:not(:disabled),textarea:not(:disabled),[tabindex="0"]';
-    const items = () => [...(dialog?.querySelectorAll(selector) || [])].filter(node => node.getClientRects().length);
-    items()[0]?.focus();
-    const trap = event => {
-      if (event.key !== "Tab" || !dialog?.contains(document.activeElement)) return;
-      const controls = items();
-      const first = controls[0], last = controls.at(-1);
-      if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last?.focus(); }
-      if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first?.focus(); }
-    };
-    dialog?.addEventListener("keydown", trap);
-    return () => { dialog?.removeEventListener("keydown", trap); if (previous?.isConnected) previous.focus(); };
-  }, [open]);
-  useEscapeKey(onClose, open);
+  useDialogFocus(dialogRef, open);
+  useEscapeKey(onClose, open, dialogRef);
 
   if (!open) return null;
 
@@ -50,6 +35,7 @@ export function Modal({
         className={["ui-modal", `ui-modal-${size}`, className].filter(Boolean).join(" ")}
         role="dialog"
         aria-modal="true"
+        tabIndex={-1}
         aria-labelledby={title ? titleId : undefined}
       >
         <div className="ui-overlay-head">
@@ -78,7 +64,10 @@ export function Drawer({
   side = "right",
   portal = false,
 }) {
-  useEscapeKey(onClose, open);
+  const titleId = useId();
+  const dialogRef = useRef(null);
+  useDialogFocus(dialogRef, open);
+  useEscapeKey(onClose, open, dialogRef);
 
   if (!open) return null;
 
@@ -91,14 +80,16 @@ export function Drawer({
       }}
     >
       <aside
+        ref={dialogRef}
         className={["ui-drawer", `ui-drawer-${side}`, className].filter(Boolean).join(" ")}
         role="dialog"
         aria-modal="true"
-        aria-labelledby={title ? "ui-drawer-title" : undefined}
+        tabIndex={-1}
+        aria-labelledby={title ? titleId : undefined}
       >
         <div className="ui-overlay-head">
           <div>
-            {title && <h2 id="ui-drawer-title">{title}</h2>}
+            {title && <h2 id={titleId}>{title}</h2>}
             {description && <p>{description}</p>}
           </div>
           {onClose && <IconButton label="Close panel" icon="ti-x" variant="ghost" onClick={onClose} />}

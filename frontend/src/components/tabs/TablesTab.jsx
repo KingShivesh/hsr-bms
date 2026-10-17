@@ -31,6 +31,7 @@ import {
 import { searchMembers } from "../../api/index.js";
 import { useToast } from "../toastContext.js";
 import { useEscapeKey } from "../ui/index.js";
+import { useDialogFocus } from "../ui/useDialogFocus.js";
 import { TableAttentionBadge, TablePrimaryAction, TableStateBadge } from "../TableStateUI.jsx";
 import { HSR_TABLES, getTableLabel, getTableRate } from "../../config/hsrTables.js";
 import { tableStateAttributes, getTableAttention, getTableStatus } from "../../config/tableStatus.js";
@@ -161,68 +162,36 @@ function CustomerInput({ value, onChange, placeholder }) {
   }, [value]);
 
   return (
-    <div className="table-player-field">
+    <div className="table-player-field" onBlur={event => { if (!event.currentTarget.contains(event.relatedTarget)) setShow(false); }}>
       <HsrIcon className="ti ti-user table-player-icon" aria-hidden="true" />
       <HsrInput
         placeholder={placeholder || undefined}
         value={value || ""}
         onChange={(e) => onChange(e.target.value)}
-        onBlur={() => setTimeout(() => setShow(false), 150)}
         onFocus={() => suggestions.length && setShow(true)}
         autoComplete="off"
-        className="table-player-input"
-        style={{ margin: 0 }}
+        className="table-player-input polish-margin-0"
+
       />
       {show && (
         <div
-          style={{
-  position: "absolute",
-  top: "100%",
-  left: 0,
-  right: 0,
-  zIndex: 300,
-  background: "var(--surface)",
-  border: "1px solid var(--border)",
-  borderRadius: "var(--radius-sm)",
-  marginTop: "4px",
-  boxShadow: "var(--shadow-md)",
-  overflow: "hidden"
-}}
+          className="polish-position-absolute polish-top-100 polish-left-0 polish-right-0 polish-z-index-300 polish-background-surface polish-border-1px-solid-border polish-border-radius-radius-sm polish-margin-top-4px polish-box-shadow-shadow-md polish-overflow-hidden"
         >
-          {suggestions.map((m, i) => (
-            <div className="type-sm"
-              key={i}
-              onMouseDown={() => {
+          {suggestions.map((m) => (
+            <HsrButton native className="table-player-suggestion"
+              key={m.id}
+              onClick={() => {
                 onChange(m.nm);
                 setShow(false);
               }}
-              style={{
-  display: "flex",
-  justifyContent: "space-between",
-  alignItems: "center",
-  padding: "8px 8px",
-  cursor: "pointer",
-  borderBottom: i < suggestions.length - 1 ? "1px solid var(--border)" : "none",
-  background: "var(--surface)"
-}}
-              onMouseEnter={(e) =>
-                (e.currentTarget.style.background = "var(--surface-muted)")
-              }
-              onMouseLeave={(e) => (e.currentTarget.style.background = "var(--surface)")}
             >
-              <span style={{ color: "var(--text-primary)", fontWeight: "var(--weight-medium)" }}>{m.nm}</span>
-              <span className="type-xs"
-                style={{
-  color: "var(--accent-text)",
-  background: "var(--accent-bg)",
-  border: "1px solid color-mix(in srgb, var(--accent) 28%, var(--border))",
-  padding: "0px 4px",
-  borderRadius: "var(--radius-sm)"
-}}
+              <span className="polish-color-text-primary polish-font-weight-weight-medium" >{m.nm}</span>
+              <span className="type-xs polish-color-accent-text polish-background-accent-bg polish-border-1px-solid-color-mix-in-srgb-accent-28-border polish-padding-0px-4px polish-border-radius-radius-sm"
+
               >
                 {m.id}
               </span>
-            </div>
+            </HsrButton>
           ))}
         </div>
       )}
@@ -544,10 +513,12 @@ function BookingPanel({ bookings, onCreate, onCancel, busyActions = {}, showToas
 
 
 function HistoryModal({ tableId, tableNum, onClose }) {
+  const dialogRef = useRef(null);
+  useDialogFocus(dialogRef, true);
   const [history, setHistory] = useState([]);
   const [audit, setAudit] = useState([]);
   const [loading, setLoading] = useState(true);
-  useEscapeKey(onClose, true);
+  useEscapeKey(onClose, true, dialogRef);
 
   useEffect(() => {
     Promise.allSettled([getTableHistory(tableId), getTableAudit(tableId)])
@@ -561,7 +532,7 @@ function HistoryModal({ tableId, tableNum, onClose }) {
 
   return (
     <div className="modal-backdrop plain" onClick={onClose}>
-      <div className="table-history-modal" onClick={(event) => event.stopPropagation()}>
+      <div ref={dialogRef} tabIndex={-1} role="dialog" aria-modal="true" aria-label={`Table ${tableNum} history`} className="table-history-modal" onClick={(event) => event.stopPropagation()}>
         <div className="table-history-head">
           <div>
             <strong>Table {tableNum}</strong>
@@ -636,10 +607,12 @@ function HistoryModal({ tableId, tableNum, onClose }) {
 
 function ResetConfirmModal({ tableId, loading, onClose, onConfirm }) {
   const [pin, setPin] = useState("");
-  useEscapeKey(onClose, true);
+  const dialogRef = useRef(null);
+  useDialogFocus(dialogRef, true);
+  useEscapeKey(loading ? undefined : onClose, true, dialogRef);
 
   return (
-    <div className="frame-loser-backdrop" role="dialog" aria-modal="true">
+    <div ref={dialogRef} tabIndex={-1} className="frame-loser-backdrop" role="dialog" aria-modal="true" aria-label={`Reset ${tableId.toUpperCase()}`}>
       <form
         className="frame-loser-modal"
         onSubmit={async (event) => {
@@ -738,7 +711,9 @@ function CheckoutQuoteScreen({
   onDiscountChange,
   onFinalize,
 }) {
-  useEscapeKey(onClose, !!quote);
+  const dialogRef = useRef(null);
+  useDialogFocus(dialogRef, !!quote);
+  useEscapeKey(quote?.finalizing ? undefined : onClose, !!quote, dialogRef);
 
   if (!quote) return null;
   const rec = quote.rec || {};
@@ -751,7 +726,7 @@ function CheckoutQuoteScreen({
   const frozenAt = rec.session_ended_at || quote.closedAtMs || "";
 
   return (
-    <div className="checkout-bill-screen" role="dialog" aria-modal="true">
+    <div ref={dialogRef} tabIndex={-1} className="checkout-bill-screen" role="dialog" aria-modal="true" aria-label="Review checkout">
       <div className="checkout-bill-shell checkout-quote-shell">
         <div className="checkout-bill-head">
           <div>
@@ -954,16 +929,17 @@ function CheckoutQuoteScreen({
             <strong>₹{total}</strong>
             <em>{quote.paymentMethod || "Cash"} · {discountAmount ? `₹${discountAmount} discount` : "No discount"}</em>
           </div>
-          <HsrButton native type="button" className="btn checkout-cancel-btn" onClick={onClose}>
-            Keep table open
+          <HsrButton native type="button" className="btn checkout-cancel-btn" disabled={quote.finalizing} onClick={onClose}>
+            Cancel
           </HsrButton>
           <HsrButton native
             type="button"
             className="checkout-bill-close"
             onClick={onFinalize}
+            loading={quote.finalizing}
             disabled={quote.loading || quote.finalizing || rec.checkout_blocked}
           >
-            {quote.finalizing ? "Closing..." : `Close table · ₹${total}`}
+            {`Confirm & Close · ₹${total}`}
           </HsrButton>
         </div>
       </div>
@@ -972,7 +948,9 @@ function CheckoutQuoteScreen({
 }
 
 function CheckoutBillScreen({ bill, onClose }) {
-  useEscapeKey(onClose, !!bill);
+  const dialogRef = useRef(null);
+  useDialogFocus(dialogRef, !!bill);
+  useEscapeKey(onClose, !!bill, dialogRef);
 
   if (!bill) return null;
   const rec = bill.rec || {};
@@ -985,7 +963,7 @@ function CheckoutBillScreen({ bill, onClose }) {
   const paymentSplit = Array.isArray(rec.payment_split) ? rec.payment_split : [];
 
   return (
-    <div className="checkout-bill-screen" role="dialog" aria-modal="true">
+    <div ref={dialogRef} tabIndex={-1} className="checkout-bill-screen" role="dialog" aria-modal="true" aria-label="Checkout receipt">
       <div className="checkout-bill-shell">
         <div className="checkout-bill-head">
           <div>
@@ -1479,52 +1457,29 @@ function TableCard({
   if (maintenance) {
     return (
       <div
-        className={`table-maintenance-card table-state-card ${compact ? "compact" : ""}`}
+        className={[`table-maintenance-card table-state-card ${compact ? "compact" : ""}`, "polish-background-surface polish-border-radius-radius-md polish-padding-12px polish-border-2px-solid-warning"].filter(Boolean).join(" ")}
         {...tableStateAttributes(status.key)}
-        style={{
-          background: "var(--surface)",
-          borderRadius: "var(--radius-md)",
-          padding: "12px",
-          border: "2px solid var(--warning)",
-        }}
+
       >
-        <div style={{ textAlign: "center", padding: "16px 0" }}>
+        <div className="polish-text-align-center polish-padding-16px-0" >
           <TableStateBadge statusKey={status.key} />
-          <div className="type-3xl"
-            style={{
-  fontWeight: "var(--weight-heavy)",
-  color: "var(--text-muted)",
-  marginBottom: "8px"
-}}
+          <div className="type-3xl polish-font-weight-weight-heavy polish-color-text-muted polish-margin-bottom-8px"
+
           >
             {String(table.num).padStart(2, "0")}
           </div>
-          <div className="type-sm" style={{
-  color: "var(--text-secondary)",
-  marginBottom: "4px"
-}}>
+          <div className="type-sm polish-color-text-secondary polish-margin-bottom-4px" >
             {maintenance.reason}
           </div>
-          <div className="type-xs"
-            style={{
-  color: "var(--text-muted)",
-  marginBottom: "16px"
-}}
+          <div className="type-xs polish-color-text-muted polish-margin-bottom-16px"
+
           >
             Since {maintenance.since}
           </div>
-          <HsrButton native className="type-sm"
+          <HsrButton native className="type-sm polish-background-accent polish-color-text-on-accent polish-border-none polish-border-radius-radius-sm polish-padding-8px-16px polish-font-weight-weight-semibold"
             onClick={() => onClearMaintenance(table.id)}
             disabled={clearMaintenanceBusy}
-            style={{
-  background: "var(--accent)",
-  color: "var(--text-on-accent)",
-  border: "none",
-  borderRadius: "var(--radius-sm)",
-  padding: "8px 16px",
-  fontWeight: "var(--weight-semibold)",
-  cursor: clearMaintenanceBusy ? "wait" : "pointer"
-}}
+            style={{ cursor: clearMaintenanceBusy ? "wait" : "pointer" }}
           >
             {clearMaintenanceBusy ? "Saving..." : "Mark Available"}
           </HsrButton>

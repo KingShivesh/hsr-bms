@@ -25,10 +25,14 @@ export const Input = forwardRef(function Input({ className = "", type = "text", 
 });
 
 export const Select = forwardRef(function Select({ className = "", children, ...props }, ref) {
+  if (props.multiple || props.size > 1) return <select ref={ref} className={`ui-select ${className}`} {...props}>{children}</select>;
   return (
+    <span className="ui-select-wrap">
     <select ref={ref} className={["ui-select", className].filter(Boolean).join(" ")} {...props}>
       {children}
     </select>
+    <Icon name="chevron-down" className="ui-select-chevron" />
+    </span>
   );
 });
 

@@ -160,30 +160,13 @@ function PeakHoursView() {
       {/* Current rate indicator */}
       {currentRate && (
         <div
-          style={{
-  display: "flex",
-  alignItems: "center",
-  gap: "8px",
-  padding: "8px 12px",
-  background: currentRate.is_peak ? "var(--warning-bg)" : "var(--success-bg)",
-  border: `1px solid ${currentRate.is_peak ? "color-mix(in srgb, var(--warning) 28%, var(--border))" : "color-mix(in srgb, var(--success) 28%, var(--border))"}`,
-  borderRadius: "var(--radius-sm)",
-  marginBottom: "16px"
-}}
+          className="polish-display-flex polish-align-items-center polish-gap-8px polish-padding-8px-12px polish-border-radius-radius-sm polish-margin-bottom-16px" style={{ background: currentRate.is_peak ? "var(--warning-bg)" : "var(--success-bg)", border: `1px solid ${currentRate.is_peak ? "color-mix(in srgb, var(--warning) 28%, var(--border))" : "color-mix(in srgb, var(--success) 28%, var(--border))"}` }}
         >
           <div
-            style={{
-              width: "8px",
-              height: "8px",
-              borderRadius: "50%",
-              background: currentRate.is_peak ? "var(--warning)" : "var(--success)",
-            }}
+            className="polish-width-8px polish-height-8px polish-border-radius-50" style={{ background: currentRate.is_peak ? "var(--warning)" : "var(--success)" }}
           />
-          <div className="type-sm"
-            style={{
-  fontWeight: "var(--weight-medium)",
-  color: currentRate.is_peak ? "var(--warning-foreground)" : "var(--success-foreground)"
-}}
+          <div className="type-sm polish-font-weight-weight-medium"
+            style={{ color: currentRate.is_peak ? "var(--warning-foreground)" : "var(--success-foreground)" }}
           >
             {currentRate.is_peak
               ? `${currentRate.label} active — ${currentRate.multiplier}× rate`
@@ -194,18 +177,13 @@ function PeakHoursView() {
 
       {/* Add new rule */}
       <div
-        style={{
-          display: "flex",
-          gap: "8px",
-          alignItems: "flex-end",
-          flexWrap: "wrap",
-        }}
+        className="polish-display-flex polish-gap-8px polish-align-items-flex-end polish-flex-wrap-wrap"
       >
         <div>
           <label className="form-label">Label</label>
           <HsrInput
-            className="input-field"
-            style={{ margin: 0, width: "140px" }}
+            className="input-field polish-margin-0 polish-width-140px"
+
             value={label}
             onChange={(e) => setLabel(e.target.value)}
           />
@@ -216,8 +194,8 @@ function PeakHoursView() {
             type="number"
             min="0"
             max="23"
-            className="input-field"
-            style={{ margin: 0, width: "90px" }}
+            className="input-field polish-margin-0 polish-width-90px"
+
             value={startHour}
             onChange={(e) => setStartHour(e.target.value)}
           />
@@ -228,8 +206,8 @@ function PeakHoursView() {
             type="number"
             min="1"
             max="24"
-            className="input-field"
-            style={{ margin: 0, width: "90px" }}
+            className="input-field polish-margin-0 polish-width-90px"
+
             value={endHour}
             onChange={(e) => setEndHour(e.target.value)}
           />
@@ -241,18 +219,16 @@ function PeakHoursView() {
             min="1"
             max="5"
             step="0.1"
-            className="input-field"
-            style={{ margin: 0, width: "90px" }}
+            className="input-field polish-margin-0 polish-width-90px"
+
             value={multiplier}
             onChange={(e) => setMultiplier(e.target.value)}
           />
         </div>
         <HsrButton native
           type="button"
-          className="btn btn-primary-sm"
-          style={{
-  marginBottom: "0px"
-}}
+          className="btn btn-primary-sm polish-margin-bottom-0px"
+
           onClick={handleSaveRule}
           disabled={!!activeAction}
         >
@@ -266,10 +242,8 @@ function PeakHoursView() {
         </HsrButton>
         {editingId && (
           <HsrButton native
-            className="btn"
-            style={{
-  marginBottom: "0px"
-}}
+            className="btn polish-margin-bottom-0px"
+
             onClick={cancelEdit}
             disabled={!!activeAction}
           >
@@ -277,10 +251,7 @@ function PeakHoursView() {
           </HsrButton>
         )}
       </div>
-      <div className="type-sm" style={{
-  color: "var(--text-muted)",
-  marginTop: "8px"
-}}>
+      <div className="type-sm polish-color-text-muted polish-margin-top-8px" >
         Example: Start 18, End 22, Multiplier 1.5 = 50% surcharge from 6pm to
         10pm
       </div>
@@ -382,45 +353,33 @@ function GSTView() {
         />
       )}
       {flash && (
-        <div className="type-sm"
-          style={{
-  background: "var(--success-bg)",
-  border: "1px solid color-mix(in srgb, var(--success) 28%, var(--border))",
-  borderRadius: "var(--radius-sm)",
-  padding: "8px 12px",
-  marginBottom: "12px",
-  color: "var(--success-foreground)",
-  fontWeight: "var(--weight-medium)"
-}}
+        <div className="type-sm polish-background-success-bg polish-border-1px-solid-color-mix-in-srgb-success-28-border polish-border-radius-radius-sm polish-padding-8px-12px polish-margin-bottom-12px polish-color-success-foreground polish-font-weight-weight-medium"
+
         >
           {flash}
         </div>
       )}
 
-      <div style={{ display: "flex", gap: "12px", alignItems: "flex-end" }}>
+      <div className="polish-display-flex polish-gap-12px polish-align-items-flex-end" >
         <div>
           <label className="form-label">GST Percentage</label>
-          <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+          <div className="polish-display-flex polish-align-items-center polish-gap-8px" >
             <HsrInput
               type="number"
               min="0"
               max="100"
               step="0.5"
-              className="input-field"
-              style={{ margin: 0, width: "120px" }}
+              className="input-field polish-margin-0 polish-width-120px"
+
               value={gst}
               onChange={(e) => setGst(e.target.value)}
             />
-            <span className="type-sm" style={{
-  color: "var(--text-secondary)"
-}}>%</span>
+            <span className="type-sm polish-color-text-secondary" >%</span>
           </div>
         </div>
         <HsrButton native
-          className="btn btn-primary-sm"
-          style={{
-  marginBottom: "0px"
-}}
+          className="btn btn-primary-sm polish-margin-bottom-0px"
+
           onClick={handleSave}
           disabled={saving}
         >
@@ -429,15 +388,8 @@ function GSTView() {
       </div>
 
       {parseFloat(gst) > 0 && (
-        <div className="type-sm"
-          style={{
-  marginTop: "12px",
-  padding: "8px 12px",
-  background: "var(--accent-bg)",
-  border: "1px solid color-mix(in srgb, var(--accent) 28%, var(--border))",
-  borderRadius: "var(--radius-sm)",
-  color: "var(--accent-text)"
-}}
+        <div className="type-sm polish-margin-top-12px polish-padding-8px-12px polish-background-accent-bg polish-border-1px-solid-color-mix-in-srgb-accent-28-border polish-border-radius-radius-sm polish-color-accent-text"
+
         >
           A bill of ₹500 will have ₹{Math.round((500 * parseFloat(gst)) / 100)}{" "}
           GST added → Total ₹{500 + Math.round((500 * parseFloat(gst)) / 100)}
@@ -445,10 +397,7 @@ function GSTView() {
       )}
 
       {parseFloat(gst) === 0 && (
-        <div className="type-sm" style={{
-  marginTop: "8px",
-  color: "var(--text-muted)"
-}}>
+        <div className="type-sm polish-margin-top-8px polish-color-text-muted" >
           GST is currently disabled. Set a percentage above to enable it.
         </div>
       )}
@@ -466,12 +415,8 @@ export default function OperationsTab() {
   ];
 
   return (
-    <div style={{ maxWidth: "780px" }}>
-      <div style={{
-  display: "flex",
-  gap: "4px",
-  marginBottom: "20px"
-}}>
+    <div className="polish-max-width-780px" >
+      <div className="polish-display-flex polish-gap-4px polish-margin-bottom-20px" >
         {TABS.map((t) => (
           <TabBtn
             key={t.id}

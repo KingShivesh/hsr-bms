@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Button, Input, Select, Alert } from "../../components/ui/index.js";
+import { Button, Input, Select, Textarea, Alert, Disclosure, SkeletonBlock } from "../../components/ui/index.js";
 import { getRecentMembers, searchMembers } from "../../api/index.js";
 import { formatCurrency } from "../../utils/format.js";
 import ContextHelp from "../../product/ContextHelp.jsx";
@@ -39,11 +39,11 @@ export function CustomerAtClose({ value, onChange, onDraftChange, disabled }) {
   return <section className="checkout-section">
     <h4>Customer (optional)</h4>
     <div className="checkout-button-grid checkout-customer-paths" role="group" aria-label="Customer at close">
-      {[["member", "Search LP Member"], ["name", "Add name"], ["skip", "Skip"]].map(([key, label]) => <Button key={key} variant="secondary" disabled={disabled} aria-pressed={path === key} onClick={() => choosePath(key)}>{label}</Button>)}
+      {[["member", "Search LP Member"], ["name", "Add name"], ["skip", "Skip"]].map(([key, label]) => <Button key={key} variant="secondary" className={path === key ? "is-active" : ""} disabled={disabled} aria-pressed={path === key} onClick={() => choosePath(key)}>{label}</Button>)}
     </div>
     {path === "member" && <>
       <label className="checkout-field"><span>Search by phone or name</span><Input autoFocus value={query} disabled={disabled} onChange={event => setQuery(event.target.value)} /></label>
-      <p role="status">{loading ? "Loading members..." : error || (query.length < 3 ? "Recent members" : !rows.length ? "No matching members" : "")}</p>
+      {loading ? <SkeletonBlock rows={2} label="Loading members" /> : <p role="status">{error || (query.length < 3 ? "Recent members" : !rows.length ? "No matching members" : "")}</p>}
       {rows.map(member => <Button key={member.id} variant="secondary" className="session-choice" disabled={disabled} aria-pressed={value?.member_id === member.id} onClick={() => onChange({ member_id: member.id, recalculate_rate: true })}>
         <strong>{member.nm || member.phone || "Member"}</strong><span>{member.phone || "No phone on file"} · {member.typ}</span><span>{member.hourly_rate ? `${formatCurrency(member.hourly_rate)}/hr` : "Club standard rate"}</span>
       </Button>)}
@@ -54,26 +54,32 @@ export function CustomerAtClose({ value, onChange, onDraftChange, disabled }) {
   </section>;
 }
 
-export function AdjustSessionTime({ quote, value, onChange, disabled }) {
+export function AdjustSessionTime({ quote, value, onChange, onDirtyChange, disabled }) {
   const [started, setStarted] = useState(() => localDateTime(quote.session_started_at));
   const [paused, setPaused] = useState(String(quote.paused_minutes || 0));
   const [reason, setReason] = useState("");
   const [notes, setNotes] = useState("");
+  const originalStarted = localDateTime(quote.time_edit?.original_started_at || quote.session_started_at);
+  const originalPaused = String((quote.time_edit?.original_paused_ms ?? quote.paused_minutes * 60000) / 60000);
+  const dirty = started !== originalStarted || paused !== originalPaused || !!reason || !!notes;
+  useEffect(() => { onDirtyChange?.(dirty); }, [dirty, onDirtyChange]);
   function apply() {
     onChange({ started_at_ms: new Date(started).getTime(), total_paused_minutes: Number(paused), reason, notes, manager_pin: value?.manager_pin || "" });
   }
-  return <details className="checkout-section checkout-time-adjust">
-    <summary>Adjust Time</summary>
+  return <Disclosure className="checkout-time-adjust" headerClassName="checkout-adjust-toggle" title="Adjust Time" icon="clock" disabled={disabled}>
     <ContextHelp label="Help with time corrections">Enter the actual start and paused time, select a reason, then review the recalculated bill before closing. The original and corrected values are audited. Large changes require the configured manager PIN.</ContextHelp>
+    <div className="checkout-time-fields">
     <label className="checkout-field"><span>Started at</span><Input type="datetime-local" step="1" value={started} disabled={disabled} onChange={event => setStarted(event.target.value)} /></label>
     <label className="checkout-field"><span>Ended at (frozen)</span><Input type="datetime-local" step="1" readOnly value={localDateTime(quote.session_ended_at)} /></label>
     <label className="checkout-field"><span>Total paused minutes</span><Input type="number" min={0} step="any" disabled={disabled} value={paused} onChange={event => setPaused(event.target.value)} /></label>
+    <div className="checkout-adjust-preview"><span>Current billable time</span><strong>{quote.dur} min</strong><span>Table charge {formatCurrency(quote.ply)}</span></div>
+    </div>
     <label className="checkout-field"><span>Reason</span><Select aria-label="Time adjustment reason" value={reason} disabled={disabled} onChange={event => setReason(event.target.value)}>
       <option value="">Select reason</option>{REASONS.map(([key, label, rows]) => <optgroup key={key} label={label}>{rows.map(([id, text]) => <option value={id} key={id}>{text}</option>)}</optgroup>)}
     </Select></label>
-    <label className="checkout-field"><span>Notes{reason === "other" ? " (required)" : " (optional)"}</span><Input maxLength={500} value={notes} disabled={disabled} onChange={event => setNotes(event.target.value)} /></label>
+    <label className="checkout-field"><span>Notes{reason === "other" ? " (required)" : " (optional)"}</span><Textarea rows={3} maxLength={500} value={notes} disabled={disabled} onChange={event => setNotes(event.target.value)} /></label>
     {quote.time_edit && <Alert tone="warning">{quote.time_edit.original_duration} → {quote.time_edit.new_duration} min · Amount change {formatCurrency(quote.time_edit.delta)}{quote.time_edit.late_edit ? " · Late Edit" : ""}</Alert>}
     {quote.pin_required && <label className="checkout-field"><span>Manager PIN required</span><Input type="password" autoComplete="off" value={value?.manager_pin || ""} disabled={disabled} onChange={event => onChange({ ...value, manager_pin: event.target.value })} /></label>}
-    <div className="checkout-actions"><Button variant="secondary" disabled={disabled} onClick={() => { onChange(null); setStarted(localDateTime(quote.time_edit?.original_started_at || quote.session_started_at)); setPaused(String((quote.time_edit?.original_paused_ms ?? quote.paused_minutes * 60000) / 60000)); }}>Reset</Button><Button variant="secondary" loading={disabled} onClick={apply} disabled={!reason || !started || paused === "" || (reason === "other" && !notes.trim())}>Apply Change</Button></div>
-  </details>;
+    <div className="checkout-actions checkout-adjust-actions"><Button variant="ghost" disabled={disabled || (!dirty && !value)} onClick={() => { onChange(null); setStarted(originalStarted); setPaused(originalPaused); setReason(""); setNotes(""); }}>Reset</Button><Button variant="primary" loading={disabled} onClick={apply} disabled={!reason || !started || paused === "" || (reason === "other" && !notes.trim())}>Apply Change</Button></div>
+  </Disclosure>;
 }

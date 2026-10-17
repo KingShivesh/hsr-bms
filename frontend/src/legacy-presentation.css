@@ -1,0 +1,98 @@
+/* Static legacy view declarations, shared by value. Dynamic data remains in JSX. */
+.polish-align-items-center { align-items: center !important; }
+.polish-align-items-flex-end { align-items: flex-end !important; }
+.polish-background-accent { background: var(--accent) !important; }
+.polish-background-accent-bg { background: var(--accent-bg) !important; }
+.polish-background-border { background: var(--border) !important; }
+.polish-background-success { background: var(--success) !important; }
+.polish-background-success-bg { background: var(--success-bg) !important; }
+.polish-background-surface { background: var(--surface) !important; }
+.polish-background-surface-muted { background: var(--surface-muted) !important; }
+.polish-border-1px-solid-border { border: 1px solid var(--border) !important; }
+.polish-border-1px-solid-color-mix-in-srgb-accent-28-border { border: 1px solid color-mix(in srgb, var(--accent) 28%, var(--border)) !important; }
+.polish-border-1px-solid-color-mix-in-srgb-success-28-border { border: 1px solid color-mix(in srgb, var(--success) 28%, var(--border)) !important; }
+.polish-border-2px-solid-warning { border: 2px solid var(--warning) !important; }
+.polish-border-none { border: none !important; }
+.polish-border-radius-50 { border-radius: 50% !important; }
+.polish-border-radius-999px { border-radius: 999px !important; }
+.polish-border-radius-radius-md { border-radius: var(--radius-md) !important; }
+.polish-border-radius-radius-sm { border-radius: var(--radius-sm) !important; }
+.polish-box-shadow-shadow-md { box-shadow: var(--shadow-md) !important; }
+.polish-color-accent { color: var(--accent) !important; }
+.polish-color-accent-text { color: var(--accent-text) !important; }
+.polish-color-danger { color: var(--danger) !important; }
+.polish-color-success { color: var(--success) !important; }
+.polish-color-success-foreground { color: var(--success-foreground) !important; }
+.polish-color-text-muted { color: var(--text-muted) !important; }
+.polish-color-text-on-accent { color: var(--text-on-accent) !important; }
+.polish-color-text-primary { color: var(--text-primary) !important; }
+.polish-color-text-secondary { color: var(--text-secondary) !important; }
+.polish-color-var---venue-text-text { color: var(--venue-text, var(--text)) !important; }
+.polish-color-warning { color: var(--warning) !important; }
+.polish-cursor-pointer { cursor: pointer !important; }
+.polish-display-flex { display: flex !important; }
+.polish-display-grid { display: grid !important; }
+.polish-flex-1 { flex: 1 !important; }
+.polish-flex-wrap-wrap { flex-wrap: wrap !important; }
+.polish-font-weight-weight-bold { font-weight: var(--weight-medium) !important; }
+.polish-font-weight-weight-heavy { font-weight: var(--weight-medium) !important; }
+.polish-font-weight-weight-medium { font-weight: var(--weight-medium) !important; }
+.polish-font-weight-weight-regular { font-weight: var(--weight-regular) !important; }
+.polish-font-weight-weight-semibold { font-weight: var(--weight-semibold) !important; }
+.polish-gap-12px { gap: var(--space-3) !important; }
+.polish-gap-4px { gap: var(--space-1) !important; }
+.polish-gap-8px { gap: var(--space-2) !important; }
+.polish-grid-column-1--1 { grid-column: 1/-1 !important; }
+.polish-grid-template-columns-repeat-3-1fr { grid-template-columns: repeat(3,1fr) !important; }
+.polish-grid-template-columns-repeat-4-1fr { grid-template-columns: repeat(4,1fr) !important; }
+.polish-height-6px { height: 6px !important; }
+.polish-height-8px { height: 8px !important; }
+.polish-justify-content-space-between { justify-content: space-between !important; }
+.polish-left-0 { left: 0 !important; }
+.polish-margin-0 { margin: 0 !important; }
+.polish-margin-bottom-0px { margin-bottom: 0px !important; }
+.polish-margin-bottom-12px { margin-bottom: var(--space-3) !important; }
+.polish-margin-bottom-16px { margin-bottom: var(--space-4) !important; }
+.polish-margin-bottom-20px { margin-bottom: var(--space-5) !important; }
+.polish-margin-bottom-4px { margin-bottom: var(--space-1) !important; }
+.polish-margin-bottom-8px { margin-bottom: var(--space-2) !important; }
+.polish-margin-top-0px { margin-top: 0px !important; }
+.polish-margin-top-12px { margin-top: var(--space-3) !important; }
+.polish-margin-top-4px { margin-top: var(--space-1) !important; }
+.polish-margin-top-8px { margin-top: var(--space-2) !important; }
+.polish-max-width-720px { max-width: 720px !important; }
+.polish-max-width-760px { max-width: 760px !important; }
+.polish-max-width-780px { max-width: 780px !important; }
+.polish-min-width-260px { min-width: 260px !important; }
+.polish-overflow-hidden { overflow: hidden !important; }
+.polish-overflow-x-auto { overflow-x: auto !important; }
+.polish-padding-0px-4px { padding: 0px var(--space-1) !important; }
+.polish-padding-0px-8px { padding: 0px var(--space-2) !important; }
+.polish-padding-12px { padding: var(--space-3) !important; }
+.polish-padding-12px-12px { padding: var(--space-3) var(--space-3) !important; }
+.polish-padding-16px { padding: var(--space-4) !important; }
+.polish-padding-16px-0 { padding: var(--space-4) 0 !important; }
+.polish-padding-32px { padding: var(--space-8) !important; }
+.polish-padding-4px-0px { padding: var(--space-1) 0px !important; }
+.polish-padding-4px-12px { padding: var(--space-1) var(--space-3) !important; }
+.polish-padding-8px { padding: var(--space-2) !important; }
+.polish-padding-8px-0 { padding: var(--space-2) 0 !important; }
+.polish-padding-8px-12px { padding: var(--space-2) var(--space-3) !important; }
+.polish-padding-8px-16px { padding: var(--space-2) var(--space-4) !important; }
+.polish-padding-8px-8px { padding: var(--space-2) var(--space-2) !important; }
+.polish-padding-bottom-8px { padding-bottom: var(--space-2) !important; }
+.polish-position-absolute { position: absolute !important; }
+.polish-resize-vertical { resize: vertical !important; }
+.polish-right-0 { right: 0 !important; }
+.polish-text-align-center { text-align: center !important; }
+.polish-text-align-left { text-align: left !important; }
+.polish-text-transform-uppercase { text-transform: uppercase !important; }
+.polish-top-100 { top: 100% !important; }
+.polish-width-100 { width: 100% !important; }
+.polish-width-120px { width: 120px !important; }
+.polish-width-140px { width: 140px !important; }
+.polish-width-32px { width: 32px !important; }
+.polish-width-36px { width: 36px !important; }
+.polish-width-8px { width: 8px !important; }
+.polish-width-90px { width: 90px !important; }
+.polish-z-index-300 { z-index: 300 !important; }

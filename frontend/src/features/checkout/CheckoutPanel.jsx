@@ -7,6 +7,7 @@ import { useToast } from "../../components/toastContext.js";
 import { tariffDescription } from "../sessions/tariffs.js";
 import { CustomerAtClose, AdjustSessionTime } from "./CheckoutControls.jsx";
 import ContextHelp from "../../product/ContextHelp.jsx";
+import { useConfirm } from "../../components/confirmContext.js";
 
 const PAYMENT_METHODS = [
   { id: "UPI", label: "UPI", icon: "ti-qrcode" },
@@ -38,6 +39,7 @@ function splitSummary(rec) {
 
 export default function CheckoutPanel({ table, open, onClose, onComplete, onPendingChange }) {
   const { showToast } = useToast();
+  const { requestConfirm } = useConfirm();
   const [paymentMethod, setPaymentMethod] = useState("Cash");
   const [discountType, setDiscountType] = useState("none");
   const [discountValue, setDiscountValue] = useState("");
@@ -54,6 +56,9 @@ export default function CheckoutPanel({ table, open, onClose, onComplete, onPend
   const requestVersion = useRef(0);
   const quoteRef = useRef(null);
   const finalizingRef = useRef(false);
+  const initialCustomerRef = useRef(null);
+  const dismissPending = useRef(false);
+  const [timeDraftDirty, setTimeDraftDirty] = useState(false);
 
   const tableId = table?.id || "";
   const sessionKey = quote?.session_key || table?.session?.session_key || "";
@@ -93,6 +98,7 @@ export default function CheckoutPanel({ table, open, onClose, onComplete, onPend
       if (!current && res.data.can_edit_time != null) {
         proposalRef.current = { ...proposalRef.current, customer: res.data.member_id ? { member_id: res.data.member_id, recalculate_rate: false } : { name: res.data.nm || null, recalculate_rate: false } };
         setProposal(proposalRef.current);
+        initialCustomerRef.current = proposalRef.current.customer;
       }
       quoteRef.current = res.data;
       setQuote(res.data || {});
@@ -115,6 +121,8 @@ export default function CheckoutPanel({ table, open, onClose, onComplete, onPend
     setError("");
     setClosedAtMs("");
     setPaymentReference("");
+    setTimeDraftDirty(false);
+    initialCustomerRef.current = null;
     quoteRef.current = null;
     setQuote(null);
     proposalRef.current = { customer: null, time_override: null };
@@ -216,13 +224,26 @@ export default function CheckoutPanel({ table, open, onClose, onComplete, onPend
     onClose?.();
   }
 
+  async function requestDismiss() {
+    if (finalizingRef.current || dismissPending.current) return;
+    const customerChanged = JSON.stringify(proposalRef.current.customer) !== JSON.stringify(initialCustomerRef.current);
+    const dirty = timeDraftDirty || proposalRef.current.time_override || customerChanged ||
+      discountType !== "none" || discountValue || discountReason || paymentReference || paymentMethod !== "Cash";
+    if (!dirty) { onClose?.(); return; }
+    dismissPending.current = true;
+    try {
+      const discard = await requestConfirm({ title: "Discard checkout edits?", message: "Your customer, time and payment edits have not been saved. The table will stay open.", confirmLabel: "Discard edits", cancelLabel: "Keep editing", tone: "warning" });
+      if (discard && !finalizingRef.current) onClose?.();
+    } finally { dismissPending.current = false; }
+  }
+
   return (
     <Drawer
       portal
       open={open}
-      title={receipt ? receipt.payment_status === "credit" ? "Charged to Credit" : "Payment Complete" : `Checkout ${String(tableId).toUpperCase()}`}
+      title={receipt ? receipt.payment_status === "credit" ? "Charged to Credit" : "Payment Complete" : `Close Session · Table ${String(tableId).replace(/^t/i, "")}`}
       description={receipt ? "Receipt is ready for staff handoff." : "Bill is frozen while payment is collected."}
-      onClose={finalizing ? undefined : receipt ? handleDone : onClose}
+      onClose={finalizing ? undefined : receipt ? handleDone : requestDismiss}
       className="checkout-panel"
     >
       {receipt ? (
@@ -286,7 +307,7 @@ export default function CheckoutPanel({ table, open, onClose, onComplete, onPend
                 <div><span>Discount</span><strong>{money(discountAmount)}</strong></div>
               </div>
 
-              {quote.can_edit_time && <AdjustSessionTime quote={quote} value={proposal.time_override} onChange={value => updateProposal("time_override", value)} disabled={finalizing || loading} />}
+              {quote.can_edit_time && <AdjustSessionTime quote={quote} value={proposal.time_override} onDirtyChange={setTimeDraftDirty} onChange={value => updateProposal("time_override", value)} disabled={finalizing || loading} />}
               {quote.can_edit_time != null && <CustomerAtClose value={proposal.customer} onDraftChange={value => { proposalRef.current = { ...proposalRef.current, customer: value }; setProposal(proposalRef.current); }} onChange={value => updateProposal("customer", value)} disabled={finalizing} />}
 
               {!!splitRows.length && (
@@ -323,6 +344,7 @@ export default function CheckoutPanel({ table, open, onClose, onComplete, onPend
                       key={option.id}
                       type="button"
                       className={discountType === option.id ? "is-active" : ""}
+                      aria-pressed={discountType === option.id}
                       disabled={finalizing || (quote.can_discount === false && option.id !== "none")}
                       onClick={() => handleDiscountType(option.id)}
                     >
@@ -385,11 +407,11 @@ export default function CheckoutPanel({ table, open, onClose, onComplete, onPend
               </section>
 
               <div className="checkout-actions checkout-actions-sticky">
-                <Button variant="secondary" onClick={onClose} disabled={finalizing}>
-                  Keep Table Open
+                <Button variant="ghost" onClick={requestDismiss} disabled={finalizing}>
+                  Cancel
                 </Button>
                 <Button variant="primary" loading={finalizing || loading} disabled={quote.checkout_blocked || !!error || (quote.pin_required && !proposal.time_override?.manager_pin)} onClick={handleFinalize}>
-                  Close table · {money(finalTotal)}
+                  Confirm &amp; Close · {money(finalTotal)}
                 </Button>
               </div>
             </>

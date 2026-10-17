@@ -14,6 +14,7 @@ import {
 import { useToast } from "../toastContext.js";
 import { Checkbox, useEscapeKey } from "../ui/index.js";
 import { useRealtimeSubscription } from "../../realtime/useRealtimeSubscription.js";
+import { useDialogFocus } from "../ui/useDialogFocus.js";
 
 const CATEGORIES = [
   "All",
@@ -130,7 +131,9 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
   const orderRefreshTimerRef = useRef(null);
   const [lastOrder, setLastOrder] = useState(null);
   const [cigaretteDraft, setCigaretteDraft] = useState({ name: "", mrp: "" });
-  useEscapeKey(() => setCigaretteDraft({ name: "", mrp: "" }), !!cigaretteDraft.name);
+  const priceDialogRef = useRef(null);
+  useDialogFocus(priceDialogRef, !!cigaretteDraft.name);
+  useEscapeKey(() => setCigaretteDraft({ name: "", mrp: "" }), !!cigaretteDraft.name, priceDialogRef);
 
   const fetchAll = useCallback(async ({ showLoading = false } = {}) => {
     if (showLoading && !hasCachedState("cafe-menu")) setLoading(true);
@@ -494,6 +497,8 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
       {cigaretteDraft.name && (
         <div className="app-confirm-backdrop" role="presentation">
           <form
+            ref={priceDialogRef}
+            tabIndex={-1}
             className="app-confirm-dialog food-price-dialog"
             role="dialog"
             aria-modal="true"
@@ -648,7 +653,7 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
                 );
               })}
               {filteredMenu.length === 0 && (
-                <div style={{ gridColumn: "1/-1" }}>
+                <div className="polish-grid-column-1--1" >
                   <EmptyState
                     icon="ti-tools-kitchen-2"
                     title={menuSearch.trim() ? "No matching items" : "No items in this category"}
@@ -952,53 +957,34 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
                     const pct = Math.round((s.qty / maxQty) * 100);
                     return (
                       <tr key={i}>
-                        <td className="type-sm" style={{
-  color: "var(--text-muted)"
-}}>
+                        <td className="type-sm polish-color-text-muted" >
                           #{i + 1}
                         </td>
-                        <td style={{ fontWeight: "var(--weight-medium)" }}>{s.name}</td>
-                        <td style={{ color: "var(--accent)", fontWeight: "var(--weight-semibold)" }}>
+                        <td className="polish-font-weight-weight-medium" >{s.name}</td>
+                        <td className="polish-color-accent polish-font-weight-weight-semibold" >
                           {s.qty}
                         </td>
-                        <td data-type="number" style={{ color: "var(--success)", fontWeight: "var(--weight-semibold)" }}>
+                        <td data-type="number" className="polish-color-success polish-font-weight-weight-semibold" >
                           ₹{s.revenue.toLocaleString("en-IN")}
                         </td>
                         <td>
                           <div
-                            style={{
-                              display: "flex",
-                              alignItems: "center",
-                              gap: "8px",
-                            }}
+                            className="polish-display-flex polish-align-items-center polish-gap-8px"
                           >
                             <div
-                              style={{
-                                flex: 1,
-                                height: "6px",
-                                background: "var(--border)",
-                                borderRadius: "var(--radius-sm)",
-                              }}
+                              className="polish-flex-1 polish-height-6px polish-background-border polish-border-radius-radius-sm"
                             >
                               <div
-                                style={{
-                                  width: `${pct}%`,
-                                  height: "6px",
-                                  background:
+                                className="polish-height-6px polish-border-radius-radius-sm" style={{ width: `${pct}%`, background:
                                     i === 0
                                       ? "var(--success)"
                                       : i === stats.length - 1
                                         ? "var(--danger)"
-                                        : "var(--accent)",
-                                  borderRadius: "var(--radius-sm)",
-                                }}
+                                        : "var(--accent)" }}
                               />
                             </div>
-                            <span className="type-xs"
-                              style={{
-  color: "var(--text-muted)",
-  width: "32px"
-}}
+                            <span className="type-xs polish-color-text-muted polish-width-32px"
+
                             >
                               {pct}%
                             </span>
@@ -1044,21 +1030,17 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
                 <tbody>
                   {orders.map((o, i) => (
                     <tr key={o.id || i}>
-                      <td className="type-sm" style={{
-  color: "var(--text-muted)"
-}}>
+                      <td className="type-sm polish-color-text-muted" >
                         {o.date}
                       </td>
-                      <td style={{ fontWeight: "var(--weight-medium)" }}>{o.customer_name}</td>
-                      <td className="type-sm" style={{
-  color: "var(--text-secondary)"
-}}>
+                      <td className="polish-font-weight-weight-medium" >{o.customer_name}</td>
+                      <td className="type-sm polish-color-text-secondary" >
                         {o.items.map((x) => `${x.item} x${x.qty}`).join(", ")}
                       </td>
-                      <td style={{ fontWeight: "var(--weight-bold)", color: o.payment_method === "UPI" ? "var(--accent)" : "var(--success)" }}>
+                      <td className="polish-font-weight-weight-bold" style={{ color: o.payment_method === "UPI" ? "var(--accent)" : "var(--success)" }}>
                         {o.payment_method || "Cash"}
                       </td>
-                      <td data-type="number" style={{ fontWeight: "var(--weight-semibold)", color: "var(--success)" }}>
+                      <td data-type="number" className="polish-font-weight-weight-semibold polish-color-success" >
                         ₹{o.total}
                       </td>
                       <td>

@@ -37,15 +37,8 @@ function Panel({ title, children, action }) {
 function StatusPill({ status }) {
   const done = status === "completed";
   return (
-    <span className="type-xs"
-      style={{
-  padding: "0px 8px",
-  borderRadius: "999px",
-  fontWeight: "var(--weight-bold)",
-  background: done ? "var(--success-bg)" : "var(--accent-bg)",
-  color: done ? "var(--success)" : "var(--accent)",
-  border: `1px solid ${done ? "color-mix(in srgb, var(--success) 28%, var(--border))" : "color-mix(in srgb, var(--accent) 28%, var(--border))"}`
-}}
+    <span className="type-xs polish-padding-0px-8px polish-border-radius-999px polish-font-weight-weight-bold"
+      style={{ background: done ? "var(--success-bg)" : "var(--accent-bg)", color: done ? "var(--success)" : "var(--accent)", border: `1px solid ${done ? "color-mix(in srgb, var(--success) 28%, var(--border))" : "color-mix(in srgb, var(--accent) 28%, var(--border))"}` }}
     >
       {done ? "COMPLETED" : "ACTIVE"}
     </span>
@@ -275,16 +268,8 @@ export default function TournamentTab({ onNavigate }) {
       )}
       <div>
         {flash && (
-          <div className="type-sm"
-            style={{
-  background: "var(--success-bg)",
-  border: "1px solid color-mix(in srgb, var(--success) 28%, var(--border))",
-  borderRadius: "var(--radius-sm)",
-  padding: "8px 12px",
-  color: "var(--success)",
-  fontWeight: "var(--weight-semibold)",
-  marginBottom: "12px"
-}}
+          <div className="type-sm polish-background-success-bg polish-border-1px-solid-color-mix-in-srgb-success-28-border polish-border-radius-radius-sm polish-padding-8px-12px polish-color-success polish-font-weight-weight-semibold polish-margin-bottom-12px"
+
           >
             {flash}
           </div>
@@ -316,12 +301,12 @@ export default function TournamentTab({ onNavigate }) {
           />
           <label className="form-label">Players</label>
           <HsrTextarea
-            className="input-field"
+            className="input-field polish-resize-vertical"
             rows={7}
             placeholder={"One player per line\nRahul\nArjun\nVikram"}
             value={playersText}
             onChange={(e) => setPlayersText(e.target.value)}
-            style={{ resize: "vertical" }}
+
           />
           <HsrButton native type="button" className="btn btn-primary-sm" onClick={handleCreate} disabled={!!activeAction}>
             {activeAction === "tournament-create" ? "Creating..." : "Create Bracket"}
@@ -330,10 +315,7 @@ export default function TournamentTab({ onNavigate }) {
 
         <Panel title="Events">
           {tournaments.length === 0 ? (
-            <div className="type-sm" style={{
-  color: "var(--text-muted)",
-  padding: "8px 0"
-}}>
+            <div className="type-sm polish-color-text-muted polish-padding-8px-0" >
               No tournaments yet
             </div>
           ) : (
@@ -342,30 +324,15 @@ export default function TournamentTab({ onNavigate }) {
                 key={t.id}
                 onClick={() => handleSelect(t.id)}
                 disabled={!!activeAction}
-                style={{
-  width: "100%",
-  textAlign: "left",
-  background: selected?.id === t.id ? "var(--accent)" : "var(--surface)",
-  color: selected?.id === t.id ? "var(--text-on-accent)" : "var(--text-primary)",
-  border: selected?.id === t.id ? "1px solid var(--accent-border)" : "1px solid var(--border)",
-  borderRadius: "var(--radius-sm)",
-  padding: "8px 12px",
-  marginBottom: "8px",
-  cursor: "pointer"
-}}
+                className="polish-width-100 polish-text-align-left polish-border-radius-radius-sm polish-padding-8px-12px polish-margin-bottom-8px polish-cursor-pointer" style={{ background: selected?.id === t.id ? "var(--accent)" : "var(--surface)", color: selected?.id === t.id ? "var(--text-on-accent)" : "var(--text-primary)", border: selected?.id === t.id ? "1px solid var(--accent-border)" : "1px solid var(--border)" }}
               >
-                <div style={{ display: "flex", justifyContent: "space-between" }}>
-                  <span className="type-sm" style={{
-  fontWeight: "var(--weight-bold)"
-}}>
+                <div className="polish-display-flex polish-justify-content-space-between" >
+                  <span className="type-sm polish-font-weight-weight-bold" >
                     {activeAction === `tournament-select-${t.id}` ? "Loading..." : t.name}
                   </span>
                   <StatusPill status={t.status} />
                 </div>
-                <div className="type-xs" style={{
-  color: selected?.id === t.id ? "var(--text-muted)" : "var(--text-secondary)",
-  marginTop: "4px"
-}}>
+                <div className="type-xs polish-margin-top-4px" style={{ color: selected?.id === t.id ? "var(--text-muted)" : "var(--text-secondary)" }}>
                   {t.game_type} · ₹{t.entry_fee || 0}
                 </div>
               </HsrButton>
@@ -389,11 +356,7 @@ export default function TournamentTab({ onNavigate }) {
 
         {!selected ? (
           <Panel title="Bracket">
-            <div style={{
-  color: "var(--text-muted)",
-  padding: "32px",
-  textAlign: "center"
-}}>
+            <div className="polish-color-text-muted polish-padding-32px polish-text-align-center" >
               Create or select a tournament
             </div>
           </Panel>
@@ -401,7 +364,7 @@ export default function TournamentTab({ onNavigate }) {
           <Panel
             title={selected.name}
             action={
-              <div style={{ display: "flex", gap: "8px", alignItems: "center" }}>
+              <div className="polish-display-flex polish-gap-8px polish-align-items-center" >
                 <StatusPill status={selected.status} />
                 {selected.status !== "completed" && (
                   <HsrButton native type="button" className="btn btn-warning-sm" onClick={handleClose} disabled={!!activeAction}>
@@ -412,12 +375,7 @@ export default function TournamentTab({ onNavigate }) {
             }
           >
             <div
-              style={{
-  display: "grid",
-  gridTemplateColumns: "repeat(4,1fr)",
-  gap: "12px",
-  marginBottom: "16px"
-}}
+              className="polish-display-grid polish-grid-template-columns-repeat-4-1fr polish-gap-12px polish-margin-bottom-16px"
             >
               {[
                 ["Game", selected.game_type],
@@ -427,57 +385,30 @@ export default function TournamentTab({ onNavigate }) {
               ].map(([label, value]) => (
                 <div
                   key={label}
-                  style={{
-                    border: "1px solid var(--border)",
-                    borderRadius: "var(--radius-sm)",
-                    padding: "12px",
-                    background: "var(--surface)",
-                  }}
+                  className="polish-border-1px-solid-border polish-border-radius-radius-sm polish-padding-12px polish-background-surface"
                 >
-                  <div className="type-xs" style={{
-  color: "var(--text-secondary)",
-  marginBottom: "4px"
-}}>
+                  <div className="type-xs polish-color-text-secondary polish-margin-bottom-4px" >
                     {label}
                   </div>
-                  <div style={{ color: "var(--text-primary)", fontWeight: "var(--weight-bold)" }}>{value}</div>
+                  <div className="polish-color-text-primary polish-font-weight-weight-bold" >{value}</div>
                 </div>
               ))}
             </div>
 
-            <div style={{
-  display: "flex",
-  gap: "12px",
-  overflowX: "auto",
-  paddingBottom: "8px"
-}}>
+            <div className="polish-display-flex polish-gap-12px polish-overflow-x-auto polish-padding-bottom-8px" >
               {rounds.map(([roundNo, matches]) => (
-                <div key={roundNo} style={{ minWidth: "260px" }}>
-                  <div className="type-sm"
-                    style={{
-  textTransform: "uppercase",
-  color: "var(--text-secondary)",
-  fontWeight: "var(--weight-bold)",
-  marginBottom: "8px"
-}}
+                <div key={roundNo} className="polish-min-width-260px" >
+                  <div className="type-sm polish-text-transform-uppercase polish-color-text-secondary polish-font-weight-weight-bold polish-margin-bottom-8px"
+
                   >
                     Round {roundNo}
                   </div>
                   {matches.map((m) => (
                     <div
                       key={m.id}
-                      style={{
-  border: "1px solid var(--border)",
-  borderRadius: "var(--radius-sm)",
-  padding: "8px",
-  marginBottom: "8px",
-  background: m.status === "completed" ? "var(--surface-muted)" : "var(--surface)"
-}}
+                      className="polish-border-1px-solid-border polish-border-radius-radius-sm polish-padding-8px polish-margin-bottom-8px" style={{ background: m.status === "completed" ? "var(--surface-muted)" : "var(--surface)" }}
                     >
-                      <div className="type-xs" style={{
-  color: "var(--text-muted)",
-  marginBottom: "8px"
-}}>
+                      <div className="type-xs polish-color-text-muted polish-margin-bottom-8px" >
                         Match {m.match_no}
                       </div>
                       {[m.player1, m.player2].filter(Boolean).map((p) => {
@@ -487,20 +418,7 @@ export default function TournamentTab({ onNavigate }) {
                             key={p}
                             disabled={!!activeAction || m.status === "completed" || selected.status === "completed"}
                             onClick={() => handleWinner(m, p)}
-                            style={{
-  width: "100%",
-  display: "flex",
-  justifyContent: "space-between",
-  alignItems: "center",
-  border: won ? "1px solid color-mix(in srgb, var(--success) 28%, var(--border))" : "1px solid var(--border)",
-  background: won ? "var(--success-bg)" : "var(--surface)",
-  color: won ? "var(--success)" : "var(--text-primary)",
-  borderRadius: "var(--radius-sm)",
-  padding: "8px 8px",
-  marginBottom: "4px",
-  cursor: activeAction ? "wait" : m.status === "completed" ? "default" : "pointer",
-  fontWeight: won ? 700 : 500
-}}
+                            className="polish-width-100 polish-display-flex polish-justify-content-space-between polish-align-items-center polish-border-radius-radius-sm polish-padding-8px-8px polish-margin-bottom-4px" style={{ border: won ? "1px solid color-mix(in srgb, var(--success) 28%, var(--border))" : "1px solid var(--border)", background: won ? "var(--success-bg)" : "var(--surface)", color: won ? "var(--success)" : "var(--text-primary)", cursor: activeAction ? "wait" : m.status === "completed" ? "default" : "pointer", fontWeight: won ? "var(--weight-semibold)" : "var(--weight-medium)" }}
                           >
                             <span>{p}</span>
                             <span className="type-xs" style={{
@@ -512,10 +430,7 @@ export default function TournamentTab({ onNavigate }) {
                         );
                       })}
                       {!m.player2 && (
-                        <div className="type-sm" style={{
-  color: "var(--text-muted)",
-  padding: "4px 0px"
-}}>
+                        <div className="type-sm polish-color-text-muted polish-padding-4px-0px" >
                           Bye advanced automatically
                         </div>
                       )}

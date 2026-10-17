@@ -1,7 +1,9 @@
 import { Icon as HsrIcon } from "./ui/index.js";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 import { ConfirmContext } from "./confirmContext.js";
 import Button from "./ui/Button.jsx";
+import { useDialogFocus } from "./ui/useDialogFocus.js";
+import { useEscapeKey } from "./ui/useEscapeKey.js";
 
 const DEFAULT_CONFIRM = {
   title: "Review action",
@@ -15,11 +17,10 @@ export function ConfirmProvider({ children }) {
   const [dialog, setDialog] = useState(null);
   const dialogRef = useRef(null);
   const cancelRef = useRef(null);
-  const openerRef = useRef(null);
+  useDialogFocus(dialogRef, !!dialog, cancelRef);
 
   const requestConfirm = useCallback((options = {}) => (
     new Promise((resolve) => {
-      openerRef.current = document.activeElement instanceof HTMLElement ? document.activeElement : null;
       setDialog({
         ...DEFAULT_CONFIRM,
         ...(typeof options === "string" ? { message: options } : options),
@@ -33,40 +34,11 @@ export function ConfirmProvider({ children }) {
       current?.resolve?.(result);
       return null;
     });
-    window.setTimeout(() => openerRef.current?.focus?.(), 0);
   }, []);
 
   const value = useMemo(() => ({ requestConfirm }), [requestConfirm]);
 
-  useEffect(() => {
-    if (!dialog) return;
-    window.requestAnimationFrame(() => cancelRef.current?.focus());
-    function onKeyDown(event) {
-      if (event.key === "Escape") {
-        event.preventDefault();
-        closeDialog(false);
-        return;
-      }
-      if (event.key !== "Tab") return;
-      const focusable = Array.from(
-        dialogRef.current?.querySelectorAll(
-          'button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])',
-        ) || [],
-      ).filter((node) => node.offsetParent !== null);
-      if (!focusable.length) return;
-      const first = focusable[0];
-      const last = focusable[focusable.length - 1];
-      if (event.shiftKey && document.activeElement === first) {
-        event.preventDefault();
-        last.focus();
-      } else if (!event.shiftKey && document.activeElement === last) {
-        event.preventDefault();
-        first.focus();
-      }
-    }
-    window.addEventListener("keydown", onKeyDown);
-    return () => window.removeEventListener("keydown", onKeyDown);
-  }, [dialog, closeDialog]);
+  useEscapeKey(() => closeDialog(false), !!dialog, dialogRef);
 
   return (
     <ConfirmContext.Provider value={value}>
@@ -84,6 +56,7 @@ export function ConfirmProvider({ children }) {
             className={`app-confirm-dialog ${dialog.tone || "danger"}`}
             role="dialog"
             aria-modal="true"
+            tabIndex={-1}
             aria-labelledby="app-confirm-title"
             aria-describedby="app-confirm-message"
           >

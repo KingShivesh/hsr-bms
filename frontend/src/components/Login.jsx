@@ -25,7 +25,6 @@ export default function Login({ onLogin }) {
       } else {
         setError(err.userMessage || "Backend is not reachable. Try again.");
       }
-      setTimeout(() => setError(""), 3000);
     } finally {
       setLoading(false);
     }
@@ -137,6 +136,7 @@ export default function Login({ onLogin }) {
                 />
               </div>
             </div>
+            {error && <div className="error-message" role="alert">{error}</div>}
             <HsrButton native
               type="submit"
               className="btn-login cf-btn-login"
@@ -147,7 +147,6 @@ export default function Login({ onLogin }) {
               <span>Sign in</span>
               <HsrIcon className="ti ti-arrow-right" aria-hidden="true" />
             </HsrButton>
-            <div className="error-message" role="alert">{error}</div>
           </form>
 
           <div className="login-footer">

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Button, Input } from "../../components/ui/index.js";
+import { Button, Input, Switch } from "../../components/ui/index.js";
 import { getSessionControls, saveSessionControls } from "../../api/index.js";
 import { useToast } from "../../components/toastContext.js";
 
@@ -28,11 +28,11 @@ export default function SessionControlsSettings() {
   return <section className="settings-panel">
     <h3>Session reminders & time corrections</h3>
     {error && <div role="alert"><p>{error}</p>{!values && <Button onClick={() => setRetry(value => value + 1)}>Retry</Button>}</div>}
-    {!values && !error ? <p role="status">Loading session controls...</p> : values && <form onSubmit={save}><fieldset disabled={busy} className="session-controls-settings">
-      {TOGGLES.map(([key, label]) => <label className="session-control-toggle" key={key}><input type="checkbox" checked={values[key]} onChange={event => setValues(current => ({ ...current, [key]: event.target.checked }))} />{label}</label>)}
+    {!values && !error ? <div className="page-skeleton compact" role="status" aria-label="Loading session controls"><div className="skeleton-line skeleton-title" /><div className="skeleton-panel" /></div> : values && <form onSubmit={save}><fieldset disabled={busy} className="session-controls-settings">
+      {TOGGLES.map(([key, label]) => <Switch key={key} label={label} checked={values[key]} disabled={busy} onChange={checked => setValues(current => ({ ...current, [key]: checked }))} />)}
       {NUMBERS.map(([key, label, min, max, step]) => <label key={key}>{label}<Input type="number" required min={min} max={max} step={step} value={values[key]} onChange={event => setValues(current => ({ ...current, [key]: event.target.value === "" ? "" : Number(event.target.value) }))} /></label>)}
       <label>Club UPI ID (optional)<Input maxLength={120} value={values.upiId} onChange={event => setValues(current => ({ ...current, upiId: event.target.value.trim() }))} /></label>
-      <Button type="submit" loading={busy}>Save Session Controls</Button>
+      <Button variant="primary" type="submit" loading={busy}>Save Session Controls</Button>
     </fieldset></form>}
   </section>;
 }

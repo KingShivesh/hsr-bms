@@ -228,26 +228,12 @@ function HistoryView({ history, period, onPeriodChange, selectedDate, onDateChan
   return (
     <div className="history-section">
       <div
-        style={{
-  display: "flex",
-  justifyContent: "space-between",
-  alignItems: "center",
-  marginBottom: "12px",
-  flexWrap: "wrap",
-  gap: "8px"
-}}
+        className="polish-display-flex polish-justify-content-space-between polish-align-items-center polish-margin-bottom-12px polish-flex-wrap-wrap polish-gap-8px"
       >
-        <div className="type-sm" style={{
-  fontWeight: "var(--weight-semibold)",
-  color: "var(--venue-text, var(--text))"
-}}>
+        <div className="type-sm polish-font-weight-weight-semibold polish-color-var---venue-text-text" >
           Bills
         </div>
-        <div style={{
-  display: "flex",
-  gap: "4px",
-  flexWrap: "wrap"
-}}>
+        <div className="polish-display-flex polish-gap-4px polish-flex-wrap-wrap" >
           {PERIODS.map((p) => (
             <TabBtn
               key={p.id}
@@ -271,18 +257,10 @@ function HistoryView({ history, period, onPeriodChange, selectedDate, onDateChan
               }}
             />
           </label>
-          <HsrButton native className="type-sm"
+          <HsrButton native className="type-sm polish-padding-4px-12px polish-border-radius-radius-sm polish-background-success-bg polish-color-success-foreground polish-border-1px-solid-color-mix-in-srgb-success-28-border polish-font-weight-weight-medium"
             onClick={onExport}
             disabled={exporting}
-            style={{
-  padding: "4px 12px",
-  borderRadius: "var(--radius-sm)",
-  cursor: exporting ? "wait" : "pointer",
-  background: "var(--success-bg)",
-  color: "var(--success-foreground)",
-  border: "1px solid color-mix(in srgb, var(--success) 28%, var(--border))",
-  fontWeight: "var(--weight-medium)"
-}}
+            style={{ cursor: exporting ? "wait" : "pointer" }}
           >
             {exporting ? "Exporting..." : "Export CSV"}
           </HsrButton>
@@ -290,11 +268,11 @@ function HistoryView({ history, period, onPeriodChange, selectedDate, onDateChan
       </div>
       <HsrInput
         type="text"
-        className="input-field"
+        className="input-field polish-margin-bottom-12px"
         placeholder="Search by customer or table..."
         value={search}
         onChange={(e) => setSearch(e.target.value)}
-        style={{ marginBottom: "12px" }}
+
         data-testid="search-transactions"
       />
       {suspiciousCount > 0 && (
@@ -305,7 +283,7 @@ function HistoryView({ history, period, onPeriodChange, selectedDate, onDateChan
           </span>
         </div>
       )}
-      <div style={{ overflowX: "auto" }}>
+      <div className="polish-overflow-x-auto" >
         <HsrTable className="data-table">
           <thead>
             <tr>
@@ -324,9 +302,7 @@ function HistoryView({ history, period, onPeriodChange, selectedDate, onDateChan
               <tr>
                 <td
                   colSpan="8"
-                  style={{
-  padding: "16px"
-}}
+                  className="polish-padding-16px"
                 >
                   <EmptyState
                     icon="ti-receipt"
@@ -338,35 +314,24 @@ function HistoryView({ history, period, onPeriodChange, selectedDate, onDateChan
             ) : (
               filtered.map((r, i) => (
                 <tr key={i} className={isSuspiciousBill(r) ? "data-row-warning" : ""}>
-                  <td className="type-sm" style={{
-  color: "var(--text-muted)"
-}}>{formatBillDate(r)}</td>
+                  <td className="type-sm polish-color-text-muted" >{formatBillDate(r)}</td>
                   <td>
-                    <span className="type-sm"
-                      style={{
-  background: "var(--surface-muted)",
-  color: "var(--text-primary)",
-  padding: "0px 8px",
-  borderRadius: "var(--radius-sm)",
-  fontWeight: "var(--weight-semibold)"
-}}
+                    <span className="type-sm polish-background-surface-muted polish-color-text-primary polish-padding-0px-8px polish-border-radius-radius-sm polish-font-weight-weight-semibold"
+
                     >
                       {r.tbl || r.table_id}
                     </span>
                   </td>
-                  <td style={{ fontWeight: "var(--weight-medium)" }}>{billCustomerName(r)}</td>
-                  <td className="type-sm" style={{
-  color: "var(--text-secondary)",
-  fontWeight: "var(--weight-bold)"
-}}>
+                  <td className="polish-font-weight-weight-medium" >{billCustomerName(r)}</td>
+                  <td className="type-sm polish-color-text-secondary polish-font-weight-weight-bold" >
                     {labelBillingMode(r.billing_mode)}
                   </td>
-                  <td style={{ color: "var(--text-secondary)" }}>{r.dur}m</td>
-                  <td data-type="number" style={{ color: "var(--success)", fontWeight: "var(--weight-medium)" }}>
+                  <td className="polish-color-text-secondary" >{r.dur}m</td>
+                  <td data-type="number" className="polish-color-success polish-font-weight-weight-medium" >
                     ₹{r.ply}
                   </td>
-                  <td data-type="number" style={{ color: "var(--warning)" }}>₹{r.famt || 0}</td>
-                  <td data-type="number" style={{ fontWeight: "var(--weight-bold)" }}>₹{billTotal(r)}</td>
+                  <td data-type="number" className="polish-color-warning" >₹{r.famt || 0}</td>
+                  <td data-type="number" className="polish-font-weight-weight-bold" >₹{billTotal(r)}</td>
                 </tr>
               ))
             )}
@@ -397,31 +362,17 @@ function TopCustomersView() {
   return (
     <div className="reports-page-shell">
       <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          marginBottom: "16px",
-        }}
+        className="polish-display-flex polish-justify-content-space-between polish-align-items-center polish-margin-bottom-16px"
       >
-        <div className="type-base" style={{
-  fontWeight: "var(--weight-semibold)",
-  color: "var(--venue-text, var(--text))"
-}}>
+        <div className="type-base polish-font-weight-weight-semibold polish-color-var---venue-text-text" >
           Regular Customers{" "}
           {data && (
-            <span className="type-sm" style={{
-  color: "var(--text-muted)",
-  fontWeight: "var(--weight-regular)"
-}}>
+            <span className="type-sm polish-color-text-muted polish-font-weight-weight-regular" >
               — {data.label}
             </span>
           )}
         </div>
-        <div style={{
-  display: "flex",
-  gap: "4px"
-}}>
+        <div className="polish-display-flex polish-gap-4px" >
           {[
             ["month", "This Month"],
             ["week", "This Week"],
@@ -461,29 +412,23 @@ function TopCustomersView() {
               {data.customers.map((c, i) => (
                 <tr key={i}>
                   <td>
-                    <span className="type-sm"
-                      style={{
-  fontWeight: "var(--weight-bold)",
-  padding: "0px 8px",
-  borderRadius: "var(--radius-sm)",
-  background: i === 0 ? "var(--warning-bg)" : i === 1 ? "var(--surface-muted)" : i === 2 ? "var(--warning-bg)" : "var(--surface-muted)",
-  color: i === 0 ? "var(--warning)" : i === 1 ? "var(--text-secondary)" : i === 2 ? "var(--warning)" : "var(--text-secondary)"
-}}
+                    <span className="type-sm polish-font-weight-weight-bold polish-padding-0px-8px polish-border-radius-radius-sm"
+                      style={{ background: i === 0 ? "var(--warning-bg)" : i === 1 ? "var(--surface-muted)" : i === 2 ? "var(--warning-bg)" : "var(--surface-muted)", color: i === 0 ? "var(--warning)" : i === 1 ? "var(--text-secondary)" : i === 2 ? "var(--warning)" : "var(--text-secondary)" }}
                     >
                       #{i + 1}
                     </span>
                   </td>
-                  <td style={{ fontWeight: "var(--weight-medium)" }}>{c.name}</td>
-                  <td style={{ color: "var(--accent)", fontWeight: "var(--weight-medium)" }}>
+                  <td className="polish-font-weight-weight-medium" >{c.name}</td>
+                  <td className="polish-color-accent polish-font-weight-weight-medium" >
                     {c.visits}
                   </td>
-                  <td data-type="number" style={{ color: "var(--text-secondary)" }}>
+                  <td data-type="number" className="polish-color-text-secondary" >
                     ₹{c.play.toLocaleString("en-IN")}
                   </td>
-                  <td data-type="number" style={{ color: "var(--warning)" }}>
+                  <td data-type="number" className="polish-color-warning" >
                     ₹{c.food.toLocaleString("en-IN")}
                   </td>
-                  <td data-type="number" style={{ fontWeight: "var(--weight-bold)", color: "var(--success)" }}>
+                  <td data-type="number" className="polish-font-weight-weight-bold polish-color-success" >
                     ₹{c.spent.toLocaleString("en-IN")}
                   </td>
                 </tr>
@@ -510,24 +455,15 @@ function UtilizationView() {
 
   return (
     <div>
-      <div className="type-base"
-        style={{
-  fontWeight: "var(--weight-semibold)",
-  color: "var(--text-primary)",
-  marginBottom: "16px"
-}}
+      <div className="type-base polish-font-weight-weight-semibold polish-color-text-primary polish-margin-bottom-16px"
+
       >
         Table Performance
       </div>
 
       {/* Summary cards */}
       <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(4,1fr)",
-          gap: "12px",
-          marginBottom: "20px",
-        }}
+        className="polish-display-grid polish-grid-template-columns-repeat-4-1fr polish-gap-12px polish-margin-bottom-20px"
       >
         <StatCard
           label="Total Sessions"
@@ -567,61 +503,37 @@ function UtilizationView() {
           <tbody>
             {data.map((d, i) => (
               <tr key={i}>
-                <td style={{ fontWeight: "var(--weight-semibold)" }}>{d.table}</td>
+                <td className="polish-font-weight-weight-semibold" >{d.table}</td>
                 <td>
-                  <span className="type-xs"
-                    style={{
-  fontWeight: "var(--weight-semibold)",
-  padding: "0px 8px",
-  borderRadius: "var(--radius-sm)",
-  background: d.type === "POOL" ? "var(--success-bg)" : "var(--danger-bg)",
-  color: d.type === "POOL" ? "var(--success)" : "var(--danger)",
-  border: `1px solid ${d.type === "POOL" ? "color-mix(in srgb, var(--success) 28%, var(--border))" : "color-mix(in srgb, var(--danger) 24%, var(--border))"}`
-}}
+                  <span className="type-xs polish-font-weight-weight-semibold polish-padding-0px-8px polish-border-radius-radius-sm"
+                    style={{ background: d.type === "POOL" ? "var(--success-bg)" : "var(--danger-bg)", color: d.type === "POOL" ? "var(--success)" : "var(--danger)", border: `1px solid ${d.type === "POOL" ? "color-mix(in srgb, var(--success) 28%, var(--border))" : "color-mix(in srgb, var(--danger) 24%, var(--border))"}` }}
                   >
                     {d.type}
                   </span>
                 </td>
-                <td style={{ color: "var(--accent)", fontWeight: "var(--weight-medium)" }}>
+                <td className="polish-color-accent polish-font-weight-weight-medium" >
                   {d.sessions}
                 </td>
-                <td style={{ color: "var(--text-secondary)" }}>{d.avg_dur}m</td>
-                <td data-type="number" style={{ color: "var(--warning)" }}>
+                <td className="polish-color-text-secondary" >{d.avg_dur}m</td>
+                <td data-type="number" className="polish-color-warning" >
                   ₹{d.food_rev.toLocaleString("en-IN")}
                 </td>
-                <td data-type="number" style={{ fontWeight: "var(--weight-bold)", color: "var(--success)" }}>
+                <td data-type="number" className="polish-font-weight-weight-bold polish-color-success" >
                   ₹{d.revenue.toLocaleString("en-IN")}
                 </td>
                 <td>
                   <div
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "8px",
-                    }}
+                    className="polish-display-flex polish-align-items-center polish-gap-8px"
                   >
                     <div
-                      style={{
-                        flex: 1,
-                        height: "6px",
-                        background: "var(--border)",
-                        borderRadius: "var(--radius-sm)",
-                      }}
+                      className="polish-flex-1 polish-height-6px polish-background-border polish-border-radius-radius-sm"
                     >
                       <div
-                        style={{
-                          width: `${Math.round((d.revenue / maxRevenue) * 100)}%`,
-                          height: "6px",
-                          background: "var(--success)",
-                          borderRadius: "var(--radius-sm)",
-                        }}
+                        className="polish-height-6px polish-background-success polish-border-radius-radius-sm" style={{ width: `${Math.round((d.revenue / maxRevenue) * 100)}%` }}
                       />
                     </div>
-                    <span className="type-xs"
-                      style={{
-  color: "var(--text-muted)",
-  width: "36px"
-}}
+                    <span className="type-xs polish-color-text-muted polish-width-36px"
+
                     >
                       {d.utilization_pct}%
                     </span>
@@ -668,30 +580,19 @@ function ClosingReportView({ onNavigate }) {
     );
 
   return (
-    <div style={{ maxWidth: "720px" }}>
+    <div className="polish-max-width-720px" >
       <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          marginBottom: "20px",
-        }}
+        className="polish-display-flex polish-justify-content-space-between polish-align-items-center polish-margin-bottom-20px"
       >
         <div>
-          <div className="type-base" style={{
-  fontWeight: "var(--weight-semibold)",
-  color: "var(--venue-text, var(--text))"
-}}>
+          <div className="type-base polish-font-weight-weight-semibold polish-color-var---venue-text-text" >
             Daily Closing Report
           </div>
-          <div className="type-sm" style={{
-  color: "var(--text-muted)",
-  marginTop: "0px"
-}}>
+          <div className="type-sm polish-color-text-muted polish-margin-top-0px" >
             {data.date}
           </div>
         </div>
-        <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
+        <div className="polish-display-flex polish-gap-8px polish-flex-wrap-wrap" >
           <HsrButton native className="btn btn-primary-sm" onClick={printReport}>
             Print Report
           </HsrButton>
@@ -706,12 +607,7 @@ function ClosingReportView({ onNavigate }) {
 
       {/* Summary */}
       <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(3,1fr)",
-          gap: "12px",
-          marginBottom: "16px",
-        }}
+        className="polish-display-grid polish-grid-template-columns-repeat-3-1fr polish-gap-12px polish-margin-bottom-16px"
       >
         <StatCard
           label="Total Revenue"
@@ -743,13 +639,9 @@ function ClosingReportView({ onNavigate }) {
 
       {/* Table breakdown */}
       {Object.keys(data.table_breakdown).length > 0 && (
-        <div className="history-section" style={{ marginBottom: "16px" }}>
-          <div className="type-sm"
-            style={{
-  fontWeight: "var(--weight-semibold)",
-  color: "var(--text-primary)",
-  marginBottom: "12px"
-}}
+        <div className="history-section polish-margin-bottom-16px" >
+          <div className="type-sm polish-font-weight-weight-semibold polish-color-text-primary polish-margin-bottom-12px"
+
           >
             Table Breakdown
           </div>
@@ -766,9 +658,9 @@ function ClosingReportView({ onNavigate }) {
                 .sort((a, b) => b[1].revenue - a[1].revenue)
                 .map(([tbl, stats], i) => (
                   <tr key={i}>
-                    <td style={{ fontWeight: "var(--weight-semibold)" }}>{tbl}</td>
-                    <td style={{ color: "var(--accent)" }}>{stats.sessions}</td>
-                    <td data-type="number" style={{ fontWeight: "var(--weight-semibold)", color: "var(--success)" }}>
+                    <td className="polish-font-weight-weight-semibold" >{tbl}</td>
+                    <td className="polish-color-accent" >{stats.sessions}</td>
+                    <td data-type="number" className="polish-font-weight-weight-semibold polish-color-success" >
                       ₹{stats.revenue.toLocaleString("en-IN")}
                     </td>
                   </tr>
@@ -780,13 +672,9 @@ function ClosingReportView({ onNavigate }) {
 
       {/* Food breakdown */}
       {Object.keys(data.food_breakdown).length > 0 && (
-        <div className="history-section" style={{ marginBottom: "16px" }}>
-          <div className="type-sm"
-            style={{
-  fontWeight: "var(--weight-semibold)",
-  color: "var(--text-primary)",
-  marginBottom: "12px"
-}}
+        <div className="history-section polish-margin-bottom-16px" >
+          <div className="type-sm polish-font-weight-weight-semibold polish-color-text-primary polish-margin-bottom-12px"
+
           >
             Food Sold Today
           </div>
@@ -802,8 +690,8 @@ function ClosingReportView({ onNavigate }) {
                 .sort((a, b) => b[1] - a[1])
                 .map(([item, qty], i) => (
                   <tr key={i}>
-                    <td style={{ fontWeight: "var(--weight-medium)" }}>{item}</td>
-                    <td style={{ color: "var(--warning)", fontWeight: "var(--weight-semibold)" }}>{qty}</td>
+                    <td className="polish-font-weight-weight-medium" >{item}</td>
+                    <td className="polish-color-warning polish-font-weight-weight-semibold" >{qty}</td>
                   </tr>
                 ))}
             </tbody>
@@ -814,12 +702,8 @@ function ClosingReportView({ onNavigate }) {
       {/* All transactions today */}
       {data.transactions.length > 0 && (
         <div className="history-section">
-          <div className="type-sm"
-            style={{
-  fontWeight: "var(--weight-semibold)",
-  color: "var(--text-primary)",
-  marginBottom: "12px"
-}}
+          <div className="type-sm polish-font-weight-weight-semibold polish-color-text-primary polish-margin-bottom-12px"
+
           >
             All Sessions Today
           </div>
@@ -837,12 +721,12 @@ function ClosingReportView({ onNavigate }) {
             <tbody>
               {data.transactions.map((t, i) => (
                 <tr key={i}>
-                  <td style={{ fontWeight: "var(--weight-semibold)" }}>{t.tbl}</td>
-                  <td style={{ fontWeight: "var(--weight-medium)" }}>{t.nm}</td>
-                  <td style={{ color: "var(--text-secondary)" }}>{t.dur}m</td>
-                  <td data-type="number" style={{ color: "var(--success)" }}>₹{t.ply}</td>
-                  <td data-type="number" style={{ color: "var(--warning)" }}>₹{t.famt}</td>
-                  <td data-type="number" style={{ fontWeight: "var(--weight-bold)" }}>₹{t.tot}</td>
+                  <td className="polish-font-weight-weight-semibold" >{t.tbl}</td>
+                  <td className="polish-font-weight-weight-medium" >{t.nm}</td>
+                  <td className="polish-color-text-secondary" >{t.dur}m</td>
+                  <td data-type="number" className="polish-color-success" >₹{t.ply}</td>
+                  <td data-type="number" className="polish-color-warning" >₹{t.famt}</td>
+                  <td data-type="number" className="polish-font-weight-weight-bold" >₹{t.tot}</td>
                 </tr>
               ))}
             </tbody>
@@ -884,14 +768,9 @@ function ClosingInsightsView() {
   }
 
   return (
-    <div style={{ maxWidth: "760px" }}>
+    <div className="polish-max-width-760px" >
       <div
-        style={{
-  display: "grid",
-  gridTemplateColumns: "repeat(3,1fr)",
-  gap: "12px",
-  marginBottom: "16px"
-}}
+        className="polish-display-grid polish-grid-template-columns-repeat-3-1fr polish-gap-12px polish-margin-bottom-16px"
       >
         <StatCard label="Revenue" value={polishCurrency(data.metrics.revenue)} color="var(--success)" />
         <StatCard label="Sessions" value={data.metrics.sessions} color="var(--accent)" />
@@ -899,10 +778,7 @@ function ClosingInsightsView() {
       </div>
 
       <div className="history-section">
-        <div className="type-base" style={{
-  fontWeight: "var(--weight-bold)",
-  marginBottom: "12px"
-}}>
+        <div className="type-base polish-font-weight-weight-bold polish-margin-bottom-12px" >
           Smart Closing Insights
         </div>
         {data.insights.map((insight, i) => {
@@ -910,24 +786,12 @@ function ClosingInsightsView() {
           return (
             <div
               key={i}
-              style={{
-  background: bg,
-  color: fg,
-  border: `1px solid ${border}`,
-  borderRadius: "var(--radius-sm)",
-  padding: "12px 12px",
-  marginBottom: "8px"
-}}
+              className="polish-border-radius-radius-sm polish-padding-12px-12px polish-margin-bottom-8px" style={{ background: bg, color: fg, border: `1px solid ${border}` }}
             >
-              <div className="type-sm" style={{
-  fontWeight: "var(--weight-heavy)",
-  marginBottom: "4px"
-}}>
+              <div className="type-sm polish-font-weight-weight-heavy polish-margin-bottom-4px" >
                 {insight.title}
               </div>
-              <div className="type-sm" style={{
-  color: "var(--text-secondary)"
-}}>{insight.detail}</div>
+              <div className="type-sm polish-color-text-secondary" >{insight.detail}</div>
             </div>
           );
         })}
@@ -947,10 +811,7 @@ function AuditLogView() {
 
   return (
     <div className="history-section">
-      <div className="type-base" style={{
-  fontWeight: "var(--weight-bold)",
-  marginBottom: "12px"
-}}>
+      <div className="type-base polish-font-weight-weight-bold polish-margin-bottom-12px" >
         Anti-Leakage Audit Log
       </div>
       <HsrTable className="data-table">
@@ -966,9 +827,7 @@ function AuditLogView() {
         <tbody>
           {rows.length === 0 ? (
             <tr>
-              <td colSpan="5" style={{
-  padding: "16px"
-}}>
+              <td colSpan="5" className="polish-padding-16px" >
                 <EmptyState
                   icon="ti-shield-check"
                   title="No audit events yet"
@@ -979,13 +838,11 @@ function AuditLogView() {
           ) : (
             rows.map((r) => (
               <tr key={r.id}>
-                <td className="type-sm" style={{
-  color: "var(--text-secondary)"
-}}>{r.date}</td>
-                <td style={{ fontWeight: "var(--weight-bold)", color: r.severity === "critical" ? "var(--danger)" : r.severity === "warning" ? "var(--warning)" : "var(--accent)" }}>
+                <td className="type-sm polish-color-text-secondary" >{r.date}</td>
+                <td className="polish-font-weight-weight-bold" style={{ color: r.severity === "critical" ? "var(--danger)" : r.severity === "warning" ? "var(--warning)" : "var(--accent)" }}>
                   {r.severity}
                 </td>
-                <td style={{ fontWeight: "var(--weight-semibold)" }}>{r.action}</td>
+                <td className="polish-font-weight-weight-semibold" >{r.action}</td>
                 <td>{r.detail}</td>
                 <td data-type="number">{r.amount ? polishCurrency(r.amount) : "—"}</td>
               </tr>
@@ -1072,9 +929,9 @@ function AdvancedAnalyticsView() {
               <tbody>
                 {tableProfitability.map((row) => (
                   <tr key={row.table}>
-                    <td style={{ fontWeight: "var(--weight-bold)" }}>{row.table}</td>
+                    <td className="polish-font-weight-weight-bold" >{row.table}</td>
                     <td>{row.sessions}</td>
-                    <td data-type="number" style={{ color: "var(--success)", fontWeight: "var(--weight-bold)" }}>₹{row.revenue.toLocaleString("en-IN")}</td>
+                    <td data-type="number" className="polish-color-success polish-font-weight-weight-bold" >₹{row.revenue.toLocaleString("en-IN")}</td>
                     <td>{row.avg_duration}m</td>
                     <td data-type="number">₹{row.revenue_per_session.toLocaleString("en-IN")}</td>
                   </tr>
@@ -1100,9 +957,7 @@ function AdvancedAnalyticsView() {
                   <strong>{row.sessions} sessions</strong>
                 </div>
               ))}
-              <div className="empty-state-detail" style={{
-  marginTop: "8px"
-}}>
+              <div className="empty-state-detail polish-margin-top-8px" >
                 These are lower-traffic slots based on recent checkout history.
               </div>
             </>

@@ -363,9 +363,9 @@ export default function ClosingTab() {
                   .sort((a, b) => b[1].revenue - a[1].revenue)
                   .map(([table, stats]) => (
                     <tr key={table}>
-                      <td style={{ fontWeight: "var(--weight-heavy)" }}>{table}</td>
+                      <td className="polish-font-weight-weight-heavy" >{table}</td>
                       <td>{stats.sessions}</td>
-                      <td data-type="number" style={{ color: "var(--success)", fontWeight: "var(--weight-heavy)" }}>{money(stats.revenue)}</td>
+                      <td data-type="number" className="polish-color-success polish-font-weight-weight-heavy" >{money(stats.revenue)}</td>
                     </tr>
                   ))}
               </tbody>
@@ -394,7 +394,7 @@ export default function ClosingTab() {
                   .map(([item, qty]) => (
                     <tr key={item}>
                       <td>{item}</td>
-                      <td style={{ fontWeight: "var(--weight-heavy)" }}>{qty}</td>
+                      <td className="polish-font-weight-weight-heavy" >{qty}</td>
                     </tr>
                   ))}
               </tbody>
@@ -423,12 +423,10 @@ export default function ClosingTab() {
             <tbody>
               {corrections.map((row, index) => (
                 <tr key={`${row.action}-${row.date}-${index}`}>
-                  <td className="type-sm" style={{
-  color: "var(--text-secondary)"
-}}>{row.date}</td>
-                  <td style={{ color: "var(--danger)", fontWeight: "var(--weight-heavy)" }}>{row.action.replaceAll("_", " ")}</td>
+                  <td className="type-sm polish-color-text-secondary" >{row.date}</td>
+                  <td className="polish-color-danger polish-font-weight-weight-heavy" >{row.action.replaceAll("_", " ")}</td>
                   <td>{row.detail}</td>
-                  <td style={{ fontWeight: "var(--weight-heavy)" }}>{row.amount || "-"}</td>
+                  <td className="polish-font-weight-weight-heavy" >{row.amount || "-"}</td>
                 </tr>
               ))}
             </tbody>

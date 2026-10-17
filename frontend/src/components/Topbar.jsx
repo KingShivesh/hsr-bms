@@ -28,19 +28,10 @@ const PAGE_DESCRIPTIONS = {
 const PAGE_PRIMARY_ACTIONS = {
   "Executive Overview": { label: "Open Live Floor", icon: "ti-layout-grid", page: "live-floor" },
   "Live Floor": { label: "Start Table", icon: "ti-player-play", event: "live-floor:new-session" },
-  "Advanced Table Controls": { label: "Start Table", icon: "ti-player-play", page: "tables" },
   "Smart Waitlist": { label: "Open Bookings", icon: "ti-calendar-plus", page: "reservations" },
-  "Bookings": { label: "New Booking", icon: "ti-calendar-plus", event: "bookings:new" },
-  "Food & Cafe POS": { label: "Place Order", icon: "ti-tools-kitchen-2", page: "food" },
+  "Bookings": { label: "New Booking", icon: "ti-calendar-plus", page: "reservations", options: { tableAction: "new" } },
   "Sales": { label: "Print Register", icon: "ti-printer", action: "print" },
   "Customers": { label: "Add Customer", icon: "ti-user-plus", event: "customers:add-focus" },
-  "Tournament Hub": { label: "Create Bracket", icon: "ti-trophy", page: "tournaments" },
-  "Daily Closing": { label: "Review Close", icon: "ti-lock-check", page: "closing" },
-  "Analytics & Reports": { label: "Export Reports", icon: "ti-download", page: "reports" },
-  "Pricing & Rules": { label: "Add Rate Rule", icon: "ti-plus", page: "operations" },
-  "Inventory & Stocks": { label: "Add Item", icon: "ti-package", page: "inventory" },
-  "Audit Log": { label: "Refresh Audit", icon: "ti-refresh", page: "staff" },
-  "Club Settings": { label: "Save Settings", icon: "ti-device-floppy", page: "settings" },
 };
 
 function asArray(value) {
@@ -169,7 +160,7 @@ export default function Topbar({
       return;
     }
     if (primaryAction.page) {
-      onNavigate?.(primaryAction.page);
+      onNavigate?.(primaryAction.page, primaryAction.options);
     }
   }
 

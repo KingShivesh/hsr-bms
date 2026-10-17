@@ -11,6 +11,8 @@ import "./table-states.css";
 import "./presentation.css";
 import "./perceived-speed.css";
 import "./product/product-shell.css";
+import "./legacy-presentation.css";
+import "./interaction-polish.css";
 import App from "./App.jsx";
 
 window.HSRTheme.sync();

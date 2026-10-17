@@ -1,0 +1,76 @@
+/* Existing palette and type scale; shared affordances, not a new theme. */
+b, strong { font-weight: 500; }
+.product-context-help summary { border: 1px solid var(--border-default); border-radius: var(--radius-sm); background: var(--surface); transition: background-color 80ms ease-out, border-color 80ms ease-out; }
+.product-context-help summary:hover { background: var(--bg-surface-hover); border-color: var(--border-strong); }
+.product-context-help summary:focus-visible { outline: 2px solid var(--border-focus); outline-offset: 2px; }
+.product-context-help summary:active { transform: translateY(.5px); }
+.op2-modal, .table-history-modal, .frame-loser-modal, .checkout-bill-shell, .food-price-dialog { border-radius: var(--radius-xl); animation: presentation-modal-in 150ms ease-out; }
+.table-player-suggestion.ui-button { width: 100%; display: flex; justify-content: space-between; align-items: center; gap: var(--space-3); padding: var(--space-2) var(--space-3); border: 0; border-bottom: 1px solid var(--border-default); border-radius: 0 !important; background: var(--surface); text-align: left; }
+.table-player-suggestion:last-child { border-bottom: 0; }
+.table-player-suggestion:hover:not(:disabled) { background: var(--bg-surface-hover); }
+.ui-button[data-tooltip]::after { transition-delay: 0ms; }
+.ui-button[data-tooltip]:hover::after { transition-delay: 300ms; }
+.ui-button[data-tooltip]:focus-visible::after { transition-delay: 0ms; }
+.ui-button-icon:hover:not(:disabled) { background: var(--bg-surface-hover); }
+.ui-button-secondary:active:not(:disabled), .ui-button-ghost:active:not(:disabled) { background: var(--bg-inset); border-color: var(--border-strong); }
+.ui-button-primary:active:not(:disabled) { background: color-mix(in srgb, var(--accent) 88%, var(--text-primary)); }
+.ui-select-wrap { position: relative; display: inline-grid; min-width: 0; max-width: 100%; vertical-align: middle; }
+.ui-select-wrap > .ui-select { appearance: none; background-image: none; width: 100%; padding-right: var(--space-10); cursor: pointer; }
+.ui-select-chevron { position: absolute; right: var(--space-3); top: 50%; transform: translateY(-50%); pointer-events: none; color: var(--text-secondary); }
+.ui-select:not(:disabled):hover { border-color: var(--border-strong); background-color: var(--bg-surface-hover); }
+.ui-input:disabled, .ui-select:disabled, .ui-textarea:disabled { opacity: .5; cursor: not-allowed; }
+.ui-switch { display: flex; align-items: center; gap: var(--space-3); min-height: 44px; position: relative; cursor: pointer; font-size: var(--text-sm); font-weight: 500; }
+.ui-switch input { position: absolute; width: 40px; height: 24px; opacity: 0; margin: 0; }
+.ui-switch-track { width: 40px; height: 24px; flex: 0 0 40px; padding: 3px; border: 1px solid var(--border-strong); border-radius: 999px; background: var(--bg-inset); transition: background-color 120ms ease-out; }
+.ui-switch-track > span { display: block; width: 16px; height: 16px; border-radius: 50%; background: var(--text-secondary); transition: transform 120ms ease-out, background-color 120ms ease-out; }
+.ui-switch input:checked + .ui-switch-track { background: var(--accent); border-color: var(--accent); }
+.ui-switch input:checked + .ui-switch-track > span { transform: translateX(16px); background: var(--on-accent); }
+.ui-switch input:focus-visible + .ui-switch-track { outline: 2px solid var(--border-focus); outline-offset: 2px; }
+.ui-switch:has(input:disabled) { opacity: .5; cursor: not-allowed; }
+.ui-disclosure { border: 1px solid var(--border-default); border-radius: var(--radius-md); background: var(--surface); min-width: 0; overflow: clip; }
+.ui-disclosure-trigger.ui-button { display: flex; width: 100%; justify-content: flex-start; gap: var(--space-3); min-height: 48px; padding: var(--space-3) var(--space-5); border: 0; border-radius: 0 !important; background: var(--bg-surface-hover); color: var(--text-primary); font-size: var(--text-sm); font-weight: 500; text-align: left; }
+.ui-disclosure-trigger.ui-button:hover:not(:disabled) { background: var(--bg-inset); }
+.ui-disclosure-trigger:focus-visible { outline-offset: -3px; }
+.ui-disclosure-chevron { margin-left: auto; transition: transform 150ms ease-out; }
+.ui-disclosure[data-open="true"] > .ui-disclosure-trigger .ui-disclosure-chevron { transform: rotate(180deg); }
+.ui-disclosure-body { display: grid; gap: var(--space-4); padding: var(--space-5); border-top: 1px solid var(--border-default); }
+.ui-disclosure-body[hidden] { display: none; }
+.ui-overlay { background: rgb(0 0 0 / 50%); }
+.ui-drawer { animation: presentation-modal-in 150ms ease-out; }
+.ui-overlay-head h2 { font-size: var(--text-xl); line-height: var(--leading-xl); font-weight: 600; }
+.checkout-panel .ui-overlay-head, .checkout-panel .ui-overlay-body { padding: var(--space-6); }
+.checkout-panel .ui-overlay-head p { font-size: var(--text-sm); }
+.checkout-section { border-radius: var(--radius-md); gap: var(--space-4); }
+.checkout-section h4 { margin: 0; font-size: var(--text-lg); line-height: var(--leading-lg); font-weight: 500; }
+.checkout-field > span { font-size: var(--text-xs); line-height: var(--leading-xs); font-weight: 500; }
+.checkout-field :is(.ui-input, .ui-select, .ui-textarea) { width: 100%; font-size: var(--text-sm); font-weight: 400; }
+.checkout-field .ui-input { min-height: 44px; padding-inline: var(--space-3); }
+.checkout-field input[readonly] { color: var(--text-secondary); background: var(--bg-surface-hover); }
+.checkout-time-fields { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-4); }
+.checkout-adjust-preview { display: grid; grid-template-columns: 1fr auto; gap: var(--space-1) var(--space-3); padding: var(--space-3); border-left: 2px solid var(--border-strong); background: var(--bg-inset); font-size: var(--text-sm); color: var(--text-secondary); }
+.checkout-adjust-preview strong { color: var(--text-primary); font-family: var(--font-mono); font-weight: 500; }
+.checkout-adjust-preview > span:last-child { grid-column: 1 / -1; }
+.checkout-adjust-actions { justify-content: space-between; }
+.checkout-customer-paths { grid-template-columns: 1.5fr 1fr .75fr; gap: var(--space-2); }
+.checkout-button-grid .ui-button, .checkout-payment-grid .ui-button { font-size: var(--text-sm); font-weight: 500; }
+.checkout-button-grid .ui-button[aria-pressed="true"], .checkout-payment-grid .ui-button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+.checkout-payment-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.checkout-payment-grid > .ui-button { min-height: 48px; }
+.checkout-button-grid .ui-button:disabled, .checkout-payment-grid .ui-button:disabled { cursor: not-allowed; }
+.checkout-actions-sticky { bottom: calc(-1 * var(--space-6)); margin-inline: calc(-1 * var(--space-6)); margin-bottom: calc(-1 * var(--space-6)); padding: var(--space-4) var(--space-6); gap: var(--space-3); background: var(--surface); backdrop-filter: none; z-index: 2; }
+.checkout-actions-sticky .ui-button { min-height: 40px; }
+.checkout-summary-grid strong, .checkout-total-card h3, .checkout-split-row b { font-family: var(--font-mono); font-weight: 500; }
+.checkout-total-card { background: var(--bg-inset); border-color: var(--border-default); border-radius: var(--radius-md); }
+.checkout-summary-grid > div { min-height: 88px; padding: var(--space-3); }
+.checkout-summary-grid strong { font-size: var(--text-lg); line-height: var(--leading-lg); margin-top: var(--space-2); }
+.checkout-summary-grid span { font-size: var(--text-xs); line-height: var(--leading-xs); font-weight: 500; }
+.session-controls-settings > label:not(.ui-switch) { display: grid; gap: var(--space-2); font-size: var(--text-xs); font-weight: 500; }
+.session-controls-settings > .ui-button { justify-self: end; }
+.login-box .error-message { margin: 0 0 var(--space-4); font-size: var(--text-sm); }
+@media (max-width: 760px), (pointer: coarse) {
+  .checkout-panel .ui-overlay-head, .checkout-panel .ui-overlay-body { padding: var(--space-4); }
+  .checkout-customer-paths { grid-template-columns: minmax(0, 1fr); }
+  .checkout-customer-paths .ui-button { min-height: 44px; }
+  .checkout-actions-sticky { bottom: calc(-1 * var(--space-4)); margin-inline: calc(-1 * var(--space-4)); margin-bottom: calc(-1 * var(--space-4)); padding: var(--space-3) var(--space-4) max(var(--space-3), env(safe-area-inset-bottom)); }
+  .checkout-actions-sticky .ui-button { min-height: 44px; }
+}

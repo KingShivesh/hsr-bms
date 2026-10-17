@@ -12,10 +12,12 @@ import {
 import RetryNotice from "../../components/RetryNotice.jsx";
 import { TableAttentionBadge, TablePrimaryAction, TableStateBadge } from "../../components/TableStateUI.jsx";
 import { useEscapeKey } from "../../components/ui/index.js";
+import { useDialogFocus } from "../../components/ui/useDialogFocus.js";
 import { useToast } from "../../components/toastContext.js";
 import { HSR_TABLES, getTableRate } from "../../config/hsrTables.js";
 import { tableActionNavigation, tableStateAttributes, getTableAttention, getTableStatus } from "../../config/tableStatus.js";
 import { useRealtimeSubscription } from "../../realtime/useRealtimeSubscription.js";
+import { useSearchParams } from "react-router-dom";
 
 function isoLocalNowPlus(minutes = 30) {
   const date = new Date(Date.now() + minutes * 60 * 1000);
@@ -80,17 +82,19 @@ function BookingSkeleton() {
 }
 
 function BookingModal({ form, setForm, saving, onClose, onSubmit, error }) {
-  useEscapeKey(onClose, true);
+  const dialogRef = useRef(null);
+  useDialogFocus(dialogRef, true);
+  useEscapeKey(saving ? undefined : onClose, true, dialogRef);
 
   return (
     <div className="lf-modal-backdrop" role="presentation">
-      <form className="op2-modal" onSubmit={onSubmit} role="dialog" aria-modal="true" aria-label="Reserve a table">
+      <form ref={dialogRef} tabIndex={-1} className="op2-modal" onSubmit={onSubmit} role="dialog" aria-modal="true" aria-label="Reserve a table">
         <div className="order-selector-head">
           <div>
             <span className="lf-eyebrow">Booking</span>
             <h3>Reserve a table</h3>
           </div>
-          <HsrButton native type="button" className="lf-icon-button" onClick={onClose} aria-label="Close booking form">
+          <HsrButton native type="button" className="lf-icon-button" disabled={saving} onClick={onClose} aria-label="Close booking form">
             <HsrIcon className="ti ti-x" aria-hidden="true" />
           </HsrButton>
         </div>
@@ -194,6 +198,7 @@ function BookingModal({ form, setForm, saving, onClose, onSubmit, error }) {
 }
 
 export default function BookingsPage({ onNavigate }) {
+  const [searchParams, setSearchParams] = useSearchParams();
   const { showToast } = useToast();
   const [bookings, setBookings] = useCachedState("bookings", []);
   const [tableState, setTableState] = useCachedState("bookings-tables", []);
@@ -248,6 +253,12 @@ export default function BookingsPage({ onNavigate }) {
   }, [loadBookings, realtimeState]);
 
   useEffect(() => () => window.clearTimeout(bookingRefreshTimerRef.current), []);
+
+  useEffect(() => {
+    if (searchParams.get("action") !== "new") return;
+    setShowModal(true);
+    setSearchParams(current => { const next = new URLSearchParams(current); next.delete("action"); return next; }, { replace: true });
+  }, [searchParams, setSearchParams]);
 
   useEffect(() => {
     function handleNewBookingRequest() {
