@@ -117,7 +117,7 @@ try {
       await new Promise(resolve => setTimeout(resolve, 800));
       return route.fulfill({ status: 409, json: { detail: "QA close rejected" } });
     });
-    await observedClick(page.getByRole("button", { name: /^Close table/ }));
+    await observedClick(page.getByRole("button", { name: /^(Confirm & Close|Close table)/ }));
     assert.match(await card.innerText(), /Closing…/);
     await page.getByText("QA close rejected", { exact: true }).waitFor();
     assert.equal(await card.getAttribute("data-table-state"), initialState);

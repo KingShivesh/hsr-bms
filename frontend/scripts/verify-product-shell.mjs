@@ -6,7 +6,7 @@ import path from "node:path";
 const api = "http://127.0.0.1:8006";
 const app = "http://127.0.0.1:5181";
 const before = "http://127.0.0.1:5180";
-const output = path.resolve("../docs/product-shell/verification");
+const output = path.resolve(process.env.PRODUCT_SHELL_REPORT_PATH || "../docs/product-shell/verification");
 await fs.mkdir(output, { recursive: true });
 const auth = await fetch(`${api}/auth/login`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ username: "admin", password: "admin123" }) }).then(response => response.json());
 assert.ok(auth.token, "Local QA login required");
@@ -124,7 +124,7 @@ try {
   await page.route("**/sessions/pause/t1", route => route.fulfill({ status: 409, contentType: "application/json", body: '{"detail":"QA keyboard pause rejected"}' }));
   await card.focus(); await page.keyboard.press("p"); await page.getByText("QA keyboard pause rejected", { exact: true }).waitFor();
   await page.unroute("**/sessions/pause/t1");
-  await card.focus(); await page.keyboard.press("e"); await page.getByRole("dialog", { name: "Checkout T1" }).waitFor();
+  await card.focus(); await page.keyboard.press("e"); await page.getByRole("dialog", { name: /Checkout T1|Close Session · Table 1/ }).waitFor();
   await page.getByLabel("Help with checkout").click(); await page.getByText(/Credit requires a linked member/).waitFor();
   await page.keyboard.press("Escape");
   report.checks.push("Focused-table P invokes guarded existing action; E opens review, contextual help, no settlement");

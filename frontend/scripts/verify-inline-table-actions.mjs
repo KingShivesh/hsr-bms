@@ -160,11 +160,11 @@ try {
   await stateCard("running").getByRole("button", { name: "End", exact: true }).click();
   await page.locator(".checkout-panel .checkout-summary-grid").waitFor();
   assert.equal(await page.locator(".lf-detail-drawer").count(), 0);
-  await page.getByRole("button", { name: "Keep Table Open" }).click();
+  await page.locator(".checkout-panel").getByRole("button", { name: /^(Cancel|Keep Table Open)$/ }).click();
   assert.equal((await request("GET", "/sessions/active")).length, 2);
   await stateCard("running").getByRole("button", { name: "End", exact: true }).click();
   await page.locator(".checkout-panel .checkout-summary-grid").waitFor();
-  await feedback(page.locator(".checkout-panel").getByRole("button", { name: /Close table/ }), "**/sessions/stop/t1**");
+  await feedback(page.locator(".checkout-panel").getByRole("button", { name: /Confirm & Close|Close table/ }), "**/sessions/stop/t1**");
   await page.getByText("Payment Complete", { exact: true }).waitFor();
   await screenshot("receipt-dark");
   await page.getByRole("button", { name: "Close Receipt" }).click();
@@ -190,8 +190,8 @@ try {
   const frameCard = page.locator(".lf-table-card").filter({ hasText: "QA Inline Frame" });
   await frameCard.getByRole("button", { name: "End", exact: true }).click();
   await page.getByText("Close the open frame before checkout.", { exact: true }).waitFor();
-  assert.ok(await page.locator(".checkout-panel").getByRole("button", { name: /Close table/ }).isDisabled());
-  await page.getByRole("button", { name: "Keep Table Open" }).click();
+  assert.ok(await page.locator(".checkout-panel").getByRole("button", { name: /Confirm & Close|Close table/ }).isDisabled());
+  await page.locator(".checkout-panel").getByRole("button", { name: /^(Cancel|Keep Table Open)$/ }).click();
   await frameCard.locator(".lf-table-card-head strong").click();
   await page.getByRole("button", { name: "Complete Frame", exact: true }).click();
   await page.getByRole("button", { name: "Start Frame", exact: true }).waitFor();

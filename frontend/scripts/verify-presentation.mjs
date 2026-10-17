@@ -89,5 +89,7 @@ assert.equal(report.errors.length, 0);
 if (stage === "after") {
   const faults = report.routes.filter(row => row.overflow || row.offScale.length || row.unsharedControls.length);
   assert.equal(faults.length, 0, JSON.stringify(faults.map(row => ({ route: row.route, theme: row.theme, width: row.width, overflow: row.overflow, offScale: row.offScale, unsharedControls: row.unsharedControls }))));
+  const extraHeavy = report.routes.filter(row => row.weights.some(weight => Number(weight) > 600));
+  assert.equal(extraHeavy.length, 0, JSON.stringify(extraHeavy.map(row => ({ route: row.route, theme: row.theme, weights: row.weights }))));
 }
 console.log(JSON.stringify({ stage, samples: report.routes.length, errors: report.errors, keyboard: report.keyboard }));

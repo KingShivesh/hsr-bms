@@ -1,0 +1,6 @@
+{
+  "phase": "after",
+  "urlAfterClick": "http://127.0.0.1:5181/bookings?action=new",
+  "visibleLoading": true,
+  "dialogOpened": true
+}

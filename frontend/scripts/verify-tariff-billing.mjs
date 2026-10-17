@@ -90,7 +90,7 @@ try {
     await page.getByRole("button", { name: "Complete Frame" }).waitFor();
     await openCheckout("t1");
     await page.getByText("Close the open frame before checkout.", { exact: true }).waitFor();
-    const finalize = page.locator(".checkout-panel").getByRole("button", { name: /Close table/i });
+    const finalize = page.locator(".checkout-panel").getByRole("button", { name: /Confirm & Close|Close table/i });
     if (!(await finalize.isDisabled())) throw new Error("Open frame checkout enabled");
     result.openFrameCheckoutBlocked = true;
     await page.keyboard.press("Escape");
@@ -119,7 +119,7 @@ try {
     await screenshot(`checkout-${theme}`);
   }
   if (phase === "after") {
-    await page.locator(".checkout-panel").getByRole("button", { name: /Close table/i }).click();
+    await page.locator(".checkout-panel").getByRole("button", { name: /Confirm & Close|Close table/i }).click();
     await page.getByText("Payment Complete", { exact: true }).waitFor();
     const history = await request("GET", "/reports/history");
     if (history[0].tot !== 160 || history[0].tariff_mode !== "frame") throw new Error("Saved frame bill wrong");

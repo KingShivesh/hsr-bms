@@ -1,0 +1,62 @@
+[
+  {
+    "theme": "light",
+    "name": "standard",
+    "duplicateClicks": 2,
+    "calls": 1,
+    "spinner": true,
+    "dimensionShiftPx": 0
+  },
+  {
+    "theme": "light",
+    "name": "native",
+    "duplicateClicks": 2,
+    "calls": 1,
+    "spinner": true,
+    "dimensionShiftPx": 0
+  },
+  {
+    "theme": "light",
+    "name": "icon",
+    "duplicateClicks": 2,
+    "calls": 1,
+    "spinner": true,
+    "dimensionShiftPx": 0
+  },
+  {
+    "theme": "light",
+    "name": "pointerdown CSS feedback before click",
+    "active": true,
+    "filter": "brightness(0.94)"
+  },
+  {
+    "theme": "dark",
+    "name": "standard",
+    "duplicateClicks": 2,
+    "calls": 1,
+    "spinner": true,
+    "dimensionShiftPx": 0
+  },
+  {
+    "theme": "dark",
+    "name": "native",
+    "duplicateClicks": 2,
+    "calls": 1,
+    "spinner": true,
+    "dimensionShiftPx": 0
+  },
+  {
+    "theme": "dark",
+    "name": "icon",
+    "duplicateClicks": 2,
+    "calls": 1,
+    "spinner": true,
+    "dimensionShiftPx": 0
+  },
+  {
+    "theme": "dark",
+    "name": "pointerdown CSS feedback before click",
+    "active": true,
+    "filter": "brightness(0.94)"
+  }
+]

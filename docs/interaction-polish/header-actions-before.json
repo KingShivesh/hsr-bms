@@ -1,0 +1,74 @@
+[
+  {
+    "route": "/legacy-table-controls",
+    "label": "Start Table",
+    "url": "http://127.0.0.1:5180/legacy-table-controls",
+    "mutations": 2,
+    "dialog": false,
+    "urlChanged": false,
+    "requests": []
+  },
+  {
+    "route": "/cafe-pos",
+    "label": "Place Order",
+    "url": "http://127.0.0.1:5180/cafe-pos",
+    "mutations": 1,
+    "dialog": false,
+    "urlChanged": false,
+    "requests": []
+  },
+  {
+    "route": "/tournaments",
+    "label": "Create Bracket",
+    "url": "http://127.0.0.1:5180/tournaments",
+    "mutations": 1,
+    "dialog": false,
+    "urlChanged": false,
+    "requests": []
+  },
+  {
+    "route": "/daily-closing",
+    "label": "Review Close",
+    "url": "http://127.0.0.1:5180/daily-closing",
+    "mutations": 1,
+    "dialog": false,
+    "urlChanged": false,
+    "requests": []
+  },
+  {
+    "route": "/analytics",
+    "label": "Export Reports",
+    "url": "http://127.0.0.1:5180/analytics",
+    "mutations": 1,
+    "dialog": false,
+    "urlChanged": false,
+    "requests": []
+  },
+  {
+    "route": "/pricing-rules",
+    "label": "Add Rate Rule",
+    "url": "http://127.0.0.1:5180/pricing-rules",
+    "mutations": 1,
+    "dialog": false,
+    "urlChanged": false,
+    "requests": []
+  },
+  {
+    "route": "/inventory",
+    "label": "Add Item",
+    "url": "http://127.0.0.1:5180/inventory",
+    "mutations": 1,
+    "dialog": false,
+    "urlChanged": false,
+    "requests": []
+  },
+  {
+    "route": "/audit-log",
+    "label": "Refresh Audit",
+    "url": "http://127.0.0.1:5180/audit-log",
+    "mutations": 0,
+    "dialog": false,
+    "urlChanged": false,
+    "requests": []
+  }
+]

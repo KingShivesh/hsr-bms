@@ -10,6 +10,8 @@ assert.equal(formatDuration(3661), "01:01:01");
 assert.equal(formatDateTime(null), "-");
 const app = process.env.POLISH_APP_URL || "http://127.0.0.1:5177";
 const api = process.env.POLISH_API_URL || "http://127.0.0.1:8003";
+const output = process.env.POLISH_OUTPUT_DIR || "../docs/presentation-polish";
+await fs.mkdir(`${output}/after`, { recursive: true });
 for (const url of [app, api]) assert.ok(["localhost", "127.0.0.1"].includes(new URL(url).hostname));
 const auth = await (await fetch(api + "/auth/login", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ username: "admin", password: "admin123" }) })).json();
 const browser = await chromium.launch({ executablePath: "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome", headless: true });
@@ -41,7 +43,7 @@ try {
     assert.ok(feedbackMs < 100);
     assert.ok(Math.abs(before.width - loading.width) < 1);
     assert.ok(await save.isDisabled());
-    await page.screenshot({ path: `../docs/presentation-polish/after/settings-saving-${theme}.png` });
+    await page.screenshot({ path: `${output}/after/settings-saving-${theme}.png` });
     await page.getByText("Rates saved", { exact: true }).first().waitFor();
     await page.getByLabel(theme === "dark" ? "Switch to light mode" : "Switch to dark mode").hover();
     await page.waitForTimeout(450);
@@ -68,9 +70,9 @@ try {
     await page.goto(app + "/settings");
     await page.getByRole("alert").getByRole("button", { name: "Retry", exact: true }).waitFor();
     assert.equal(await page.getByRole("button", { name: "Save Table Rates" }).count(), 0);
-    await page.screenshot({ path: `../docs/presentation-polish/after/settings-error-${theme}.png` });
+    await page.screenshot({ path: `${output}/after/settings-error-${theme}.png` });
     report.errors.push({ theme, failedSettingsDoNotShowEditableDefaults: true, retryVisible: true });
     await context.close();
   }
-} finally { await browser.close(); await fs.writeFile("../docs/presentation-polish/controls.json", JSON.stringify(report, null, 2)); }
+} finally { await browser.close(); await fs.writeFile(`${output}/controls.json`, JSON.stringify(report, null, 2)); }
 console.log(JSON.stringify(report));

@@ -53,5 +53,5 @@ try {
     await context.close();
   }
 } finally { await browser.close(); }
-await fs.writeFile("../docs/perceived-speed/async-buttons.json", JSON.stringify(results, null, 2));
+await fs.writeFile(process.env.ASYNC_BUTTON_REPORT_PATH || "../docs/perceived-speed/async-buttons.json", JSON.stringify(results, null, 2));
 console.log(JSON.stringify(results, null, 2));

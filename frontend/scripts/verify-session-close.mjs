@@ -88,7 +88,7 @@ try {
       for (const width of [1440, 375, 414]) await capture(page, "start", theme, width);
     } else {
       await page.setViewportSize({ width: 1440, height: 1000 });
-      await dialog.getByRole("button", { name: /^Close table/ }).click();
+      await dialog.getByRole("button", { name: /^(Confirm & Close|Close table)/ }).click();
       await dialog.getByRole("heading", { name: "Payment Complete" }).waitFor();
       const receipts = await fetch(api + "/reports/history", { headers: { Authorization: `Bearer ${(await login("admin", "admin123")).token}` } }).then(response => response.json());
       assert.ok(receipts.some(row => row.time_edit?.staff === "staff" && row.nm === "QA Receipt Walk-in"));

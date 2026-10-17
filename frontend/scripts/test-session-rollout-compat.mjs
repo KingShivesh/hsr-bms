@@ -35,7 +35,7 @@ try {
     assert.equal(await dialog.getByText("Customer (optional)", { exact: true }).count(), 0);
     await dialog.getByRole("button", { name: method, exact: true }).click();
     await page.waitForTimeout(200);
-    await dialog.getByRole("button", { name: /^Close table/ }).click();
+    await dialog.getByRole("button", { name: /^(Confirm & Close|Close table)/ }).click();
     await dialog.getByRole("heading", { name: "Payment Complete" }).waitFor();
     assert.ok(captured);
     report.checks.push({ theme, method, legacyFrozenCheckout: true, identityHidden: true, preservedPayment: true });

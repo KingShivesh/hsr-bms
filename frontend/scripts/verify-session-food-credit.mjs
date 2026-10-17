@@ -167,7 +167,7 @@ try {
     }
     report.contrast.push(...await scanRenderedContrast(a, { route: "/live-floor", theme, state: "name-only-close" }));
     await a.setViewportSize({ width: 1440, height: 1100 });
-    await checkout.getByRole("button", { name: /^Close table/ }).click();
+    await checkout.getByRole("button", { name: /^(Confirm & Close|Close table)/ }).click();
     await checkout.getByRole("heading", { name: "Payment Complete" }).waitFor();
     report.checks.push({ theme, name: "name-only cash close", noPhoneInput: true, paymentOptions: ["UPI", "Cash", "Credit"] });
     await checkout.getByRole("button", { name: "Close Receipt" }).click();
@@ -179,7 +179,7 @@ try {
     await checkout.getByRole("button", { name: "Credit", exact: true }).click();
     await checkout.getByText(/Payment remains outstanding/).waitFor();
     for (const width of [1440, 375, 414]) { await a.setViewportSize({ width, height: width === 1440 ? 1100 : 844 }); await checkout.getByText("Payment method", { exact: true }).scrollIntoViewIfNeeded(); await capture(a, theme, "member-credit", width); }
-    await checkout.getByRole("button", { name: /^Close table/ }).click();
+    await checkout.getByRole("button", { name: /^(Confirm & Close|Close table)/ }).click();
     await checkout.getByRole("heading", { name: "Charged to Credit" }).waitFor();
     report.checks.push({ theme, name: "member credit UI close", receiptStatus: "credit" });
     const owner = await login("admin");
