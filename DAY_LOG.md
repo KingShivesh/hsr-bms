@@ -5,7 +5,8 @@
 Status: in progress; Day 1 is not complete and Day 2 is not authorized.
 
 - DEFERRED.md: written and committed (`e5a743e`).
-- PILOT.md: not created; no real club agreement, contact or confirmed dates supplied.
+- PILOT.md: not created. The user confirmed that no pilot club or contact is
+  selected for now; there is no agreement or confirmed setup/start date.
 - Audit: not started; waiting for the pilot gate. Previous UI/regression results
   are not a substitute for this requested full-stack audit.
 - Backup/restore: incomplete and unverified; not started out of sequence.
