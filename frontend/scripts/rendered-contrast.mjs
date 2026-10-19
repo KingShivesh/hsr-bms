@@ -8,9 +8,11 @@ export async function scanRenderedContrast(page, metadata, attempt = 0) {
     // Hide glyph paint only, preserving currentColor fills and layout. Sample the
     // actual rendered gradient/image underneath each text line, not a CSS guess.
     const hide = await page.addStyleTag({ content: "body * { -webkit-text-fill-color: transparent !important; text-shadow: none !important; caret-color: transparent !important; } input::placeholder,textarea::placeholder { color: transparent !important; } svg text { fill: transparent !important; }" });
+    await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
     let pixels;
     const viewport = await page.evaluate(() => ({ modal: !!document.querySelector('[role="dialog"][aria-modal="true"]'), x: scrollX, y: scrollY }));
-    try { pixels = PNG.sync.read(await page.screenshot({ fullPage: !viewport.modal })); }
+    const cropped = viewport.modal || metadata.viewportOnly;
+    try { pixels = PNG.sync.read(await page.screenshot({ fullPage: !cropped })); }
     finally { await hide.evaluate(el => el.remove()); }
     const stateAfter = await page.evaluate(() => `${location.pathname}${location.search}:${!!document.querySelector('[role="dialog"][aria-modal="true"]')}`);
     if (stateBefore !== stateAfter) {
@@ -24,8 +26,8 @@ export async function scanRenderedContrast(page, metadata, attempt = 0) {
     for (const candidate of candidates.filter(c => c.gradient)) {
       const ratios = [];
       for (const box of candidate.boxes) for (const position of [0.2, 0.5, 0.8]) {
-        const x = Math.min(pixels.width - 1, Math.max(0, Math.round(box.x - (viewport.modal ? viewport.x : 0) + box.width * position)));
-        const y = Math.min(pixels.height - 1, Math.max(0, Math.round(box.y - (viewport.modal ? viewport.y : 0) + box.height / 2)));
+        const x = Math.min(pixels.width - 1, Math.max(0, Math.round(box.x - (cropped ? viewport.x : 0) + box.width * position)));
+        const y = Math.min(pixels.height - 1, Math.max(0, Math.round(box.y - (cropped ? viewport.y : 0) + box.height / 2)));
         const offset = (y * pixels.width + x) * 4;
         const bg = { r: pixels.data[offset], g: pixels.data[offset + 1], b: pixels.data[offset + 2] };
         const a = candidate.foreground.a;

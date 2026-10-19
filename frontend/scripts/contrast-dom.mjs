@@ -1,5 +1,5 @@
 // Run inside the page: flatten translucent layers instead of skipping faint text.
-export function scanTextContrast({ route, theme, state, collect = false }) {
+export function scanTextContrast({ route, theme, state, collect = false, viewportOnly = false }) {
   const canvas = document.createElement("canvas");
   canvas.width = canvas.height = 1;
   const ctx = canvas.getContext("2d", { willReadFrequently: true });
@@ -69,7 +69,7 @@ export function scanTextContrast({ route, theme, state, collect = false }) {
     }
     // Scroll containers clip text; hidden lines must not sample a different surface.
     let left = -Infinity, top = -Infinity, right = Infinity, bottom = Infinity;
-    if (modal) { left = 0; top = 0; right = innerWidth; bottom = innerHeight; }
+    if (modal || viewportOnly) { left = 0; top = 0; right = innerWidth; bottom = innerHeight; }
     for (let parent = el.parentElement; parent; parent = parent.parentElement) {
       const css = getComputedStyle(parent), bounds = parent.getBoundingClientRect();
       if (["hidden", "clip", "auto", "scroll"].includes(css.overflowX)) { left = Math.max(left, bounds.left); right = Math.min(right, bounds.right); }
@@ -78,7 +78,7 @@ export function scanTextContrast({ route, theme, state, collect = false }) {
     boxes = boxes.map(box => ({ x: Math.max(box.left, left), y: Math.max(box.top, top), width: Math.min(box.right, right) - Math.max(box.left, left), height: Math.min(box.bottom, bottom) - Math.max(box.top, top) })).filter(box => box.width > 0 && box.height > 0);
     boxes = boxes.filter(box => {
       const x = box.x + box.width / 2, y = box.y + box.height / 2;
-      if (x < 0 || y < 0 || x >= innerWidth || y >= innerHeight) return !modal;
+      if (x < 0 || y < 0 || x >= innerWidth || y >= innerHeight) return !modal && !viewportOnly;
       const painted = document.elementFromPoint(x, y);
       return !painted || painted === el || el.contains(painted) || painted.contains(el);
     });

@@ -4,7 +4,7 @@ import assert from "node:assert/strict";
 import { scanRenderedContrast } from "./rendered-contrast.mjs";
 
 const app = "http://127.0.0.1:5181", api = "http://127.0.0.1:8006";
-const directory = "../docs/interaction-polish/controls";
+const directory = process.env.POLISH_CONTROLS_REPORT_PATH || "../docs/interaction-polish/controls";
 await fs.mkdir(directory, { recursive: true });
 const auth = await fetch(api + "/auth/login", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ username: "staff", password: "staff123" }) }).then(r => r.json());
 const browser = await chromium.launch({ executablePath: "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome", headless: true });

@@ -47,8 +47,10 @@ try {
     await page.getByText("Rates saved", { exact: true }).first().waitFor();
     await page.getByLabel(theme === "dark" ? "Switch to light mode" : "Switch to dark mode").hover();
     await page.waitForTimeout(450);
-    const tooltip = await page.getByLabel(theme === "dark" ? "Switch to light mode" : "Switch to dark mode").evaluate(button => ({ text: getComputedStyle(button, "::after").content, visible: getComputedStyle(button, "::after").opacity }));
-    assert.ok(Number(tooltip.visible) > 0.99);
+    const tip = page.getByRole("tooltip");
+    await tip.waitFor();
+    const tooltip = await tip.evaluate(node => ({ text: node.textContent, visible: getComputedStyle(node).opacity, x: node.getBoundingClientRect().x, right: node.getBoundingClientRect().right }));
+    assert.ok(Number(tooltip.visible) > 0.99 && tooltip.x >= 0 && tooltip.right <= page.viewportSize().width);
     report.controls.push({ theme, feedbackMs, widthBefore: before.width, widthLoading: loading.width, spinnerColor, tooltip });
 
     for (const route of ["/dashboard", "/bookings", "/customers", "/sales", "/cafe-pos", "/inventory", "/settings"]) {
@@ -63,7 +65,7 @@ try {
       await skeleton.waitFor({ timeout: 5000 });
       report.loading.push({ theme, route, skeletonVisible: true });
       release();
-      await page.unroute(api + "/**");
+      await page.unrouteAll({ behavior: "wait" });
       await skeleton.waitFor({ state: "hidden" });
     }
     await page.route("**/settings/rates", handler => handler.fulfill({ status: 503, contentType: "application/json", body: JSON.stringify({ detail: "QA connection interrupted" }) }));

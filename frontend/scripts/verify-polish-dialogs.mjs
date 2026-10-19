@@ -2,12 +2,13 @@ import { chromium } from "playwright";
 import fs from "node:fs/promises";
 import assert from "node:assert/strict";
 import { scanRenderedContrast } from "./rendered-contrast.mjs";
-const output = "../docs/interaction-polish/dialogs";
+import { measureUi } from "./ui-readiness-metrics.mjs";
+const output = process.env.DIALOG_OUTPUT_DIR || "../docs/interaction-polish/dialogs";
 await fs.mkdir(output, { recursive: true });
 const browser = await chromium.launch({ executablePath: "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome", headless: true });
 const report = { checks: [], contrast: [], errors: [] };
 try {
-  for (const theme of ["dark", "light"]) for (const phase of ["before", "after"]) {
+  for (const theme of ["dark", "light"]) for (const phase of process.env.DIALOG_STAGES?.split(",") || ["before", "after"]) {
     const auth = await fetch("http://127.0.0.1:8006/auth/login", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ username: "admin", password: "admin123" }) }).then(r => r.json());
     const context = await browser.newContext({ viewport: { width: 1440, height: 1100 }, reducedMotion: "reduce" });
     await context.addInitScript(({ auth, theme }) => { localStorage.setItem("theme", theme); for (const key of ["token", "role", "username"]) localStorage.setItem(key, auth[key]); }, { auth, theme });
@@ -38,7 +39,7 @@ try {
         await page.route("**/settings/menu", async route => { const response = await route.fetch(); const menu = await response.json(); menu["QA Cigarette"] = { price: 20, category: "Cigarettes", available: true }; await route.fulfill({ response, json: menu }); });
         await page.reload(); await page.getByRole("button", { name: /QA Cigarette/ }).click();
       }],
-    ]) {
+    ].filter(([name]) => !process.env.DIALOG_NAMES || process.env.DIALOG_NAMES.split(",").includes(name))) {
       console.log(`${phase} ${theme}: ${name}`);
       await page.goto(origin + route);
       await page.waitForFunction(() => !document.querySelector('.page-skeleton,.lf-skeleton,.ui-skeleton-stack,.ui-skeleton-grid'));
@@ -46,6 +47,18 @@ try {
       const dialog = name === "history" && phase === "before" ? page.locator(".table-history-modal") : page.getByRole("dialog", { name: name === "reset" && phase === "after" ? "Reset T1" : undefined }).last();
       await dialog.waitFor(); await page.waitForTimeout(200);
       await dialog.screenshot({ path: `${output}/${name}-${phase}-${theme}.png` });
+      for (const width of process.env.DIALOG_WIDTHS?.split(",").map(Number) || [1440]) {
+        await page.setViewportSize({width,height:width===375?844:1000});
+        await page.waitForTimeout(100);
+        const metrics = await page.evaluate(measureUi), box = await dialog.boundingBox();
+        await page.screenshot({path:`${output}/${name}-${phase}-${theme}-${width}.png`,animations:"disabled"});
+        report.checks.push({phase,theme,name,width,...metrics,withinViewport:box.x>=0&&box.y>=0&&box.width<=width+1&&box.height<=(width===375?844:1000)+1});
+        if (phase === "after") {
+          assert.equal(metrics.overflow,0);assert.equal(metrics.shortTargets.length,0);assert.equal(metrics.unlabeledInputs.length,0);assert.equal(metrics.contentOverflow.length,0);
+          assert.ok(box.x>=0&&box.y>=0&&box.width<=width+1&&box.height<=(width===375?844:1000)+1);
+          report.contrast.push(...await scanRenderedContrast(page,{route,theme,state:`${name}-${width}`}));
+        }
+      }
       if (phase === "after") {
         const controls = dialog.locator('button:visible:not(:disabled),input:visible:not(:disabled),select:visible:not(:disabled),textarea:visible:not(:disabled)');
         await controls.last().focus(); await page.keyboard.press("Tab");

@@ -3,31 +3,17 @@ import assert from "node:assert/strict";
 import fs from "node:fs/promises";
 const browser = await chromium.launch({ executablePath: "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome", headless: true });
 const results = [];
+const app = process.env.ASYNC_BUTTON_APP_URL || "http://127.0.0.1:5181";
+assert.ok(["127.0.0.1", "localhost"].includes(new URL(app).hostname), "Local QA only");
 try {
   for (const theme of ["light", "dark"]) {
     const context = await browser.newContext();
     await context.addInitScript(theme => localStorage.setItem("theme", theme), theme);
     const page = await context.newPage();
-    await page.goto("http://127.0.0.1:5181/login");
+    await page.goto(app + "/login");
     await page.evaluate(async () => {
-      const { default: React } = await import("/node_modules/.vite/deps/react.js");
-      const { default: ReactDOM } = await import("/node_modules/.vite/deps/react-dom_client.js");
-      const { createElement } = React;
-      const { createRoot } = ReactDOM;
-      const { default: Button, IconButton } = await import("/src/components/ui/Button.jsx");
-      const host = document.createElement("div");
-      host.style.cssText = "position:fixed;inset:10px;z-index:9999;background:var(--surface);padding:30px;display:flex;gap:20px;align-items:start";
-      document.body.append(host);
-      window.__buttonCalls = {}; window.__buttonResolvers = {};
-      const make = name => () => {
-        window.__buttonCalls[name] = (window.__buttonCalls[name] || 0) + 1;
-        return new Promise(resolve => { window.__buttonResolvers[name] = resolve; });
-      };
-      createRoot(host).render(createElement("div", {},
-        createElement(Button, { onClick: make("standard"), "data-testid": "standard" }, "Save a longer label"),
-        createElement(Button, { native: true, onClick: make("native"), "data-testid": "native" }, "Native action"),
-        createElement(IconButton, { onClick: make("icon"), "data-testid": "icon", label: "Retry", icon: "ti-refresh" }),
-      ));
+      const fixture = await import("/scripts/feedback-fixtures.jsx");
+      fixture.mountAsyncButtonsFixture();
     });
     for (const name of ["standard", "native", "icon"]) {
       const button = page.getByTestId(name);
