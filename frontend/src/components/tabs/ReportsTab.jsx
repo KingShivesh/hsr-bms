@@ -1,8 +1,8 @@
-import { formatCurrency as polishCurrency } from "../../utils/format.js";
+import { formatCurrency as polishCurrency, formatDateTime } from "../../utils/format.js";
 import { Button as HsrButton, Icon as HsrIcon, Input as HsrInput, Table as HsrTable } from "../ui/index.js";
 import { useCallback, useEffect, useState } from "react";
 import DataFreshness from "../../product/DataFreshness.jsx";
-import { useCachedState } from "../../hooks/useCachedState.js";
+import { hasCachedState, useCachedState } from "../../hooks/useCachedState.js";
 import {
   getSummary,
   getHistory,
@@ -18,6 +18,7 @@ import { CSV_PREFIX } from "../../config/hsrTables.js";
 import { MetricCard } from "../ui/index.js";
 import { useToast } from "../toastContext.js";
 import RetryNotice from "../RetryNotice.jsx";
+import Pagination from "../ui/Pagination.jsx";
 import SessionEditsReport from "../../features/sessions/SessionEditsReport.jsx";
 
 const PERIODS = [
@@ -33,16 +34,7 @@ const REPORT_TABS = [
   { id: "session-edits", label: "Session Edits" },
 ];
 const DEFAULT_REPORT_TAB = "history";
-const BILL_DATE_FORMATTER = new Intl.DateTimeFormat("en-IN", {
-  timeZone: "Asia/Kolkata",
-  day: "2-digit",
-  month: "2-digit",
-  year: "numeric",
-  hour: "2-digit",
-  minute: "2-digit",
-  second: "2-digit",
-  hourCycle: "h23",
-});
+const HISTORY_PAGE_SIZE = 25;
 const DATE_PICKER_FORMATTER = new Intl.DateTimeFormat("en-IN", {
   timeZone: "Asia/Kolkata",
   day: "2-digit",
@@ -53,7 +45,7 @@ const DATE_PICKER_FORMATTER = new Intl.DateTimeFormat("en-IN", {
 function formatBillDate(row) {
   const ts = Number(row?.ts);
   if (Number.isFinite(ts) && ts > 0) {
-    return BILL_DATE_FORMATTER.format(new Date(ts));
+    return formatDateTime(ts, { includeYear: true });
   }
   return row?.date || "-";
 }
@@ -64,6 +56,11 @@ function billCustomerName(row) {
 
 function billTotal(row) {
   return Number(row?.tot ?? row?.total ?? 0);
+}
+
+function numberOrZero(value) {
+  const number = Number(value);
+  return Number.isFinite(number) ? number : 0;
 }
 
 function isSuspiciousBill(row) {
@@ -112,7 +109,7 @@ function StatCard({ label, value, color, context, empty = false }) {
   );
 }
 
-function EmptyState({ icon = "ti-chart-bar", title, detail }) {
+function EmptyState({ icon = "ti-chart-bar", title, detail, action }) {
   return (
     <div className="empty-state">
       <div className="empty-state-icon">
@@ -120,6 +117,7 @@ function EmptyState({ icon = "ti-chart-bar", title, detail }) {
       </div>
       <div className="empty-state-title">{title}</div>
       {detail && <div className="empty-state-detail">{detail}</div>}
+      {action}
     </div>
   );
 }
@@ -196,14 +194,17 @@ function ReportEmptyList({ title, detail, rows }) {
 // ── Bills ──
 function HistoryView({ history, period, onPeriodChange, selectedDate, onDateChange, onExport, exporting = false }) {
   const [search, setSearch] = useState("");
+  const [page, setPage] = useState(1);
+  useEffect(() => setPage(1), [search, period, selectedDate]);
   const labelBillingMode = (mode) => {
     if (mode === "sharing") return "Sharing";
     if (mode === "lp") return "LP";
     return "Single";
   };
 
-  const filtered = history.filter((r) => {
-    const customer = billCustomerName(r).toLowerCase();
+  const filtered = (Array.isArray(history) ? history : []).filter((r) => {
+    if (!r) return false;
+    const customer = String(billCustomerName(r)).toLowerCase();
     const table = String(r.tbl || r.table_id || "").toLowerCase();
     const matchSearch =
       customer.includes(search.toLowerCase()) ||
@@ -216,7 +217,7 @@ function HistoryView({ history, period, onPeriodChange, selectedDate, onDateChan
     if (period === "today") {
       const d = now;
       const todayStr = `${String(d.getDate()).padStart(2, "0")}/${String(d.getMonth() + 1).padStart(2, "0")}/${d.getFullYear()}`;
-      return r.date.startsWith(todayStr);
+      return r.date?.startsWith(todayStr) || false;
     }
     if (period === "week") {
       return r.ts >= Date.now() - 7 * 24 * 60 * 60 * 1000;
@@ -224,6 +225,10 @@ function HistoryView({ history, period, onPeriodChange, selectedDate, onDateChan
     return true;
   });
   const suspiciousCount = filtered.filter(isSuspiciousBill).length;
+  const pageCount = Math.max(1, Math.ceil(filtered.length / HISTORY_PAGE_SIZE));
+  const currentPage = Math.max(1, Math.min(page, pageCount));
+  const pageRows = filtered.slice((currentPage - 1) * HISTORY_PAGE_SIZE, currentPage * HISTORY_PAGE_SIZE);
+  useEffect(() => setPage(value => Math.max(1, Math.min(value, pageCount))), [pageCount]);
 
   return (
     <div className="history-section">
@@ -270,6 +275,7 @@ function HistoryView({ history, period, onPeriodChange, selectedDate, onDateChan
         type="text"
         className="input-field polish-margin-bottom-12px"
         placeholder="Search by customer or table..."
+        aria-label="Search bills by customer or table"
         value={search}
         onChange={(e) => setSearch(e.target.value)}
 
@@ -308,12 +314,13 @@ function HistoryView({ history, period, onPeriodChange, selectedDate, onDateChan
                     icon="ti-receipt"
                     title="No transactions found"
                     detail="Try a different period or search term."
+                    action={(search || period !== "all") && <HsrButton variant="secondary" icon="ti-filter-off" onClick={() => { setSearch(""); onDateChange(""); onPeriodChange("all"); }}>Clear filters</HsrButton>}
                   />
                 </td>
               </tr>
             ) : (
-              filtered.map((r, i) => (
-                <tr key={i} className={isSuspiciousBill(r) ? "data-row-warning" : ""}>
+              pageRows.map((r, i) => (
+                <tr key={r.id ?? i} data-receipt-id={r.id} className={isSuspiciousBill(r) ? "data-row-warning" : ""}>
                   <td className="type-sm polish-color-text-muted" >{formatBillDate(r)}</td>
                   <td>
                     <span className="type-sm polish-background-surface-muted polish-color-text-primary polish-padding-0px-8px polish-border-radius-radius-sm polish-font-weight-weight-semibold"
@@ -326,18 +333,19 @@ function HistoryView({ history, period, onPeriodChange, selectedDate, onDateChan
                   <td className="type-sm polish-color-text-secondary polish-font-weight-weight-bold" >
                     {labelBillingMode(r.billing_mode)}
                   </td>
-                  <td className="polish-color-text-secondary" >{r.dur}m</td>
+                  <td className="polish-color-text-secondary" >{numberOrZero(r.dur)}m</td>
                   <td data-type="number" className="polish-color-success polish-font-weight-weight-medium" >
-                    ₹{r.ply}
+                    {polishCurrency(r.ply)}
                   </td>
-                  <td data-type="number" className="polish-color-warning" >₹{r.famt || 0}</td>
-                  <td data-type="number" className="polish-font-weight-weight-bold" >₹{billTotal(r)}</td>
+                  <td data-type="number" className="polish-color-warning" >{polishCurrency(r.famt)}</td>
+                  <td data-type="number" className="polish-font-weight-weight-bold" >{polishCurrency(billTotal(r))}</td>
                 </tr>
               ))
             )}
           </tbody>
         </HsrTable>
       </div>
+      <Pagination total={filtered.length} page={currentPage} pageSize={HISTORY_PAGE_SIZE} onPageChange={setPage} label="Bills" />
     </div>
   );
 }
@@ -346,18 +354,29 @@ function HistoryView({ history, period, onPeriodChange, selectedDate, onDateChan
 function TopCustomersView() {
   const [data, setData] = useState(null);
   const [period, setPeriod] = useState("month");
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+  const [retry, setRetry] = useState(0);
 
   useEffect(() => {
+    let active = true;
+    setLoading(true);
+    setError("");
     async function fetchTopCustomers() {
       try {
         const res = await getTopCustomers(period);
-        setData(res.data);
+        if (active) setData(res.data);
       } catch (e) {
-        console.error(e);
+        if (active) setError(e.userMessage || "Regular customers could not load.");
+      } finally {
+        if (active) setLoading(false);
       }
     }
     fetchTopCustomers();
-  }, [period]);
+    return () => { active = false; };
+  }, [period, retry]);
+
+  const customers = Array.isArray(data?.customers) ? data.customers.filter(Boolean) : [];
 
   return (
     <div className="reports-page-shell">
@@ -366,7 +385,7 @@ function TopCustomersView() {
       >
         <div className="type-base polish-font-weight-weight-semibold polish-color-var---venue-text-text" >
           Regular Customers{" "}
-          {data && (
+          {!loading && !error && data && (
             <span className="type-sm polish-color-text-muted polish-font-weight-weight-regular" >
               — {data.label}
             </span>
@@ -381,7 +400,7 @@ function TopCustomersView() {
             <TabBtn
               key={id}
               active={period === id}
-              onClick={() => setPeriod(id)}
+              onClick={() => { if (period !== id) { setLoading(true); setPeriod(id); } }}
             >
               {label}
             </TabBtn>
@@ -389,11 +408,14 @@ function TopCustomersView() {
         </div>
       </div>
 
-      {!data || data.customers.length === 0 ? (
+      {loading ? <LoadingState title="Loading regular customers..." /> : error ? (
+        <RetryNotice message={error} onRetry={() => setRetry(value => value + 1)} />
+      ) : customers.length === 0 ? (
         <EmptyState
           icon="ti-users"
           title="No customer data yet"
           detail="Customer rankings will appear once sessions are completed."
+          action={<HsrButton variant="secondary" icon="ti-refresh" onClick={() => setRetry(value => value + 1)}>Refresh</HsrButton>}
         />
       ) : (
         <div className="history-section">
@@ -409,7 +431,7 @@ function TopCustomersView() {
               </tr>
             </thead>
             <tbody>
-              {data.customers.map((c, i) => (
+              {customers.map((c, i) => (
                 <tr key={i}>
                   <td>
                     <span className="type-sm polish-font-weight-weight-bold polish-padding-0px-8px polish-border-radius-radius-sm"
@@ -420,16 +442,16 @@ function TopCustomersView() {
                   </td>
                   <td className="polish-font-weight-weight-medium" >{c.name}</td>
                   <td className="polish-color-accent polish-font-weight-weight-medium" >
-                    {c.visits}
+                    {numberOrZero(c.visits)}
                   </td>
                   <td data-type="number" className="polish-color-text-secondary" >
-                    ₹{c.play.toLocaleString("en-IN")}
+                    {polishCurrency(c.play)}
                   </td>
                   <td data-type="number" className="polish-color-warning" >
-                    ₹{c.food.toLocaleString("en-IN")}
+                    {polishCurrency(c.food)}
                   </td>
                   <td data-type="number" className="polish-font-weight-weight-bold polish-color-success" >
-                    ₹{c.spent.toLocaleString("en-IN")}
+                    {polishCurrency(c.spent)}
                   </td>
                 </tr>
               ))}
@@ -444,14 +466,26 @@ function TopCustomersView() {
 // ── Table Performance ──
 function UtilizationView() {
   const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+  const [retry, setRetry] = useState(0);
 
   useEffect(() => {
+    let active = true;
+    setLoading(true);
+    setError("");
     getTableUtilization()
-      .then((r) => setData(r.data))
-      .catch(console.error);
-  }, []);
+      .then((r) => { if (active) setData(Array.isArray(r.data) ? r.data.filter(Boolean) : []); })
+      .catch(e => { if (active) setError(e.userMessage || "Table performance could not load."); })
+      .finally(() => { if (active) setLoading(false); });
+    return () => { active = false; };
+  }, [retry]);
 
-  const maxRevenue = Math.max(...data.map((d) => d.revenue), 1);
+  if (loading) return <LoadingState title="Loading table performance..." />;
+  if (error) return <RetryNotice message={error} onRetry={() => setRetry(value => value + 1)} />;
+  if (data.length === 0) return <EmptyState title="No table performance data" detail="No table sessions are available in this report." action={<HsrButton variant="secondary" icon="ti-refresh" onClick={() => setRetry(value => value + 1)}>Refresh</HsrButton>} />;
+
+  const maxRevenue = Math.max(...data.map((d) => numberOrZero(d.revenue)), 1);
 
   return (
     <div>
@@ -467,12 +501,12 @@ function UtilizationView() {
       >
         <StatCard
           label="Total Sessions"
-          value={data.reduce((a, d) => a + d.sessions, 0)}
+          value={data.reduce((a, d) => a + numberOrZero(d.sessions), 0)}
           color="var(--accent)"
         />
         <StatCard
           label="Total Revenue"
-          value={polishCurrency(data.reduce((a, d) => a + d.revenue, 0))}
+          value={polishCurrency(data.reduce((a, d) => a + numberOrZero(d.revenue), 0))}
           color="var(--success)"
         />
         <StatCard
@@ -482,7 +516,7 @@ function UtilizationView() {
         />
         <StatCard
           label="Avg Duration"
-          value={`${Math.round(data.reduce((a, d) => a + (d.avg_dur || 0), 0) / Math.max(data.filter((d) => d.sessions > 0).length, 1))}m`}
+          value={`${Math.round(data.reduce((a, d) => a + numberOrZero(d.avg_dur), 0) / Math.max(data.filter((d) => d.sessions > 0).length, 1))}m`}
           color="var(--text-primary)"
         />
       </div>
@@ -512,14 +546,14 @@ function UtilizationView() {
                   </span>
                 </td>
                 <td className="polish-color-accent polish-font-weight-weight-medium" >
-                  {d.sessions}
+                  {numberOrZero(d.sessions)}
                 </td>
-                <td className="polish-color-text-secondary" >{d.avg_dur}m</td>
+                <td className="polish-color-text-secondary" >{numberOrZero(d.avg_dur)}m</td>
                 <td data-type="number" className="polish-color-warning" >
-                  ₹{d.food_rev.toLocaleString("en-IN")}
+                  {polishCurrency(d.food_rev)}
                 </td>
                 <td data-type="number" className="polish-font-weight-weight-bold polish-color-success" >
-                  ₹{d.revenue.toLocaleString("en-IN")}
+                  {polishCurrency(d.revenue)}
                 </td>
                 <td>
                   <div
@@ -529,13 +563,13 @@ function UtilizationView() {
                       className="polish-flex-1 polish-height-6px polish-background-border polish-border-radius-radius-sm"
                     >
                       <div
-                        className="polish-height-6px polish-background-success polish-border-radius-radius-sm" style={{ width: `${Math.round((d.revenue / maxRevenue) * 100)}%` }}
+                        className="polish-height-6px polish-background-success polish-border-radius-radius-sm" style={{ width: `${Math.round((numberOrZero(d.revenue) / maxRevenue) * 100)}%` }}
                       />
                     </div>
                     <span className="type-xs polish-color-text-muted polish-width-36px"
 
                     >
-                      {d.utilization_pct}%
+                      {numberOrZero(d.utilization_pct)}%
                     </span>
                   </div>
                 </td>
@@ -616,12 +650,12 @@ function ClosingReportView({ onNavigate }) {
         />
         <StatCard
           label="Sessions"
-          value={data.total_sessions}
+          value={numberOrZero(data.total_sessions)}
           color="var(--accent)"
         />
         <StatCard
           label="Avg Duration"
-          value={`${data.avg_duration}m`}
+          value={`${numberOrZero(data.avg_duration)}m`}
           color="var(--text-primary)"
         />
         <StatCard
@@ -638,7 +672,7 @@ function ClosingReportView({ onNavigate }) {
       </div>
 
       {/* Table breakdown */}
-      {Object.keys(data.table_breakdown).length > 0 && (
+      {Object.keys(data.table_breakdown || {}).length > 0 && (
         <div className="history-section polish-margin-bottom-16px" >
           <div className="type-sm polish-font-weight-weight-semibold polish-color-text-primary polish-margin-bottom-12px"
 
@@ -654,14 +688,14 @@ function ClosingReportView({ onNavigate }) {
               </tr>
             </thead>
             <tbody>
-              {Object.entries(data.table_breakdown)
-                .sort((a, b) => b[1].revenue - a[1].revenue)
+              {Object.entries(data.table_breakdown || {})
+                .sort((a, b) => numberOrZero(b[1]?.revenue) - numberOrZero(a[1]?.revenue))
                 .map(([tbl, stats], i) => (
                   <tr key={i}>
                     <td className="polish-font-weight-weight-semibold" >{tbl}</td>
-                    <td className="polish-color-accent" >{stats.sessions}</td>
+                    <td className="polish-color-accent" >{numberOrZero(stats?.sessions)}</td>
                     <td data-type="number" className="polish-font-weight-weight-semibold polish-color-success" >
-                      ₹{stats.revenue.toLocaleString("en-IN")}
+                      {polishCurrency(stats?.revenue)}
                     </td>
                   </tr>
                 ))}
@@ -671,7 +705,7 @@ function ClosingReportView({ onNavigate }) {
       )}
 
       {/* Food breakdown */}
-      {Object.keys(data.food_breakdown).length > 0 && (
+      {Object.keys(data.food_breakdown || {}).length > 0 && (
         <div className="history-section polish-margin-bottom-16px" >
           <div className="type-sm polish-font-weight-weight-semibold polish-color-text-primary polish-margin-bottom-12px"
 
@@ -686,12 +720,12 @@ function ClosingReportView({ onNavigate }) {
               </tr>
             </thead>
             <tbody>
-              {Object.entries(data.food_breakdown)
+              {Object.entries(data.food_breakdown || {})
                 .sort((a, b) => b[1] - a[1])
                 .map(([item, qty], i) => (
                   <tr key={i}>
                     <td className="polish-font-weight-weight-medium" >{item}</td>
-                    <td className="polish-color-warning polish-font-weight-weight-semibold" >{qty}</td>
+                    <td className="polish-color-warning polish-font-weight-weight-semibold" >{numberOrZero(qty)}</td>
                   </tr>
                 ))}
             </tbody>
@@ -700,7 +734,7 @@ function ClosingReportView({ onNavigate }) {
       )}
 
       {/* All transactions today */}
-      {data.transactions.length > 0 && (
+      {Array.isArray(data.transactions) && data.transactions.some(Boolean) && (
         <div className="history-section">
           <div className="type-sm polish-font-weight-weight-semibold polish-color-text-primary polish-margin-bottom-12px"
 
@@ -719,14 +753,14 @@ function ClosingReportView({ onNavigate }) {
               </tr>
             </thead>
             <tbody>
-              {data.transactions.map((t, i) => (
+              {data.transactions.filter(Boolean).map((t, i) => (
                 <tr key={i}>
                   <td className="polish-font-weight-weight-semibold" >{t.tbl}</td>
                   <td className="polish-font-weight-weight-medium" >{t.nm}</td>
-                  <td className="polish-color-text-secondary" >{t.dur}m</td>
-                  <td data-type="number" className="polish-color-success" >₹{t.ply}</td>
-                  <td data-type="number" className="polish-color-warning" >₹{t.famt}</td>
-                  <td data-type="number" className="polish-font-weight-weight-bold" >₹{t.tot}</td>
+                  <td className="polish-color-text-secondary" >{numberOrZero(t.dur)}m</td>
+                  <td data-type="number" className="polish-color-success" >{polishCurrency(t.ply)}</td>
+                  <td data-type="number" className="polish-color-warning" >{polishCurrency(t.famt)}</td>
+                  <td data-type="number" className="polish-font-weight-weight-bold" >{polishCurrency(t.tot)}</td>
                 </tr>
               ))}
             </tbody>
@@ -734,7 +768,7 @@ function ClosingReportView({ onNavigate }) {
         </div>
       )}
 
-      {data.total_sessions === 0 && (
+      {numberOrZero(data.total_sessions) === 0 && (
         <EmptyState
           icon="ti-clock-hour-4"
           title="No sessions recorded today"
@@ -772,16 +806,16 @@ function ClosingInsightsView() {
       <div
         className="polish-display-grid polish-grid-template-columns-repeat-3-1fr polish-gap-12px polish-margin-bottom-16px"
       >
-        <StatCard label="Revenue" value={polishCurrency(data.metrics.revenue)} color="var(--success)" />
-        <StatCard label="Sessions" value={data.metrics.sessions} color="var(--accent)" />
-        <StatCard label="Food" value={polishCurrency(data.metrics.food)} color="var(--warning)" />
+        <StatCard label="Revenue" value={polishCurrency(data.metrics?.revenue)} color="var(--success)" />
+        <StatCard label="Sessions" value={numberOrZero(data.metrics?.sessions)} color="var(--accent)" />
+        <StatCard label="Food" value={polishCurrency(data.metrics?.food)} color="var(--warning)" />
       </div>
 
       <div className="history-section">
         <div className="type-base polish-font-weight-weight-bold polish-margin-bottom-12px" >
           Smart Closing Insights
         </div>
-        {data.insights.map((insight, i) => {
+        {(Array.isArray(data.insights) ? data.insights.filter(Boolean) : []).map((insight, i) => {
           const [bg, fg, border] = colors[insight.type] || colors.info;
           return (
             <div
@@ -805,7 +839,7 @@ function AuditLogView() {
 
   useEffect(() => {
     getAuditLogs(100)
-      .then((r) => setRows(r.data))
+      .then((r) => setRows(Array.isArray(r.data) ? r.data.filter(Boolean) : []))
       .catch(console.error);
   }, []);
 
@@ -838,7 +872,7 @@ function AuditLogView() {
           ) : (
             rows.map((r) => (
               <tr key={r.id}>
-                <td className="type-sm polish-color-text-secondary" >{r.date}</td>
+                <td className="type-sm polish-color-text-secondary" >{formatBillDate(r)}</td>
                 <td className="polish-font-weight-weight-bold" style={{ color: r.severity === "critical" ? "var(--danger)" : r.severity === "warning" ? "var(--warning)" : "var(--accent)" }}>
                   {r.severity}
                 </td>
@@ -856,17 +890,26 @@ function AuditLogView() {
 
 function AdvancedAnalyticsView() {
   const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+  const [retry, setRetry] = useState(0);
 
   useEffect(() => {
+    let active = true;
+    setLoading(true);
+    setError("");
     getAdvancedAnalytics()
-      .then((r) => setData(r.data))
-      .catch(console.error);
-  }, []);
+      .then((r) => { if (active) setData(r.data || {}); })
+      .catch(e => { if (active) setError(e.userMessage || "Advanced analytics could not load."); })
+      .finally(() => { if (active) setLoading(false); });
+    return () => { active = false; };
+  }, [retry]);
 
-  if (!data) return <LoadingState title="Loading advanced analytics..." />;
+  if (loading) return <LoadingState title="Loading advanced analytics..." />;
+  if (error) return <RetryNotice message={error} onRetry={() => setRetry(value => value + 1)} />;
 
-  const tableProfitability = Array.isArray(data.table_profitability) ? data.table_profitability : [];
-  const quietHours = Array.isArray(data.quiet_hours) ? data.quiet_hours : [];
+  const tableProfitability = Array.isArray(data.table_profitability) ? data.table_profitability.filter(Boolean) : [];
+  const quietHours = Array.isArray(data.quiet_hours) ? data.quiet_hours.filter(Boolean) : [];
   const hasQuietHourSignals = quietHours.some((row) => Number(row.sessions || 0) > 0);
   const hasCustomerData = Number(data.total_customers || 0) > 0;
   const hasSpendData = Number(data.avg_spend_per_customer || 0) > 0;
@@ -877,21 +920,21 @@ function AdvancedAnalyticsView() {
       <div className="advanced-grid">
         <StatCard
           label="Retention"
-          value={`${data.retention_rate}%`}
+          value={`${numberOrZero(data.retention_rate)}%`}
           color="var(--accent)"
           context={hasCustomerData ? "Returning customer share" : "Awaiting customer history"}
           empty={!hasCustomerData}
         />
         <StatCard
           label="Repeat Customers"
-          value={`${data.repeat_customers}/${data.total_customers}`}
+          value={`${numberOrZero(data.repeat_customers)}/${numberOrZero(data.total_customers)}`}
           color="var(--success)"
           context={hasCustomerData ? "Customers with repeat visits" : "No customer visits in range"}
           empty={!hasCustomerData}
         />
         <StatCard
           label="Food Attachment"
-          value={`${data.food_attachment_rate}%`}
+          value={`${numberOrZero(data.food_attachment_rate)}%`}
           color="var(--warning)"
           context={hasFoodAttachData ? "Orders attached to sessions" : "No food orders attached yet"}
           empty={!hasFoodAttachData}
@@ -930,10 +973,10 @@ function AdvancedAnalyticsView() {
                 {tableProfitability.map((row) => (
                   <tr key={row.table}>
                     <td className="polish-font-weight-weight-bold" >{row.table}</td>
-                    <td>{row.sessions}</td>
-                    <td data-type="number" className="polish-color-success polish-font-weight-weight-bold" >₹{row.revenue.toLocaleString("en-IN")}</td>
-                    <td>{row.avg_duration}m</td>
-                    <td data-type="number">₹{row.revenue_per_session.toLocaleString("en-IN")}</td>
+                    <td>{numberOrZero(row.sessions)}</td>
+                    <td data-type="number" className="polish-color-success polish-font-weight-weight-bold" >{polishCurrency(row.revenue)}</td>
+                    <td>{numberOrZero(row.avg_duration)}m</td>
+                    <td data-type="number">{polishCurrency(row.revenue_per_session)}</td>
                   </tr>
                 ))}
               </tbody>
@@ -953,8 +996,8 @@ function AdvancedAnalyticsView() {
             <>
               {quietHours.map((row) => (
                 <div key={row.hour} className="risk-row">
-                  <span>{row.hour}:00 - {row.hour + 1}:00</span>
-                  <strong>{row.sessions} sessions</strong>
+                  <span>{numberOrZero(row.hour)}:00 - {numberOrZero(row.hour) + 1}:00</span>
+                  <strong>{numberOrZero(row.sessions)} sessions</strong>
                 </div>
               ))}
               <div className="empty-state-detail polish-margin-top-8px" >
@@ -988,15 +1031,18 @@ export default function ReportsTab({ onNavigate }) {
     top_table: "-",
   });
   const [history, setHistory] = useCachedState("reports-history", []);
+  const [summaryReady, setSummaryReady] = useState(() => hasCachedState("reports-summary"));
+  const [historyReady, setHistoryReady] = useState(() => hasCachedState("reports-history"));
   const [exporting, setExporting] = useState(false);
   const [refreshedAt, setRefreshedAt] = useState(0);
-  const [refreshing, setRefreshing] = useState(false);
+  const [refreshing, setRefreshing] = useState(true);
   const [loadError, setLoadError] = useState("");
 
   const fetchSummary = useCallback(async () => {
     try {
       const res = await getSummary();
-      setSummary(res.data);
+      setSummary(res.data || {});
+      setSummaryReady(true);
       return true;
     } catch (e) {
       console.error(e);
@@ -1008,7 +1054,8 @@ export default function ReportsTab({ onNavigate }) {
   const fetchHistory = useCallback(async () => {
     try {
       const res = await getHistory();
-      setHistory(res.data);
+      setHistory(Array.isArray(res.data) ? res.data.filter(Boolean) : []);
+      setHistoryReady(true);
       return true;
     } catch (e) {
       console.error(e);
@@ -1055,30 +1102,32 @@ export default function ReportsTab({ onNavigate }) {
       {loadError && (
         <RetryNotice
           message={loadError}
-          detail="Reports may be stale until the latest data loads."
+          detail={summaryReady || historyReady ? "Reports may be stale until the latest data loads." : "Check your connection, then try again."}
           onRetry={refreshReports}
         />
       )}
       <DataFreshness at={refreshedAt} loading={refreshing} onRefresh={refreshReports} />
-      {/* Summary cards — always visible */}
-      <div className="reports-summary-grid">
-        <StatCard
-          label="Today's Revenue"
-          value={polishCurrency(summary.sale)}
-          color="var(--success)"
-        />
-        <StatCard
-          label="Sessions Today"
-          value={summary.sessions}
-          color="var(--accent)"
-        />
-        <StatCard
-          label="Avg Duration"
-          value={`${summary.avg_time}m`}
-          color="var(--text-primary)"
-        />
-        <StatCard label="Top Table" value={summary.top_table} color="var(--warning)" />
-      </div>
+      {!summaryReady && refreshing && <LoadingState title="Loading report summary..." />}
+      {summaryReady && (
+        <div className="reports-summary-grid">
+          <StatCard
+            label="Today's Revenue"
+            value={polishCurrency(summary?.sale)}
+            color="var(--success)"
+          />
+          <StatCard
+            label="Sessions Today"
+            value={numberOrZero(summary?.sessions)}
+            color="var(--accent)"
+          />
+          <StatCard
+            label="Avg Duration"
+            value={`${numberOrZero(summary?.avg_time)}m`}
+            color="var(--text-primary)"
+          />
+          <StatCard label="Top Table" value={summary?.top_table || "-"} color="var(--warning)" />
+        </div>
+      )}
 
       {/* Sub-tab navigation */}
       <div className="segmented-control page-tabs reports-tabs">
@@ -1093,16 +1142,17 @@ export default function ReportsTab({ onNavigate }) {
         ))}
       </div>
 
-      {activeTab === "history" && (
+      {activeTab === "history" && !historyReady && refreshing && <LoadingState title="Loading bills..." />}
+      {activeTab === "history" && historyReady && (
         <HistoryView
           history={history}
           period={period}
           onPeriodChange={setPeriod}
-	          selectedDate={selectedDate}
-	          onDateChange={setSelectedDate}
-	          onExport={handleExport}
-	          exporting={exporting}
-	        />
+          selectedDate={selectedDate}
+          onDateChange={setSelectedDate}
+          onExport={handleExport}
+          exporting={exporting}
+        />
       )}
       {activeTab === "customers" && <TopCustomersView />}
       {activeTab === "tables" && <UtilizationView />}

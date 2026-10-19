@@ -1,4 +1,4 @@
-import { Button as HsrButton, Input as HsrInput } from "../ui/index.js";
+import { Button as HsrButton, Input as HsrInput, SkeletonBlock } from "../ui/index.js";
 import { useState, useEffect } from "react";
 import {
   getPeakHours,
@@ -17,6 +17,7 @@ function TabBtn({ active, onClick, children }) {
   return (
     <HsrButton native
       type="button"
+      aria-pressed={active}
       onClick={onClick}
       className={`ui-tab-btn ${active ? "active" : ""}`}
     >
@@ -52,28 +53,32 @@ function PeakHoursView() {
   const [editingId, setEditingId] = useState(null);
   const [activeAction, setActiveAction] = useState("");
   const [loadError, setLoadError] = useState("");
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetchAll();
   }, []);
 
   async function fetchAll() {
+    setLoading(true);
     try {
       setLoadError("");
       const [rRes, cRes] = await Promise.all([
         getPeakHours(),
         getCurrentRate(),
       ]);
-      setRules(rRes.data);
+      setRules(Array.isArray(rRes.data) ? rRes.data.filter((rule) => rule && typeof rule === "object") : []);
       setCurrentRate(cRes.data);
     } catch (e) {
       console.error(e);
       setLoadError(e.userMessage || "Peak-hour settings could not load.");
+    } finally {
+      setLoading(false);
     }
   }
 
   async function handleSaveRule() {
-    if (startHour >= endHour) {
+    if (Number(startHour) >= Number(endHour)) {
       showToast("Start hour must be before end hour", "error");
       return;
     }
@@ -108,9 +113,9 @@ function PeakHoursView() {
   function startEdit(rule) {
     setEditingId(rule.id);
     setLabel(rule.label || "Peak Hours");
-    setStartHour(rule.start_hour);
-    setEndHour(rule.end_hour);
-    setMultiplier(rule.multiplier);
+    setStartHour(rule.start_hour ?? "");
+    setEndHour(rule.end_hour ?? "");
+    setMultiplier(rule.multiplier ?? "");
   }
 
   function cancelEdit() {
@@ -142,8 +147,11 @@ function PeakHoursView() {
   }
 
   function fmtHour(h) {
-    return `${String(h).padStart(2, "0")}:00`;
+    return h == null ? "—" : `${String(h).padStart(2, "0")}:00`;
   }
+
+  if (loading) return <Panel title="Peak Hour Rates"><SkeletonBlock label="Loading peak-hour settings" rows={4} /></Panel>;
+  if (loadError && !currentRate) return <Panel title="Peak Hour Rates"><RetryNotice message={loadError} onRetry={fetchAll} /></Panel>;
 
   return (
     <Panel
@@ -166,7 +174,8 @@ function PeakHoursView() {
             className="polish-width-8px polish-height-8px polish-border-radius-50" style={{ background: currentRate.is_peak ? "var(--warning)" : "var(--success)" }}
           />
           <div className="type-sm polish-font-weight-weight-medium"
-            style={{ color: currentRate.is_peak ? "var(--warning-foreground)" : "var(--success-foreground)" }}
+            title={currentRate.label || undefined}
+            style={{ color: currentRate.is_peak ? "var(--warning-foreground)" : "var(--success-foreground)", minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}
           >
             {currentRate.is_peak
               ? `${currentRate.label} active — ${currentRate.multiplier}× rate`
@@ -180,8 +189,9 @@ function PeakHoursView() {
         className="polish-display-flex polish-gap-8px polish-align-items-flex-end polish-flex-wrap-wrap"
       >
         <div>
-          <label className="form-label">Label</label>
+          <label className="form-label" htmlFor="peak-rule-label">Label</label>
           <HsrInput
+            id="peak-rule-label"
             className="input-field polish-margin-0 polish-width-140px"
 
             value={label}
@@ -189,8 +199,9 @@ function PeakHoursView() {
           />
         </div>
         <div>
-          <label className="form-label">Start Hour</label>
+          <label className="form-label" htmlFor="peak-rule-start">Start Hour</label>
           <HsrInput
+            id="peak-rule-start"
             type="number"
             min="0"
             max="23"
@@ -201,8 +212,9 @@ function PeakHoursView() {
           />
         </div>
         <div>
-          <label className="form-label">End Hour</label>
+          <label className="form-label" htmlFor="peak-rule-end">End Hour</label>
           <HsrInput
+            id="peak-rule-end"
             type="number"
             min="1"
             max="24"
@@ -213,8 +225,9 @@ function PeakHoursView() {
           />
         </div>
         <div>
-          <label className="form-label">Multiplier</label>
+          <label className="form-label" htmlFor="peak-rule-multiplier">Multiplier</label>
           <HsrInput
+            id="peak-rule-multiplier"
             type="number"
             min="1"
             max="5"
@@ -230,7 +243,8 @@ function PeakHoursView() {
           className="btn btn-primary-sm polish-margin-bottom-0px"
 
           onClick={handleSaveRule}
-          disabled={!!activeAction}
+          disabled={!!activeAction || !!loadError}
+          loading={activeAction === "peak-add" || activeAction === `peak-edit-${editingId}`}
         >
           {activeAction === "peak-add"
             ? "Adding..."
@@ -269,8 +283,8 @@ function PeakHoursView() {
           <div className="operations-rule-table">
             {rules.map((rule) => (
               <div className="operations-rule-row" key={rule.id}>
-                <div>
-                  <strong>{rule.label}</strong>
+                <div style={{ minWidth: 0 }}>
+                  <strong title={rule.label || "Peak Hours"} style={{ display: "block", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{rule.label || "Peak Hours"}</strong>
                   <span>{fmtHour(rule.start_hour)} - {fmtHour(rule.end_hour)}</span>
                 </div>
                 <em>{rule.multiplier}x</em>
@@ -279,7 +293,7 @@ function PeakHoursView() {
                     type="button"
                     className="btn"
                     onClick={() => startEdit(rule)}
-                    disabled={!!activeAction}
+                    disabled={!!activeAction || !!loadError || rule.id == null}
                   >
                     Edit Rule
                   </HsrButton>
@@ -287,7 +301,8 @@ function PeakHoursView() {
                     type="button"
                     className="btn btn-danger-sm"
                     onClick={() => handleDelete(rule.id)}
-                    disabled={!!activeAction}
+                    disabled={!!activeAction || !!loadError || rule.id == null}
+                    loading={activeAction === `peak-delete-${rule.id}`}
                   >
                     {activeAction === `peak-delete-${rule.id}` ? "Deleting..." : "Delete Rule"}
                   </HsrButton>
@@ -308,20 +323,29 @@ function GSTView() {
   const [flash, setFlash] = useState("");
   const [saving, setSaving] = useState(false);
   const [loadError, setLoadError] = useState("");
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    getGST()
-      .then((r) => {
-        setLoadError("");
-        setGst(r.data.gst_percent);
-      })
-      .catch((e) => {
-        console.error(e);
-        setLoadError(e.userMessage || "GST setting could not load.");
-      });
+    fetchGST();
   }, []);
 
+  async function fetchGST() {
+    setLoading(true);
+    setLoadError("");
+    try {
+      const response = await getGST();
+      const value = response.data?.gst_percent;
+      if (value == null || !Number.isFinite(Number(value))) throw new Error("GST percentage unavailable");
+      setGst(value);
+    } catch (error) {
+      setLoadError(error.userMessage || "GST setting could not load.");
+    } finally {
+      setLoading(false);
+    }
+  }
+
   async function handleSave() {
+    if (loading || loadError) return;
     setSaving(true);
     try {
       await saveGST(parseFloat(gst) || 0);
@@ -335,23 +359,14 @@ function GSTView() {
     }
   }
 
+  if (loading) return <Panel title="Tax / GST"><SkeletonBlock label="Loading GST setting" rows={2} /></Panel>;
+  if (loadError) return <Panel title="Tax / GST"><RetryNotice message={loadError} detail="Reload the saved tax value before editing it." onRetry={fetchGST} /></Panel>;
+
   return (
     <Panel
       title="Tax / GST"
       description="Automatically add GST to every bill. Set to 0 to disable."
     >
-      {loadError && (
-        <RetryNotice
-          message={loadError}
-          detail="The saved tax value may be stale until this reloads."
-          onRetry={() => {
-            setLoadError("");
-            getGST()
-              .then((r) => setGst(r.data.gst_percent))
-              .catch((e) => setLoadError(e.userMessage || "GST setting could not load."));
-          }}
-        />
-      )}
       {flash && (
         <div className="type-sm polish-background-success-bg polish-border-1px-solid-color-mix-in-srgb-success-28-border polish-border-radius-radius-sm polish-padding-8px-12px polish-margin-bottom-12px polish-color-success-foreground polish-font-weight-weight-medium"
 
@@ -362,9 +377,10 @@ function GSTView() {
 
       <div className="polish-display-flex polish-gap-12px polish-align-items-flex-end" >
         <div>
-          <label className="form-label">GST Percentage</label>
+          <label className="form-label" htmlFor="gst-percentage">GST Percentage</label>
           <div className="polish-display-flex polish-align-items-center polish-gap-8px" >
             <HsrInput
+              id="gst-percentage"
               type="number"
               min="0"
               max="100"
@@ -382,6 +398,7 @@ function GSTView() {
 
           onClick={handleSave}
           disabled={saving}
+          loading={saving}
         >
           {saving ? "Saving..." : "Save GST"}
         </HsrButton>

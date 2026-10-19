@@ -1,22 +1,13 @@
-import { formatCurrency as polishCurrency } from "../../utils/format.js";
+import { formatCurrency as polishCurrency, formatDateTime } from "../../utils/format.js";
 import { Icon as HsrIcon, Button as HsrButton, Input as HsrInput, Table as HsrTable } from "../../components/ui/index.js";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useCachedState, hasCachedState } from "../../hooks/useCachedState.js";
 import { getFoodOrders, getHistory } from "../../api/index.js";
 import RetryNotice from "../../components/RetryNotice.jsx";
-import { Button, Drawer } from "../../components/ui/index.js";
+import { Button, Drawer, MetricValue } from "../../components/ui/index.js";
+import Pagination from "../../components/ui/Pagination.jsx";
 import { useRealtimeSubscription } from "../../realtime/useRealtimeSubscription.js";
 import { tariffDescription } from "../sessions/tariffs.js";
-
-const BILL_DATE_FORMATTER = new Intl.DateTimeFormat("en-IN", {
-  timeZone: "Asia/Kolkata",
-  day: "2-digit",
-  month: "short",
-  year: "numeric",
-  hour: "2-digit",
-  minute: "2-digit",
-  hour12: true,
-});
 
 function asArray(value) {
   return Array.isArray(value) ? value : [];
@@ -42,7 +33,7 @@ function billCustomer(row) {
 
 function billDate(row) {
   const ts = Number(row?.ts);
-  if (Number.isFinite(ts) && ts > 0) return BILL_DATE_FORMATTER.format(new Date(ts));
+  if (Number.isFinite(ts) && ts > 0) return formatDateTime(ts, { includeYear: true });
   return row?.date || "-";
 }
 
@@ -73,6 +64,7 @@ export default function SalesPage() {
   const [loading, setLoading] = useState(() => !hasCachedState("sales-history"));
   const [error, setError] = useState("");
   const [query, setQuery] = useState("");
+  const [page, setPage] = useState(1);
   const [selected, setSelected] = useState(null);
   const salesRefreshTimerRef = useRef(null);
 
@@ -151,7 +143,7 @@ export default function SalesPage() {
     };
   }, [history, foodOrders]);
 
-  const rows = useMemo(() => {
+  const filteredRows = useMemo(() => {
     const needle = query.trim().toLowerCase();
     return history
       .filter((row) => {
@@ -163,9 +155,11 @@ export default function SalesPage() {
           row.billing_mode,
           row.session_key,
         ].some((value) => String(value || "").toLowerCase().includes(needle));
-      })
-      .slice(0, 80);
+      });
   }, [history, query]);
+  const pageSize = 25;
+  const safePage = Math.min(page, Math.max(1, Math.ceil(filteredRows.length / pageSize)));
+  const rows = filteredRows.slice((safePage - 1) * pageSize, safePage * pageSize);
 
   if (loading && !history.length && !foodOrders.length && !error) {
     return <div data-realtime-state={realtimeState}><SalesSkeleton /></div>;
@@ -194,13 +188,13 @@ export default function SalesPage() {
       )}
 
       <div className="op2-metric-grid sales-metrics">
-        <div><span>Total sales</span><strong>{money(summary.total)}</strong><em>{summary.sessions} table session(s)</em></div>
-        <div><span>Table revenue</span><strong>{money(summary.tableRevenue)}</strong><em>Time-based sales</em></div>
-        <div><span>Food revenue</span><strong>{money(summary.foodRevenue)}</strong><em>{summary.foodOrders} counter order(s)</em></div>
-        <div><span>Cash</span><strong>{money(summary.payment.Cash)}</strong><em>Collected in cash</em></div>
-        <div><span>UPI</span><strong>{money(summary.payment.UPI)}</strong><em>Digital payments</em></div>
-        <div><span>Card</span><strong>{money(summary.payment.Card)}</strong><em>Card payments</em></div>
-        <div><span>Credit</span><strong>{money(summary.payment.Credit)}</strong><em>Outstanding, not collected</em></div>
+        <div><span>Total sales</span><MetricValue>{money(summary.total)}</MetricValue><em>{summary.sessions} table session(s)</em></div>
+        <div><span>Table revenue</span><MetricValue>{money(summary.tableRevenue)}</MetricValue><em>Time-based sales</em></div>
+        <div><span>Food revenue</span><MetricValue>{money(summary.foodRevenue)}</MetricValue><em>{summary.foodOrders} counter order(s)</em></div>
+        <div><span>Cash</span><MetricValue>{money(summary.payment.Cash)}</MetricValue><em>Collected in cash</em></div>
+        <div><span>UPI</span><MetricValue>{money(summary.payment.UPI)}</MetricValue><em>Digital payments</em></div>
+        <div><span>Card</span><MetricValue>{money(summary.payment.Card)}</MetricValue><em>Card payments</em></div>
+        <div><span>Credit</span><MetricValue>{money(summary.payment.Credit)}</MetricValue><em>Outstanding, not collected</em></div>
       </div>
 
       <div className="op2-panel">
@@ -212,8 +206,9 @@ export default function SalesPage() {
           <div className="op2-controls">
             <HsrInput
               value={query}
-              onChange={(event) => setQuery(event.target.value)}
+              onChange={(event) => { setQuery(event.target.value); setPage(1); }}
               placeholder="Search customer, table, payment..."
+              aria-label="Search sales"
             />
           </div>
         </div>
@@ -235,12 +230,12 @@ export default function SalesPage() {
               </thead>
               <tbody>
                 {rows.map((row) => (
-                  <tr key={row.id || `${row.ts}-${row.tbl}`} onClick={() => setSelected(row)}>
+                  <tr data-receipt-id={row.id} key={row.id || `${row.ts}-${row.tbl}`} onClick={() => setSelected(row)}>
                     <td>
-                      <strong>#{row.id || "-"}</strong>
+                      <HsrButton native className="sales-receipt-trigger" aria-label={`Open receipt ${row.id || "details"}`} onClick={() => setSelected(row)}>#{row.id || "-"}</HsrButton>
                       <span>{billDate(row)}</span>
                     </td>
-                    <td>{billCustomer(row)}</td>
+                    <td className="sales-customer-cell" title={billCustomer(row)}>{billCustomer(row)}</td>
                     <td>{String(row.tbl || "-").toUpperCase()}</td>
                     <td><em>{paymentMethod(row)}</em></td>
                     <td>{Number(row.dur || 0)}m</td>
@@ -259,9 +254,11 @@ export default function SalesPage() {
             <span>Completed sessions and food orders will appear here after checkout.</span>
           </div>
         )}
+        <Pagination total={filteredRows.length} page={safePage} pageSize={pageSize} onPageChange={setPage} label="Sales" />
       </div>
 
       <Drawer
+        portal
         open={!!selected}
         title={selected ? `Receipt #${selected.id || "-"}` : "Receipt"}
         description={selected ? `${billCustomer(selected)} · ${paymentMethod(selected)}` : ""}
