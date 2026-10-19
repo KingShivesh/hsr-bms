@@ -80,6 +80,12 @@ export default function SessionAlertsProvider({ children, onNavigate }) {
           oscillator.start(); oscillator.stop(audio.current.currentTime + 0.4);
         }
         if (row.intensity === "subtle") continue;
+        // Keep older IDs tracked so a subsequent poll cannot resurrect their dismissed UI.
+        for (const earlier of rows) {
+          if (earlier.session_key === row.session_key && earlier.id !== row.id && toastIds.current.has(earlier.id)) {
+            dismissToast(toastIds.current.get(earlier.id));
+          }
+        }
         const id = showToast(`${row.table_id.toUpperCase()} — ${row.threshold_minutes} min played · ${formatCurrency(row.accrued_amount)} accrued${row.intensity === "urgent" ? " · Check table now" : ""}`, "warning", {
           duration: row.intensity === "urgent" ? null : 10000,
           actionLabel: "View", onAction: () => { navigate.current?.("live-floor", { tableId: row.table_id }); return acknowledge(row.id); },

@@ -50,7 +50,13 @@ async function readEventStream(response, onEvent, signal) {
   } finally { signal.removeEventListener("abort", cancel); await reader.cancel().catch(() => {}); reader.releaseLock(); }
 }
 
-function defaultAuthExpired() {
+function defaultAuthExpired(token) {
+  if (!token || localStorage.getItem("token") !== token) return;
+  try {
+    sessionStorage.setItem("hsr:auth-expired", "1");
+  } catch {
+    // Ending the expired session must still work when notice storage is blocked.
+  }
   localStorage.removeItem("token");
   window.location.reload();
 }
@@ -237,14 +243,16 @@ export class RealtimeConnectionManager {
         },
       );
 
+      if (generation !== this.generation || controller.signal.aborted) return;
       if (response.status === 401) {
-        this.onAuthExpired();
+        if (this.getToken() === token) this.onAuthExpired(token);
+        else this.scheduleReconnect(generation, topicKey);
         return;
       }
       if (!response.ok) throw new Error(`Realtime connection failed (${response.status})`);
 
       await readEventStream(response, (event) => {
-        if (generation !== this.generation) return;
+        if (generation !== this.generation || controller.signal.aborted) return;
         this.clearTimeout(this.heartbeatTimer);
         this.heartbeatTimer = this.setTimeout(() => {
           if (generation !== this.generation) return;
@@ -261,7 +269,8 @@ export class RealtimeConnectionManager {
         }
         if (event.type === "system.auth_expired") {
           controller.abort();
-          this.onAuthExpired();
+          if (this.getToken() === token) this.onAuthExpired(token);
+          else this.scheduleReconnect(generation, topicKey);
           return;
         }
         if (event.type === "system.heartbeat") return;

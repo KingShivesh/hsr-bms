@@ -49,12 +49,14 @@ function backendErrorMessage(err) {
     return "Backend took too long to respond. It may be waking up. Please try again.";
   }
   if (!err.response) {
-    return "Backend is unreachable. Check internet, Render backend status, or VITE_API_URL.";
+    return "Cannot reach the club server. Check your connection, then try again.";
   }
   if (err.response.status >= 500) {
-    return "Backend had a server error. Try again and check Render logs if it repeats.";
+    return "The club server could not complete the request. Try again in a moment.";
   }
   const detail = err.response.data?.detail;
+  if (err.response.status === 403 && (!detail || detail === "Forbidden")) return "You don't have permission to do this. Ask the club owner for help.";
+  if (err.response.status === 404 && (!detail || detail === "Not Found")) return "This record no longer exists. Refresh the page, then try again.";
   if (Array.isArray(detail)) return detail.map(row => row.msg || "Invalid value").join("; ");
   return typeof detail === "string" ? detail : err.message || "Request failed";
 }
@@ -129,8 +131,18 @@ api.interceptors.response.use(
     }
     const isLogin = err.config?.url?.includes("/auth/login");
     if (err.response?.status === 401 && !isLogin) {
-      localStorage.removeItem("token");
-      window.location.reload();
+      const token = localStorage.getItem("token");
+      const headers = err.config?.headers;
+      const authorization = headers?.get?.("Authorization") || headers?.Authorization;
+      if (token && authorization === `Bearer ${token}`) {
+        try {
+          sessionStorage.setItem("hsr:auth-expired", "1");
+        } catch {
+          // A blocked notice store must not prevent an expired session from ending.
+        }
+        localStorage.removeItem("token");
+        window.location.reload();
+      }
     }
     return Promise.reject(err);
   },

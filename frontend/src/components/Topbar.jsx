@@ -1,4 +1,4 @@
-import { Button as HsrButton, Icon as HsrIcon } from "./ui/index.js";
+import { Button as HsrButton, Icon as HsrIcon, SkeletonBlock } from "./ui/index.js";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { getAuditLogs, getBookings, getTableState, getWaitlist } from "../api/index.js";
 import { useTheme } from "../hooks/useTheme.js";
@@ -220,20 +220,21 @@ export default function Topbar({
     <header className="topbar cf-topbar">
       <div className="cf-title-block">
         <div className="topbar-breadcrumb">
-          <HsrButton native type="button" onClick={() => onNavigate?.(role === "admin" ? "dashboard" : "live-floor")}>
+          <HsrButton native type="button" title={product?.profile?.name || "HSR Snooker Cafe"} onClick={() => onNavigate?.(role === "admin" ? "dashboard" : "live-floor")}>
             {product?.profile?.name || "HSR Snooker Cafe"}
           </HsrButton>
           <HsrIcon className="ti ti-chevron-right" aria-hidden="true" />
-          {section ? <><HsrButton native onClick={() => onNavigate?.("settings")}>Settings</HsrButton><HsrIcon className="ti ti-chevron-right" /><span>{section.charAt(0).toUpperCase() + section.slice(1)}</span></> : <span aria-current="page">{title}</span>}
+          {section ? <><HsrButton native onClick={() => onNavigate?.("settings")}>Settings</HsrButton><HsrIcon className="ti ti-chevron-right" /><span title={section}>{section.charAt(0).toUpperCase() + section.slice(1)}</span></> : <span aria-current="page" title={title}>{title}</span>}
         </div>
         <div className="topbar-title">{title}</div>
-        <p>{PAGE_DESCRIPTIONS[title] || "HSR Snooker Cafe management console"}</p>
+        <p title={PAGE_DESCRIPTIONS[title] || "HSR Snooker Cafe management console"}>{PAGE_DESCRIPTIONS[title] || "HSR Snooker Cafe management console"}</p>
       </div>
       <div className="topbar-right">
         {primaryAction && (
           <HsrButton native
             type="button"
             className="cf-page-primary-action"
+            aria-label={primaryAction.label}
             onClick={runPrimaryAction}
           >
             <HsrIcon className={`ti ${primaryAction.icon}`} aria-hidden="true" />
@@ -282,14 +283,14 @@ export default function Topbar({
               </div>
               {notificationsLoading && (
                 <div className="cf-notification-state">
-                  <HsrIcon className="ti ti-loader-2" aria-hidden="true" />
-                  <span>Loading notifications...</span>
+                  <SkeletonBlock rows={3} label="Loading notifications" />
                 </div>
               )}
               {notificationsError && (
                 <div className="cf-notification-state error">
                   <HsrIcon className="ti ti-alert-triangle" aria-hidden="true" />
                   <span>{notificationsError}</span>
+                  <HsrButton icon="ti-refresh" onClick={loadNotifications}>Retry notifications</HsrButton>
                 </div>
               )}
               {!notificationsLoading && !notificationsError && (

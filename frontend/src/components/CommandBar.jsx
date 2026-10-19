@@ -1,5 +1,7 @@
-import { Icon as HsrIcon, Input as HsrInput, Button as HsrButton } from "./ui/index.js";
+import { Icon as HsrIcon, Input as HsrInput, Button as HsrButton, SkeletonBlock, EmptyState } from "./ui/index.js";
 import { useEffect, useMemo, useRef, useState } from "react";
+import RetryNotice from "./RetryNotice.jsx";
+import { useDialogScrollLock } from "./ui/useDialogFocus.js";
 import {
   getAuditLogs,
   getBookings,
@@ -29,12 +31,16 @@ export default function CommandBar({ page, setPage, onNewSession, role = "admin"
     menuItems: [],
   });
   const [loadingData, setLoadingData] = useState(false);
+  const [searchError, setSearchError] = useState("");
+  const [retry, setRetry] = useState(0);
+  useDialogScrollLock(open);
 
   useEffect(() => {
     if (!open) return;
     let alive = true;
     async function loadSearchData() {
       setLoadingData(true);
+      setSearchError("");
       const results = await Promise.allSettled([
         getTableState(),
         getWaitlist(),
@@ -47,16 +53,18 @@ export default function CommandBar({ page, setPage, onNewSession, role = "admin"
       if (!alive) return;
       const menuData = results[6].status === "fulfilled" ? results[6].value.data || {} : {};
       const tableData = results[0].status === "fulfilled" ? results[0].value.data || {} : {};
+      const rows = value => Array.isArray(value) ? value.filter(Boolean) : [];
+      const responseRows = index => results[index].status === "fulfilled" ? rows(results[index].value.data) : [];
       setSearchData({
-        sessions: tableData.active_sessions || [],
-        tables: tableData.tables || [],
-        waitlist: results[1].status === "fulfilled" ? results[1].value.data || [] : [],
-        bookings: results[2].status === "fulfilled" ? results[2].value.data || [] : [],
-        foodOrders: results[3].status === "fulfilled" ? results[3].value.data || [] : [],
-        auditLogs: results[4].status === "fulfilled" ? results[4].value.data || [] : [],
-        members: results[5].status === "fulfilled" ? results[5].value.data || [] : [],
+        sessions: rows(tableData.active_sessions),
+        tables: rows(tableData.tables),
+        waitlist: responseRows(1),
+        bookings: responseRows(2),
+        foodOrders: responseRows(3),
+        auditLogs: responseRows(4),
+        members: responseRows(5),
         menuItems: Array.isArray(menuData)
-          ? menuData
+          ? rows(menuData)
           : Object.entries(menuData).map(([name, item]) => ({
             name,
             price: item?.price || 0,
@@ -64,13 +72,14 @@ export default function CommandBar({ page, setPage, onNewSession, role = "admin"
             available: item?.available !== false,
           })),
       });
+      if (results.some(result => result.status === "rejected")) setSearchError("Some live results could not load.");
       setLoadingData(false);
     }
     loadSearchData();
     return () => {
       alive = false;
     };
-  }, [open, role]);
+  }, [open, role, retry]);
 
   const commands = useMemo(
     () => [
@@ -285,6 +294,7 @@ export default function CommandBar({ page, setPage, onNewSession, role = "admin"
 
   function openCommandPalette() {
     openerRef.current = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+    setLoadingData(true);
     setOpen(true);
   }
 
@@ -416,10 +426,9 @@ export default function CommandBar({ page, setPage, onNewSession, role = "admin"
           <span>Esc</span>
         </div>
         <div id="command-results" className="command-list" role="listbox" aria-label="Command results">
-          {loadingData && !query.trim() ? (
-            <div className="command-empty">Loading live results...</div>
-          ) : filtered.length === 0 ? (
-            <div className="command-empty">No matching command</div>
+          {searchError && <RetryNotice message={searchError} detail="Page shortcuts remain available." onRetry={() => setRetry(value => value + 1)} />}
+          {filtered.length === 0 && !loadingData ? (
+            <EmptyState icon="ti-search" title="No matching commands" description="No pages or live records match this search." secondaryAction={false} action={<HsrButton onClick={() => { setQuery(""); inputRef.current?.focus(); }}>Clear search</HsrButton>} />
           ) : (
             filtered.map((cmd, index) => (
               <HsrButton native
@@ -438,6 +447,7 @@ export default function CommandBar({ page, setPage, onNewSession, role = "admin"
               </HsrButton>
             ))
           )}
+          {loadingData && <SkeletonBlock rows={3} label="Loading live command results" />}
         </div>
       </div>
     </div>

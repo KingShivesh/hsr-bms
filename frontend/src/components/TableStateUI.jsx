@@ -22,7 +22,7 @@ export function TableAttentionBadge({ attention }) {
   );
 }
 
-export function TablePrimaryAction({ statusKey = "available", onClick, label = "", disabled = false }) {
+export function TablePrimaryAction({ statusKey = "available", onClick, label = "", disabled = false, loading = false }) {
   const status = getTableStatusByKey(statusKey);
   const action = status.primaryAction;
   return (
@@ -31,6 +31,7 @@ export function TablePrimaryAction({ statusKey = "available", onClick, label = "
       className="table-state-primary"
       onClick={onClick}
       disabled={disabled || action.disabled}
+      loading={loading}
     >
       <HsrIcon className={`ti ${action.icon}`} aria-hidden="true" />
       {label || action.label}

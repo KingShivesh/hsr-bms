@@ -1,6 +1,7 @@
 import EmptyState from "./EmptyState.jsx";
 
 export default function DataTable({ columns = [], rows = [], rowKey = "id", empty, className = "" }) {
+  const safeRows = Array.isArray(rows) ? rows.filter(Boolean) : [];
   return (
     <div className={["ui-table-wrap", className].filter(Boolean).join(" ")}>
       <Table>
@@ -14,8 +15,8 @@ export default function DataTable({ columns = [], rows = [], rowKey = "id", empt
           </tr>
         </thead>
         <tbody>
-          {rows.length ? (
-            rows.map((row, index) => (
+          {safeRows.length ? (
+            safeRows.map((row, index) => (
               <tr key={row[rowKey] || index}>
                 {columns.map((column) => (
                   <td key={column.key} data-type={column.type} className={column.align === "right" || column.type === "number" ? "is-right" : ""}>

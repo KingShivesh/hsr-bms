@@ -1,5 +1,5 @@
 import { formatCurrency as polishCurrency, formatDuration as polishDuration, formatDateTime as polishDateTime } from "../utils/format.js";
-import { SkeletonGrid, SkeletonBlock } from "./ui/index.js";
+import { SkeletonGrid, SkeletonBlock, EmptyState } from "./ui/index.js";
 import RetryNotice from "./RetryNotice.jsx";
 import { Button as HsrButton, Icon as HsrIcon, Select as HsrSelect, Table as HsrTable } from "./ui/index.js";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
@@ -395,7 +395,7 @@ function LiveFloor({ tables, elapsed, onNavigate }) {
   return (
     <section className="ops-panel ops-floor-panel">
       <SectionHead
-        title={`Live Floor — ${activeCount ? `${activeCount} running / ${idleCount} idle` : `${idleCount} idle`}`}
+        title={`Live Floor — ${!tables.length ? "no tables" : activeCount ? `${activeCount} running / ${idleCount} idle` : `${idleCount} idle`}`}
         action={
           <div className="ops-floor-actions">
             <span className={`ops-floor-health-pill ${pausedCount || longRunningCount ? "warning" : "ok"}`}>
@@ -407,6 +407,7 @@ function LiveFloor({ tables, elapsed, onNavigate }) {
           </div>
         }
       />
+      {!tables.length && <EmptyState icon="ti-layout-grid" title="No table data" description="Open Live Floor to reload the club's table status." action={<HsrButton onClick={() => onNavigate("live-floor")}>Open Live Floor</HsrButton>} />}
       <div className="ops-floor-grid">
         {tables.map((table) => {
           const session = table.session;

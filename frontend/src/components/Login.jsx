@@ -1,5 +1,5 @@
 import { Icon as HsrIcon, Input as HsrInput, Button as HsrButton } from "./ui/index.js";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { login } from "../api/index.js";
 import { APP_NAME, TABLE_RANGE, TOTAL_TABLES } from "../config/hsrTables.js";
 
@@ -8,11 +8,26 @@ export default function Login({ onLogin }) {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [credentialsInvalid, setCredentialsInvalid] = useState(false);
+  const [sessionExpired] = useState(() => {
+    try { return sessionStorage.getItem("hsr:auth-expired") === "1"; }
+    catch { return false; }
+  });
+  const pending = useRef(false);
+
+  useEffect(() => {
+    if (!sessionExpired) return;
+    try { sessionStorage.removeItem("hsr:auth-expired"); }
+    catch { /* The notice remains usable when browser storage is unavailable. */ }
+  }, [sessionExpired]);
 
   async function handleSubmit(e) {
     e.preventDefault();
+    if (pending.current) return;
+    pending.current = true;
     setLoading(true);
     setError("");
+    setCredentialsInvalid(false);
     try {
       const res = await login(username, password);
       localStorage.setItem("token", res.data.token);
@@ -21,11 +36,13 @@ export default function Login({ onLogin }) {
       onLogin(res.data.role || "admin", res.data.username || username);
     } catch (err) {
       if (err.response?.status === 401) {
+        setCredentialsInvalid(true);
         setError("Invalid username or password");
       } else {
         setError(err.userMessage || "Backend is not reachable. Try again.");
       }
     } finally {
+      pending.current = false;
       setLoading(false);
     }
   }
@@ -101,7 +118,8 @@ export default function Login({ onLogin }) {
             </div>
           </div>
 
-          <form onSubmit={handleSubmit}>
+          {sessionExpired && <div className="error-message" role="status">Your session ended. Sign in again to continue.</div>}
+          <form onSubmit={handleSubmit} aria-busy={loading || undefined}>
             <div className="form-group">
               <label className="form-label" htmlFor="login-username">Username</label>
               <div className="login-input-wrap">
@@ -115,6 +133,9 @@ export default function Login({ onLogin }) {
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
                   required
+                  disabled={loading}
+                  aria-invalid={credentialsInvalid || undefined}
+                  aria-describedby={error ? "login-error" : undefined}
                   data-testid="username-input"
                 />
               </div>
@@ -132,11 +153,14 @@ export default function Login({ onLogin }) {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
+                  disabled={loading}
+                  aria-invalid={credentialsInvalid || undefined}
+                  aria-describedby={error ? "login-error" : undefined}
                   data-testid="password-input"
                 />
               </div>
             </div>
-            {error && <div className="error-message" role="alert">{error}</div>}
+            {error && <div id="login-error" className="error-message" role="alert"><span>{error}</span>{credentialsInvalid && <span className="login-error-hint">Check both fields, then try again.</span>}</div>}
             <HsrButton native
               type="submit"
               className="btn-login cf-btn-login"

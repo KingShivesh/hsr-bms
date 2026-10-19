@@ -12538,22 +12538,6 @@ body.dark .checkout-bill-screen {
 }
 
 @media (max-width: 900px) {
-  .sidebar {
-    width: 60px !important;
-  }
-
-  .sidebar.mobile-open,
-  .sidebar:hover,
-  .sidebar:focus-within {
-    width: min(232px, 82vw) !important;
-  }
-
-  .main-content,
-  .sidebar:hover + .main-content,
-  .sidebar:focus-within + .main-content {
-    margin-left: 64px !important;
-  }
-
   .food-menu-edit-row {
     grid-template-columns: 1fr !important;
   }
@@ -16851,7 +16835,7 @@ body.dark .cf-table-slot p {
 @media (max-width: 1180px) {
 }
 
-@media (max-width: 760px) {
+@media (max-width: 768px) {
   .cf-sidebar,
   .cf-sidebar.collapsed {
     width: 64px !important;
@@ -16870,6 +16854,10 @@ body.dark .cf-table-slot p {
 
   .cf-sidebar .cf-collapse-btn {
     display: none !important;
+  }
+
+  .cf-sidebar .sb-mobile-toggle {
+    display: grid !important;
   }
 
   .cf-sidebar:not(.mobile-open) .sb-logo > div:last-child,
@@ -20426,7 +20414,7 @@ body.dark .dashboard-home .dashboard-close-day-btn * {
   .tariff-package-row .lf-icon-button { grid-column: 2; grid-row: 1; }
 }
 
-@media (max-width: 760px) {
+@media (max-width: 768px) {
   /* Touch/sticky hover must not expand the rail over table action targets. */
   .cf-sidebar:not(.mobile-open),
   .cf-sidebar:not(.mobile-open):hover,

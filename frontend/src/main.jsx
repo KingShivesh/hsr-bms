@@ -14,11 +14,13 @@ import "./product/product-shell.css";
 import "./legacy-presentation.css";
 import "./interaction-polish.css";
 import App from "./App.jsx";
+import TooltipHost from "./components/ui/TooltipHost.jsx";
 
 window.HSRTheme.sync();
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <App />
+    <TooltipHost />
   </StrictMode>,
 );

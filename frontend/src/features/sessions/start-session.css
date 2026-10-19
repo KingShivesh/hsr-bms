@@ -25,7 +25,7 @@
 .session-control-toggle input { width: 20px; height: 20px; }
 .app-toast-warning { border: 1px solid var(--warning); background: var(--surface); color: var(--text-primary); }
 .app-toast-warning .app-toast-icon { color: var(--warning); }
-.app-toast-container.app-session-alert-container { top: auto; bottom: 20px; z-index: 1900; max-height: 50dvh; overflow-y: auto; }
+.app-toast-container.app-session-alert-container { top: auto; bottom: 20px; z-index: 1900; max-height: 25dvh; overflow-y: auto; overscroll-behavior: contain; }
 .checkout-panel .checkout-customer-paths { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 .checkout-panel .checkout-customer-paths button { white-space: normal; overflow-wrap: normal; min-width: 0; }
 .checkout-panel .checkout-payment-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }

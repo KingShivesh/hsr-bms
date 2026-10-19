@@ -8,7 +8,7 @@ export { default as EmptyState } from "./EmptyState.jsx";
 export { default as Disclosure } from "./Disclosure.jsx";
 export { default as Switch } from "./Switch.jsx";
 export { Alert, SkeletonBlock, SkeletonGrid } from "./Feedback.jsx";
-export { CurrencyAmount, MetricCard, Timer } from "./DataDisplay.jsx";
+export { CurrencyAmount, MetricCard, MetricValue, Timer } from "./DataDisplay.jsx";
 export { Field, Input, SearchInput, Select, Textarea } from "./Field.jsx";
 export { PageHeader, SectionHeader } from "./Layout.jsx";
 export { ConfirmActions, Drawer, Modal } from "./Overlay.jsx";
