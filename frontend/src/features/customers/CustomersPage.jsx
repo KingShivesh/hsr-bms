@@ -16,6 +16,7 @@ import RetryNotice from "../../components/RetryNotice.jsx";
 import { useConfirm } from "../../components/confirmContext.js";
 import { useToast } from "../../components/toastContext.js";
 import { Button, Drawer } from "../../components/ui/index.js";
+import Pagination from "../../components/ui/Pagination.jsx";
 
 function memberName(member) {
   return member.nm || member.name || "Customer";
@@ -70,6 +71,7 @@ export default function CustomersPage() {
   const [loading, setLoading] = useState(() => !hasCachedState("members"));
   const [error, setError] = useState("");
   const [query, setQuery] = useState("");
+  const [page, setPage] = useState(1);
   const [newName, setNewName] = useState("");
   const [selectedCustomer, setSelectedCustomer] = useState(null);
   const [busy, setBusy] = useState("");
@@ -119,6 +121,9 @@ export default function CustomersPage() {
       })
       .sort((a, b) => Number(b.spt || 0) - Number(a.spt || 0));
   }, [members, query]);
+  const pageSize = 24;
+  const safePage = Math.min(page, Math.max(1, Math.ceil(visibleMembers.length / pageSize)));
+  const pageMembers = visibleMembers.slice((safePage - 1) * pageSize, safePage * pageSize);
 
   async function handleAdd(event) {
     event.preventDefault();
@@ -231,7 +236,7 @@ export default function CustomersPage() {
             onBlur={() => setFormError(newName.trim() ? "" : "Enter customer name")}
             aria-invalid={!!formError}
             aria-describedby={formError ? "customer-form-error" : undefined}
-            onChange={(event) => setNewName(event.target.value)}
+            onChange={(event) => { setNewName(event.target.value); if (event.target.value.trim()) setFormError(""); }}
             placeholder="Customer name"
             aria-label="Customer name"
             disabled={!!busy}
@@ -242,12 +247,12 @@ export default function CustomersPage() {
           </HsrButton>
         </form>
       </div>
-      {formError && <p id="customer-form-error" role="alert">{formError}</p>}
+      {formError && <p id="customer-form-error" className="ui-field-error" role="alert">{formError}</p>}
 
       <div className="op2-metric-grid">
         <div><span>Total customers</span><strong>{members.length}</strong><em>{duplicates.length} duplicate group(s)</em></div>
         <div><span>Premium</span><strong>{totals.premium}</strong><em>high-value profiles</em></div>
-        <div><span>Total spend</span><strong>{money(totals.totalSpend)}</strong><em>{totals.totalVisits} recorded visits</em></div>
+        <div><span>Total spend</span><strong data-dense={money(totals.totalSpend).length > 12}>{money(totals.totalSpend)}</strong><em>{totals.totalVisits} recorded visits</em></div>
       </div>
 
       {!!duplicates.length && (
@@ -293,13 +298,13 @@ export default function CustomersPage() {
             <h2>All customers</h2>
           </div>
           <div className="op2-controls">
-            <HsrInput value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search customer..." />
+            <HsrInput value={query} onChange={(event) => { setQuery(event.target.value); setPage(1); }} placeholder="Search customer..." aria-label="Search customers" />
           </div>
         </div>
 
         {visibleMembers.length ? (
           <div className="op2-customer-grid">
-            {visibleMembers.map((member) => {
+            {pageMembers.map((member) => {
               const id = memberId(member);
               const tier = memberTier(member);
               const premium = /premium/i.test(tier);
@@ -307,10 +312,12 @@ export default function CustomersPage() {
                 <article
                   className="op2-customer-card"
                   key={id || memberName(member)}
+                  data-customer-id={id}
                   role="button"
                   tabIndex={0}
                   onClick={() => setSelectedCustomer(member)}
                   onKeyDown={(event) => {
+                    if (event.target !== event.currentTarget) return;
                     if (event.key === "Enter" || event.key === " ") {
                       event.preventDefault();
                       setSelectedCustomer(member);
@@ -319,14 +326,14 @@ export default function CustomersPage() {
                 >
                   <div className="op2-customer-main">
                     <div>
-                      <strong>{memberName(member)}{member.pending ? " · Saving…" : ""}</strong>
+                      <strong title={memberName(member)}>{memberName(member)}{member.pending ? " · Saving…" : ""}</strong>
                       <span>{id || "No ID"}</span>
                     </div>
                     <em data-tier={tier.toLowerCase()}>{tier}</em>
                   </div>
                   <div className="op2-customer-stats">
                     <div><span>Visits</span><strong>{member.vis || 0}</strong></div>
-                    <div><span>Spent</span><strong>{money(member.spt)}</strong></div>
+                    <div className={money(member.spt).length > 12 ? "is-wide" : undefined}><span>Spent</span><strong>{money(member.spt)}</strong></div>
                     <div><span>Last visit</span><strong>{member.lst || "-"}</strong></div>
                   </div>
                   <div className="op2-card-actions">
@@ -371,10 +378,12 @@ export default function CustomersPage() {
             )}
           />
         )}
+        <Pagination total={visibleMembers.length} page={safePage} pageSize={pageSize} onPageChange={setPage} label="Customers" />
       </section>
 
       <Drawer
         open={!!selectedCustomer}
+        portal
         title={selectedCustomer ? memberName(selectedCustomer) : "Customer"}
         description={selectedCustomer ? `${memberId(selectedCustomer) || "No ID"} · ${memberTier(selectedCustomer)}` : ""}
         onClose={() => setSelectedCustomer(null)}
@@ -386,14 +395,14 @@ export default function CustomersPage() {
               <div className="customer-avatar">{memberName(selectedCustomer).slice(0, 2).toUpperCase()}</div>
               <div>
                 <span className="lf-eyebrow">Customer profile</span>
-                <h3>{memberName(selectedCustomer)}</h3>
+                <h3 title={memberName(selectedCustomer)}>{memberName(selectedCustomer)}</h3>
                 <p>{memberTier(selectedCustomer)} · Last visit {selectedCustomer.lst || "-"}</p>
               </div>
             </div>
             <div className="checkout-summary-grid">
               <div><span>Visits</span><strong>{selectedCustomer.vis || 0}</strong></div>
-              <div><span>Spent</span><strong>{money(selectedCustomer.spt)}</strong></div>
-              <div><span>Credit outstanding</span><strong>{money(selectedCustomer.current_balance || 0)}</strong></div>
+              <div className={money(selectedCustomer.spt).length > 12 ? "is-wide" : undefined}><span>Spent</span><strong>{money(selectedCustomer.spt)}</strong></div>
+              <div className={money(selectedCustomer.current_balance).length > 12 ? "is-wide" : undefined}><span>Credit outstanding</span><strong>{money(selectedCustomer.current_balance || 0)}</strong></div>
               <div><span>Customer ID</span><strong>{memberId(selectedCustomer) || "-"}</strong></div>
               <div><span>Tier</span><strong>{memberTier(selectedCustomer)}</strong></div>
             </div>

@@ -1,5 +1,6 @@
-import { formatDuration as polishDuration, formatDateTime as polishDateTime } from "../../utils/format.js";
-import { SkeletonBlock } from "../ui/index.js";
+import { formatCurrency as polishCurrency, formatDuration as polishDuration, formatDateTime as polishDateTime } from "../../utils/format.js";
+import { SkeletonBlock, EmptyState } from "../ui/index.js";
+import RetryNotice from "../RetryNotice.jsx";
 import { Icon as HsrIcon, Input as HsrInput, Select as HsrSelect, Button as HsrButton, Table as HsrTable, Textarea as HsrTextarea } from "../ui/index.js";
 import { useState, useEffect, useRef, useMemo } from "react";
 import {
@@ -166,6 +167,7 @@ function CustomerInput({ value, onChange, placeholder }) {
       <HsrIcon className="ti ti-user table-player-icon" aria-hidden="true" />
       <HsrInput
         placeholder={placeholder || undefined}
+        aria-label={placeholder || "Player name"}
         value={value || ""}
         onChange={(e) => onChange(e.target.value)}
         onFocus={() => suggestions.length && setShow(true)}
@@ -207,6 +209,9 @@ function QueuePanel({
   activeCount,
   busyActions = {},
   showToast,
+  loading = false,
+  error = "",
+  onRetry,
 }) {
   const [customerName, setCustomerName] = useState("");
   const [phone, setPhone] = useState("");
@@ -251,6 +256,7 @@ function QueuePanel({
         <HsrInput
           className="table-mini-input"
           placeholder="Customer name"
+          aria-label="Walk-in customer name"
           value={customerName}
           onChange={(e) => setCustomerName(e.target.value)}
           required
@@ -258,6 +264,7 @@ function QueuePanel({
         <HsrInput
           className="table-mini-input"
           placeholder="Phone optional"
+          aria-label="Walk-in phone"
           value={phone}
           onChange={(e) => setPhone(e.target.value)}
         />
@@ -272,6 +279,7 @@ function QueuePanel({
         <HsrSelect
           className="table-mini-input"
           value={preferredType}
+          aria-label="Preferred table type"
           onChange={(e) => setPreferredType(e.target.value)}
         >
           <option value="ANY">Any table</option>
@@ -280,6 +288,7 @@ function QueuePanel({
         </HsrSelect>
         <HsrInput
           className="table-mini-input queue-notes-input"
+          aria-label="Walk-in notes"
           placeholder="Notes optional"
           value={notes}
           onChange={(e) => setNotes(e.target.value)}
@@ -290,7 +299,7 @@ function QueuePanel({
       </form>
 
       <div className="queue-list">
-        {queue.length === 0 ? (
+        {loading ? <SkeletonBlock rows={3} label="Loading walk-in queue" /> : error ? <RetryNotice message={error} onRetry={onRetry} /> : queue.length === 0 ? (
           <div className="empty-state compact">
             <div className="empty-state-icon">
               <HsrIcon className="ti ti-users-plus" aria-hidden="true" />
@@ -307,7 +316,7 @@ function QueuePanel({
               <div key={entry.id} className="queue-row">
                 <div className="queue-position">#{entry.position}</div>
                 <div className="queue-main">
-                  <div className="queue-name">{entry.customer_name}</div>
+                  <div className="queue-name" title={entry.customer_name}>{entry.customer_name}</div>
                   <div className="queue-meta">
                     {entry.preferred_type === "ANY" ? "Any table" : entry.preferred_type} · {entry.party_size} player{entry.party_size === 1 ? "" : "s"} · {entry.wait_mins}m
                   </div>
@@ -341,7 +350,7 @@ function QueuePanel({
   );
 }
 
-function BookingPanel({ bookings, onCreate, onCancel, busyActions = {}, showToast }) {
+function BookingPanel({ bookings, onCreate, onCancel, busyActions = {}, showToast, loading = false, error = "", onRetry }) {
   const defaultTime = () => {
     const d = new Date(Date.now() + 60 * 60 * 1000);
     d.setMinutes(0, 0, 0);
@@ -407,6 +416,7 @@ function BookingPanel({ bookings, onCreate, onCancel, busyActions = {}, showToas
         <HsrInput
           className="table-mini-input"
           placeholder="Full customer name"
+          aria-label="Booking customer name"
           value={customerName}
           onChange={(e) => setCustomerName(e.target.value)}
           required
@@ -414,12 +424,14 @@ function BookingPanel({ bookings, onCreate, onCancel, busyActions = {}, showToas
         <HsrInput
           className="table-mini-input"
           placeholder="Phone optional"
+          aria-label="Booking phone"
           value={phone}
           onChange={(e) => setPhone(e.target.value)}
         />
         <HsrSelect
           className="table-mini-input"
           value={tableId}
+          aria-label="Booking table"
           onChange={(e) => setTableId(e.target.value)}
         >
           <option value="ANY">Any table</option>
@@ -432,6 +444,7 @@ function BookingPanel({ bookings, onCreate, onCancel, busyActions = {}, showToas
         <HsrInput
           className="table-mini-input"
           type="datetime-local"
+          aria-label="Booking date and time"
           value={bookingTime}
           onChange={(e) => setBookingTime(e.target.value)}
           required
@@ -447,6 +460,7 @@ function BookingPanel({ bookings, onCreate, onCancel, busyActions = {}, showToas
         />
         <HsrInput
           className="table-mini-input booking-notes-input"
+          aria-label="Booking notes"
           placeholder="Notes optional"
           value={notes}
           onChange={(e) => setNotes(e.target.value)}
@@ -456,7 +470,7 @@ function BookingPanel({ bookings, onCreate, onCancel, busyActions = {}, showToas
         </HsrButton>
       </form>
       <div className="booking-list">
-        {bookings.length === 0 ? (
+        {loading ? <SkeletonBlock rows={3} label="Loading table bookings" /> : error ? <RetryNotice message={error} onRetry={onRetry} /> : bookings.length === 0 ? (
           <div className="empty-state compact">
             <div className="empty-state-icon"><HsrIcon className="ti ti-calendar-plus" aria-hidden="true" /></div>
             <div className="empty-state-title">No upcoming bookings</div>
@@ -471,14 +485,14 @@ function BookingPanel({ bookings, onCreate, onCancel, busyActions = {}, showToas
                 className={`booking-row ${missed ? "missed" : ""}`}
               >
                 <div>
-                  <div className="queue-name">
+                  <div className="queue-name" title={booking.customer_name}>
                     {booking.customer_name}
                     {missed && (
                       <span className="booking-status-pill">Missed</span>
                     )}
                   </div>
                   <div className="queue-meta">
-                    {new Date(booking.booking_time).toLocaleString("en-IN")} ·{" "}
+                    {polishDateTime(booking.booking_time)} ·{" "}
                     {booking.table_id === "ANY" ? "Any table" : booking.table_id} ·{" "}
                     {booking.duration_mins}m
                   </div>
@@ -566,7 +580,7 @@ function HistoryModal({ tableId, tableNum, onClose }) {
                       <td>{row.date?.split(",")[0]}</td>
                       <td>{row.nm}</td>
                       <td>{row.dur}m</td>
-                      <td data-type="number">₹{row.tot}</td>
+                      <td data-type="number">{polishCurrency(row.tot)}</td>
                       <td>{row.payment_method || "Cash"}</td>
                     </tr>
                   ))}
@@ -592,7 +606,7 @@ function HistoryModal({ tableId, tableNum, onClose }) {
                       <td>{row.date}</td>
                       <td>{String(row.action || "").replaceAll("_", " ")}</td>
                       <td>{row.detail}</td>
-                      <td data-type="number">{row.amount ? `₹${row.amount}` : "-"}</td>
+                      <td data-type="number">{row.amount == null ? "-" : polishCurrency(row.amount)}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -732,7 +746,7 @@ function CheckoutQuoteScreen({
           <div>
             <div className="quick-session-eyebrow">Review bill</div>
             <div className="checkout-bill-title">
-              {quote.tableId?.toUpperCase()} · ₹{total}
+              {quote.tableId?.toUpperCase()} · {polishCurrency(total)}
             </div>
             <div className="checkout-bill-sub">
               {quote.paymentMethod || rec.payment_method || "Cash"} · {rec.dur || 0} min · {tariffDescription(rec)}
@@ -770,23 +784,23 @@ function CheckoutQuoteScreen({
           <div className="checkout-bill-summary">
             <div>
               <span>Table</span>
-              <strong>₹{rec.ply || 0}</strong>
+              <strong>{polishCurrency(rec.ply)}</strong>
             </div>
             <div>
               <span>Food</span>
-              <strong>₹{rec.famt || 0}</strong>
+              <strong>{polishCurrency(rec.famt)}</strong>
             </div>
             <div>
               <span>Before discount</span>
-              <strong>₹{rawTotal}</strong>
+              <strong>{polishCurrency(rawTotal)}</strong>
             </div>
             <div>
               <span>Discount</span>
-              <strong>₹{discountAmount}</strong>
+              <strong>{polishCurrency(discountAmount)}</strong>
             </div>
             <div className="checkout-final-total">
               <span>Final bill</span>
-              <strong>₹{total}</strong>
+              <strong>{polishCurrency(total)}</strong>
             </div>
           </div>
         </section>
@@ -804,11 +818,11 @@ function CheckoutQuoteScreen({
                         {checkoutSplitMeta(rec, item)}
                       </div>
                     </div>
-                    <strong>₹{item.total ?? 0}</strong>
+                    <strong>{polishCurrency(item.total)}</strong>
                   </div>
                   <div className="checkout-split-parts">
-                    <span>Table ₹{item.table ?? item.play ?? 0}</span>
-                    <span>Food ₹{item.food ?? 0}</span>
+                    <span>Table {polishCurrency(item.table ?? item.play)}</span>
+                    <span>Food {polishCurrency(item.food)}</span>
                   </div>
                 </div>
               ))}
@@ -926,8 +940,8 @@ function CheckoutQuoteScreen({
         <div className="checkout-final-actions">
           <div className="checkout-final-review">
             <span>Final settlement</span>
-            <strong>₹{total}</strong>
-            <em>{quote.paymentMethod || "Cash"} · {discountAmount ? `₹${discountAmount} discount` : "No discount"}</em>
+            <strong>{polishCurrency(total)}</strong>
+            <em>{quote.paymentMethod || "Cash"} · {discountAmount ? `${polishCurrency(discountAmount)} discount` : "No discount"}</em>
           </div>
           <HsrButton native type="button" className="btn checkout-cancel-btn" disabled={quote.finalizing} onClick={onClose}>
             Cancel
@@ -939,7 +953,7 @@ function CheckoutQuoteScreen({
             loading={quote.finalizing}
             disabled={quote.loading || quote.finalizing || rec.checkout_blocked}
           >
-            {`Confirm & Close · ₹${total}`}
+            {`Confirm & Close · ${polishCurrency(total)}`}
           </HsrButton>
         </div>
       </div>
@@ -969,7 +983,7 @@ function CheckoutBillScreen({ bill, onClose }) {
           <div>
             <div className="quick-session-eyebrow">Table closed</div>
             <div className="checkout-bill-title">
-              {bill.tableId?.toUpperCase()} · ₹{total}
+              {bill.tableId?.toUpperCase()} · {polishCurrency(total)}
             </div>
             <div className="checkout-bill-sub">
               {rec.payment_method || bill.paymentMethod || "Cash"} · {rec.dur || 0} min · {tariffDescription(rec)}
@@ -992,20 +1006,20 @@ function CheckoutBillScreen({ bill, onClose }) {
         <div className="checkout-bill-summary">
           <div>
             <span>Table</span>
-            <strong>₹{rec.ply || 0}</strong>
+            <strong>{polishCurrency(rec.ply)}</strong>
           </div>
           <div>
             <span>Food</span>
-            <strong>₹{rec.famt || 0}</strong>
+            <strong>{polishCurrency(rec.famt)}</strong>
           </div>
           <div>
             <span>Total</span>
-            <strong>₹{total}</strong>
+            <strong>{polishCurrency(total)}</strong>
           </div>
           {rec.discount_amount > 0 && (
             <div>
               <span>Discount</span>
-              <strong>₹{rec.discount_amount}</strong>
+              <strong>{polishCurrency(rec.discount_amount)}</strong>
             </div>
           )}
         </div>
@@ -1020,7 +1034,7 @@ function CheckoutBillScreen({ bill, onClose }) {
             <div className="checkout-payment-received">
               {paymentSplit.map((row) => (
                 <span key={row.method}>
-                  {row.method} ₹{row.amount}
+                  {row.method} {polishCurrency(row.amount)}
                 </span>
               ))}
             </div>
@@ -1038,11 +1052,11 @@ function CheckoutBillScreen({ bill, onClose }) {
                     {checkoutSplitMeta(rec, item)}
                   </div>
                 </div>
-                <strong>₹{item.total ?? 0}</strong>
+                <strong>{polishCurrency(item.total)}</strong>
               </div>
               <div className="checkout-split-parts">
-                <span>Table ₹{item.table ?? item.play ?? 0}</span>
-                <span>Food ₹{item.food ?? 0}</span>
+                <span>Table {polishCurrency(item.table ?? item.play)}</span>
+                <span>Food {polishCurrency(item.food)}</span>
               </div>
             </div>
           ))}
@@ -1117,15 +1131,15 @@ function TableFloorTile({
       <div className="table-floor-body">
         <div className="table-floor-topline">
           <TableStateBadge statusKey={statusKey} label={statusLabel} />
-          <strong>₹{rate}/hr</strong>
+          <strong>{polishCurrency(rate)}/hr</strong>
         </div>
         <div className="table-floor-summary">
           <strong className={occupied ? "table-state-timer" : ""} data-timer={status.timerStyle}>
-            {occupied ? fmt(session.elapsed) : booking ? bookingTime : `₹${rate}/hr`}
+            {occupied ? fmt(session.elapsed) : booking ? bookingTime : `${polishCurrency(rate)}/hr`}
           </strong>
-          <span>
+          <span title={occupied ? `${polishCurrency(total)} running` : maintenance?.reason || booking?.customer_name || undefined}>
             {occupied
-              ? `₹${total} running`
+              ? `${polishCurrency(total)} running`
               : maintenance
                 ? maintenance.reason
                 : booking
@@ -1142,13 +1156,13 @@ function TableFloorTile({
           ) : maintenance ? (
             <span>Marked since {maintenance.since || "now"}</span>
           ) : booking ? (
-            <span>{booking.customer_name} · {booking.duration_mins || 60} min</span>
+            <span title={booking.customer_name}>{booking.customer_name} · {booking.duration_mins || 60} min</span>
           ) : (
             <span>Tap to start or reserve</span>
           )}
         </div>
       </div>
-      <TablePrimaryAction statusKey={statusKey} onClick={handlePrimary} disabled={checkoutBusy} label={checkoutBusy ? "Loading..." : ""} />
+      <TablePrimaryAction statusKey={statusKey} onClick={handlePrimary} disabled={checkoutBusy} loading={checkoutBusy} />
     </article>
   );
 }
@@ -1195,7 +1209,7 @@ function LiveFloorCommand({
           <div className="tables-view-title">Live Floor Control</div>
           <div className="tables-view-sub">
             {activeTables.length
-              ? `${activeTables.length} running · ₹${liveValue} live value`
+              ? `${activeTables.length} running · ${polishCurrency(liveValue)} live value`
               : "All tables idle. Start from the floor or quick session."}
           </div>
         </div>
@@ -1241,7 +1255,7 @@ function LiveFloorCommand({
                   onClick={() => onSelect(table.id)}
                 >
                   <strong>T{table.num}</strong>
-                  <span>{fmt(session?.elapsed)} · ₹{runningTotalForSession(session, peakRate, gstPercent)}</span>
+                  <span>{fmt(session?.elapsed)} · {polishCurrency(runningTotalForSession(session, peakRate, gstPercent))}</span>
                   <em>{billingModeLabel(session?.billingMode)}</em>
                 </HsrButton>
               );
@@ -1303,11 +1317,11 @@ function SessionWorkspace({
         <div>
           <span className={`session-status-pill ${statusTone}`}>{status}</span>
           <h3>T{table.num} · {getTableLabel(table)}</h3>
-          <p>₹{rate}/hr · {table.type === "POOL" ? "Pool" : "Snooker"}</p>
+          <p>{polishCurrency(rate)}/hr · {table.type === "POOL" ? "Pool" : "Snooker"}</p>
         </div>
         <div className="session-workspace-total">
           <span>{session ? "Running total" : "Current total"}</span>
-          <strong>₹{total}</strong>
+          <strong>{polishCurrency(total)}</strong>
         </div>
       </div>
 
@@ -1320,11 +1334,11 @@ function SessionWorkspace({
         <div className="session-workspace-stat">
           <span>Players</span>
           <strong>{players.length || "-"}</strong>
-          <em>{players.length ? players.join(", ") : "Walk-in names optional"}</em>
+          <em title={players.join(", ")}>{players.length ? players.join(", ") : "Walk-in names optional"}</em>
         </div>
         <div className="session-workspace-stat">
           <span>Food tab</span>
-          <strong>₹{session?.foodTotal || 0}</strong>
+          <strong>{polishCurrency(session?.foodTotal)}</strong>
           <em>{foodItems.length ? `${foodItems.length} item${foodItems.length === 1 ? "" : "s"}` : "No food added"}</em>
         </div>
       </div>
@@ -1520,12 +1534,12 @@ function TableCard({
           {occupied ? (
             <>
               <span className="table-state-timer" data-timer={status.timerStyle}>{fmt(session.elapsed)}</span>
-              <span>{activePlayers.join(", ") || session.customer_name || "Guest"} · ₹{total} running</span>
+              <span title={activePlayers.join(", ") || session.customer_name || "Guest"}>{activePlayers.join(", ") || session.customer_name || "Guest"} · {polishCurrency(total)} running</span>
             </>
           ) : (
             <>
-              <span className="table-state-rate">₹{rate}/hr</span>
-              {booking && <span>{bookingDisplayTime(booking)} · {booking.customer_name}</span>}
+              <span className="table-state-rate">{polishCurrency(rate)}/hr</span>
+              {booking && <span title={booking.customer_name}>{bookingDisplayTime(booking)} · {booking.customer_name}</span>}
             </>
           )}
         </div>
@@ -1535,7 +1549,7 @@ function TableCard({
           {/* Top row — rate, history, maintenance */}
           <div className="table-control-top">
             <span className="table-rate-line">
-              ₹{rate}/hr · {getTableLabel(table)}
+              {polishCurrency(rate)}/hr · {getTableLabel(table)}
             </span>
             <div className="table-utility-cluster">
               <HsrButton native
@@ -1564,6 +1578,7 @@ function TableCard({
             <div className="table-inline-panel maintenance">
               <HsrInput
                 placeholder="Reason"
+                aria-label={`T${table.num} maintenance reason`}
                 value={maintReason}
                 onChange={(e) => setMaintReason(e.target.value)}
                 className="table-mini-input"
@@ -1589,7 +1604,7 @@ function TableCard({
               <strong>Session started {fmtClock(session.startTime)}</strong>
               <strong>Session end {paused ? "Paused" : "Running"}</strong>
               {activeBillingMode === "sharing" && shareCount > 1 && (
-                <strong>₹{shareAmount} each</strong>
+                <strong>{polishCurrency(shareAmount)} each</strong>
               )}
               {activeBillingMode === "lp" && <strong>LP session</strong>}
             </div>
@@ -1768,7 +1783,7 @@ function TableCard({
           <TablePrimaryAction
             statusKey={status.key}
             disabled={startBusy || quoteBusy || pauseBusy}
-            label={startBusy ? "Starting..." : quoteBusy ? "Loading..." : ""}
+            loading={startBusy || quoteBusy}
             onClick={() => {
               if (occupied) onStop(table.id);
               else if (booking) onReviewBooking?.();
@@ -1783,6 +1798,11 @@ function TableCard({
 
 export default function TablesTab({ onSessionEnd, newSessionRequest = 0, onOpenFoodOrder, onNavigate }) {
   const { showToast } = useToast();
+  const [initialLoading, setInitialLoading] = useState(true);
+  const [floorReady, setFloorReady] = useState(false);
+  const [readErrors, setReadErrors] = useState({});
+  const [queueLoading, setQueueLoading] = useState(true);
+  const [bookingsLoading, setBookingsLoading] = useState(true);
   const [sessions, setSessions] = useState({});
   const [tableStates, setTableStates] = useState({});
   const [names, setNames] = useState({});
@@ -1845,14 +1865,11 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0, onOpenF
   }, [bookings]);
 
   useEffect(() => {
-    fetchActive();
-    fetchRates();
-    fetchMaintenance();
-    fetchPricing();
-    fetchQueue();
-    fetchBookings();
+    refreshControls();
     const pricingIv = setInterval(fetchPricing, 60000);
     return () => clearInterval(pricingIv);
+    // Initial reads use imported API helpers and stable setters; actions explicitly refresh later.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -1881,8 +1898,10 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0, onOpenF
   async function fetchActive() {
     try {
       const res = await getLiveFloor();
-      const floor = res.data.floor || {};
-      const tableRows = floor.tables || res.data.tables || [];
+      const floor = res.data?.floor || {};
+      const payload = floor.tables || res.data?.tables;
+      if (!Array.isArray(payload)) throw new Error("Floor data unavailable");
+      const tableRows = payload.filter(Boolean);
       const floorResources = floor.resources || {};
       const s = {},
         n = {};
@@ -1923,59 +1942,93 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0, onOpenF
       setSessions(s);
       setTableStates(nextTableStates);
       setNames(n);
+      setFloorReady(true);
+      clearReadError("floor");
       if (floorResources.rates || res.data.rates) setRates(floorResources.rates || res.data.rates);
       if (floorResources.maintenance || res.data.maintenance) {
         setMaintenance(floorResources.maintenance || res.data.maintenance);
       }
     } catch (e) {
       console.error(e);
+      setReadErrors(current => ({ ...current, floor: e.userMessage || "Table statuses could not load." }));
+    } finally {
+      setInitialLoading(false);
     }
   }
 
   async function fetchRates() {
     try {
       const rRes = await getRates();
+      if (!rRes.data || typeof rRes.data !== "object") throw new Error("Rates unavailable");
       setRates(rRes.data);
+      clearReadError("rates");
     } catch (e) {
       console.error(e);
+      setReadErrors(current => ({ ...current, rates: e.userMessage || "Table rates could not load." }));
     }
   }
 
   async function fetchMaintenance() {
     try {
       const res = await getMaintenance();
-      setMaintenance(res.data);
+      setMaintenance(res.data || {});
+      clearReadError("maintenance");
     } catch (e) {
       console.error(e);
+      setReadErrors(current => ({ ...current, maintenance: e.userMessage || "Maintenance statuses could not load." }));
     }
   }
 
   async function fetchPricing() {
     try {
       const [peakRes, gstRes] = await Promise.all([getCurrentRate(), getGST()]);
+      if (!peakRes.data || !gstRes.data) throw new Error("Pricing unavailable");
       setPeakRate(peakRes.data);
       setGstPercent(gstRes.data.gst_percent || 0);
+      clearReadError("pricing");
     } catch (e) {
       console.error(e);
+      setReadErrors(current => ({ ...current, pricing: e.userMessage || "Pricing details could not load." }));
     }
   }
 
   async function fetchQueue() {
     try {
       const res = await getWaitlist();
-      setQueue(res.data);
+      if (!Array.isArray(res.data)) throw new Error("Queue unavailable");
+      setQueue(res.data.filter(Boolean));
+      clearReadError("queue");
     } catch (e) {
       console.error(e);
+      setReadErrors(current => ({ ...current, queue: e.userMessage || "Waitlist could not load." }));
+    } finally {
+      setQueueLoading(false);
     }
   }
 
   async function fetchBookings() {
     try {
       const res = await getBookings();
-      setBookings(res.data);
+      if (!Array.isArray(res.data)) throw new Error("Bookings unavailable");
+      setBookings(res.data.filter(Boolean));
+      clearReadError("bookings");
     } catch (e) {
       console.error(e);
+      setReadErrors(current => ({ ...current, bookings: e.userMessage || "Bookings could not load." }));
+    } finally {
+      setBookingsLoading(false);
     }
+  }
+
+  function clearReadError(key) {
+    setReadErrors(current => {
+      if (!current[key]) return current;
+      const next = { ...current }; delete next[key]; return next;
+    });
+  }
+
+  function refreshControls() {
+    return Promise.all([fetchActive(), fetchRates(), fetchMaintenance(), fetchPricing(), fetchQueue(), fetchBookings()]);
   }
 
   async function handleCreateBooking(booking) {
@@ -2304,7 +2357,7 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0, onOpenF
     if (paymentMethod === "Split") {
       const splitTotal = splitPayload.reduce((sum, row) => sum + row.amount, 0);
       if (splitTotal !== total) {
-        showToast(`Split payments must total ₹${total}`, "error");
+        showToast(`Split payments must total ${polishCurrency(total)}`, "error");
         return;
       }
     }
@@ -2532,6 +2585,10 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0, onOpenF
     }
   }
 
+  if (initialLoading) return <SkeletonBlock rows={6} label="Loading table controls" />;
+  if (!floorReady) return <RetryNotice message={readErrors.floor || "Table statuses are unavailable"} onRetry={refreshControls} />;
+  if (!TABLES.every(table => tableStates[table.id])) return <EmptyState title="Some table statuses are unavailable" description="Reload the floor before starting or closing a table." action={<HsrButton icon="ti-refresh" onClick={refreshControls}>Reload tables</HsrButton>} />;
+
   return (
     <>
       <CheckoutQuoteScreen
@@ -2555,6 +2612,7 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0, onOpenF
       />}
 
       <div className="advanced-table-controls-page">
+        {!!Object.keys(readErrors).length && <RetryNotice message="Some table controls could not load" detail={Object.values(readErrors).join(" ")} onRetry={refreshControls} />}
         <LiveFloorCommand
           tables={TABLES}
           tableStates={tableStates}
@@ -2616,11 +2674,11 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0, onOpenF
                 <div className="table-detail-total">
                   <span>Running</span>
                   <strong>
-                    ₹{runningTotalForSession(
+                    {polishCurrency(runningTotalForSession(
                       sessions[selectedTable.id],
                       peakRate,
                       gstPercent,
-                    )}
+                    ))}
                   </strong>
                 </div>
               </div>
@@ -2688,6 +2746,9 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0, onOpenF
         <div className="tables-support-tools">
           <QueuePanel
             queue={queue}
+            loading={queueLoading}
+            error={readErrors.queue}
+            onRetry={fetchQueue}
             activeCount={Object.keys(sessions).length}
             onAdd={handleAddToQueue}
             onSeat={handleSeatQueue}
@@ -2698,6 +2759,9 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0, onOpenF
 
           <BookingPanel
             bookings={bookings}
+            loading={bookingsLoading}
+            error={readErrors.bookings}
+            onRetry={fetchBookings}
             onCreate={handleCreateBooking}
             onCancel={handleCancelBooking}
             busyActions={busyActions}

@@ -243,8 +243,9 @@ export default function SettingsTab({ role = "admin", onOpenTables, onNavigate }
       >
         <div className="settings-form-grid">
           <div>
-            <label className="form-label">Wiraka Rate T1/T2 (₹/hour)</label>
+            <label className="form-label" htmlFor="settings-wiraka-rate">Wiraka Rate T1/T2 (₹/hour)</label>
             <HsrInput
+              id="settings-wiraka-rate"
               type="number"
               className="input-field"
               value={wr}
@@ -252,8 +253,9 @@ export default function SettingsTab({ role = "admin", onOpenTables, onNavigate }
             />
           </div>
           <div>
-            <label className="form-label">Pool Rate T5 (₹/hour)</label>
+            <label className="form-label" htmlFor="settings-pool-rate">Pool Rate T5 (₹/hour)</label>
             <HsrInput
+              id="settings-pool-rate"
               type="number"
               className="input-field"
               value={pr}
@@ -261,8 +263,9 @@ export default function SettingsTab({ role = "admin", onOpenTables, onNavigate }
             />
           </div>
           <div>
-            <label className="form-label">English Rate T3/T4 (₹/hour)</label>
+            <label className="form-label" htmlFor="settings-english-rate">English Rate T3/T4 (₹/hour)</label>
             <HsrInput
+              id="settings-english-rate"
               type="number"
               className="input-field"
               value={sr}
@@ -286,8 +289,9 @@ export default function SettingsTab({ role = "admin", onOpenTables, onNavigate }
       >
         <div className="settings-inline-row">
           <div className="settings-inline-field">
-            <label className="form-label">Minimum minutes</label>
+            <label className="form-label" htmlFor="settings-minimum-minutes">Minimum minutes</label>
             <HsrInput
+              id="settings-minimum-minutes"
               type="number"
               min="0"
               className="input-field"
@@ -318,8 +322,9 @@ export default function SettingsTab({ role = "admin", onOpenTables, onNavigate }
       >
         <div className="settings-inline-row">
           <div className="settings-inline-field">
-            <label className="form-label">Grace minutes after booking time</label>
+            <label className="form-label" htmlFor="settings-grace-minutes">Grace minutes after booking time</label>
             <HsrInput
+              id="settings-grace-minutes"
               type="number"
               min="1"
               max="120"
@@ -373,8 +378,9 @@ export default function SettingsTab({ role = "admin", onOpenTables, onNavigate }
           >
             <div className="settings-credentials-grid">
               <div>
-                <label className="form-label">New Admin Username</label>
+                <label className="form-label" htmlFor="settings-admin-username">New Admin Username</label>
                 <HsrInput
+                  id="settings-admin-username"
                   type="text"
                   className="input-field"
                   placeholder="Enter new username"
@@ -383,8 +389,9 @@ export default function SettingsTab({ role = "admin", onOpenTables, onNavigate }
                 />
               </div>
               <div>
-                <label className="form-label">New Admin Password</label>
+                <label className="form-label" htmlFor="settings-admin-password">New Admin Password</label>
                 <HsrInput
+                  id="settings-admin-password"
                   type="password"
                   className="input-field"
                   placeholder="Min 8 characters"
@@ -412,8 +419,9 @@ export default function SettingsTab({ role = "admin", onOpenTables, onNavigate }
           >
             <div className="settings-credentials-grid">
               <div>
-                <label className="form-label">Staff Username</label>
+                <label className="form-label" htmlFor="settings-staff-username">Staff Username</label>
                 <HsrInput
+                  id="settings-staff-username"
                   type="text"
                   className="input-field"
                   value={newStaffUser}
@@ -421,8 +429,9 @@ export default function SettingsTab({ role = "admin", onOpenTables, onNavigate }
                 />
               </div>
               <div>
-                <label className="form-label">Staff Password</label>
+                <label className="form-label" htmlFor="settings-staff-password">Staff Password</label>
                 <HsrInput
+                  id="settings-staff-password"
                   type="password"
                   className="input-field"
                   placeholder="Min 8 characters"
@@ -464,8 +473,9 @@ export default function SettingsTab({ role = "admin", onOpenTables, onNavigate }
                   </div>
                   <div className="settings-credentials-grid">
                     <div>
-                      <label className="form-label">Manager PIN</label>
+                      <label className="form-label" htmlFor="settings-manager-pin">Manager PIN</label>
                       <HsrInput
+                        id="settings-manager-pin"
                         type="password"
                         className="input-field"
                         placeholder="Required if manager PIN is enabled"
@@ -474,8 +484,9 @@ export default function SettingsTab({ role = "admin", onOpenTables, onNavigate }
                       />
                     </div>
                     <div>
-                      <label className="form-label">Confirmation word</label>
+                      <label className="form-label" htmlFor="settings-confirmation-word">Confirmation word</label>
                       <HsrInput
+                        id="settings-confirmation-word"
                         type="text"
                         className="input-field"
                         placeholder="RESET or CLEAR"

@@ -282,7 +282,9 @@ export default function CheckoutPanel({ table, open, onClose, onComplete, onPend
           {loading && !quote && <div className="page-skeleton compact" role="status" aria-label="Preparing frozen bill"><div className="skeleton-line skeleton-title" /><div className="skeleton-panel" /></div>}
           {loading && quote && <p role="status">Recalculating bill…</p>}
           {finalizing && <p role="status">Closing table…</p>}
-          {error && <Alert tone="danger" title="Checkout needs attention">{error}</Alert>}
+          {error && <Alert tone="danger" title="Checkout needs attention">{error}
+            {!quote && <Button variant="secondary" loading={loading} onClick={() => loadQuote({ nextPaymentMethod: paymentMethod, nextDiscountType: discountType, nextDiscountValue: discountValue, nextClosedAtMs: closedAtMs })}>Retry quote</Button>}
+          </Alert>}
           {quote && (
             <>
               <div className="checkout-total-card">
@@ -360,6 +362,7 @@ export default function CheckoutPanel({ table, open, onClose, onComplete, onPend
                       value={discountValue}
                       onChange={(event) => setDiscountValue(sanitizeRupeeDiscount(event.target.value))}
                       placeholder="Max ₹50"
+                      aria-label="Discount amount in rupees"
                     />
                     <Button variant="secondary" loading={loading} onClick={handleRupeeApply} disabled={!discountValue}>
                       Apply Discount

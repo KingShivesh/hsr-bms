@@ -1,4 +1,4 @@
-import { Icon as HsrIcon, Input as HsrInput, Button as HsrButton, Select as HsrSelect, Table as HsrTable } from "../ui/index.js";
+import { Icon as HsrIcon, Input as HsrInput, Button as HsrButton, Select as HsrSelect, Table as HsrTable, MetricValue } from "../ui/index.js";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useCachedState, hasCachedState } from "../../hooks/useCachedState.js";
 import {
@@ -15,6 +15,7 @@ import { useToast } from "../toastContext.js";
 import { Checkbox, useEscapeKey } from "../ui/index.js";
 import { useRealtimeSubscription } from "../../realtime/useRealtimeSubscription.js";
 import { useDialogFocus } from "../ui/useDialogFocus.js";
+import { formatCurrency, formatDateTime } from "../../utils/format.js";
 
 const CATEGORIES = [
   "All",
@@ -248,13 +249,13 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
   }, []);
 
   function getItemPrice(v) {
-    return typeof v === "object" ? v.price : v;
+    return Number(typeof v === "object" ? v?.price : v) || 0;
   }
   function getItemCat(v) {
-    return typeof v === "object" ? v.category || "Snacks" : "Snacks";
+    return typeof v === "object" ? v?.category || "Snacks" : "Snacks";
   }
   function getItemAvail(v) {
-    return typeof v === "object" ? v.available !== false : true;
+    return v != null && (typeof v !== "object" || v.available !== false);
   }
   function isCigarette(name) {
     return /cigarette|cigg/i.test(name);
@@ -456,8 +457,8 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
     );
   const placeOrderLabel =
     orderTarget === "table"
-      ? `Add to table bill · ₹${cartTotalValue}`
-      : `Collect ${paymentMethod} · ₹${cartTotalValue}`;
+      ? `Add to table bill · ${formatCurrency(cartTotalValue)}`
+      : `Collect ${paymentMethod} · ${formatCurrency(cartTotalValue)}`;
 
   useEffect(() => {
     if (!orderContext?.tableId) return;
@@ -635,11 +636,11 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
                     <span className="food-card-media" aria-hidden="true">
                       <HsrIcon className={`ti ${isCigarette(name) ? "ti-smoking" : "ti-tools-kitchen-2"}`} />
                     </span>
-                    <div className="food-menu-name">
+                    <div className="food-menu-name" title={name}>
                       {name}
                     </div>
                     <div className="food-menu-price">
-                      {isCigarette(name) ? "Manual price" : `₹${getItemPrice(v)}`}
+                      {isCigarette(name) ? "Manual price" : formatCurrency(getItemPrice(v))}
                     </div>
                     <div className="food-menu-category">
                       {getItemCat(v)}
@@ -748,6 +749,7 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
                   </div>
                   <HsrSelect
                     className="input-field"
+                    aria-label="Order table"
                     value={selectedTable}
                     onChange={(e) => {
                       setSelectedTable(e.target.value);
@@ -763,6 +765,7 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
                   </HsrSelect>
                   <HsrSelect
                     className="input-field"
+                    aria-label="Order player"
                     value={selectedPlayer}
                     onChange={(e) => setSelectedPlayer(e.target.value)}
                     disabled={!selectedTable}
@@ -780,6 +783,7 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
                   <HsrInput
                     className="input-field"
                     placeholder="Customer name"
+                    aria-label="Counter customer name"
                     value={customerName}
                     onChange={(e) => setCustomerName(e.target.value)}
                   />
@@ -823,6 +827,8 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
                 />
               ) : (
                 <>
+                  {cartItemCount >= 100 && <a className="food-cart-items-link" href="#food-cart-items" onClick={event => { event.preventDefault(); document.getElementById("food-cart-items")?.focus(); }}>100+ items · View items</a>}
+                  <div id="food-cart-items" className="food-cart-lines" tabIndex={-1} aria-label="Order items">
                   {cart.map((i) => {
                     const price = getCartUnitPrice(i);
                     return (
@@ -831,13 +837,13 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
                         className="cart-line"
                       >
                         <div>
-                          <div className="cart-line-name">
+                          <div className="cart-line-name" title={i.item}>
                             {isCigarette(i.item) && i.mrp
                               ? `${i.item} (₹${i.mrp})`
                               : i.item}
                           </div>
                           <div className="cart-line-meta">
-                            ₹{price} × {i.qty}
+                            {formatCurrency(price)} × {i.qty}
                           </div>
                         </div>
                         <div
@@ -860,7 +866,7 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
                             </HsrButton>
                           </div>
                           <span className="cart-line-price">
-                            ₹{price * i.qty}
+                            {formatCurrency(price * i.qty)}
                           </span>
                           <HsrButton native
                             type="button"
@@ -874,18 +880,19 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
                       </div>
                     );
                   })}
+                  </div>
 
                   <div className="food-cart-total">
                     <div>
                       <span>Subtotal</span>
                       <small>{cartItemCount} item{cartItemCount === 1 ? "" : "s"}</small>
                     </div>
-                    <strong>₹{cartTotalValue}</strong>
+                    <MetricValue>{formatCurrency(cartTotalValue)}</MetricValue>
                   </div>
 
                   <div className="food-cart-grand-total">
                     <span>Total</span>
-                    <strong>₹{cartTotalValue}</strong>
+                    <MetricValue>{formatCurrency(cartTotalValue)}</MetricValue>
                   </div>
 
                   <HsrButton native
@@ -912,11 +919,11 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
                       <span>
                         {i.item} x{i.qty}
                       </span>
-                      <span>₹{i.price}</span>
+                      <span>{formatCurrency(i.price)}</span>
                     </div>
                   ))}
                   <div className="success-callout-total">
-                    Total: ₹{lastOrder.total} · {lastOrder.paymentMethod || "Cash"}
+                    Total: {formatCurrency(lastOrder.total)} · {lastOrder.paymentMethod || "Cash"}
                   </div>
                 </div>
               )}
@@ -938,6 +945,7 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
               icon="ti-chart-bar"
               title="No food orders yet"
               detail="Food performance will appear after the first order."
+              action={<HsrButton onClick={() => setActiveTab("order")}>New Order</HsrButton>}
             />
           ) : (
             <div className="history-section">
@@ -946,7 +954,7 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
                   <tr>
                     <th>Rank</th>
                     <th>Item</th>
-                    <th>Units Sold</th>
+                    <th data-type="number">Units Sold</th>
                     <th data-type="number">Revenue</th>
                     <th>Performance</th>
                   </tr>
@@ -954,18 +962,18 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
                 <tbody>
                   {stats.map((s, i) => {
                     const maxQty = stats[0]?.qty || 1;
-                    const pct = Math.round((s.qty / maxQty) * 100);
+                    const pct = Math.max(0, Math.min(100, Math.round(((Number(s.qty) || 0) / maxQty) * 100)));
                     return (
                       <tr key={i}>
                         <td className="type-sm polish-color-text-muted" >
                           #{i + 1}
                         </td>
                         <td className="polish-font-weight-weight-medium" >{s.name}</td>
-                        <td className="polish-color-accent polish-font-weight-weight-semibold" >
+                        <td data-type="number" className="polish-color-accent polish-font-weight-weight-semibold" >
                           {s.qty}
                         </td>
                         <td data-type="number" className="polish-color-success polish-font-weight-weight-semibold" >
-                          ₹{s.revenue.toLocaleString("en-IN")}
+                          {formatCurrency(s.revenue)}
                         </td>
                         <td>
                           <div
@@ -1013,6 +1021,7 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
               icon="ti-receipt"
               title="No standalone food orders yet"
               detail="Orders placed without a table session will show here."
+              action={<HsrButton onClick={() => setActiveTab("order")}>New Order</HsrButton>}
             />
           ) : (
             <div className="history-section">
@@ -1031,17 +1040,17 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
                   {orders.map((o, i) => (
                     <tr key={o.id || i}>
                       <td className="type-sm polish-color-text-muted" >
-                        {o.date}
+                        {o.ts ? formatDateTime(o.ts) : o.date || "-"}
                       </td>
-                      <td className="polish-font-weight-weight-medium" >{o.customer_name}</td>
+                      <td className="polish-font-weight-weight-medium" >{o.customer_name || "Guest"}</td>
                       <td className="type-sm polish-color-text-secondary" >
-                        {o.items.map((x) => `${x.item} x${x.qty}`).join(", ")}
+                        {Array.isArray(o.items) && o.items.length ? o.items.filter(Boolean).map((x) => `${x.item || "Item"} x${Number(x.qty) || 0}`).join(", ") : "No item details"}
                       </td>
                       <td className="polish-font-weight-weight-bold" style={{ color: o.payment_method === "UPI" ? "var(--accent)" : "var(--success)" }}>
                         {o.payment_method || "Cash"}
                       </td>
                       <td data-type="number" className="polish-font-weight-weight-semibold polish-color-success" >
-                        ₹{o.total}
+                        {formatCurrency(o.total)}
                       </td>
                       <td>
                         <HsrButton native

@@ -1,5 +1,5 @@
 import { formatCurrency as polishCurrency } from "../../utils/format.js";
-import { Icon as HsrIcon, Input as HsrInput, Select as HsrSelect, Textarea as HsrTextarea, Button as HsrButton } from "../ui/index.js";
+import { Icon as HsrIcon, Input as HsrInput, Select as HsrSelect, Textarea as HsrTextarea, Button as HsrButton, SkeletonBlock, EmptyState } from "../ui/index.js";
 import { useEffect, useMemo, useState } from "react";
 import {
   closeTournament,
@@ -17,6 +17,7 @@ import { useConfirm } from "../confirmContext.js";
 import RetryNotice from "../RetryNotice.jsx";
 
 const GAME_TYPES = ["8 Ball", "9 Ball", "10 Ball", "Snooker", "Straight Pool"];
+const clippedText = { display: "block", minWidth: 0, maxWidth: "100%", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" };
 
 function recommendedTypeForGame(gameType) {
   return gameType === "Snooker" ? "SNOOKER" : "POOL";
@@ -26,7 +27,7 @@ function Panel({ title, children, action }) {
   return (
     <div className="settings-panel">
       <div className="settings-panel-header">
-        <div className="settings-panel-title">{title}</div>
+        <div className="settings-panel-title" title={title} style={clippedText}>{title}</div>
         {action}
       </div>
       {children}
@@ -40,7 +41,7 @@ function StatusPill({ status }) {
     <span className="type-xs polish-padding-0px-8px polish-border-radius-999px polish-font-weight-weight-bold"
       style={{ background: done ? "var(--success-bg)" : "var(--accent-bg)", color: done ? "var(--success)" : "var(--accent)", border: `1px solid ${done ? "color-mix(in srgb, var(--success) 28%, var(--border))" : "color-mix(in srgb, var(--accent) 28%, var(--border))"}` }}
     >
-      {done ? "COMPLETED" : "ACTIVE"}
+      {done ? "COMPLETED" : status === "active" ? "ACTIVE" : "UNKNOWN"}
     </span>
   );
 }
@@ -94,6 +95,7 @@ export default function TournamentTab({ onNavigate }) {
   const [activeAction, setActiveAction] = useState("");
   const [loadError, setLoadError] = useState("");
   const [tableLoadError, setTableLoadError] = useState("");
+  const [tableLoading, setTableLoading] = useState(true);
 
   useEffect(() => {
     fetchAll();
@@ -108,12 +110,14 @@ export default function TournamentTab({ onNavigate }) {
     try {
       setLoadError("");
       const res = await getTournaments();
-      setTournaments(res.data);
-      const id = nextSelectedId || selected?.id || res.data[0]?.id;
+      const events = Array.isArray(res.data) ? res.data.filter((event) => event && typeof event === "object") : [];
+      setTournaments(events);
+      const id = nextSelectedId || (events.some((event) => event.id === selected?.id) ? selected.id : events[0]?.id);
       if (id) {
         const detail = await getTournament(id);
+        if (!detail.data || typeof detail.data !== "object" || Array.isArray(detail.data)) throw new Error("Tournament detail unavailable");
         setSelected(detail.data);
-      }
+      } else setSelected(null);
     } catch (e) {
       console.error(e);
       setLoadError(e.userMessage || "Tournaments could not load.");
@@ -126,11 +130,14 @@ export default function TournamentTab({ onNavigate }) {
     try {
       setTableLoadError("");
       const res = await getTableState();
-      setTableState(res.data.tables || []);
+      if (!Array.isArray(res.data?.tables)) throw new Error("Live table status unavailable");
+      setTableState(res.data.tables.filter((table) => table && typeof table === "object"));
       setRates(res.data.rates || { wr: 320, pr: 170, sr: 270 });
     } catch (e) {
       console.error(e);
       setTableLoadError(e.userMessage || "Live table status could not load.");
+    } finally {
+      setTableLoading(false);
     }
   }
 
@@ -171,6 +178,7 @@ export default function TournamentTab({ onNavigate }) {
     setActiveAction(`tournament-select-${id}`);
     try {
       const res = await getTournament(id);
+      if (!res.data || typeof res.data !== "object" || Array.isArray(res.data)) throw new Error("Tournament detail unavailable");
       setSelected(res.data);
     } catch (e) {
       showToast(e.response?.data?.detail || "Failed to load tournament", "error");
@@ -216,8 +224,8 @@ export default function TournamentTab({ onNavigate }) {
   }
 
   const rounds = useMemo(() => {
-    const grouped = {};
-    (selected?.matches || []).forEach((m) => {
+    const grouped = Object.create(null);
+    (Array.isArray(selected?.matches) ? selected.matches : []).filter(Boolean).forEach((m) => {
       grouped[m.round_no] = grouped[m.round_no] || [];
       grouped[m.round_no].push(m);
     });
@@ -228,8 +236,10 @@ export default function TournamentTab({ onNavigate }) {
     tableState.reduce((acc, row) => {
       acc[String(row.id || "").toLowerCase()] = row;
       return acc;
-    }, {})
+    }, Object.create(null))
   ), [tableState]);
+  const playerCount = Array.isArray(selected?.players) ? selected.players.filter(Boolean).length : null;
+  const tableDataComplete = HSR_TABLES.every((table) => tableStateById[table.id]);
 
   if (loading) {
     return (
@@ -259,13 +269,6 @@ export default function TournamentTab({ onNavigate }) {
           }}
         />
       )}
-      {tableLoadError && (
-        <RetryNotice
-          message={tableLoadError}
-          detail="Tournament table availability may be stale until this reloads."
-          onRetry={fetchTableState}
-        />
-      )}
       <div>
         {flash && (
           <div className="type-sm polish-background-success-bg polish-border-1px-solid-color-mix-in-srgb-success-28-border polish-border-radius-radius-sm polish-padding-8px-12px polish-color-success polish-font-weight-weight-semibold polish-margin-bottom-12px"
@@ -276,14 +279,16 @@ export default function TournamentTab({ onNavigate }) {
         )}
 
         <Panel title="Create Tournament">
-          <label className="form-label">Name</label>
+          <label className="form-label" htmlFor="tournament-name">Name</label>
           <HsrInput
+            id="tournament-name"
             className="input-field"
             value={name}
             onChange={(e) => setName(e.target.value)}
           />
-          <label className="form-label">Game</label>
+          <label className="form-label" htmlFor="tournament-game">Game</label>
           <HsrSelect
+            id="tournament-game"
             className="input-field"
             value={gameType}
             onChange={(e) => setGameType(e.target.value)}
@@ -292,15 +297,17 @@ export default function TournamentTab({ onNavigate }) {
               <option key={g}>{g}</option>
             ))}
           </HsrSelect>
-          <label className="form-label">Entry Fee</label>
+          <label className="form-label" htmlFor="tournament-entry-fee">Entry Fee</label>
           <HsrInput
+            id="tournament-entry-fee"
             type="number"
             className="input-field"
             value={entryFee}
             onChange={(e) => setEntryFee(e.target.value)}
           />
-          <label className="form-label">Players</label>
+          <label className="form-label" htmlFor="tournament-players">Players</label>
           <HsrTextarea
+            id="tournament-players"
             className="input-field polish-resize-vertical"
             rows={7}
             placeholder={"One player per line\nRahul\nArjun\nVikram"}
@@ -316,19 +323,20 @@ export default function TournamentTab({ onNavigate }) {
         <Panel title="Events">
           {tournaments.length === 0 ? (
             <div className="type-sm polish-color-text-muted polish-padding-8px-0" >
-              No tournaments yet
+              {loadError ? "Tournament events unavailable. Retry to reload." : "No tournaments yet"}
             </div>
           ) : (
             tournaments.map((t) => (
               <HsrButton native
                 key={t.id}
                 onClick={() => handleSelect(t.id)}
-                disabled={!!activeAction}
+                disabled={!!activeAction || t.id == null}
+                loading={activeAction === `tournament-select-${t.id}`}
                 className="polish-width-100 polish-text-align-left polish-border-radius-radius-sm polish-padding-8px-12px polish-margin-bottom-8px polish-cursor-pointer" style={{ background: selected?.id === t.id ? "var(--accent)" : "var(--surface)", color: selected?.id === t.id ? "var(--text-on-accent)" : "var(--text-primary)", border: selected?.id === t.id ? "1px solid var(--accent-border)" : "1px solid var(--border)" }}
               >
                 <div className="polish-display-flex polish-justify-content-space-between" >
-                  <span className="type-sm polish-font-weight-weight-bold" >
-                    {activeAction === `tournament-select-${t.id}` ? "Loading..." : t.name}
+                  <span className="type-sm polish-font-weight-weight-bold" title={t.name || "Unnamed tournament"} style={clippedText}>
+                    {activeAction === `tournament-select-${t.id}` ? "Loading..." : t.name || "Unnamed tournament"}
                   </span>
                   <StatusPill status={t.status} />
                 </div>
@@ -346,12 +354,12 @@ export default function TournamentTab({ onNavigate }) {
           <div className="tournament-floor-note">
             Live table status uses the HSR setup: T1/T2 Wiraka, T3/T4 English, T5 Pool.
           </div>
-          <TournamentTableFloor
+          {tableLoading ? <SkeletonBlock label="Loading live table status" rows={3} /> : tableLoadError || !tableDataComplete ? <RetryNotice message={tableLoadError || "Some live table statuses are unavailable"} detail="Reload before choosing a tournament table." onRetry={fetchTableState} /> : <TournamentTableFloor
             gameType={selected?.game_type || gameType}
             rates={rates}
             tableStateById={tableStateById}
             onNavigate={onNavigate}
-          />
+          />}
         </Panel>
 
         {!selected ? (
@@ -366,8 +374,8 @@ export default function TournamentTab({ onNavigate }) {
             action={
               <div className="polish-display-flex polish-gap-8px polish-align-items-center" >
                 <StatusPill status={selected.status} />
-                {selected.status !== "completed" && (
-                  <HsrButton native type="button" className="btn btn-warning-sm" onClick={handleClose} disabled={!!activeAction}>
+                {selected.status === "active" && (
+                  <HsrButton native type="button" className="btn btn-warning-sm" onClick={handleClose} disabled={!!activeAction || selected.id == null} loading={activeAction === "tournament-close"}>
                     {activeAction === "tournament-close" ? "Closing..." : "Close Tournament"}
                   </HsrButton>
                 )}
@@ -379,8 +387,8 @@ export default function TournamentTab({ onNavigate }) {
             >
               {[
                 ["Game", selected.game_type],
-                ["Players", selected.players.length],
-                ["Pot", polishCurrency(selected.entry_fee * selected.players.length)],
+                ["Players", playerCount ?? "—"],
+                ["Pot", playerCount === null || selected.entry_fee == null ? "—" : polishCurrency(selected.entry_fee * playerCount)],
                 ["Winner", selected.winner_name || "—"],
               ].map(([label, value]) => (
                 <div
@@ -390,14 +398,15 @@ export default function TournamentTab({ onNavigate }) {
                   <div className="type-xs polish-color-text-secondary polish-margin-bottom-4px" >
                     {label}
                   </div>
-                  <div className="polish-color-text-primary polish-font-weight-weight-bold" >{value}</div>
+                  <div className="polish-color-text-primary polish-font-weight-weight-bold" title={String(value ?? "")} style={clippedText}>{value}</div>
                 </div>
               ))}
             </div>
 
+            {!rounds.length && <EmptyState icon="ti-trophy" title={Array.isArray(selected.matches) ? "No matches yet" : "Bracket unavailable"} description={Array.isArray(selected.matches) ? "This tournament has no recorded matches." : "Reload the selected tournament to recover its bracket."} action={!Array.isArray(selected.matches) ? <HsrButton onClick={() => handleSelect(selected.id)} disabled={selected.id == null || !!activeAction}>Reload bracket</HsrButton> : undefined} />}
             <div className="polish-display-flex polish-gap-12px polish-overflow-x-auto polish-padding-bottom-8px" >
               {rounds.map(([roundNo, matches]) => (
-                <div key={roundNo} className="polish-min-width-260px" >
+                <div key={roundNo} className="polish-min-width-260px" style={{ width: 260, flexShrink: 0 }}>
                   <div className="type-sm polish-text-transform-uppercase polish-color-text-secondary polish-font-weight-weight-bold polish-margin-bottom-8px"
 
                   >
@@ -416,11 +425,12 @@ export default function TournamentTab({ onNavigate }) {
                         return (
                           <HsrButton native
                             key={p}
-                            disabled={!!activeAction || m.status === "completed" || selected.status === "completed"}
+                            disabled={!!activeAction || m.status === "completed" || selected.status !== "active" || m.id == null || selected.id == null}
+                            loading={activeAction === `winner-${m.id}-${p}`}
                             onClick={() => handleWinner(m, p)}
                             className="polish-width-100 polish-display-flex polish-justify-content-space-between polish-align-items-center polish-border-radius-radius-sm polish-padding-8px-8px polish-margin-bottom-4px" style={{ border: won ? "1px solid color-mix(in srgb, var(--success) 28%, var(--border))" : "1px solid var(--border)", background: won ? "var(--success-bg)" : "var(--surface)", color: won ? "var(--success)" : "var(--text-primary)", cursor: activeAction ? "wait" : m.status === "completed" ? "default" : "pointer", fontWeight: won ? "var(--weight-semibold)" : "var(--weight-medium)" }}
                           >
-                            <span>{p}</span>
+                            <span title={p} style={clippedText}>{p}</span>
                             <span className="type-xs" style={{
   color: won ? "var(--success)" : "var(--text-muted)"
 }}>

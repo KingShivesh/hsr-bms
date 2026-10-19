@@ -31,15 +31,16 @@ import { MetricCard } from "../ui/index.js";
 import { useToast } from "../toastContext.js";
 import { useConfirm } from "../confirmContext.js";
 import { useRealtimeSubscription } from "../../realtime/useRealtimeSubscription.js";
+import { topDialog, useDialogFocus } from "../ui/useDialogFocus.js";
 
 function money(value = 0) { return polishCurrency(value); }
 
 function asArray(value) {
-  if (Array.isArray(value)) return value;
+  if (Array.isArray(value)) return value.filter((row) => row && typeof row === "object" && !Array.isArray(row));
   if (!value || typeof value !== "object") return [];
-  if (Array.isArray(value.items)) return value.items;
-  if (Array.isArray(value.menu)) return value.menu;
-  if (Array.isArray(value.data)) return value.data;
+  if (Object.hasOwn(value, "items")) return asArray(value.items);
+  if (Object.hasOwn(value, "menu")) return asArray(value.menu);
+  if (Object.hasOwn(value, "data")) return asArray(value.data);
   return Object.entries(value).map(([name, item]) => (
     item && typeof item === "object"
       ? { name, ...item }
@@ -48,7 +49,7 @@ function asArray(value) {
 }
 
 function asMaintenanceRows(value) {
-  if (Array.isArray(value)) return value;
+  if (Array.isArray(value)) return asArray(value);
   if (!value || typeof value !== "object") return [];
   return Object.entries(value).map(([table_id, item]) => ({ table_id, ...(item || {}) }));
 }
@@ -191,22 +192,17 @@ function ActionButton({ tone = "default", icon, children, className = "", ...pro
 function Modal({ title, onClose, children }) {
   const modalRef = useRef(null);
   const closeRef = useRef(null);
-  const openerRef = useRef(null);
   const onCloseRef = useRef(onClose);
   const titleId = `cf-modal-title-${title.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`;
+  useDialogFocus(modalRef, true, closeRef);
 
   useEffect(() => {
     onCloseRef.current = onClose;
   }, [onClose]);
 
   useEffect(() => {
-    openerRef.current = document.activeElement instanceof HTMLElement ? document.activeElement : null;
-    window.requestAnimationFrame(() => closeRef.current?.focus());
-    function closeAndRestore() {
-      onCloseRef.current?.();
-      window.setTimeout(() => openerRef.current?.focus?.(), 0);
-    }
     function onKeyDown(event) {
+      if (event.defaultPrevented || topDialog() !== modalRef.current) return;
       if (event.key === "Escape") {
         const activeEl = document.activeElement;
         const isInput =
@@ -217,29 +213,13 @@ function Modal({ title, onClose, children }) {
 
         if (isInput && activeEl.value && String(activeEl.value).trim().length > 0) {
           activeEl.blur();
+          event.preventDefault();
           event.stopPropagation();
           return;
         }
 
         event.preventDefault();
-        closeAndRestore();
-        return;
-      }
-      if (event.key !== "Tab") return;
-      const focusable = Array.from(
-        modalRef.current?.querySelectorAll(
-          'button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])',
-        ) || [],
-      ).filter((node) => node.offsetParent !== null);
-      if (!focusable.length) return;
-      const first = focusable[0];
-      const last = focusable[focusable.length - 1];
-      if (event.shiftKey && document.activeElement === first) {
-        event.preventDefault();
-        last.focus();
-      } else if (!event.shiftKey && document.activeElement === last) {
-        event.preventDefault();
-        first.focus();
+        onCloseRef.current?.();
       }
     }
     window.addEventListener("keydown", onKeyDown);
@@ -252,6 +232,7 @@ function Modal({ title, onClose, children }) {
         ref={modalRef}
         className="cf-modal"
         role="dialog"
+        tabIndex={-1}
         aria-modal="true"
         aria-labelledby={titleId}
       >
@@ -296,9 +277,9 @@ function RowList({ rows, emptyTitle = "Nothing pending", emptyDetail = "New acti
       {rows.map((row) => (
         <div className={`cf-row ${row.tone || ""}`} key={row.id}>
           <HsrIcon className={`ti ${row.icon}`} aria-hidden="true" />
-          <div>
-            <strong>{row.title}</strong>
-            <span>{row.detail}</span>
+          <div style={{ minWidth: 0, flex: 1 }}>
+            <strong title={row.title} style={{ display: "block", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{row.title}</strong>
+            <span title={row.detail} style={{ display: "block", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{row.detail}</span>
           </div>
           {row.amount && <em>{row.amount}</em>}
           {row.action}
@@ -308,7 +289,7 @@ function RowList({ rows, emptyTitle = "Nothing pending", emptyDetail = "New acti
   );
 }
 
-function WaitlistView({ waitlist, bookings, activeSessions, maintenance, actions, busy, activeAction, showToast }) {
+function WaitlistView({ waitlist, bookings, activeSessions, tableState, maintenance, actions, busy, activeAction, showToast }) {
   const [showAdd, setShowAdd] = useState(false);
   const [seatTarget, setSeatTarget] = useState({});
   const [form, setForm] = useState({
@@ -322,9 +303,10 @@ function WaitlistView({ waitlist, bookings, activeSessions, maintenance, actions
   const upcoming = bookings.filter((booking) => booking.status === "booked");
   const activeIds = new Set(activeSessions.map((session) => String(session.table_id || "").toLowerCase()));
   const maintenanceIds = new Set(maintenance.map((row) => String(row.table_id || "").toLowerCase()));
-  const availableTables = HSR_TABLES.filter(
+  const tableDataComplete = HSR_TABLES.every((table) => tableState.some((row) => String(row.id).toLowerCase() === table.id));
+  const availableTables = tableDataComplete ? HSR_TABLES.filter(
     (table) => !activeIds.has(table.id) && !maintenanceIds.has(table.id),
-  );
+  ) : [];
 
   async function submitWaitlist(event) {
     event.preventDefault();
@@ -348,7 +330,7 @@ function WaitlistView({ waitlist, bookings, activeSessions, maintenance, actions
       <div className="cf-toolbar">
         <div>
           <strong>Queue desk</strong>
-          <span>{availableTables.length} tables available for seating</span>
+          <span>{tableDataComplete ? `${availableTables.length} tables available for seating` : "Table availability unavailable"}</span>
         </div>
         <ActionButton tone="primary" icon="ti-user-plus" onClick={() => setShowAdd(true)}>
           Add Walk-in Guest
@@ -374,6 +356,7 @@ function WaitlistView({ waitlist, bookings, activeSessions, maintenance, actions
               action: (
                 <div className="cf-row-actions">
                   <HsrSelect
+                    aria-label={`Table for ${entry.customer_name || "waiting guest"}`}
                     value={seatTarget[entry.id] || entry.recommended_table?.id || availableTables[0]?.id || ""}
                     onChange={(event) => setSeatTarget((prev) => ({ ...prev, [entry.id]: event.target.value }))}
                     disabled={busy}
@@ -385,7 +368,7 @@ function WaitlistView({ waitlist, bookings, activeSessions, maintenance, actions
                       </option>
                     ))}
                   </HsrSelect>
-                  <ActionButton tone="success" icon="ti-armchair" onClick={() => seatEntry(entry)} disabled={busy}>
+                  <ActionButton tone="success" icon="ti-armchair" onClick={() => seatEntry(entry)} disabled={busy || !availableTables.length}>
                     {activeAction === `wait-seat-${entry.id}` ? "Seating..." : "Seat"}
                   </ActionButton>
                   <ActionButton tone="danger" icon="ti-x" onClick={() => actions.cancelWaitlist(entry.id)} disabled={busy}>
@@ -950,7 +933,7 @@ function InventoryView({ menu, maintenance, actions, busy, activeAction, showToa
                         <span className="cf-bulk-failed-list">
                           Failed:
                           {bulkResult.failed.map((item) => (
-                            <b key={item.name}>{item.name}</b>
+                            <b key={item.name} title={item.name} style={{ maxWidth: "100%", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{item.name}</b>
                           ))}
                         </span>
                       )}
@@ -974,9 +957,9 @@ function InventoryView({ menu, maintenance, actions, busy, activeAction, showToa
                     aria-label={`Select ${item.name}`}
                   />
                 </label>
-                <div>
-                  <strong>{item.name}</strong>
-                  <span>{item.category || "Menu"} · {money(item.price)} · {item.available === false ? "Out of stock" : "In stock"}</span>
+                <div style={{ minWidth: 0 }}>
+                  <strong title={item.name} style={{ display: "block", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{item.name}</strong>
+                  <span title={item.category || "Menu"} style={{ display: "block", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{item.category || "Menu"} · {money(item.price)} · {item.available === false ? "Out of stock" : "In stock"}</span>
                 </div>
                 <div className="cf-row-actions">
                   <ActionButton
@@ -987,7 +970,7 @@ function InventoryView({ menu, maintenance, actions, busy, activeAction, showToa
                     onClick={() => setEditing({
                       oldName: item.name,
                       newName: item.name,
-                      price: item.price,
+                      price: item.price ?? "",
                       category: item.category || "Veg Snacks",
                     })}
                   >
@@ -1034,6 +1017,7 @@ function InventoryView({ menu, maintenance, actions, busy, activeAction, showToa
           action={
             <form className="cf-inline-form" onSubmit={submitMaintenance}>
               <HsrSelect
+                aria-label="Table for maintenance"
                 value={maintenanceForm.table_id}
                 onChange={(event) => setMaintenanceForm((prev) => ({ ...prev, table_id: event.target.value }))}
               >
@@ -1044,6 +1028,7 @@ function InventoryView({ menu, maintenance, actions, busy, activeAction, showToa
                 ))}
               </HsrSelect>
               <HsrInput
+                aria-label="Maintenance reason"
                 value={maintenanceForm.reason}
                 onChange={(event) => setMaintenanceForm((prev) => ({ ...prev, reason: event.target.value }))}
                 placeholder="Reason"
@@ -1173,7 +1158,7 @@ function StaffView({ auditLogs }) {
     acc[key].actions += 1;
     if (log.severity === "danger") acc[key].risk += 1;
     return acc;
-  }, {});
+  }, Object.create(null));
   const rows = Object.entries(staffMap).map(([staff, value]) => ({
     id: staff,
     icon: "ti-user-check",
@@ -1228,6 +1213,10 @@ export default function ClubSuiteTab({ view }) {
         const key = loaders[index].key;
         const payload = result.value.data || {};
         if (key === "tableState") {
+          if (!Array.isArray(payload.tables)) {
+            failed.push(loaders[index].label);
+            return;
+          }
           nextData.activeSessions = asArray(payload.active_sessions);
           nextData.tableState = asArray(payload.tables);
           nextData.maintenance = asMaintenanceRows(payload.maintenance);
@@ -1458,10 +1447,10 @@ export default function ClubSuiteTab({ view }) {
     }),
   }), [loadData, runAction, showToast]);
 
-  const props = useMemo(
-    () => ({ ...(optimistic ? optimistic(data) : data), actions, busy, activeAction, showToast }),
-    [data, optimistic, actions, busy, activeAction, showToast],
-  );
+  const props = useMemo(() => {
+    const rows = Object.fromEntries(Object.keys(emptyWorkspaceData()).map((key) => [key, asArray(data?.[key])]));
+    return { ...(optimistic ? optimistic(rows) : rows), actions, busy, activeAction, showToast };
+  }, [data, optimistic, actions, busy, activeAction, showToast]);
 
   if (loading) {
     return <div data-realtime-state={realtimeState}><WorkspaceLoading /></div>;

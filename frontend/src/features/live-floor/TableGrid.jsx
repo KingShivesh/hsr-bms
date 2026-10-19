@@ -1,4 +1,4 @@
-import { Icon as HsrIcon } from "../../components/ui/index.js";
+import { EmptyState, Button } from "../../components/ui/index.js";
 import { Profiler, useRef } from "react";
 import { recordProfile } from "../../utils/profile.js";
 import TableCard from "./TableCard.jsx";
@@ -17,15 +17,13 @@ export default function TableGrid({
   onReviewBooking,
   onSaveRate,
   onInvalidRate,
+  onReload,
 }) {
   const gridRef = useRef(null);
 
   if (!tables.length) {
     return (
-      <div className="lf-empty-inline">
-        <HsrIcon className="ti ti-table-off" aria-hidden="true" />
-        <span>No tables returned by the backend.</span>
-      </div>
+      <EmptyState icon="ti-layout-grid" title="No table data" description="Reload to check the club's tables before starting a session." action={<Button onClick={onReload} icon="ti-refresh">Reload tables</Button>} />
     );
   }
 

@@ -1,5 +1,6 @@
 import { Icon as HsrIcon, Button as HsrButton, Input as HsrInput, Select as HsrSelect, Textarea as HsrTextarea, EmptyState, Button } from "../../components/ui/index.js";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { useCachedState, hasCachedState } from "../../hooks/useCachedState.js";
 import {
   cancelBooking,
@@ -18,6 +19,7 @@ import { HSR_TABLES, getTableRate } from "../../config/hsrTables.js";
 import { tableActionNavigation, tableStateAttributes, getTableAttention, getTableStatus } from "../../config/tableStatus.js";
 import { useRealtimeSubscription } from "../../realtime/useRealtimeSubscription.js";
 import { useSearchParams } from "react-router-dom";
+import { formatDateTime } from "../../utils/format.js";
 
 function isoLocalNowPlus(minutes = 30) {
   const date = new Date(Date.now() + minutes * 60 * 1000);
@@ -26,15 +28,7 @@ function isoLocalNowPlus(minutes = 30) {
 }
 
 function shortDate(value) {
-  if (!value) return "-";
-  const date = new Date(value);
-  if (Number.isNaN(date.getTime())) return String(value);
-  return date.toLocaleString("en-IN", {
-    day: "2-digit",
-    month: "short",
-    hour: "2-digit",
-    minute: "2-digit",
-  });
+  return formatDateTime(value);
 }
 
 function shortDuration(seconds = 0) {
@@ -86,9 +80,11 @@ function BookingModal({ form, setForm, saving, onClose, onSubmit, error }) {
   useDialogFocus(dialogRef, true);
   useEscapeKey(saving ? undefined : onClose, true, dialogRef);
 
-  return (
-    <div className="lf-modal-backdrop" role="presentation">
-      <form ref={dialogRef} tabIndex={-1} className="op2-modal" onSubmit={onSubmit} role="dialog" aria-modal="true" aria-label="Reserve a table">
+  return createPortal(
+    <div className="lf-modal-backdrop" style={{ zIndex: 2000 }} role="presentation" onMouseDown={event => {
+      if (event.target === event.currentTarget && !saving && !form.customer_name.trim() && !form.phone.trim() && !form.notes.trim()) onClose();
+    }}>
+      <form ref={dialogRef} tabIndex={-1} className="op2-modal" onSubmit={onSubmit} role="dialog" aria-modal="true" aria-label="Reserve a table" aria-busy={saving || undefined}>
         <div className="order-selector-head">
           <div>
             <span className="lf-eyebrow">Booking</span>
@@ -103,6 +99,7 @@ function BookingModal({ form, setForm, saving, onClose, onSubmit, error }) {
           <span>Customer name</span>
           <HsrInput
             required
+            disabled={saving}
             value={form.customer_name}
             onChange={(event) => setForm((prev) => ({ ...prev, customer_name: event.target.value }))}
             placeholder="Walk-in or regular customer"
@@ -112,6 +109,7 @@ function BookingModal({ form, setForm, saving, onClose, onSubmit, error }) {
         <label className="lf-field">
           <span>Phone</span>
           <HsrInput
+            disabled={saving}
             value={form.phone}
             onChange={(event) => setForm((prev) => ({ ...prev, phone: event.target.value }))}
             placeholder="Optional"
@@ -122,6 +120,7 @@ function BookingModal({ form, setForm, saving, onClose, onSubmit, error }) {
           <label className="lf-field">
             <span>Table</span>
             <HsrSelect
+              disabled={saving}
               value={form.table_id}
               onChange={(event) => {
                 const table = HSR_TABLES.find((row) => row.id.toUpperCase() === event.target.value);
@@ -143,6 +142,7 @@ function BookingModal({ form, setForm, saving, onClose, onSubmit, error }) {
           <label className="lf-field">
             <span>Table type</span>
             <HsrSelect
+              disabled={saving}
               value={form.table_type}
               onChange={(event) => setForm((prev) => ({ ...prev, table_type: event.target.value }))}
             >
@@ -158,6 +158,7 @@ function BookingModal({ form, setForm, saving, onClose, onSubmit, error }) {
             <span>Date and time</span>
             <HsrInput
               required
+              disabled={saving}
               type="datetime-local"
               value={form.booking_time}
               onChange={(event) => setForm((prev) => ({ ...prev, booking_time: event.target.value }))}
@@ -167,6 +168,7 @@ function BookingModal({ form, setForm, saving, onClose, onSubmit, error }) {
             <span>Duration</span>
             <HsrInput
               type="number"
+              disabled={saving}
               min="30"
               step="15"
               value={form.duration_mins}
@@ -178,22 +180,24 @@ function BookingModal({ form, setForm, saving, onClose, onSubmit, error }) {
         <label className="lf-field">
           <span>Notes</span>
           <HsrTextarea
+            disabled={saving}
             value={form.notes}
             onChange={(event) => setForm((prev) => ({ ...prev, notes: event.target.value }))}
             placeholder="Advance paid, preferred table, reminder note"
           />
         </label>
 
-        {error && <p role="alert">{error}</p>}
+        {error && <p role="alert" className="ui-field-error">{error}</p>}
         <div className="op2-modal-actions">
-          <HsrButton native type="button" className="lf-secondary-button" onClick={onClose}>Discard Booking</HsrButton>
+          <HsrButton native type="button" className="lf-secondary-button" disabled={saving} onClick={onClose}>Cancel</HsrButton>
           <HsrButton native type="submit" className="lf-primary-button" loading={saving}>
             <HsrIcon className="ti ti-calendar-plus" aria-hidden="true" />
             {saving ? "Creating..." : "Create booking"}
           </HsrButton>
         </div>
       </form>
-    </div>
+    </div>,
+    document.body,
   );
 }
 
@@ -481,7 +485,7 @@ export default function BookingsPage({ onNavigate }) {
             <h2>Booking list</h2>
           </div>
           <div className="op2-controls">
-            <HsrInput value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search booking..." />
+            <HsrInput value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search booking..." aria-label="Search bookings" />
             {["booked", "missed", "all"].map((status) => (
               <HsrButton native type="button" key={status} aria-pressed={filter === status} className={filter === status ? "active" : ""} onClick={() => setFilter(status)}>
                 {status}

@@ -340,6 +340,7 @@ export default function LiveFloor({ role = "admin", onNavigate, newSessionReques
                 onReviewBooking={booking}
                 onSaveRate={saveInlineRate}
                 onInvalidRate={invalidRate}
+                onReload={() => loadFloor({ showLoading: true })}
               />
             </div>
 
