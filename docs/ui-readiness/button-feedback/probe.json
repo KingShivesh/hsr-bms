@@ -1,0 +1,1826 @@
+{
+  "schemaVersion": 1,
+  "startedAt": "2026-10-18T17:15:12.139Z",
+  "app": "http://127.0.0.1:5181",
+  "api": "http://127.0.0.1:8006",
+  "configuration": {
+    "widths": [
+      1440
+    ],
+    "themes": [
+      "light"
+    ],
+    "deadlineMs": 200,
+    "outcomeMs": 1200,
+    "blockedDelayMs": 700,
+    "maxDepth": 0,
+    "maxStates": 1,
+    "maxButtons": 1,
+    "settleMs": 350,
+    "routes": [
+      "/dashboard"
+    ],
+    "discoveredRoutes": [
+      "/dashboard"
+    ]
+  },
+  "safety": {
+    "localLoginExceptions": 1,
+    "forwardedBusinessWriteMethods": 0,
+    "expectedQaDatabase": "sqlite:////tmp/hsr-session-close-ui.db",
+    "databaseVerification": "Operator-provided isolation guarantee; not independently verified by this browser audit",
+    "localDatabaseSideEffects": "Approved QA GETs may reconcile state; DB side effects are not measured or claimed absent",
+    "policy": "Exact API8006 QA origin; allowlisted GET/HEAD only, including approved reconciling GETs; all business POST/PUT/PATCH/DELETE blocked; same-origin reviewed read redirects only; no service workers, WebSockets or event streams"
+  },
+  "routes": [
+    {
+      "route": "/dashboard",
+      "theme": "light",
+      "width": 1440,
+      "status": "reachable",
+      "screenState": "safety-degraded",
+      "url": "http://127.0.0.1:5181/dashboard",
+      "visibleButtons": 60,
+      "hiddenButtons": [
+        {
+          "index": 2,
+          "key": "[\"BUTTON\",\"\",\"\",null,\"Expand navigation\"]",
+          "occurrence": 0,
+          "label": "Expand navigation",
+          "variant": "native",
+          "classes": [
+            "ui-button",
+            "ui-button-native",
+            "ui-button-md",
+            "sb-mobile-toggle"
+          ],
+          "visible": false,
+          "disabled": false,
+          "loading": false,
+          "surface": false,
+          "status": "excluded-hidden"
+        }
+      ],
+      "setupNetwork": [
+        {
+          "phase": "setup",
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/events/stream",
+          "at": 1792343714287,
+          "kind": "blocked-read",
+          "reason": "Unreviewed read/stream or method outside the approved QA GET policy"
+        },
+        {
+          "phase": "setup",
+          "method": "GET",
+          "url": "http://127.0.0.1:5181/favicon.svg",
+          "at": 1792343714288,
+          "kind": "blocked-app-data-request"
+        },
+        {
+          "phase": "setup",
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/events/stream",
+          "at": 1792343714559,
+          "kind": "blocked-read",
+          "reason": "Unreviewed read/stream or method outside the approved QA GET policy"
+        }
+      ],
+      "pageErrors": []
+    }
+  ],
+  "buttons": [
+    {
+      "route": "/dashboard",
+      "theme": "light",
+      "width": 1440,
+      "steps": [],
+      "button": {
+        "index": 0,
+        "key": "[\"BUTTON\",\"\",\"\",null,\"Club menu\"]",
+        "occurrence": 0,
+        "label": "Club menu",
+        "variant": "native",
+        "classes": [
+          "ui-button",
+          "ui-button-native",
+          "ui-button-md",
+          "product-club-trigger",
+          "sb-logo"
+        ],
+        "visible": true,
+        "disabled": false,
+        "loading": false,
+        "surface": false
+      },
+      "feedback": {
+        "status": "pass",
+        "deadlineMs": 200,
+        "pressedWithin200ms": true,
+        "clickResponseWithin200ms": true,
+        "pressed": {
+          "ms": 31,
+          "before": [
+            [
+              [
+                "rgba(0, 0, 0, 0)",
+                "none",
+                "rgb(24, 24, 27)",
+                "rgb(24, 24, 27)",
+                "rgb(24, 24, 27)",
+                "rgb(24, 24, 27)",
+                "rgb(24, 24, 27)",
+                "none",
+                "none",
+                "none",
+                "1",
+                "rgb(24, 24, 27)",
+                "none",
+                "3px",
+                "500",
+                "none",
+                ""
+              ],
+              null,
+              null
+            ],
+            [
+              [
+                "rgb(0, 107, 60)",
+                "none",
+                "rgb(250, 250, 250)",
+                "rgb(250, 250, 250)",
+                "rgb(250, 250, 250)",
+                "rgb(250, 250, 250)",
+                "rgb(250, 250, 250)",
+                "none",
+                "none",
+                "none",
+                "1",
+                "rgb(250, 250, 250)",
+                "none",
+                "3px",
+                "600",
+                "none",
+                ""
+              ],
+              null,
+              null
+            ],
+            [
+              [
+                "rgba(0, 0, 0, 0)",
+                "none",
+                "rgb(24, 24, 27)",
+                "rgb(24, 24, 27)",
+                "rgb(24, 24, 27)",
+                "rgb(24, 24, 27)",
+                "rgb(24, 24, 27)",
+                "none",
+                "none",
+                "none",
+                "1",
+                "rgb(24, 24, 27)",
+                "none",
+                "3px",
+                "500",
+                "none",
+                ""
+              ],
+              null,
+              null
+            ]
+          ],
+          "after": [
+            [
+              [
+                "rgba(0, 0, 0, 0)",
+                "none",
+                "rgb(24, 24, 27)",
+                "rgb(24, 24, 27)",
+                "rgb(24, 24, 27)",
+                "rgb(24, 24, 27)",
+                "rgb(24, 24, 27)",
+                "none",
+                "brightness(0.94)",
+                "matrix(1, 0, 0, 1, 0, 0)",
+                "1",
+                "rgb(24, 24, 27)",
+                "none",
+                "0px",
+                "500",
+                "none",
+                ""
+              ],
+              null,
+              null
+            ],
+            [
+              [
+                "rgb(0, 107, 60)",
+                "none",
+                "rgb(250, 250, 250)",
+                "rgb(250, 250, 250)",
+                "rgb(250, 250, 250)",
+                "rgb(250, 250, 250)",
+                "rgb(250, 250, 250)",
+                "none",
+                "none",
+                "none",
+                "1",
+                "rgb(250, 250, 250)",
+                "none",
+                "3px",
+                "600",
+                "none",
+                ""
+              ],
+              null,
+              null
+            ],
+            [
+              [
+                "rgba(0, 0, 0, 0)",
+                "none",
+                "rgb(24, 24, 27)",
+                "rgb(24, 24, 27)",
+                "rgb(24, 24, 27)",
+                "rgb(24, 24, 27)",
+                "rgb(24, 24, 27)",
+                "none",
+                "none",
+                "none",
+                "1",
+                "rgb(24, 24, 27)",
+                "none",
+                "3px",
+                "500",
+                "none",
+                ""
+              ],
+              null,
+              null
+            ]
+          ]
+        },
+        "clickResponse": {
+          "kind": "visible-dom-added",
+          "ms": 3
+        },
+        "loadingObserved": false
+      },
+      "actionOutcome": {
+        "status": "safety-boundary-blocked",
+        "businessSuccess": "not-asserted",
+        "urlAfter": "http://127.0.0.1:5181/dashboard",
+        "network": [
+          {
+            "phase": "action",
+            "method": "GET",
+            "url": "http://127.0.0.1:8006/events/stream",
+            "at": 1792343718890,
+            "kind": "blocked-read",
+            "reason": "Unreviewed read/stream or method outside the approved QA GET policy"
+          }
+        ],
+        "presentation": [],
+        "actionFailures": [],
+        "pageErrors": []
+      },
+      "setupNetwork": [
+        {
+          "phase": "setup",
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/events/stream",
+          "at": 1792343715473,
+          "kind": "blocked-read",
+          "reason": "Unreviewed read/stream or method outside the approved QA GET policy"
+        },
+        {
+          "phase": "setup",
+          "method": "GET",
+          "url": "http://127.0.0.1:5181/favicon.svg",
+          "at": 1792343715478,
+          "kind": "blocked-app-data-request"
+        },
+        {
+          "phase": "setup",
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/events/stream",
+          "at": 1792343715521,
+          "kind": "blocked-read",
+          "reason": "Unreviewed read/stream or method outside the approved QA GET policy"
+        },
+        {
+          "phase": "replay",
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/events/stream",
+          "at": 1792343716874,
+          "kind": "blocked-read",
+          "reason": "Unreviewed read/stream or method outside the approved QA GET policy"
+        }
+      ]
+    }
+  ],
+  "exclusions": [
+    {
+      "route": "/dashboard",
+      "theme": "light",
+      "width": 1440,
+      "steps": [],
+      "button": {
+        "index": 1,
+        "key": "[\"BUTTON\",\"\",\"\",null,\"Collapse sidebar\"]",
+        "occurrence": 0,
+        "label": "Collapse sidebar",
+        "variant": "native",
+        "classes": [
+          "ui-button",
+          "ui-button-native",
+          "ui-button-md",
+          "cf-collapse-btn"
+        ],
+        "visible": true,
+        "disabled": false,
+        "loading": false,
+        "surface": false
+      },
+      "status": "excluded-button-limit"
+    },
+    {
+      "route": "/dashboard",
+      "theme": "light",
+      "width": 1440,
+      "steps": [],
+      "button": {
+        "index": 3,
+        "key": "[\"BUTTON\",\"\",\"\",null,\"Live Floor\"]",
+        "occurrence": 0,
+        "label": "Live Floor",
+        "variant": "native",
+        "classes": [
+          "ui-button",
+          "ui-button-native",
+          "ui-button-md",
+          "sb-item"
+        ],
+        "visible": true,
+        "disabled": false,
+        "loading": false,
+        "surface": false
+      },
+      "status": "excluded-button-limit"
+    },
+    {
+      "route": "/dashboard",
+      "theme": "light",
+      "width": 1440,
+      "steps": [],
+      "button": {
+        "index": 4,
+        "key": "[\"BUTTON\",\"\",\"\",null,\"Bookings\"]",
+        "occurrence": 0,
+        "label": "Bookings",
+        "variant": "native",
+        "classes": [
+          "ui-button",
+          "ui-button-native",
+          "ui-button-md",
+          "sb-item"
+        ],
+        "visible": true,
+        "disabled": false,
+        "loading": false,
+        "surface": false
+      },
+      "status": "excluded-button-limit"
+    },
+    {
+      "route": "/dashboard",
+      "theme": "light",
+      "width": 1440,
+      "steps": [],
+      "button": {
+        "index": 5,
+        "key": "[\"BUTTON\",\"\",\"\",null,\"Customers\"]",
+        "occurrence": 0,
+        "label": "Customers",
+        "variant": "native",
+        "classes": [
+          "ui-button",
+          "ui-button-native",
+          "ui-button-md",
+          "sb-item"
+        ],
+        "visible": true,
+        "disabled": false,
+        "loading": false,
+        "surface": false
+      },
+      "status": "excluded-button-limit"
+    },
+    {
+      "route": "/dashboard",
+      "theme": "light",
+      "width": 1440,
+      "steps": [],
+      "button": {
+        "index": 6,
+        "key": "[\"BUTTON\",\"\",\"\",null,\"Waitlist\"]",
+        "occurrence": 0,
+        "label": "Waitlist",
+        "variant": "native",
+        "classes": [
+          "ui-button",
+          "ui-button-native",
+          "ui-button-md",
+          "sb-item"
+        ],
+        "visible": true,
+        "disabled": false,
+        "loading": false,
+        "surface": false
+      },
+      "status": "excluded-button-limit"
+    },
+    {
+      "route": "/dashboard",
+      "theme": "light",
+      "width": 1440,
+      "steps": [],
+      "button": {
+        "index": 7,
+        "key": "[\"BUTTON\",\"\",\"\",null,\"Cafe POS\"]",
+        "occurrence": 0,
+        "label": "Cafe POS",
+        "variant": "native",
+        "classes": [
+          "ui-button",
+          "ui-button-native",
+          "ui-button-md",
+          "sb-item"
+        ],
+        "visible": true,
+        "disabled": false,
+        "loading": false,
+        "surface": false
+      },
+      "status": "excluded-button-limit"
+    },
+    {
+      "route": "/dashboard",
+      "theme": "light",
+      "width": 1440,
+      "steps": [],
+      "button": {
+        "index": 8,
+        "key": "[\"BUTTON\",\"\",\"\",null,\"Sales\"]",
+        "occurrence": 0,
+        "label": "Sales",
+        "variant": "native",
+        "classes": [
+          "ui-button",
+          "ui-button-native",
+          "ui-button-md",
+          "sb-item"
+        ],
+        "visible": true,
+        "disabled": false,
+        "loading": false,
+        "surface": false
+      },
+      "status": "excluded-button-limit"
+    },
+    {
+      "route": "/dashboard",
+      "theme": "light",
+      "width": 1440,
+      "steps": [],
+      "button": {
+        "index": 9,
+        "key": "[\"BUTTON\",\"\",\"\",null,\"Analytics & Reports\"]",
+        "occurrence": 0,
+        "label": "Analytics & Reports",
+        "variant": "native",
+        "classes": [
+          "ui-button",
+          "ui-button-native",
+          "ui-button-md",
+          "sb-item"
+        ],
+        "visible": true,
+        "disabled": false,
+        "loading": false,
+        "surface": false
+      },
+      "status": "excluded-button-limit"
+    },
+    {
+      "route": "/dashboard",
+      "theme": "light",
+      "width": 1440,
+      "steps": [],
+      "button": {
+        "index": 10,
+        "key": "[\"BUTTON\",\"\",\"\",null,\"Daily Closing\"]",
+        "occurrence": 0,
+        "label": "Daily Closing",
+        "variant": "native",
+        "classes": [
+          "ui-button",
+          "ui-button-native",
+          "ui-button-md",
+          "sb-item"
+        ],
+        "visible": true,
+        "disabled": false,
+        "loading": false,
+        "surface": false
+      },
+      "status": "excluded-button-limit"
+    },
+    {
+      "route": "/dashboard",
+      "theme": "light",
+      "width": 1440,
+      "steps": [],
+      "button": {
+        "index": 11,
+        "key": "[\"BUTTON\",\"\",\"\",null,\"Executive Overview\"]",
+        "occurrence": 0,
+        "label": "Executive Overview",
+        "variant": "native",
+        "classes": [
+          "ui-button",
+          "ui-button-native",
+          "ui-button-md",
+          "sb-item",
+          "active"
+        ],
+        "visible": true,
+        "disabled": false,
+        "loading": false,
+        "surface": false
+      },
+      "status": "excluded-button-limit"
+    },
+    {
+      "route": "/dashboard",
+      "theme": "light",
+      "width": 1440,
+      "steps": [],
+      "button": {
+        "index": 12,
+        "key": "[\"BUTTON\",\"\",\"\",null,\"Inventory & Stocks\"]",
+        "occurrence": 0,
+        "label": "Inventory & Stocks",
+        "variant": "native",
+        "classes": [
+          "ui-button",
+          "ui-button-native",
+          "ui-button-md",
+          "sb-item"
+        ],
+        "visible": true,
+        "disabled": false,
+        "loading": false,
+        "surface": false
+      },
+      "status": "excluded-button-limit"
+    },
+    {
+      "route": "/dashboard",
+      "theme": "light",
+      "width": 1440,
+      "steps": [],
+      "button": {
+        "index": 13,
+        "key": "[\"BUTTON\",\"\",\"\",null,\"Tournaments\"]",
+        "occurrence": 0,
+        "label": "Tournaments",
+        "variant": "native",
+        "classes": [
+          "ui-button",
+          "ui-button-native",
+          "ui-button-md",
+          "sb-item"
+        ],
+        "visible": true,
+        "disabled": false,
+        "loading": false,
+        "surface": false
+      },
+      "status": "excluded-button-limit"
+    },
+    {
+      "route": "/dashboard",
+      "theme": "light",
+      "width": 1440,
+      "steps": [],
+      "button": {
+        "index": 14,
+        "key": "[\"BUTTON\",\"\",\"\",null,\"Audit Log\"]",
+        "occurrence": 0,
+        "label": "Audit Log",
+        "variant": "native",
+        "classes": [
+          "ui-button",
+          "ui-button-native",
+          "ui-button-md",
+          "sb-item"
+        ],
+        "visible": true,
+        "disabled": false,
+        "loading": false,
+        "surface": false
+      },
+      "status": "excluded-button-limit"
+    },
+    {
+      "route": "/dashboard",
+      "theme": "light",
+      "width": 1440,
+      "steps": [],
+      "button": {
+        "index": 15,
+        "key": "[\"BUTTON\",\"\",\"\",null,\"Pricing & Rules\"]",
+        "occurrence": 0,
+        "label": "Pricing & Rules",
+        "variant": "native",
+        "classes": [
+          "ui-button",
+          "ui-button-native",
+          "ui-button-md",
+          "sb-item"
+        ],
+        "visible": true,
+        "disabled": false,
+        "loading": false,
+        "surface": false
+      },
+      "status": "excluded-button-limit"
+    },
+    {
+      "route": "/dashboard",
+      "theme": "light",
+      "width": 1440,
+      "steps": [],
+      "button": {
+        "index": 16,
+        "key": "[\"BUTTON\",\"\",\"\",null,\"Advanced Table Controls\"]",
+        "occurrence": 0,
+        "label": "Advanced Table Controls",
+        "variant": "native",
+        "classes": [
+          "ui-button",
+          "ui-button-native",
+          "ui-button-md",
+          "sb-item"
+        ],
+        "visible": true,
+        "disabled": false,
+        "loading": false,
+        "surface": false
+      },
+      "status": "excluded-button-limit"
+    },
+    {
+      "route": "/dashboard",
+      "theme": "light",
+      "width": 1440,
+      "steps": [],
+      "button": {
+        "index": 17,
+        "key": "[\"BUTTON\",\"\",\"\",null,\"Settings\"]",
+        "occurrence": 0,
+        "label": "Settings",
+        "variant": "native",
+        "classes": [
+          "ui-button",
+          "ui-button-native",
+          "ui-button-md",
+          "sb-item"
+        ],
+        "visible": true,
+        "disabled": false,
+        "loading": false,
+        "surface": false
+      },
+      "status": "excluded-button-limit"
+    },
+    {
+      "route": "/dashboard",
+      "theme": "light",
+      "width": 1440,
+      "steps": [],
+      "button": {
+        "index": 18,
+        "key": "[\"BUTTON\",\"\",\"\",null,\"Status\"]",
+        "occurrence": 0,
+        "label": "Status",
+        "variant": "native",
+        "classes": [
+          "ui-button",
+          "ui-button-native",
+          "ui-button-md"
+        ],
+        "visible": true,
+        "disabled": false,
+        "loading": false,
+        "surface": false
+      },
+      "status": "excluded-button-limit"
+    },
+    {
+      "route": "/dashboard",
+      "theme": "light",
+      "width": 1440,
+      "steps": [],
+      "button": {
+        "index": 19,
+        "key": "[\"BUTTON\",\"\",\"\",null,\"Changelog\"]",
+        "occurrence": 0,
+        "label": "Changelog",
+        "variant": "native",
+        "classes": [
+          "ui-button",
+          "ui-button-native",
+          "ui-button-md"
+        ],
+        "visible": true,
+        "disabled": false,
+        "loading": false,
+        "surface": false
+      },
+      "status": "excluded-button-limit"
+    },
+    {
+      "route": "/dashboard",
+      "theme": "light",
+      "width": 1440,
+      "steps": [],
+      "button": {
+        "index": 20,
+        "key": "[\"BUTTON\",\"\",\"\",null,\"Logout\"]",
+        "occurrence": 0,
+        "label": "Logout",
+        "variant": "native",
+        "classes": [
+          "ui-button",
+          "ui-button-native",
+          "ui-button-md",
+          "sb-item"
+        ],
+        "visible": true,
+        "disabled": false,
+        "loading": false,
+        "surface": false
+      },
+      "status": "excluded-button-limit"
+    },
+    {
+      "route": "/dashboard",
+      "theme": "light",
+      "width": 1440,
+      "steps": [],
+      "button": {
+        "index": 21,
+        "key": "[\"BUTTON\",\"\",\"\",null,\"HSR Snooker Cafe BMS\"]",
+        "occurrence": 0,
+        "label": "HSR Snooker Cafe BMS",
+        "variant": "native",
+        "classes": [
+          "ui-button",
+          "ui-button-native",
+          "ui-button-md"
+        ],
+        "visible": true,
+        "disabled": false,
+        "loading": false,
+        "surface": false
+      },
+      "status": "excluded-button-limit"
+    },
+    {
+      "route": "/dashboard",
+      "theme": "light",
+      "width": 1440,
+      "steps": [],
+      "button": {
+        "index": 22,
+        "key": "[\"BUTTON\",\"\",\"\",null,\"Open Live Floor\"]",
+        "occurrence": 0,
+        "label": "Open Live Floor",
+        "variant": "native",
+        "classes": [
+          "ui-button",
+          "ui-button-native",
+          "ui-button-md",
+          "cf-page-primary-action"
+        ],
+        "visible": true,
+        "disabled": false,
+        "loading": false,
+        "surface": false
+      },
+      "status": "excluded-button-limit"
+    },
+    {
+      "route": "/dashboard",
+      "theme": "light",
+      "width": 1440,
+      "steps": [],
+      "button": {
+        "index": 23,
+        "key": "[\"BUTTON\",\"\",\"\",null,\"Search Actions ⌘K\"]",
+        "occurrence": 0,
+        "label": "Search Actions ⌘K",
+        "variant": "native",
+        "classes": [
+          "ui-button",
+          "ui-button-native",
+          "ui-button-md",
+          "cf-command-pill"
+        ],
+        "visible": true,
+        "disabled": false,
+        "loading": false,
+        "surface": false
+      },
+      "status": "excluded-button-limit"
+    },
+    {
+      "route": "/dashboard",
+      "theme": "light",
+      "width": 1440,
+      "steps": [],
+      "button": {
+        "index": 24,
+        "key": "[\"BUTTON\",\"\",\"\",null,\"Open notifications\"]",
+        "occurrence": 0,
+        "label": "Open notifications",
+        "variant": "native",
+        "classes": [
+          "ui-button",
+          "ui-button-native",
+          "ui-button-md",
+          "topbar-icon-btn",
+          "cf-notification-btn"
+        ],
+        "visible": true,
+        "disabled": false,
+        "loading": false,
+        "surface": false
+      },
+      "status": "excluded-button-limit"
+    },
+    {
+      "route": "/dashboard",
+      "theme": "light",
+      "width": 1440,
+      "steps": [],
+      "button": {
+        "index": 25,
+        "key": "[\"BUTTON\",\"\",\"\",null,\"Help\"]",
+        "occurrence": 0,
+        "label": "Help",
+        "variant": "native",
+        "classes": [
+          "ui-button",
+          "ui-button-native",
+          "ui-button-md",
+          "topbar-icon-btn",
+          "product-menu-trigger"
+        ],
+        "visible": true,
+        "disabled": false,
+        "loading": false,
+        "surface": false
+      },
+      "status": "excluded-button-limit"
+    },
+    {
+      "route": "/dashboard",
+      "theme": "light",
+      "width": 1440,
+      "steps": [],
+      "button": {
+        "index": 26,
+        "key": "[\"BUTTON\",\"\",\"\",null,\"User menu\"]",
+        "occurrence": 0,
+        "label": "User menu",
+        "variant": "native",
+        "classes": [
+          "ui-button",
+          "ui-button-native",
+          "ui-button-md",
+          "topbar-icon-btn",
+          "product-user-trigger",
+          "product-menu-trigger"
+        ],
+        "visible": true,
+        "disabled": false,
+        "loading": false,
+        "surface": false
+      },
+      "status": "excluded-button-limit"
+    },
+    {
+      "route": "/dashboard",
+      "theme": "light",
+      "width": 1440,
+      "steps": [],
+      "button": {
+        "index": 27,
+        "key": "[\"BUTTON\",\"\",\"\",null,\"Switch to dark mode\"]",
+        "occurrence": 0,
+        "label": "Switch to dark mode",
+        "variant": "native",
+        "classes": [
+          "ui-button",
+          "ui-button-native",
+          "ui-button-md",
+          "topbar-icon-btn"
+        ],
+        "visible": true,
+        "disabled": false,
+        "loading": false,
+        "surface": false
+      },
+      "status": "excluded-button-limit"
+    },
+    {
+      "route": "/dashboard",
+      "theme": "light",
+      "width": 1440,
+      "steps": [],
+      "button": {
+        "index": 28,
+        "key": "[\"BUTTON\",\"\",\"\",null,\"Retry now\"]",
+        "occurrence": 0,
+        "label": "Retry now",
+        "variant": "native",
+        "classes": [
+          "ui-button",
+          "ui-button-native",
+          "ui-button-md"
+        ],
+        "visible": true,
+        "disabled": false,
+        "loading": false,
+        "surface": false
+      },
+      "status": "excluded-button-limit"
+    },
+    {
+      "route": "/dashboard",
+      "theme": "light",
+      "width": 1440,
+      "steps": [],
+      "button": {
+        "index": 29,
+        "key": "[\"BUTTON\",\"\",\"\",null,\"Collapse setup\"]",
+        "occurrence": 0,
+        "label": "Collapse setup",
+        "variant": "ghost",
+        "classes": [
+          "ui-button",
+          "ui-button-ghost",
+          "ui-button-md"
+        ],
+        "visible": true,
+        "disabled": false,
+        "loading": false,
+        "surface": false
+      },
+      "status": "excluded-button-limit"
+    },
+    {
+      "route": "/dashboard",
+      "theme": "light",
+      "width": 1440,
+      "steps": [],
+      "button": {
+        "index": 30,
+        "key": "[\"BUTTON\",\"\",\"\",null,\"Dismiss setup\"]",
+        "occurrence": 0,
+        "label": "Dismiss setup",
+        "variant": "ghost",
+        "classes": [
+          "ui-button",
+          "ui-button-ghost",
+          "ui-button-md"
+        ],
+        "visible": true,
+        "disabled": false,
+        "loading": false,
+        "surface": false
+      },
+      "status": "excluded-button-limit"
+    },
+    {
+      "route": "/dashboard",
+      "theme": "light",
+      "width": 1440,
+      "steps": [],
+      "button": {
+        "index": 31,
+        "key": "[\"BUTTON\",\"\",\"\",null,\"Add club identity\"]",
+        "occurrence": 0,
+        "label": "Add club identity",
+        "variant": "ghost",
+        "classes": [
+          "ui-button",
+          "ui-button-ghost",
+          "ui-button-md"
+        ],
+        "visible": true,
+        "disabled": false,
+        "loading": false,
+        "surface": false
+      },
+      "status": "excluded-button-limit"
+    },
+    {
+      "route": "/dashboard",
+      "theme": "light",
+      "width": 1440,
+      "steps": [],
+      "button": {
+        "index": 32,
+        "key": "[\"BUTTON\",\"\",\"\",null,\"Review 5 table rates\"]",
+        "occurrence": 0,
+        "label": "Review 5 table rates",
+        "variant": "ghost",
+        "classes": [
+          "ui-button",
+          "ui-button-ghost",
+          "ui-button-md"
+        ],
+        "visible": true,
+        "disabled": false,
+        "loading": false,
+        "surface": false
+      },
+      "status": "excluded-button-limit"
+    },
+    {
+      "route": "/dashboard",
+      "theme": "light",
+      "width": 1440,
+      "steps": [],
+      "button": {
+        "index": 33,
+        "key": "[\"BUTTON\",\"\",\"\",null,\"Review staff access\"]",
+        "occurrence": 0,
+        "label": "Review staff access",
+        "variant": "ghost",
+        "classes": [
+          "ui-button",
+          "ui-button-ghost",
+          "ui-button-md"
+        ],
+        "visible": true,
+        "disabled": false,
+        "loading": false,
+        "surface": false
+      },
+      "status": "excluded-button-limit"
+    },
+    {
+      "route": "/dashboard",
+      "theme": "light",
+      "width": 1440,
+      "steps": [],
+      "button": {
+        "index": 34,
+        "key": "[\"BUTTON\",\"\",\"\",null,\"Add cafe menu items Complete\"]",
+        "occurrence": 0,
+        "label": "Add cafe menu items Complete",
+        "variant": "ghost",
+        "classes": [
+          "ui-button",
+          "ui-button-ghost",
+          "ui-button-md"
+        ],
+        "visible": true,
+        "disabled": false,
+        "loading": false,
+        "surface": false
+      },
+      "status": "excluded-button-limit"
+    },
+    {
+      "route": "/dashboard",
+      "theme": "light",
+      "width": 1440,
+      "steps": [],
+      "button": {
+        "index": 35,
+        "key": "[\"BUTTON\",\"\",\"\",null,\"Configure UPI payments\"]",
+        "occurrence": 0,
+        "label": "Configure UPI payments",
+        "variant": "ghost",
+        "classes": [
+          "ui-button",
+          "ui-button-ghost",
+          "ui-button-md"
+        ],
+        "visible": true,
+        "disabled": false,
+        "loading": false,
+        "surface": false
+      },
+      "status": "excluded-button-limit"
+    },
+    {
+      "route": "/dashboard",
+      "theme": "light",
+      "width": 1440,
+      "steps": [],
+      "button": {
+        "index": 36,
+        "key": "[\"BUTTON\",\"\",\"\",null,\"Review your first shift\"]",
+        "occurrence": 0,
+        "label": "Review your first shift",
+        "variant": "ghost",
+        "classes": [
+          "ui-button",
+          "ui-button-ghost",
+          "ui-button-md"
+        ],
+        "visible": true,
+        "disabled": false,
+        "loading": false,
+        "surface": false
+      },
+      "status": "excluded-button-limit"
+    },
+    {
+      "route": "/dashboard",
+      "theme": "light",
+      "width": 1440,
+      "steps": [],
+      "button": {
+        "index": 37,
+        "key": "[\"BUTTON\",\"\",\"\",null,\"Continue setup\"]",
+        "occurrence": 0,
+        "label": "Continue setup",
+        "variant": "primary",
+        "classes": [
+          "ui-button",
+          "ui-button-primary",
+          "ui-button-md"
+        ],
+        "visible": true,
+        "disabled": false,
+        "loading": false,
+        "surface": false
+      },
+      "status": "excluded-button-limit"
+    },
+    {
+      "route": "/dashboard",
+      "theme": "light",
+      "width": 1440,
+      "steps": [],
+      "button": {
+        "index": 38,
+        "key": "[\"BUTTON\",\"\",\"\",null,\"Try sample workspace\"]",
+        "occurrence": 0,
+        "label": "Try sample workspace",
+        "variant": "secondary",
+        "classes": [
+          "ui-button",
+          "ui-button-secondary",
+          "ui-button-md"
+        ],
+        "visible": true,
+        "disabled": false,
+        "loading": false,
+        "surface": false
+      },
+      "status": "excluded-button-limit"
+    },
+    {
+      "route": "/dashboard",
+      "theme": "light",
+      "width": 1440,
+      "steps": [],
+      "button": {
+        "index": 39,
+        "key": "[\"BUTTON\",\"\",\"\",null,\"Take a tour\"]",
+        "occurrence": 0,
+        "label": "Take a tour",
+        "variant": "ghost",
+        "classes": [
+          "ui-button",
+          "ui-button-ghost",
+          "ui-button-md"
+        ],
+        "visible": true,
+        "disabled": false,
+        "loading": false,
+        "surface": false
+      },
+      "status": "excluded-button-limit"
+    },
+    {
+      "route": "/dashboard",
+      "theme": "light",
+      "width": 1440,
+      "steps": [],
+      "button": {
+        "index": 40,
+        "key": "[\"BUTTON\",\"\",\"\",null,\"Refresh dashboard\"]",
+        "occurrence": 0,
+        "label": "Refresh dashboard",
+        "variant": "native",
+        "classes": [
+          "ui-button",
+          "ui-button-native",
+          "ui-button-md",
+          "topbar-icon-btn"
+        ],
+        "visible": true,
+        "disabled": false,
+        "loading": false,
+        "surface": false
+      },
+      "status": "excluded-button-limit"
+    },
+    {
+      "route": "/dashboard",
+      "theme": "light",
+      "width": 1440,
+      "steps": [],
+      "button": {
+        "index": 41,
+        "key": "[\"BUTTON\",\"\",\"\",null,\"Start Table\"]",
+        "occurrence": 0,
+        "label": "Start Table",
+        "variant": "native",
+        "classes": [
+          "ui-button",
+          "ui-button-native",
+          "ui-button-md",
+          "ops-quick-action"
+        ],
+        "visible": true,
+        "disabled": false,
+        "loading": false,
+        "surface": false
+      },
+      "status": "excluded-button-limit"
+    },
+    {
+      "route": "/dashboard",
+      "theme": "light",
+      "width": 1440,
+      "steps": [],
+      "button": {
+        "index": 42,
+        "key": "[\"BUTTON\",\"\",\"\",null,\"Food POS\"]",
+        "occurrence": 0,
+        "label": "Food POS",
+        "variant": "native",
+        "classes": [
+          "ui-button",
+          "ui-button-native",
+          "ui-button-md",
+          "ops-quick-action"
+        ],
+        "visible": true,
+        "disabled": false,
+        "loading": false,
+        "surface": false
+      },
+      "status": "excluded-button-limit"
+    },
+    {
+      "route": "/dashboard",
+      "theme": "light",
+      "width": 1440,
+      "steps": [],
+      "button": {
+        "index": 43,
+        "key": "[\"BUTTON\",\"\",\"\",null,\"Bookings\"]",
+        "occurrence": 1,
+        "label": "Bookings",
+        "variant": "native",
+        "classes": [
+          "ui-button",
+          "ui-button-native",
+          "ui-button-md",
+          "ops-quick-action"
+        ],
+        "visible": true,
+        "disabled": false,
+        "loading": false,
+        "surface": false
+      },
+      "status": "excluded-button-limit"
+    },
+    {
+      "route": "/dashboard",
+      "theme": "light",
+      "width": 1440,
+      "steps": [],
+      "button": {
+        "index": 44,
+        "key": "[\"BUTTON\",\"\",\"\",null,\"Queue\"]",
+        "occurrence": 0,
+        "label": "Queue",
+        "variant": "native",
+        "classes": [
+          "ui-button",
+          "ui-button-native",
+          "ui-button-md",
+          "ops-quick-action"
+        ],
+        "visible": true,
+        "disabled": false,
+        "loading": false,
+        "surface": false
+      },
+      "status": "excluded-button-limit"
+    },
+    {
+      "route": "/dashboard",
+      "theme": "light",
+      "width": 1440,
+      "steps": [],
+      "button": {
+        "index": 45,
+        "key": "[\"BUTTON\",\"\",\"\",null,\"Closing\"]",
+        "occurrence": 0,
+        "label": "Closing",
+        "variant": "native",
+        "classes": [
+          "ui-button",
+          "ui-button-native",
+          "ui-button-md",
+          "ops-quick-action"
+        ],
+        "visible": true,
+        "disabled": false,
+        "loading": false,
+        "surface": false
+      },
+      "status": "excluded-button-limit"
+    },
+    {
+      "route": "/dashboard",
+      "theme": "light",
+      "width": 1440,
+      "steps": [],
+      "button": {
+        "index": 46,
+        "key": "[\"BUTTON\",\"\",\"\",null,\"Manage tables\"]",
+        "occurrence": 0,
+        "label": "Manage tables",
+        "variant": "native",
+        "classes": [
+          "ui-button",
+          "ui-button-native",
+          "ui-button-md",
+          "ops-link-btn"
+        ],
+        "visible": true,
+        "disabled": false,
+        "loading": false,
+        "surface": false
+      },
+      "status": "excluded-button-limit"
+    },
+    {
+      "route": "/dashboard",
+      "theme": "light",
+      "width": 1440,
+      "steps": [],
+      "button": {
+        "index": 47,
+        "key": "[\"BUTTON\",\"\",\"\",null,\"T 1 Wiraka 22:05:09 ₹3,960 Guest single · Food ₹120 Checkout / Close\"]",
+        "occurrence": 0,
+        "label": "T 1 Wiraka 22:05:09 ₹3,960 Guest single · Food ₹120 Checkout / Close",
+        "variant": "native",
+        "classes": [
+          "ui-button",
+          "ui-button-native",
+          "ui-button-md",
+          "ops-table-card",
+          "table-state-card"
+        ],
+        "visible": true,
+        "disabled": false,
+        "loading": false,
+        "surface": false
+      },
+      "status": "excluded-button-limit"
+    },
+    {
+      "route": "/dashboard",
+      "theme": "light",
+      "width": 1440,
+      "steps": [],
+      "button": {
+        "index": 48,
+        "key": "[\"BUTTON\",\"\",\"\",null,\"T 2 Wiraka 24:21:09 ₹3,840 Guest single · Food ₹0 Checkout / Close\"]",
+        "occurrence": 0,
+        "label": "T 2 Wiraka 24:21:09 ₹3,840 Guest single · Food ₹0 Checkout / Close",
+        "variant": "native",
+        "classes": [
+          "ui-button",
+          "ui-button-native",
+          "ui-button-md",
+          "ops-table-card",
+          "table-state-card"
+        ],
+        "visible": true,
+        "disabled": false,
+        "loading": false,
+        "surface": false
+      },
+      "status": "excluded-button-limit"
+    },
+    {
+      "route": "/dashboard",
+      "theme": "light",
+      "width": 1440,
+      "steps": [],
+      "button": {
+        "index": 49,
+        "key": "[\"BUTTON\",\"\",\"\",null,\"T 3 English ₹270/hr Available Ready to start Start Session\"]",
+        "occurrence": 0,
+        "label": "T 3 English ₹270/hr Available Ready to start Start Session",
+        "variant": "native",
+        "classes": [
+          "ui-button",
+          "ui-button-native",
+          "ui-button-md",
+          "ops-table-card",
+          "table-state-card"
+        ],
+        "visible": true,
+        "disabled": false,
+        "loading": false,
+        "surface": false
+      },
+      "status": "excluded-button-limit"
+    },
+    {
+      "route": "/dashboard",
+      "theme": "light",
+      "width": 1440,
+      "steps": [],
+      "button": {
+        "index": 50,
+        "key": "[\"BUTTON\",\"\",\"\",null,\"T 4 English ₹270/hr Available Ready to start Start Session\"]",
+        "occurrence": 0,
+        "label": "T 4 English ₹270/hr Available Ready to start Start Session",
+        "variant": "native",
+        "classes": [
+          "ui-button",
+          "ui-button-native",
+          "ui-button-md",
+          "ops-table-card",
+          "table-state-card"
+        ],
+        "visible": true,
+        "disabled": false,
+        "loading": false,
+        "surface": false
+      },
+      "status": "excluded-button-limit"
+    },
+    {
+      "route": "/dashboard",
+      "theme": "light",
+      "width": 1440,
+      "steps": [],
+      "button": {
+        "index": 51,
+        "key": "[\"BUTTON\",\"\",\"\",null,\"T 5 Pool ₹170/hr Available Ready to start Start Session\"]",
+        "occurrence": 0,
+        "label": "T 5 Pool ₹170/hr Available Ready to start Start Session",
+        "variant": "native",
+        "classes": [
+          "ui-button",
+          "ui-button-native",
+          "ui-button-md",
+          "ops-table-card",
+          "table-state-card"
+        ],
+        "visible": true,
+        "disabled": false,
+        "loading": false,
+        "surface": false
+      },
+      "status": "excluded-button-limit"
+    },
+    {
+      "route": "/dashboard",
+      "theme": "light",
+      "width": 1440,
+      "steps": [],
+      "button": {
+        "index": 52,
+        "key": "[\"BUTTON\",\"\",\"\",null,\"T1 crossed 180 min Review billing before the session gets stale.\"]",
+        "occurrence": 0,
+        "label": "T1 crossed 180 min Review billing before the session gets stale.",
+        "variant": "native",
+        "classes": [
+          "ui-button",
+          "ui-button-native",
+          "ui-button-md",
+          "ops-attention-row",
+          "critical"
+        ],
+        "visible": true,
+        "disabled": false,
+        "loading": false,
+        "surface": false
+      },
+      "status": "excluded-button-limit"
+    },
+    {
+      "route": "/dashboard",
+      "theme": "light",
+      "width": 1440,
+      "steps": [],
+      "button": {
+        "index": 53,
+        "key": "[\"BUTTON\",\"\",\"\",null,\"T2 crossed 180 min Review billing before the session gets stale.\"]",
+        "occurrence": 0,
+        "label": "T2 crossed 180 min Review billing before the session gets stale.",
+        "variant": "native",
+        "classes": [
+          "ui-button",
+          "ui-button-native",
+          "ui-button-md",
+          "ops-attention-row",
+          "critical"
+        ],
+        "visible": true,
+        "disabled": false,
+        "loading": false,
+        "surface": false
+      },
+      "status": "excluded-button-limit"
+    },
+    {
+      "route": "/dashboard",
+      "theme": "light",
+      "width": 1440,
+      "steps": [],
+      "button": {
+        "index": 54,
+        "key": "[\"BUTTON\",\"\",\"\",null,\"2 long sessions Check if players need a food prompt, pause, transfer, or checkout.\"]",
+        "occurrence": 0,
+        "label": "2 long sessions Check if players need a food prompt, pause, transfer, or checkout.",
+        "variant": "native",
+        "classes": [
+          "ui-button",
+          "ui-button-native",
+          "ui-button-md",
+          "ops-attention-row",
+          "critical"
+        ],
+        "visible": true,
+        "disabled": false,
+        "loading": false,
+        "surface": false
+      },
+      "status": "excluded-button-limit"
+    },
+    {
+      "route": "/dashboard",
+      "theme": "light",
+      "width": 1440,
+      "steps": [],
+      "button": {
+        "index": 55,
+        "key": "[\"BUTTON\",\"\",\"\",null,\"Food attachment is low Prompt tea, fries, cold drinks or cigarettes during checkout.\"]",
+        "occurrence": 0,
+        "label": "Food attachment is low Prompt tea, fries, cold drinks or cigarettes during checkout.",
+        "variant": "native",
+        "classes": [
+          "ui-button",
+          "ui-button-native",
+          "ui-button-md",
+          "ops-attention-row",
+          "info"
+        ],
+        "visible": true,
+        "disabled": false,
+        "loading": false,
+        "surface": false
+      },
+      "status": "excluded-button-limit"
+    },
+    {
+      "route": "/dashboard",
+      "theme": "light",
+      "width": 1440,
+      "steps": [],
+      "button": {
+        "index": 56,
+        "key": "[\"BUTTON\",\"\",\"\",null,\"2 tables still running Settle active sessions before daily closing.\"]",
+        "occurrence": 0,
+        "label": "2 tables still running Settle active sessions before daily closing.",
+        "variant": "native",
+        "classes": [
+          "ui-button",
+          "ui-button-native",
+          "ui-button-md",
+          "ops-attention-row",
+          "info"
+        ],
+        "visible": true,
+        "disabled": false,
+        "loading": false,
+        "surface": false
+      },
+      "status": "excluded-button-limit"
+    },
+    {
+      "route": "/dashboard",
+      "theme": "light",
+      "width": 1440,
+      "steps": [],
+      "button": {
+        "index": 57,
+        "key": "[\"BUTTON\",\"\",\"\",null,\"View\"]",
+        "occurrence": 0,
+        "label": "View",
+        "variant": "native",
+        "classes": [
+          "ui-button",
+          "ui-button-native",
+          "ui-button-md",
+          "app-toast-action"
+        ],
+        "visible": true,
+        "disabled": false,
+        "loading": false,
+        "surface": false
+      },
+      "status": "excluded-button-limit"
+    },
+    {
+      "route": "/dashboard",
+      "theme": "light",
+      "width": 1440,
+      "steps": [],
+      "button": {
+        "index": 58,
+        "key": "[\"BUTTON\",\"\",\"\",null,\"Dismiss\"]",
+        "occurrence": 0,
+        "label": "Dismiss",
+        "variant": "native",
+        "classes": [
+          "ui-button",
+          "ui-button-native",
+          "ui-button-md",
+          "app-toast-action"
+        ],
+        "visible": true,
+        "disabled": false,
+        "loading": false,
+        "surface": false
+      },
+      "status": "excluded-button-limit"
+    },
+    {
+      "route": "/dashboard",
+      "theme": "light",
+      "width": 1440,
+      "steps": [],
+      "button": {
+        "index": 59,
+        "key": "[\"BUTTON\",\"\",\"\",null,\"View\"]",
+        "occurrence": 1,
+        "label": "View",
+        "variant": "native",
+        "classes": [
+          "ui-button",
+          "ui-button-native",
+          "ui-button-md",
+          "app-toast-action"
+        ],
+        "visible": true,
+        "disabled": false,
+        "loading": false,
+        "surface": false
+      },
+      "status": "excluded-button-limit"
+    },
+    {
+      "route": "/dashboard",
+      "theme": "light",
+      "width": 1440,
+      "steps": [],
+      "button": {
+        "index": 60,
+        "key": "[\"BUTTON\",\"\",\"\",null,\"Dismiss\"]",
+        "occurrence": 1,
+        "label": "Dismiss",
+        "variant": "native",
+        "classes": [
+          "ui-button",
+          "ui-button-native",
+          "ui-button-md",
+          "app-toast-action"
+        ],
+        "visible": true,
+        "disabled": false,
+        "loading": false,
+        "surface": false
+      },
+      "status": "excluded-button-limit"
+    }
+  ],
+  "screenshots": [
+    {
+      "theme": "light",
+      "width": 1440,
+      "path": "/Users/shivanshgupta/.codex/worktrees/player-start-flow/billiards-bms:HSR/docs/ui-readiness/button-feedback/button-states-light-1440.png",
+      "samples": [
+        {
+          "theme": "light",
+          "width": 1440,
+          "route": "/dashboard",
+          "steps": [],
+          "button": "Club menu",
+          "variant": "native",
+          "state": "default"
+        },
+        {
+          "theme": "light",
+          "width": 1440,
+          "route": "/dashboard",
+          "steps": [],
+          "button": "Club menu",
+          "variant": "native",
+          "state": "focus"
+        },
+        {
+          "theme": "light",
+          "width": 1440,
+          "route": "/dashboard",
+          "steps": [],
+          "button": "Club menu",
+          "variant": "native",
+          "state": "hover"
+        },
+        {
+          "theme": "light",
+          "width": 1440,
+          "route": "/dashboard",
+          "steps": [],
+          "button": "Club menu",
+          "variant": "native",
+          "state": "pressed"
+        }
+      ],
+      "missing": [
+        {
+          "variant": "native",
+          "state": "loading",
+          "status": "not-naturally-observed"
+        },
+        {
+          "variant": "native",
+          "state": "disabled",
+          "status": "not-naturally-observed"
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "limitations": [
+    "Feedback is not business success. Writes receive a deliberate HTTP 409 after 700ms; transient loading can pass feedback while action remains blocked.",
+    "GET /bookings and GET /sessions/quote/<id> are allowed only on API8006 against the operator-isolated sqlite:////tmp/hsr-session-close-ui.db. These GETs may reconcile QA state, including booking expiry and session-key initialization; zero local DB side effects are not asserted.",
+    "All browser POST/PUT/PATCH/DELETE requests, including checkout preview and all settlement/business writes, are blocked. Local QA login via Node fetch is the sole POST exception.",
+    "Only rendered buttons are inventoried; offscreen buttons are scrolled into view. Hidden controls, unavailable records, disabled controls and bounded exploration are reported, not passed.",
+    "No form filling, business fixtures, synthetic component states or seeded records. Overlay/menu exploration defaults to depth 1 and six states per route/configuration (including default); limit exclusions are explicit. Replay blocks business write methods but permits approved QA GET reconciliation.",
+    "Press feedback compares painted computed properties against settled hover, not :active membership. Click DOM feedback ignores arbitrary clock text and unrelated attribute changes.",
+    "Focus images use keyboard modality plus direct focus, not a complete keyboard-navigation audit. Screenshot sheets contain actual button crops, not whole-page evidence.",
+    "Service workers, WebSockets, SSE and external assets are blocked; live-sync fallback may differ from an unrestricted browser."
+  ],
+  "finishedAt": "2026-10-18T17:15:20.308Z",
+  "summary": {
+    "routes": 1,
+    "degradedScreens": 1,
+    "buttons": 1,
+    "feedback": {
+      "pass": 1
+    },
+    "actionOutcomes": {
+      "safety-boundary-blocked": 1
+    },
+    "exclusions": 59,
+    "screenshots": 1,
+    "businessSuccessClaims": 0
+  }
+}

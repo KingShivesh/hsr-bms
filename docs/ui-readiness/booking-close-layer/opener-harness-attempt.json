@@ -1,0 +1,844 @@
+{
+  "schemaVersion": 1,
+  "startedAt": "2026-10-19T20:56:08.500Z",
+  "mode": "both",
+  "origins": {
+    "before": "http://127.0.0.1:5180",
+    "after": "http://127.0.0.1:5181"
+  },
+  "api": "http://127.0.0.1:8006",
+  "configuration": {
+    "route": "/bookings",
+    "widths": [
+      375,
+      768,
+      1024,
+      1440,
+      1920
+    ],
+    "themes": [
+      "light",
+      "dark"
+    ],
+    "isolateReminders": true,
+    "maxCases": 20
+  },
+  "safety": {
+    "authenticationPosts": 1,
+    "forwardedBusinessWrites": 0,
+    "blockedWrites": [],
+    "expectedQaDatabase": "sqlite:////tmp/hsr-session-close-ui.db",
+    "databaseVerification": "Parent-provided QA isolation; not independently verified.",
+    "policy": "Only fixed loopback previews and API8006; allowlisted GET/HEAD, reviewed same-origin redirects; all browser writes, service workers, WebSockets and SSE blocked. Local authentication is the sole possible POST exception; BOOKING_QA_TOKEN avoids even that POST.",
+    "getSideEffects": "GET /bookings may reconcile isolated QA state. Zero database side effects are not asserted."
+  },
+  "cases": [
+    {
+      "stage": "before",
+      "theme": "light",
+      "width": 375,
+      "status": "setup-degraded-not-app-bug",
+      "click": {
+        "completed": false,
+        "method": "Playwright center click; no force, JS click or DOM relocation"
+      },
+      "screenshots": [
+        {
+          "state": "setup-degraded",
+          "file": "before/light-375-setup-degraded.png"
+        }
+      ],
+      "networkErrors": [],
+      "pageErrors": [],
+      "setupError": "locator.click: Timeout 12000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('.topbar').getByRole('button', { name: 'New Booking', exact: true })\u001b[22m\n"
+    },
+    {
+      "stage": "before",
+      "theme": "light",
+      "width": 768,
+      "status": "setup-degraded-not-app-bug",
+      "click": {
+        "completed": false,
+        "method": "Playwright center click; no force, JS click or DOM relocation"
+      },
+      "screenshots": [
+        {
+          "state": "setup-degraded",
+          "file": "before/light-768-setup-degraded.png"
+        }
+      ],
+      "networkErrors": [],
+      "pageErrors": [],
+      "setupError": "locator.click: Timeout 12000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('.topbar').getByRole('button', { name: 'New Booking', exact: true })\u001b[22m\n"
+    },
+    {
+      "stage": "before",
+      "theme": "light",
+      "width": 1024,
+      "status": "setup-degraded-not-app-bug",
+      "click": {
+        "completed": false,
+        "method": "Playwright center click; no force, JS click or DOM relocation"
+      },
+      "screenshots": [
+        {
+          "state": "setup-degraded",
+          "file": "before/light-1024-setup-degraded.png"
+        }
+      ],
+      "networkErrors": [],
+      "pageErrors": [],
+      "setupError": "locator.click: Timeout 12000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('.topbar').getByRole('button', { name: 'New Booking', exact: true })\u001b[22m\n"
+    },
+    {
+      "stage": "before",
+      "theme": "light",
+      "width": 1440,
+      "status": "pass",
+      "click": {
+        "completed": true,
+        "method": "Playwright center click; no force, JS click or DOM relocation",
+        "observed": {
+          "count": 1,
+          "trusted": true
+        },
+        "dialogClosed": true,
+        "routeRetained": true
+      },
+      "screenshots": [
+        {
+          "state": "open-before-click",
+          "file": "before/light-1440-open-before-click.png"
+        },
+        {
+          "state": "closed-after-click",
+          "file": "before/light-1440-closed-after-click.png"
+        }
+      ],
+      "networkErrors": [],
+      "pageErrors": [],
+      "measurements": {
+        "center": {
+          "x": 997,
+          "y": 236
+        },
+        "centerHitBelongsToButton": true,
+        "hit": {
+          "tag": "path",
+          "className": "SVG",
+          "zIndex": "auto",
+          "position": "static",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 993,
+            "y": 232,
+            "width": 8,
+            "height": 8
+          }
+        },
+        "button": {
+          "tag": "BUTTON",
+          "className": "ui-button ui-button-native ui-button-md lf-icon-button",
+          "zIndex": "auto",
+          "position": "relative",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 979,
+            "y": 218,
+            "width": 36,
+            "height": 36
+          }
+        },
+        "dialog": {
+          "tag": "FORM",
+          "className": "op2-modal",
+          "zIndex": "auto",
+          "position": "static",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 400,
+            "y": 184,
+            "width": 640,
+            "height": 632
+          }
+        },
+        "backdrop": {
+          "tag": "DIV",
+          "className": "lf-modal-backdrop",
+          "zIndex": "70",
+          "position": "fixed",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 0,
+            "y": 0,
+            "width": 1440,
+            "height": 1000
+          }
+        },
+        "topbar": {
+          "tag": "HEADER",
+          "className": "topbar cf-topbar",
+          "zIndex": "80",
+          "position": "sticky",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 288,
+            "y": 0,
+            "width": 1152,
+            "height": 77
+          }
+        },
+        "sidebar": {
+          "tag": "ASIDE",
+          "className": "sidebar cf-sidebar  ",
+          "zIndex": "1400",
+          "position": "fixed",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 0,
+            "y": 0,
+            "width": 288,
+            "height": 1000
+          }
+        },
+        "backdropDirectlyUnderBody": false,
+        "modalLeftEdgeOwned": true,
+        "scroll": {
+          "x": 0,
+          "y": 0,
+          "dialog": 0
+        },
+        "ancestry": [
+          {
+            "tag": "BUTTON",
+            "className": "ui-button ui-button-native ui-button-md lf-icon-button",
+            "zIndex": "auto",
+            "position": "relative",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 979,
+              "y": 218,
+              "width": 36,
+              "height": 36
+            }
+          },
+          {
+            "tag": "DIV",
+            "className": "order-selector-head",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 425,
+              "y": 209,
+              "width": 590,
+              "height": 54
+            }
+          },
+          {
+            "tag": "FORM",
+            "className": "op2-modal",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 400,
+              "y": 184,
+              "width": 640,
+              "height": 632
+            }
+          },
+          {
+            "tag": "DIV",
+            "className": "lf-modal-backdrop",
+            "zIndex": "70",
+            "position": "fixed",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 0,
+              "y": 0,
+              "width": 1440,
+              "height": 1000
+            }
+          },
+          {
+            "tag": "SECTION",
+            "className": "op2-page",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 312,
+              "y": 170,
+              "width": 1104,
+              "height": 1164
+            }
+          },
+          {
+            "tag": "DIV",
+            "className": "page route-page",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 288,
+              "y": 122,
+              "width": 1152,
+              "height": 1260
+            }
+          },
+          {
+            "tag": "DIV",
+            "className": "main-content page-reservations",
+            "zIndex": "1",
+            "position": "relative",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 288,
+              "y": 0,
+              "width": 1152,
+              "height": 1382
+            }
+          },
+          {
+            "tag": "DIV",
+            "className": "shell",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 0,
+              "y": 0,
+              "width": 1440,
+              "height": 1382
+            }
+          },
+          {
+            "tag": "DIV",
+            "className": "",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 0,
+              "y": 0,
+              "width": 1440,
+              "height": 1382
+            }
+          },
+          {
+            "tag": "BODY",
+            "className": "",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 0,
+              "y": 0,
+              "width": 1440,
+              "height": 1382
+            }
+          },
+          {
+            "tag": "HTML",
+            "className": "",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 0,
+              "y": 0,
+              "width": 1440,
+              "height": 1382
+            }
+          }
+        ]
+      },
+      "checks": {
+        "centerHitBelongsToButton": true,
+        "modalLeftEdgeNotBehindSidebar": true,
+        "actualUnforcedTrustedClick": true,
+        "dialogClosed": true,
+        "routeRetained": true,
+        "noRuntimeErrors": true,
+        "noReadErrors": true
+      }
+    },
+    {
+      "stage": "before",
+      "theme": "light",
+      "width": 1920,
+      "status": "pass",
+      "click": {
+        "completed": true,
+        "method": "Playwright center click; no force, JS click or DOM relocation",
+        "observed": {
+          "count": 1,
+          "trusted": true
+        },
+        "dialogClosed": true,
+        "routeRetained": true
+      },
+      "screenshots": [
+        {
+          "state": "open-before-click",
+          "file": "before/light-1920-open-before-click.png"
+        },
+        {
+          "state": "closed-after-click",
+          "file": "before/light-1920-closed-after-click.png"
+        }
+      ],
+      "networkErrors": [],
+      "pageErrors": [],
+      "measurements": {
+        "center": {
+          "x": 1237,
+          "y": 236
+        },
+        "centerHitBelongsToButton": true,
+        "hit": {
+          "tag": "path",
+          "className": "SVG",
+          "zIndex": "auto",
+          "position": "static",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 1233,
+            "y": 232,
+            "width": 8,
+            "height": 8
+          }
+        },
+        "button": {
+          "tag": "BUTTON",
+          "className": "ui-button ui-button-native ui-button-md lf-icon-button",
+          "zIndex": "auto",
+          "position": "relative",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 1219,
+            "y": 218,
+            "width": 36,
+            "height": 36
+          }
+        },
+        "dialog": {
+          "tag": "FORM",
+          "className": "op2-modal",
+          "zIndex": "auto",
+          "position": "static",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 640,
+            "y": 184,
+            "width": 640,
+            "height": 632
+          }
+        },
+        "backdrop": {
+          "tag": "DIV",
+          "className": "lf-modal-backdrop",
+          "zIndex": "70",
+          "position": "fixed",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 0,
+            "y": 0,
+            "width": 1920,
+            "height": 1000
+          }
+        },
+        "topbar": {
+          "tag": "HEADER",
+          "className": "topbar cf-topbar",
+          "zIndex": "80",
+          "position": "sticky",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 288,
+            "y": 0,
+            "width": 1632,
+            "height": 77
+          }
+        },
+        "sidebar": {
+          "tag": "ASIDE",
+          "className": "sidebar cf-sidebar  ",
+          "zIndex": "1400",
+          "position": "fixed",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 0,
+            "y": 0,
+            "width": 288,
+            "height": 1000
+          }
+        },
+        "backdropDirectlyUnderBody": false,
+        "modalLeftEdgeOwned": true,
+        "scroll": {
+          "x": 0,
+          "y": 0,
+          "dialog": 0
+        },
+        "ancestry": [
+          {
+            "tag": "BUTTON",
+            "className": "ui-button ui-button-native ui-button-md lf-icon-button",
+            "zIndex": "auto",
+            "position": "relative",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 1219,
+              "y": 218,
+              "width": 36,
+              "height": 36
+            }
+          },
+          {
+            "tag": "DIV",
+            "className": "order-selector-head",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 665,
+              "y": 209,
+              "width": 590,
+              "height": 54
+            }
+          },
+          {
+            "tag": "FORM",
+            "className": "op2-modal",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 640,
+              "y": 184,
+              "width": 640,
+              "height": 632
+            }
+          },
+          {
+            "tag": "DIV",
+            "className": "lf-modal-backdrop",
+            "zIndex": "70",
+            "position": "fixed",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 0,
+              "y": 0,
+              "width": 1920,
+              "height": 1000
+            }
+          },
+          {
+            "tag": "SECTION",
+            "className": "op2-page",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 312,
+              "y": 170,
+              "width": 1452,
+              "height": 1128
+            }
+          },
+          {
+            "tag": "DIV",
+            "className": "page route-page",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 288,
+              "y": 122,
+              "width": 1500,
+              "height": 1224
+            }
+          },
+          {
+            "tag": "DIV",
+            "className": "main-content page-reservations",
+            "zIndex": "1",
+            "position": "relative",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 288,
+              "y": 0,
+              "width": 1632,
+              "height": 1346
+            }
+          },
+          {
+            "tag": "DIV",
+            "className": "shell",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 0,
+              "y": 0,
+              "width": 1920,
+              "height": 1346
+            }
+          },
+          {
+            "tag": "DIV",
+            "className": "",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 0,
+              "y": 0,
+              "width": 1920,
+              "height": 1346
+            }
+          },
+          {
+            "tag": "BODY",
+            "className": "",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 0,
+              "y": 0,
+              "width": 1920,
+              "height": 1346
+            }
+          },
+          {
+            "tag": "HTML",
+            "className": "",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 0,
+              "y": 0,
+              "width": 1920,
+              "height": 1346
+            }
+          }
+        ]
+      },
+      "checks": {
+        "centerHitBelongsToButton": true,
+        "modalLeftEdgeNotBehindSidebar": true,
+        "actualUnforcedTrustedClick": true,
+        "dialogClosed": true,
+        "routeRetained": true,
+        "noRuntimeErrors": true,
+        "noReadErrors": true
+      }
+    },
+    {
+      "stage": "before",
+      "theme": "dark",
+      "width": 375,
+      "status": "setup-degraded-not-app-bug",
+      "click": {
+        "completed": false,
+        "method": "Playwright center click; no force, JS click or DOM relocation"
+      },
+      "screenshots": [
+        {
+          "state": "setup-degraded",
+          "file": "before/dark-375-setup-degraded.png"
+        }
+      ],
+      "networkErrors": [],
+      "pageErrors": [],
+      "setupError": "locator.click: Timeout 12000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('.topbar').getByRole('button', { name: 'New Booking', exact: true })\u001b[22m\n"
+    },
+    {
+      "stage": "before",
+      "theme": "dark",
+      "width": 768,
+      "status": "setup-degraded-not-app-bug",
+      "click": {
+        "completed": false,
+        "method": "Playwright center click; no force, JS click or DOM relocation"
+      },
+      "screenshots": [
+        {
+          "state": "setup-degraded",
+          "file": "before/dark-768-setup-degraded.png"
+        }
+      ],
+      "networkErrors": [],
+      "pageErrors": [],
+      "setupError": "locator.click: Timeout 12000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('.topbar').getByRole('button', { name: 'New Booking', exact: true })\u001b[22m\n"
+    },
+    {
+      "stage": "before",
+      "theme": "dark",
+      "width": 1024,
+      "status": "setup-degraded-not-app-bug",
+      "click": {
+        "completed": false,
+        "method": "Playwright center click; no force, JS click or DOM relocation"
+      },
+      "screenshots": [],
+      "networkErrors": [],
+      "pageErrors": [],
+      "setupError": "locator.click: Target page, context or browser has been closed\nCall log:\n\u001b[2m  - waiting for locator('.topbar').getByRole('button', { name: 'New Booking', exact: true })\u001b[22m\n"
+    },
+    {
+      "stage": "before",
+      "theme": "dark",
+      "width": 1440,
+      "status": "pending",
+      "click": {
+        "completed": false,
+        "method": "Playwright center click; no force, JS click or DOM relocation"
+      },
+      "screenshots": [],
+      "networkErrors": [],
+      "pageErrors": []
+    }
+  ],
+  "failures": [
+    {
+      "stage": "before",
+      "theme": "light",
+      "width": 375,
+      "status": "setup-degraded-not-app-bug",
+      "failedChecks": [],
+      "setupError": "locator.click: Timeout 12000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('.topbar').getByRole('button', { name: 'New Booking', exact: true })\u001b[22m\n"
+    },
+    {
+      "stage": "before",
+      "theme": "light",
+      "width": 768,
+      "status": "setup-degraded-not-app-bug",
+      "failedChecks": [],
+      "setupError": "locator.click: Timeout 12000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('.topbar').getByRole('button', { name: 'New Booking', exact: true })\u001b[22m\n"
+    },
+    {
+      "stage": "before",
+      "theme": "light",
+      "width": 1024,
+      "status": "setup-degraded-not-app-bug",
+      "failedChecks": [],
+      "setupError": "locator.click: Timeout 12000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('.topbar').getByRole('button', { name: 'New Booking', exact: true })\u001b[22m\n"
+    },
+    {
+      "stage": "before",
+      "theme": "dark",
+      "width": 375,
+      "status": "setup-degraded-not-app-bug",
+      "failedChecks": [],
+      "setupError": "locator.click: Timeout 12000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('.topbar').getByRole('button', { name: 'New Booking', exact: true })\u001b[22m\n"
+    },
+    {
+      "stage": "before",
+      "theme": "dark",
+      "width": 768,
+      "status": "setup-degraded-not-app-bug",
+      "failedChecks": [],
+      "setupError": "locator.click: Timeout 12000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('.topbar').getByRole('button', { name: 'New Booking', exact: true })\u001b[22m\n"
+    },
+    {
+      "stage": "before",
+      "theme": "dark",
+      "width": 1024,
+      "status": "setup-degraded-not-app-bug",
+      "failedChecks": [],
+      "setupError": "locator.click: Target page, context or browser has been closed\nCall log:\n\u001b[2m  - waiting for locator('.topbar').getByRole('button', { name: 'New Booking', exact: true })\u001b[22m\n"
+    }
+  ],
+  "baselineObservations": [],
+  "errors": [
+    "browser.newContext: Target page, context or browser has been closed\nBrowser logs:\n\n<launching> /Applications/Google Chrome.app/Contents/MacOS/Google Chrome --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,BlockOriginHeaderModificationOnRedirect,Translate,AutoDeElevate,OptimizationHints,NetworkTimeServiceQuerying,AimEnabled,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --disable-updater-scheduler --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --disable-background-networking --disable-component-update --disable-sync --no-first-run --user-data-dir=/var/folders/pl/wwrj7sfx5235y03nvfj3ksrr0000gn/T/playwright_chromiumdev_profile-1kOhlH --remote-debugging-pipe --no-startup-window\n<launched> pid=36567\n[pid=36567][err] Trying to load the allocator multiple times. This is *not* supported.\n[pid=36567][err] [36592:2439355:1020/022617.028077:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[pid=36567][err] [36592:2439403:1020/022617.028834:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[pid=36567][err] [36592:2439355:1020/022617.054402:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[pid=36567][err] [36592:2439403:1020/022617.054563:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[pid=36567][err] [36592:2439355:1020/022617.057706:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[pid=36567][err] [36592:2439403:1020/022617.057811:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[pid=36567][err] [36592:2439355:1020/022617.059607:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[pid=36567][err] [36592:2439403:1020/022617.059805:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[pid=36567][err] [36592:2439355:1020/022617.060476:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[pid=36567][err] [36592:2439403:1020/022617.060625:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[pid=36567][err] [36567:2439333:1020/022620.240426:ERROR:google_apis/gcm/engine/registration_request.cc:291] Registration response error message: DEPRECATED_ENDPOINT\n[pid=36567][err] [36592:2439355:1020/022634.757980:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[pid=36567][err] [36592:2439403:1020/022634.758208:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[pid=36567][err] [36592:2439355:1020/022634.761255:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[pid=36567][err] [36592:2439403:1020/022634.761394:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[pid=36567][err] [36592:2439355:1020/022634.763902:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[pid=36567][err] [36592:2439403:1020/022634.764019:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[pid=36567][err] [36592:2439355:1020/022634.764768:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[pid=36567][err] [36592:2439403:1020/022634.764873:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[pid=36567][err] [36592:2439355:1020/022634.765195:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[pid=36567][err] [36592:2439403:1020/022634.765310:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[pid=36567][err] [36567:2439333:1020/022646.766610:ERROR:google_apis/gcm/engine/registration_request.cc:291] Registration response error message: DEPRECATED_ENDPOINT\n[pid=36567][err] [36592:2439355:1020/022656.158152:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[pid=36567][err] [36592:2439403:1020/022656.158503:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[pid=36567][err] [36592:2439355:1020/022656.262674:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[pid=36567][err] [36592:2439403:1020/022656.262853:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[pid=36567][err] [36592:2439355:1020/022656.271102:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[pid=36567][err] [36592:2439403:1020/022656.271250:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[pid=36567][err] [36592:2439355:1020/022656.272353:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[pid=36567][err] [36592:2439403:1020/022656.272461:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[pid=36567][err] [36592:2439355:1020/022656.273757:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[pid=36567][err] [36592:2439403:1020/022656.273887:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[pid=36567][err] [36592:2439355:1020/022715.198891:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[pid=36567][err] [36592:2439403:1020/022715.199256:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[pid=36567][err] [36592:2439355:1020/022715.220349:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[pid=36567][err] [36592:2439403:1020/022715.220519:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[pid=36567][err] [36592:2439355:1020/022715.221416:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[pid=36567][err] [36592:2439403:1020/022715.221535:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[pid=36567][err] [36592:2439355:1020/022715.221949:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[pid=36567][err] [36592:2439403:1020/022715.222089:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[pid=36567][err] [36592:2439355:1020/022715.225928:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[pid=36567][err] [36592:2439403:1020/022715.226720:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[pid=36567][err] [36824:2442034:1020/022721.509566:ERROR:sandbox/mac/system_services.cc:31] SetApplicationIsDaemon: Error Domain=NSOSStatusErrorDomain Code=-50 \"paramErr: error in user parameter list\" (-50)\n[pid=36567][err] [36592:2439355:1020/022724.066393:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[pid=36567][err] [36592:2439403:1020/022724.066627:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[pid=36567][err] [36592:2439355:1020/022724.091600:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[pid=36567][err] [36592:2439403:1020/022724.091752:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[pid=36567][err] [36592:2439355:1020/022724.093003:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[pid=36567][err] [36592:2439403:1020/022724.093123:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[pid=36567][err] [36592:2439355:1020/022724.098569:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[pid=36567][err] [36592:2439403:1020/022724.098687:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[pid=36567][err] [36592:2439355:1020/022724.104672:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[pid=36567][err] [36592:2439403:1020/022724.104837:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[pid=36567][err] [36592:2439355:1020/022732.389060:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[pid=36567][err] [36592:2439403:1020/022732.389348:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[pid=36567][err] [36592:2439355:1020/022732.390658:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[pid=36567][err] [36592:2439403:1020/022732.390767:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[pid=36567][err] [36592:2439355:1020/022732.391632:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[pid=36567][err] [36592:2439403:1020/022732.391730:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[pid=36567][err] [36592:2439355:1020/022732.391977:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[pid=36567][err] [36592:2439403:1020/022732.392097:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[pid=36567][err] [36592:2439355:1020/022732.392382:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[pid=36567][err] [36592:2439403:1020/022732.392490:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[pid=36567][err] [36567:2439333:1020/022733.949126:ERROR:google_apis/gcm/engine/registration_request.cc:291] Registration response error message: DEPRECATED_ENDPOINT\n[pid=36567][err] [36592:2439355:1020/022747.424500:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[pid=36567][err] [36592:2439403:1020/022747.424715:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[pid=36567][err] [36592:2439355:1020/022747.482520:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[pid=36567][err] [36592:2439403:1020/022747.482687:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[pid=36567][err] [36592:2439355:1020/022747.486261:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[pid=36567][err] [36592:2439403:1020/022747.486411:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[pid=36567][err] [36592:2439355:1020/022747.486801:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[pid=36567][err] [36592:2439403:1020/022747.486913:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[pid=36567][err] [36592:2439355:1020/022747.487280:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[pid=36567][err] [36592:2439403:1020/022747.487407:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[pid=36567][err] [36592:2439355:1020/022802.396932:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[pid=36567][err] [36592:2439403:1020/022802.397108:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[pid=36567][err] [36592:2439355:1020/022802.402490:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[pid=36567][err] [36592:2439403:1020/022802.402656:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[pid=36567][err] [36592:2439355:1020/022802.419408:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[pid=36567][err] [36592:2439403:1020/022802.419561:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[pid=36567][err] [36592:2439355:1020/022802.419862:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[pid=36567][err] [36592:2439403:1020/022802.419968:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[pid=36567][err] [36592:2439355:1020/022802.420254:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[pid=36567][err] [36592:2439403:1020/022802.420376:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[pid=36567] <gracefully close start>"
+  ],
+  "limitations": [
+    "Only the existing topbar New Booking opener and Close booking form control are exercised; no form filling, submit, forced clicks, DOM relocation, CSS overrides or synthetic application states.",
+    "A closed dialog is UI behavior, not a claim of business success."
+  ],
+  "finishedAt": "2026-10-19T20:58:07.894Z",
+  "summary": {
+    "cases": 9,
+    "expectedCases": 20,
+    "afterPasses": 0,
+    "baselineObservations": 0,
+    "degradedCases": 6,
+    "failures": 6,
+    "errors": 1,
+    "forwardedBusinessWrites": 0
+  }
+}

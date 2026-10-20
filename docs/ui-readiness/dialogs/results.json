@@ -1,0 +1,2096 @@
+{
+  "checks": [
+    {
+      "phase": "before",
+      "theme": "dark",
+      "name": "inventory",
+      "width": 375,
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true
+    },
+    {
+      "phase": "before",
+      "theme": "dark",
+      "name": "inventory",
+      "width": 768,
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [
+        {
+          "label": "Close",
+          "height": 36,
+          "className": "ui-button ui-button-native ui-button-md"
+        },
+        {
+          "label": "Discard Menu Item",
+          "height": 36,
+          "className": "ui-button ui-button-native ui-button-md cf-action-btn default"
+        },
+        {
+          "label": "Add Menu Item",
+          "height": 36,
+          "className": "ui-button ui-button-native ui-button-md cf-action-btn primary"
+        }
+      ],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true
+    },
+    {
+      "phase": "before",
+      "theme": "dark",
+      "name": "inventory",
+      "width": 1024,
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true
+    },
+    {
+      "phase": "before",
+      "theme": "dark",
+      "name": "inventory",
+      "width": 1440,
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true
+    },
+    {
+      "phase": "before",
+      "theme": "dark",
+      "name": "inventory",
+      "width": 1920,
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true
+    },
+    {
+      "phase": "before",
+      "theme": "dark",
+      "name": "history",
+      "width": 375,
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true
+    },
+    {
+      "phase": "before",
+      "theme": "dark",
+      "name": "history",
+      "width": 768,
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [
+        {
+          "label": "Close history",
+          "height": 36,
+          "className": "ui-button ui-button-native ui-button-md"
+        }
+      ],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true
+    },
+    {
+      "phase": "before",
+      "theme": "dark",
+      "name": "history",
+      "width": 1024,
+      "applicationCrashed": false,
+      "overflow": 68,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true
+    },
+    {
+      "phase": "before",
+      "theme": "dark",
+      "name": "history",
+      "width": 1440,
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true
+    },
+    {
+      "phase": "before",
+      "theme": "dark",
+      "name": "history",
+      "width": 1920,
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true
+    },
+    {
+      "phase": "before",
+      "theme": "dark",
+      "name": "reset",
+      "width": 375,
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true
+    },
+    {
+      "phase": "before",
+      "theme": "dark",
+      "name": "reset",
+      "width": 768,
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [
+        {
+          "label": "Close reset confirmation",
+          "height": 36,
+          "className": "ui-button ui-button-native ui-button-md quick-session-close"
+        },
+        {
+          "label": "Reset Table",
+          "height": 36,
+          "className": "ui-button ui-button-native ui-button-md frame-loser-submit"
+        }
+      ],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true
+    },
+    {
+      "phase": "before",
+      "theme": "dark",
+      "name": "reset",
+      "width": 1024,
+      "applicationCrashed": false,
+      "overflow": 68,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true
+    },
+    {
+      "phase": "before",
+      "theme": "dark",
+      "name": "reset",
+      "width": 1440,
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true
+    },
+    {
+      "phase": "before",
+      "theme": "dark",
+      "name": "reset",
+      "width": 1920,
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true
+    },
+    {
+      "phase": "before",
+      "theme": "dark",
+      "name": "cigarette-price",
+      "width": 375,
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true
+    },
+    {
+      "phase": "before",
+      "theme": "dark",
+      "name": "cigarette-price",
+      "width": 768,
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [
+        {
+          "label": "Discard Item",
+          "height": 36,
+          "className": "ui-button ui-button-native ui-button-md app-confirm-btn secondary"
+        },
+        {
+          "label": "Add Cigarette",
+          "height": 36,
+          "className": "ui-button ui-button-native ui-button-md app-confirm-btn primary"
+        }
+      ],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true
+    },
+    {
+      "phase": "before",
+      "theme": "dark",
+      "name": "cigarette-price",
+      "width": 1024,
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true
+    },
+    {
+      "phase": "before",
+      "theme": "dark",
+      "name": "cigarette-price",
+      "width": 1440,
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true
+    },
+    {
+      "phase": "before",
+      "theme": "dark",
+      "name": "cigarette-price",
+      "width": 1920,
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true
+    },
+    {
+      "phase": "after",
+      "theme": "dark",
+      "switchChangesPosition": true,
+      "beforeTransform": "matrix(1, 0, 0, 1, 16, 0)",
+      "transform": "none",
+      "trustedStaffSettingUnchanged": true,
+      "savedToBackend": false
+    },
+    {
+      "phase": "after",
+      "theme": "dark",
+      "name": "inventory",
+      "width": 375,
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true
+    },
+    {
+      "phase": "after",
+      "theme": "dark",
+      "name": "inventory",
+      "width": 768,
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true
+    },
+    {
+      "phase": "after",
+      "theme": "dark",
+      "name": "inventory",
+      "width": 1024,
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true
+    },
+    {
+      "phase": "after",
+      "theme": "dark",
+      "name": "inventory",
+      "width": 1440,
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true
+    },
+    {
+      "phase": "after",
+      "theme": "dark",
+      "name": "inventory",
+      "width": 1920,
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true
+    },
+    {
+      "phase": "after",
+      "theme": "dark",
+      "name": "inventory",
+      "forwardTrap": true,
+      "reverseTrap": true,
+      "escapeCloses": true
+    },
+    {
+      "phase": "after",
+      "theme": "dark",
+      "name": "history",
+      "width": 375,
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true
+    },
+    {
+      "phase": "after",
+      "theme": "dark",
+      "name": "history",
+      "width": 768,
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true
+    },
+    {
+      "phase": "after",
+      "theme": "dark",
+      "name": "history",
+      "width": 1024,
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true
+    },
+    {
+      "phase": "after",
+      "theme": "dark",
+      "name": "history",
+      "width": 1440,
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true
+    },
+    {
+      "phase": "after",
+      "theme": "dark",
+      "name": "history",
+      "width": 1920,
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true
+    },
+    {
+      "phase": "after",
+      "theme": "dark",
+      "name": "history",
+      "forwardTrap": true,
+      "reverseTrap": true,
+      "escapeCloses": true
+    },
+    {
+      "phase": "after",
+      "theme": "dark",
+      "name": "reset",
+      "width": 375,
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true
+    },
+    {
+      "phase": "after",
+      "theme": "dark",
+      "name": "reset",
+      "width": 768,
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true
+    },
+    {
+      "phase": "after",
+      "theme": "dark",
+      "name": "reset",
+      "width": 1024,
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true
+    },
+    {
+      "phase": "after",
+      "theme": "dark",
+      "name": "reset",
+      "width": 1440,
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true
+    },
+    {
+      "phase": "after",
+      "theme": "dark",
+      "name": "reset",
+      "width": 1920,
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true
+    },
+    {
+      "phase": "after",
+      "theme": "dark",
+      "name": "reset",
+      "forwardTrap": true,
+      "reverseTrap": true,
+      "escapeCloses": true
+    },
+    {
+      "phase": "after",
+      "theme": "dark",
+      "name": "cigarette-price",
+      "width": 375,
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true
+    },
+    {
+      "phase": "after",
+      "theme": "dark",
+      "name": "cigarette-price",
+      "width": 768,
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true
+    },
+    {
+      "phase": "after",
+      "theme": "dark",
+      "name": "cigarette-price",
+      "width": 1024,
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true
+    },
+    {
+      "phase": "after",
+      "theme": "dark",
+      "name": "cigarette-price",
+      "width": 1440,
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true
+    },
+    {
+      "phase": "after",
+      "theme": "dark",
+      "name": "cigarette-price",
+      "width": 1920,
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true
+    },
+    {
+      "phase": "after",
+      "theme": "dark",
+      "name": "cigarette-price",
+      "forwardTrap": true,
+      "reverseTrap": true,
+      "escapeCloses": true
+    },
+    {
+      "phase": "before",
+      "theme": "light",
+      "name": "inventory",
+      "width": 375,
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true
+    },
+    {
+      "phase": "before",
+      "theme": "light",
+      "name": "inventory",
+      "width": 768,
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [
+        {
+          "label": "Close",
+          "height": 36,
+          "className": "ui-button ui-button-native ui-button-md"
+        },
+        {
+          "label": "Discard Menu Item",
+          "height": 36,
+          "className": "ui-button ui-button-native ui-button-md cf-action-btn default"
+        },
+        {
+          "label": "Add Menu Item",
+          "height": 36,
+          "className": "ui-button ui-button-native ui-button-md cf-action-btn primary"
+        }
+      ],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true
+    },
+    {
+      "phase": "before",
+      "theme": "light",
+      "name": "inventory",
+      "width": 1024,
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true
+    },
+    {
+      "phase": "before",
+      "theme": "light",
+      "name": "inventory",
+      "width": 1440,
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true
+    },
+    {
+      "phase": "before",
+      "theme": "light",
+      "name": "inventory",
+      "width": 1920,
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true
+    },
+    {
+      "phase": "before",
+      "theme": "light",
+      "name": "history",
+      "width": 375,
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true
+    },
+    {
+      "phase": "before",
+      "theme": "light",
+      "name": "history",
+      "width": 768,
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [
+        {
+          "label": "Close history",
+          "height": 36,
+          "className": "ui-button ui-button-native ui-button-md"
+        }
+      ],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true
+    },
+    {
+      "phase": "before",
+      "theme": "light",
+      "name": "history",
+      "width": 1024,
+      "applicationCrashed": false,
+      "overflow": 68,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true
+    },
+    {
+      "phase": "before",
+      "theme": "light",
+      "name": "history",
+      "width": 1440,
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true
+    },
+    {
+      "phase": "before",
+      "theme": "light",
+      "name": "history",
+      "width": 1920,
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true
+    },
+    {
+      "phase": "before",
+      "theme": "light",
+      "name": "reset",
+      "width": 375,
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true
+    },
+    {
+      "phase": "before",
+      "theme": "light",
+      "name": "reset",
+      "width": 768,
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [
+        {
+          "label": "Close reset confirmation",
+          "height": 36,
+          "className": "ui-button ui-button-native ui-button-md quick-session-close"
+        },
+        {
+          "label": "Reset Table",
+          "height": 36,
+          "className": "ui-button ui-button-native ui-button-md frame-loser-submit"
+        }
+      ],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true
+    },
+    {
+      "phase": "before",
+      "theme": "light",
+      "name": "reset",
+      "width": 1024,
+      "applicationCrashed": false,
+      "overflow": 68,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true
+    },
+    {
+      "phase": "before",
+      "theme": "light",
+      "name": "reset",
+      "width": 1440,
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true
+    },
+    {
+      "phase": "before",
+      "theme": "light",
+      "name": "reset",
+      "width": 1920,
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true
+    },
+    {
+      "phase": "before",
+      "theme": "light",
+      "name": "cigarette-price",
+      "width": 375,
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true
+    },
+    {
+      "phase": "before",
+      "theme": "light",
+      "name": "cigarette-price",
+      "width": 768,
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [
+        {
+          "label": "Discard Item",
+          "height": 36,
+          "className": "ui-button ui-button-native ui-button-md app-confirm-btn secondary"
+        },
+        {
+          "label": "Add Cigarette",
+          "height": 36,
+          "className": "ui-button ui-button-native ui-button-md app-confirm-btn primary"
+        }
+      ],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true
+    },
+    {
+      "phase": "before",
+      "theme": "light",
+      "name": "cigarette-price",
+      "width": 1024,
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true
+    },
+    {
+      "phase": "before",
+      "theme": "light",
+      "name": "cigarette-price",
+      "width": 1440,
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true
+    },
+    {
+      "phase": "before",
+      "theme": "light",
+      "name": "cigarette-price",
+      "width": 1920,
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true
+    },
+    {
+      "phase": "after",
+      "theme": "light",
+      "switchChangesPosition": true,
+      "beforeTransform": "matrix(1, 0, 0, 1, 16, 0)",
+      "transform": "none",
+      "trustedStaffSettingUnchanged": true,
+      "savedToBackend": false
+    },
+    {
+      "phase": "after",
+      "theme": "light",
+      "name": "inventory",
+      "width": 375,
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true
+    },
+    {
+      "phase": "after",
+      "theme": "light",
+      "name": "inventory",
+      "width": 768,
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true
+    },
+    {
+      "phase": "after",
+      "theme": "light",
+      "name": "inventory",
+      "width": 1024,
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true
+    },
+    {
+      "phase": "after",
+      "theme": "light",
+      "name": "inventory",
+      "width": 1440,
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true
+    },
+    {
+      "phase": "after",
+      "theme": "light",
+      "name": "inventory",
+      "width": 1920,
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true
+    },
+    {
+      "phase": "after",
+      "theme": "light",
+      "name": "inventory",
+      "forwardTrap": true,
+      "reverseTrap": true,
+      "escapeCloses": true
+    },
+    {
+      "phase": "after",
+      "theme": "light",
+      "name": "history",
+      "width": 375,
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true
+    },
+    {
+      "phase": "after",
+      "theme": "light",
+      "name": "history",
+      "width": 768,
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true
+    },
+    {
+      "phase": "after",
+      "theme": "light",
+      "name": "history",
+      "width": 1024,
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true
+    },
+    {
+      "phase": "after",
+      "theme": "light",
+      "name": "history",
+      "width": 1440,
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true
+    },
+    {
+      "phase": "after",
+      "theme": "light",
+      "name": "history",
+      "width": 1920,
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true
+    },
+    {
+      "phase": "after",
+      "theme": "light",
+      "name": "history",
+      "forwardTrap": true,
+      "reverseTrap": true,
+      "escapeCloses": true
+    },
+    {
+      "phase": "after",
+      "theme": "light",
+      "name": "reset",
+      "width": 375,
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true
+    },
+    {
+      "phase": "after",
+      "theme": "light",
+      "name": "reset",
+      "width": 768,
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true
+    },
+    {
+      "phase": "after",
+      "theme": "light",
+      "name": "reset",
+      "width": 1024,
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true
+    },
+    {
+      "phase": "after",
+      "theme": "light",
+      "name": "reset",
+      "width": 1440,
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true
+    },
+    {
+      "phase": "after",
+      "theme": "light",
+      "name": "reset",
+      "width": 1920,
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true
+    },
+    {
+      "phase": "after",
+      "theme": "light",
+      "name": "reset",
+      "forwardTrap": true,
+      "reverseTrap": true,
+      "escapeCloses": true
+    },
+    {
+      "phase": "after",
+      "theme": "light",
+      "name": "cigarette-price",
+      "width": 375,
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true
+    },
+    {
+      "phase": "after",
+      "theme": "light",
+      "name": "cigarette-price",
+      "width": 768,
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true
+    },
+    {
+      "phase": "after",
+      "theme": "light",
+      "name": "cigarette-price",
+      "width": 1024,
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true
+    },
+    {
+      "phase": "after",
+      "theme": "light",
+      "name": "cigarette-price",
+      "width": 1440,
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true
+    },
+    {
+      "phase": "after",
+      "theme": "light",
+      "name": "cigarette-price",
+      "width": 1920,
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true
+    },
+    {
+      "phase": "after",
+      "theme": "light",
+      "name": "cigarette-price",
+      "forwardTrap": true,
+      "reverseTrap": true,
+      "escapeCloses": true
+    }
+  ],
+  "contrast": [],
+  "errors": []
+}

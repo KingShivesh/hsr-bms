@@ -1,0 +1,24 @@
+{
+  "stage": "after",
+  "checks": [
+    {
+      "theme": "light",
+      "feedbackMs": 9.799999997019768,
+      "cancelDisabled": true,
+      "escapeBlocked": true,
+      "retainedWhilePending": true,
+      "posts": 1,
+      "actualBookingsSaved": 0
+    },
+    {
+      "theme": "dark",
+      "feedbackMs": 17.5,
+      "cancelDisabled": true,
+      "escapeBlocked": true,
+      "retainedWhilePending": true,
+      "posts": 1,
+      "actualBookingsSaved": 0
+    }
+  ],
+  "productionWrites": 0
+}

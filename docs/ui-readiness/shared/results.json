@@ -1,0 +1,762 @@
+{
+  "samples": [
+    {
+      "stage": "before",
+      "theme": "light",
+      "width": 375,
+      "file": "before-light-375-tooltip.png",
+      "tooltip": {
+        "x": 276.1875,
+        "y": -14,
+        "width": 78.8125,
+        "height": 26
+      },
+      "tooltipInViewport": false,
+      "scrollLocked": false,
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 1,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "contrast": [
+        {
+          "route": "customers",
+          "theme": "light",
+          "state": "shared-tooltip",
+          "selector": "div.customer-avatar",
+          "kind": "text",
+          "text": "QA",
+          "color": "rgb(250, 250, 250)",
+          "background": {
+            "r": 244,
+            "g": 244,
+            "b": 244
+          },
+          "fontSize": "20px",
+          "fontWeight": "600",
+          "ratio": 1.05,
+          "required": 4.5,
+          "gradient": true,
+          "backgroundMethod": "rendered pixels, three samples per text line"
+        }
+      ]
+    },
+    {
+      "stage": "before",
+      "theme": "light",
+      "width": 768,
+      "file": "before-light-768-tooltip.png",
+      "tooltip": {
+        "x": 669.1875,
+        "y": -14,
+        "width": 78.8125,
+        "height": 26
+      },
+      "tooltipInViewport": false,
+      "scrollLocked": false,
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [
+        {
+          "label": "Close panel",
+          "height": 36,
+          "className": "ui-button ui-button-icon ui-button-ghost ui-button-md"
+        },
+        {
+          "label": "Upgrade Tier",
+          "height": 36,
+          "className": "ui-button ui-button-secondary ui-button-md"
+        },
+        {
+          "label": "Delete Customer",
+          "height": 36,
+          "className": "ui-button ui-button-danger ui-button-md"
+        }
+      ],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 1,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "contrast": []
+    },
+    {
+      "stage": "before",
+      "theme": "light",
+      "width": 1024,
+      "file": "before-light-1024-tooltip.png",
+      "tooltip": {
+        "x": 925.1875,
+        "y": -14,
+        "width": 78.8125,
+        "height": 26
+      },
+      "tooltipInViewport": false,
+      "scrollLocked": false,
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 1,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "contrast": []
+    },
+    {
+      "stage": "before",
+      "theme": "light",
+      "width": 1440,
+      "file": "before-light-1440-tooltip.png",
+      "tooltip": {
+        "x": 1341.1875,
+        "y": -14,
+        "width": 78.8125,
+        "height": 26
+      },
+      "tooltipInViewport": false,
+      "scrollLocked": false,
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 1,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "contrast": []
+    },
+    {
+      "stage": "before",
+      "theme": "light",
+      "width": 1920,
+      "file": "before-light-1920-tooltip.png",
+      "tooltip": {
+        "x": 1821.1875,
+        "y": -14,
+        "width": 78.8125,
+        "height": 26
+      },
+      "tooltipInViewport": false,
+      "scrollLocked": false,
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 1,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "contrast": []
+    },
+    {
+      "stage": "before",
+      "theme": "dark",
+      "width": 375,
+      "file": "before-dark-375-tooltip.png",
+      "tooltip": {
+        "x": 276.1875,
+        "y": -14,
+        "width": 78.8125,
+        "height": 26
+      },
+      "tooltipInViewport": false,
+      "scrollLocked": false,
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 1,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "contrast": [
+        {
+          "route": "customers",
+          "theme": "dark",
+          "state": "shared-tooltip",
+          "selector": "div.customer-avatar",
+          "kind": "text",
+          "text": "QA",
+          "color": "rgb(7, 18, 13)",
+          "background": {
+            "r": 11,
+            "g": 11,
+            "b": 15
+          },
+          "fontSize": "20px",
+          "fontWeight": "600",
+          "ratio": 1.03,
+          "required": 4.5,
+          "gradient": true,
+          "backgroundMethod": "rendered pixels, three samples per text line"
+        }
+      ]
+    },
+    {
+      "stage": "before",
+      "theme": "dark",
+      "width": 768,
+      "file": "before-dark-768-tooltip.png",
+      "tooltip": {
+        "x": 669.1875,
+        "y": -14,
+        "width": 78.8125,
+        "height": 26
+      },
+      "tooltipInViewport": false,
+      "scrollLocked": false,
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [
+        {
+          "label": "Close panel",
+          "height": 36,
+          "className": "ui-button ui-button-icon ui-button-ghost ui-button-md"
+        },
+        {
+          "label": "Upgrade Tier",
+          "height": 36,
+          "className": "ui-button ui-button-secondary ui-button-md"
+        },
+        {
+          "label": "Delete Customer",
+          "height": 36,
+          "className": "ui-button ui-button-danger ui-button-md"
+        }
+      ],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 1,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "contrast": []
+    },
+    {
+      "stage": "before",
+      "theme": "dark",
+      "width": 1024,
+      "file": "before-dark-1024-tooltip.png",
+      "tooltip": {
+        "x": 925.1875,
+        "y": -14,
+        "width": 78.8125,
+        "height": 26
+      },
+      "tooltipInViewport": false,
+      "scrollLocked": false,
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 1,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "contrast": []
+    },
+    {
+      "stage": "before",
+      "theme": "dark",
+      "width": 1440,
+      "file": "before-dark-1440-tooltip.png",
+      "tooltip": {
+        "x": 1341.1875,
+        "y": -14,
+        "width": 78.8125,
+        "height": 26
+      },
+      "tooltipInViewport": false,
+      "scrollLocked": false,
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 1,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "contrast": []
+    },
+    {
+      "stage": "before",
+      "theme": "dark",
+      "width": 1920,
+      "file": "before-dark-1920-tooltip.png",
+      "tooltip": {
+        "x": 1821.1875,
+        "y": -14,
+        "width": 78.8125,
+        "height": 26
+      },
+      "tooltipInViewport": false,
+      "scrollLocked": false,
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 1,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "contrast": []
+    },
+    {
+      "stage": "after",
+      "theme": "light",
+      "width": 375,
+      "file": "after-light-375-tooltip.png",
+      "tooltip": {
+        "x": 288,
+        "y": 72,
+        "width": 78.8125,
+        "height": 26
+      },
+      "tooltipInViewport": true,
+      "scrollLocked": true,
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 1,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "contrast": []
+    },
+    {
+      "stage": "after",
+      "theme": "light",
+      "width": 768,
+      "file": "after-light-768-tooltip.png",
+      "tooltip": {
+        "x": 681,
+        "y": 72,
+        "width": 78.8125,
+        "height": 26
+      },
+      "tooltipInViewport": true,
+      "scrollLocked": true,
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 1,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "contrast": []
+    },
+    {
+      "stage": "after",
+      "theme": "light",
+      "width": 1024,
+      "file": "after-light-1024-tooltip.png",
+      "tooltip": {
+        "x": 937,
+        "y": 64,
+        "width": 78.8125,
+        "height": 26
+      },
+      "tooltipInViewport": true,
+      "scrollLocked": true,
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 1,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "contrast": []
+    },
+    {
+      "stage": "after",
+      "theme": "light",
+      "width": 1440,
+      "file": "after-light-1440-tooltip.png",
+      "tooltip": {
+        "x": 1353,
+        "y": 64,
+        "width": 78.8125,
+        "height": 26
+      },
+      "tooltipInViewport": true,
+      "scrollLocked": true,
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 1,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "contrast": []
+    },
+    {
+      "stage": "after",
+      "theme": "light",
+      "width": 1920,
+      "file": "after-light-1920-tooltip.png",
+      "tooltip": {
+        "x": 1833,
+        "y": 64,
+        "width": 78.8125,
+        "height": 26
+      },
+      "tooltipInViewport": true,
+      "scrollLocked": true,
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 1,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "contrast": []
+    },
+    {
+      "stage": "after",
+      "theme": "dark",
+      "width": 375,
+      "file": "after-dark-375-tooltip.png",
+      "tooltip": {
+        "x": 288,
+        "y": 72,
+        "width": 78.8125,
+        "height": 26
+      },
+      "tooltipInViewport": true,
+      "scrollLocked": true,
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 1,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "contrast": []
+    },
+    {
+      "stage": "after",
+      "theme": "dark",
+      "width": 768,
+      "file": "after-dark-768-tooltip.png",
+      "tooltip": {
+        "x": 681,
+        "y": 72,
+        "width": 78.8125,
+        "height": 26
+      },
+      "tooltipInViewport": true,
+      "scrollLocked": true,
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 1,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "contrast": []
+    },
+    {
+      "stage": "after",
+      "theme": "dark",
+      "width": 1024,
+      "file": "after-dark-1024-tooltip.png",
+      "tooltip": {
+        "x": 937,
+        "y": 64,
+        "width": 78.8125,
+        "height": 26
+      },
+      "tooltipInViewport": true,
+      "scrollLocked": true,
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 1,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "contrast": []
+    },
+    {
+      "stage": "after",
+      "theme": "dark",
+      "width": 1440,
+      "file": "after-dark-1440-tooltip.png",
+      "tooltip": {
+        "x": 1353,
+        "y": 64,
+        "width": 78.8125,
+        "height": 26
+      },
+      "tooltipInViewport": true,
+      "scrollLocked": true,
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 1,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "contrast": []
+    },
+    {
+      "stage": "after",
+      "theme": "dark",
+      "width": 1920,
+      "file": "after-dark-1920-tooltip.png",
+      "tooltip": {
+        "x": 1833,
+        "y": 64,
+        "width": 78.8125,
+        "height": 26
+      },
+      "tooltipInViewport": true,
+      "scrollLocked": true,
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 1,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "contrast": []
+    }
+  ],
+  "behavior": [
+    {
+      "stage": "before",
+      "theme": "light",
+      "scrollLocked": false,
+      "errorPersistsAfter6100ms": false,
+      "toastInDialog": false,
+      "keyboardReachable": false,
+      "dismissible": false,
+      "scrollRestored": true
+    },
+    {
+      "stage": "before",
+      "theme": "dark",
+      "scrollLocked": false,
+      "errorPersistsAfter6100ms": false,
+      "toastInDialog": false,
+      "keyboardReachable": false,
+      "dismissible": false,
+      "scrollRestored": true
+    },
+    {
+      "stage": "after",
+      "theme": "light",
+      "scrollLocked": true,
+      "errorPersistsAfter6100ms": true,
+      "toastInDialog": true,
+      "keyboardReachable": true,
+      "dismissible": true,
+      "scrollRestored": true
+    },
+    {
+      "stage": "after",
+      "theme": "dark",
+      "scrollLocked": true,
+      "errorPersistsAfter6100ms": true,
+      "toastInDialog": true,
+      "keyboardReachable": true,
+      "dismissible": true,
+      "scrollRestored": true
+    }
+  ],
+  "errors": [],
+  "forwardedBusinessWrites": 0
+}

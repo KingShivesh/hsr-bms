@@ -1,0 +1,23 @@
+{
+  "generatedAt": "2026-10-20T09:13:45.974Z",
+  "appUrl": "http://127.0.0.1:5181",
+  "apiUrl": "http://127.0.0.1:8006",
+  "routes": [
+    "/settings?section=club",
+    "/settings?section=team",
+    "/settings?section=account",
+    "/settings?section=activity",
+    "/settings?section=billing",
+    "/missing-page"
+  ],
+  "dynamicStatesIncluded": [
+    "default (including login)",
+    "login error and filled fields",
+    "notification popover",
+    "command palette",
+    "first safe action"
+  ],
+  "method": "composited foreground/background, inputs, placeholders, ancestor opacity; rendered pixel samples for gradients/images; WCAG large text 24px or 18.66px bold; disabled controls exempt",
+  "violations": [],
+  "errors": []
+}

@@ -1,0 +1,652 @@
+{
+  "phase": "after",
+  "app": "http://127.0.0.1:5181",
+  "api": "http://127.0.0.1:8006",
+  "startedAt": "2026-10-20T13:36:53.785Z",
+  "cases": [
+    {
+      "theme": "light",
+      "width": 375,
+      "writes": [],
+      "blockedReads": [],
+      "errors": [],
+      "hover": true,
+      "trustedClick": true,
+      "beforeHover": {
+        "button": {
+          "x": 93,
+          "y": 594.640625,
+          "width": 253,
+          "height": 44
+        },
+        "center": {
+          "x": 219.5,
+          "y": 616.640625
+        },
+        "hit": {
+          "tag": "BUTTON",
+          "className": "ui-button ui-button-native ui-button-md primary-action-btn",
+          "text": "Book table"
+        },
+        "unobscured": true,
+        "viewport": {
+          "width": 375,
+          "height": 844
+        },
+        "workspace": {
+          "position": "static",
+          "top": "auto",
+          "bottom": "auto",
+          "left": "auto",
+          "zIndex": "auto",
+          "maxHeight": "none"
+        },
+        "dialogs": 0
+      },
+      "afterHover": {
+        "button": {
+          "x": 93,
+          "y": 594.640625,
+          "width": 253,
+          "height": 44
+        },
+        "center": {
+          "x": 219.5,
+          "y": 616.640625
+        },
+        "hit": {
+          "tag": "BUTTON",
+          "className": "ui-button ui-button-native ui-button-md primary-action-btn",
+          "text": "Book table"
+        },
+        "unobscured": true,
+        "viewport": {
+          "width": 375,
+          "height": 844
+        },
+        "workspace": {
+          "position": "static",
+          "top": "auto",
+          "bottom": "auto",
+          "left": "auto",
+          "zIndex": "auto",
+          "maxHeight": "none"
+        },
+        "dialogs": 0
+      },
+      "screenshot": "/Users/shivanshgupta/.codex/worktrees/player-start-flow/billiards-bms:HSR/docs/ui-readiness/advanced-book-pointer/after/light-375-book-table.png",
+      "afterClick": {
+        "button": {
+          "x": 93,
+          "y": 593.640625,
+          "width": 253,
+          "height": 44
+        },
+        "center": {
+          "x": 219.5,
+          "y": 615.640625
+        },
+        "hit": {
+          "tag": "BUTTON",
+          "className": "ui-button ui-button-native ui-button-md primary-action-btn",
+          "text": "Book table"
+        },
+        "unobscured": true,
+        "viewport": {
+          "width": 375,
+          "height": 844
+        },
+        "workspace": {
+          "position": "static",
+          "top": "auto",
+          "bottom": "auto",
+          "left": "auto",
+          "zIndex": "auto",
+          "maxHeight": "none"
+        },
+        "dialogs": 0
+      },
+      "workspaceInNormalFlow": true,
+      "passed": true
+    },
+    {
+      "theme": "light",
+      "width": 414,
+      "writes": [],
+      "blockedReads": [],
+      "errors": [],
+      "hover": true,
+      "trustedClick": true,
+      "beforeHover": {
+        "button": {
+          "x": 93,
+          "y": 594.640625,
+          "width": 292,
+          "height": 44
+        },
+        "center": {
+          "x": 239,
+          "y": 616.640625
+        },
+        "hit": {
+          "tag": "BUTTON",
+          "className": "ui-button ui-button-native ui-button-md primary-action-btn",
+          "text": "Book table"
+        },
+        "unobscured": true,
+        "viewport": {
+          "width": 414,
+          "height": 844
+        },
+        "workspace": {
+          "position": "static",
+          "top": "auto",
+          "bottom": "auto",
+          "left": "auto",
+          "zIndex": "auto",
+          "maxHeight": "none"
+        },
+        "dialogs": 0
+      },
+      "afterHover": {
+        "button": {
+          "x": 93,
+          "y": 593.6412353515625,
+          "width": 292,
+          "height": 44
+        },
+        "center": {
+          "x": 239,
+          "y": 615.6412353515625
+        },
+        "hit": {
+          "tag": "BUTTON",
+          "className": "ui-button ui-button-native ui-button-md primary-action-btn",
+          "text": "Book table"
+        },
+        "unobscured": true,
+        "viewport": {
+          "width": 414,
+          "height": 844
+        },
+        "workspace": {
+          "position": "static",
+          "top": "auto",
+          "bottom": "auto",
+          "left": "auto",
+          "zIndex": "auto",
+          "maxHeight": "none"
+        },
+        "dialogs": 0
+      },
+      "screenshot": "/Users/shivanshgupta/.codex/worktrees/player-start-flow/billiards-bms:HSR/docs/ui-readiness/advanced-book-pointer/after/light-414-book-table.png",
+      "afterClick": {
+        "button": {
+          "x": 93,
+          "y": 593.640625,
+          "width": 292,
+          "height": 44
+        },
+        "center": {
+          "x": 239,
+          "y": 615.640625
+        },
+        "hit": {
+          "tag": "BUTTON",
+          "className": "ui-button ui-button-native ui-button-md primary-action-btn",
+          "text": "Book table"
+        },
+        "unobscured": true,
+        "viewport": {
+          "width": 414,
+          "height": 844
+        },
+        "workspace": {
+          "position": "static",
+          "top": "auto",
+          "bottom": "auto",
+          "left": "auto",
+          "zIndex": "auto",
+          "maxHeight": "none"
+        },
+        "dialogs": 0
+      },
+      "workspaceInNormalFlow": true,
+      "passed": true
+    },
+    {
+      "theme": "light",
+      "width": 1440,
+      "writes": [],
+      "blockedReads": [],
+      "errors": [],
+      "hover": true,
+      "trustedClick": true,
+      "beforeHover": {
+        "button": {
+          "x": 325,
+          "y": 754.640625,
+          "width": 173,
+          "height": 36
+        },
+        "center": {
+          "x": 411.5,
+          "y": 772.640625
+        },
+        "hit": {
+          "tag": "BUTTON",
+          "className": "ui-button ui-button-native ui-button-md primary-action-btn",
+          "text": "Book table"
+        },
+        "unobscured": true,
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        },
+        "workspace": {
+          "position": "sticky",
+          "top": "20px",
+          "bottom": "auto",
+          "left": "auto",
+          "zIndex": "auto",
+          "maxHeight": "850px"
+        },
+        "dialogs": 0
+      },
+      "afterHover": {
+        "button": {
+          "x": 325,
+          "y": 753.6412353515625,
+          "width": 173,
+          "height": 36
+        },
+        "center": {
+          "x": 411.5,
+          "y": 771.6412353515625
+        },
+        "hit": {
+          "tag": "BUTTON",
+          "className": "ui-button ui-button-native ui-button-md primary-action-btn",
+          "text": "Book table"
+        },
+        "unobscured": true,
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        },
+        "workspace": {
+          "position": "sticky",
+          "top": "20px",
+          "bottom": "auto",
+          "left": "auto",
+          "zIndex": "auto",
+          "maxHeight": "850px"
+        },
+        "dialogs": 0
+      },
+      "screenshot": "/Users/shivanshgupta/.codex/worktrees/player-start-flow/billiards-bms:HSR/docs/ui-readiness/advanced-book-pointer/after/light-1440-book-table.png",
+      "afterClick": {
+        "button": {
+          "x": 325,
+          "y": 753.640625,
+          "width": 173,
+          "height": 36
+        },
+        "center": {
+          "x": 411.5,
+          "y": 771.640625
+        },
+        "hit": {
+          "tag": "BUTTON",
+          "className": "ui-button ui-button-native ui-button-md primary-action-btn",
+          "text": "Book table"
+        },
+        "unobscured": true,
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        },
+        "workspace": {
+          "position": "sticky",
+          "top": "20px",
+          "bottom": "auto",
+          "left": "auto",
+          "zIndex": "auto",
+          "maxHeight": "850px"
+        },
+        "dialogs": 0
+      },
+      "workspaceInNormalFlow": false,
+      "passed": true
+    },
+    {
+      "theme": "dark",
+      "width": 375,
+      "writes": [],
+      "blockedReads": [],
+      "errors": [],
+      "hover": true,
+      "trustedClick": true,
+      "beforeHover": {
+        "button": {
+          "x": 93,
+          "y": 594.640625,
+          "width": 253,
+          "height": 44
+        },
+        "center": {
+          "x": 219.5,
+          "y": 616.640625
+        },
+        "hit": {
+          "tag": "BUTTON",
+          "className": "ui-button ui-button-native ui-button-md primary-action-btn",
+          "text": "Book table"
+        },
+        "unobscured": true,
+        "viewport": {
+          "width": 375,
+          "height": 844
+        },
+        "workspace": {
+          "position": "static",
+          "top": "auto",
+          "bottom": "auto",
+          "left": "auto",
+          "zIndex": "auto",
+          "maxHeight": "none"
+        },
+        "dialogs": 0
+      },
+      "afterHover": {
+        "button": {
+          "x": 93,
+          "y": 594.640625,
+          "width": 253,
+          "height": 44
+        },
+        "center": {
+          "x": 219.5,
+          "y": 616.640625
+        },
+        "hit": {
+          "tag": "BUTTON",
+          "className": "ui-button ui-button-native ui-button-md primary-action-btn",
+          "text": "Book table"
+        },
+        "unobscured": true,
+        "viewport": {
+          "width": 375,
+          "height": 844
+        },
+        "workspace": {
+          "position": "static",
+          "top": "auto",
+          "bottom": "auto",
+          "left": "auto",
+          "zIndex": "auto",
+          "maxHeight": "none"
+        },
+        "dialogs": 0
+      },
+      "screenshot": "/Users/shivanshgupta/.codex/worktrees/player-start-flow/billiards-bms:HSR/docs/ui-readiness/advanced-book-pointer/after/dark-375-book-table.png",
+      "afterClick": {
+        "button": {
+          "x": 93,
+          "y": 593.640625,
+          "width": 253,
+          "height": 44
+        },
+        "center": {
+          "x": 219.5,
+          "y": 615.640625
+        },
+        "hit": {
+          "tag": "BUTTON",
+          "className": "ui-button ui-button-native ui-button-md primary-action-btn",
+          "text": "Book table"
+        },
+        "unobscured": true,
+        "viewport": {
+          "width": 375,
+          "height": 844
+        },
+        "workspace": {
+          "position": "static",
+          "top": "auto",
+          "bottom": "auto",
+          "left": "auto",
+          "zIndex": "auto",
+          "maxHeight": "none"
+        },
+        "dialogs": 0
+      },
+      "workspaceInNormalFlow": true,
+      "passed": true
+    },
+    {
+      "theme": "dark",
+      "width": 414,
+      "writes": [],
+      "blockedReads": [],
+      "errors": [],
+      "hover": true,
+      "trustedClick": true,
+      "beforeHover": {
+        "button": {
+          "x": 93,
+          "y": 594.640625,
+          "width": 292,
+          "height": 44
+        },
+        "center": {
+          "x": 239,
+          "y": 616.640625
+        },
+        "hit": {
+          "tag": "BUTTON",
+          "className": "ui-button ui-button-native ui-button-md primary-action-btn",
+          "text": "Book table"
+        },
+        "unobscured": true,
+        "viewport": {
+          "width": 414,
+          "height": 844
+        },
+        "workspace": {
+          "position": "static",
+          "top": "auto",
+          "bottom": "auto",
+          "left": "auto",
+          "zIndex": "auto",
+          "maxHeight": "none"
+        },
+        "dialogs": 0
+      },
+      "afterHover": {
+        "button": {
+          "x": 93,
+          "y": 593.87255859375,
+          "width": 292,
+          "height": 44
+        },
+        "center": {
+          "x": 239,
+          "y": 615.87255859375
+        },
+        "hit": {
+          "tag": "BUTTON",
+          "className": "ui-button ui-button-native ui-button-md primary-action-btn",
+          "text": "Book table"
+        },
+        "unobscured": true,
+        "viewport": {
+          "width": 414,
+          "height": 844
+        },
+        "workspace": {
+          "position": "static",
+          "top": "auto",
+          "bottom": "auto",
+          "left": "auto",
+          "zIndex": "auto",
+          "maxHeight": "none"
+        },
+        "dialogs": 0
+      },
+      "screenshot": "/Users/shivanshgupta/.codex/worktrees/player-start-flow/billiards-bms:HSR/docs/ui-readiness/advanced-book-pointer/after/dark-414-book-table.png",
+      "afterClick": {
+        "button": {
+          "x": 93,
+          "y": 593.640625,
+          "width": 292,
+          "height": 44
+        },
+        "center": {
+          "x": 239,
+          "y": 615.640625
+        },
+        "hit": {
+          "tag": "BUTTON",
+          "className": "ui-button ui-button-native ui-button-md primary-action-btn",
+          "text": "Book table"
+        },
+        "unobscured": true,
+        "viewport": {
+          "width": 414,
+          "height": 844
+        },
+        "workspace": {
+          "position": "static",
+          "top": "auto",
+          "bottom": "auto",
+          "left": "auto",
+          "zIndex": "auto",
+          "maxHeight": "none"
+        },
+        "dialogs": 0
+      },
+      "workspaceInNormalFlow": true,
+      "passed": true
+    },
+    {
+      "theme": "dark",
+      "width": 1440,
+      "writes": [],
+      "blockedReads": [],
+      "errors": [],
+      "hover": true,
+      "trustedClick": true,
+      "beforeHover": {
+        "button": {
+          "x": 325,
+          "y": 754.640625,
+          "width": 173,
+          "height": 36
+        },
+        "center": {
+          "x": 411.5,
+          "y": 772.640625
+        },
+        "hit": {
+          "tag": "BUTTON",
+          "className": "ui-button ui-button-native ui-button-md primary-action-btn",
+          "text": "Book table"
+        },
+        "unobscured": true,
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        },
+        "workspace": {
+          "position": "sticky",
+          "top": "20px",
+          "bottom": "auto",
+          "left": "auto",
+          "zIndex": "auto",
+          "maxHeight": "850px"
+        },
+        "dialogs": 0
+      },
+      "afterHover": {
+        "button": {
+          "x": 325,
+          "y": 753.872802734375,
+          "width": 173,
+          "height": 36
+        },
+        "center": {
+          "x": 411.5,
+          "y": 771.872802734375
+        },
+        "hit": {
+          "tag": "BUTTON",
+          "className": "ui-button ui-button-native ui-button-md primary-action-btn",
+          "text": "Book table"
+        },
+        "unobscured": true,
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        },
+        "workspace": {
+          "position": "sticky",
+          "top": "20px",
+          "bottom": "auto",
+          "left": "auto",
+          "zIndex": "auto",
+          "maxHeight": "850px"
+        },
+        "dialogs": 0
+      },
+      "screenshot": "/Users/shivanshgupta/.codex/worktrees/player-start-flow/billiards-bms:HSR/docs/ui-readiness/advanced-book-pointer/after/dark-1440-book-table.png",
+      "afterClick": {
+        "button": {
+          "x": 325,
+          "y": 753.640625,
+          "width": 173,
+          "height": 36
+        },
+        "center": {
+          "x": 411.5,
+          "y": 771.640625
+        },
+        "hit": {
+          "tag": "BUTTON",
+          "className": "ui-button ui-button-native ui-button-md primary-action-btn",
+          "text": "Book table"
+        },
+        "unobscured": true,
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        },
+        "workspace": {
+          "position": "sticky",
+          "top": "20px",
+          "bottom": "auto",
+          "left": "auto",
+          "zIndex": "auto",
+          "maxHeight": "850px"
+        },
+        "dialogs": 0
+      },
+      "workspaceInNormalFlow": false,
+      "passed": true
+    }
+  ],
+  "errors": [],
+  "safety": {
+    "authPosts": 1,
+    "forwardedBusinessWrites": 0
+  },
+  "limits": "375/414 mobile and 1440 desktop, both themes. Alerts isolated, no modal dismissed or CSS injected. Booking name remains empty; all browser write methods blocked. Reviewed QA GETs may reconcile isolated local data.",
+  "finishedAt": "2026-10-20T13:37:13.018Z",
+  "summary": {
+    "cases": 6,
+    "passed": 6,
+    "failed": 0,
+    "errors": 0,
+    "forwardedBusinessWrites": 0
+  }
+}

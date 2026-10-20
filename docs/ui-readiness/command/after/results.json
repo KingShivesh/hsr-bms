@@ -1,0 +1,3451 @@
+{
+  "startedAt": "2026-10-19T20:41:48.629Z",
+  "stage": "after",
+  "app": "http://127.0.0.1:5181",
+  "api": "http://127.0.0.1:8006",
+  "themes": [
+    "light",
+    "dark"
+  ],
+  "widths": [
+    375,
+    768,
+    1024,
+    1440,
+    1920
+  ],
+  "safety": {
+    "localAdminLoginAttempts": 1,
+    "forwardedBusinessWrites": 0,
+    "policy": "One explicit Node-side admin login at API8006. Browser mutations, external origins, redirects, source modules and WebSockets blocked. Exact seven command reads intercepted only after authenticated Help loads; no command actions with business effects are invoked."
+  },
+  "limitations": [
+    "Before measures unfiltered pending commands only; it does not type a query that would mask the loading defect.",
+    "After-only scenarios are never executed by before mode. Mocked live records never enter the QA database.",
+    "Forwarded local bootstrap and navigation GETs may reconcile QA data; database side effects are not measured or claimed absent."
+  ],
+  "cases": [
+    {
+      "theme": "light",
+      "width": 375,
+      "status": "pass",
+      "samples": [
+        {
+          "state": "seven-live-reads-held",
+          "file": "light-375-seven-live-reads-held.png",
+          "applicationCrashed": false,
+          "overflow": 0,
+          "shortTargets": [],
+          "clipped": [
+            {
+              "text": "Command palette",
+              "width": 1,
+              "contentWidth": 188,
+              "className": "sr-only"
+            },
+            {
+              "text": "Search pages, live sessions, waitlist entries and actions. Use arrow keys to move and Ente",
+              "width": 1,
+              "contentWidth": 600,
+              "className": "sr-only"
+            }
+          ],
+          "brokenImages": [],
+          "invalidCopy": [],
+          "unlabeledButtons": [],
+          "unlabeledInputs": [],
+          "collectionSizes": {
+            ".op2-customer-card": 0,
+            ".sales-table tbody tr": 0
+          },
+          "contentOverflow": [],
+          "palette": {
+            "accent": "#006b3c",
+            "font": "\"Syne Variable\", Syne, sans-serif"
+          },
+          "contrast": []
+        },
+        {
+          "state": "failed-live-reads-retry",
+          "file": "light-375-failed-live-reads-retry.png",
+          "applicationCrashed": false,
+          "overflow": 0,
+          "shortTargets": [],
+          "clipped": [
+            {
+              "text": "Command palette",
+              "width": 1,
+              "contentWidth": 188,
+              "className": "sr-only"
+            },
+            {
+              "text": "Search pages, live sessions, waitlist entries and actions. Use arrow keys to move and Ente",
+              "width": 1,
+              "contentWidth": 600,
+              "className": "sr-only"
+            }
+          ],
+          "brokenImages": [],
+          "invalidCopy": [],
+          "unlabeledButtons": [],
+          "unlabeledInputs": [],
+          "collectionSizes": {
+            ".op2-customer-card": 0,
+            ".sales-table tbody tr": 0
+          },
+          "contentOverflow": [],
+          "palette": {
+            "accent": "#006b3c",
+            "font": "\"Syne Variable\", Syne, sans-serif"
+          },
+          "contrast": []
+        },
+        {
+          "state": "retry-recovered",
+          "file": "light-375-retry-recovered.png",
+          "applicationCrashed": false,
+          "overflow": 0,
+          "shortTargets": [],
+          "clipped": [
+            {
+              "text": "Command palette",
+              "width": 1,
+              "contentWidth": 188,
+              "className": "sr-only"
+            },
+            {
+              "text": "Search pages, live sessions, waitlist entries and actions. Use arrow keys to move and Ente",
+              "width": 1,
+              "contentWidth": 600,
+              "className": "sr-only"
+            }
+          ],
+          "brokenImages": [],
+          "invalidCopy": [],
+          "unlabeledButtons": [],
+          "unlabeledInputs": [],
+          "collectionSizes": {
+            ".op2-customer-card": 0,
+            ".sales-table tbody tr": 0
+          },
+          "contentOverflow": [],
+          "palette": {
+            "accent": "#006b3c",
+            "font": "\"Syne Variable\", Syne, sans-serif"
+          },
+          "contrast": []
+        },
+        {
+          "state": "partial-null-and-array-rows",
+          "file": "light-375-partial-null-and-array-rows.png",
+          "applicationCrashed": false,
+          "overflow": 0,
+          "shortTargets": [],
+          "clipped": [
+            {
+              "text": "Command palette",
+              "width": 1,
+              "contentWidth": 188,
+              "className": "sr-only"
+            },
+            {
+              "text": "Search pages, live sessions, waitlist entries and actions. Use arrow keys to move and Ente",
+              "width": 1,
+              "contentWidth": 600,
+              "className": "sr-only"
+            }
+          ],
+          "brokenImages": [],
+          "invalidCopy": [],
+          "unlabeledButtons": [],
+          "unlabeledInputs": [],
+          "collectionSizes": {
+            ".op2-customer-card": 0,
+            ".sales-table tbody tr": 0
+          },
+          "contentOverflow": [],
+          "palette": {
+            "accent": "#006b3c",
+            "font": "\"Syne Variable\", Syne, sans-serif"
+          },
+          "contrast": []
+        },
+        {
+          "state": "empty-search-clear-action",
+          "file": "light-375-empty-search-clear-action.png",
+          "applicationCrashed": false,
+          "overflow": 0,
+          "shortTargets": [],
+          "clipped": [
+            {
+              "text": "Command palette",
+              "width": 1,
+              "contentWidth": 188,
+              "className": "sr-only"
+            },
+            {
+              "text": "Search pages, live sessions, waitlist entries and actions. Use arrow keys to move and Ente",
+              "width": 1,
+              "contentWidth": 600,
+              "className": "sr-only"
+            }
+          ],
+          "brokenImages": [],
+          "invalidCopy": [],
+          "unlabeledButtons": [],
+          "unlabeledInputs": [],
+          "collectionSizes": {
+            ".op2-customer-card": 0,
+            ".sales-table tbody tr": 0
+          },
+          "contentOverflow": [],
+          "palette": {
+            "accent": "#006b3c",
+            "font": "\"Syne Variable\", Syne, sans-serif"
+          },
+          "contrast": []
+        }
+      ],
+      "cycles": [
+        {
+          "mode": "held",
+          "requested": [
+            "tables",
+            "waitlist",
+            "bookings",
+            "food",
+            "audit",
+            "members",
+            "menu"
+          ],
+          "completed": [
+            "tables",
+            "waitlist",
+            "bookings",
+            "food",
+            "audit",
+            "members",
+            "menu"
+          ],
+          "attempts": 8,
+          "gateReleased": true
+        },
+        {
+          "mode": "failure",
+          "requested": [
+            "tables",
+            "waitlist",
+            "bookings",
+            "food",
+            "audit",
+            "members",
+            "menu"
+          ],
+          "completed": [
+            "tables",
+            "waitlist",
+            "bookings",
+            "food",
+            "audit",
+            "members",
+            "menu"
+          ],
+          "attempts": 21,
+          "gateReleased": true
+        },
+        {
+          "mode": "recovery",
+          "requested": [
+            "tables",
+            "waitlist",
+            "bookings",
+            "food",
+            "audit",
+            "members",
+            "menu"
+          ],
+          "completed": [
+            "tables",
+            "waitlist",
+            "bookings",
+            "food",
+            "audit",
+            "members",
+            "menu"
+          ],
+          "attempts": 7,
+          "gateReleased": true
+        },
+        {
+          "mode": "partial",
+          "requested": [
+            "tables",
+            "waitlist",
+            "bookings",
+            "food",
+            "audit",
+            "members",
+            "menu"
+          ],
+          "completed": [
+            "tables",
+            "waitlist",
+            "bookings",
+            "food",
+            "audit",
+            "members",
+            "menu"
+          ],
+          "attempts": 7,
+          "gateReleased": true
+        },
+        {
+          "mode": "empty",
+          "requested": [
+            "tables",
+            "waitlist",
+            "bookings",
+            "food",
+            "audit",
+            "members",
+            "menu"
+          ],
+          "completed": [
+            "tables",
+            "waitlist",
+            "bookings",
+            "food",
+            "audit",
+            "members",
+            "menu"
+          ],
+          "attempts": 7,
+          "gateReleased": true
+        }
+      ],
+      "violations": [],
+      "pageErrors": [],
+      "loading": {
+        "feedback": {
+          "paintedMs": 33.599999994039536,
+          "staticClosingAtFirstPaint": 1,
+          "skeletonAtFirstPaint": true
+        },
+        "dailyClosingCount": 1,
+        "plainLoading": false,
+        "skeletonCount": 1,
+        "searchFocused": true,
+        "scrollLocked": true
+      },
+      "keyboard": {
+        "forwardTrap": true,
+        "reverseTrap": true,
+        "escapeClosed": true,
+        "openerRestored": true,
+        "scrollRestored": true
+      },
+      "navigation": {
+        "pathname": "/daily-closing",
+        "gateReleased": false,
+        "liveResponsesCompleted": 0
+      },
+      "recovery": {
+        "failedReadAttempts": 21,
+        "recoveryReads": 7,
+        "retryRemoved": true,
+        "staticCommandsRetained": true
+      },
+      "partial": {
+        "validMember": 1,
+        "results": 5,
+        "pageErrors": []
+      },
+      "empty": {
+        "clearSearchRecovered": true,
+        "searchFocused": true
+      },
+      "browserWrites": 0
+    },
+    {
+      "theme": "light",
+      "width": 768,
+      "status": "pass",
+      "samples": [
+        {
+          "state": "seven-live-reads-held",
+          "file": "light-768-seven-live-reads-held.png",
+          "applicationCrashed": false,
+          "overflow": 0,
+          "shortTargets": [],
+          "clipped": [
+            {
+              "text": "Command palette",
+              "width": 1,
+              "contentWidth": 188,
+              "className": "sr-only"
+            },
+            {
+              "text": "Search pages, live sessions, waitlist entries and actions. Use arrow keys to move and Ente",
+              "width": 1,
+              "contentWidth": 600,
+              "className": "sr-only"
+            }
+          ],
+          "brokenImages": [],
+          "invalidCopy": [],
+          "unlabeledButtons": [],
+          "unlabeledInputs": [],
+          "collectionSizes": {
+            ".op2-customer-card": 0,
+            ".sales-table tbody tr": 0
+          },
+          "contentOverflow": [],
+          "palette": {
+            "accent": "#006b3c",
+            "font": "\"Syne Variable\", Syne, sans-serif"
+          },
+          "contrast": []
+        },
+        {
+          "state": "failed-live-reads-retry",
+          "file": "light-768-failed-live-reads-retry.png",
+          "applicationCrashed": false,
+          "overflow": 0,
+          "shortTargets": [],
+          "clipped": [
+            {
+              "text": "Command palette",
+              "width": 1,
+              "contentWidth": 188,
+              "className": "sr-only"
+            },
+            {
+              "text": "Search pages, live sessions, waitlist entries and actions. Use arrow keys to move and Ente",
+              "width": 1,
+              "contentWidth": 600,
+              "className": "sr-only"
+            }
+          ],
+          "brokenImages": [],
+          "invalidCopy": [],
+          "unlabeledButtons": [],
+          "unlabeledInputs": [],
+          "collectionSizes": {
+            ".op2-customer-card": 0,
+            ".sales-table tbody tr": 0
+          },
+          "contentOverflow": [],
+          "palette": {
+            "accent": "#006b3c",
+            "font": "\"Syne Variable\", Syne, sans-serif"
+          },
+          "contrast": []
+        },
+        {
+          "state": "retry-recovered",
+          "file": "light-768-retry-recovered.png",
+          "applicationCrashed": false,
+          "overflow": 0,
+          "shortTargets": [],
+          "clipped": [
+            {
+              "text": "Command palette",
+              "width": 1,
+              "contentWidth": 188,
+              "className": "sr-only"
+            },
+            {
+              "text": "Search pages, live sessions, waitlist entries and actions. Use arrow keys to move and Ente",
+              "width": 1,
+              "contentWidth": 600,
+              "className": "sr-only"
+            }
+          ],
+          "brokenImages": [],
+          "invalidCopy": [],
+          "unlabeledButtons": [],
+          "unlabeledInputs": [],
+          "collectionSizes": {
+            ".op2-customer-card": 0,
+            ".sales-table tbody tr": 0
+          },
+          "contentOverflow": [],
+          "palette": {
+            "accent": "#006b3c",
+            "font": "\"Syne Variable\", Syne, sans-serif"
+          },
+          "contrast": []
+        },
+        {
+          "state": "partial-null-and-array-rows",
+          "file": "light-768-partial-null-and-array-rows.png",
+          "applicationCrashed": false,
+          "overflow": 0,
+          "shortTargets": [],
+          "clipped": [
+            {
+              "text": "Command palette",
+              "width": 1,
+              "contentWidth": 188,
+              "className": "sr-only"
+            },
+            {
+              "text": "Search pages, live sessions, waitlist entries and actions. Use arrow keys to move and Ente",
+              "width": 1,
+              "contentWidth": 600,
+              "className": "sr-only"
+            }
+          ],
+          "brokenImages": [],
+          "invalidCopy": [],
+          "unlabeledButtons": [],
+          "unlabeledInputs": [],
+          "collectionSizes": {
+            ".op2-customer-card": 0,
+            ".sales-table tbody tr": 0
+          },
+          "contentOverflow": [],
+          "palette": {
+            "accent": "#006b3c",
+            "font": "\"Syne Variable\", Syne, sans-serif"
+          },
+          "contrast": []
+        },
+        {
+          "state": "empty-search-clear-action",
+          "file": "light-768-empty-search-clear-action.png",
+          "applicationCrashed": false,
+          "overflow": 0,
+          "shortTargets": [],
+          "clipped": [
+            {
+              "text": "Command palette",
+              "width": 1,
+              "contentWidth": 188,
+              "className": "sr-only"
+            },
+            {
+              "text": "Search pages, live sessions, waitlist entries and actions. Use arrow keys to move and Ente",
+              "width": 1,
+              "contentWidth": 600,
+              "className": "sr-only"
+            }
+          ],
+          "brokenImages": [],
+          "invalidCopy": [],
+          "unlabeledButtons": [],
+          "unlabeledInputs": [],
+          "collectionSizes": {
+            ".op2-customer-card": 0,
+            ".sales-table tbody tr": 0
+          },
+          "contentOverflow": [],
+          "palette": {
+            "accent": "#006b3c",
+            "font": "\"Syne Variable\", Syne, sans-serif"
+          },
+          "contrast": []
+        }
+      ],
+      "cycles": [
+        {
+          "mode": "held",
+          "requested": [
+            "tables",
+            "waitlist",
+            "bookings",
+            "food",
+            "audit",
+            "members",
+            "menu"
+          ],
+          "completed": [
+            "tables",
+            "waitlist",
+            "bookings",
+            "food",
+            "audit",
+            "members",
+            "menu"
+          ],
+          "attempts": 8,
+          "gateReleased": true
+        },
+        {
+          "mode": "failure",
+          "requested": [
+            "tables",
+            "waitlist",
+            "bookings",
+            "food",
+            "audit",
+            "members",
+            "menu"
+          ],
+          "completed": [
+            "tables",
+            "waitlist",
+            "bookings",
+            "food",
+            "audit",
+            "members",
+            "menu"
+          ],
+          "attempts": 21,
+          "gateReleased": true
+        },
+        {
+          "mode": "recovery",
+          "requested": [
+            "tables",
+            "waitlist",
+            "bookings",
+            "food",
+            "audit",
+            "members",
+            "menu"
+          ],
+          "completed": [
+            "tables",
+            "waitlist",
+            "bookings",
+            "food",
+            "audit",
+            "members",
+            "menu"
+          ],
+          "attempts": 7,
+          "gateReleased": true
+        },
+        {
+          "mode": "partial",
+          "requested": [
+            "tables",
+            "waitlist",
+            "bookings",
+            "food",
+            "audit",
+            "members",
+            "menu"
+          ],
+          "completed": [
+            "tables",
+            "waitlist",
+            "bookings",
+            "food",
+            "audit",
+            "members",
+            "menu"
+          ],
+          "attempts": 7,
+          "gateReleased": true
+        },
+        {
+          "mode": "empty",
+          "requested": [
+            "tables",
+            "waitlist",
+            "bookings",
+            "food",
+            "audit",
+            "members",
+            "menu"
+          ],
+          "completed": [
+            "tables",
+            "waitlist",
+            "bookings",
+            "food",
+            "audit",
+            "members",
+            "menu"
+          ],
+          "attempts": 7,
+          "gateReleased": true
+        }
+      ],
+      "violations": [],
+      "pageErrors": [],
+      "loading": {
+        "feedback": {
+          "paintedMs": 36.599999994039536,
+          "staticClosingAtFirstPaint": 1,
+          "skeletonAtFirstPaint": true
+        },
+        "dailyClosingCount": 1,
+        "plainLoading": false,
+        "skeletonCount": 1,
+        "searchFocused": true,
+        "scrollLocked": true
+      },
+      "keyboard": {
+        "forwardTrap": true,
+        "reverseTrap": true,
+        "escapeClosed": true,
+        "openerRestored": true,
+        "scrollRestored": true
+      },
+      "navigation": {
+        "pathname": "/daily-closing",
+        "gateReleased": false,
+        "liveResponsesCompleted": 0
+      },
+      "recovery": {
+        "failedReadAttempts": 21,
+        "recoveryReads": 7,
+        "retryRemoved": true,
+        "staticCommandsRetained": true
+      },
+      "partial": {
+        "validMember": 1,
+        "results": 5,
+        "pageErrors": []
+      },
+      "empty": {
+        "clearSearchRecovered": true,
+        "searchFocused": true
+      },
+      "browserWrites": 0
+    },
+    {
+      "theme": "light",
+      "width": 1024,
+      "status": "pass",
+      "samples": [
+        {
+          "state": "seven-live-reads-held",
+          "file": "light-1024-seven-live-reads-held.png",
+          "applicationCrashed": false,
+          "overflow": 0,
+          "shortTargets": [],
+          "clipped": [
+            {
+              "text": "Command palette",
+              "width": 1,
+              "contentWidth": 188,
+              "className": "sr-only"
+            },
+            {
+              "text": "Search pages, live sessions, waitlist entries and actions. Use arrow keys to move and Ente",
+              "width": 1,
+              "contentWidth": 600,
+              "className": "sr-only"
+            }
+          ],
+          "brokenImages": [],
+          "invalidCopy": [],
+          "unlabeledButtons": [],
+          "unlabeledInputs": [],
+          "collectionSizes": {
+            ".op2-customer-card": 0,
+            ".sales-table tbody tr": 0
+          },
+          "contentOverflow": [],
+          "palette": {
+            "accent": "#006b3c",
+            "font": "\"Syne Variable\", Syne, sans-serif"
+          },
+          "contrast": []
+        },
+        {
+          "state": "failed-live-reads-retry",
+          "file": "light-1024-failed-live-reads-retry.png",
+          "applicationCrashed": false,
+          "overflow": 0,
+          "shortTargets": [],
+          "clipped": [
+            {
+              "text": "Command palette",
+              "width": 1,
+              "contentWidth": 188,
+              "className": "sr-only"
+            },
+            {
+              "text": "Search pages, live sessions, waitlist entries and actions. Use arrow keys to move and Ente",
+              "width": 1,
+              "contentWidth": 600,
+              "className": "sr-only"
+            }
+          ],
+          "brokenImages": [],
+          "invalidCopy": [],
+          "unlabeledButtons": [],
+          "unlabeledInputs": [],
+          "collectionSizes": {
+            ".op2-customer-card": 0,
+            ".sales-table tbody tr": 0
+          },
+          "contentOverflow": [],
+          "palette": {
+            "accent": "#006b3c",
+            "font": "\"Syne Variable\", Syne, sans-serif"
+          },
+          "contrast": []
+        },
+        {
+          "state": "retry-recovered",
+          "file": "light-1024-retry-recovered.png",
+          "applicationCrashed": false,
+          "overflow": 0,
+          "shortTargets": [],
+          "clipped": [
+            {
+              "text": "Command palette",
+              "width": 1,
+              "contentWidth": 188,
+              "className": "sr-only"
+            },
+            {
+              "text": "Search pages, live sessions, waitlist entries and actions. Use arrow keys to move and Ente",
+              "width": 1,
+              "contentWidth": 600,
+              "className": "sr-only"
+            }
+          ],
+          "brokenImages": [],
+          "invalidCopy": [],
+          "unlabeledButtons": [],
+          "unlabeledInputs": [],
+          "collectionSizes": {
+            ".op2-customer-card": 0,
+            ".sales-table tbody tr": 0
+          },
+          "contentOverflow": [],
+          "palette": {
+            "accent": "#006b3c",
+            "font": "\"Syne Variable\", Syne, sans-serif"
+          },
+          "contrast": []
+        },
+        {
+          "state": "partial-null-and-array-rows",
+          "file": "light-1024-partial-null-and-array-rows.png",
+          "applicationCrashed": false,
+          "overflow": 0,
+          "shortTargets": [],
+          "clipped": [
+            {
+              "text": "Command palette",
+              "width": 1,
+              "contentWidth": 188,
+              "className": "sr-only"
+            },
+            {
+              "text": "Search pages, live sessions, waitlist entries and actions. Use arrow keys to move and Ente",
+              "width": 1,
+              "contentWidth": 600,
+              "className": "sr-only"
+            }
+          ],
+          "brokenImages": [],
+          "invalidCopy": [],
+          "unlabeledButtons": [],
+          "unlabeledInputs": [],
+          "collectionSizes": {
+            ".op2-customer-card": 0,
+            ".sales-table tbody tr": 0
+          },
+          "contentOverflow": [],
+          "palette": {
+            "accent": "#006b3c",
+            "font": "\"Syne Variable\", Syne, sans-serif"
+          },
+          "contrast": []
+        },
+        {
+          "state": "empty-search-clear-action",
+          "file": "light-1024-empty-search-clear-action.png",
+          "applicationCrashed": false,
+          "overflow": 0,
+          "shortTargets": [],
+          "clipped": [
+            {
+              "text": "Command palette",
+              "width": 1,
+              "contentWidth": 188,
+              "className": "sr-only"
+            },
+            {
+              "text": "Search pages, live sessions, waitlist entries and actions. Use arrow keys to move and Ente",
+              "width": 1,
+              "contentWidth": 600,
+              "className": "sr-only"
+            }
+          ],
+          "brokenImages": [],
+          "invalidCopy": [],
+          "unlabeledButtons": [],
+          "unlabeledInputs": [],
+          "collectionSizes": {
+            ".op2-customer-card": 0,
+            ".sales-table tbody tr": 0
+          },
+          "contentOverflow": [],
+          "palette": {
+            "accent": "#006b3c",
+            "font": "\"Syne Variable\", Syne, sans-serif"
+          },
+          "contrast": []
+        }
+      ],
+      "cycles": [
+        {
+          "mode": "held",
+          "requested": [
+            "tables",
+            "waitlist",
+            "bookings",
+            "food",
+            "audit",
+            "members",
+            "menu"
+          ],
+          "completed": [
+            "tables",
+            "waitlist",
+            "bookings",
+            "food",
+            "audit",
+            "members",
+            "menu"
+          ],
+          "attempts": 8,
+          "gateReleased": true
+        },
+        {
+          "mode": "failure",
+          "requested": [
+            "tables",
+            "waitlist",
+            "bookings",
+            "food",
+            "audit",
+            "members",
+            "menu"
+          ],
+          "completed": [
+            "tables",
+            "waitlist",
+            "bookings",
+            "food",
+            "audit",
+            "members",
+            "menu"
+          ],
+          "attempts": 21,
+          "gateReleased": true
+        },
+        {
+          "mode": "recovery",
+          "requested": [
+            "tables",
+            "waitlist",
+            "bookings",
+            "food",
+            "audit",
+            "members",
+            "menu"
+          ],
+          "completed": [
+            "tables",
+            "waitlist",
+            "bookings",
+            "food",
+            "audit",
+            "members",
+            "menu"
+          ],
+          "attempts": 7,
+          "gateReleased": true
+        },
+        {
+          "mode": "partial",
+          "requested": [
+            "tables",
+            "waitlist",
+            "bookings",
+            "food",
+            "audit",
+            "members",
+            "menu"
+          ],
+          "completed": [
+            "tables",
+            "waitlist",
+            "bookings",
+            "food",
+            "audit",
+            "members",
+            "menu"
+          ],
+          "attempts": 7,
+          "gateReleased": true
+        },
+        {
+          "mode": "empty",
+          "requested": [
+            "tables",
+            "waitlist",
+            "bookings",
+            "food",
+            "audit",
+            "members",
+            "menu"
+          ],
+          "completed": [
+            "tables",
+            "waitlist",
+            "bookings",
+            "food",
+            "audit",
+            "members",
+            "menu"
+          ],
+          "attempts": 7,
+          "gateReleased": true
+        }
+      ],
+      "violations": [],
+      "pageErrors": [],
+      "loading": {
+        "feedback": {
+          "paintedMs": 48.70000000298023,
+          "staticClosingAtFirstPaint": 1,
+          "skeletonAtFirstPaint": true
+        },
+        "dailyClosingCount": 1,
+        "plainLoading": false,
+        "skeletonCount": 1,
+        "searchFocused": true,
+        "scrollLocked": true
+      },
+      "keyboard": {
+        "forwardTrap": true,
+        "reverseTrap": true,
+        "escapeClosed": true,
+        "openerRestored": true,
+        "scrollRestored": true
+      },
+      "navigation": {
+        "pathname": "/daily-closing",
+        "gateReleased": false,
+        "liveResponsesCompleted": 0
+      },
+      "recovery": {
+        "failedReadAttempts": 21,
+        "recoveryReads": 7,
+        "retryRemoved": true,
+        "staticCommandsRetained": true
+      },
+      "partial": {
+        "validMember": 1,
+        "results": 5,
+        "pageErrors": []
+      },
+      "empty": {
+        "clearSearchRecovered": true,
+        "searchFocused": true
+      },
+      "browserWrites": 0
+    },
+    {
+      "theme": "light",
+      "width": 1440,
+      "status": "pass",
+      "samples": [
+        {
+          "state": "seven-live-reads-held",
+          "file": "light-1440-seven-live-reads-held.png",
+          "applicationCrashed": false,
+          "overflow": 0,
+          "shortTargets": [],
+          "clipped": [
+            {
+              "text": "Command palette",
+              "width": 1,
+              "contentWidth": 188,
+              "className": "sr-only"
+            },
+            {
+              "text": "Search pages, live sessions, waitlist entries and actions. Use arrow keys to move and Ente",
+              "width": 1,
+              "contentWidth": 600,
+              "className": "sr-only"
+            }
+          ],
+          "brokenImages": [],
+          "invalidCopy": [],
+          "unlabeledButtons": [],
+          "unlabeledInputs": [],
+          "collectionSizes": {
+            ".op2-customer-card": 0,
+            ".sales-table tbody tr": 0
+          },
+          "contentOverflow": [],
+          "palette": {
+            "accent": "#006b3c",
+            "font": "\"Syne Variable\", Syne, sans-serif"
+          },
+          "contrast": []
+        },
+        {
+          "state": "failed-live-reads-retry",
+          "file": "light-1440-failed-live-reads-retry.png",
+          "applicationCrashed": false,
+          "overflow": 0,
+          "shortTargets": [],
+          "clipped": [
+            {
+              "text": "Command palette",
+              "width": 1,
+              "contentWidth": 188,
+              "className": "sr-only"
+            },
+            {
+              "text": "Search pages, live sessions, waitlist entries and actions. Use arrow keys to move and Ente",
+              "width": 1,
+              "contentWidth": 600,
+              "className": "sr-only"
+            }
+          ],
+          "brokenImages": [],
+          "invalidCopy": [],
+          "unlabeledButtons": [],
+          "unlabeledInputs": [],
+          "collectionSizes": {
+            ".op2-customer-card": 0,
+            ".sales-table tbody tr": 0
+          },
+          "contentOverflow": [],
+          "palette": {
+            "accent": "#006b3c",
+            "font": "\"Syne Variable\", Syne, sans-serif"
+          },
+          "contrast": []
+        },
+        {
+          "state": "retry-recovered",
+          "file": "light-1440-retry-recovered.png",
+          "applicationCrashed": false,
+          "overflow": 0,
+          "shortTargets": [],
+          "clipped": [
+            {
+              "text": "Command palette",
+              "width": 1,
+              "contentWidth": 188,
+              "className": "sr-only"
+            },
+            {
+              "text": "Search pages, live sessions, waitlist entries and actions. Use arrow keys to move and Ente",
+              "width": 1,
+              "contentWidth": 600,
+              "className": "sr-only"
+            }
+          ],
+          "brokenImages": [],
+          "invalidCopy": [],
+          "unlabeledButtons": [],
+          "unlabeledInputs": [],
+          "collectionSizes": {
+            ".op2-customer-card": 0,
+            ".sales-table tbody tr": 0
+          },
+          "contentOverflow": [],
+          "palette": {
+            "accent": "#006b3c",
+            "font": "\"Syne Variable\", Syne, sans-serif"
+          },
+          "contrast": []
+        },
+        {
+          "state": "partial-null-and-array-rows",
+          "file": "light-1440-partial-null-and-array-rows.png",
+          "applicationCrashed": false,
+          "overflow": 0,
+          "shortTargets": [],
+          "clipped": [
+            {
+              "text": "Command palette",
+              "width": 1,
+              "contentWidth": 188,
+              "className": "sr-only"
+            },
+            {
+              "text": "Search pages, live sessions, waitlist entries and actions. Use arrow keys to move and Ente",
+              "width": 1,
+              "contentWidth": 600,
+              "className": "sr-only"
+            }
+          ],
+          "brokenImages": [],
+          "invalidCopy": [],
+          "unlabeledButtons": [],
+          "unlabeledInputs": [],
+          "collectionSizes": {
+            ".op2-customer-card": 0,
+            ".sales-table tbody tr": 0
+          },
+          "contentOverflow": [],
+          "palette": {
+            "accent": "#006b3c",
+            "font": "\"Syne Variable\", Syne, sans-serif"
+          },
+          "contrast": []
+        },
+        {
+          "state": "empty-search-clear-action",
+          "file": "light-1440-empty-search-clear-action.png",
+          "applicationCrashed": false,
+          "overflow": 0,
+          "shortTargets": [],
+          "clipped": [
+            {
+              "text": "Command palette",
+              "width": 1,
+              "contentWidth": 188,
+              "className": "sr-only"
+            },
+            {
+              "text": "Search pages, live sessions, waitlist entries and actions. Use arrow keys to move and Ente",
+              "width": 1,
+              "contentWidth": 600,
+              "className": "sr-only"
+            }
+          ],
+          "brokenImages": [],
+          "invalidCopy": [],
+          "unlabeledButtons": [],
+          "unlabeledInputs": [],
+          "collectionSizes": {
+            ".op2-customer-card": 0,
+            ".sales-table tbody tr": 0
+          },
+          "contentOverflow": [],
+          "palette": {
+            "accent": "#006b3c",
+            "font": "\"Syne Variable\", Syne, sans-serif"
+          },
+          "contrast": []
+        }
+      ],
+      "cycles": [
+        {
+          "mode": "held",
+          "requested": [
+            "tables",
+            "waitlist",
+            "bookings",
+            "food",
+            "audit",
+            "members",
+            "menu"
+          ],
+          "completed": [
+            "tables",
+            "waitlist",
+            "bookings",
+            "food",
+            "audit",
+            "members",
+            "menu"
+          ],
+          "attempts": 8,
+          "gateReleased": true
+        },
+        {
+          "mode": "failure",
+          "requested": [
+            "tables",
+            "waitlist",
+            "bookings",
+            "food",
+            "audit",
+            "members",
+            "menu"
+          ],
+          "completed": [
+            "tables",
+            "waitlist",
+            "bookings",
+            "food",
+            "audit",
+            "members",
+            "menu"
+          ],
+          "attempts": 21,
+          "gateReleased": true
+        },
+        {
+          "mode": "recovery",
+          "requested": [
+            "tables",
+            "waitlist",
+            "bookings",
+            "food",
+            "audit",
+            "members",
+            "menu"
+          ],
+          "completed": [
+            "tables",
+            "waitlist",
+            "bookings",
+            "food",
+            "audit",
+            "members",
+            "menu"
+          ],
+          "attempts": 7,
+          "gateReleased": true
+        },
+        {
+          "mode": "partial",
+          "requested": [
+            "tables",
+            "waitlist",
+            "bookings",
+            "food",
+            "audit",
+            "members",
+            "menu"
+          ],
+          "completed": [
+            "tables",
+            "waitlist",
+            "bookings",
+            "food",
+            "audit",
+            "members",
+            "menu"
+          ],
+          "attempts": 7,
+          "gateReleased": true
+        },
+        {
+          "mode": "empty",
+          "requested": [
+            "tables",
+            "waitlist",
+            "bookings",
+            "food",
+            "audit",
+            "members",
+            "menu"
+          ],
+          "completed": [
+            "tables",
+            "waitlist",
+            "bookings",
+            "food",
+            "audit",
+            "members",
+            "menu"
+          ],
+          "attempts": 7,
+          "gateReleased": true
+        }
+      ],
+      "violations": [],
+      "pageErrors": [],
+      "loading": {
+        "feedback": {
+          "paintedMs": 50.5,
+          "staticClosingAtFirstPaint": 1,
+          "skeletonAtFirstPaint": true
+        },
+        "dailyClosingCount": 1,
+        "plainLoading": false,
+        "skeletonCount": 1,
+        "searchFocused": true,
+        "scrollLocked": true
+      },
+      "keyboard": {
+        "forwardTrap": true,
+        "reverseTrap": true,
+        "escapeClosed": true,
+        "openerRestored": true,
+        "scrollRestored": true
+      },
+      "navigation": {
+        "pathname": "/daily-closing",
+        "gateReleased": false,
+        "liveResponsesCompleted": 0
+      },
+      "recovery": {
+        "failedReadAttempts": 21,
+        "recoveryReads": 7,
+        "retryRemoved": true,
+        "staticCommandsRetained": true
+      },
+      "partial": {
+        "validMember": 1,
+        "results": 5,
+        "pageErrors": []
+      },
+      "empty": {
+        "clearSearchRecovered": true,
+        "searchFocused": true
+      },
+      "browserWrites": 0
+    },
+    {
+      "theme": "light",
+      "width": 1920,
+      "status": "pass",
+      "samples": [
+        {
+          "state": "seven-live-reads-held",
+          "file": "light-1920-seven-live-reads-held.png",
+          "applicationCrashed": false,
+          "overflow": 0,
+          "shortTargets": [],
+          "clipped": [
+            {
+              "text": "Command palette",
+              "width": 1,
+              "contentWidth": 188,
+              "className": "sr-only"
+            },
+            {
+              "text": "Search pages, live sessions, waitlist entries and actions. Use arrow keys to move and Ente",
+              "width": 1,
+              "contentWidth": 600,
+              "className": "sr-only"
+            }
+          ],
+          "brokenImages": [],
+          "invalidCopy": [],
+          "unlabeledButtons": [],
+          "unlabeledInputs": [],
+          "collectionSizes": {
+            ".op2-customer-card": 0,
+            ".sales-table tbody tr": 0
+          },
+          "contentOverflow": [],
+          "palette": {
+            "accent": "#006b3c",
+            "font": "\"Syne Variable\", Syne, sans-serif"
+          },
+          "contrast": []
+        },
+        {
+          "state": "failed-live-reads-retry",
+          "file": "light-1920-failed-live-reads-retry.png",
+          "applicationCrashed": false,
+          "overflow": 0,
+          "shortTargets": [],
+          "clipped": [
+            {
+              "text": "Command palette",
+              "width": 1,
+              "contentWidth": 188,
+              "className": "sr-only"
+            },
+            {
+              "text": "Search pages, live sessions, waitlist entries and actions. Use arrow keys to move and Ente",
+              "width": 1,
+              "contentWidth": 600,
+              "className": "sr-only"
+            }
+          ],
+          "brokenImages": [],
+          "invalidCopy": [],
+          "unlabeledButtons": [],
+          "unlabeledInputs": [],
+          "collectionSizes": {
+            ".op2-customer-card": 0,
+            ".sales-table tbody tr": 0
+          },
+          "contentOverflow": [],
+          "palette": {
+            "accent": "#006b3c",
+            "font": "\"Syne Variable\", Syne, sans-serif"
+          },
+          "contrast": []
+        },
+        {
+          "state": "retry-recovered",
+          "file": "light-1920-retry-recovered.png",
+          "applicationCrashed": false,
+          "overflow": 0,
+          "shortTargets": [],
+          "clipped": [
+            {
+              "text": "Command palette",
+              "width": 1,
+              "contentWidth": 188,
+              "className": "sr-only"
+            },
+            {
+              "text": "Search pages, live sessions, waitlist entries and actions. Use arrow keys to move and Ente",
+              "width": 1,
+              "contentWidth": 600,
+              "className": "sr-only"
+            }
+          ],
+          "brokenImages": [],
+          "invalidCopy": [],
+          "unlabeledButtons": [],
+          "unlabeledInputs": [],
+          "collectionSizes": {
+            ".op2-customer-card": 0,
+            ".sales-table tbody tr": 0
+          },
+          "contentOverflow": [],
+          "palette": {
+            "accent": "#006b3c",
+            "font": "\"Syne Variable\", Syne, sans-serif"
+          },
+          "contrast": []
+        },
+        {
+          "state": "partial-null-and-array-rows",
+          "file": "light-1920-partial-null-and-array-rows.png",
+          "applicationCrashed": false,
+          "overflow": 0,
+          "shortTargets": [],
+          "clipped": [
+            {
+              "text": "Command palette",
+              "width": 1,
+              "contentWidth": 188,
+              "className": "sr-only"
+            },
+            {
+              "text": "Search pages, live sessions, waitlist entries and actions. Use arrow keys to move and Ente",
+              "width": 1,
+              "contentWidth": 600,
+              "className": "sr-only"
+            }
+          ],
+          "brokenImages": [],
+          "invalidCopy": [],
+          "unlabeledButtons": [],
+          "unlabeledInputs": [],
+          "collectionSizes": {
+            ".op2-customer-card": 0,
+            ".sales-table tbody tr": 0
+          },
+          "contentOverflow": [],
+          "palette": {
+            "accent": "#006b3c",
+            "font": "\"Syne Variable\", Syne, sans-serif"
+          },
+          "contrast": []
+        },
+        {
+          "state": "empty-search-clear-action",
+          "file": "light-1920-empty-search-clear-action.png",
+          "applicationCrashed": false,
+          "overflow": 0,
+          "shortTargets": [],
+          "clipped": [
+            {
+              "text": "Command palette",
+              "width": 1,
+              "contentWidth": 188,
+              "className": "sr-only"
+            },
+            {
+              "text": "Search pages, live sessions, waitlist entries and actions. Use arrow keys to move and Ente",
+              "width": 1,
+              "contentWidth": 600,
+              "className": "sr-only"
+            }
+          ],
+          "brokenImages": [],
+          "invalidCopy": [],
+          "unlabeledButtons": [],
+          "unlabeledInputs": [],
+          "collectionSizes": {
+            ".op2-customer-card": 0,
+            ".sales-table tbody tr": 0
+          },
+          "contentOverflow": [],
+          "palette": {
+            "accent": "#006b3c",
+            "font": "\"Syne Variable\", Syne, sans-serif"
+          },
+          "contrast": []
+        }
+      ],
+      "cycles": [
+        {
+          "mode": "held",
+          "requested": [
+            "tables",
+            "waitlist",
+            "bookings",
+            "food",
+            "audit",
+            "members",
+            "menu"
+          ],
+          "completed": [
+            "tables",
+            "waitlist",
+            "bookings",
+            "food",
+            "audit",
+            "members",
+            "menu"
+          ],
+          "attempts": 8,
+          "gateReleased": true
+        },
+        {
+          "mode": "failure",
+          "requested": [
+            "tables",
+            "waitlist",
+            "bookings",
+            "food",
+            "audit",
+            "members",
+            "menu"
+          ],
+          "completed": [
+            "tables",
+            "waitlist",
+            "bookings",
+            "food",
+            "audit",
+            "members",
+            "menu"
+          ],
+          "attempts": 21,
+          "gateReleased": true
+        },
+        {
+          "mode": "recovery",
+          "requested": [
+            "tables",
+            "waitlist",
+            "bookings",
+            "food",
+            "audit",
+            "members",
+            "menu"
+          ],
+          "completed": [
+            "tables",
+            "waitlist",
+            "bookings",
+            "food",
+            "audit",
+            "members",
+            "menu"
+          ],
+          "attempts": 7,
+          "gateReleased": true
+        },
+        {
+          "mode": "partial",
+          "requested": [
+            "tables",
+            "waitlist",
+            "bookings",
+            "food",
+            "audit",
+            "members",
+            "menu"
+          ],
+          "completed": [
+            "tables",
+            "waitlist",
+            "bookings",
+            "food",
+            "audit",
+            "members",
+            "menu"
+          ],
+          "attempts": 7,
+          "gateReleased": true
+        },
+        {
+          "mode": "empty",
+          "requested": [
+            "tables",
+            "waitlist",
+            "bookings",
+            "food",
+            "audit",
+            "members",
+            "menu"
+          ],
+          "completed": [
+            "tables",
+            "waitlist",
+            "bookings",
+            "food",
+            "audit",
+            "members",
+            "menu"
+          ],
+          "attempts": 7,
+          "gateReleased": true
+        }
+      ],
+      "violations": [],
+      "pageErrors": [],
+      "loading": {
+        "feedback": {
+          "paintedMs": 43.79999999701977,
+          "staticClosingAtFirstPaint": 1,
+          "skeletonAtFirstPaint": true
+        },
+        "dailyClosingCount": 1,
+        "plainLoading": false,
+        "skeletonCount": 1,
+        "searchFocused": true,
+        "scrollLocked": true
+      },
+      "keyboard": {
+        "forwardTrap": true,
+        "reverseTrap": true,
+        "escapeClosed": true,
+        "openerRestored": true,
+        "scrollRestored": true
+      },
+      "navigation": {
+        "pathname": "/daily-closing",
+        "gateReleased": false,
+        "liveResponsesCompleted": 0
+      },
+      "recovery": {
+        "failedReadAttempts": 21,
+        "recoveryReads": 7,
+        "retryRemoved": true,
+        "staticCommandsRetained": true
+      },
+      "partial": {
+        "validMember": 1,
+        "results": 5,
+        "pageErrors": []
+      },
+      "empty": {
+        "clearSearchRecovered": true,
+        "searchFocused": true
+      },
+      "browserWrites": 0
+    },
+    {
+      "theme": "dark",
+      "width": 375,
+      "status": "pass",
+      "samples": [
+        {
+          "state": "seven-live-reads-held",
+          "file": "dark-375-seven-live-reads-held.png",
+          "applicationCrashed": false,
+          "overflow": 0,
+          "shortTargets": [],
+          "clipped": [
+            {
+              "text": "Command palette",
+              "width": 1,
+              "contentWidth": 188,
+              "className": "sr-only"
+            },
+            {
+              "text": "Search pages, live sessions, waitlist entries and actions. Use arrow keys to move and Ente",
+              "width": 1,
+              "contentWidth": 600,
+              "className": "sr-only"
+            }
+          ],
+          "brokenImages": [],
+          "invalidCopy": [],
+          "unlabeledButtons": [],
+          "unlabeledInputs": [],
+          "collectionSizes": {
+            ".op2-customer-card": 0,
+            ".sales-table tbody tr": 0
+          },
+          "contentOverflow": [],
+          "palette": {
+            "accent": "#00ff7f",
+            "font": "\"Syne Variable\", Syne, sans-serif"
+          },
+          "contrast": []
+        },
+        {
+          "state": "failed-live-reads-retry",
+          "file": "dark-375-failed-live-reads-retry.png",
+          "applicationCrashed": false,
+          "overflow": 0,
+          "shortTargets": [],
+          "clipped": [
+            {
+              "text": "Command palette",
+              "width": 1,
+              "contentWidth": 188,
+              "className": "sr-only"
+            },
+            {
+              "text": "Search pages, live sessions, waitlist entries and actions. Use arrow keys to move and Ente",
+              "width": 1,
+              "contentWidth": 600,
+              "className": "sr-only"
+            }
+          ],
+          "brokenImages": [],
+          "invalidCopy": [],
+          "unlabeledButtons": [],
+          "unlabeledInputs": [],
+          "collectionSizes": {
+            ".op2-customer-card": 0,
+            ".sales-table tbody tr": 0
+          },
+          "contentOverflow": [],
+          "palette": {
+            "accent": "#00ff7f",
+            "font": "\"Syne Variable\", Syne, sans-serif"
+          },
+          "contrast": []
+        },
+        {
+          "state": "retry-recovered",
+          "file": "dark-375-retry-recovered.png",
+          "applicationCrashed": false,
+          "overflow": 0,
+          "shortTargets": [],
+          "clipped": [
+            {
+              "text": "Command palette",
+              "width": 1,
+              "contentWidth": 188,
+              "className": "sr-only"
+            },
+            {
+              "text": "Search pages, live sessions, waitlist entries and actions. Use arrow keys to move and Ente",
+              "width": 1,
+              "contentWidth": 600,
+              "className": "sr-only"
+            }
+          ],
+          "brokenImages": [],
+          "invalidCopy": [],
+          "unlabeledButtons": [],
+          "unlabeledInputs": [],
+          "collectionSizes": {
+            ".op2-customer-card": 0,
+            ".sales-table tbody tr": 0
+          },
+          "contentOverflow": [],
+          "palette": {
+            "accent": "#00ff7f",
+            "font": "\"Syne Variable\", Syne, sans-serif"
+          },
+          "contrast": []
+        },
+        {
+          "state": "partial-null-and-array-rows",
+          "file": "dark-375-partial-null-and-array-rows.png",
+          "applicationCrashed": false,
+          "overflow": 0,
+          "shortTargets": [],
+          "clipped": [
+            {
+              "text": "Command palette",
+              "width": 1,
+              "contentWidth": 188,
+              "className": "sr-only"
+            },
+            {
+              "text": "Search pages, live sessions, waitlist entries and actions. Use arrow keys to move and Ente",
+              "width": 1,
+              "contentWidth": 600,
+              "className": "sr-only"
+            }
+          ],
+          "brokenImages": [],
+          "invalidCopy": [],
+          "unlabeledButtons": [],
+          "unlabeledInputs": [],
+          "collectionSizes": {
+            ".op2-customer-card": 0,
+            ".sales-table tbody tr": 0
+          },
+          "contentOverflow": [],
+          "palette": {
+            "accent": "#00ff7f",
+            "font": "\"Syne Variable\", Syne, sans-serif"
+          },
+          "contrast": []
+        },
+        {
+          "state": "empty-search-clear-action",
+          "file": "dark-375-empty-search-clear-action.png",
+          "applicationCrashed": false,
+          "overflow": 0,
+          "shortTargets": [],
+          "clipped": [
+            {
+              "text": "Command palette",
+              "width": 1,
+              "contentWidth": 188,
+              "className": "sr-only"
+            },
+            {
+              "text": "Search pages, live sessions, waitlist entries and actions. Use arrow keys to move and Ente",
+              "width": 1,
+              "contentWidth": 600,
+              "className": "sr-only"
+            }
+          ],
+          "brokenImages": [],
+          "invalidCopy": [],
+          "unlabeledButtons": [],
+          "unlabeledInputs": [],
+          "collectionSizes": {
+            ".op2-customer-card": 0,
+            ".sales-table tbody tr": 0
+          },
+          "contentOverflow": [],
+          "palette": {
+            "accent": "#00ff7f",
+            "font": "\"Syne Variable\", Syne, sans-serif"
+          },
+          "contrast": []
+        }
+      ],
+      "cycles": [
+        {
+          "mode": "held",
+          "requested": [
+            "tables",
+            "waitlist",
+            "bookings",
+            "food",
+            "audit",
+            "members",
+            "menu"
+          ],
+          "completed": [
+            "tables",
+            "waitlist",
+            "bookings",
+            "food",
+            "audit",
+            "members",
+            "menu"
+          ],
+          "attempts": 8,
+          "gateReleased": true
+        },
+        {
+          "mode": "failure",
+          "requested": [
+            "tables",
+            "waitlist",
+            "bookings",
+            "food",
+            "audit",
+            "members",
+            "menu"
+          ],
+          "completed": [
+            "tables",
+            "waitlist",
+            "bookings",
+            "food",
+            "audit",
+            "members",
+            "menu"
+          ],
+          "attempts": 21,
+          "gateReleased": true
+        },
+        {
+          "mode": "recovery",
+          "requested": [
+            "tables",
+            "waitlist",
+            "bookings",
+            "food",
+            "audit",
+            "members",
+            "menu"
+          ],
+          "completed": [
+            "tables",
+            "waitlist",
+            "bookings",
+            "food",
+            "audit",
+            "members",
+            "menu"
+          ],
+          "attempts": 7,
+          "gateReleased": true
+        },
+        {
+          "mode": "partial",
+          "requested": [
+            "tables",
+            "waitlist",
+            "bookings",
+            "food",
+            "audit",
+            "members",
+            "menu"
+          ],
+          "completed": [
+            "tables",
+            "waitlist",
+            "bookings",
+            "food",
+            "audit",
+            "members",
+            "menu"
+          ],
+          "attempts": 7,
+          "gateReleased": true
+        },
+        {
+          "mode": "empty",
+          "requested": [
+            "tables",
+            "waitlist",
+            "bookings",
+            "food",
+            "audit",
+            "members",
+            "menu"
+          ],
+          "completed": [
+            "tables",
+            "waitlist",
+            "bookings",
+            "food",
+            "audit",
+            "members",
+            "menu"
+          ],
+          "attempts": 7,
+          "gateReleased": true
+        }
+      ],
+      "violations": [],
+      "pageErrors": [],
+      "loading": {
+        "feedback": {
+          "paintedMs": 33.1000000089407,
+          "staticClosingAtFirstPaint": 1,
+          "skeletonAtFirstPaint": true
+        },
+        "dailyClosingCount": 1,
+        "plainLoading": false,
+        "skeletonCount": 1,
+        "searchFocused": true,
+        "scrollLocked": true
+      },
+      "keyboard": {
+        "forwardTrap": true,
+        "reverseTrap": true,
+        "escapeClosed": true,
+        "openerRestored": true,
+        "scrollRestored": true
+      },
+      "navigation": {
+        "pathname": "/daily-closing",
+        "gateReleased": false,
+        "liveResponsesCompleted": 0
+      },
+      "recovery": {
+        "failedReadAttempts": 21,
+        "recoveryReads": 7,
+        "retryRemoved": true,
+        "staticCommandsRetained": true
+      },
+      "partial": {
+        "validMember": 1,
+        "results": 5,
+        "pageErrors": []
+      },
+      "empty": {
+        "clearSearchRecovered": true,
+        "searchFocused": true
+      },
+      "browserWrites": 0
+    },
+    {
+      "theme": "dark",
+      "width": 768,
+      "status": "pass",
+      "samples": [
+        {
+          "state": "seven-live-reads-held",
+          "file": "dark-768-seven-live-reads-held.png",
+          "applicationCrashed": false,
+          "overflow": 0,
+          "shortTargets": [],
+          "clipped": [
+            {
+              "text": "Command palette",
+              "width": 1,
+              "contentWidth": 188,
+              "className": "sr-only"
+            },
+            {
+              "text": "Search pages, live sessions, waitlist entries and actions. Use arrow keys to move and Ente",
+              "width": 1,
+              "contentWidth": 600,
+              "className": "sr-only"
+            }
+          ],
+          "brokenImages": [],
+          "invalidCopy": [],
+          "unlabeledButtons": [],
+          "unlabeledInputs": [],
+          "collectionSizes": {
+            ".op2-customer-card": 0,
+            ".sales-table tbody tr": 0
+          },
+          "contentOverflow": [],
+          "palette": {
+            "accent": "#00ff7f",
+            "font": "\"Syne Variable\", Syne, sans-serif"
+          },
+          "contrast": []
+        },
+        {
+          "state": "failed-live-reads-retry",
+          "file": "dark-768-failed-live-reads-retry.png",
+          "applicationCrashed": false,
+          "overflow": 0,
+          "shortTargets": [],
+          "clipped": [
+            {
+              "text": "Command palette",
+              "width": 1,
+              "contentWidth": 188,
+              "className": "sr-only"
+            },
+            {
+              "text": "Search pages, live sessions, waitlist entries and actions. Use arrow keys to move and Ente",
+              "width": 1,
+              "contentWidth": 600,
+              "className": "sr-only"
+            }
+          ],
+          "brokenImages": [],
+          "invalidCopy": [],
+          "unlabeledButtons": [],
+          "unlabeledInputs": [],
+          "collectionSizes": {
+            ".op2-customer-card": 0,
+            ".sales-table tbody tr": 0
+          },
+          "contentOverflow": [],
+          "palette": {
+            "accent": "#00ff7f",
+            "font": "\"Syne Variable\", Syne, sans-serif"
+          },
+          "contrast": []
+        },
+        {
+          "state": "retry-recovered",
+          "file": "dark-768-retry-recovered.png",
+          "applicationCrashed": false,
+          "overflow": 0,
+          "shortTargets": [],
+          "clipped": [
+            {
+              "text": "Command palette",
+              "width": 1,
+              "contentWidth": 188,
+              "className": "sr-only"
+            },
+            {
+              "text": "Search pages, live sessions, waitlist entries and actions. Use arrow keys to move and Ente",
+              "width": 1,
+              "contentWidth": 600,
+              "className": "sr-only"
+            }
+          ],
+          "brokenImages": [],
+          "invalidCopy": [],
+          "unlabeledButtons": [],
+          "unlabeledInputs": [],
+          "collectionSizes": {
+            ".op2-customer-card": 0,
+            ".sales-table tbody tr": 0
+          },
+          "contentOverflow": [],
+          "palette": {
+            "accent": "#00ff7f",
+            "font": "\"Syne Variable\", Syne, sans-serif"
+          },
+          "contrast": []
+        },
+        {
+          "state": "partial-null-and-array-rows",
+          "file": "dark-768-partial-null-and-array-rows.png",
+          "applicationCrashed": false,
+          "overflow": 0,
+          "shortTargets": [],
+          "clipped": [
+            {
+              "text": "Command palette",
+              "width": 1,
+              "contentWidth": 188,
+              "className": "sr-only"
+            },
+            {
+              "text": "Search pages, live sessions, waitlist entries and actions. Use arrow keys to move and Ente",
+              "width": 1,
+              "contentWidth": 600,
+              "className": "sr-only"
+            }
+          ],
+          "brokenImages": [],
+          "invalidCopy": [],
+          "unlabeledButtons": [],
+          "unlabeledInputs": [],
+          "collectionSizes": {
+            ".op2-customer-card": 0,
+            ".sales-table tbody tr": 0
+          },
+          "contentOverflow": [],
+          "palette": {
+            "accent": "#00ff7f",
+            "font": "\"Syne Variable\", Syne, sans-serif"
+          },
+          "contrast": []
+        },
+        {
+          "state": "empty-search-clear-action",
+          "file": "dark-768-empty-search-clear-action.png",
+          "applicationCrashed": false,
+          "overflow": 0,
+          "shortTargets": [],
+          "clipped": [
+            {
+              "text": "Command palette",
+              "width": 1,
+              "contentWidth": 188,
+              "className": "sr-only"
+            },
+            {
+              "text": "Search pages, live sessions, waitlist entries and actions. Use arrow keys to move and Ente",
+              "width": 1,
+              "contentWidth": 600,
+              "className": "sr-only"
+            }
+          ],
+          "brokenImages": [],
+          "invalidCopy": [],
+          "unlabeledButtons": [],
+          "unlabeledInputs": [],
+          "collectionSizes": {
+            ".op2-customer-card": 0,
+            ".sales-table tbody tr": 0
+          },
+          "contentOverflow": [],
+          "palette": {
+            "accent": "#00ff7f",
+            "font": "\"Syne Variable\", Syne, sans-serif"
+          },
+          "contrast": []
+        }
+      ],
+      "cycles": [
+        {
+          "mode": "held",
+          "requested": [
+            "tables",
+            "waitlist",
+            "bookings",
+            "food",
+            "audit",
+            "members",
+            "menu"
+          ],
+          "completed": [
+            "tables",
+            "waitlist",
+            "bookings",
+            "food",
+            "audit",
+            "members",
+            "menu"
+          ],
+          "attempts": 8,
+          "gateReleased": true
+        },
+        {
+          "mode": "failure",
+          "requested": [
+            "tables",
+            "waitlist",
+            "bookings",
+            "food",
+            "audit",
+            "members",
+            "menu"
+          ],
+          "completed": [
+            "tables",
+            "waitlist",
+            "bookings",
+            "food",
+            "audit",
+            "members",
+            "menu"
+          ],
+          "attempts": 21,
+          "gateReleased": true
+        },
+        {
+          "mode": "recovery",
+          "requested": [
+            "tables",
+            "waitlist",
+            "bookings",
+            "food",
+            "audit",
+            "members",
+            "menu"
+          ],
+          "completed": [
+            "tables",
+            "waitlist",
+            "bookings",
+            "food",
+            "audit",
+            "members",
+            "menu"
+          ],
+          "attempts": 7,
+          "gateReleased": true
+        },
+        {
+          "mode": "partial",
+          "requested": [
+            "tables",
+            "waitlist",
+            "bookings",
+            "food",
+            "audit",
+            "members",
+            "menu"
+          ],
+          "completed": [
+            "tables",
+            "waitlist",
+            "bookings",
+            "food",
+            "audit",
+            "members",
+            "menu"
+          ],
+          "attempts": 7,
+          "gateReleased": true
+        },
+        {
+          "mode": "empty",
+          "requested": [
+            "tables",
+            "waitlist",
+            "bookings",
+            "food",
+            "audit",
+            "members",
+            "menu"
+          ],
+          "completed": [
+            "tables",
+            "waitlist",
+            "bookings",
+            "food",
+            "audit",
+            "members",
+            "menu"
+          ],
+          "attempts": 7,
+          "gateReleased": true
+        }
+      ],
+      "violations": [],
+      "pageErrors": [],
+      "loading": {
+        "feedback": {
+          "paintedMs": 37.3999999910593,
+          "staticClosingAtFirstPaint": 1,
+          "skeletonAtFirstPaint": true
+        },
+        "dailyClosingCount": 1,
+        "plainLoading": false,
+        "skeletonCount": 1,
+        "searchFocused": true,
+        "scrollLocked": true
+      },
+      "keyboard": {
+        "forwardTrap": true,
+        "reverseTrap": true,
+        "escapeClosed": true,
+        "openerRestored": true,
+        "scrollRestored": true
+      },
+      "navigation": {
+        "pathname": "/daily-closing",
+        "gateReleased": false,
+        "liveResponsesCompleted": 0
+      },
+      "recovery": {
+        "failedReadAttempts": 21,
+        "recoveryReads": 7,
+        "retryRemoved": true,
+        "staticCommandsRetained": true
+      },
+      "partial": {
+        "validMember": 1,
+        "results": 5,
+        "pageErrors": []
+      },
+      "empty": {
+        "clearSearchRecovered": true,
+        "searchFocused": true
+      },
+      "browserWrites": 0
+    },
+    {
+      "theme": "dark",
+      "width": 1024,
+      "status": "pass",
+      "samples": [
+        {
+          "state": "seven-live-reads-held",
+          "file": "dark-1024-seven-live-reads-held.png",
+          "applicationCrashed": false,
+          "overflow": 0,
+          "shortTargets": [],
+          "clipped": [
+            {
+              "text": "Command palette",
+              "width": 1,
+              "contentWidth": 188,
+              "className": "sr-only"
+            },
+            {
+              "text": "Search pages, live sessions, waitlist entries and actions. Use arrow keys to move and Ente",
+              "width": 1,
+              "contentWidth": 600,
+              "className": "sr-only"
+            }
+          ],
+          "brokenImages": [],
+          "invalidCopy": [],
+          "unlabeledButtons": [],
+          "unlabeledInputs": [],
+          "collectionSizes": {
+            ".op2-customer-card": 0,
+            ".sales-table tbody tr": 0
+          },
+          "contentOverflow": [],
+          "palette": {
+            "accent": "#00ff7f",
+            "font": "\"Syne Variable\", Syne, sans-serif"
+          },
+          "contrast": []
+        },
+        {
+          "state": "failed-live-reads-retry",
+          "file": "dark-1024-failed-live-reads-retry.png",
+          "applicationCrashed": false,
+          "overflow": 0,
+          "shortTargets": [],
+          "clipped": [
+            {
+              "text": "Command palette",
+              "width": 1,
+              "contentWidth": 188,
+              "className": "sr-only"
+            },
+            {
+              "text": "Search pages, live sessions, waitlist entries and actions. Use arrow keys to move and Ente",
+              "width": 1,
+              "contentWidth": 600,
+              "className": "sr-only"
+            }
+          ],
+          "brokenImages": [],
+          "invalidCopy": [],
+          "unlabeledButtons": [],
+          "unlabeledInputs": [],
+          "collectionSizes": {
+            ".op2-customer-card": 0,
+            ".sales-table tbody tr": 0
+          },
+          "contentOverflow": [],
+          "palette": {
+            "accent": "#00ff7f",
+            "font": "\"Syne Variable\", Syne, sans-serif"
+          },
+          "contrast": []
+        },
+        {
+          "state": "retry-recovered",
+          "file": "dark-1024-retry-recovered.png",
+          "applicationCrashed": false,
+          "overflow": 0,
+          "shortTargets": [],
+          "clipped": [
+            {
+              "text": "Command palette",
+              "width": 1,
+              "contentWidth": 188,
+              "className": "sr-only"
+            },
+            {
+              "text": "Search pages, live sessions, waitlist entries and actions. Use arrow keys to move and Ente",
+              "width": 1,
+              "contentWidth": 600,
+              "className": "sr-only"
+            }
+          ],
+          "brokenImages": [],
+          "invalidCopy": [],
+          "unlabeledButtons": [],
+          "unlabeledInputs": [],
+          "collectionSizes": {
+            ".op2-customer-card": 0,
+            ".sales-table tbody tr": 0
+          },
+          "contentOverflow": [],
+          "palette": {
+            "accent": "#00ff7f",
+            "font": "\"Syne Variable\", Syne, sans-serif"
+          },
+          "contrast": []
+        },
+        {
+          "state": "partial-null-and-array-rows",
+          "file": "dark-1024-partial-null-and-array-rows.png",
+          "applicationCrashed": false,
+          "overflow": 0,
+          "shortTargets": [],
+          "clipped": [
+            {
+              "text": "Command palette",
+              "width": 1,
+              "contentWidth": 188,
+              "className": "sr-only"
+            },
+            {
+              "text": "Search pages, live sessions, waitlist entries and actions. Use arrow keys to move and Ente",
+              "width": 1,
+              "contentWidth": 600,
+              "className": "sr-only"
+            }
+          ],
+          "brokenImages": [],
+          "invalidCopy": [],
+          "unlabeledButtons": [],
+          "unlabeledInputs": [],
+          "collectionSizes": {
+            ".op2-customer-card": 0,
+            ".sales-table tbody tr": 0
+          },
+          "contentOverflow": [],
+          "palette": {
+            "accent": "#00ff7f",
+            "font": "\"Syne Variable\", Syne, sans-serif"
+          },
+          "contrast": []
+        },
+        {
+          "state": "empty-search-clear-action",
+          "file": "dark-1024-empty-search-clear-action.png",
+          "applicationCrashed": false,
+          "overflow": 0,
+          "shortTargets": [],
+          "clipped": [
+            {
+              "text": "Command palette",
+              "width": 1,
+              "contentWidth": 188,
+              "className": "sr-only"
+            },
+            {
+              "text": "Search pages, live sessions, waitlist entries and actions. Use arrow keys to move and Ente",
+              "width": 1,
+              "contentWidth": 600,
+              "className": "sr-only"
+            }
+          ],
+          "brokenImages": [],
+          "invalidCopy": [],
+          "unlabeledButtons": [],
+          "unlabeledInputs": [],
+          "collectionSizes": {
+            ".op2-customer-card": 0,
+            ".sales-table tbody tr": 0
+          },
+          "contentOverflow": [],
+          "palette": {
+            "accent": "#00ff7f",
+            "font": "\"Syne Variable\", Syne, sans-serif"
+          },
+          "contrast": []
+        }
+      ],
+      "cycles": [
+        {
+          "mode": "held",
+          "requested": [
+            "tables",
+            "waitlist",
+            "bookings",
+            "food",
+            "audit",
+            "members",
+            "menu"
+          ],
+          "completed": [
+            "tables",
+            "waitlist",
+            "bookings",
+            "food",
+            "audit",
+            "members",
+            "menu"
+          ],
+          "attempts": 8,
+          "gateReleased": true
+        },
+        {
+          "mode": "failure",
+          "requested": [
+            "tables",
+            "waitlist",
+            "bookings",
+            "food",
+            "audit",
+            "members",
+            "menu"
+          ],
+          "completed": [
+            "tables",
+            "waitlist",
+            "bookings",
+            "food",
+            "audit",
+            "members",
+            "menu"
+          ],
+          "attempts": 21,
+          "gateReleased": true
+        },
+        {
+          "mode": "recovery",
+          "requested": [
+            "tables",
+            "waitlist",
+            "bookings",
+            "food",
+            "audit",
+            "members",
+            "menu"
+          ],
+          "completed": [
+            "tables",
+            "waitlist",
+            "bookings",
+            "food",
+            "audit",
+            "members",
+            "menu"
+          ],
+          "attempts": 7,
+          "gateReleased": true
+        },
+        {
+          "mode": "partial",
+          "requested": [
+            "tables",
+            "waitlist",
+            "bookings",
+            "food",
+            "audit",
+            "members",
+            "menu"
+          ],
+          "completed": [
+            "tables",
+            "waitlist",
+            "bookings",
+            "food",
+            "audit",
+            "members",
+            "menu"
+          ],
+          "attempts": 7,
+          "gateReleased": true
+        },
+        {
+          "mode": "empty",
+          "requested": [
+            "tables",
+            "waitlist",
+            "bookings",
+            "food",
+            "audit",
+            "members",
+            "menu"
+          ],
+          "completed": [
+            "tables",
+            "waitlist",
+            "bookings",
+            "food",
+            "audit",
+            "members",
+            "menu"
+          ],
+          "attempts": 7,
+          "gateReleased": true
+        }
+      ],
+      "violations": [],
+      "pageErrors": [],
+      "loading": {
+        "feedback": {
+          "paintedMs": 38.900000005960464,
+          "staticClosingAtFirstPaint": 1,
+          "skeletonAtFirstPaint": true
+        },
+        "dailyClosingCount": 1,
+        "plainLoading": false,
+        "skeletonCount": 1,
+        "searchFocused": true,
+        "scrollLocked": true
+      },
+      "keyboard": {
+        "forwardTrap": true,
+        "reverseTrap": true,
+        "escapeClosed": true,
+        "openerRestored": true,
+        "scrollRestored": true
+      },
+      "navigation": {
+        "pathname": "/daily-closing",
+        "gateReleased": false,
+        "liveResponsesCompleted": 0
+      },
+      "recovery": {
+        "failedReadAttempts": 21,
+        "recoveryReads": 7,
+        "retryRemoved": true,
+        "staticCommandsRetained": true
+      },
+      "partial": {
+        "validMember": 1,
+        "results": 5,
+        "pageErrors": []
+      },
+      "empty": {
+        "clearSearchRecovered": true,
+        "searchFocused": true
+      },
+      "browserWrites": 0
+    },
+    {
+      "theme": "dark",
+      "width": 1440,
+      "status": "pass",
+      "samples": [
+        {
+          "state": "seven-live-reads-held",
+          "file": "dark-1440-seven-live-reads-held.png",
+          "applicationCrashed": false,
+          "overflow": 0,
+          "shortTargets": [],
+          "clipped": [
+            {
+              "text": "Command palette",
+              "width": 1,
+              "contentWidth": 188,
+              "className": "sr-only"
+            },
+            {
+              "text": "Search pages, live sessions, waitlist entries and actions. Use arrow keys to move and Ente",
+              "width": 1,
+              "contentWidth": 600,
+              "className": "sr-only"
+            }
+          ],
+          "brokenImages": [],
+          "invalidCopy": [],
+          "unlabeledButtons": [],
+          "unlabeledInputs": [],
+          "collectionSizes": {
+            ".op2-customer-card": 0,
+            ".sales-table tbody tr": 0
+          },
+          "contentOverflow": [],
+          "palette": {
+            "accent": "#00ff7f",
+            "font": "\"Syne Variable\", Syne, sans-serif"
+          },
+          "contrast": []
+        },
+        {
+          "state": "failed-live-reads-retry",
+          "file": "dark-1440-failed-live-reads-retry.png",
+          "applicationCrashed": false,
+          "overflow": 0,
+          "shortTargets": [],
+          "clipped": [
+            {
+              "text": "Command palette",
+              "width": 1,
+              "contentWidth": 188,
+              "className": "sr-only"
+            },
+            {
+              "text": "Search pages, live sessions, waitlist entries and actions. Use arrow keys to move and Ente",
+              "width": 1,
+              "contentWidth": 600,
+              "className": "sr-only"
+            }
+          ],
+          "brokenImages": [],
+          "invalidCopy": [],
+          "unlabeledButtons": [],
+          "unlabeledInputs": [],
+          "collectionSizes": {
+            ".op2-customer-card": 0,
+            ".sales-table tbody tr": 0
+          },
+          "contentOverflow": [],
+          "palette": {
+            "accent": "#00ff7f",
+            "font": "\"Syne Variable\", Syne, sans-serif"
+          },
+          "contrast": []
+        },
+        {
+          "state": "retry-recovered",
+          "file": "dark-1440-retry-recovered.png",
+          "applicationCrashed": false,
+          "overflow": 0,
+          "shortTargets": [],
+          "clipped": [
+            {
+              "text": "Command palette",
+              "width": 1,
+              "contentWidth": 188,
+              "className": "sr-only"
+            },
+            {
+              "text": "Search pages, live sessions, waitlist entries and actions. Use arrow keys to move and Ente",
+              "width": 1,
+              "contentWidth": 600,
+              "className": "sr-only"
+            }
+          ],
+          "brokenImages": [],
+          "invalidCopy": [],
+          "unlabeledButtons": [],
+          "unlabeledInputs": [],
+          "collectionSizes": {
+            ".op2-customer-card": 0,
+            ".sales-table tbody tr": 0
+          },
+          "contentOverflow": [],
+          "palette": {
+            "accent": "#00ff7f",
+            "font": "\"Syne Variable\", Syne, sans-serif"
+          },
+          "contrast": []
+        },
+        {
+          "state": "partial-null-and-array-rows",
+          "file": "dark-1440-partial-null-and-array-rows.png",
+          "applicationCrashed": false,
+          "overflow": 0,
+          "shortTargets": [],
+          "clipped": [
+            {
+              "text": "Command palette",
+              "width": 1,
+              "contentWidth": 188,
+              "className": "sr-only"
+            },
+            {
+              "text": "Search pages, live sessions, waitlist entries and actions. Use arrow keys to move and Ente",
+              "width": 1,
+              "contentWidth": 600,
+              "className": "sr-only"
+            }
+          ],
+          "brokenImages": [],
+          "invalidCopy": [],
+          "unlabeledButtons": [],
+          "unlabeledInputs": [],
+          "collectionSizes": {
+            ".op2-customer-card": 0,
+            ".sales-table tbody tr": 0
+          },
+          "contentOverflow": [],
+          "palette": {
+            "accent": "#00ff7f",
+            "font": "\"Syne Variable\", Syne, sans-serif"
+          },
+          "contrast": []
+        },
+        {
+          "state": "empty-search-clear-action",
+          "file": "dark-1440-empty-search-clear-action.png",
+          "applicationCrashed": false,
+          "overflow": 0,
+          "shortTargets": [],
+          "clipped": [
+            {
+              "text": "Command palette",
+              "width": 1,
+              "contentWidth": 188,
+              "className": "sr-only"
+            },
+            {
+              "text": "Search pages, live sessions, waitlist entries and actions. Use arrow keys to move and Ente",
+              "width": 1,
+              "contentWidth": 600,
+              "className": "sr-only"
+            }
+          ],
+          "brokenImages": [],
+          "invalidCopy": [],
+          "unlabeledButtons": [],
+          "unlabeledInputs": [],
+          "collectionSizes": {
+            ".op2-customer-card": 0,
+            ".sales-table tbody tr": 0
+          },
+          "contentOverflow": [],
+          "palette": {
+            "accent": "#00ff7f",
+            "font": "\"Syne Variable\", Syne, sans-serif"
+          },
+          "contrast": []
+        }
+      ],
+      "cycles": [
+        {
+          "mode": "held",
+          "requested": [
+            "tables",
+            "waitlist",
+            "bookings",
+            "food",
+            "audit",
+            "members",
+            "menu"
+          ],
+          "completed": [
+            "tables",
+            "waitlist",
+            "bookings",
+            "food",
+            "audit",
+            "members",
+            "menu"
+          ],
+          "attempts": 8,
+          "gateReleased": true
+        },
+        {
+          "mode": "failure",
+          "requested": [
+            "tables",
+            "waitlist",
+            "bookings",
+            "food",
+            "audit",
+            "members",
+            "menu"
+          ],
+          "completed": [
+            "tables",
+            "waitlist",
+            "bookings",
+            "food",
+            "audit",
+            "members",
+            "menu"
+          ],
+          "attempts": 21,
+          "gateReleased": true
+        },
+        {
+          "mode": "recovery",
+          "requested": [
+            "tables",
+            "waitlist",
+            "bookings",
+            "food",
+            "audit",
+            "members",
+            "menu"
+          ],
+          "completed": [
+            "tables",
+            "waitlist",
+            "bookings",
+            "food",
+            "audit",
+            "members",
+            "menu"
+          ],
+          "attempts": 7,
+          "gateReleased": true
+        },
+        {
+          "mode": "partial",
+          "requested": [
+            "tables",
+            "waitlist",
+            "bookings",
+            "food",
+            "audit",
+            "members",
+            "menu"
+          ],
+          "completed": [
+            "tables",
+            "waitlist",
+            "bookings",
+            "food",
+            "audit",
+            "members",
+            "menu"
+          ],
+          "attempts": 7,
+          "gateReleased": true
+        },
+        {
+          "mode": "empty",
+          "requested": [
+            "tables",
+            "waitlist",
+            "bookings",
+            "food",
+            "audit",
+            "members",
+            "menu"
+          ],
+          "completed": [
+            "tables",
+            "waitlist",
+            "bookings",
+            "food",
+            "audit",
+            "members",
+            "menu"
+          ],
+          "attempts": 7,
+          "gateReleased": true
+        }
+      ],
+      "violations": [],
+      "pageErrors": [],
+      "loading": {
+        "feedback": {
+          "paintedMs": 31,
+          "staticClosingAtFirstPaint": 1,
+          "skeletonAtFirstPaint": true
+        },
+        "dailyClosingCount": 1,
+        "plainLoading": false,
+        "skeletonCount": 1,
+        "searchFocused": true,
+        "scrollLocked": true
+      },
+      "keyboard": {
+        "forwardTrap": true,
+        "reverseTrap": true,
+        "escapeClosed": true,
+        "openerRestored": true,
+        "scrollRestored": true
+      },
+      "navigation": {
+        "pathname": "/daily-closing",
+        "gateReleased": false,
+        "liveResponsesCompleted": 0
+      },
+      "recovery": {
+        "failedReadAttempts": 21,
+        "recoveryReads": 7,
+        "retryRemoved": true,
+        "staticCommandsRetained": true
+      },
+      "partial": {
+        "validMember": 1,
+        "results": 5,
+        "pageErrors": []
+      },
+      "empty": {
+        "clearSearchRecovered": true,
+        "searchFocused": true
+      },
+      "browserWrites": 0
+    },
+    {
+      "theme": "dark",
+      "width": 1920,
+      "status": "pass",
+      "samples": [
+        {
+          "state": "seven-live-reads-held",
+          "file": "dark-1920-seven-live-reads-held.png",
+          "applicationCrashed": false,
+          "overflow": 0,
+          "shortTargets": [],
+          "clipped": [
+            {
+              "text": "Command palette",
+              "width": 1,
+              "contentWidth": 188,
+              "className": "sr-only"
+            },
+            {
+              "text": "Search pages, live sessions, waitlist entries and actions. Use arrow keys to move and Ente",
+              "width": 1,
+              "contentWidth": 600,
+              "className": "sr-only"
+            }
+          ],
+          "brokenImages": [],
+          "invalidCopy": [],
+          "unlabeledButtons": [],
+          "unlabeledInputs": [],
+          "collectionSizes": {
+            ".op2-customer-card": 0,
+            ".sales-table tbody tr": 0
+          },
+          "contentOverflow": [],
+          "palette": {
+            "accent": "#00ff7f",
+            "font": "\"Syne Variable\", Syne, sans-serif"
+          },
+          "contrast": []
+        },
+        {
+          "state": "failed-live-reads-retry",
+          "file": "dark-1920-failed-live-reads-retry.png",
+          "applicationCrashed": false,
+          "overflow": 0,
+          "shortTargets": [],
+          "clipped": [
+            {
+              "text": "Command palette",
+              "width": 1,
+              "contentWidth": 188,
+              "className": "sr-only"
+            },
+            {
+              "text": "Search pages, live sessions, waitlist entries and actions. Use arrow keys to move and Ente",
+              "width": 1,
+              "contentWidth": 600,
+              "className": "sr-only"
+            }
+          ],
+          "brokenImages": [],
+          "invalidCopy": [],
+          "unlabeledButtons": [],
+          "unlabeledInputs": [],
+          "collectionSizes": {
+            ".op2-customer-card": 0,
+            ".sales-table tbody tr": 0
+          },
+          "contentOverflow": [],
+          "palette": {
+            "accent": "#00ff7f",
+            "font": "\"Syne Variable\", Syne, sans-serif"
+          },
+          "contrast": []
+        },
+        {
+          "state": "retry-recovered",
+          "file": "dark-1920-retry-recovered.png",
+          "applicationCrashed": false,
+          "overflow": 0,
+          "shortTargets": [],
+          "clipped": [
+            {
+              "text": "Command palette",
+              "width": 1,
+              "contentWidth": 188,
+              "className": "sr-only"
+            },
+            {
+              "text": "Search pages, live sessions, waitlist entries and actions. Use arrow keys to move and Ente",
+              "width": 1,
+              "contentWidth": 600,
+              "className": "sr-only"
+            }
+          ],
+          "brokenImages": [],
+          "invalidCopy": [],
+          "unlabeledButtons": [],
+          "unlabeledInputs": [],
+          "collectionSizes": {
+            ".op2-customer-card": 0,
+            ".sales-table tbody tr": 0
+          },
+          "contentOverflow": [],
+          "palette": {
+            "accent": "#00ff7f",
+            "font": "\"Syne Variable\", Syne, sans-serif"
+          },
+          "contrast": []
+        },
+        {
+          "state": "partial-null-and-array-rows",
+          "file": "dark-1920-partial-null-and-array-rows.png",
+          "applicationCrashed": false,
+          "overflow": 0,
+          "shortTargets": [],
+          "clipped": [
+            {
+              "text": "Command palette",
+              "width": 1,
+              "contentWidth": 188,
+              "className": "sr-only"
+            },
+            {
+              "text": "Search pages, live sessions, waitlist entries and actions. Use arrow keys to move and Ente",
+              "width": 1,
+              "contentWidth": 600,
+              "className": "sr-only"
+            }
+          ],
+          "brokenImages": [],
+          "invalidCopy": [],
+          "unlabeledButtons": [],
+          "unlabeledInputs": [],
+          "collectionSizes": {
+            ".op2-customer-card": 0,
+            ".sales-table tbody tr": 0
+          },
+          "contentOverflow": [],
+          "palette": {
+            "accent": "#00ff7f",
+            "font": "\"Syne Variable\", Syne, sans-serif"
+          },
+          "contrast": []
+        },
+        {
+          "state": "empty-search-clear-action",
+          "file": "dark-1920-empty-search-clear-action.png",
+          "applicationCrashed": false,
+          "overflow": 0,
+          "shortTargets": [],
+          "clipped": [
+            {
+              "text": "Command palette",
+              "width": 1,
+              "contentWidth": 188,
+              "className": "sr-only"
+            },
+            {
+              "text": "Search pages, live sessions, waitlist entries and actions. Use arrow keys to move and Ente",
+              "width": 1,
+              "contentWidth": 600,
+              "className": "sr-only"
+            }
+          ],
+          "brokenImages": [],
+          "invalidCopy": [],
+          "unlabeledButtons": [],
+          "unlabeledInputs": [],
+          "collectionSizes": {
+            ".op2-customer-card": 0,
+            ".sales-table tbody tr": 0
+          },
+          "contentOverflow": [],
+          "palette": {
+            "accent": "#00ff7f",
+            "font": "\"Syne Variable\", Syne, sans-serif"
+          },
+          "contrast": []
+        }
+      ],
+      "cycles": [
+        {
+          "mode": "held",
+          "requested": [
+            "tables",
+            "waitlist",
+            "bookings",
+            "food",
+            "audit",
+            "members",
+            "menu"
+          ],
+          "completed": [
+            "tables",
+            "waitlist",
+            "bookings",
+            "food",
+            "audit",
+            "members",
+            "menu"
+          ],
+          "attempts": 8,
+          "gateReleased": true
+        },
+        {
+          "mode": "failure",
+          "requested": [
+            "tables",
+            "waitlist",
+            "bookings",
+            "food",
+            "audit",
+            "members",
+            "menu"
+          ],
+          "completed": [
+            "tables",
+            "waitlist",
+            "bookings",
+            "food",
+            "audit",
+            "members",
+            "menu"
+          ],
+          "attempts": 21,
+          "gateReleased": true
+        },
+        {
+          "mode": "recovery",
+          "requested": [
+            "tables",
+            "waitlist",
+            "bookings",
+            "food",
+            "audit",
+            "members",
+            "menu"
+          ],
+          "completed": [
+            "tables",
+            "waitlist",
+            "bookings",
+            "food",
+            "audit",
+            "members",
+            "menu"
+          ],
+          "attempts": 7,
+          "gateReleased": true
+        },
+        {
+          "mode": "partial",
+          "requested": [
+            "tables",
+            "waitlist",
+            "bookings",
+            "food",
+            "audit",
+            "members",
+            "menu"
+          ],
+          "completed": [
+            "tables",
+            "waitlist",
+            "bookings",
+            "food",
+            "audit",
+            "members",
+            "menu"
+          ],
+          "attempts": 7,
+          "gateReleased": true
+        },
+        {
+          "mode": "empty",
+          "requested": [
+            "tables",
+            "waitlist",
+            "bookings",
+            "food",
+            "audit",
+            "members",
+            "menu"
+          ],
+          "completed": [
+            "tables",
+            "waitlist",
+            "bookings",
+            "food",
+            "audit",
+            "members",
+            "menu"
+          ],
+          "attempts": 7,
+          "gateReleased": true
+        }
+      ],
+      "violations": [],
+      "pageErrors": [],
+      "loading": {
+        "feedback": {
+          "paintedMs": 34.80000001192093,
+          "staticClosingAtFirstPaint": 1,
+          "skeletonAtFirstPaint": true
+        },
+        "dailyClosingCount": 1,
+        "plainLoading": false,
+        "skeletonCount": 1,
+        "searchFocused": true,
+        "scrollLocked": true
+      },
+      "keyboard": {
+        "forwardTrap": true,
+        "reverseTrap": true,
+        "escapeClosed": true,
+        "openerRestored": true,
+        "scrollRestored": true
+      },
+      "navigation": {
+        "pathname": "/daily-closing",
+        "gateReleased": false,
+        "liveResponsesCompleted": 0
+      },
+      "recovery": {
+        "failedReadAttempts": 21,
+        "recoveryReads": 7,
+        "retryRemoved": true,
+        "staticCommandsRetained": true
+      },
+      "partial": {
+        "validMember": 1,
+        "results": 5,
+        "pageErrors": []
+      },
+      "empty": {
+        "clearSearchRecovered": true,
+        "searchFocused": true
+      },
+      "browserWrites": 0
+    }
+  ],
+  "errors": [],
+  "finishedAt": "2026-10-19T20:43:50.625Z",
+  "summary": {
+    "expectedCases": 10,
+    "cases": 10,
+    "observed": 0,
+    "passed": 10,
+    "failed": 0,
+    "hiddenStaticClosingWhileHeld": 0,
+    "violations": 0
+  },
+  "status": "pass"
+}

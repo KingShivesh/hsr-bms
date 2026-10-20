@@ -1,0 +1,1037 @@
+{
+  "stage": "after",
+  "samples": [
+    {
+      "theme": "dark",
+      "width": 375,
+      "state": "default",
+      "file": "dark-375-default.png",
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "contrast": []
+    },
+    {
+      "theme": "dark",
+      "width": 375,
+      "state": "filled",
+      "file": "dark-375-filled.png",
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "contrast": []
+    },
+    {
+      "theme": "dark",
+      "width": 375,
+      "state": "pending",
+      "file": "dark-375-pending.png",
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "contrast": []
+    },
+    {
+      "theme": "dark",
+      "width": 375,
+      "state": "error",
+      "file": "dark-375-error.png",
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "contrast": [],
+      "errorFieldsMarked": true
+    },
+    {
+      "theme": "dark",
+      "width": 375,
+      "state": "server-error",
+      "file": "dark-375-server-error.png",
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "contrast": []
+    },
+    {
+      "theme": "dark",
+      "width": 375,
+      "state": "offline",
+      "file": "dark-375-offline.png",
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "contrast": []
+    },
+    {
+      "theme": "dark",
+      "width": 768,
+      "state": "default",
+      "file": "dark-768-default.png",
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "contrast": []
+    },
+    {
+      "theme": "dark",
+      "width": 768,
+      "state": "filled",
+      "file": "dark-768-filled.png",
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "contrast": []
+    },
+    {
+      "theme": "dark",
+      "width": 768,
+      "state": "pending",
+      "file": "dark-768-pending.png",
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "contrast": []
+    },
+    {
+      "theme": "dark",
+      "width": 768,
+      "state": "error",
+      "file": "dark-768-error.png",
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "contrast": [],
+      "errorFieldsMarked": true
+    },
+    {
+      "theme": "dark",
+      "width": 768,
+      "state": "server-error",
+      "file": "dark-768-server-error.png",
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "contrast": []
+    },
+    {
+      "theme": "dark",
+      "width": 768,
+      "state": "offline",
+      "file": "dark-768-offline.png",
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "contrast": []
+    },
+    {
+      "theme": "dark",
+      "width": 1024,
+      "state": "default",
+      "file": "dark-1024-default.png",
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "contrast": []
+    },
+    {
+      "theme": "dark",
+      "width": 1024,
+      "state": "filled",
+      "file": "dark-1024-filled.png",
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "contrast": []
+    },
+    {
+      "theme": "dark",
+      "width": 1024,
+      "state": "pending",
+      "file": "dark-1024-pending.png",
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "contrast": []
+    },
+    {
+      "theme": "dark",
+      "width": 1024,
+      "state": "error",
+      "file": "dark-1024-error.png",
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "contrast": [],
+      "errorFieldsMarked": true
+    },
+    {
+      "theme": "dark",
+      "width": 1024,
+      "state": "server-error",
+      "file": "dark-1024-server-error.png",
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "contrast": []
+    },
+    {
+      "theme": "dark",
+      "width": 1024,
+      "state": "offline",
+      "file": "dark-1024-offline.png",
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "contrast": []
+    },
+    {
+      "theme": "dark",
+      "width": 1440,
+      "state": "default",
+      "file": "dark-1440-default.png",
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "contrast": []
+    },
+    {
+      "theme": "dark",
+      "width": 1440,
+      "state": "filled",
+      "file": "dark-1440-filled.png",
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "contrast": []
+    },
+    {
+      "theme": "dark",
+      "width": 1440,
+      "state": "pending",
+      "file": "dark-1440-pending.png",
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "contrast": []
+    },
+    {
+      "theme": "dark",
+      "width": 1440,
+      "state": "error",
+      "file": "dark-1440-error.png",
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "contrast": [],
+      "errorFieldsMarked": true
+    },
+    {
+      "theme": "dark",
+      "width": 1440,
+      "state": "server-error",
+      "file": "dark-1440-server-error.png",
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "contrast": []
+    },
+    {
+      "theme": "dark",
+      "width": 1440,
+      "state": "offline",
+      "file": "dark-1440-offline.png",
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "contrast": []
+    },
+    {
+      "theme": "dark",
+      "width": 1920,
+      "state": "default",
+      "file": "dark-1920-default.png",
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "contrast": []
+    },
+    {
+      "theme": "dark",
+      "width": 1920,
+      "state": "filled",
+      "file": "dark-1920-filled.png",
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "contrast": []
+    },
+    {
+      "theme": "dark",
+      "width": 1920,
+      "state": "pending",
+      "file": "dark-1920-pending.png",
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "contrast": []
+    },
+    {
+      "theme": "dark",
+      "width": 1920,
+      "state": "error",
+      "file": "dark-1920-error.png",
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "contrast": [],
+      "errorFieldsMarked": true
+    },
+    {
+      "theme": "dark",
+      "width": 1920,
+      "state": "server-error",
+      "file": "dark-1920-server-error.png",
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "contrast": []
+    },
+    {
+      "theme": "dark",
+      "width": 1920,
+      "state": "offline",
+      "file": "dark-1920-offline.png",
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "contrast": []
+    },
+    {
+      "theme": "light",
+      "width": 375,
+      "state": "default",
+      "file": "light-375-default.png",
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "contrast": []
+    },
+    {
+      "theme": "light",
+      "width": 375,
+      "state": "filled",
+      "file": "light-375-filled.png",
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "contrast": []
+    },
+    {
+      "theme": "light",
+      "width": 375,
+      "state": "pending",
+      "file": "light-375-pending.png",
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "contrast": []
+    },
+    {
+      "theme": "light",
+      "width": 375,
+      "state": "error",
+      "file": "light-375-error.png",
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "contrast": [],
+      "errorFieldsMarked": true
+    },
+    {
+      "theme": "light",
+      "width": 375,
+      "state": "server-error",
+      "file": "light-375-server-error.png",
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "contrast": []
+    },
+    {
+      "theme": "light",
+      "width": 375,
+      "state": "offline",
+      "file": "light-375-offline.png",
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "contrast": []
+    },
+    {
+      "theme": "light",
+      "width": 768,
+      "state": "default",
+      "file": "light-768-default.png",
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "contrast": []
+    },
+    {
+      "theme": "light",
+      "width": 768,
+      "state": "filled",
+      "file": "light-768-filled.png",
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "contrast": []
+    },
+    {
+      "theme": "light",
+      "width": 768,
+      "state": "pending",
+      "file": "light-768-pending.png",
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "contrast": []
+    },
+    {
+      "theme": "light",
+      "width": 768,
+      "state": "error",
+      "file": "light-768-error.png",
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "contrast": [],
+      "errorFieldsMarked": true
+    },
+    {
+      "theme": "light",
+      "width": 768,
+      "state": "server-error",
+      "file": "light-768-server-error.png",
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "contrast": []
+    },
+    {
+      "theme": "light",
+      "width": 768,
+      "state": "offline",
+      "file": "light-768-offline.png",
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "contrast": []
+    },
+    {
+      "theme": "light",
+      "width": 1024,
+      "state": "default",
+      "file": "light-1024-default.png",
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "contrast": []
+    },
+    {
+      "theme": "light",
+      "width": 1024,
+      "state": "filled",
+      "file": "light-1024-filled.png",
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "contrast": []
+    },
+    {
+      "theme": "light",
+      "width": 1024,
+      "state": "pending",
+      "file": "light-1024-pending.png",
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "contrast": []
+    },
+    {
+      "theme": "light",
+      "width": 1024,
+      "state": "error",
+      "file": "light-1024-error.png",
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "contrast": [],
+      "errorFieldsMarked": true
+    },
+    {
+      "theme": "light",
+      "width": 1024,
+      "state": "server-error",
+      "file": "light-1024-server-error.png",
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "contrast": []
+    },
+    {
+      "theme": "light",
+      "width": 1024,
+      "state": "offline",
+      "file": "light-1024-offline.png",
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "contrast": []
+    },
+    {
+      "theme": "light",
+      "width": 1440,
+      "state": "default",
+      "file": "light-1440-default.png",
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "contrast": []
+    },
+    {
+      "theme": "light",
+      "width": 1440,
+      "state": "filled",
+      "file": "light-1440-filled.png",
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "contrast": []
+    },
+    {
+      "theme": "light",
+      "width": 1440,
+      "state": "pending",
+      "file": "light-1440-pending.png",
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "contrast": []
+    },
+    {
+      "theme": "light",
+      "width": 1440,
+      "state": "error",
+      "file": "light-1440-error.png",
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "contrast": [],
+      "errorFieldsMarked": true
+    },
+    {
+      "theme": "light",
+      "width": 1440,
+      "state": "server-error",
+      "file": "light-1440-server-error.png",
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "contrast": []
+    },
+    {
+      "theme": "light",
+      "width": 1440,
+      "state": "offline",
+      "file": "light-1440-offline.png",
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "contrast": []
+    },
+    {
+      "theme": "light",
+      "width": 1920,
+      "state": "default",
+      "file": "light-1920-default.png",
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "contrast": []
+    },
+    {
+      "theme": "light",
+      "width": 1920,
+      "state": "filled",
+      "file": "light-1920-filled.png",
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "contrast": []
+    },
+    {
+      "theme": "light",
+      "width": 1920,
+      "state": "pending",
+      "file": "light-1920-pending.png",
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "contrast": []
+    },
+    {
+      "theme": "light",
+      "width": 1920,
+      "state": "error",
+      "file": "light-1920-error.png",
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "contrast": [],
+      "errorFieldsMarked": true
+    },
+    {
+      "theme": "light",
+      "width": 1920,
+      "state": "server-error",
+      "file": "light-1920-server-error.png",
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "contrast": []
+    },
+    {
+      "theme": "light",
+      "width": 1920,
+      "state": "offline",
+      "file": "light-1920-offline.png",
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "contrast": []
+    }
+  ],
+  "errors": [],
+  "productionWrites": 0
+}

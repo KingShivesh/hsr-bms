@@ -1,0 +1,5960 @@
+{
+  "schemaVersion": 1,
+  "startedAt": "2026-10-19T20:59:18.379Z",
+  "mode": "both",
+  "origins": {
+    "before": "http://127.0.0.1:5180",
+    "after": "http://127.0.0.1:5181"
+  },
+  "api": "http://127.0.0.1:8006",
+  "configuration": {
+    "route": "/bookings",
+    "widths": [
+      375,
+      768,
+      1024,
+      1440,
+      1920
+    ],
+    "themes": [
+      "light",
+      "dark"
+    ],
+    "isolateReminders": true,
+    "maxCases": 20
+  },
+  "safety": {
+    "authenticationPosts": 1,
+    "forwardedBusinessWrites": 0,
+    "blockedWrites": [],
+    "expectedQaDatabase": "sqlite:////tmp/hsr-session-close-ui.db",
+    "databaseVerification": "Parent-provided QA isolation; not independently verified.",
+    "policy": "Only fixed loopback previews and API8006; allowlisted GET/HEAD, reviewed same-origin redirects; all browser writes, service workers, WebSockets and SSE blocked. Local authentication is the sole possible POST exception; BOOKING_QA_TOKEN avoids even that POST.",
+    "getSideEffects": "GET /bookings may reconcile isolated QA state. Zero database side effects are not asserted."
+  },
+  "cases": [
+    {
+      "stage": "before",
+      "theme": "light",
+      "width": 375,
+      "status": "layer-or-close-failure",
+      "click": {
+        "completed": false,
+        "method": "Playwright center click; no force, JS click or DOM relocation",
+        "error": "locator.click: Timeout 3000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('dialog', { name: 'Reserve a table', exact: true }).getByRole('button', { name: 'Close booking form', exact: true })\u001b[22m\n\u001b[2m    - locator resolved to <button type=\"button\" aria-label=\"Close booking form\" data-tooltip=\"Close booking form\" class=\"ui-button ui-button-native ui-button-md lf-icon-button\">…</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div class=\"topbar-title\">Bookings</div> from <header class=\"topbar cf-topbar\">…</header> subtree intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m    - element is visible, enabled and stable\u001b[22m\n\u001b[2m    - scrolling into view if needed\u001b[22m\n\u001b[2m    - done scrolling\u001b[22m\n\u001b[2m    - <div class=\"topbar-title\">Bookings</div> from <header class=\"topbar cf-topbar\">…</header> subtree intercepts pointer events\u001b[22m\n\u001b[2m  2 × retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m      - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div class=\"topbar-breadcrumb\">…</div> from <header class=\"topbar cf-topbar\">…</header> subtree intercepts pointer events\u001b[22m\n\u001b[2m  2 × retrying click action\u001b[22m\n\u001b[2m      - waiting 500ms\u001b[22m\n\u001b[2m      - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div class=\"topbar-title\">Bookings</div> from <header class=\"topbar cf-topbar\">…</header> subtree intercepts pointer events\u001b[22m\n\u001b[2m  2 × retrying click action\u001b[22m\n\u001b[2m      - waiting 500ms\u001b[22m\n\u001b[2m      - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div class=\"topbar-breadcrumb\">…</div> from <header class=\"topbar cf-topbar\">…</header> subtree intercepts pointer events\u001b[22m\n\u001b[2m  - retrying click action\u001b[22m\n\u001b[2m    - waiting 500ms\u001b[22m\n",
+        "observed": {
+          "count": 0,
+          "trusted": false
+        },
+        "dialogClosed": false,
+        "routeRetained": true
+      },
+      "screenshots": [
+        {
+          "state": "open-before-click",
+          "file": "before/light-375-open-before-click.png"
+        },
+        {
+          "state": "still-open-after-click",
+          "file": "before/light-375-still-open-after-click.png"
+        }
+      ],
+      "networkErrors": [],
+      "pageErrors": [],
+      "opener": {
+        "label": "New booking",
+        "inTopbar": false
+      },
+      "measurements": {
+        "center": {
+          "x": 312,
+          "y": 60
+        },
+        "centerHitBelongsToButton": false,
+        "hit": {
+          "tag": "DIV",
+          "className": "topbar-title",
+          "zIndex": "auto",
+          "position": "static",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 76,
+            "y": 60,
+            "width": 287,
+            "height": 32
+          }
+        },
+        "button": {
+          "tag": "BUTTON",
+          "className": "ui-button ui-button-native ui-button-md lf-icon-button",
+          "zIndex": "auto",
+          "position": "relative",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 290,
+            "y": 38,
+            "width": 44,
+            "height": 44
+          }
+        },
+        "dialog": {
+          "tag": "FORM",
+          "className": "op2-modal",
+          "zIndex": "auto",
+          "position": "static",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 16,
+            "y": 8,
+            "width": 343,
+            "height": 828
+          }
+        },
+        "backdrop": {
+          "tag": "DIV",
+          "className": "lf-modal-backdrop",
+          "zIndex": "70",
+          "position": "fixed",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 0,
+            "y": 0,
+            "width": 375,
+            "height": 844
+          }
+        },
+        "topbar": {
+          "tag": "HEADER",
+          "className": "topbar cf-topbar",
+          "zIndex": "80",
+          "position": "sticky",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 64,
+            "y": 0,
+            "width": 311,
+            "height": 157
+          }
+        },
+        "sidebar": {
+          "tag": "ASIDE",
+          "className": "sidebar cf-sidebar  ",
+          "zIndex": "1400",
+          "position": "fixed",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 0,
+            "y": 0,
+            "width": 64,
+            "height": 844
+          }
+        },
+        "backdropDirectlyUnderBody": false,
+        "modalLeftEdgeOwned": false,
+        "scroll": {
+          "x": 0,
+          "y": 0,
+          "dialog": 0
+        },
+        "ancestry": [
+          {
+            "tag": "BUTTON",
+            "className": "ui-button ui-button-native ui-button-md lf-icon-button",
+            "zIndex": "auto",
+            "position": "relative",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 290,
+              "y": 38,
+              "width": 44,
+              "height": 44
+            }
+          },
+          {
+            "tag": "DIV",
+            "className": "order-selector-head",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 41,
+              "y": 33,
+              "width": 293,
+              "height": 54
+            }
+          },
+          {
+            "tag": "FORM",
+            "className": "op2-modal",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 16,
+              "y": 8,
+              "width": 343,
+              "height": 828
+            }
+          },
+          {
+            "tag": "DIV",
+            "className": "lf-modal-backdrop",
+            "zIndex": "70",
+            "position": "fixed",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 0,
+              "y": 0,
+              "width": 375,
+              "height": 844
+            }
+          },
+          {
+            "tag": "SECTION",
+            "className": "op2-page",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 80,
+              "y": 226,
+              "width": 279,
+              "height": 3124
+            }
+          },
+          {
+            "tag": "DIV",
+            "className": "page route-page",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 64,
+              "y": 202,
+              "width": 311,
+              "height": 3172
+            }
+          },
+          {
+            "tag": "DIV",
+            "className": "main-content page-reservations",
+            "zIndex": "1",
+            "position": "relative",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 64,
+              "y": 0,
+              "width": 311,
+              "height": 3374
+            }
+          },
+          {
+            "tag": "DIV",
+            "className": "shell",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 0,
+              "y": 0,
+              "width": 375,
+              "height": 3374
+            }
+          },
+          {
+            "tag": "DIV",
+            "className": "",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 0,
+              "y": 0,
+              "width": 375,
+              "height": 3374
+            }
+          },
+          {
+            "tag": "BODY",
+            "className": "",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 0,
+              "y": 0,
+              "width": 375,
+              "height": 3374
+            }
+          },
+          {
+            "tag": "HTML",
+            "className": "",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 0,
+              "y": 0,
+              "width": 375,
+              "height": 3374
+            }
+          }
+        ]
+      },
+      "checks": {
+        "centerHitBelongsToButton": false,
+        "modalLeftEdgeNotBehindSidebar": false,
+        "actualUnforcedTrustedClick": false,
+        "dialogClosed": false,
+        "routeRetained": true,
+        "noRuntimeErrors": true,
+        "noReadErrors": true
+      }
+    },
+    {
+      "stage": "before",
+      "theme": "light",
+      "width": 768,
+      "status": "layer-or-close-failure",
+      "click": {
+        "completed": true,
+        "method": "Playwright center click; no force, JS click or DOM relocation",
+        "observed": {
+          "count": 1,
+          "trusted": true
+        },
+        "dialogClosed": true,
+        "routeRetained": true
+      },
+      "screenshots": [
+        {
+          "state": "open-before-click",
+          "file": "before/light-768-open-before-click.png"
+        },
+        {
+          "state": "closed-after-click",
+          "file": "before/light-768-closed-after-click.png"
+        }
+      ],
+      "networkErrors": [],
+      "pageErrors": [],
+      "opener": {
+        "label": "New booking",
+        "inTopbar": false
+      },
+      "measurements": {
+        "center": {
+          "x": 661,
+          "y": 236
+        },
+        "centerHitBelongsToButton": true,
+        "hit": {
+          "tag": "path",
+          "className": "SVG",
+          "zIndex": "auto",
+          "position": "static",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 657,
+            "y": 232,
+            "width": 8,
+            "height": 8
+          }
+        },
+        "button": {
+          "tag": "BUTTON",
+          "className": "ui-button ui-button-native ui-button-md lf-icon-button",
+          "zIndex": "auto",
+          "position": "relative",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 643,
+            "y": 218,
+            "width": 36,
+            "height": 36
+          }
+        },
+        "dialog": {
+          "tag": "FORM",
+          "className": "op2-modal",
+          "zIndex": "auto",
+          "position": "static",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 64,
+            "y": 184,
+            "width": 640,
+            "height": 632
+          }
+        },
+        "backdrop": {
+          "tag": "DIV",
+          "className": "lf-modal-backdrop",
+          "zIndex": "70",
+          "position": "fixed",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 0,
+            "y": 0,
+            "width": 768,
+            "height": 1000
+          }
+        },
+        "topbar": {
+          "tag": "HEADER",
+          "className": "topbar cf-topbar",
+          "zIndex": "80",
+          "position": "sticky",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 288,
+            "y": 0,
+            "width": 480,
+            "height": 93
+          }
+        },
+        "sidebar": {
+          "tag": "ASIDE",
+          "className": "sidebar cf-sidebar  ",
+          "zIndex": "1400",
+          "position": "fixed",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 0,
+            "y": 0,
+            "width": 288,
+            "height": 1000
+          }
+        },
+        "backdropDirectlyUnderBody": false,
+        "modalLeftEdgeOwned": false,
+        "scroll": {
+          "x": 0,
+          "y": 0,
+          "dialog": 0
+        },
+        "ancestry": [
+          {
+            "tag": "BUTTON",
+            "className": "ui-button ui-button-native ui-button-md lf-icon-button",
+            "zIndex": "auto",
+            "position": "relative",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 643,
+              "y": 218,
+              "width": 36,
+              "height": 36
+            }
+          },
+          {
+            "tag": "DIV",
+            "className": "order-selector-head",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 89,
+              "y": 209,
+              "width": 590,
+              "height": 54
+            }
+          },
+          {
+            "tag": "FORM",
+            "className": "op2-modal",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 64,
+              "y": 184,
+              "width": 640,
+              "height": 632
+            }
+          },
+          {
+            "tag": "DIV",
+            "className": "lf-modal-backdrop",
+            "zIndex": "70",
+            "position": "fixed",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 0,
+              "y": 0,
+              "width": 768,
+              "height": 1000
+            }
+          },
+          {
+            "tag": "SECTION",
+            "className": "op2-page",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 312,
+              "y": 186,
+              "width": 432,
+              "height": 1940
+            }
+          },
+          {
+            "tag": "DIV",
+            "className": "page route-page",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 288,
+              "y": 138,
+              "width": 480,
+              "height": 2036
+            }
+          },
+          {
+            "tag": "DIV",
+            "className": "main-content page-reservations",
+            "zIndex": "1",
+            "position": "relative",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 288,
+              "y": 0,
+              "width": 480,
+              "height": 2174
+            }
+          },
+          {
+            "tag": "DIV",
+            "className": "shell",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 0,
+              "y": 0,
+              "width": 768,
+              "height": 2174
+            }
+          },
+          {
+            "tag": "DIV",
+            "className": "",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 0,
+              "y": 0,
+              "width": 768,
+              "height": 2174
+            }
+          },
+          {
+            "tag": "BODY",
+            "className": "",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 0,
+              "y": 0,
+              "width": 768,
+              "height": 2174
+            }
+          },
+          {
+            "tag": "HTML",
+            "className": "",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 0,
+              "y": 0,
+              "width": 768,
+              "height": 2174
+            }
+          }
+        ]
+      },
+      "checks": {
+        "centerHitBelongsToButton": true,
+        "modalLeftEdgeNotBehindSidebar": false,
+        "actualUnforcedTrustedClick": true,
+        "dialogClosed": true,
+        "routeRetained": true,
+        "noRuntimeErrors": true,
+        "noReadErrors": true
+      }
+    },
+    {
+      "stage": "before",
+      "theme": "light",
+      "width": 1024,
+      "status": "layer-or-close-failure",
+      "click": {
+        "completed": true,
+        "method": "Playwright center click; no force, JS click or DOM relocation",
+        "observed": {
+          "count": 1,
+          "trusted": true
+        },
+        "dialogClosed": true,
+        "routeRetained": true
+      },
+      "screenshots": [
+        {
+          "state": "open-before-click",
+          "file": "before/light-1024-open-before-click.png"
+        },
+        {
+          "state": "closed-after-click",
+          "file": "before/light-1024-closed-after-click.png"
+        }
+      ],
+      "networkErrors": [],
+      "pageErrors": [],
+      "opener": {
+        "label": "New booking",
+        "inTopbar": false
+      },
+      "measurements": {
+        "center": {
+          "x": 789,
+          "y": 236
+        },
+        "centerHitBelongsToButton": true,
+        "hit": {
+          "tag": "path",
+          "className": "SVG",
+          "zIndex": "auto",
+          "position": "static",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 785,
+            "y": 232,
+            "width": 8,
+            "height": 8
+          }
+        },
+        "button": {
+          "tag": "BUTTON",
+          "className": "ui-button ui-button-native ui-button-md lf-icon-button",
+          "zIndex": "auto",
+          "position": "relative",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 771,
+            "y": 218,
+            "width": 36,
+            "height": 36
+          }
+        },
+        "dialog": {
+          "tag": "FORM",
+          "className": "op2-modal",
+          "zIndex": "auto",
+          "position": "static",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 192,
+            "y": 184,
+            "width": 640,
+            "height": 632
+          }
+        },
+        "backdrop": {
+          "tag": "DIV",
+          "className": "lf-modal-backdrop",
+          "zIndex": "70",
+          "position": "fixed",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 0,
+            "y": 0,
+            "width": 1024,
+            "height": 1000
+          }
+        },
+        "topbar": {
+          "tag": "HEADER",
+          "className": "topbar cf-topbar",
+          "zIndex": "80",
+          "position": "sticky",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 288,
+            "y": 0,
+            "width": 736,
+            "height": 77
+          }
+        },
+        "sidebar": {
+          "tag": "ASIDE",
+          "className": "sidebar cf-sidebar  ",
+          "zIndex": "1400",
+          "position": "fixed",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 0,
+            "y": 0,
+            "width": 288,
+            "height": 1000
+          }
+        },
+        "backdropDirectlyUnderBody": false,
+        "modalLeftEdgeOwned": false,
+        "scroll": {
+          "x": 0,
+          "y": 0,
+          "dialog": 0
+        },
+        "ancestry": [
+          {
+            "tag": "BUTTON",
+            "className": "ui-button ui-button-native ui-button-md lf-icon-button",
+            "zIndex": "auto",
+            "position": "relative",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 771,
+              "y": 218,
+              "width": 36,
+              "height": 36
+            }
+          },
+          {
+            "tag": "DIV",
+            "className": "order-selector-head",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 217,
+              "y": 209,
+              "width": 590,
+              "height": 54
+            }
+          },
+          {
+            "tag": "FORM",
+            "className": "op2-modal",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 192,
+              "y": 184,
+              "width": 640,
+              "height": 632
+            }
+          },
+          {
+            "tag": "DIV",
+            "className": "lf-modal-backdrop",
+            "zIndex": "70",
+            "position": "fixed",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 0,
+              "y": 0,
+              "width": 1024,
+              "height": 1000
+            }
+          },
+          {
+            "tag": "SECTION",
+            "className": "op2-page",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 312,
+              "y": 170,
+              "width": 688,
+              "height": 1780
+            }
+          },
+          {
+            "tag": "DIV",
+            "className": "page route-page",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 288,
+              "y": 122,
+              "width": 736,
+              "height": 1876
+            }
+          },
+          {
+            "tag": "DIV",
+            "className": "main-content page-reservations",
+            "zIndex": "1",
+            "position": "relative",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 288,
+              "y": 0,
+              "width": 736,
+              "height": 1998
+            }
+          },
+          {
+            "tag": "DIV",
+            "className": "shell",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 0,
+              "y": 0,
+              "width": 1024,
+              "height": 1998
+            }
+          },
+          {
+            "tag": "DIV",
+            "className": "",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 0,
+              "y": 0,
+              "width": 1024,
+              "height": 1998
+            }
+          },
+          {
+            "tag": "BODY",
+            "className": "",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 0,
+              "y": 0,
+              "width": 1024,
+              "height": 1998
+            }
+          },
+          {
+            "tag": "HTML",
+            "className": "",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 0,
+              "y": 0,
+              "width": 1024,
+              "height": 1998
+            }
+          }
+        ]
+      },
+      "checks": {
+        "centerHitBelongsToButton": true,
+        "modalLeftEdgeNotBehindSidebar": false,
+        "actualUnforcedTrustedClick": true,
+        "dialogClosed": true,
+        "routeRetained": true,
+        "noRuntimeErrors": true,
+        "noReadErrors": true
+      }
+    },
+    {
+      "stage": "before",
+      "theme": "light",
+      "width": 1440,
+      "status": "pass",
+      "click": {
+        "completed": true,
+        "method": "Playwright center click; no force, JS click or DOM relocation",
+        "observed": {
+          "count": 1,
+          "trusted": true
+        },
+        "dialogClosed": true,
+        "routeRetained": true
+      },
+      "screenshots": [
+        {
+          "state": "open-before-click",
+          "file": "before/light-1440-open-before-click.png"
+        },
+        {
+          "state": "closed-after-click",
+          "file": "before/light-1440-closed-after-click.png"
+        }
+      ],
+      "networkErrors": [],
+      "pageErrors": [],
+      "opener": {
+        "label": "New Booking",
+        "inTopbar": true
+      },
+      "measurements": {
+        "center": {
+          "x": 997,
+          "y": 236
+        },
+        "centerHitBelongsToButton": true,
+        "hit": {
+          "tag": "path",
+          "className": "SVG",
+          "zIndex": "auto",
+          "position": "static",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 993,
+            "y": 232,
+            "width": 8,
+            "height": 8
+          }
+        },
+        "button": {
+          "tag": "BUTTON",
+          "className": "ui-button ui-button-native ui-button-md lf-icon-button",
+          "zIndex": "auto",
+          "position": "relative",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 979,
+            "y": 218,
+            "width": 36,
+            "height": 36
+          }
+        },
+        "dialog": {
+          "tag": "FORM",
+          "className": "op2-modal",
+          "zIndex": "auto",
+          "position": "static",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 400,
+            "y": 184,
+            "width": 640,
+            "height": 632
+          }
+        },
+        "backdrop": {
+          "tag": "DIV",
+          "className": "lf-modal-backdrop",
+          "zIndex": "70",
+          "position": "fixed",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 0,
+            "y": 0,
+            "width": 1440,
+            "height": 1000
+          }
+        },
+        "topbar": {
+          "tag": "HEADER",
+          "className": "topbar cf-topbar",
+          "zIndex": "80",
+          "position": "sticky",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 288,
+            "y": 0,
+            "width": 1152,
+            "height": 77
+          }
+        },
+        "sidebar": {
+          "tag": "ASIDE",
+          "className": "sidebar cf-sidebar  ",
+          "zIndex": "1400",
+          "position": "fixed",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 0,
+            "y": 0,
+            "width": 288,
+            "height": 1000
+          }
+        },
+        "backdropDirectlyUnderBody": false,
+        "modalLeftEdgeOwned": true,
+        "scroll": {
+          "x": 0,
+          "y": 0,
+          "dialog": 0
+        },
+        "ancestry": [
+          {
+            "tag": "BUTTON",
+            "className": "ui-button ui-button-native ui-button-md lf-icon-button",
+            "zIndex": "auto",
+            "position": "relative",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 979,
+              "y": 218,
+              "width": 36,
+              "height": 36
+            }
+          },
+          {
+            "tag": "DIV",
+            "className": "order-selector-head",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 425,
+              "y": 209,
+              "width": 590,
+              "height": 54
+            }
+          },
+          {
+            "tag": "FORM",
+            "className": "op2-modal",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 400,
+              "y": 184,
+              "width": 640,
+              "height": 632
+            }
+          },
+          {
+            "tag": "DIV",
+            "className": "lf-modal-backdrop",
+            "zIndex": "70",
+            "position": "fixed",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 0,
+              "y": 0,
+              "width": 1440,
+              "height": 1000
+            }
+          },
+          {
+            "tag": "SECTION",
+            "className": "op2-page",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 312,
+              "y": 170,
+              "width": 1104,
+              "height": 1164
+            }
+          },
+          {
+            "tag": "DIV",
+            "className": "page route-page",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 288,
+              "y": 122,
+              "width": 1152,
+              "height": 1260
+            }
+          },
+          {
+            "tag": "DIV",
+            "className": "main-content page-reservations",
+            "zIndex": "1",
+            "position": "relative",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 288,
+              "y": 0,
+              "width": 1152,
+              "height": 1382
+            }
+          },
+          {
+            "tag": "DIV",
+            "className": "shell",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 0,
+              "y": 0,
+              "width": 1440,
+              "height": 1382
+            }
+          },
+          {
+            "tag": "DIV",
+            "className": "",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 0,
+              "y": 0,
+              "width": 1440,
+              "height": 1382
+            }
+          },
+          {
+            "tag": "BODY",
+            "className": "",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 0,
+              "y": 0,
+              "width": 1440,
+              "height": 1382
+            }
+          },
+          {
+            "tag": "HTML",
+            "className": "",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 0,
+              "y": 0,
+              "width": 1440,
+              "height": 1382
+            }
+          }
+        ]
+      },
+      "checks": {
+        "centerHitBelongsToButton": true,
+        "modalLeftEdgeNotBehindSidebar": true,
+        "actualUnforcedTrustedClick": true,
+        "dialogClosed": true,
+        "routeRetained": true,
+        "noRuntimeErrors": true,
+        "noReadErrors": true
+      }
+    },
+    {
+      "stage": "before",
+      "theme": "light",
+      "width": 1920,
+      "status": "pass",
+      "click": {
+        "completed": true,
+        "method": "Playwright center click; no force, JS click or DOM relocation",
+        "observed": {
+          "count": 1,
+          "trusted": true
+        },
+        "dialogClosed": true,
+        "routeRetained": true
+      },
+      "screenshots": [
+        {
+          "state": "open-before-click",
+          "file": "before/light-1920-open-before-click.png"
+        },
+        {
+          "state": "closed-after-click",
+          "file": "before/light-1920-closed-after-click.png"
+        }
+      ],
+      "networkErrors": [],
+      "pageErrors": [],
+      "opener": {
+        "label": "New Booking",
+        "inTopbar": true
+      },
+      "measurements": {
+        "center": {
+          "x": 1237,
+          "y": 236
+        },
+        "centerHitBelongsToButton": true,
+        "hit": {
+          "tag": "path",
+          "className": "SVG",
+          "zIndex": "auto",
+          "position": "static",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 1233,
+            "y": 232,
+            "width": 8,
+            "height": 8
+          }
+        },
+        "button": {
+          "tag": "BUTTON",
+          "className": "ui-button ui-button-native ui-button-md lf-icon-button",
+          "zIndex": "auto",
+          "position": "relative",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 1219,
+            "y": 218,
+            "width": 36,
+            "height": 36
+          }
+        },
+        "dialog": {
+          "tag": "FORM",
+          "className": "op2-modal",
+          "zIndex": "auto",
+          "position": "static",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 640,
+            "y": 184,
+            "width": 640,
+            "height": 632
+          }
+        },
+        "backdrop": {
+          "tag": "DIV",
+          "className": "lf-modal-backdrop",
+          "zIndex": "70",
+          "position": "fixed",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 0,
+            "y": 0,
+            "width": 1920,
+            "height": 1000
+          }
+        },
+        "topbar": {
+          "tag": "HEADER",
+          "className": "topbar cf-topbar",
+          "zIndex": "80",
+          "position": "sticky",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 288,
+            "y": 0,
+            "width": 1632,
+            "height": 77
+          }
+        },
+        "sidebar": {
+          "tag": "ASIDE",
+          "className": "sidebar cf-sidebar  ",
+          "zIndex": "1400",
+          "position": "fixed",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 0,
+            "y": 0,
+            "width": 288,
+            "height": 1000
+          }
+        },
+        "backdropDirectlyUnderBody": false,
+        "modalLeftEdgeOwned": true,
+        "scroll": {
+          "x": 0,
+          "y": 0,
+          "dialog": 0
+        },
+        "ancestry": [
+          {
+            "tag": "BUTTON",
+            "className": "ui-button ui-button-native ui-button-md lf-icon-button",
+            "zIndex": "auto",
+            "position": "relative",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 1219,
+              "y": 218,
+              "width": 36,
+              "height": 36
+            }
+          },
+          {
+            "tag": "DIV",
+            "className": "order-selector-head",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 665,
+              "y": 209,
+              "width": 590,
+              "height": 54
+            }
+          },
+          {
+            "tag": "FORM",
+            "className": "op2-modal",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 640,
+              "y": 184,
+              "width": 640,
+              "height": 632
+            }
+          },
+          {
+            "tag": "DIV",
+            "className": "lf-modal-backdrop",
+            "zIndex": "70",
+            "position": "fixed",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 0,
+              "y": 0,
+              "width": 1920,
+              "height": 1000
+            }
+          },
+          {
+            "tag": "SECTION",
+            "className": "op2-page",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 312,
+              "y": 170,
+              "width": 1452,
+              "height": 1128
+            }
+          },
+          {
+            "tag": "DIV",
+            "className": "page route-page",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 288,
+              "y": 122,
+              "width": 1500,
+              "height": 1224
+            }
+          },
+          {
+            "tag": "DIV",
+            "className": "main-content page-reservations",
+            "zIndex": "1",
+            "position": "relative",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 288,
+              "y": 0,
+              "width": 1632,
+              "height": 1346
+            }
+          },
+          {
+            "tag": "DIV",
+            "className": "shell",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 0,
+              "y": 0,
+              "width": 1920,
+              "height": 1346
+            }
+          },
+          {
+            "tag": "DIV",
+            "className": "",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 0,
+              "y": 0,
+              "width": 1920,
+              "height": 1346
+            }
+          },
+          {
+            "tag": "BODY",
+            "className": "",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 0,
+              "y": 0,
+              "width": 1920,
+              "height": 1346
+            }
+          },
+          {
+            "tag": "HTML",
+            "className": "",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 0,
+              "y": 0,
+              "width": 1920,
+              "height": 1346
+            }
+          }
+        ]
+      },
+      "checks": {
+        "centerHitBelongsToButton": true,
+        "modalLeftEdgeNotBehindSidebar": true,
+        "actualUnforcedTrustedClick": true,
+        "dialogClosed": true,
+        "routeRetained": true,
+        "noRuntimeErrors": true,
+        "noReadErrors": true
+      }
+    },
+    {
+      "stage": "before",
+      "theme": "dark",
+      "width": 375,
+      "status": "layer-or-close-failure",
+      "click": {
+        "completed": false,
+        "method": "Playwright center click; no force, JS click or DOM relocation",
+        "error": "locator.click: Timeout 3000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('dialog', { name: 'Reserve a table', exact: true }).getByRole('button', { name: 'Close booking form', exact: true })\u001b[22m\n\u001b[2m    - locator resolved to <button type=\"button\" aria-label=\"Close booking form\" data-tooltip=\"Close booking form\" class=\"ui-button ui-button-native ui-button-md lf-icon-button\">…</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div class=\"topbar-title\">Bookings</div> from <header class=\"topbar cf-topbar\">…</header> subtree intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m    - element is visible, enabled and stable\u001b[22m\n\u001b[2m    - scrolling into view if needed\u001b[22m\n\u001b[2m    - done scrolling\u001b[22m\n\u001b[2m    - <div class=\"topbar-title\">Bookings</div> from <header class=\"topbar cf-topbar\">…</header> subtree intercepts pointer events\u001b[22m\n\u001b[2m  2 × retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m      - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div class=\"topbar-breadcrumb\">…</div> from <header class=\"topbar cf-topbar\">…</header> subtree intercepts pointer events\u001b[22m\n\u001b[2m  2 × retrying click action\u001b[22m\n\u001b[2m      - waiting 500ms\u001b[22m\n\u001b[2m      - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div class=\"topbar-title\">Bookings</div> from <header class=\"topbar cf-topbar\">…</header> subtree intercepts pointer events\u001b[22m\n\u001b[2m  2 × retrying click action\u001b[22m\n\u001b[2m      - waiting 500ms\u001b[22m\n\u001b[2m      - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div class=\"topbar-breadcrumb\">…</div> from <header class=\"topbar cf-topbar\">…</header> subtree intercepts pointer events\u001b[22m\n\u001b[2m  - retrying click action\u001b[22m\n\u001b[2m    - waiting 500ms\u001b[22m\n",
+        "observed": {
+          "count": 0,
+          "trusted": false
+        },
+        "dialogClosed": false,
+        "routeRetained": true
+      },
+      "screenshots": [
+        {
+          "state": "open-before-click",
+          "file": "before/dark-375-open-before-click.png"
+        },
+        {
+          "state": "still-open-after-click",
+          "file": "before/dark-375-still-open-after-click.png"
+        }
+      ],
+      "networkErrors": [],
+      "pageErrors": [],
+      "opener": {
+        "label": "New booking",
+        "inTopbar": false
+      },
+      "measurements": {
+        "center": {
+          "x": 312,
+          "y": 60
+        },
+        "centerHitBelongsToButton": false,
+        "hit": {
+          "tag": "DIV",
+          "className": "topbar-title",
+          "zIndex": "auto",
+          "position": "static",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 76,
+            "y": 60,
+            "width": 287,
+            "height": 32
+          }
+        },
+        "button": {
+          "tag": "BUTTON",
+          "className": "ui-button ui-button-native ui-button-md lf-icon-button",
+          "zIndex": "auto",
+          "position": "relative",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 290,
+            "y": 38,
+            "width": 44,
+            "height": 44
+          }
+        },
+        "dialog": {
+          "tag": "FORM",
+          "className": "op2-modal",
+          "zIndex": "auto",
+          "position": "static",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 16,
+            "y": 8,
+            "width": 343,
+            "height": 828
+          }
+        },
+        "backdrop": {
+          "tag": "DIV",
+          "className": "lf-modal-backdrop",
+          "zIndex": "70",
+          "position": "fixed",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 0,
+            "y": 0,
+            "width": 375,
+            "height": 844
+          }
+        },
+        "topbar": {
+          "tag": "HEADER",
+          "className": "topbar cf-topbar",
+          "zIndex": "80",
+          "position": "sticky",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 64,
+            "y": 0,
+            "width": 311,
+            "height": 157
+          }
+        },
+        "sidebar": {
+          "tag": "ASIDE",
+          "className": "sidebar cf-sidebar  ",
+          "zIndex": "1400",
+          "position": "fixed",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 0,
+            "y": 0,
+            "width": 64,
+            "height": 844
+          }
+        },
+        "backdropDirectlyUnderBody": false,
+        "modalLeftEdgeOwned": false,
+        "scroll": {
+          "x": 0,
+          "y": 0,
+          "dialog": 0
+        },
+        "ancestry": [
+          {
+            "tag": "BUTTON",
+            "className": "ui-button ui-button-native ui-button-md lf-icon-button",
+            "zIndex": "auto",
+            "position": "relative",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 290,
+              "y": 38,
+              "width": 44,
+              "height": 44
+            }
+          },
+          {
+            "tag": "DIV",
+            "className": "order-selector-head",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 41,
+              "y": 33,
+              "width": 293,
+              "height": 54
+            }
+          },
+          {
+            "tag": "FORM",
+            "className": "op2-modal",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 16,
+              "y": 8,
+              "width": 343,
+              "height": 828
+            }
+          },
+          {
+            "tag": "DIV",
+            "className": "lf-modal-backdrop",
+            "zIndex": "70",
+            "position": "fixed",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 0,
+              "y": 0,
+              "width": 375,
+              "height": 844
+            }
+          },
+          {
+            "tag": "SECTION",
+            "className": "op2-page",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 80,
+              "y": 226,
+              "width": 279,
+              "height": 3124
+            }
+          },
+          {
+            "tag": "DIV",
+            "className": "page route-page",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 64,
+              "y": 202,
+              "width": 311,
+              "height": 3172
+            }
+          },
+          {
+            "tag": "DIV",
+            "className": "main-content page-reservations",
+            "zIndex": "1",
+            "position": "relative",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 64,
+              "y": 0,
+              "width": 311,
+              "height": 3374
+            }
+          },
+          {
+            "tag": "DIV",
+            "className": "shell",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 0,
+              "y": 0,
+              "width": 375,
+              "height": 3374
+            }
+          },
+          {
+            "tag": "DIV",
+            "className": "",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 0,
+              "y": 0,
+              "width": 375,
+              "height": 3374
+            }
+          },
+          {
+            "tag": "BODY",
+            "className": "dark",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 0,
+              "y": 0,
+              "width": 375,
+              "height": 3374
+            }
+          },
+          {
+            "tag": "HTML",
+            "className": "dark",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 0,
+              "y": 0,
+              "width": 375,
+              "height": 3374
+            }
+          }
+        ]
+      },
+      "checks": {
+        "centerHitBelongsToButton": false,
+        "modalLeftEdgeNotBehindSidebar": false,
+        "actualUnforcedTrustedClick": false,
+        "dialogClosed": false,
+        "routeRetained": true,
+        "noRuntimeErrors": true,
+        "noReadErrors": true
+      }
+    },
+    {
+      "stage": "before",
+      "theme": "dark",
+      "width": 768,
+      "status": "layer-or-close-failure",
+      "click": {
+        "completed": true,
+        "method": "Playwright center click; no force, JS click or DOM relocation",
+        "observed": {
+          "count": 1,
+          "trusted": true
+        },
+        "dialogClosed": true,
+        "routeRetained": true
+      },
+      "screenshots": [
+        {
+          "state": "open-before-click",
+          "file": "before/dark-768-open-before-click.png"
+        },
+        {
+          "state": "closed-after-click",
+          "file": "before/dark-768-closed-after-click.png"
+        }
+      ],
+      "networkErrors": [],
+      "pageErrors": [],
+      "opener": {
+        "label": "New booking",
+        "inTopbar": false
+      },
+      "measurements": {
+        "center": {
+          "x": 661,
+          "y": 236
+        },
+        "centerHitBelongsToButton": true,
+        "hit": {
+          "tag": "path",
+          "className": "SVG",
+          "zIndex": "auto",
+          "position": "static",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 657,
+            "y": 232,
+            "width": 8,
+            "height": 8
+          }
+        },
+        "button": {
+          "tag": "BUTTON",
+          "className": "ui-button ui-button-native ui-button-md lf-icon-button",
+          "zIndex": "auto",
+          "position": "relative",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 643,
+            "y": 218,
+            "width": 36,
+            "height": 36
+          }
+        },
+        "dialog": {
+          "tag": "FORM",
+          "className": "op2-modal",
+          "zIndex": "auto",
+          "position": "static",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 64,
+            "y": 184,
+            "width": 640,
+            "height": 632
+          }
+        },
+        "backdrop": {
+          "tag": "DIV",
+          "className": "lf-modal-backdrop",
+          "zIndex": "70",
+          "position": "fixed",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 0,
+            "y": 0,
+            "width": 768,
+            "height": 1000
+          }
+        },
+        "topbar": {
+          "tag": "HEADER",
+          "className": "topbar cf-topbar",
+          "zIndex": "80",
+          "position": "sticky",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 288,
+            "y": 0,
+            "width": 480,
+            "height": 93
+          }
+        },
+        "sidebar": {
+          "tag": "ASIDE",
+          "className": "sidebar cf-sidebar  ",
+          "zIndex": "1400",
+          "position": "fixed",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 0,
+            "y": 0,
+            "width": 288,
+            "height": 1000
+          }
+        },
+        "backdropDirectlyUnderBody": false,
+        "modalLeftEdgeOwned": false,
+        "scroll": {
+          "x": 0,
+          "y": 0,
+          "dialog": 0
+        },
+        "ancestry": [
+          {
+            "tag": "BUTTON",
+            "className": "ui-button ui-button-native ui-button-md lf-icon-button",
+            "zIndex": "auto",
+            "position": "relative",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 643,
+              "y": 218,
+              "width": 36,
+              "height": 36
+            }
+          },
+          {
+            "tag": "DIV",
+            "className": "order-selector-head",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 89,
+              "y": 209,
+              "width": 590,
+              "height": 54
+            }
+          },
+          {
+            "tag": "FORM",
+            "className": "op2-modal",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 64,
+              "y": 184,
+              "width": 640,
+              "height": 632
+            }
+          },
+          {
+            "tag": "DIV",
+            "className": "lf-modal-backdrop",
+            "zIndex": "70",
+            "position": "fixed",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 0,
+              "y": 0,
+              "width": 768,
+              "height": 1000
+            }
+          },
+          {
+            "tag": "SECTION",
+            "className": "op2-page",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 312,
+              "y": 186,
+              "width": 432,
+              "height": 1940
+            }
+          },
+          {
+            "tag": "DIV",
+            "className": "page route-page",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 288,
+              "y": 138,
+              "width": 480,
+              "height": 2036
+            }
+          },
+          {
+            "tag": "DIV",
+            "className": "main-content page-reservations",
+            "zIndex": "1",
+            "position": "relative",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 288,
+              "y": 0,
+              "width": 480,
+              "height": 2174
+            }
+          },
+          {
+            "tag": "DIV",
+            "className": "shell",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 0,
+              "y": 0,
+              "width": 768,
+              "height": 2174
+            }
+          },
+          {
+            "tag": "DIV",
+            "className": "",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 0,
+              "y": 0,
+              "width": 768,
+              "height": 2174
+            }
+          },
+          {
+            "tag": "BODY",
+            "className": "dark",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 0,
+              "y": 0,
+              "width": 768,
+              "height": 2174
+            }
+          },
+          {
+            "tag": "HTML",
+            "className": "dark",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 0,
+              "y": 0,
+              "width": 768,
+              "height": 2174
+            }
+          }
+        ]
+      },
+      "checks": {
+        "centerHitBelongsToButton": true,
+        "modalLeftEdgeNotBehindSidebar": false,
+        "actualUnforcedTrustedClick": true,
+        "dialogClosed": true,
+        "routeRetained": true,
+        "noRuntimeErrors": true,
+        "noReadErrors": true
+      }
+    },
+    {
+      "stage": "before",
+      "theme": "dark",
+      "width": 1024,
+      "status": "layer-or-close-failure",
+      "click": {
+        "completed": true,
+        "method": "Playwright center click; no force, JS click or DOM relocation",
+        "observed": {
+          "count": 1,
+          "trusted": true
+        },
+        "dialogClosed": true,
+        "routeRetained": true
+      },
+      "screenshots": [
+        {
+          "state": "open-before-click",
+          "file": "before/dark-1024-open-before-click.png"
+        },
+        {
+          "state": "closed-after-click",
+          "file": "before/dark-1024-closed-after-click.png"
+        }
+      ],
+      "networkErrors": [],
+      "pageErrors": [],
+      "opener": {
+        "label": "New booking",
+        "inTopbar": false
+      },
+      "measurements": {
+        "center": {
+          "x": 789,
+          "y": 236
+        },
+        "centerHitBelongsToButton": true,
+        "hit": {
+          "tag": "path",
+          "className": "SVG",
+          "zIndex": "auto",
+          "position": "static",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 785,
+            "y": 232,
+            "width": 8,
+            "height": 8
+          }
+        },
+        "button": {
+          "tag": "BUTTON",
+          "className": "ui-button ui-button-native ui-button-md lf-icon-button",
+          "zIndex": "auto",
+          "position": "relative",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 771,
+            "y": 218,
+            "width": 36,
+            "height": 36
+          }
+        },
+        "dialog": {
+          "tag": "FORM",
+          "className": "op2-modal",
+          "zIndex": "auto",
+          "position": "static",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 192,
+            "y": 184,
+            "width": 640,
+            "height": 632
+          }
+        },
+        "backdrop": {
+          "tag": "DIV",
+          "className": "lf-modal-backdrop",
+          "zIndex": "70",
+          "position": "fixed",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 0,
+            "y": 0,
+            "width": 1024,
+            "height": 1000
+          }
+        },
+        "topbar": {
+          "tag": "HEADER",
+          "className": "topbar cf-topbar",
+          "zIndex": "80",
+          "position": "sticky",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 288,
+            "y": 0,
+            "width": 736,
+            "height": 77
+          }
+        },
+        "sidebar": {
+          "tag": "ASIDE",
+          "className": "sidebar cf-sidebar  ",
+          "zIndex": "1400",
+          "position": "fixed",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 0,
+            "y": 0,
+            "width": 288,
+            "height": 1000
+          }
+        },
+        "backdropDirectlyUnderBody": false,
+        "modalLeftEdgeOwned": false,
+        "scroll": {
+          "x": 0,
+          "y": 0,
+          "dialog": 0
+        },
+        "ancestry": [
+          {
+            "tag": "BUTTON",
+            "className": "ui-button ui-button-native ui-button-md lf-icon-button",
+            "zIndex": "auto",
+            "position": "relative",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 771,
+              "y": 218,
+              "width": 36,
+              "height": 36
+            }
+          },
+          {
+            "tag": "DIV",
+            "className": "order-selector-head",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 217,
+              "y": 209,
+              "width": 590,
+              "height": 54
+            }
+          },
+          {
+            "tag": "FORM",
+            "className": "op2-modal",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 192,
+              "y": 184,
+              "width": 640,
+              "height": 632
+            }
+          },
+          {
+            "tag": "DIV",
+            "className": "lf-modal-backdrop",
+            "zIndex": "70",
+            "position": "fixed",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 0,
+              "y": 0,
+              "width": 1024,
+              "height": 1000
+            }
+          },
+          {
+            "tag": "SECTION",
+            "className": "op2-page",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 312,
+              "y": 170,
+              "width": 688,
+              "height": 1780
+            }
+          },
+          {
+            "tag": "DIV",
+            "className": "page route-page",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 288,
+              "y": 122,
+              "width": 736,
+              "height": 1876
+            }
+          },
+          {
+            "tag": "DIV",
+            "className": "main-content page-reservations",
+            "zIndex": "1",
+            "position": "relative",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 288,
+              "y": 0,
+              "width": 736,
+              "height": 1998
+            }
+          },
+          {
+            "tag": "DIV",
+            "className": "shell",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 0,
+              "y": 0,
+              "width": 1024,
+              "height": 1998
+            }
+          },
+          {
+            "tag": "DIV",
+            "className": "",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 0,
+              "y": 0,
+              "width": 1024,
+              "height": 1998
+            }
+          },
+          {
+            "tag": "BODY",
+            "className": "dark",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 0,
+              "y": 0,
+              "width": 1024,
+              "height": 1998
+            }
+          },
+          {
+            "tag": "HTML",
+            "className": "dark",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 0,
+              "y": 0,
+              "width": 1024,
+              "height": 1998
+            }
+          }
+        ]
+      },
+      "checks": {
+        "centerHitBelongsToButton": true,
+        "modalLeftEdgeNotBehindSidebar": false,
+        "actualUnforcedTrustedClick": true,
+        "dialogClosed": true,
+        "routeRetained": true,
+        "noRuntimeErrors": true,
+        "noReadErrors": true
+      }
+    },
+    {
+      "stage": "before",
+      "theme": "dark",
+      "width": 1440,
+      "status": "pass",
+      "click": {
+        "completed": true,
+        "method": "Playwright center click; no force, JS click or DOM relocation",
+        "observed": {
+          "count": 1,
+          "trusted": true
+        },
+        "dialogClosed": true,
+        "routeRetained": true
+      },
+      "screenshots": [
+        {
+          "state": "open-before-click",
+          "file": "before/dark-1440-open-before-click.png"
+        },
+        {
+          "state": "closed-after-click",
+          "file": "before/dark-1440-closed-after-click.png"
+        }
+      ],
+      "networkErrors": [],
+      "pageErrors": [],
+      "opener": {
+        "label": "New Booking",
+        "inTopbar": true
+      },
+      "measurements": {
+        "center": {
+          "x": 997,
+          "y": 236
+        },
+        "centerHitBelongsToButton": true,
+        "hit": {
+          "tag": "path",
+          "className": "SVG",
+          "zIndex": "auto",
+          "position": "static",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 993,
+            "y": 232,
+            "width": 8,
+            "height": 8
+          }
+        },
+        "button": {
+          "tag": "BUTTON",
+          "className": "ui-button ui-button-native ui-button-md lf-icon-button",
+          "zIndex": "auto",
+          "position": "relative",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 979,
+            "y": 218,
+            "width": 36,
+            "height": 36
+          }
+        },
+        "dialog": {
+          "tag": "FORM",
+          "className": "op2-modal",
+          "zIndex": "auto",
+          "position": "static",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 400,
+            "y": 184,
+            "width": 640,
+            "height": 632
+          }
+        },
+        "backdrop": {
+          "tag": "DIV",
+          "className": "lf-modal-backdrop",
+          "zIndex": "70",
+          "position": "fixed",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 0,
+            "y": 0,
+            "width": 1440,
+            "height": 1000
+          }
+        },
+        "topbar": {
+          "tag": "HEADER",
+          "className": "topbar cf-topbar",
+          "zIndex": "80",
+          "position": "sticky",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 288,
+            "y": 0,
+            "width": 1152,
+            "height": 77
+          }
+        },
+        "sidebar": {
+          "tag": "ASIDE",
+          "className": "sidebar cf-sidebar  ",
+          "zIndex": "1400",
+          "position": "fixed",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 0,
+            "y": 0,
+            "width": 288,
+            "height": 1000
+          }
+        },
+        "backdropDirectlyUnderBody": false,
+        "modalLeftEdgeOwned": true,
+        "scroll": {
+          "x": 0,
+          "y": 0,
+          "dialog": 0
+        },
+        "ancestry": [
+          {
+            "tag": "BUTTON",
+            "className": "ui-button ui-button-native ui-button-md lf-icon-button",
+            "zIndex": "auto",
+            "position": "relative",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 979,
+              "y": 218,
+              "width": 36,
+              "height": 36
+            }
+          },
+          {
+            "tag": "DIV",
+            "className": "order-selector-head",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 425,
+              "y": 209,
+              "width": 590,
+              "height": 54
+            }
+          },
+          {
+            "tag": "FORM",
+            "className": "op2-modal",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 400,
+              "y": 184,
+              "width": 640,
+              "height": 632
+            }
+          },
+          {
+            "tag": "DIV",
+            "className": "lf-modal-backdrop",
+            "zIndex": "70",
+            "position": "fixed",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 0,
+              "y": 0,
+              "width": 1440,
+              "height": 1000
+            }
+          },
+          {
+            "tag": "SECTION",
+            "className": "op2-page",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 312,
+              "y": 170,
+              "width": 1104,
+              "height": 1164
+            }
+          },
+          {
+            "tag": "DIV",
+            "className": "page route-page",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 288,
+              "y": 122,
+              "width": 1152,
+              "height": 1260
+            }
+          },
+          {
+            "tag": "DIV",
+            "className": "main-content page-reservations",
+            "zIndex": "1",
+            "position": "relative",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 288,
+              "y": 0,
+              "width": 1152,
+              "height": 1382
+            }
+          },
+          {
+            "tag": "DIV",
+            "className": "shell",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 0,
+              "y": 0,
+              "width": 1440,
+              "height": 1382
+            }
+          },
+          {
+            "tag": "DIV",
+            "className": "",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 0,
+              "y": 0,
+              "width": 1440,
+              "height": 1382
+            }
+          },
+          {
+            "tag": "BODY",
+            "className": "dark",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 0,
+              "y": 0,
+              "width": 1440,
+              "height": 1382
+            }
+          },
+          {
+            "tag": "HTML",
+            "className": "dark",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 0,
+              "y": 0,
+              "width": 1440,
+              "height": 1382
+            }
+          }
+        ]
+      },
+      "checks": {
+        "centerHitBelongsToButton": true,
+        "modalLeftEdgeNotBehindSidebar": true,
+        "actualUnforcedTrustedClick": true,
+        "dialogClosed": true,
+        "routeRetained": true,
+        "noRuntimeErrors": true,
+        "noReadErrors": true
+      }
+    },
+    {
+      "stage": "before",
+      "theme": "dark",
+      "width": 1920,
+      "status": "pass",
+      "click": {
+        "completed": true,
+        "method": "Playwright center click; no force, JS click or DOM relocation",
+        "observed": {
+          "count": 1,
+          "trusted": true
+        },
+        "dialogClosed": true,
+        "routeRetained": true
+      },
+      "screenshots": [
+        {
+          "state": "open-before-click",
+          "file": "before/dark-1920-open-before-click.png"
+        },
+        {
+          "state": "closed-after-click",
+          "file": "before/dark-1920-closed-after-click.png"
+        }
+      ],
+      "networkErrors": [],
+      "pageErrors": [],
+      "opener": {
+        "label": "New Booking",
+        "inTopbar": true
+      },
+      "measurements": {
+        "center": {
+          "x": 1237,
+          "y": 236
+        },
+        "centerHitBelongsToButton": true,
+        "hit": {
+          "tag": "path",
+          "className": "SVG",
+          "zIndex": "auto",
+          "position": "static",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 1233,
+            "y": 232,
+            "width": 8,
+            "height": 8
+          }
+        },
+        "button": {
+          "tag": "BUTTON",
+          "className": "ui-button ui-button-native ui-button-md lf-icon-button",
+          "zIndex": "auto",
+          "position": "relative",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 1219,
+            "y": 218,
+            "width": 36,
+            "height": 36
+          }
+        },
+        "dialog": {
+          "tag": "FORM",
+          "className": "op2-modal",
+          "zIndex": "auto",
+          "position": "static",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 640,
+            "y": 184,
+            "width": 640,
+            "height": 632
+          }
+        },
+        "backdrop": {
+          "tag": "DIV",
+          "className": "lf-modal-backdrop",
+          "zIndex": "70",
+          "position": "fixed",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 0,
+            "y": 0,
+            "width": 1920,
+            "height": 1000
+          }
+        },
+        "topbar": {
+          "tag": "HEADER",
+          "className": "topbar cf-topbar",
+          "zIndex": "80",
+          "position": "sticky",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 288,
+            "y": 0,
+            "width": 1632,
+            "height": 77
+          }
+        },
+        "sidebar": {
+          "tag": "ASIDE",
+          "className": "sidebar cf-sidebar  ",
+          "zIndex": "1400",
+          "position": "fixed",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 0,
+            "y": 0,
+            "width": 288,
+            "height": 1000
+          }
+        },
+        "backdropDirectlyUnderBody": false,
+        "modalLeftEdgeOwned": true,
+        "scroll": {
+          "x": 0,
+          "y": 0,
+          "dialog": 0
+        },
+        "ancestry": [
+          {
+            "tag": "BUTTON",
+            "className": "ui-button ui-button-native ui-button-md lf-icon-button",
+            "zIndex": "auto",
+            "position": "relative",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 1219,
+              "y": 218,
+              "width": 36,
+              "height": 36
+            }
+          },
+          {
+            "tag": "DIV",
+            "className": "order-selector-head",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 665,
+              "y": 209,
+              "width": 590,
+              "height": 54
+            }
+          },
+          {
+            "tag": "FORM",
+            "className": "op2-modal",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 640,
+              "y": 184,
+              "width": 640,
+              "height": 632
+            }
+          },
+          {
+            "tag": "DIV",
+            "className": "lf-modal-backdrop",
+            "zIndex": "70",
+            "position": "fixed",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 0,
+              "y": 0,
+              "width": 1920,
+              "height": 1000
+            }
+          },
+          {
+            "tag": "SECTION",
+            "className": "op2-page",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 312,
+              "y": 170,
+              "width": 1452,
+              "height": 1128
+            }
+          },
+          {
+            "tag": "DIV",
+            "className": "page route-page",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 288,
+              "y": 122,
+              "width": 1500,
+              "height": 1224
+            }
+          },
+          {
+            "tag": "DIV",
+            "className": "main-content page-reservations",
+            "zIndex": "1",
+            "position": "relative",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 288,
+              "y": 0,
+              "width": 1632,
+              "height": 1346
+            }
+          },
+          {
+            "tag": "DIV",
+            "className": "shell",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 0,
+              "y": 0,
+              "width": 1920,
+              "height": 1346
+            }
+          },
+          {
+            "tag": "DIV",
+            "className": "",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 0,
+              "y": 0,
+              "width": 1920,
+              "height": 1346
+            }
+          },
+          {
+            "tag": "BODY",
+            "className": "dark",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 0,
+              "y": 0,
+              "width": 1920,
+              "height": 1346
+            }
+          },
+          {
+            "tag": "HTML",
+            "className": "dark",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 0,
+              "y": 0,
+              "width": 1920,
+              "height": 1346
+            }
+          }
+        ]
+      },
+      "checks": {
+        "centerHitBelongsToButton": true,
+        "modalLeftEdgeNotBehindSidebar": true,
+        "actualUnforcedTrustedClick": true,
+        "dialogClosed": true,
+        "routeRetained": true,
+        "noRuntimeErrors": true,
+        "noReadErrors": true
+      }
+    },
+    {
+      "stage": "after",
+      "theme": "light",
+      "width": 375,
+      "status": "pass",
+      "click": {
+        "completed": true,
+        "method": "Playwright center click; no force, JS click or DOM relocation",
+        "observed": {
+          "count": 1,
+          "trusted": true
+        },
+        "dialogClosed": true,
+        "routeRetained": true
+      },
+      "screenshots": [
+        {
+          "state": "open-before-click",
+          "file": "after/light-375-open-before-click.png"
+        },
+        {
+          "state": "closed-after-click",
+          "file": "after/light-375-closed-after-click.png"
+        }
+      ],
+      "networkErrors": [],
+      "pageErrors": [],
+      "opener": {
+        "label": "New Booking",
+        "inTopbar": true
+      },
+      "measurements": {
+        "center": {
+          "x": 312,
+          "y": 60
+        },
+        "centerHitBelongsToButton": true,
+        "hit": {
+          "tag": "path",
+          "className": "SVG",
+          "zIndex": "auto",
+          "position": "static",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 308,
+            "y": 56,
+            "width": 8,
+            "height": 8
+          }
+        },
+        "button": {
+          "tag": "BUTTON",
+          "className": "ui-button ui-button-native ui-button-md lf-icon-button",
+          "zIndex": "auto",
+          "position": "relative",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 290,
+            "y": 38,
+            "width": 44,
+            "height": 44
+          }
+        },
+        "dialog": {
+          "tag": "FORM",
+          "className": "op2-modal",
+          "zIndex": "auto",
+          "position": "static",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 16,
+            "y": 8,
+            "width": 343,
+            "height": 828
+          }
+        },
+        "backdrop": {
+          "tag": "DIV",
+          "className": "lf-modal-backdrop",
+          "zIndex": "2000",
+          "position": "fixed",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 0,
+            "y": 0,
+            "width": 375,
+            "height": 844
+          }
+        },
+        "topbar": {
+          "tag": "HEADER",
+          "className": "topbar cf-topbar",
+          "zIndex": "80",
+          "position": "sticky",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 64,
+            "y": 0,
+            "width": 311,
+            "height": 157
+          }
+        },
+        "sidebar": {
+          "tag": "ASIDE",
+          "className": "sidebar cf-sidebar  ",
+          "zIndex": "1400",
+          "position": "fixed",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 0,
+            "y": 0,
+            "width": 64,
+            "height": 844
+          }
+        },
+        "backdropDirectlyUnderBody": true,
+        "modalLeftEdgeOwned": true,
+        "scroll": {
+          "x": 0,
+          "y": 0,
+          "dialog": 0
+        },
+        "ancestry": [
+          {
+            "tag": "BUTTON",
+            "className": "ui-button ui-button-native ui-button-md lf-icon-button",
+            "zIndex": "auto",
+            "position": "relative",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 290,
+              "y": 38,
+              "width": 44,
+              "height": 44
+            }
+          },
+          {
+            "tag": "DIV",
+            "className": "order-selector-head",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 41,
+              "y": 33,
+              "width": 293,
+              "height": 54
+            }
+          },
+          {
+            "tag": "FORM",
+            "className": "op2-modal",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 16,
+              "y": 8,
+              "width": 343,
+              "height": 828
+            }
+          },
+          {
+            "tag": "DIV",
+            "className": "lf-modal-backdrop",
+            "zIndex": "2000",
+            "position": "fixed",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 0,
+              "y": 0,
+              "width": 375,
+              "height": 844
+            }
+          },
+          {
+            "tag": "BODY",
+            "className": "",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 0,
+              "y": 0,
+              "width": 375,
+              "height": 3354
+            }
+          },
+          {
+            "tag": "HTML",
+            "className": "",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 0,
+              "y": 0,
+              "width": 375,
+              "height": 3354
+            }
+          }
+        ]
+      },
+      "checks": {
+        "centerHitBelongsToButton": true,
+        "modalLeftEdgeNotBehindSidebar": true,
+        "actualUnforcedTrustedClick": true,
+        "dialogClosed": true,
+        "routeRetained": true,
+        "noRuntimeErrors": true,
+        "noReadErrors": true
+      }
+    },
+    {
+      "stage": "after",
+      "theme": "light",
+      "width": 768,
+      "status": "pass",
+      "click": {
+        "completed": true,
+        "method": "Playwright center click; no force, JS click or DOM relocation",
+        "observed": {
+          "count": 1,
+          "trusted": true
+        },
+        "dialogClosed": true,
+        "routeRetained": true
+      },
+      "screenshots": [
+        {
+          "state": "open-before-click",
+          "file": "after/light-768-open-before-click.png"
+        },
+        {
+          "state": "closed-after-click",
+          "file": "after/light-768-closed-after-click.png"
+        }
+      ],
+      "networkErrors": [],
+      "pageErrors": [],
+      "opener": {
+        "label": "New Booking",
+        "inTopbar": true
+      },
+      "measurements": {
+        "center": {
+          "x": 661,
+          "y": 232
+        },
+        "centerHitBelongsToButton": true,
+        "hit": {
+          "tag": "path",
+          "className": "SVG",
+          "zIndex": "auto",
+          "position": "static",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 657,
+            "y": 228,
+            "width": 8,
+            "height": 8
+          }
+        },
+        "button": {
+          "tag": "BUTTON",
+          "className": "ui-button ui-button-native ui-button-md lf-icon-button",
+          "zIndex": "auto",
+          "position": "relative",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 643,
+            "y": 210,
+            "width": 36,
+            "height": 44
+          }
+        },
+        "dialog": {
+          "tag": "FORM",
+          "className": "op2-modal",
+          "zIndex": "auto",
+          "position": "static",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 64,
+            "y": 180,
+            "width": 640,
+            "height": 640
+          }
+        },
+        "backdrop": {
+          "tag": "DIV",
+          "className": "lf-modal-backdrop",
+          "zIndex": "2000",
+          "position": "fixed",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 0,
+            "y": 0,
+            "width": 768,
+            "height": 1000
+          }
+        },
+        "topbar": {
+          "tag": "HEADER",
+          "className": "topbar cf-topbar",
+          "zIndex": "80",
+          "position": "sticky",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 64,
+            "y": 0,
+            "width": 704,
+            "height": 105
+          }
+        },
+        "sidebar": {
+          "tag": "ASIDE",
+          "className": "sidebar cf-sidebar  ",
+          "zIndex": "1400",
+          "position": "fixed",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 0,
+            "y": 0,
+            "width": 64,
+            "height": 1000
+          }
+        },
+        "backdropDirectlyUnderBody": true,
+        "modalLeftEdgeOwned": true,
+        "scroll": {
+          "x": 0,
+          "y": 0,
+          "dialog": 0
+        },
+        "ancestry": [
+          {
+            "tag": "BUTTON",
+            "className": "ui-button ui-button-native ui-button-md lf-icon-button",
+            "zIndex": "auto",
+            "position": "relative",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 643,
+              "y": 210,
+              "width": 36,
+              "height": 44
+            }
+          },
+          {
+            "tag": "DIV",
+            "className": "order-selector-head",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 89,
+              "y": 205,
+              "width": 590,
+              "height": 54
+            }
+          },
+          {
+            "tag": "FORM",
+            "className": "op2-modal",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 64,
+              "y": 180,
+              "width": 640,
+              "height": 640
+            }
+          },
+          {
+            "tag": "DIV",
+            "className": "lf-modal-backdrop",
+            "zIndex": "2000",
+            "position": "fixed",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 0,
+              "y": 0,
+              "width": 768,
+              "height": 1000
+            }
+          },
+          {
+            "tag": "BODY",
+            "className": "",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 0,
+              "y": 0,
+              "width": 768,
+              "height": 2062
+            }
+          },
+          {
+            "tag": "HTML",
+            "className": "",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 0,
+              "y": 0,
+              "width": 768,
+              "height": 2062
+            }
+          }
+        ]
+      },
+      "checks": {
+        "centerHitBelongsToButton": true,
+        "modalLeftEdgeNotBehindSidebar": true,
+        "actualUnforcedTrustedClick": true,
+        "dialogClosed": true,
+        "routeRetained": true,
+        "noRuntimeErrors": true,
+        "noReadErrors": true
+      }
+    },
+    {
+      "stage": "after",
+      "theme": "light",
+      "width": 1024,
+      "status": "pass",
+      "click": {
+        "completed": true,
+        "method": "Playwright center click; no force, JS click or DOM relocation",
+        "observed": {
+          "count": 1,
+          "trusted": true
+        },
+        "dialogClosed": true,
+        "routeRetained": true
+      },
+      "screenshots": [
+        {
+          "state": "open-before-click",
+          "file": "after/light-1024-open-before-click.png"
+        },
+        {
+          "state": "closed-after-click",
+          "file": "after/light-1024-closed-after-click.png"
+        }
+      ],
+      "networkErrors": [],
+      "pageErrors": [],
+      "opener": {
+        "label": "New Booking",
+        "inTopbar": true
+      },
+      "measurements": {
+        "center": {
+          "x": 789,
+          "y": 236
+        },
+        "centerHitBelongsToButton": true,
+        "hit": {
+          "tag": "path",
+          "className": "SVG",
+          "zIndex": "auto",
+          "position": "static",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 785,
+            "y": 232,
+            "width": 8,
+            "height": 8
+          }
+        },
+        "button": {
+          "tag": "BUTTON",
+          "className": "ui-button ui-button-native ui-button-md lf-icon-button",
+          "zIndex": "auto",
+          "position": "relative",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 771,
+            "y": 218,
+            "width": 36,
+            "height": 36
+          }
+        },
+        "dialog": {
+          "tag": "FORM",
+          "className": "op2-modal",
+          "zIndex": "auto",
+          "position": "static",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 192,
+            "y": 184,
+            "width": 640,
+            "height": 632
+          }
+        },
+        "backdrop": {
+          "tag": "DIV",
+          "className": "lf-modal-backdrop",
+          "zIndex": "2000",
+          "position": "fixed",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 0,
+            "y": 0,
+            "width": 1024,
+            "height": 1000
+          }
+        },
+        "topbar": {
+          "tag": "HEADER",
+          "className": "topbar cf-topbar",
+          "zIndex": "80",
+          "position": "sticky",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 288,
+            "y": 0,
+            "width": 736,
+            "height": 77
+          }
+        },
+        "sidebar": {
+          "tag": "ASIDE",
+          "className": "sidebar cf-sidebar  ",
+          "zIndex": "1400",
+          "position": "fixed",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 0,
+            "y": 0,
+            "width": 288,
+            "height": 1000
+          }
+        },
+        "backdropDirectlyUnderBody": true,
+        "modalLeftEdgeOwned": true,
+        "scroll": {
+          "x": 0,
+          "y": 0,
+          "dialog": 0
+        },
+        "ancestry": [
+          {
+            "tag": "BUTTON",
+            "className": "ui-button ui-button-native ui-button-md lf-icon-button",
+            "zIndex": "auto",
+            "position": "relative",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 771,
+              "y": 218,
+              "width": 36,
+              "height": 36
+            }
+          },
+          {
+            "tag": "DIV",
+            "className": "order-selector-head",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 217,
+              "y": 209,
+              "width": 590,
+              "height": 54
+            }
+          },
+          {
+            "tag": "FORM",
+            "className": "op2-modal",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 192,
+              "y": 184,
+              "width": 640,
+              "height": 632
+            }
+          },
+          {
+            "tag": "DIV",
+            "className": "lf-modal-backdrop",
+            "zIndex": "2000",
+            "position": "fixed",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 0,
+              "y": 0,
+              "width": 1024,
+              "height": 1000
+            }
+          },
+          {
+            "tag": "BODY",
+            "className": "",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 0,
+              "y": 0,
+              "width": 1024,
+              "height": 1998
+            }
+          },
+          {
+            "tag": "HTML",
+            "className": "",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 0,
+              "y": 0,
+              "width": 1024,
+              "height": 1998
+            }
+          }
+        ]
+      },
+      "checks": {
+        "centerHitBelongsToButton": true,
+        "modalLeftEdgeNotBehindSidebar": true,
+        "actualUnforcedTrustedClick": true,
+        "dialogClosed": true,
+        "routeRetained": true,
+        "noRuntimeErrors": true,
+        "noReadErrors": true
+      }
+    },
+    {
+      "stage": "after",
+      "theme": "light",
+      "width": 1440,
+      "status": "pass",
+      "click": {
+        "completed": true,
+        "method": "Playwright center click; no force, JS click or DOM relocation",
+        "observed": {
+          "count": 1,
+          "trusted": true
+        },
+        "dialogClosed": true,
+        "routeRetained": true
+      },
+      "screenshots": [
+        {
+          "state": "open-before-click",
+          "file": "after/light-1440-open-before-click.png"
+        },
+        {
+          "state": "closed-after-click",
+          "file": "after/light-1440-closed-after-click.png"
+        }
+      ],
+      "networkErrors": [],
+      "pageErrors": [],
+      "opener": {
+        "label": "New Booking",
+        "inTopbar": true
+      },
+      "measurements": {
+        "center": {
+          "x": 997,
+          "y": 236
+        },
+        "centerHitBelongsToButton": true,
+        "hit": {
+          "tag": "path",
+          "className": "SVG",
+          "zIndex": "auto",
+          "position": "static",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 993,
+            "y": 232,
+            "width": 8,
+            "height": 8
+          }
+        },
+        "button": {
+          "tag": "BUTTON",
+          "className": "ui-button ui-button-native ui-button-md lf-icon-button",
+          "zIndex": "auto",
+          "position": "relative",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 979,
+            "y": 218,
+            "width": 36,
+            "height": 36
+          }
+        },
+        "dialog": {
+          "tag": "FORM",
+          "className": "op2-modal",
+          "zIndex": "auto",
+          "position": "static",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 400,
+            "y": 184,
+            "width": 640,
+            "height": 632
+          }
+        },
+        "backdrop": {
+          "tag": "DIV",
+          "className": "lf-modal-backdrop",
+          "zIndex": "2000",
+          "position": "fixed",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 0,
+            "y": 0,
+            "width": 1440,
+            "height": 1000
+          }
+        },
+        "topbar": {
+          "tag": "HEADER",
+          "className": "topbar cf-topbar",
+          "zIndex": "80",
+          "position": "sticky",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 288,
+            "y": 0,
+            "width": 1152,
+            "height": 77
+          }
+        },
+        "sidebar": {
+          "tag": "ASIDE",
+          "className": "sidebar cf-sidebar  ",
+          "zIndex": "1400",
+          "position": "fixed",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 0,
+            "y": 0,
+            "width": 288,
+            "height": 1000
+          }
+        },
+        "backdropDirectlyUnderBody": true,
+        "modalLeftEdgeOwned": true,
+        "scroll": {
+          "x": 0,
+          "y": 0,
+          "dialog": 0
+        },
+        "ancestry": [
+          {
+            "tag": "BUTTON",
+            "className": "ui-button ui-button-native ui-button-md lf-icon-button",
+            "zIndex": "auto",
+            "position": "relative",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 979,
+              "y": 218,
+              "width": 36,
+              "height": 36
+            }
+          },
+          {
+            "tag": "DIV",
+            "className": "order-selector-head",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 425,
+              "y": 209,
+              "width": 590,
+              "height": 54
+            }
+          },
+          {
+            "tag": "FORM",
+            "className": "op2-modal",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 400,
+              "y": 184,
+              "width": 640,
+              "height": 632
+            }
+          },
+          {
+            "tag": "DIV",
+            "className": "lf-modal-backdrop",
+            "zIndex": "2000",
+            "position": "fixed",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 0,
+              "y": 0,
+              "width": 1440,
+              "height": 1000
+            }
+          },
+          {
+            "tag": "BODY",
+            "className": "",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 0,
+              "y": 0,
+              "width": 1440,
+              "height": 1382
+            }
+          },
+          {
+            "tag": "HTML",
+            "className": "",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 0,
+              "y": 0,
+              "width": 1440,
+              "height": 1382
+            }
+          }
+        ]
+      },
+      "checks": {
+        "centerHitBelongsToButton": true,
+        "modalLeftEdgeNotBehindSidebar": true,
+        "actualUnforcedTrustedClick": true,
+        "dialogClosed": true,
+        "routeRetained": true,
+        "noRuntimeErrors": true,
+        "noReadErrors": true
+      }
+    },
+    {
+      "stage": "after",
+      "theme": "light",
+      "width": 1920,
+      "status": "pass",
+      "click": {
+        "completed": true,
+        "method": "Playwright center click; no force, JS click or DOM relocation",
+        "observed": {
+          "count": 1,
+          "trusted": true
+        },
+        "dialogClosed": true,
+        "routeRetained": true
+      },
+      "screenshots": [
+        {
+          "state": "open-before-click",
+          "file": "after/light-1920-open-before-click.png"
+        },
+        {
+          "state": "closed-after-click",
+          "file": "after/light-1920-closed-after-click.png"
+        }
+      ],
+      "networkErrors": [],
+      "pageErrors": [],
+      "opener": {
+        "label": "New Booking",
+        "inTopbar": true
+      },
+      "measurements": {
+        "center": {
+          "x": 1237,
+          "y": 236
+        },
+        "centerHitBelongsToButton": true,
+        "hit": {
+          "tag": "path",
+          "className": "SVG",
+          "zIndex": "auto",
+          "position": "static",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 1233,
+            "y": 232,
+            "width": 8,
+            "height": 8
+          }
+        },
+        "button": {
+          "tag": "BUTTON",
+          "className": "ui-button ui-button-native ui-button-md lf-icon-button",
+          "zIndex": "auto",
+          "position": "relative",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 1219,
+            "y": 218,
+            "width": 36,
+            "height": 36
+          }
+        },
+        "dialog": {
+          "tag": "FORM",
+          "className": "op2-modal",
+          "zIndex": "auto",
+          "position": "static",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 640,
+            "y": 184,
+            "width": 640,
+            "height": 632
+          }
+        },
+        "backdrop": {
+          "tag": "DIV",
+          "className": "lf-modal-backdrop",
+          "zIndex": "2000",
+          "position": "fixed",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 0,
+            "y": 0,
+            "width": 1920,
+            "height": 1000
+          }
+        },
+        "topbar": {
+          "tag": "HEADER",
+          "className": "topbar cf-topbar",
+          "zIndex": "80",
+          "position": "sticky",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 288,
+            "y": 0,
+            "width": 1632,
+            "height": 77
+          }
+        },
+        "sidebar": {
+          "tag": "ASIDE",
+          "className": "sidebar cf-sidebar  ",
+          "zIndex": "1400",
+          "position": "fixed",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 0,
+            "y": 0,
+            "width": 288,
+            "height": 1000
+          }
+        },
+        "backdropDirectlyUnderBody": true,
+        "modalLeftEdgeOwned": true,
+        "scroll": {
+          "x": 0,
+          "y": 0,
+          "dialog": 0
+        },
+        "ancestry": [
+          {
+            "tag": "BUTTON",
+            "className": "ui-button ui-button-native ui-button-md lf-icon-button",
+            "zIndex": "auto",
+            "position": "relative",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 1219,
+              "y": 218,
+              "width": 36,
+              "height": 36
+            }
+          },
+          {
+            "tag": "DIV",
+            "className": "order-selector-head",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 665,
+              "y": 209,
+              "width": 590,
+              "height": 54
+            }
+          },
+          {
+            "tag": "FORM",
+            "className": "op2-modal",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 640,
+              "y": 184,
+              "width": 640,
+              "height": 632
+            }
+          },
+          {
+            "tag": "DIV",
+            "className": "lf-modal-backdrop",
+            "zIndex": "2000",
+            "position": "fixed",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 0,
+              "y": 0,
+              "width": 1920,
+              "height": 1000
+            }
+          },
+          {
+            "tag": "BODY",
+            "className": "",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 0,
+              "y": 0,
+              "width": 1920,
+              "height": 1346
+            }
+          },
+          {
+            "tag": "HTML",
+            "className": "",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 0,
+              "y": 0,
+              "width": 1920,
+              "height": 1346
+            }
+          }
+        ]
+      },
+      "checks": {
+        "centerHitBelongsToButton": true,
+        "modalLeftEdgeNotBehindSidebar": true,
+        "actualUnforcedTrustedClick": true,
+        "dialogClosed": true,
+        "routeRetained": true,
+        "noRuntimeErrors": true,
+        "noReadErrors": true
+      }
+    },
+    {
+      "stage": "after",
+      "theme": "dark",
+      "width": 375,
+      "status": "pass",
+      "click": {
+        "completed": true,
+        "method": "Playwright center click; no force, JS click or DOM relocation",
+        "observed": {
+          "count": 1,
+          "trusted": true
+        },
+        "dialogClosed": true,
+        "routeRetained": true
+      },
+      "screenshots": [
+        {
+          "state": "open-before-click",
+          "file": "after/dark-375-open-before-click.png"
+        },
+        {
+          "state": "closed-after-click",
+          "file": "after/dark-375-closed-after-click.png"
+        }
+      ],
+      "networkErrors": [],
+      "pageErrors": [],
+      "opener": {
+        "label": "New Booking",
+        "inTopbar": true
+      },
+      "measurements": {
+        "center": {
+          "x": 312,
+          "y": 60
+        },
+        "centerHitBelongsToButton": true,
+        "hit": {
+          "tag": "path",
+          "className": "SVG",
+          "zIndex": "auto",
+          "position": "static",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 308,
+            "y": 56,
+            "width": 8,
+            "height": 8
+          }
+        },
+        "button": {
+          "tag": "BUTTON",
+          "className": "ui-button ui-button-native ui-button-md lf-icon-button",
+          "zIndex": "auto",
+          "position": "relative",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 290,
+            "y": 38,
+            "width": 44,
+            "height": 44
+          }
+        },
+        "dialog": {
+          "tag": "FORM",
+          "className": "op2-modal",
+          "zIndex": "auto",
+          "position": "static",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 16,
+            "y": 8,
+            "width": 343,
+            "height": 828
+          }
+        },
+        "backdrop": {
+          "tag": "DIV",
+          "className": "lf-modal-backdrop",
+          "zIndex": "2000",
+          "position": "fixed",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 0,
+            "y": 0,
+            "width": 375,
+            "height": 844
+          }
+        },
+        "topbar": {
+          "tag": "HEADER",
+          "className": "topbar cf-topbar",
+          "zIndex": "80",
+          "position": "sticky",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 64,
+            "y": 0,
+            "width": 311,
+            "height": 157
+          }
+        },
+        "sidebar": {
+          "tag": "ASIDE",
+          "className": "sidebar cf-sidebar  ",
+          "zIndex": "1400",
+          "position": "fixed",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 0,
+            "y": 0,
+            "width": 64,
+            "height": 844
+          }
+        },
+        "backdropDirectlyUnderBody": true,
+        "modalLeftEdgeOwned": true,
+        "scroll": {
+          "x": 0,
+          "y": 0,
+          "dialog": 0
+        },
+        "ancestry": [
+          {
+            "tag": "BUTTON",
+            "className": "ui-button ui-button-native ui-button-md lf-icon-button",
+            "zIndex": "auto",
+            "position": "relative",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 290,
+              "y": 38,
+              "width": 44,
+              "height": 44
+            }
+          },
+          {
+            "tag": "DIV",
+            "className": "order-selector-head",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 41,
+              "y": 33,
+              "width": 293,
+              "height": 54
+            }
+          },
+          {
+            "tag": "FORM",
+            "className": "op2-modal",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 16,
+              "y": 8,
+              "width": 343,
+              "height": 828
+            }
+          },
+          {
+            "tag": "DIV",
+            "className": "lf-modal-backdrop",
+            "zIndex": "2000",
+            "position": "fixed",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 0,
+              "y": 0,
+              "width": 375,
+              "height": 844
+            }
+          },
+          {
+            "tag": "BODY",
+            "className": "dark",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 0,
+              "y": 0,
+              "width": 375,
+              "height": 3354
+            }
+          },
+          {
+            "tag": "HTML",
+            "className": "dark",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 0,
+              "y": 0,
+              "width": 375,
+              "height": 3354
+            }
+          }
+        ]
+      },
+      "checks": {
+        "centerHitBelongsToButton": true,
+        "modalLeftEdgeNotBehindSidebar": true,
+        "actualUnforcedTrustedClick": true,
+        "dialogClosed": true,
+        "routeRetained": true,
+        "noRuntimeErrors": true,
+        "noReadErrors": true
+      }
+    },
+    {
+      "stage": "after",
+      "theme": "dark",
+      "width": 768,
+      "status": "pass",
+      "click": {
+        "completed": true,
+        "method": "Playwright center click; no force, JS click or DOM relocation",
+        "observed": {
+          "count": 1,
+          "trusted": true
+        },
+        "dialogClosed": true,
+        "routeRetained": true
+      },
+      "screenshots": [
+        {
+          "state": "open-before-click",
+          "file": "after/dark-768-open-before-click.png"
+        },
+        {
+          "state": "closed-after-click",
+          "file": "after/dark-768-closed-after-click.png"
+        }
+      ],
+      "networkErrors": [],
+      "pageErrors": [],
+      "opener": {
+        "label": "New Booking",
+        "inTopbar": true
+      },
+      "measurements": {
+        "center": {
+          "x": 661,
+          "y": 232
+        },
+        "centerHitBelongsToButton": true,
+        "hit": {
+          "tag": "path",
+          "className": "SVG",
+          "zIndex": "auto",
+          "position": "static",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 657,
+            "y": 228,
+            "width": 8,
+            "height": 8
+          }
+        },
+        "button": {
+          "tag": "BUTTON",
+          "className": "ui-button ui-button-native ui-button-md lf-icon-button",
+          "zIndex": "auto",
+          "position": "relative",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 643,
+            "y": 210,
+            "width": 36,
+            "height": 44
+          }
+        },
+        "dialog": {
+          "tag": "FORM",
+          "className": "op2-modal",
+          "zIndex": "auto",
+          "position": "static",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 64,
+            "y": 180,
+            "width": 640,
+            "height": 640
+          }
+        },
+        "backdrop": {
+          "tag": "DIV",
+          "className": "lf-modal-backdrop",
+          "zIndex": "2000",
+          "position": "fixed",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 0,
+            "y": 0,
+            "width": 768,
+            "height": 1000
+          }
+        },
+        "topbar": {
+          "tag": "HEADER",
+          "className": "topbar cf-topbar",
+          "zIndex": "80",
+          "position": "sticky",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 64,
+            "y": 0,
+            "width": 704,
+            "height": 105
+          }
+        },
+        "sidebar": {
+          "tag": "ASIDE",
+          "className": "sidebar cf-sidebar  ",
+          "zIndex": "1400",
+          "position": "fixed",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 0,
+            "y": 0,
+            "width": 64,
+            "height": 1000
+          }
+        },
+        "backdropDirectlyUnderBody": true,
+        "modalLeftEdgeOwned": true,
+        "scroll": {
+          "x": 0,
+          "y": 0,
+          "dialog": 0
+        },
+        "ancestry": [
+          {
+            "tag": "BUTTON",
+            "className": "ui-button ui-button-native ui-button-md lf-icon-button",
+            "zIndex": "auto",
+            "position": "relative",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 643,
+              "y": 210,
+              "width": 36,
+              "height": 44
+            }
+          },
+          {
+            "tag": "DIV",
+            "className": "order-selector-head",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 89,
+              "y": 205,
+              "width": 590,
+              "height": 54
+            }
+          },
+          {
+            "tag": "FORM",
+            "className": "op2-modal",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 64,
+              "y": 180,
+              "width": 640,
+              "height": 640
+            }
+          },
+          {
+            "tag": "DIV",
+            "className": "lf-modal-backdrop",
+            "zIndex": "2000",
+            "position": "fixed",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 0,
+              "y": 0,
+              "width": 768,
+              "height": 1000
+            }
+          },
+          {
+            "tag": "BODY",
+            "className": "dark",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 0,
+              "y": 0,
+              "width": 768,
+              "height": 2062
+            }
+          },
+          {
+            "tag": "HTML",
+            "className": "dark",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 0,
+              "y": 0,
+              "width": 768,
+              "height": 2062
+            }
+          }
+        ]
+      },
+      "checks": {
+        "centerHitBelongsToButton": true,
+        "modalLeftEdgeNotBehindSidebar": true,
+        "actualUnforcedTrustedClick": true,
+        "dialogClosed": true,
+        "routeRetained": true,
+        "noRuntimeErrors": true,
+        "noReadErrors": true
+      }
+    },
+    {
+      "stage": "after",
+      "theme": "dark",
+      "width": 1024,
+      "status": "pass",
+      "click": {
+        "completed": true,
+        "method": "Playwright center click; no force, JS click or DOM relocation",
+        "observed": {
+          "count": 1,
+          "trusted": true
+        },
+        "dialogClosed": true,
+        "routeRetained": true
+      },
+      "screenshots": [
+        {
+          "state": "open-before-click",
+          "file": "after/dark-1024-open-before-click.png"
+        },
+        {
+          "state": "closed-after-click",
+          "file": "after/dark-1024-closed-after-click.png"
+        }
+      ],
+      "networkErrors": [],
+      "pageErrors": [],
+      "opener": {
+        "label": "New Booking",
+        "inTopbar": true
+      },
+      "measurements": {
+        "center": {
+          "x": 789,
+          "y": 236
+        },
+        "centerHitBelongsToButton": true,
+        "hit": {
+          "tag": "path",
+          "className": "SVG",
+          "zIndex": "auto",
+          "position": "static",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 785,
+            "y": 232,
+            "width": 8,
+            "height": 8
+          }
+        },
+        "button": {
+          "tag": "BUTTON",
+          "className": "ui-button ui-button-native ui-button-md lf-icon-button",
+          "zIndex": "auto",
+          "position": "relative",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 771,
+            "y": 218,
+            "width": 36,
+            "height": 36
+          }
+        },
+        "dialog": {
+          "tag": "FORM",
+          "className": "op2-modal",
+          "zIndex": "auto",
+          "position": "static",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 192,
+            "y": 184,
+            "width": 640,
+            "height": 632
+          }
+        },
+        "backdrop": {
+          "tag": "DIV",
+          "className": "lf-modal-backdrop",
+          "zIndex": "2000",
+          "position": "fixed",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 0,
+            "y": 0,
+            "width": 1024,
+            "height": 1000
+          }
+        },
+        "topbar": {
+          "tag": "HEADER",
+          "className": "topbar cf-topbar",
+          "zIndex": "80",
+          "position": "sticky",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 288,
+            "y": 0,
+            "width": 736,
+            "height": 77
+          }
+        },
+        "sidebar": {
+          "tag": "ASIDE",
+          "className": "sidebar cf-sidebar  ",
+          "zIndex": "1400",
+          "position": "fixed",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 0,
+            "y": 0,
+            "width": 288,
+            "height": 1000
+          }
+        },
+        "backdropDirectlyUnderBody": true,
+        "modalLeftEdgeOwned": true,
+        "scroll": {
+          "x": 0,
+          "y": 0,
+          "dialog": 0
+        },
+        "ancestry": [
+          {
+            "tag": "BUTTON",
+            "className": "ui-button ui-button-native ui-button-md lf-icon-button",
+            "zIndex": "auto",
+            "position": "relative",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 771,
+              "y": 218,
+              "width": 36,
+              "height": 36
+            }
+          },
+          {
+            "tag": "DIV",
+            "className": "order-selector-head",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 217,
+              "y": 209,
+              "width": 590,
+              "height": 54
+            }
+          },
+          {
+            "tag": "FORM",
+            "className": "op2-modal",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 192,
+              "y": 184,
+              "width": 640,
+              "height": 632
+            }
+          },
+          {
+            "tag": "DIV",
+            "className": "lf-modal-backdrop",
+            "zIndex": "2000",
+            "position": "fixed",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 0,
+              "y": 0,
+              "width": 1024,
+              "height": 1000
+            }
+          },
+          {
+            "tag": "BODY",
+            "className": "dark",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 0,
+              "y": 0,
+              "width": 1024,
+              "height": 1998
+            }
+          },
+          {
+            "tag": "HTML",
+            "className": "dark",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 0,
+              "y": 0,
+              "width": 1024,
+              "height": 1998
+            }
+          }
+        ]
+      },
+      "checks": {
+        "centerHitBelongsToButton": true,
+        "modalLeftEdgeNotBehindSidebar": true,
+        "actualUnforcedTrustedClick": true,
+        "dialogClosed": true,
+        "routeRetained": true,
+        "noRuntimeErrors": true,
+        "noReadErrors": true
+      }
+    },
+    {
+      "stage": "after",
+      "theme": "dark",
+      "width": 1440,
+      "status": "pass",
+      "click": {
+        "completed": true,
+        "method": "Playwright center click; no force, JS click or DOM relocation",
+        "observed": {
+          "count": 1,
+          "trusted": true
+        },
+        "dialogClosed": true,
+        "routeRetained": true
+      },
+      "screenshots": [
+        {
+          "state": "open-before-click",
+          "file": "after/dark-1440-open-before-click.png"
+        },
+        {
+          "state": "closed-after-click",
+          "file": "after/dark-1440-closed-after-click.png"
+        }
+      ],
+      "networkErrors": [],
+      "pageErrors": [],
+      "opener": {
+        "label": "New Booking",
+        "inTopbar": true
+      },
+      "measurements": {
+        "center": {
+          "x": 997,
+          "y": 236
+        },
+        "centerHitBelongsToButton": true,
+        "hit": {
+          "tag": "path",
+          "className": "SVG",
+          "zIndex": "auto",
+          "position": "static",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 993,
+            "y": 232,
+            "width": 8,
+            "height": 8
+          }
+        },
+        "button": {
+          "tag": "BUTTON",
+          "className": "ui-button ui-button-native ui-button-md lf-icon-button",
+          "zIndex": "auto",
+          "position": "relative",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 979,
+            "y": 218,
+            "width": 36,
+            "height": 36
+          }
+        },
+        "dialog": {
+          "tag": "FORM",
+          "className": "op2-modal",
+          "zIndex": "auto",
+          "position": "static",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 400,
+            "y": 184,
+            "width": 640,
+            "height": 632
+          }
+        },
+        "backdrop": {
+          "tag": "DIV",
+          "className": "lf-modal-backdrop",
+          "zIndex": "2000",
+          "position": "fixed",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 0,
+            "y": 0,
+            "width": 1440,
+            "height": 1000
+          }
+        },
+        "topbar": {
+          "tag": "HEADER",
+          "className": "topbar cf-topbar",
+          "zIndex": "80",
+          "position": "sticky",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 288,
+            "y": 0,
+            "width": 1152,
+            "height": 77
+          }
+        },
+        "sidebar": {
+          "tag": "ASIDE",
+          "className": "sidebar cf-sidebar  ",
+          "zIndex": "1400",
+          "position": "fixed",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 0,
+            "y": 0,
+            "width": 288,
+            "height": 1000
+          }
+        },
+        "backdropDirectlyUnderBody": true,
+        "modalLeftEdgeOwned": true,
+        "scroll": {
+          "x": 0,
+          "y": 0,
+          "dialog": 0
+        },
+        "ancestry": [
+          {
+            "tag": "BUTTON",
+            "className": "ui-button ui-button-native ui-button-md lf-icon-button",
+            "zIndex": "auto",
+            "position": "relative",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 979,
+              "y": 218,
+              "width": 36,
+              "height": 36
+            }
+          },
+          {
+            "tag": "DIV",
+            "className": "order-selector-head",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 425,
+              "y": 209,
+              "width": 590,
+              "height": 54
+            }
+          },
+          {
+            "tag": "FORM",
+            "className": "op2-modal",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 400,
+              "y": 184,
+              "width": 640,
+              "height": 632
+            }
+          },
+          {
+            "tag": "DIV",
+            "className": "lf-modal-backdrop",
+            "zIndex": "2000",
+            "position": "fixed",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 0,
+              "y": 0,
+              "width": 1440,
+              "height": 1000
+            }
+          },
+          {
+            "tag": "BODY",
+            "className": "dark",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 0,
+              "y": 0,
+              "width": 1440,
+              "height": 1382
+            }
+          },
+          {
+            "tag": "HTML",
+            "className": "dark",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 0,
+              "y": 0,
+              "width": 1440,
+              "height": 1382
+            }
+          }
+        ]
+      },
+      "checks": {
+        "centerHitBelongsToButton": true,
+        "modalLeftEdgeNotBehindSidebar": true,
+        "actualUnforcedTrustedClick": true,
+        "dialogClosed": true,
+        "routeRetained": true,
+        "noRuntimeErrors": true,
+        "noReadErrors": true
+      }
+    },
+    {
+      "stage": "after",
+      "theme": "dark",
+      "width": 1920,
+      "status": "pass",
+      "click": {
+        "completed": true,
+        "method": "Playwright center click; no force, JS click or DOM relocation",
+        "observed": {
+          "count": 1,
+          "trusted": true
+        },
+        "dialogClosed": true,
+        "routeRetained": true
+      },
+      "screenshots": [
+        {
+          "state": "open-before-click",
+          "file": "after/dark-1920-open-before-click.png"
+        },
+        {
+          "state": "closed-after-click",
+          "file": "after/dark-1920-closed-after-click.png"
+        }
+      ],
+      "networkErrors": [],
+      "pageErrors": [],
+      "opener": {
+        "label": "New Booking",
+        "inTopbar": true
+      },
+      "measurements": {
+        "center": {
+          "x": 1237,
+          "y": 236
+        },
+        "centerHitBelongsToButton": true,
+        "hit": {
+          "tag": "path",
+          "className": "SVG",
+          "zIndex": "auto",
+          "position": "static",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 1233,
+            "y": 232,
+            "width": 8,
+            "height": 8
+          }
+        },
+        "button": {
+          "tag": "BUTTON",
+          "className": "ui-button ui-button-native ui-button-md lf-icon-button",
+          "zIndex": "auto",
+          "position": "relative",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 1219,
+            "y": 218,
+            "width": 36,
+            "height": 36
+          }
+        },
+        "dialog": {
+          "tag": "FORM",
+          "className": "op2-modal",
+          "zIndex": "auto",
+          "position": "static",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 640,
+            "y": 184,
+            "width": 640,
+            "height": 632
+          }
+        },
+        "backdrop": {
+          "tag": "DIV",
+          "className": "lf-modal-backdrop",
+          "zIndex": "2000",
+          "position": "fixed",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 0,
+            "y": 0,
+            "width": 1920,
+            "height": 1000
+          }
+        },
+        "topbar": {
+          "tag": "HEADER",
+          "className": "topbar cf-topbar",
+          "zIndex": "80",
+          "position": "sticky",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 288,
+            "y": 0,
+            "width": 1632,
+            "height": 77
+          }
+        },
+        "sidebar": {
+          "tag": "ASIDE",
+          "className": "sidebar cf-sidebar  ",
+          "zIndex": "1400",
+          "position": "fixed",
+          "opacity": "1",
+          "transform": "none",
+          "isolation": "auto",
+          "bounds": {
+            "x": 0,
+            "y": 0,
+            "width": 288,
+            "height": 1000
+          }
+        },
+        "backdropDirectlyUnderBody": true,
+        "modalLeftEdgeOwned": true,
+        "scroll": {
+          "x": 0,
+          "y": 0,
+          "dialog": 0
+        },
+        "ancestry": [
+          {
+            "tag": "BUTTON",
+            "className": "ui-button ui-button-native ui-button-md lf-icon-button",
+            "zIndex": "auto",
+            "position": "relative",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 1219,
+              "y": 218,
+              "width": 36,
+              "height": 36
+            }
+          },
+          {
+            "tag": "DIV",
+            "className": "order-selector-head",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 665,
+              "y": 209,
+              "width": 590,
+              "height": 54
+            }
+          },
+          {
+            "tag": "FORM",
+            "className": "op2-modal",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 640,
+              "y": 184,
+              "width": 640,
+              "height": 632
+            }
+          },
+          {
+            "tag": "DIV",
+            "className": "lf-modal-backdrop",
+            "zIndex": "2000",
+            "position": "fixed",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 0,
+              "y": 0,
+              "width": 1920,
+              "height": 1000
+            }
+          },
+          {
+            "tag": "BODY",
+            "className": "dark",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 0,
+              "y": 0,
+              "width": 1920,
+              "height": 1346
+            }
+          },
+          {
+            "tag": "HTML",
+            "className": "dark",
+            "zIndex": "auto",
+            "position": "static",
+            "opacity": "1",
+            "transform": "none",
+            "isolation": "auto",
+            "bounds": {
+              "x": 0,
+              "y": 0,
+              "width": 1920,
+              "height": 1346
+            }
+          }
+        ]
+      },
+      "checks": {
+        "centerHitBelongsToButton": true,
+        "modalLeftEdgeNotBehindSidebar": true,
+        "actualUnforcedTrustedClick": true,
+        "dialogClosed": true,
+        "routeRetained": true,
+        "noRuntimeErrors": true,
+        "noReadErrors": true
+      }
+    }
+  ],
+  "failures": [],
+  "baselineObservations": [
+    {
+      "stage": "before",
+      "theme": "light",
+      "width": 375,
+      "status": "layer-or-close-failure",
+      "failedChecks": [
+        "centerHitBelongsToButton",
+        "modalLeftEdgeNotBehindSidebar",
+        "actualUnforcedTrustedClick",
+        "dialogClosed"
+      ]
+    },
+    {
+      "stage": "before",
+      "theme": "light",
+      "width": 768,
+      "status": "layer-or-close-failure",
+      "failedChecks": [
+        "modalLeftEdgeNotBehindSidebar"
+      ]
+    },
+    {
+      "stage": "before",
+      "theme": "light",
+      "width": 1024,
+      "status": "layer-or-close-failure",
+      "failedChecks": [
+        "modalLeftEdgeNotBehindSidebar"
+      ]
+    },
+    {
+      "stage": "before",
+      "theme": "dark",
+      "width": 375,
+      "status": "layer-or-close-failure",
+      "failedChecks": [
+        "centerHitBelongsToButton",
+        "modalLeftEdgeNotBehindSidebar",
+        "actualUnforcedTrustedClick",
+        "dialogClosed"
+      ]
+    },
+    {
+      "stage": "before",
+      "theme": "dark",
+      "width": 768,
+      "status": "layer-or-close-failure",
+      "failedChecks": [
+        "modalLeftEdgeNotBehindSidebar"
+      ]
+    },
+    {
+      "stage": "before",
+      "theme": "dark",
+      "width": 1024,
+      "status": "layer-or-close-failure",
+      "failedChecks": [
+        "modalLeftEdgeNotBehindSidebar"
+      ]
+    }
+  ],
+  "errors": [],
+  "harnessCorrection": {
+    "earlierAttempt": "docs/ui-readiness/booking-close-layer/opener-harness-attempt.json",
+    "reason": "Baseline mobile/tablet has no topbar New Booking control. Use the first existing New Booking control on either preview; missing topbar controls were harness setup misses, not app bugs."
+  },
+  "limitations": [
+    "Only the first existing New Booking opener (topbar when present) and Close booking form control are exercised; no form filling, submit, forced clicks, DOM relocation, CSS overrides or synthetic application states.",
+    "A closed dialog is UI behavior, not a claim of business success."
+  ],
+  "coreRetryDisposition": {
+    "sourceReport": "docs/ui-readiness/button-feedback/core-retry.json",
+    "rawSummary": {
+      "routes": 18,
+      "degradedScreens": 0,
+      "buttons": 78,
+      "feedback": {
+        "pass": 68,
+        "unreachable": 10
+      },
+      "actionOutcomes": {
+        "navigation-observed": 31,
+        "local-dom-response-observed": 25,
+        "mutation-blocked": 6,
+        "no-action-outcome-observed": 6,
+        "unmeasured": 10
+      },
+      "exclusions": 14,
+      "screenshots": 4,
+      "businessSuccessClaims": 0
+    },
+    "originalReportNotModified": true,
+    "policy": "These dispositions explain the original ten unreachable entries. They do not turn the original 68-pass/10-unreachable run into a passing raw run.",
+    "timeoutRecheckReport": "docs/ui-readiness/button-feedback/core-timeout-rechecks.json",
+    "timeoutRechecks": [
+      {
+        "route": "/dashboard",
+        "theme": "dark",
+        "width": 1440,
+        "opener": "Refresh dashboard",
+        "target": "T2 running table card / Checkout / Close",
+        "previousStatus": "unreachable",
+        "previousReason": "page.waitForFunction: Timeout 12000ms exceeded during setup/replay",
+        "recheckStatus": "pass",
+        "pressedFeedbackMs": 7.8,
+        "clickResponseMs": 10,
+        "clickResponseKind": "navigation",
+        "actionOutcome": "navigation-observed",
+        "pageErrors": [],
+        "readErrors": [],
+        "businessWriteAttempts": []
+      },
+      {
+        "route": "/bookings",
+        "theme": "dark",
+        "width": 375,
+        "opener": null,
+        "target": "Learn more",
+        "previousStatus": "unreachable",
+        "previousReason": "page.waitForFunction: Timeout 12000ms exceeded during setup",
+        "recheckStatus": "pass",
+        "pressedFeedbackMs": 8.5,
+        "clickResponseMs": 31.9,
+        "clickResponseKind": "visible-dom-added",
+        "actionOutcome": "local-dom-response-observed",
+        "pageErrors": [],
+        "readErrors": [],
+        "businessWriteAttempts": []
+      }
+    ],
+    "reminderEvidence": {
+      "report": "docs/ui-readiness/reminder-stack/after-results.json",
+      "summary": {
+        "expectedCases": 4,
+        "passedAfter": 4,
+        "observedBefore": 0,
+        "failed": 0,
+        "screenshots": 16,
+        "violations": 0
+      },
+      "cases": [
+        {
+          "stage": "after",
+          "theme": "light",
+          "width": 375,
+          "status": "pass"
+        },
+        {
+          "stage": "after",
+          "theme": "light",
+          "width": 1440,
+          "status": "pass"
+        },
+        {
+          "stage": "after",
+          "theme": "dark",
+          "width": 375,
+          "status": "pass"
+        },
+        {
+          "stage": "after",
+          "theme": "dark",
+          "width": 1440,
+          "status": "pass"
+        }
+      ]
+    },
+    "entries": [
+      {
+        "originalButtonIndex": 20,
+        "route": "/bookings",
+        "theme": "light",
+        "width": 375,
+        "openerSteps": [
+          "New Booking"
+        ],
+        "button": "Close booking form",
+        "originalStatus": "unreachable",
+        "originalReason": "locator.hover: Timeout 2500ms exceeded.",
+        "disposition": "confirmed-booking-layer-bug",
+        "sourceFix": "BookingsPage.jsx: BookingModal body portal and z-index 2000",
+        "focusedVerification": {
+          "report": "docs/ui-readiness/booking-close-layer/results.json",
+          "stage": "after",
+          "theme": "light",
+          "width": 375,
+          "status": "pass",
+          "checks": {
+            "centerHitBelongsToButton": true,
+            "modalLeftEdgeNotBehindSidebar": true,
+            "actualUnforcedTrustedClick": true,
+            "dialogClosed": true,
+            "routeRetained": true,
+            "noRuntimeErrors": true,
+            "noReadErrors": true
+          }
+        },
+        "verificationScope": "Same BookingModal close control and original width/theme; duplicate opener paths are not separately re-audited."
+      },
+      {
+        "originalButtonIndex": 23,
+        "route": "/bookings",
+        "theme": "light",
+        "width": 375,
+        "openerSteps": [
+          "New booking"
+        ],
+        "button": "Close booking form",
+        "originalStatus": "unreachable",
+        "originalReason": "locator.hover: Timeout 2500ms exceeded.",
+        "disposition": "confirmed-booking-layer-bug",
+        "sourceFix": "BookingsPage.jsx: BookingModal body portal and z-index 2000",
+        "focusedVerification": {
+          "report": "docs/ui-readiness/booking-close-layer/results.json",
+          "stage": "after",
+          "theme": "light",
+          "width": 375,
+          "status": "pass",
+          "checks": {
+            "centerHitBelongsToButton": true,
+            "modalLeftEdgeNotBehindSidebar": true,
+            "actualUnforcedTrustedClick": true,
+            "dialogClosed": true,
+            "routeRetained": true,
+            "noRuntimeErrors": true,
+            "noReadErrors": true
+          }
+        },
+        "verificationScope": "Same BookingModal close control and original width/theme; duplicate opener paths are not separately re-audited."
+      },
+      {
+        "originalButtonIndex": 43,
+        "route": "/dashboard",
+        "theme": "dark",
+        "width": 1440,
+        "openerSteps": [
+          "Refresh dashboard"
+        ],
+        "button": "T 2 Wiraka 25:32:52 ₹3,840 Guest single · Food ₹0 Checkout / Close",
+        "originalStatus": "unreachable",
+        "originalReason": "page.waitForFunction: Timeout 12000ms exceeded.",
+        "disposition": "passed-on-separate-focused-recheck",
+        "evidence": {
+          "route": "/dashboard",
+          "theme": "dark",
+          "width": 1440,
+          "opener": "Refresh dashboard",
+          "target": "T2 running table card / Checkout / Close",
+          "previousStatus": "unreachable",
+          "previousReason": "page.waitForFunction: Timeout 12000ms exceeded during setup/replay",
+          "recheckStatus": "pass",
+          "pressedFeedbackMs": 7.8,
+          "clickResponseMs": 10,
+          "clickResponseKind": "navigation",
+          "actionOutcome": "navigation-observed",
+          "pageErrors": [],
+          "readErrors": [],
+          "businessWriteAttempts": []
+        },
+        "rawEntryNotReclassifiedAsPass": true
+      },
+      {
+        "originalButtonIndex": 45,
+        "route": "/live-floor",
+        "theme": "dark",
+        "width": 1440,
+        "openerSteps": [
+          "Start Table"
+        ],
+        "button": "View",
+        "originalStatus": "unreachable",
+        "originalReason": "Button no longer rendered: View",
+        "disposition": "excluded-reminder-isolation-mismatch",
+        "explanation": "The retry disables reminder records that originally supplied these controls. Absence is not failed button feedback.",
+        "evidence": "docs/ui-readiness/reminder-stack/after-results.json",
+        "rawEntryNotReclassifiedAsPass": true
+      },
+      {
+        "originalButtonIndex": 46,
+        "route": "/live-floor",
+        "theme": "dark",
+        "width": 1440,
+        "openerSteps": [
+          "Start Table"
+        ],
+        "button": "Dismiss",
+        "originalStatus": "unreachable",
+        "originalReason": "Button no longer rendered: Dismiss",
+        "disposition": "excluded-reminder-isolation-mismatch",
+        "explanation": "The retry disables reminder records that originally supplied these controls. Absence is not failed button feedback.",
+        "evidence": "docs/ui-readiness/reminder-stack/after-results.json",
+        "rawEntryNotReclassifiedAsPass": true
+      },
+      {
+        "originalButtonIndex": 47,
+        "route": "/live-floor",
+        "theme": "dark",
+        "width": 1440,
+        "openerSteps": [
+          "Start Table"
+        ],
+        "button": "View",
+        "originalStatus": "unreachable",
+        "originalReason": "Button no longer rendered: View",
+        "disposition": "excluded-reminder-isolation-mismatch",
+        "explanation": "The retry disables reminder records that originally supplied these controls. Absence is not failed button feedback.",
+        "evidence": "docs/ui-readiness/reminder-stack/after-results.json",
+        "rawEntryNotReclassifiedAsPass": true
+      },
+      {
+        "originalButtonIndex": 48,
+        "route": "/live-floor",
+        "theme": "dark",
+        "width": 1440,
+        "openerSteps": [
+          "Start Table"
+        ],
+        "button": "Dismiss",
+        "originalStatus": "unreachable",
+        "originalReason": "Button no longer rendered: Dismiss",
+        "disposition": "excluded-reminder-isolation-mismatch",
+        "explanation": "The retry disables reminder records that originally supplied these controls. Absence is not failed button feedback.",
+        "evidence": "docs/ui-readiness/reminder-stack/after-results.json",
+        "rawEntryNotReclassifiedAsPass": true
+      },
+      {
+        "originalButtonIndex": 62,
+        "route": "/bookings",
+        "theme": "dark",
+        "width": 375,
+        "openerSteps": [],
+        "button": "Learn more",
+        "originalStatus": "unreachable",
+        "originalReason": "page.waitForFunction: Timeout 12000ms exceeded.",
+        "disposition": "passed-on-separate-focused-recheck",
+        "evidence": {
+          "route": "/bookings",
+          "theme": "dark",
+          "width": 375,
+          "opener": null,
+          "target": "Learn more",
+          "previousStatus": "unreachable",
+          "previousReason": "page.waitForFunction: Timeout 12000ms exceeded during setup",
+          "recheckStatus": "pass",
+          "pressedFeedbackMs": 8.5,
+          "clickResponseMs": 31.9,
+          "clickResponseKind": "visible-dom-added",
+          "actionOutcome": "local-dom-response-observed",
+          "pageErrors": [],
+          "readErrors": [],
+          "businessWriteAttempts": []
+        },
+        "rawEntryNotReclassifiedAsPass": true
+      },
+      {
+        "originalButtonIndex": 63,
+        "route": "/bookings",
+        "theme": "dark",
+        "width": 375,
+        "openerSteps": [
+          "New Booking"
+        ],
+        "button": "Close booking form",
+        "originalStatus": "unreachable",
+        "originalReason": "locator.hover: Timeout 2500ms exceeded.",
+        "disposition": "confirmed-booking-layer-bug",
+        "sourceFix": "BookingsPage.jsx: BookingModal body portal and z-index 2000",
+        "focusedVerification": {
+          "report": "docs/ui-readiness/booking-close-layer/results.json",
+          "stage": "after",
+          "theme": "dark",
+          "width": 375,
+          "status": "pass",
+          "checks": {
+            "centerHitBelongsToButton": true,
+            "modalLeftEdgeNotBehindSidebar": true,
+            "actualUnforcedTrustedClick": true,
+            "dialogClosed": true,
+            "routeRetained": true,
+            "noRuntimeErrors": true,
+            "noReadErrors": true
+          }
+        },
+        "verificationScope": "Same BookingModal close control and original width/theme; duplicate opener paths are not separately re-audited."
+      },
+      {
+        "originalButtonIndex": 65,
+        "route": "/bookings",
+        "theme": "dark",
+        "width": 375,
+        "openerSteps": [
+          "New booking"
+        ],
+        "button": "Close booking form",
+        "originalStatus": "unreachable",
+        "originalReason": "locator.hover: Timeout 2500ms exceeded.",
+        "disposition": "confirmed-booking-layer-bug",
+        "sourceFix": "BookingsPage.jsx: BookingModal body portal and z-index 2000",
+        "focusedVerification": {
+          "report": "docs/ui-readiness/booking-close-layer/results.json",
+          "stage": "after",
+          "theme": "dark",
+          "width": 375,
+          "status": "pass",
+          "checks": {
+            "centerHitBelongsToButton": true,
+            "modalLeftEdgeNotBehindSidebar": true,
+            "actualUnforcedTrustedClick": true,
+            "dialogClosed": true,
+            "routeRetained": true,
+            "noRuntimeErrors": true,
+            "noReadErrors": true
+          }
+        },
+        "verificationScope": "Same BookingModal close control and original width/theme; duplicate opener paths are not separately re-audited."
+      }
+    ]
+  },
+  "finishedAt": "2026-10-19T21:01:23.921Z",
+  "summary": {
+    "cases": 20,
+    "expectedCases": 20,
+    "afterPasses": 10,
+    "baselineObservations": 6,
+    "degradedCases": 0,
+    "failures": 0,
+    "errors": 0,
+    "forwardedBusinessWrites": 0
+  }
+}

@@ -1,0 +1,1055 @@
+{
+  "startedAt": "2026-10-18T17:10:26.909Z",
+  "stages": [
+    "before",
+    "after"
+  ],
+  "api": "http://127.0.0.1:8006",
+  "widths": [
+    375,
+    1440
+  ],
+  "themes": [
+    "light",
+    "dark"
+  ],
+  "fixture": {
+    "initial": [
+      {
+        "id": 960060,
+        "session_key": "qa-reminder-stack-ui-only",
+        "table_id": "t1",
+        "threshold_minutes": 60,
+        "intensity": "normal",
+        "paused": false,
+        "accrued_amount": 320
+      }
+    ],
+    "replacement": [
+      {
+        "id": 960060,
+        "session_key": "qa-reminder-stack-ui-only",
+        "table_id": "t1",
+        "threshold_minutes": 60,
+        "intensity": "normal",
+        "paused": false,
+        "accrued_amount": 320
+      },
+      {
+        "id": 960120,
+        "session_key": "qa-reminder-stack-ui-only",
+        "table_id": "t1",
+        "threshold_minutes": 120,
+        "intensity": "urgent",
+        "paused": false,
+        "accrued_amount": 640
+      }
+    ],
+    "soundEnabled": false,
+    "owner_summaries": []
+  },
+  "safety": {
+    "localAdminLoginAttempts": 1,
+    "forwardedBusinessWrites": 0,
+    "policy": "One explicit Node-side admin login to literal API8006. Browser GET/HEAD reads use reviewed local paths; alerts and SSE are mocked. Browser mutations, acknowledgements, source imports, WebSockets, external origins and redirects are blocked."
+  },
+  "limitations": [
+    "Alert rows are UI-only response fixtures; no alert, acknowledgement, table or financial records are created.",
+    "The local QA database must already contain T1 for the checkout deep link. Missing checkout is reported as a failure, not replaced with a synthetic dialog.",
+    "Forwarded local QA GETs, including checkout quote, may reconcile backend state; database side effects are not measured or claimed absent.",
+    "The before stage records regression observations without requiring the unfixed preview to satisfy after-only expectations."
+  ],
+  "cases": [
+    {
+      "stage": "before",
+      "theme": "light",
+      "width": 375,
+      "app": "http://127.0.0.1:5180",
+      "status": "observed",
+      "samples": [
+        {
+          "state": "60-minute-warning",
+          "file": "before-light-375-60-minute-warning.png",
+          "messages": [
+            "T1 — 60 min played · ₹320 accrued"
+          ],
+          "count": 1,
+          "exiting": 0,
+          "zIndex": 1900,
+          "maxHeight": 422,
+          "height": 92,
+          "viewportHeight": 844,
+          "overflowY": "auto",
+          "insideDialog": false,
+          "actualTheme": "light"
+        },
+        {
+          "state": "120-minute-replacement",
+          "file": "before-light-375-120-minute-replacement.png",
+          "messages": [
+            "T1 — 60 min played · ₹320 accrued",
+            "T1 — 120 min played · ₹640 accrued · Check table now"
+          ],
+          "count": 2,
+          "exiting": 0,
+          "zIndex": 1900,
+          "maxHeight": 422,
+          "height": 236,
+          "viewportHeight": 844,
+          "overflowY": "auto",
+          "insideDialog": false,
+          "actualTheme": "light"
+        },
+        {
+          "state": "repeated-alert-reads",
+          "file": "before-light-375-repeated-alert-reads.png",
+          "messages": [
+            "T1 — 60 min played · ₹320 accrued",
+            "T1 — 120 min played · ₹640 accrued · Check table now"
+          ],
+          "count": 2,
+          "exiting": 0,
+          "zIndex": 1900,
+          "maxHeight": 422,
+          "height": 236,
+          "viewportHeight": 844,
+          "overflowY": "auto",
+          "insideDialog": false,
+          "actualTheme": "light"
+        },
+        {
+          "state": "below-checkout",
+          "file": "before-light-375-below-checkout.png",
+          "messages": [
+            "T1 — 120 min played · ₹640 accrued · Check table now"
+          ],
+          "count": 1,
+          "exiting": 0,
+          "zIndex": 1900,
+          "maxHeight": 422,
+          "height": 136,
+          "viewportHeight": 844,
+          "overflowY": "auto",
+          "insideDialog": false,
+          "actualTheme": "light"
+        }
+      ],
+      "repeatReads": [
+        {
+          "index": 1,
+          "alertReads": 6,
+          "responseObserved": true,
+          "latestCount": 1,
+          "olderCount": 1,
+          "total": 2
+        },
+        {
+          "index": 2,
+          "alertReads": 8,
+          "responseObserved": true,
+          "latestCount": 1,
+          "olderCount": 1,
+          "total": 2
+        },
+        {
+          "index": 3,
+          "alertReads": 9,
+          "responseObserved": true,
+          "latestCount": 1,
+          "olderCount": 1,
+          "total": 2
+        }
+      ],
+      "violations": [],
+      "pageErrors": [],
+      "replacement": {
+        "latestCount": 1,
+        "olderCount": 1,
+        "singleLatest": false,
+        "elapsedSinceFirstWarningMs": 1484
+      },
+      "layering": {
+        "warningZ": 1900,
+        "checkoutZ": 2000,
+        "warningInsideCheckout": false,
+        "checkoutReceivesOverlap": true,
+        "maxHeight": 422,
+        "viewportHeight": 844,
+        "height": 136
+      },
+      "counts": {
+        "alertReads": 11,
+        "blockedBrowserWrites": 0,
+        "acknowledgementAttempts": 0
+      }
+    },
+    {
+      "stage": "before",
+      "theme": "light",
+      "width": 1440,
+      "app": "http://127.0.0.1:5180",
+      "status": "observed",
+      "samples": [
+        {
+          "state": "60-minute-warning",
+          "file": "before-light-1440-60-minute-warning.png",
+          "messages": [
+            "T1 — 60 min played · ₹320 accrued"
+          ],
+          "count": 1,
+          "exiting": 0,
+          "zIndex": 1900,
+          "maxHeight": 500,
+          "height": 92,
+          "viewportHeight": 1000,
+          "overflowY": "auto",
+          "insideDialog": false,
+          "actualTheme": "light"
+        },
+        {
+          "state": "120-minute-replacement",
+          "file": "before-light-1440-120-minute-replacement.png",
+          "messages": [
+            "T1 — 60 min played · ₹320 accrued",
+            "T1 — 120 min played · ₹640 accrued · Check table now"
+          ],
+          "count": 2,
+          "exiting": 0,
+          "zIndex": 1900,
+          "maxHeight": 500,
+          "height": 214,
+          "viewportHeight": 1000,
+          "overflowY": "auto",
+          "insideDialog": false,
+          "actualTheme": "light"
+        },
+        {
+          "state": "repeated-alert-reads",
+          "file": "before-light-1440-repeated-alert-reads.png",
+          "messages": [
+            "T1 — 60 min played · ₹320 accrued",
+            "T1 — 120 min played · ₹640 accrued · Check table now"
+          ],
+          "count": 2,
+          "exiting": 0,
+          "zIndex": 1900,
+          "maxHeight": 500,
+          "height": 214,
+          "viewportHeight": 1000,
+          "overflowY": "auto",
+          "insideDialog": false,
+          "actualTheme": "light"
+        },
+        {
+          "state": "below-checkout",
+          "file": "before-light-1440-below-checkout.png",
+          "messages": [
+            "T1 — 120 min played · ₹640 accrued · Check table now"
+          ],
+          "count": 1,
+          "exiting": 0,
+          "zIndex": 1900,
+          "maxHeight": 500,
+          "height": 114,
+          "viewportHeight": 1000,
+          "overflowY": "auto",
+          "insideDialog": false,
+          "actualTheme": "light"
+        }
+      ],
+      "repeatReads": [
+        {
+          "index": 1,
+          "alertReads": 4,
+          "responseObserved": true,
+          "latestCount": 1,
+          "olderCount": 1,
+          "total": 2
+        },
+        {
+          "index": 2,
+          "alertReads": 5,
+          "responseObserved": true,
+          "latestCount": 1,
+          "olderCount": 1,
+          "total": 2
+        },
+        {
+          "index": 3,
+          "alertReads": 6,
+          "responseObserved": true,
+          "latestCount": 1,
+          "olderCount": 1,
+          "total": 2
+        }
+      ],
+      "violations": [],
+      "pageErrors": [],
+      "replacement": {
+        "latestCount": 1,
+        "olderCount": 1,
+        "singleLatest": false,
+        "elapsedSinceFirstWarningMs": 1275
+      },
+      "layering": {
+        "warningZ": 1900,
+        "checkoutZ": 2000,
+        "warningInsideCheckout": false,
+        "checkoutReceivesOverlap": true,
+        "maxHeight": 500,
+        "viewportHeight": 1000,
+        "height": 114
+      },
+      "counts": {
+        "alertReads": 9,
+        "blockedBrowserWrites": 0,
+        "acknowledgementAttempts": 0
+      }
+    },
+    {
+      "stage": "before",
+      "theme": "dark",
+      "width": 375,
+      "app": "http://127.0.0.1:5180",
+      "status": "observed",
+      "samples": [
+        {
+          "state": "60-minute-warning",
+          "file": "before-dark-375-60-minute-warning.png",
+          "messages": [
+            "T1 — 60 min played · ₹320 accrued"
+          ],
+          "count": 1,
+          "exiting": 0,
+          "zIndex": 1900,
+          "maxHeight": 422,
+          "height": 92,
+          "viewportHeight": 844,
+          "overflowY": "auto",
+          "insideDialog": false,
+          "actualTheme": "dark"
+        },
+        {
+          "state": "120-minute-replacement",
+          "file": "before-dark-375-120-minute-replacement.png",
+          "messages": [
+            "T1 — 60 min played · ₹320 accrued",
+            "T1 — 120 min played · ₹640 accrued · Check table now"
+          ],
+          "count": 2,
+          "exiting": 0,
+          "zIndex": 1900,
+          "maxHeight": 422,
+          "height": 236,
+          "viewportHeight": 844,
+          "overflowY": "auto",
+          "insideDialog": false,
+          "actualTheme": "dark"
+        },
+        {
+          "state": "repeated-alert-reads",
+          "file": "before-dark-375-repeated-alert-reads.png",
+          "messages": [
+            "T1 — 60 min played · ₹320 accrued",
+            "T1 — 120 min played · ₹640 accrued · Check table now"
+          ],
+          "count": 2,
+          "exiting": 0,
+          "zIndex": 1900,
+          "maxHeight": 422,
+          "height": 236,
+          "viewportHeight": 844,
+          "overflowY": "auto",
+          "insideDialog": false,
+          "actualTheme": "dark"
+        },
+        {
+          "state": "below-checkout",
+          "file": "before-dark-375-below-checkout.png",
+          "messages": [
+            "T1 — 120 min played · ₹640 accrued · Check table now"
+          ],
+          "count": 1,
+          "exiting": 0,
+          "zIndex": 1900,
+          "maxHeight": 422,
+          "height": 136,
+          "viewportHeight": 844,
+          "overflowY": "auto",
+          "insideDialog": false,
+          "actualTheme": "dark"
+        }
+      ],
+      "repeatReads": [
+        {
+          "index": 1,
+          "alertReads": 5,
+          "responseObserved": true,
+          "latestCount": 1,
+          "olderCount": 1,
+          "total": 2
+        },
+        {
+          "index": 2,
+          "alertReads": 6,
+          "responseObserved": true,
+          "latestCount": 1,
+          "olderCount": 1,
+          "total": 2
+        },
+        {
+          "index": 3,
+          "alertReads": 8,
+          "responseObserved": true,
+          "latestCount": 1,
+          "olderCount": 1,
+          "total": 2
+        }
+      ],
+      "violations": [],
+      "pageErrors": [],
+      "replacement": {
+        "latestCount": 1,
+        "olderCount": 1,
+        "singleLatest": false,
+        "elapsedSinceFirstWarningMs": 3537
+      },
+      "layering": {
+        "warningZ": 1900,
+        "checkoutZ": 2000,
+        "warningInsideCheckout": false,
+        "checkoutReceivesOverlap": true,
+        "maxHeight": 422,
+        "viewportHeight": 844,
+        "height": 136
+      },
+      "counts": {
+        "alertReads": 11,
+        "blockedBrowserWrites": 0,
+        "acknowledgementAttempts": 0
+      }
+    },
+    {
+      "stage": "before",
+      "theme": "dark",
+      "width": 1440,
+      "app": "http://127.0.0.1:5180",
+      "status": "observed",
+      "samples": [
+        {
+          "state": "60-minute-warning",
+          "file": "before-dark-1440-60-minute-warning.png",
+          "messages": [
+            "T1 — 60 min played · ₹320 accrued"
+          ],
+          "count": 1,
+          "exiting": 0,
+          "zIndex": 1900,
+          "maxHeight": 500,
+          "height": 92,
+          "viewportHeight": 1000,
+          "overflowY": "auto",
+          "insideDialog": false,
+          "actualTheme": "dark"
+        },
+        {
+          "state": "120-minute-replacement",
+          "file": "before-dark-1440-120-minute-replacement.png",
+          "messages": [
+            "T1 — 60 min played · ₹320 accrued",
+            "T1 — 120 min played · ₹640 accrued · Check table now"
+          ],
+          "count": 2,
+          "exiting": 0,
+          "zIndex": 1900,
+          "maxHeight": 500,
+          "height": 214,
+          "viewportHeight": 1000,
+          "overflowY": "auto",
+          "insideDialog": false,
+          "actualTheme": "dark"
+        },
+        {
+          "state": "repeated-alert-reads",
+          "file": "before-dark-1440-repeated-alert-reads.png",
+          "messages": [
+            "T1 — 60 min played · ₹320 accrued",
+            "T1 — 120 min played · ₹640 accrued · Check table now"
+          ],
+          "count": 2,
+          "exiting": 0,
+          "zIndex": 1900,
+          "maxHeight": 500,
+          "height": 214,
+          "viewportHeight": 1000,
+          "overflowY": "auto",
+          "insideDialog": false,
+          "actualTheme": "dark"
+        },
+        {
+          "state": "below-checkout",
+          "file": "before-dark-1440-below-checkout.png",
+          "messages": [
+            "T1 — 120 min played · ₹640 accrued · Check table now"
+          ],
+          "count": 1,
+          "exiting": 0,
+          "zIndex": 1900,
+          "maxHeight": 500,
+          "height": 114,
+          "viewportHeight": 1000,
+          "overflowY": "auto",
+          "insideDialog": false,
+          "actualTheme": "dark"
+        }
+      ],
+      "repeatReads": [
+        {
+          "index": 1,
+          "alertReads": 5,
+          "responseObserved": true,
+          "latestCount": 1,
+          "olderCount": 1,
+          "total": 2
+        },
+        {
+          "index": 2,
+          "alertReads": 6,
+          "responseObserved": true,
+          "latestCount": 1,
+          "olderCount": 1,
+          "total": 2
+        },
+        {
+          "index": 3,
+          "alertReads": 7,
+          "responseObserved": true,
+          "latestCount": 1,
+          "olderCount": 1,
+          "total": 2
+        }
+      ],
+      "violations": [],
+      "pageErrors": [],
+      "replacement": {
+        "latestCount": 1,
+        "olderCount": 1,
+        "singleLatest": false,
+        "elapsedSinceFirstWarningMs": 1875
+      },
+      "layering": {
+        "warningZ": 1900,
+        "checkoutZ": 2000,
+        "warningInsideCheckout": false,
+        "checkoutReceivesOverlap": true,
+        "maxHeight": 500,
+        "viewportHeight": 1000,
+        "height": 114
+      },
+      "counts": {
+        "alertReads": 10,
+        "blockedBrowserWrites": 0,
+        "acknowledgementAttempts": 0
+      }
+    },
+    {
+      "stage": "after",
+      "theme": "light",
+      "width": 375,
+      "app": "http://127.0.0.1:5181",
+      "status": "fail",
+      "samples": [
+        {
+          "state": "60-minute-warning",
+          "file": "after-light-375-60-minute-warning.png",
+          "messages": [
+            "T1 — 60 min played · ₹320 accrued"
+          ],
+          "count": 1,
+          "exiting": 0,
+          "zIndex": 1900,
+          "maxHeight": 422,
+          "height": 104,
+          "viewportHeight": 844,
+          "overflowY": "auto",
+          "insideDialog": false,
+          "actualTheme": "light"
+        },
+        {
+          "state": "120-minute-replacement",
+          "file": "after-light-375-120-minute-replacement.png",
+          "messages": [
+            "T1 — 120 min played · ₹640 accrued · Check table now"
+          ],
+          "count": 1,
+          "exiting": 0,
+          "zIndex": 1900,
+          "maxHeight": 422,
+          "height": 154,
+          "viewportHeight": 844,
+          "overflowY": "auto",
+          "insideDialog": false,
+          "actualTheme": "light"
+        },
+        {
+          "state": "repeated-alert-reads",
+          "file": "after-light-375-repeated-alert-reads.png",
+          "messages": [
+            "T1 — 120 min played · ₹640 accrued · Check table now"
+          ],
+          "count": 1,
+          "exiting": 0,
+          "zIndex": 1900,
+          "maxHeight": 422,
+          "height": 154,
+          "viewportHeight": 844,
+          "overflowY": "auto",
+          "insideDialog": false,
+          "actualTheme": "light"
+        },
+        {
+          "state": "below-checkout",
+          "file": "after-light-375-below-checkout.png",
+          "messages": [
+            "T1 — 120 min played · ₹640 accrued · Check table now"
+          ],
+          "count": 1,
+          "exiting": 0,
+          "zIndex": 1900,
+          "maxHeight": 422,
+          "height": 154,
+          "viewportHeight": 844,
+          "overflowY": "auto",
+          "insideDialog": false,
+          "actualTheme": "light"
+        }
+      ],
+      "repeatReads": [
+        {
+          "index": 1,
+          "alertReads": 6,
+          "responseObserved": true,
+          "latestCount": 1,
+          "olderCount": 0,
+          "total": 1
+        },
+        {
+          "index": 2,
+          "alertReads": 7,
+          "responseObserved": true,
+          "latestCount": 1,
+          "olderCount": 0,
+          "total": 1
+        },
+        {
+          "index": 3,
+          "alertReads": 8,
+          "responseObserved": true,
+          "latestCount": 1,
+          "olderCount": 0,
+          "total": 1
+        }
+      ],
+      "violations": [],
+      "pageErrors": [],
+      "replacement": {
+        "latestCount": 1,
+        "olderCount": 0,
+        "singleLatest": true,
+        "elapsedSinceFirstWarningMs": 1441
+      },
+      "layering": {
+        "warningZ": 1900,
+        "checkoutZ": 2000,
+        "warningInsideCheckout": false,
+        "checkoutReceivesOverlap": true,
+        "maxHeight": 422,
+        "viewportHeight": 844,
+        "height": 154
+      },
+      "error": "AssertionError [ERR_ASSERTION]: Warning stack max-height must be at most 25dvh\n    at runCase (file:///Users/shivanshgupta/.codex/worktrees/player-start-flow/billiards-bms:HSR/frontend/scripts/test-reminder-stack.mjs:206:14)\n    at async file:///Users/shivanshgupta/.codex/worktrees/player-start-flow/billiards-bms:HSR/frontend/scripts/test-reminder-stack.mjs:235:5",
+      "counts": {
+        "alertReads": 11,
+        "blockedBrowserWrites": 0,
+        "acknowledgementAttempts": 0
+      }
+    },
+    {
+      "stage": "after",
+      "theme": "light",
+      "width": 1440,
+      "app": "http://127.0.0.1:5181",
+      "status": "fail",
+      "samples": [
+        {
+          "state": "60-minute-warning",
+          "file": "after-light-1440-60-minute-warning.png",
+          "messages": [
+            "T1 — 60 min played · ₹320 accrued"
+          ],
+          "count": 1,
+          "exiting": 0,
+          "zIndex": 1900,
+          "maxHeight": 500,
+          "height": 110,
+          "viewportHeight": 1000,
+          "overflowY": "auto",
+          "insideDialog": false,
+          "actualTheme": "light"
+        },
+        {
+          "state": "120-minute-replacement",
+          "file": "after-light-1440-120-minute-replacement.png",
+          "messages": [
+            "T1 — 120 min played · ₹640 accrued · Check table now"
+          ],
+          "count": 1,
+          "exiting": 0,
+          "zIndex": 1900,
+          "maxHeight": 500,
+          "height": 146,
+          "viewportHeight": 1000,
+          "overflowY": "auto",
+          "insideDialog": false,
+          "actualTheme": "light"
+        },
+        {
+          "state": "repeated-alert-reads",
+          "file": "after-light-1440-repeated-alert-reads.png",
+          "messages": [
+            "T1 — 120 min played · ₹640 accrued · Check table now"
+          ],
+          "count": 1,
+          "exiting": 0,
+          "zIndex": 1900,
+          "maxHeight": 500,
+          "height": 146,
+          "viewportHeight": 1000,
+          "overflowY": "auto",
+          "insideDialog": false,
+          "actualTheme": "light"
+        },
+        {
+          "state": "below-checkout",
+          "file": "after-light-1440-below-checkout.png",
+          "messages": [
+            "T1 — 120 min played · ₹640 accrued · Check table now"
+          ],
+          "count": 1,
+          "exiting": 0,
+          "zIndex": 1900,
+          "maxHeight": 500,
+          "height": 146,
+          "viewportHeight": 1000,
+          "overflowY": "auto",
+          "insideDialog": false,
+          "actualTheme": "light"
+        }
+      ],
+      "repeatReads": [
+        {
+          "index": 1,
+          "alertReads": 4,
+          "responseObserved": true,
+          "latestCount": 1,
+          "olderCount": 0,
+          "total": 1
+        },
+        {
+          "index": 2,
+          "alertReads": 5,
+          "responseObserved": true,
+          "latestCount": 1,
+          "olderCount": 0,
+          "total": 1
+        },
+        {
+          "index": 3,
+          "alertReads": 6,
+          "responseObserved": true,
+          "latestCount": 1,
+          "olderCount": 0,
+          "total": 1
+        }
+      ],
+      "violations": [],
+      "pageErrors": [],
+      "replacement": {
+        "latestCount": 1,
+        "olderCount": 0,
+        "singleLatest": true,
+        "elapsedSinceFirstWarningMs": 1876
+      },
+      "layering": {
+        "warningZ": 1900,
+        "checkoutZ": 2000,
+        "warningInsideCheckout": false,
+        "checkoutReceivesOverlap": true,
+        "maxHeight": 500,
+        "viewportHeight": 1000,
+        "height": 146
+      },
+      "error": "AssertionError [ERR_ASSERTION]: Warning stack max-height must be at most 25dvh\n    at runCase (file:///Users/shivanshgupta/.codex/worktrees/player-start-flow/billiards-bms:HSR/frontend/scripts/test-reminder-stack.mjs:206:14)\n    at async file:///Users/shivanshgupta/.codex/worktrees/player-start-flow/billiards-bms:HSR/frontend/scripts/test-reminder-stack.mjs:235:5",
+      "counts": {
+        "alertReads": 9,
+        "blockedBrowserWrites": 0,
+        "acknowledgementAttempts": 0
+      }
+    },
+    {
+      "stage": "after",
+      "theme": "dark",
+      "width": 375,
+      "app": "http://127.0.0.1:5181",
+      "status": "fail",
+      "samples": [
+        {
+          "state": "60-minute-warning",
+          "file": "after-dark-375-60-minute-warning.png",
+          "messages": [
+            "T1 — 60 min played · ₹320 accrued"
+          ],
+          "count": 1,
+          "exiting": 0,
+          "zIndex": 1900,
+          "maxHeight": 422,
+          "height": 104,
+          "viewportHeight": 844,
+          "overflowY": "auto",
+          "insideDialog": false,
+          "actualTheme": "dark"
+        },
+        {
+          "state": "120-minute-replacement",
+          "file": "after-dark-375-120-minute-replacement.png",
+          "messages": [
+            "T1 — 120 min played · ₹640 accrued · Check table now"
+          ],
+          "count": 1,
+          "exiting": 0,
+          "zIndex": 1900,
+          "maxHeight": 422,
+          "height": 154,
+          "viewportHeight": 844,
+          "overflowY": "auto",
+          "insideDialog": false,
+          "actualTheme": "dark"
+        },
+        {
+          "state": "repeated-alert-reads",
+          "file": "after-dark-375-repeated-alert-reads.png",
+          "messages": [
+            "T1 — 120 min played · ₹640 accrued · Check table now"
+          ],
+          "count": 1,
+          "exiting": 0,
+          "zIndex": 1900,
+          "maxHeight": 422,
+          "height": 154,
+          "viewportHeight": 844,
+          "overflowY": "auto",
+          "insideDialog": false,
+          "actualTheme": "dark"
+        },
+        {
+          "state": "below-checkout",
+          "file": "after-dark-375-below-checkout.png",
+          "messages": [
+            "T1 — 120 min played · ₹640 accrued · Check table now"
+          ],
+          "count": 1,
+          "exiting": 0,
+          "zIndex": 1900,
+          "maxHeight": 422,
+          "height": 154,
+          "viewportHeight": 844,
+          "overflowY": "auto",
+          "insideDialog": false,
+          "actualTheme": "dark"
+        }
+      ],
+      "repeatReads": [
+        {
+          "index": 1,
+          "alertReads": 6,
+          "responseObserved": true,
+          "latestCount": 1,
+          "olderCount": 0,
+          "total": 1
+        },
+        {
+          "index": 2,
+          "alertReads": 7,
+          "responseObserved": true,
+          "latestCount": 1,
+          "olderCount": 0,
+          "total": 1
+        },
+        {
+          "index": 3,
+          "alertReads": 8,
+          "responseObserved": true,
+          "latestCount": 1,
+          "olderCount": 0,
+          "total": 1
+        }
+      ],
+      "violations": [],
+      "pageErrors": [],
+      "replacement": {
+        "latestCount": 1,
+        "olderCount": 0,
+        "singleLatest": true,
+        "elapsedSinceFirstWarningMs": 1364
+      },
+      "layering": {
+        "warningZ": 1900,
+        "checkoutZ": 2000,
+        "warningInsideCheckout": false,
+        "checkoutReceivesOverlap": true,
+        "maxHeight": 422,
+        "viewportHeight": 844,
+        "height": 154
+      },
+      "error": "AssertionError [ERR_ASSERTION]: Warning stack max-height must be at most 25dvh\n    at runCase (file:///Users/shivanshgupta/.codex/worktrees/player-start-flow/billiards-bms:HSR/frontend/scripts/test-reminder-stack.mjs:206:14)\n    at async file:///Users/shivanshgupta/.codex/worktrees/player-start-flow/billiards-bms:HSR/frontend/scripts/test-reminder-stack.mjs:235:5",
+      "counts": {
+        "alertReads": 11,
+        "blockedBrowserWrites": 0,
+        "acknowledgementAttempts": 0
+      }
+    },
+    {
+      "stage": "after",
+      "theme": "dark",
+      "width": 1440,
+      "app": "http://127.0.0.1:5181",
+      "status": "fail",
+      "samples": [
+        {
+          "state": "60-minute-warning",
+          "file": "after-dark-1440-60-minute-warning.png",
+          "messages": [
+            "T1 — 60 min played · ₹320 accrued"
+          ],
+          "count": 1,
+          "exiting": 0,
+          "zIndex": 1900,
+          "maxHeight": 500,
+          "height": 110,
+          "viewportHeight": 1000,
+          "overflowY": "auto",
+          "insideDialog": false,
+          "actualTheme": "dark"
+        },
+        {
+          "state": "120-minute-replacement",
+          "file": "after-dark-1440-120-minute-replacement.png",
+          "messages": [
+            "T1 — 120 min played · ₹640 accrued · Check table now"
+          ],
+          "count": 1,
+          "exiting": 0,
+          "zIndex": 1900,
+          "maxHeight": 500,
+          "height": 146,
+          "viewportHeight": 1000,
+          "overflowY": "auto",
+          "insideDialog": false,
+          "actualTheme": "dark"
+        },
+        {
+          "state": "repeated-alert-reads",
+          "file": "after-dark-1440-repeated-alert-reads.png",
+          "messages": [
+            "T1 — 120 min played · ₹640 accrued · Check table now"
+          ],
+          "count": 1,
+          "exiting": 0,
+          "zIndex": 1900,
+          "maxHeight": 500,
+          "height": 146,
+          "viewportHeight": 1000,
+          "overflowY": "auto",
+          "insideDialog": false,
+          "actualTheme": "dark"
+        },
+        {
+          "state": "below-checkout",
+          "file": "after-dark-1440-below-checkout.png",
+          "messages": [
+            "T1 — 120 min played · ₹640 accrued · Check table now"
+          ],
+          "count": 1,
+          "exiting": 0,
+          "zIndex": 1900,
+          "maxHeight": 500,
+          "height": 146,
+          "viewportHeight": 1000,
+          "overflowY": "auto",
+          "insideDialog": false,
+          "actualTheme": "dark"
+        }
+      ],
+      "repeatReads": [
+        {
+          "index": 1,
+          "alertReads": 5,
+          "responseObserved": true,
+          "latestCount": 1,
+          "olderCount": 0,
+          "total": 1
+        },
+        {
+          "index": 2,
+          "alertReads": 6,
+          "responseObserved": true,
+          "latestCount": 1,
+          "olderCount": 0,
+          "total": 1
+        },
+        {
+          "index": 3,
+          "alertReads": 7,
+          "responseObserved": true,
+          "latestCount": 1,
+          "olderCount": 0,
+          "total": 1
+        }
+      ],
+      "violations": [],
+      "pageErrors": [],
+      "replacement": {
+        "latestCount": 1,
+        "olderCount": 0,
+        "singleLatest": true,
+        "elapsedSinceFirstWarningMs": 1223
+      },
+      "layering": {
+        "warningZ": 1900,
+        "checkoutZ": 2000,
+        "warningInsideCheckout": false,
+        "checkoutReceivesOverlap": true,
+        "maxHeight": 500,
+        "viewportHeight": 1000,
+        "height": 146
+      },
+      "error": "AssertionError [ERR_ASSERTION]: Warning stack max-height must be at most 25dvh\n    at runCase (file:///Users/shivanshgupta/.codex/worktrees/player-start-flow/billiards-bms:HSR/frontend/scripts/test-reminder-stack.mjs:206:14)\n    at async file:///Users/shivanshgupta/.codex/worktrees/player-start-flow/billiards-bms:HSR/frontend/scripts/test-reminder-stack.mjs:235:5",
+      "counts": {
+        "alertReads": 10,
+        "blockedBrowserWrites": 0,
+        "acknowledgementAttempts": 0
+      }
+    }
+  ],
+  "errors": [],
+  "finishedAt": "2026-10-18T17:11:33.909Z",
+  "summary": {
+    "expectedCases": 8,
+    "passedAfter": 0,
+    "observedBefore": 4,
+    "failed": 4,
+    "screenshots": 32,
+    "violations": 0
+  },
+  "status": "fail"
+}

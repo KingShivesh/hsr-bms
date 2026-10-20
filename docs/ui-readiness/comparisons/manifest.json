@@ -1,0 +1,1281 @@
+{
+  "legend": "Before on the left, after on the right. Light on top, dark below. Original pixels, no resizing; first 1000px of tall captures. Full source captures are retained.",
+  "images": [
+    {
+      "name": "login",
+      "path": "comparisons/login.png",
+      "width": 758,
+      "height": 2008,
+      "sources": [
+        {
+          "theme": "light",
+          "stage": "before",
+          "path": "login/before/light-375-error.png",
+          "sha256": "a8959d6bc00ceff4493728ad79a909ecf79f4a68b5bb180a0f0eb8e9a0edc1a0",
+          "width": 375,
+          "height": 1174,
+          "croppedHeight": 1000
+        },
+        {
+          "theme": "light",
+          "stage": "after",
+          "path": "login/after/light-375-error.png",
+          "sha256": "f6ecfbfa15b9285ab83e4c896d9a05ac8f38784041c6133d7d15ee7c1e2e4188",
+          "width": 375,
+          "height": 1196,
+          "croppedHeight": 1000
+        },
+        {
+          "theme": "dark",
+          "stage": "before",
+          "path": "login/before/dark-375-error.png",
+          "sha256": "fe43ff658bbb8ff38740280a3e0cd9707455e2158528083e1d3454ab8d34c58c",
+          "width": 375,
+          "height": 1174,
+          "croppedHeight": 1000
+        },
+        {
+          "theme": "dark",
+          "stage": "after",
+          "path": "login/after/dark-375-error.png",
+          "sha256": "9cbbad4299f880f7cebec7192f344162b029aa612e8a5c366e5d60ef9262c87d",
+          "width": 375,
+          "height": 1196,
+          "croppedHeight": 1000
+        }
+      ]
+    },
+    {
+      "name": "dashboard",
+      "path": "comparisons/dashboard.png",
+      "width": 1544,
+      "height": 2008,
+      "sources": [
+        {
+          "theme": "light",
+          "stage": "before",
+          "path": "dashboard/before/light-768-default.png",
+          "sha256": "fe396a63b5082d1633af4a2136e58186f2a1312eea584cd74d7c0fda67267c36",
+          "width": 768,
+          "height": 1000,
+          "croppedHeight": 1000
+        },
+        {
+          "theme": "light",
+          "stage": "after",
+          "path": "dashboard/after/light-768-default.png",
+          "sha256": "09d20681a9481ef1144d02e2e1dcfc0030c214c8e66ced1ff7e38eeb6d3263e3",
+          "width": 768,
+          "height": 1000,
+          "croppedHeight": 1000
+        },
+        {
+          "theme": "dark",
+          "stage": "before",
+          "path": "dashboard/before/dark-768-default.png",
+          "sha256": "f687efd605569fcab8d4d72c4383c63a098553ed183c73c195af56ed677b5a4c",
+          "width": 768,
+          "height": 1000,
+          "croppedHeight": 1000
+        },
+        {
+          "theme": "dark",
+          "stage": "after",
+          "path": "dashboard/after/dark-768-default.png",
+          "sha256": "f00258e9c5497a7832763edefadc1d3a3e023220d6df7dc9317fffeeaca7d1cd",
+          "width": 768,
+          "height": 1000,
+          "croppedHeight": 1000
+        }
+      ]
+    },
+    {
+      "name": "live-floor",
+      "path": "comparisons/live-floor.png",
+      "width": 758,
+      "height": 1696,
+      "sources": [
+        {
+          "theme": "light",
+          "stage": "before",
+          "path": "live-floor/before/light-375-empty.png",
+          "sha256": "2ff48281b1d9799ba5eb8fa072da8c95d8657ce784c18ac69780db4ccdee954d",
+          "width": 375,
+          "height": 844,
+          "croppedHeight": 844
+        },
+        {
+          "theme": "light",
+          "stage": "after",
+          "path": "live-floor/after/light-375-empty.png",
+          "sha256": "66f58d8c7abef11f37ae849738b5e612d8f83b2d091fc55580dd8c67280ecd24",
+          "width": 375,
+          "height": 844,
+          "croppedHeight": 844
+        },
+        {
+          "theme": "dark",
+          "stage": "before",
+          "path": "live-floor/before/dark-375-empty.png",
+          "sha256": "b7781560d21f00b927c810d9c9fce3f799b965b4757313aaf12de0b05887373b",
+          "width": 375,
+          "height": 844,
+          "croppedHeight": 844
+        },
+        {
+          "theme": "dark",
+          "stage": "after",
+          "path": "live-floor/after/dark-375-empty.png",
+          "sha256": "3e2053b89616155445e7164e18a2835cf07903ff9ed3dd17437489c4d4ae3f13",
+          "width": 375,
+          "height": 844,
+          "croppedHeight": 844
+        }
+      ]
+    },
+    {
+      "name": "checkout",
+      "path": "comparisons/checkout.png",
+      "width": 758,
+      "height": 1696,
+      "sources": [
+        {
+          "theme": "light",
+          "stage": "before",
+          "path": "checkout/before/light-375-error.png",
+          "sha256": "ea23aecffd13de68e48c66cec667e46ccb41b12fa7a1295d37765f3ea7713b6d",
+          "width": 375,
+          "height": 844,
+          "croppedHeight": 844
+        },
+        {
+          "theme": "light",
+          "stage": "after",
+          "path": "checkout/after/light-375-error.png",
+          "sha256": "e8d1650595e6978d9b80136e96982bc2dabdb14cca379d5b9c6a18713382816c",
+          "width": 375,
+          "height": 844,
+          "croppedHeight": 844
+        },
+        {
+          "theme": "dark",
+          "stage": "before",
+          "path": "checkout/before/dark-375-error.png",
+          "sha256": "ab91ab0d1fe8e08c5a5c1dfb22e5655cc4471b7f1a1b532dfdf6d981a801494c",
+          "width": 375,
+          "height": 844,
+          "croppedHeight": 844
+        },
+        {
+          "theme": "dark",
+          "stage": "after",
+          "path": "checkout/after/dark-375-error.png",
+          "sha256": "dc3ab830a62e962afb36c51164bb1752d61a706af650046fc5aa637878b12ee4",
+          "width": 375,
+          "height": 844,
+          "croppedHeight": 844
+        }
+      ]
+    },
+    {
+      "name": "members",
+      "path": "comparisons/members.png",
+      "width": 758,
+      "height": 1696,
+      "sources": [
+        {
+          "theme": "light",
+          "stage": "before",
+          "path": "customers/detail-before/light-375.png",
+          "sha256": "cbfca46e4b3b4f752a45412f4bbf4e001ea3c6f9f5a1d69eec35c08271280b57",
+          "width": 375,
+          "height": 844,
+          "croppedHeight": 844
+        },
+        {
+          "theme": "light",
+          "stage": "after",
+          "path": "customers/detail-after/light-375.png",
+          "sha256": "a7af9a70750fc4c987303024a299aaba22e235cfc2ac98d282675bbf2fe546f8",
+          "width": 375,
+          "height": 844,
+          "croppedHeight": 844
+        },
+        {
+          "theme": "dark",
+          "stage": "before",
+          "path": "customers/detail-before/dark-375.png",
+          "sha256": "ec87e6fc966ed9bcf66cdd434ce661ae838efa7e0dc7991f8029f362e1ca96a2",
+          "width": 375,
+          "height": 844,
+          "croppedHeight": 844
+        },
+        {
+          "theme": "dark",
+          "stage": "after",
+          "path": "customers/detail-after/dark-375.png",
+          "sha256": "5b8d82b024b4f35cfc272f6716316a474f593fbdbf6465a0c65faeeb2048cb51",
+          "width": 375,
+          "height": 844,
+          "croppedHeight": 844
+        }
+      ]
+    },
+    {
+      "name": "bookings",
+      "path": "comparisons/bookings.png",
+      "width": 758,
+      "height": 1696,
+      "sources": [
+        {
+          "theme": "light",
+          "stage": "before",
+          "path": "bookings/feedback-before/light-pending.png",
+          "sha256": "87bbcb09ee8e1141c2f218e319297eefee5ae1cfcb58d6c4ca0b9ef47c426dea",
+          "width": 375,
+          "height": 844,
+          "croppedHeight": 844
+        },
+        {
+          "theme": "light",
+          "stage": "after",
+          "path": "bookings/feedback-after/light-pending.png",
+          "sha256": "8ec3b60e379d36c7357eff220596f914ac86b98053e850554c770653dc835dad",
+          "width": 375,
+          "height": 844,
+          "croppedHeight": 844
+        },
+        {
+          "theme": "dark",
+          "stage": "before",
+          "path": "bookings/feedback-before/dark-pending.png",
+          "sha256": "3ef61118544b32d9b06bbc537497a22975b65fae1953947e39eb15c5e80d2144",
+          "width": 375,
+          "height": 844,
+          "croppedHeight": 844
+        },
+        {
+          "theme": "dark",
+          "stage": "after",
+          "path": "bookings/feedback-after/dark-pending.png",
+          "sha256": "4925530d5d5ba40a6115e572310582741910a2fb5118179be44069695d6005e3",
+          "width": 375,
+          "height": 844,
+          "croppedHeight": 844
+        }
+      ]
+    },
+    {
+      "name": "booking-layer",
+      "path": "comparisons/booking-layer.png",
+      "width": 758,
+      "height": 1696,
+      "sources": [
+        {
+          "theme": "light",
+          "stage": "before",
+          "path": "booking-close-layer/before/light-375-open-before-click.png",
+          "sha256": "4278053fd29f0cca32d50a6617bb024c8074ff25f43aa9ae407a6cad64e89300",
+          "width": 375,
+          "height": 844,
+          "croppedHeight": 844
+        },
+        {
+          "theme": "light",
+          "stage": "after",
+          "path": "booking-close-layer/after/light-375-open-before-click.png",
+          "sha256": "10b340fb39ae2fcf0f20acb479542b21f986c207a7c10a56e244fe8df1c37a21",
+          "width": 375,
+          "height": 844,
+          "croppedHeight": 844
+        },
+        {
+          "theme": "dark",
+          "stage": "before",
+          "path": "booking-close-layer/before/dark-375-open-before-click.png",
+          "sha256": "12085993ed13074968545bc49e79646de44f71320f466c8401c2b8ccca18e31d",
+          "width": 375,
+          "height": 844,
+          "croppedHeight": 844
+        },
+        {
+          "theme": "dark",
+          "stage": "after",
+          "path": "booking-close-layer/after/dark-375-open-before-click.png",
+          "sha256": "3a8ca9d828e54fa47652457c290303c0d42e4fc37e6dd151604f37b42e2160f3",
+          "width": 375,
+          "height": 844,
+          "croppedHeight": 844
+        }
+      ]
+    },
+    {
+      "name": "cafe-stats",
+      "path": "comparisons/cafe-stats.png",
+      "width": 758,
+      "height": 1696,
+      "sources": [
+        {
+          "theme": "light",
+          "stage": "before",
+          "path": "cafe-stats/before/light-375-partial.png",
+          "sha256": "cc104ba97c4df91584b1d60fa7fe76a635c7f4f82ab039210e26fd46517ce667",
+          "width": 375,
+          "height": 844,
+          "croppedHeight": 844
+        },
+        {
+          "theme": "light",
+          "stage": "after",
+          "path": "cafe-stats/after/light-375-partial.png",
+          "sha256": "1dfe4b099d1c1480e41befeb4dc3504493443f0c09c6ad5fa627819d5c614cce",
+          "width": 375,
+          "height": 844,
+          "croppedHeight": 844
+        },
+        {
+          "theme": "dark",
+          "stage": "before",
+          "path": "cafe-stats/before/dark-375-partial.png",
+          "sha256": "4645a19342d73df7ad3a3a529943bc3aeb83acca5fd507cbb7c287a7bf9786c1",
+          "width": 375,
+          "height": 844,
+          "croppedHeight": 844
+        },
+        {
+          "theme": "dark",
+          "stage": "after",
+          "path": "cafe-stats/after/dark-375-partial.png",
+          "sha256": "5bae21fb584f48b5fc52c57d8e6aaec630ac1659a90edc4bca3fc8e3947639da",
+          "width": 375,
+          "height": 844,
+          "croppedHeight": 844
+        }
+      ]
+    },
+    {
+      "name": "cafe-history",
+      "path": "comparisons/cafe-history.png",
+      "width": 758,
+      "height": 1696,
+      "sources": [
+        {
+          "theme": "light",
+          "stage": "before",
+          "path": "cafe-history/before/light-375-partial.png",
+          "sha256": "3db4241575f122bcd2ac0b52f9fa59ca38dee3a588ae294de42746fee0d37e06",
+          "width": 375,
+          "height": 844,
+          "croppedHeight": 844
+        },
+        {
+          "theme": "light",
+          "stage": "after",
+          "path": "cafe-history/after/light-375-partial.png",
+          "sha256": "12b1eb8f3cf0d1b7f010ee8ea93a0468909487e9e54c41042ceefbcb0f33d62e",
+          "width": 375,
+          "height": 844,
+          "croppedHeight": 844
+        },
+        {
+          "theme": "dark",
+          "stage": "before",
+          "path": "cafe-history/before/dark-375-partial.png",
+          "sha256": "4645a19342d73df7ad3a3a529943bc3aeb83acca5fd507cbb7c287a7bf9786c1",
+          "width": 375,
+          "height": 844,
+          "croppedHeight": 844
+        },
+        {
+          "theme": "dark",
+          "stage": "after",
+          "path": "cafe-history/after/dark-375-partial.png",
+          "sha256": "99558732d08fcc2f87bbc8908421c9e27c41af8dfffe2d536151ece7a696518f",
+          "width": 375,
+          "height": 844,
+          "croppedHeight": 844
+        }
+      ]
+    },
+    {
+      "name": "sales",
+      "path": "comparisons/sales.png",
+      "width": 758,
+      "height": 1696,
+      "sources": [
+        {
+          "theme": "light",
+          "stage": "before",
+          "path": "sales/detail-before/light-375.png",
+          "sha256": "1f31a2825c692d0dfa76c00bca16db14d135b9a892db637b09ecab9111c15786",
+          "width": 375,
+          "height": 844,
+          "croppedHeight": 844
+        },
+        {
+          "theme": "light",
+          "stage": "after",
+          "path": "sales/detail-after/light-375.png",
+          "sha256": "62a59ef96b9d9b3c95b6143a4c765366feed0edf56eaeb2c3b6f0c2adbe55e2c",
+          "width": 375,
+          "height": 844,
+          "croppedHeight": 844
+        },
+        {
+          "theme": "dark",
+          "stage": "before",
+          "path": "sales/detail-before/dark-375.png",
+          "sha256": "9abe86d16e4b881b74e3a2425b354e8409c0a12fa25b13cc8d7a454a13591ee6",
+          "width": 375,
+          "height": 844,
+          "croppedHeight": 844
+        },
+        {
+          "theme": "dark",
+          "stage": "after",
+          "path": "sales/detail-after/dark-375.png",
+          "sha256": "c85ae74de1b944af975122ba9a96c16c1c39716cd2b59d33773e40a8b911a71b",
+          "width": 375,
+          "height": 844,
+          "croppedHeight": 844
+        }
+      ]
+    },
+    {
+      "name": "reports-bills",
+      "path": "comparisons/reports-bills.png",
+      "width": 758,
+      "height": 1696,
+      "sources": [
+        {
+          "theme": "light",
+          "stage": "before",
+          "path": "analytics/before/light-375-loading.png",
+          "sha256": "e1c7f6e5958ce9e4fe47867cfe18b27128ff632b3d63e884129f0ccf93241804",
+          "width": 375,
+          "height": 844,
+          "croppedHeight": 844
+        },
+        {
+          "theme": "light",
+          "stage": "after",
+          "path": "analytics/after/light-375-loading.png",
+          "sha256": "998d8b9ed47ded33e3247196d959371b261f23f9afa8808be44f7eef6b17d77f",
+          "width": 375,
+          "height": 844,
+          "croppedHeight": 844
+        },
+        {
+          "theme": "dark",
+          "stage": "before",
+          "path": "analytics/before/dark-375-loading.png",
+          "sha256": "99db20205bd9f0b0042366d2ee67fd0009e23ab9b40a856fa335f910e0b7a333",
+          "width": 375,
+          "height": 844,
+          "croppedHeight": 844
+        },
+        {
+          "theme": "dark",
+          "stage": "after",
+          "path": "analytics/after/dark-375-loading.png",
+          "sha256": "0955c0decc0205b7839570b4389859ecf9c4353cb8e2ca165ee07e8a902c7db8",
+          "width": 375,
+          "height": 844,
+          "croppedHeight": 844
+        }
+      ]
+    },
+    {
+      "name": "reports-tables",
+      "path": "comparisons/reports-tables.png",
+      "width": 758,
+      "height": 1696,
+      "sources": [
+        {
+          "theme": "light",
+          "stage": "before",
+          "path": "reports-tables/before/light-375-partial.png",
+          "sha256": "fe0bad89d6c0ccf90d114339ea310ec76129d52e80e28417436a8a4497330685",
+          "width": 375,
+          "height": 844,
+          "croppedHeight": 844
+        },
+        {
+          "theme": "light",
+          "stage": "after",
+          "path": "reports-tables/after/light-375-partial.png",
+          "sha256": "4917bc6528ba58ed9a90d8ef8daffee11ff392f7c23d73c90fd322bfa09b9a06",
+          "width": 375,
+          "height": 844,
+          "croppedHeight": 844
+        },
+        {
+          "theme": "dark",
+          "stage": "before",
+          "path": "reports-tables/before/dark-375-partial.png",
+          "sha256": "ff61c9c73b5b8ae068d44389c75a46f1aa5cdb7e7eac898ff59b3b0692f1943c",
+          "width": 375,
+          "height": 844,
+          "croppedHeight": 844
+        },
+        {
+          "theme": "dark",
+          "stage": "after",
+          "path": "reports-tables/after/dark-375-partial.png",
+          "sha256": "a26a1e7a224a1f10be815e78e99f487f909e30a730d9293034b407253f315235",
+          "width": 375,
+          "height": 844,
+          "croppedHeight": 844
+        }
+      ]
+    },
+    {
+      "name": "reports-analytics",
+      "path": "comparisons/reports-analytics.png",
+      "width": 758,
+      "height": 1696,
+      "sources": [
+        {
+          "theme": "light",
+          "stage": "before",
+          "path": "reports-advanced/before/light-375-error.png",
+          "sha256": "1bd0f3257ce1b406d9cf84b8f16fffce5a8aa50ca14821fbdb81ba7a6184c1d7",
+          "width": 375,
+          "height": 844,
+          "croppedHeight": 844
+        },
+        {
+          "theme": "light",
+          "stage": "after",
+          "path": "reports-advanced/after/light-375-error.png",
+          "sha256": "14df98f938d2ff88848067ba9e22e70b20e2a2686500d9644d76e8cda811cb21",
+          "width": 375,
+          "height": 844,
+          "croppedHeight": 844
+        },
+        {
+          "theme": "dark",
+          "stage": "before",
+          "path": "reports-advanced/before/dark-375-error.png",
+          "sha256": "c703b2258b8315be885c6a0fec1470d713416586cf0a4b91fc372481a22d43fb",
+          "width": 375,
+          "height": 844,
+          "croppedHeight": 844
+        },
+        {
+          "theme": "dark",
+          "stage": "after",
+          "path": "reports-advanced/after/dark-375-error.png",
+          "sha256": "abb840c6176d4fb472a7d6ad9bd91fad47fc28b7fc570c5f313be2ba18b6f633",
+          "width": 375,
+          "height": 844,
+          "croppedHeight": 844
+        }
+      ]
+    },
+    {
+      "name": "reports-session-edits",
+      "path": "comparisons/reports-session-edits.png",
+      "width": 758,
+      "height": 1696,
+      "sources": [
+        {
+          "theme": "light",
+          "stage": "before",
+          "path": "reports-session-edits/before/light-375-loading.png",
+          "sha256": "f352e47d59f1deea762d978301db49d19448b87713552fc1c65bcccd2c493af2",
+          "width": 375,
+          "height": 844,
+          "croppedHeight": 844
+        },
+        {
+          "theme": "light",
+          "stage": "after",
+          "path": "reports-session-edits/after/light-375-loading.png",
+          "sha256": "6ef12191bdb695f225746f0e66ca3ae2d09778105d07980c63807b2f38206b35",
+          "width": 375,
+          "height": 844,
+          "croppedHeight": 844
+        },
+        {
+          "theme": "dark",
+          "stage": "before",
+          "path": "reports-session-edits/before/dark-375-loading.png",
+          "sha256": "130f704c448081d9e557dadc1fd642d37b5341b5e5f2e8b79dd9cb70ef7d2d8a",
+          "width": 375,
+          "height": 844,
+          "croppedHeight": 844
+        },
+        {
+          "theme": "dark",
+          "stage": "after",
+          "path": "reports-session-edits/after/dark-375-loading.png",
+          "sha256": "c0f1bf106bf172c82ee2044edd28cf262c5797b24d299a2a85f4ab66c22f629c",
+          "width": 375,
+          "height": 844,
+          "croppedHeight": 844
+        }
+      ]
+    },
+    {
+      "name": "settings",
+      "path": "comparisons/settings.png",
+      "width": 758,
+      "height": 2008,
+      "sources": [
+        {
+          "theme": "light",
+          "stage": "before",
+          "path": "settings/before/light-375-default.png",
+          "sha256": "8346acbe1469aefa74b66c667e51e73218a0b9ae4e89fc3b117a78e2704ee76e",
+          "width": 375,
+          "height": 4350,
+          "croppedHeight": 1000
+        },
+        {
+          "theme": "light",
+          "stage": "after",
+          "path": "settings/after/light-375-default.png",
+          "sha256": "971744dde88895569b01d8a1493bcddcfc410183487aea21c18f23b2e4c7f586",
+          "width": 375,
+          "height": 4350,
+          "croppedHeight": 1000
+        },
+        {
+          "theme": "dark",
+          "stage": "before",
+          "path": "settings/before/dark-375-default.png",
+          "sha256": "fa67b12da50f9264ed178e8898e3bd90ee7134b6d272314c99d5db15acbad7c1",
+          "width": 375,
+          "height": 4350,
+          "croppedHeight": 1000
+        },
+        {
+          "theme": "dark",
+          "stage": "after",
+          "path": "settings/after/dark-375-default.png",
+          "sha256": "254fee532d15b1cdb5237469f3c47f50d2302d28f14ddfdb047130ace0768c8b",
+          "width": 375,
+          "height": 4350,
+          "croppedHeight": 1000
+        }
+      ]
+    },
+    {
+      "name": "settings-account",
+      "path": "comparisons/settings-account.png",
+      "width": 758,
+      "height": 1696,
+      "sources": [
+        {
+          "theme": "light",
+          "stage": "before",
+          "path": "settings-account/before/light-375-partial.png",
+          "sha256": "824f3f37cc40aa2d1f196338accb1393694e444b581d3c66129bc569d8313fb6",
+          "width": 375,
+          "height": 844,
+          "croppedHeight": 844
+        },
+        {
+          "theme": "light",
+          "stage": "after",
+          "path": "settings-account/after/light-375-partial.png",
+          "sha256": "b5f45459790bb0bde45b98e6f995417d817cd2450ffd45e672dcc8d96b8ef74c",
+          "width": 375,
+          "height": 844,
+          "croppedHeight": 844
+        },
+        {
+          "theme": "dark",
+          "stage": "before",
+          "path": "settings-account/before/dark-375-partial.png",
+          "sha256": "aef72f4c6539925f3915bfa17ca6202fdcb428f7e9c46be6ad059bf36504b31a",
+          "width": 375,
+          "height": 844,
+          "croppedHeight": 844
+        },
+        {
+          "theme": "dark",
+          "stage": "after",
+          "path": "settings-account/after/dark-375-partial.png",
+          "sha256": "09b4a603e0e362b2abebfd99294ab77eec1434efd812477c2bc86e2475fd4d68",
+          "width": 375,
+          "height": 844,
+          "croppedHeight": 844
+        }
+      ]
+    },
+    {
+      "name": "settings-activity",
+      "path": "comparisons/settings-activity.png",
+      "width": 758,
+      "height": 1696,
+      "sources": [
+        {
+          "theme": "light",
+          "stage": "before",
+          "path": "settings-activity/before/light-375-partial.png",
+          "sha256": "5fabca66b5c0a44ffc2a8a3af5c5db52b302a08cbda7ec6c5372f43820d4cc86",
+          "width": 375,
+          "height": 844,
+          "croppedHeight": 844
+        },
+        {
+          "theme": "light",
+          "stage": "after",
+          "path": "settings-activity/after/light-375-partial.png",
+          "sha256": "14d509e689394bd722cf90993c6d367c411cc798c76587b6b1fe9ed99205f099",
+          "width": 375,
+          "height": 844,
+          "croppedHeight": 844
+        },
+        {
+          "theme": "dark",
+          "stage": "before",
+          "path": "settings-activity/before/dark-375-partial.png",
+          "sha256": "dca2bccdbd25123e4e1de4a2b99d454f960d0a257250821625f88184ccf65e2d",
+          "width": 375,
+          "height": 844,
+          "croppedHeight": 844
+        },
+        {
+          "theme": "dark",
+          "stage": "after",
+          "path": "settings-activity/after/dark-375-partial.png",
+          "sha256": "0ac0d62a3f76de62df758e8d3d9d3ac4015bca9dcc076ef4ee2a67316663760f",
+          "width": 375,
+          "height": 844,
+          "croppedHeight": 844
+        }
+      ]
+    },
+    {
+      "name": "inventory",
+      "path": "comparisons/inventory.png",
+      "width": 758,
+      "height": 2008,
+      "sources": [
+        {
+          "theme": "light",
+          "stage": "before",
+          "path": "inventory/before/light-375-default.png",
+          "sha256": "fc0135edb0da14bef0ba17e4f120c745a64d871a0aaed8d71ff1442c8f4438ab",
+          "width": 375,
+          "height": 2108,
+          "croppedHeight": 1000
+        },
+        {
+          "theme": "light",
+          "stage": "after",
+          "path": "inventory/after/light-375-default.png",
+          "sha256": "2d21795c0d5f3a6d6277a79dd48f72926b51db5315193743ea6eeeb90ad4caac",
+          "width": 375,
+          "height": 2108,
+          "croppedHeight": 1000
+        },
+        {
+          "theme": "dark",
+          "stage": "before",
+          "path": "inventory/before/dark-375-default.png",
+          "sha256": "369c6e8458cef6a74215d2e9d487f3bff65992810d4dec00e29c008b79cee954",
+          "width": 375,
+          "height": 2108,
+          "croppedHeight": 1000
+        },
+        {
+          "theme": "dark",
+          "stage": "after",
+          "path": "inventory/after/dark-375-default.png",
+          "sha256": "d937a13fc13130e140fdd0b1b4a01fc2f1b4f6c766cab6f6d2f867b69e16ed97",
+          "width": 375,
+          "height": 2108,
+          "croppedHeight": 1000
+        }
+      ]
+    },
+    {
+      "name": "legacy-controls",
+      "path": "comparisons/legacy-controls.png",
+      "width": 2192,
+      "height": 2008,
+      "sources": [
+        {
+          "theme": "light",
+          "stage": "before",
+          "path": "legacy-table-controls/before/light-1024-default.png",
+          "sha256": "f3cc7a432d854148085e232e953f137ac73c794dd6e3967b951e123b29908b9d",
+          "width": 1092,
+          "height": 2724,
+          "croppedHeight": 1000
+        },
+        {
+          "theme": "light",
+          "stage": "after",
+          "path": "legacy-table-controls/after/light-1024-default.png",
+          "sha256": "521591455f150af832ab6bf78dbaa3b5aff8b1a60b6677fedd54c985f2720227",
+          "width": 1024,
+          "height": 2780,
+          "croppedHeight": 1000
+        },
+        {
+          "theme": "dark",
+          "stage": "before",
+          "path": "legacy-table-controls/before/dark-1024-default.png",
+          "sha256": "3a4dfe46dd61b00ada962ea23021c20aa017427a550afe6dc20b640d8fa47b49",
+          "width": 1092,
+          "height": 2724,
+          "croppedHeight": 1000
+        },
+        {
+          "theme": "dark",
+          "stage": "after",
+          "path": "legacy-table-controls/after/dark-1024-default.png",
+          "sha256": "f9f59e5a7f9afa27f0dfd8c4c9557cfc573de08a66ab1000a8013fca950b9a43",
+          "width": 1024,
+          "height": 2780,
+          "croppedHeight": 1000
+        }
+      ]
+    },
+    {
+      "name": "advanced-book-pointer",
+      "path": "comparisons/advanced-book-pointer.png",
+      "width": 758,
+      "height": 1696,
+      "sources": [
+        {
+          "theme": "light",
+          "stage": "before",
+          "path": "advanced-book-pointer/before/light-375-book-table.png",
+          "sha256": "b2794cdddc83232e86644fed820fa304458f78a2ca2dbbea30901d9cdbae8ee6",
+          "width": 375,
+          "height": 844,
+          "croppedHeight": 844
+        },
+        {
+          "theme": "light",
+          "stage": "after",
+          "path": "advanced-book-pointer/after/light-375-book-table.png",
+          "sha256": "1f6ecc52213f3a91d670d30ab74ae67a5c77daa66ae35f47356171b5be6970e4",
+          "width": 375,
+          "height": 844,
+          "croppedHeight": 844
+        },
+        {
+          "theme": "dark",
+          "stage": "before",
+          "path": "advanced-book-pointer/before/dark-375-book-table.png",
+          "sha256": "c3fb30fedc2dfaae58113e3d9d5e2050a8e60817c40627d18e745f6c1c520dab",
+          "width": 375,
+          "height": 844,
+          "croppedHeight": 844
+        },
+        {
+          "theme": "dark",
+          "stage": "after",
+          "path": "advanced-book-pointer/after/dark-375-book-table.png",
+          "sha256": "729029b7f5bf657381cdce3bb478127a9ea9b9fb5bc8ed08e08f17321eb4e8e5",
+          "width": 375,
+          "height": 844,
+          "croppedHeight": 844
+        }
+      ]
+    },
+    {
+      "name": "tournaments",
+      "path": "comparisons/tournaments.png",
+      "width": 758,
+      "height": 2008,
+      "sources": [
+        {
+          "theme": "light",
+          "stage": "before",
+          "path": "tournaments/before/light-375-default.png",
+          "sha256": "9a49f43cd079a57a331e55e784a8afad210f14c41fb16ee22166265cd5d5c89e",
+          "width": 375,
+          "height": 2194,
+          "croppedHeight": 1000
+        },
+        {
+          "theme": "light",
+          "stage": "after",
+          "path": "tournaments/after/light-375-default.png",
+          "sha256": "7751730113ba85dfb153f081126c8be29a258c1274b4cf4cf34cc909aea2cde6",
+          "width": 375,
+          "height": 2182,
+          "croppedHeight": 1000
+        },
+        {
+          "theme": "dark",
+          "stage": "before",
+          "path": "tournaments/before/dark-375-default.png",
+          "sha256": "b237a675a7cbf17bc7a1d109a7334fac1a37f98b8f4892dd47dccd97bac8038b",
+          "width": 375,
+          "height": 2194,
+          "croppedHeight": 1000
+        },
+        {
+          "theme": "dark",
+          "stage": "after",
+          "path": "tournaments/after/dark-375-default.png",
+          "sha256": "71e1ec85fe6d8bd393d8cdfbbb789784401066ebcfb7cd7a6f3d875680e958d7",
+          "width": 375,
+          "height": 2182,
+          "croppedHeight": 1000
+        }
+      ]
+    },
+    {
+      "name": "closing",
+      "path": "comparisons/closing.png",
+      "width": 758,
+      "height": 2008,
+      "sources": [
+        {
+          "theme": "light",
+          "stage": "before",
+          "path": "daily-closing/before/light-375-default.png",
+          "sha256": "aded5b3a79193326986479f436edc99b59ab57c6bdb81b48fcc4e7d363a05320",
+          "width": 375,
+          "height": 3292,
+          "croppedHeight": 1000
+        },
+        {
+          "theme": "light",
+          "stage": "after",
+          "path": "daily-closing/after/light-375-default.png",
+          "sha256": "c8cc2f80b6bc78310af9fc58e8e21a2b3edafcb1cf1e8d67c5f5a6a0b84a2c94",
+          "width": 375,
+          "height": 3219,
+          "croppedHeight": 1000
+        },
+        {
+          "theme": "dark",
+          "stage": "before",
+          "path": "daily-closing/before/dark-375-default.png",
+          "sha256": "89b63d3d133c62c72781cbbf0da316875c18eec620b0d806456dd71cd0018aad",
+          "width": 375,
+          "height": 3292,
+          "croppedHeight": 1000
+        },
+        {
+          "theme": "dark",
+          "stage": "after",
+          "path": "daily-closing/after/dark-375-default.png",
+          "sha256": "8936b37d8c6ed3f24fce9c6e451728ce717d1ac5518f58f7fad51f7278d261b0",
+          "width": 375,
+          "height": 3219,
+          "croppedHeight": 1000
+        }
+      ]
+    },
+    {
+      "name": "pricing",
+      "path": "comparisons/pricing.png",
+      "width": 758,
+      "height": 1704,
+      "sources": [
+        {
+          "theme": "light",
+          "stage": "before",
+          "path": "pricing-rules/before/light-375-default.png",
+          "sha256": "9c047c6689f43ea1f5c5ad9ebe3c50fcb334377252e81f7baa47ade68231edf4",
+          "width": 375,
+          "height": 848,
+          "croppedHeight": 848
+        },
+        {
+          "theme": "light",
+          "stage": "after",
+          "path": "pricing-rules/after/light-375-default.png",
+          "sha256": "2af931a63deabc9cd4b0bfd7769401f0f79e371bc0e2ca44a4346b8c8465d448",
+          "width": 375,
+          "height": 848,
+          "croppedHeight": 848
+        },
+        {
+          "theme": "dark",
+          "stage": "before",
+          "path": "pricing-rules/before/dark-375-default.png",
+          "sha256": "bcfb995e10a70bee782274ae37c6cd4158792e821cf8177c770f84180ab46fae",
+          "width": 375,
+          "height": 848,
+          "croppedHeight": 848
+        },
+        {
+          "theme": "dark",
+          "stage": "after",
+          "path": "pricing-rules/after/dark-375-default.png",
+          "sha256": "c103badf18703e50ff95761e698ff9f10e932e1e2b95b0dc6b2f45432cd32e79",
+          "width": 375,
+          "height": 848,
+          "croppedHeight": 848
+        }
+      ]
+    },
+    {
+      "name": "status",
+      "path": "comparisons/status.png",
+      "width": 758,
+      "height": 1696,
+      "sources": [
+        {
+          "theme": "light",
+          "stage": "before",
+          "path": "status/before/light-375-loading.png",
+          "sha256": "73631a67f26c98c61ece5def93c99c68308b7fecc5ef807c70b0b78d0d6b0237",
+          "width": 375,
+          "height": 844,
+          "croppedHeight": 844
+        },
+        {
+          "theme": "light",
+          "stage": "after",
+          "path": "status/after/light-375-loading.png",
+          "sha256": "0942018cab14127e04ec3b62b00ce07a03df222555ffea5e053ad23ff6902257",
+          "width": 375,
+          "height": 844,
+          "croppedHeight": 844
+        },
+        {
+          "theme": "dark",
+          "stage": "before",
+          "path": "status/before/dark-375-loading.png",
+          "sha256": "e3540c23d7d6ce392e8834f349aa1b16a5aee0535102528e7a9818511e64d6e5",
+          "width": 375,
+          "height": 844,
+          "croppedHeight": 844
+        },
+        {
+          "theme": "dark",
+          "stage": "after",
+          "path": "status/after/dark-375-loading.png",
+          "sha256": "6ff8f2edba7d90bdbb6c44783b1276624a5a3d393b69465e5eb962cdf18d8916",
+          "width": 375,
+          "height": 844,
+          "croppedHeight": 844
+        }
+      ]
+    },
+    {
+      "name": "tooltips",
+      "path": "comparisons/tooltips.png",
+      "width": 758,
+      "height": 1696,
+      "sources": [
+        {
+          "theme": "light",
+          "stage": "before",
+          "path": "shared/before-light-375-tooltip.png",
+          "sha256": "002d44f7724c1181ce396f51b84ed2e26683601cad995c0925823ec4ffa07b80",
+          "width": 375,
+          "height": 844,
+          "croppedHeight": 844
+        },
+        {
+          "theme": "light",
+          "stage": "after",
+          "path": "shared/after-light-375-tooltip.png",
+          "sha256": "ecc11896c381574f244e3c287b9f3f4027564f999cecbe28ea51703697972a41",
+          "width": 375,
+          "height": 844,
+          "croppedHeight": 844
+        },
+        {
+          "theme": "dark",
+          "stage": "before",
+          "path": "shared/before-dark-375-tooltip.png",
+          "sha256": "c75680ceacfeb44685de25f60316bf747b6cb25019f6a3e0362639f1dd6ee78f",
+          "width": 375,
+          "height": 844,
+          "croppedHeight": 844
+        },
+        {
+          "theme": "dark",
+          "stage": "after",
+          "path": "shared/after-dark-375-tooltip.png",
+          "sha256": "75ea023e79ba03e6e6e3a173ce4f815b6aed800d47666c65549e9187ba5a424b",
+          "width": 375,
+          "height": 844,
+          "croppedHeight": 844
+        }
+      ]
+    },
+    {
+      "name": "reminders",
+      "path": "comparisons/reminders.png",
+      "width": 758,
+      "height": 1804,
+      "sources": [
+        {
+          "theme": "light",
+          "stage": "before",
+          "path": "reminder-stack/before-light-375-120-minute-replacement.png",
+          "sha256": "f9b590c622b95e1fbccd63c249c01c84846d7d7b213182ae47acbd65cc8963a4",
+          "width": 375,
+          "height": 898,
+          "croppedHeight": 898
+        },
+        {
+          "theme": "light",
+          "stage": "after",
+          "path": "reminder-stack/after-light-375-120-minute-replacement.png",
+          "sha256": "e88f03ec81bb4286346d87ef36b1034ecd026d5d6e4bcf4f29bd8c7250ddfaab",
+          "width": 375,
+          "height": 898,
+          "croppedHeight": 898
+        },
+        {
+          "theme": "dark",
+          "stage": "before",
+          "path": "reminder-stack/before-dark-375-120-minute-replacement.png",
+          "sha256": "d42a37b6a0c5dea9e7b5e982d029f44136cec7f7cd6f1e32ae1c246628ddc2b4",
+          "width": 375,
+          "height": 898,
+          "croppedHeight": 898
+        },
+        {
+          "theme": "dark",
+          "stage": "after",
+          "path": "reminder-stack/after-dark-375-120-minute-replacement.png",
+          "sha256": "2f46e564b04a45fdcba8e1c27b36a2ccc95b995dee364923b302c3a81dfc9761",
+          "width": 375,
+          "height": 898,
+          "croppedHeight": 898
+        }
+      ]
+    },
+    {
+      "name": "command",
+      "path": "comparisons/command.png",
+      "width": 758,
+      "height": 2008,
+      "sources": [
+        {
+          "theme": "light",
+          "stage": "before",
+          "path": "command/before/light-375-seven-live-reads-held.png",
+          "sha256": "0561a5bf373df00586a6a1faa72632faf9b32219e139317004ebf1a4d0e13171",
+          "width": 375,
+          "height": 1189,
+          "croppedHeight": 1000
+        },
+        {
+          "theme": "light",
+          "stage": "after",
+          "path": "command/after/light-375-seven-live-reads-held.png",
+          "sha256": "6143c1f6837c3f78074a77d50905d4a3ad74c417cca8472c86d7d8261d817fed",
+          "width": 375,
+          "height": 1189,
+          "croppedHeight": 1000
+        },
+        {
+          "theme": "dark",
+          "stage": "before",
+          "path": "command/before/dark-375-seven-live-reads-held.png",
+          "sha256": "d8592596a39b1714c9c1de371fadf022bbfff7504f3327a1f53e1a1c80460cc5",
+          "width": 375,
+          "height": 1189,
+          "croppedHeight": 1000
+        },
+        {
+          "theme": "dark",
+          "stage": "after",
+          "path": "command/after/dark-375-seven-live-reads-held.png",
+          "sha256": "26236196bfa614bca4113cbf56c196c189a01f48b3e60b32d95f846a22a1b4eb",
+          "width": 375,
+          "height": 1189,
+          "croppedHeight": 1000
+        }
+      ]
+    },
+    {
+      "name": "cafe-cart",
+      "path": "comparisons/cafe-cart.png",
+      "width": 758,
+      "height": 1696,
+      "sources": [
+        {
+          "theme": "light",
+          "stage": "before",
+          "path": "cafe-extreme/before/light/375-hundred-items-submit-viewport.png",
+          "sha256": "3f14930b0585abcaace692346c757c4cd05beb8d3c591b459f0a16f9b0538fde",
+          "width": 375,
+          "height": 844,
+          "croppedHeight": 844
+        },
+        {
+          "theme": "light",
+          "stage": "after",
+          "path": "cafe-extreme/after/light/375-hundred-items-submit-viewport.png",
+          "sha256": "fd44701bd67b5679daa1536c6c5c219222022b18a2ca97283344fce36ded4953",
+          "width": 375,
+          "height": 844,
+          "croppedHeight": 844
+        },
+        {
+          "theme": "dark",
+          "stage": "before",
+          "path": "cafe-extreme/before/dark/375-hundred-items-submit-viewport.png",
+          "sha256": "b152fc403f84dfffefcca98c255c40390c1428b581bb5e325be95e1672d22803",
+          "width": 375,
+          "height": 844,
+          "croppedHeight": 844
+        },
+        {
+          "theme": "dark",
+          "stage": "after",
+          "path": "cafe-extreme/after/dark/375-hundred-items-submit-viewport.png",
+          "sha256": "9d4980c6385d74952f35962a140b2b1b7b08485348e2d02f7ca089be077dcec6",
+          "width": 375,
+          "height": 844,
+          "croppedHeight": 844
+        }
+      ]
+    },
+    {
+      "name": "cafe-large-amount",
+      "path": "comparisons/cafe-large-amount.png",
+      "width": 758,
+      "height": 2008,
+      "sources": [
+        {
+          "theme": "light",
+          "stage": "before",
+          "path": "cafe-extreme/before/light/375-large-amount-full-cart.png",
+          "sha256": "b7b5a534b104818bf75670532ab95b8a9254463f07d21f255746009e442618eb",
+          "width": 375,
+          "height": 1801,
+          "croppedHeight": 1000
+        },
+        {
+          "theme": "light",
+          "stage": "after",
+          "path": "cafe-extreme/after/light/375-large-amount-full-cart.png",
+          "sha256": "f4ea2a966e2a97550e361b2ef024d8502f1dc8b4f267c4b445499c2de7975332",
+          "width": 375,
+          "height": 1713,
+          "croppedHeight": 1000
+        },
+        {
+          "theme": "dark",
+          "stage": "before",
+          "path": "cafe-extreme/before/dark/375-large-amount-full-cart.png",
+          "sha256": "5ee934a49585414a43df2015a3bee17569403a3714ff5eebf92bb198ea1e9a23",
+          "width": 375,
+          "height": 1801,
+          "croppedHeight": 1000
+        },
+        {
+          "theme": "dark",
+          "stage": "after",
+          "path": "cafe-extreme/after/dark/375-large-amount-full-cart.png",
+          "sha256": "c5d669063d5c20a441ff0f94b5fa21e7afa0ceb49fd9f01aea6f1a26e3e30f52",
+          "width": 375,
+          "height": 1713,
+          "croppedHeight": 1000
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,467 @@
+{
+  "checks": [
+    {
+      "theme": "dark",
+      "trustedStaffTimeEditing": true,
+      "toggle": {
+        "tag": "BUTTON",
+        "height": 48,
+        "background": "rgb(11, 11, 15)",
+        "chevron": "matrix(-1, 0, 0, -1, 0, 0)"
+      },
+      "reasonRequired": true,
+      "textarea": true,
+      "resetWorks": true,
+      "nestedEscapeKeepsDraft": true,
+      "focusTrap": true
+    },
+    {
+      "theme": "dark",
+      "width": 1440,
+      "selected": {
+        "color": "rgb(250, 250, 250)",
+        "background": "rgb(11, 11, 15)",
+        "pressed": "true"
+      },
+      "overflow": 0,
+      "height": 1100,
+      "buttons": [
+        {
+          "label": "",
+          "height": 36
+        },
+        {
+          "label": "Adjust Time",
+          "height": 48
+        },
+        {
+          "label": "Search LP Member",
+          "height": 46
+        },
+        {
+          "label": "Add name",
+          "height": 46
+        },
+        {
+          "label": "Skip",
+          "height": 46
+        },
+        {
+          "label": "No discount",
+          "height": 44
+        },
+        {
+          "label": "5%",
+          "height": 44
+        },
+        {
+          "label": "10%",
+          "height": 44
+        },
+        {
+          "label": "₹ off",
+          "height": 44
+        },
+        {
+          "label": "UPI",
+          "height": 48
+        },
+        {
+          "label": "Cash",
+          "height": 48
+        },
+        {
+          "label": "Credit",
+          "height": 48
+        },
+        {
+          "label": "Cancel",
+          "height": 40
+        },
+        {
+          "label": "Confirm & Close · ₹3,960",
+          "height": 40
+        }
+      ]
+    },
+    {
+      "theme": "dark",
+      "width": 375,
+      "selected": {
+        "color": "rgb(250, 250, 250)",
+        "background": "rgb(11, 11, 15)",
+        "pressed": "true"
+      },
+      "overflow": 0,
+      "height": 896,
+      "buttons": [
+        {
+          "label": "",
+          "height": 44
+        },
+        {
+          "label": "Adjust Time",
+          "height": 44
+        },
+        {
+          "label": "Search LP Member",
+          "height": 44
+        },
+        {
+          "label": "Add name",
+          "height": 44
+        },
+        {
+          "label": "Skip",
+          "height": 44
+        },
+        {
+          "label": "No discount",
+          "height": 44
+        },
+        {
+          "label": "5%",
+          "height": 44
+        },
+        {
+          "label": "10%",
+          "height": 44
+        },
+        {
+          "label": "₹ off",
+          "height": 44
+        },
+        {
+          "label": "UPI",
+          "height": 44
+        },
+        {
+          "label": "Cash",
+          "height": 44
+        },
+        {
+          "label": "Credit",
+          "height": 44
+        },
+        {
+          "label": "Cancel",
+          "height": 44
+        },
+        {
+          "label": "Confirm & Close · ₹3,960",
+          "height": 44
+        }
+      ]
+    },
+    {
+      "theme": "dark",
+      "width": 414,
+      "selected": {
+        "color": "rgb(250, 250, 250)",
+        "background": "rgb(11, 11, 15)",
+        "pressed": "true"
+      },
+      "overflow": 0,
+      "height": 896,
+      "buttons": [
+        {
+          "label": "",
+          "height": 44
+        },
+        {
+          "label": "Adjust Time",
+          "height": 44
+        },
+        {
+          "label": "Search LP Member",
+          "height": 44
+        },
+        {
+          "label": "Add name",
+          "height": 44
+        },
+        {
+          "label": "Skip",
+          "height": 44
+        },
+        {
+          "label": "No discount",
+          "height": 44
+        },
+        {
+          "label": "5%",
+          "height": 44
+        },
+        {
+          "label": "10%",
+          "height": 44
+        },
+        {
+          "label": "₹ off",
+          "height": 44
+        },
+        {
+          "label": "UPI",
+          "height": 44
+        },
+        {
+          "label": "Cash",
+          "height": 44
+        },
+        {
+          "label": "Credit",
+          "height": 44
+        },
+        {
+          "label": "Cancel",
+          "height": 44
+        },
+        {
+          "label": "Confirm & Close · ₹3,960",
+          "height": 44
+        }
+      ]
+    },
+    {
+      "theme": "dark",
+      "paymentPendingFeedbackMs": 5.199999988079071,
+      "duplicateCloseRequests": 0,
+      "sizeShiftPx": 0,
+      "pendingDismissBlocked": true,
+      "failureKeepsDrawer": true
+    },
+    {
+      "theme": "light",
+      "trustedStaffTimeEditing": true,
+      "toggle": {
+        "tag": "BUTTON",
+        "height": 48,
+        "background": "rgb(250, 250, 250)",
+        "chevron": "matrix(-1, 0, 0, -1, 0, 0)"
+      },
+      "reasonRequired": true,
+      "textarea": true,
+      "resetWorks": true,
+      "nestedEscapeKeepsDraft": true,
+      "focusTrap": true
+    },
+    {
+      "theme": "light",
+      "width": 1440,
+      "selected": {
+        "color": "rgb(250, 250, 250)",
+        "background": "rgb(0, 107, 60)",
+        "pressed": "true"
+      },
+      "overflow": 0,
+      "height": 1100,
+      "buttons": [
+        {
+          "label": "",
+          "height": 36
+        },
+        {
+          "label": "Adjust Time",
+          "height": 48
+        },
+        {
+          "label": "Search LP Member",
+          "height": 46
+        },
+        {
+          "label": "Add name",
+          "height": 46
+        },
+        {
+          "label": "Skip",
+          "height": 46
+        },
+        {
+          "label": "No discount",
+          "height": 44
+        },
+        {
+          "label": "5%",
+          "height": 44
+        },
+        {
+          "label": "10%",
+          "height": 44
+        },
+        {
+          "label": "₹ off",
+          "height": 44
+        },
+        {
+          "label": "UPI",
+          "height": 48
+        },
+        {
+          "label": "Cash",
+          "height": 48
+        },
+        {
+          "label": "Credit",
+          "height": 48
+        },
+        {
+          "label": "Cancel",
+          "height": 40
+        },
+        {
+          "label": "Confirm & Close · ₹3,960",
+          "height": 40
+        }
+      ]
+    },
+    {
+      "theme": "light",
+      "width": 375,
+      "selected": {
+        "color": "rgb(250, 250, 250)",
+        "background": "rgb(0, 107, 60)",
+        "pressed": "true"
+      },
+      "overflow": 0,
+      "height": 896,
+      "buttons": [
+        {
+          "label": "",
+          "height": 44
+        },
+        {
+          "label": "Adjust Time",
+          "height": 44
+        },
+        {
+          "label": "Search LP Member",
+          "height": 44
+        },
+        {
+          "label": "Add name",
+          "height": 44
+        },
+        {
+          "label": "Skip",
+          "height": 44
+        },
+        {
+          "label": "No discount",
+          "height": 44
+        },
+        {
+          "label": "5%",
+          "height": 44
+        },
+        {
+          "label": "10%",
+          "height": 44
+        },
+        {
+          "label": "₹ off",
+          "height": 44
+        },
+        {
+          "label": "UPI",
+          "height": 44
+        },
+        {
+          "label": "Cash",
+          "height": 44
+        },
+        {
+          "label": "Credit",
+          "height": 44
+        },
+        {
+          "label": "Cancel",
+          "height": 44
+        },
+        {
+          "label": "Confirm & Close · ₹3,960",
+          "height": 44
+        }
+      ]
+    },
+    {
+      "theme": "light",
+      "width": 414,
+      "selected": {
+        "color": "rgb(250, 250, 250)",
+        "background": "rgb(0, 107, 60)",
+        "pressed": "true"
+      },
+      "overflow": 0,
+      "height": 896,
+      "buttons": [
+        {
+          "label": "",
+          "height": 44
+        },
+        {
+          "label": "Adjust Time",
+          "height": 44
+        },
+        {
+          "label": "Search LP Member",
+          "height": 44
+        },
+        {
+          "label": "Add name",
+          "height": 44
+        },
+        {
+          "label": "Skip",
+          "height": 44
+        },
+        {
+          "label": "No discount",
+          "height": 44
+        },
+        {
+          "label": "5%",
+          "height": 44
+        },
+        {
+          "label": "10%",
+          "height": 44
+        },
+        {
+          "label": "₹ off",
+          "height": 44
+        },
+        {
+          "label": "UPI",
+          "height": 44
+        },
+        {
+          "label": "Cash",
+          "height": 44
+        },
+        {
+          "label": "Credit",
+          "height": 44
+        },
+        {
+          "label": "Cancel",
+          "height": 44
+        },
+        {
+          "label": "Confirm & Close · ₹3,960",
+          "height": 44
+        }
+      ]
+    },
+    {
+      "theme": "light",
+      "paymentPendingFeedbackMs": 4.9000000059604645,
+      "duplicateCloseRequests": 0,
+      "sizeShiftPx": 0,
+      "pendingDismissBlocked": true,
+      "failureKeepsDrawer": true
+    }
+  ],
+  "contrast": [],
+  "errors": [],
+  "productionMutations": 0
+}

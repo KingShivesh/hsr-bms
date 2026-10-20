@@ -1,0 +1,1904 @@
+{
+  "startedAt": "2026-10-18T17:04:53.495Z",
+  "app": "http://127.0.0.1:5181",
+  "api": "http://127.0.0.1:8006",
+  "widths": [
+    375,
+    768,
+    1024,
+    1440,
+    1920
+  ],
+  "themes": [
+    "light",
+    "dark"
+  ],
+  "scenario": "Built preview consumes a mocked auth/me 200, then a matching-token protected GET 401; expiry notice appears once and is absent after reload.",
+  "safety": {
+    "forwardedApiRequests": 0,
+    "forwardedBusinessWrites": 0,
+    "actualLoginAttempts": 0,
+    "policy": "Only static preview reads are forwarded, without redirects. Every API response is mocked; all mutations, external origins, WebSockets and source-module requests are blocked. Service workers are disabled."
+  },
+  "limitations": [
+    "Mocked client-boundary regression, not a real JWT-expiry, backend-authentication or database test.",
+    "Stale-token REST/stream races remain covered by test-auth-expiry.mjs; no browser pass is claimed for those races.",
+    "Requires the parent-rebuilt production preview on 5181 configured for API8006; no dev server or source imports are used."
+  ],
+  "cases": [
+    {
+      "theme": "light",
+      "width": 375,
+      "status": "pass",
+      "functionalPass": true,
+      "network": [
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/ready",
+          "resourceType": "xhr",
+          "status": 200,
+          "mocked": true
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:5181/favicon.svg",
+          "resourceType": "other",
+          "status": 200,
+          "fixture": "reviewed-preview-favicon",
+          "mocked": false
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/events/stream",
+          "resourceType": "fetch",
+          "status": 200,
+          "mocked": true,
+          "fixture": "connected-then-closed; no expiry event"
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/product/context",
+          "resourceType": "xhr",
+          "status": 200,
+          "mocked": true
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/sessions/alerts",
+          "resourceType": "xhr",
+          "status": 200,
+          "mocked": true
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/ready",
+          "resourceType": "xhr",
+          "status": 200,
+          "mocked": true
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/auth/me",
+          "resourceType": "xhr",
+          "status": 200,
+          "mocked": true
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:5181/favicon.svg",
+          "resourceType": "other",
+          "status": 200,
+          "fixture": "reviewed-preview-favicon",
+          "mocked": false
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/sessions/alerts",
+          "resourceType": "xhr",
+          "status": 200,
+          "mocked": true
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/reports/summary",
+          "resourceType": "xhr",
+          "status": 401,
+          "mocked": true,
+          "afterAuthMeConsumed": true
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/ready",
+          "resourceType": "xhr",
+          "status": 200,
+          "mocked": true
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:5181/favicon.svg",
+          "resourceType": "other",
+          "status": 200,
+          "fixture": "reviewed-preview-favicon",
+          "mocked": false
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:5181/favicon.svg",
+          "resourceType": "other",
+          "status": 200,
+          "fixture": "reviewed-preview-favicon",
+          "mocked": false
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/ready",
+          "resourceType": "xhr",
+          "status": 200,
+          "mocked": true
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:5181/favicon.svg",
+          "resourceType": "other",
+          "status": 200,
+          "fixture": "reviewed-preview-favicon",
+          "mocked": false
+        }
+      ],
+      "pageErrors": [],
+      "safetyViolations": [],
+      "observedTheme": "light",
+      "expiredNotice": {
+        "role": "status",
+        "text": "Your session ended. Sign in again to continue.",
+        "width": 309,
+        "height": 22,
+        "scrollWidth": 309,
+        "clientWidth": 309,
+        "color": "rgb(180, 35, 24)",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "counts": {
+        "authMe200s": 1,
+        "protectedGet401s": 1,
+        "loginRequests": 0,
+        "forwardedPreviewReads": 24
+      }
+    },
+    {
+      "theme": "light",
+      "width": 768,
+      "status": "pass",
+      "functionalPass": true,
+      "network": [
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/ready",
+          "resourceType": "xhr",
+          "status": 200,
+          "mocked": true
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:5181/favicon.svg",
+          "resourceType": "other",
+          "status": 200,
+          "fixture": "reviewed-preview-favicon",
+          "mocked": false
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/events/stream",
+          "resourceType": "fetch",
+          "status": 200,
+          "mocked": true,
+          "fixture": "connected-then-closed; no expiry event"
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/product/context",
+          "resourceType": "xhr",
+          "status": 200,
+          "mocked": true
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/sessions/alerts",
+          "resourceType": "xhr",
+          "status": 200,
+          "mocked": true
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/ready",
+          "resourceType": "xhr",
+          "status": 200,
+          "mocked": true
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/auth/me",
+          "resourceType": "xhr",
+          "status": 200,
+          "mocked": true
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:5181/favicon.svg",
+          "resourceType": "other",
+          "status": 200,
+          "fixture": "reviewed-preview-favicon",
+          "mocked": false
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/sessions/alerts",
+          "resourceType": "xhr",
+          "status": 200,
+          "mocked": true
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/reports/summary",
+          "resourceType": "xhr",
+          "status": 401,
+          "mocked": true,
+          "afterAuthMeConsumed": true
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/ready",
+          "resourceType": "xhr",
+          "status": 200,
+          "mocked": true
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:5181/favicon.svg",
+          "resourceType": "other",
+          "status": 200,
+          "fixture": "reviewed-preview-favicon",
+          "mocked": false
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:5181/favicon.svg",
+          "resourceType": "other",
+          "status": 200,
+          "fixture": "reviewed-preview-favicon",
+          "mocked": false
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/ready",
+          "resourceType": "xhr",
+          "status": 200,
+          "mocked": true
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:5181/favicon.svg",
+          "resourceType": "other",
+          "status": 200,
+          "fixture": "reviewed-preview-favicon",
+          "mocked": false
+        }
+      ],
+      "pageErrors": [],
+      "safetyViolations": [],
+      "observedTheme": "light",
+      "expiredNotice": {
+        "role": "status",
+        "text": "Your session ended. Sign in again to continue.",
+        "width": 316,
+        "height": 22,
+        "scrollWidth": 316,
+        "clientWidth": 316,
+        "color": "rgb(180, 35, 24)",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "counts": {
+        "authMe200s": 1,
+        "protectedGet401s": 1,
+        "loginRequests": 0,
+        "forwardedPreviewReads": 24
+      }
+    },
+    {
+      "theme": "light",
+      "width": 1024,
+      "status": "pass",
+      "functionalPass": true,
+      "network": [
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/ready",
+          "resourceType": "xhr",
+          "status": 200,
+          "mocked": true
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:5181/favicon.svg",
+          "resourceType": "other",
+          "status": 200,
+          "fixture": "reviewed-preview-favicon",
+          "mocked": false
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/events/stream",
+          "resourceType": "fetch",
+          "status": 200,
+          "mocked": true,
+          "fixture": "connected-then-closed; no expiry event"
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/product/context",
+          "resourceType": "xhr",
+          "status": 200,
+          "mocked": true
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/sessions/alerts",
+          "resourceType": "xhr",
+          "status": 200,
+          "mocked": true
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/ready",
+          "resourceType": "xhr",
+          "status": 200,
+          "mocked": true
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/auth/me",
+          "resourceType": "xhr",
+          "status": 200,
+          "mocked": true
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/sessions/alerts",
+          "resourceType": "xhr",
+          "status": 200,
+          "mocked": true
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:5181/favicon.svg",
+          "resourceType": "other",
+          "status": 200,
+          "fixture": "reviewed-preview-favicon",
+          "mocked": false
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/reports/summary",
+          "resourceType": "xhr",
+          "status": 401,
+          "mocked": true,
+          "afterAuthMeConsumed": true
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/ready",
+          "resourceType": "xhr",
+          "status": 200,
+          "mocked": true
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:5181/favicon.svg",
+          "resourceType": "other",
+          "status": 200,
+          "fixture": "reviewed-preview-favicon",
+          "mocked": false
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:5181/favicon.svg",
+          "resourceType": "other",
+          "status": 200,
+          "fixture": "reviewed-preview-favicon",
+          "mocked": false
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/ready",
+          "resourceType": "xhr",
+          "status": 200,
+          "mocked": true
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:5181/favicon.svg",
+          "resourceType": "other",
+          "status": 200,
+          "fixture": "reviewed-preview-favicon",
+          "mocked": false
+        }
+      ],
+      "pageErrors": [],
+      "safetyViolations": [],
+      "observedTheme": "light",
+      "expiredNotice": {
+        "role": "status",
+        "text": "Your session ended. Sign in again to continue.",
+        "width": 293.609375,
+        "height": 40,
+        "scrollWidth": 294,
+        "clientWidth": 294,
+        "color": "rgb(180, 35, 24)",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "counts": {
+        "authMe200s": 1,
+        "protectedGet401s": 1,
+        "loginRequests": 0,
+        "forwardedPreviewReads": 24
+      }
+    },
+    {
+      "theme": "light",
+      "width": 1440,
+      "status": "pass",
+      "functionalPass": true,
+      "network": [
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/ready",
+          "resourceType": "xhr",
+          "status": 200,
+          "mocked": true
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:5181/favicon.svg",
+          "resourceType": "other",
+          "status": 200,
+          "fixture": "reviewed-preview-favicon",
+          "mocked": false
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/events/stream",
+          "resourceType": "fetch",
+          "status": 200,
+          "mocked": true,
+          "fixture": "connected-then-closed; no expiry event"
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/product/context",
+          "resourceType": "xhr",
+          "status": 200,
+          "mocked": true
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/sessions/alerts",
+          "resourceType": "xhr",
+          "status": 200,
+          "mocked": true
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/ready",
+          "resourceType": "xhr",
+          "status": 200,
+          "mocked": true
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/auth/me",
+          "resourceType": "xhr",
+          "status": 200,
+          "mocked": true
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:5181/favicon.svg",
+          "resourceType": "other",
+          "status": 200,
+          "fixture": "reviewed-preview-favicon",
+          "mocked": false
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/sessions/alerts",
+          "resourceType": "xhr",
+          "status": 200,
+          "mocked": true
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/reports/summary",
+          "resourceType": "xhr",
+          "status": 401,
+          "mocked": true,
+          "afterAuthMeConsumed": true
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/ready",
+          "resourceType": "xhr",
+          "status": 200,
+          "mocked": true
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:5181/favicon.svg",
+          "resourceType": "other",
+          "status": 200,
+          "fixture": "reviewed-preview-favicon",
+          "mocked": false
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:5181/favicon.svg",
+          "resourceType": "other",
+          "status": 200,
+          "fixture": "reviewed-preview-favicon",
+          "mocked": false
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/ready",
+          "resourceType": "xhr",
+          "status": 200,
+          "mocked": true
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:5181/favicon.svg",
+          "resourceType": "other",
+          "status": 200,
+          "fixture": "reviewed-preview-favicon",
+          "mocked": false
+        }
+      ],
+      "pageErrors": [],
+      "safetyViolations": [],
+      "observedTheme": "light",
+      "expiredNotice": {
+        "role": "status",
+        "text": "Your session ended. Sign in again to continue.",
+        "width": 295.203125,
+        "height": 40,
+        "scrollWidth": 295,
+        "clientWidth": 295,
+        "color": "rgb(180, 35, 24)",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "counts": {
+        "authMe200s": 1,
+        "protectedGet401s": 1,
+        "loginRequests": 0,
+        "forwardedPreviewReads": 24
+      }
+    },
+    {
+      "theme": "light",
+      "width": 1920,
+      "status": "pass",
+      "functionalPass": true,
+      "network": [
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/ready",
+          "resourceType": "xhr",
+          "status": 200,
+          "mocked": true
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:5181/favicon.svg",
+          "resourceType": "other",
+          "status": 200,
+          "fixture": "reviewed-preview-favicon",
+          "mocked": false
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/events/stream",
+          "resourceType": "fetch",
+          "status": 200,
+          "mocked": true,
+          "fixture": "connected-then-closed; no expiry event"
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/product/context",
+          "resourceType": "xhr",
+          "status": 200,
+          "mocked": true
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/sessions/alerts",
+          "resourceType": "xhr",
+          "status": 200,
+          "mocked": true
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/ready",
+          "resourceType": "xhr",
+          "status": 200,
+          "mocked": true
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/auth/me",
+          "resourceType": "xhr",
+          "status": 200,
+          "mocked": true
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:5181/favicon.svg",
+          "resourceType": "other",
+          "status": 200,
+          "fixture": "reviewed-preview-favicon",
+          "mocked": false
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/sessions/alerts",
+          "resourceType": "xhr",
+          "status": 200,
+          "mocked": true
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/reports/summary",
+          "resourceType": "xhr",
+          "status": 401,
+          "mocked": true,
+          "afterAuthMeConsumed": true
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/ready",
+          "resourceType": "xhr",
+          "status": 200,
+          "mocked": true
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:5181/favicon.svg",
+          "resourceType": "other",
+          "status": 200,
+          "fixture": "reviewed-preview-favicon",
+          "mocked": false
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:5181/favicon.svg",
+          "resourceType": "other",
+          "status": 200,
+          "fixture": "reviewed-preview-favicon",
+          "mocked": false
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/ready",
+          "resourceType": "xhr",
+          "status": 200,
+          "mocked": true
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:5181/favicon.svg",
+          "resourceType": "other",
+          "status": 200,
+          "fixture": "reviewed-preview-favicon",
+          "mocked": false
+        }
+      ],
+      "pageErrors": [],
+      "safetyViolations": [],
+      "observedTheme": "light",
+      "expiredNotice": {
+        "role": "status",
+        "text": "Your session ended. Sign in again to continue.",
+        "width": 295.203125,
+        "height": 40,
+        "scrollWidth": 295,
+        "clientWidth": 295,
+        "color": "rgb(180, 35, 24)",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "counts": {
+        "authMe200s": 1,
+        "protectedGet401s": 1,
+        "loginRequests": 0,
+        "forwardedPreviewReads": 24
+      }
+    },
+    {
+      "theme": "dark",
+      "width": 375,
+      "status": "pass",
+      "functionalPass": true,
+      "network": [
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/ready",
+          "resourceType": "xhr",
+          "status": 200,
+          "mocked": true
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:5181/favicon.svg",
+          "resourceType": "other",
+          "status": 200,
+          "fixture": "reviewed-preview-favicon",
+          "mocked": false
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/events/stream",
+          "resourceType": "fetch",
+          "status": 200,
+          "mocked": true,
+          "fixture": "connected-then-closed; no expiry event"
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/product/context",
+          "resourceType": "xhr",
+          "status": 200,
+          "mocked": true
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/sessions/alerts",
+          "resourceType": "xhr",
+          "status": 200,
+          "mocked": true
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/ready",
+          "resourceType": "xhr",
+          "status": 200,
+          "mocked": true
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/auth/me",
+          "resourceType": "xhr",
+          "status": 200,
+          "mocked": true
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:5181/favicon.svg",
+          "resourceType": "other",
+          "status": 200,
+          "fixture": "reviewed-preview-favicon",
+          "mocked": false
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/reports/summary",
+          "resourceType": "xhr",
+          "status": 401,
+          "mocked": true,
+          "afterAuthMeConsumed": true
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/ready",
+          "resourceType": "xhr",
+          "status": 200,
+          "mocked": true
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:5181/favicon.svg",
+          "resourceType": "other",
+          "status": 200,
+          "fixture": "reviewed-preview-favicon",
+          "mocked": false
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:5181/favicon.svg",
+          "resourceType": "other",
+          "status": 200,
+          "fixture": "reviewed-preview-favicon",
+          "mocked": false
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/ready",
+          "resourceType": "xhr",
+          "status": 200,
+          "mocked": true
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:5181/favicon.svg",
+          "resourceType": "other",
+          "status": 200,
+          "fixture": "reviewed-preview-favicon",
+          "mocked": false
+        }
+      ],
+      "pageErrors": [],
+      "safetyViolations": [],
+      "observedTheme": "dark",
+      "expiredNotice": {
+        "role": "status",
+        "text": "Your session ended. Sign in again to continue.",
+        "width": 309,
+        "height": 22,
+        "scrollWidth": 309,
+        "clientWidth": 309,
+        "color": "rgb(240, 128, 119)",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "counts": {
+        "authMe200s": 1,
+        "protectedGet401s": 1,
+        "loginRequests": 0,
+        "forwardedPreviewReads": 24
+      }
+    },
+    {
+      "theme": "dark",
+      "width": 768,
+      "status": "pass",
+      "functionalPass": true,
+      "network": [
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/ready",
+          "resourceType": "xhr",
+          "status": 200,
+          "mocked": true
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:5181/favicon.svg",
+          "resourceType": "other",
+          "status": 200,
+          "fixture": "reviewed-preview-favicon",
+          "mocked": false
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/events/stream",
+          "resourceType": "fetch",
+          "status": 200,
+          "mocked": true,
+          "fixture": "connected-then-closed; no expiry event"
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/product/context",
+          "resourceType": "xhr",
+          "status": 200,
+          "mocked": true
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/sessions/alerts",
+          "resourceType": "xhr",
+          "status": 200,
+          "mocked": true
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/ready",
+          "resourceType": "xhr",
+          "status": 200,
+          "mocked": true
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/auth/me",
+          "resourceType": "xhr",
+          "status": 200,
+          "mocked": true
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:5181/favicon.svg",
+          "resourceType": "other",
+          "status": 200,
+          "fixture": "reviewed-preview-favicon",
+          "mocked": false
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/reports/summary",
+          "resourceType": "xhr",
+          "status": 401,
+          "mocked": true,
+          "afterAuthMeConsumed": true
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/ready",
+          "resourceType": "xhr",
+          "status": 200,
+          "mocked": true
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:5181/favicon.svg",
+          "resourceType": "other",
+          "status": 200,
+          "fixture": "reviewed-preview-favicon",
+          "mocked": false
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/ready",
+          "resourceType": "xhr",
+          "status": 200,
+          "mocked": true
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:5181/favicon.svg",
+          "resourceType": "other",
+          "status": 200,
+          "fixture": "reviewed-preview-favicon",
+          "mocked": false
+        }
+      ],
+      "pageErrors": [],
+      "safetyViolations": [],
+      "observedTheme": "dark",
+      "expiredNotice": {
+        "role": "status",
+        "text": "Your session ended. Sign in again to continue.",
+        "width": 316,
+        "height": 22,
+        "scrollWidth": 316,
+        "clientWidth": 316,
+        "color": "rgb(240, 128, 119)",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "counts": {
+        "authMe200s": 1,
+        "protectedGet401s": 1,
+        "loginRequests": 0,
+        "forwardedPreviewReads": 23
+      }
+    },
+    {
+      "theme": "dark",
+      "width": 1024,
+      "status": "pass",
+      "functionalPass": true,
+      "network": [
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/ready",
+          "resourceType": "xhr",
+          "status": 200,
+          "mocked": true
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:5181/favicon.svg",
+          "resourceType": "other",
+          "status": 200,
+          "fixture": "reviewed-preview-favicon",
+          "mocked": false
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/events/stream",
+          "resourceType": "fetch",
+          "status": 200,
+          "mocked": true,
+          "fixture": "connected-then-closed; no expiry event"
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/product/context",
+          "resourceType": "xhr",
+          "status": 200,
+          "mocked": true
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/sessions/alerts",
+          "resourceType": "xhr",
+          "status": 200,
+          "mocked": true
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/ready",
+          "resourceType": "xhr",
+          "status": 200,
+          "mocked": true
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/auth/me",
+          "resourceType": "xhr",
+          "status": 200,
+          "mocked": true
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:5181/favicon.svg",
+          "resourceType": "other",
+          "status": 200,
+          "fixture": "reviewed-preview-favicon",
+          "mocked": false
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/reports/summary",
+          "resourceType": "xhr",
+          "status": 401,
+          "mocked": true,
+          "afterAuthMeConsumed": true
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/ready",
+          "resourceType": "xhr",
+          "status": 200,
+          "mocked": true
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:5181/favicon.svg",
+          "resourceType": "other",
+          "status": 200,
+          "fixture": "reviewed-preview-favicon",
+          "mocked": false
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:5181/favicon.svg",
+          "resourceType": "other",
+          "status": 200,
+          "fixture": "reviewed-preview-favicon",
+          "mocked": false
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/ready",
+          "resourceType": "xhr",
+          "status": 200,
+          "mocked": true
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:5181/favicon.svg",
+          "resourceType": "other",
+          "status": 200,
+          "fixture": "reviewed-preview-favicon",
+          "mocked": false
+        }
+      ],
+      "pageErrors": [],
+      "safetyViolations": [],
+      "observedTheme": "dark",
+      "expiredNotice": {
+        "role": "status",
+        "text": "Your session ended. Sign in again to continue.",
+        "width": 293.609375,
+        "height": 40,
+        "scrollWidth": 294,
+        "clientWidth": 294,
+        "color": "rgb(240, 128, 119)",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "counts": {
+        "authMe200s": 1,
+        "protectedGet401s": 1,
+        "loginRequests": 0,
+        "forwardedPreviewReads": 24
+      }
+    },
+    {
+      "theme": "dark",
+      "width": 1440,
+      "status": "pass",
+      "functionalPass": true,
+      "network": [
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/ready",
+          "resourceType": "xhr",
+          "status": 200,
+          "mocked": true
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:5181/favicon.svg",
+          "resourceType": "other",
+          "status": 200,
+          "fixture": "reviewed-preview-favicon",
+          "mocked": false
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/events/stream",
+          "resourceType": "fetch",
+          "status": 200,
+          "mocked": true,
+          "fixture": "connected-then-closed; no expiry event"
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/product/context",
+          "resourceType": "xhr",
+          "status": 200,
+          "mocked": true
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/sessions/alerts",
+          "resourceType": "xhr",
+          "status": 200,
+          "mocked": true
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/ready",
+          "resourceType": "xhr",
+          "status": 200,
+          "mocked": true
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/auth/me",
+          "resourceType": "xhr",
+          "status": 200,
+          "mocked": true
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:5181/favicon.svg",
+          "resourceType": "other",
+          "status": 200,
+          "fixture": "reviewed-preview-favicon",
+          "mocked": false
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/sessions/alerts",
+          "resourceType": "xhr",
+          "status": 200,
+          "mocked": true
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/reports/summary",
+          "resourceType": "xhr",
+          "status": 401,
+          "mocked": true,
+          "afterAuthMeConsumed": true
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/ready",
+          "resourceType": "xhr",
+          "status": 200,
+          "mocked": true
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:5181/favicon.svg",
+          "resourceType": "other",
+          "status": 200,
+          "fixture": "reviewed-preview-favicon",
+          "mocked": false
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:5181/favicon.svg",
+          "resourceType": "other",
+          "status": 200,
+          "fixture": "reviewed-preview-favicon",
+          "mocked": false
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/ready",
+          "resourceType": "xhr",
+          "status": 200,
+          "mocked": true
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:5181/favicon.svg",
+          "resourceType": "other",
+          "status": 200,
+          "fixture": "reviewed-preview-favicon",
+          "mocked": false
+        }
+      ],
+      "pageErrors": [],
+      "safetyViolations": [],
+      "observedTheme": "dark",
+      "expiredNotice": {
+        "role": "status",
+        "text": "Your session ended. Sign in again to continue.",
+        "width": 295.203125,
+        "height": 40,
+        "scrollWidth": 295,
+        "clientWidth": 295,
+        "color": "rgb(240, 128, 119)",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "counts": {
+        "authMe200s": 1,
+        "protectedGet401s": 1,
+        "loginRequests": 0,
+        "forwardedPreviewReads": 24
+      }
+    },
+    {
+      "theme": "dark",
+      "width": 1920,
+      "status": "pass",
+      "functionalPass": true,
+      "network": [
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/ready",
+          "resourceType": "xhr",
+          "status": 200,
+          "mocked": true
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:5181/favicon.svg",
+          "resourceType": "other",
+          "status": 200,
+          "fixture": "reviewed-preview-favicon",
+          "mocked": false
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/events/stream",
+          "resourceType": "fetch",
+          "status": 200,
+          "mocked": true,
+          "fixture": "connected-then-closed; no expiry event"
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/product/context",
+          "resourceType": "xhr",
+          "status": 200,
+          "mocked": true
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/sessions/alerts",
+          "resourceType": "xhr",
+          "status": 200,
+          "mocked": true
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/ready",
+          "resourceType": "xhr",
+          "status": 200,
+          "mocked": true
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/auth/me",
+          "resourceType": "xhr",
+          "status": 200,
+          "mocked": true
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:5181/favicon.svg",
+          "resourceType": "other",
+          "status": 200,
+          "fixture": "reviewed-preview-favicon",
+          "mocked": false
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/sessions/alerts",
+          "resourceType": "xhr",
+          "status": 200,
+          "mocked": true
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/reports/summary",
+          "resourceType": "xhr",
+          "status": 401,
+          "mocked": true,
+          "afterAuthMeConsumed": true
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/ready",
+          "resourceType": "xhr",
+          "status": 200,
+          "mocked": true
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:5181/favicon.svg",
+          "resourceType": "other",
+          "status": 200,
+          "fixture": "reviewed-preview-favicon",
+          "mocked": false
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:5181/favicon.svg",
+          "resourceType": "other",
+          "status": 200,
+          "fixture": "reviewed-preview-favicon",
+          "mocked": false
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/ready",
+          "resourceType": "xhr",
+          "status": 200,
+          "mocked": true
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:5181/favicon.svg",
+          "resourceType": "other",
+          "status": 200,
+          "fixture": "reviewed-preview-favicon",
+          "mocked": false
+        }
+      ],
+      "pageErrors": [],
+      "safetyViolations": [],
+      "observedTheme": "dark",
+      "expiredNotice": {
+        "role": "status",
+        "text": "Your session ended. Sign in again to continue.",
+        "width": 295.203125,
+        "height": 40,
+        "scrollWidth": 295,
+        "clientWidth": 295,
+        "color": "rgb(240, 128, 119)",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "counts": {
+        "authMe200s": 1,
+        "protectedGet401s": 1,
+        "loginRequests": 0,
+        "forwardedPreviewReads": 24
+      }
+    }
+  ],
+  "samples": [
+    {
+      "theme": "light",
+      "width": 375,
+      "state": "expired-login",
+      "file": "light-375-expired-login.png",
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "contrast": [],
+      "uiFaults": []
+    },
+    {
+      "theme": "light",
+      "width": 375,
+      "state": "notice-consumed",
+      "file": "light-375-notice-consumed.png",
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "contrast": [],
+      "uiFaults": []
+    },
+    {
+      "theme": "light",
+      "width": 768,
+      "state": "expired-login",
+      "file": "light-768-expired-login.png",
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "contrast": [],
+      "uiFaults": []
+    },
+    {
+      "theme": "light",
+      "width": 768,
+      "state": "notice-consumed",
+      "file": "light-768-notice-consumed.png",
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "contrast": [],
+      "uiFaults": []
+    },
+    {
+      "theme": "light",
+      "width": 1024,
+      "state": "expired-login",
+      "file": "light-1024-expired-login.png",
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "contrast": [],
+      "uiFaults": []
+    },
+    {
+      "theme": "light",
+      "width": 1024,
+      "state": "notice-consumed",
+      "file": "light-1024-notice-consumed.png",
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "contrast": [],
+      "uiFaults": []
+    },
+    {
+      "theme": "light",
+      "width": 1440,
+      "state": "expired-login",
+      "file": "light-1440-expired-login.png",
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "contrast": [],
+      "uiFaults": []
+    },
+    {
+      "theme": "light",
+      "width": 1440,
+      "state": "notice-consumed",
+      "file": "light-1440-notice-consumed.png",
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "contrast": [],
+      "uiFaults": []
+    },
+    {
+      "theme": "light",
+      "width": 1920,
+      "state": "expired-login",
+      "file": "light-1920-expired-login.png",
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "contrast": [],
+      "uiFaults": []
+    },
+    {
+      "theme": "light",
+      "width": 1920,
+      "state": "notice-consumed",
+      "file": "light-1920-notice-consumed.png",
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "contrast": [],
+      "uiFaults": []
+    },
+    {
+      "theme": "dark",
+      "width": 375,
+      "state": "expired-login",
+      "file": "dark-375-expired-login.png",
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "contrast": [],
+      "uiFaults": []
+    },
+    {
+      "theme": "dark",
+      "width": 375,
+      "state": "notice-consumed",
+      "file": "dark-375-notice-consumed.png",
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "contrast": [],
+      "uiFaults": []
+    },
+    {
+      "theme": "dark",
+      "width": 768,
+      "state": "expired-login",
+      "file": "dark-768-expired-login.png",
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "contrast": [],
+      "uiFaults": []
+    },
+    {
+      "theme": "dark",
+      "width": 768,
+      "state": "notice-consumed",
+      "file": "dark-768-notice-consumed.png",
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "contrast": [],
+      "uiFaults": []
+    },
+    {
+      "theme": "dark",
+      "width": 1024,
+      "state": "expired-login",
+      "file": "dark-1024-expired-login.png",
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "contrast": [],
+      "uiFaults": []
+    },
+    {
+      "theme": "dark",
+      "width": 1024,
+      "state": "notice-consumed",
+      "file": "dark-1024-notice-consumed.png",
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "contrast": [],
+      "uiFaults": []
+    },
+    {
+      "theme": "dark",
+      "width": 1440,
+      "state": "expired-login",
+      "file": "dark-1440-expired-login.png",
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "contrast": [],
+      "uiFaults": []
+    },
+    {
+      "theme": "dark",
+      "width": 1440,
+      "state": "notice-consumed",
+      "file": "dark-1440-notice-consumed.png",
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "contrast": [],
+      "uiFaults": []
+    },
+    {
+      "theme": "dark",
+      "width": 1920,
+      "state": "expired-login",
+      "file": "dark-1920-expired-login.png",
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "contrast": [],
+      "uiFaults": []
+    },
+    {
+      "theme": "dark",
+      "width": 1920,
+      "state": "notice-consumed",
+      "file": "dark-1920-notice-consumed.png",
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "contrast": [],
+      "uiFaults": []
+    }
+  ],
+  "errors": [],
+  "finishedAt": "2026-10-18T17:05:16.924Z",
+  "summary": {
+    "expectedCases": 10,
+    "passed": 10,
+    "failed": 0,
+    "capturedSamples": 20,
+    "safetyViolations": 0,
+    "staleTokenBrowserAssertions": 0
+  },
+  "status": "pass"
+}

@@ -1,0 +1,242 @@
+{
+  "app": "http://127.0.0.1:5181",
+  "api": "http://127.0.0.1:8006",
+  "startedAt": "2026-10-19T20:47:01.473Z",
+  "scope": "Focused three-finding regression only; both themes at 375/1440; toast lifecycle at 1440 only",
+  "checks": [
+    {
+      "name": "source-helper-year-option",
+      "historical": [
+        "9 Jan 2024, 12:00 PM",
+        "9 Jan 2025, 12:00 PM"
+      ],
+      "passed": true
+    }
+  ],
+  "cases": [
+    {
+      "theme": "light",
+      "width": 375,
+      "checks": [
+        {
+          "name": "held-queue-and-bookings-do-not-hide-floor",
+          "held": [
+            "/waitlist",
+            "/bookings"
+          ],
+          "tableActions": 6,
+          "heldVisibleForMs": 1800,
+          "passed": true
+        },
+        {
+          "name": "optional-panels-settle-after-release",
+          "passed": true
+        },
+        {
+          "name": "built-reports-distinguishes-years",
+          "dates": [
+            "9 Jan 2024, 12:00 PM",
+            "9 Jan 2025, 12:00 PM"
+          ],
+          "passed": true
+        },
+        {
+          "name": "built-sales-distinguishes-years",
+          "dates": [
+            "#990001\n9 Jan 2024, 12:00 PM",
+            "#990002\n9 Jan 2025, 12:00 PM"
+          ],
+          "passed": true
+        }
+      ],
+      "screenshots": [
+        {
+          "state": "held-floor",
+          "file": "light-375-held-floor.png"
+        },
+        {
+          "state": "report-year-rows",
+          "file": "light-375-report-year-rows.png"
+        },
+        {
+          "state": "sales-year-rows",
+          "file": "light-375-sales-year-rows.png"
+        }
+      ],
+      "passed": true
+    },
+    {
+      "theme": "light",
+      "width": 1440,
+      "checks": [
+        {
+          "name": "held-queue-and-bookings-do-not-hide-floor",
+          "held": [
+            "/waitlist",
+            "/bookings"
+          ],
+          "tableActions": 6,
+          "heldVisibleForMs": 1800,
+          "passed": true
+        },
+        {
+          "name": "optional-panels-settle-after-release",
+          "passed": true
+        },
+        {
+          "name": "built-reports-distinguishes-years",
+          "dates": [
+            "9 Jan 2024, 12:00 PM",
+            "9 Jan 2025, 12:00 PM"
+          ],
+          "passed": true
+        },
+        {
+          "name": "focused-toast-resumes-after-dialog-host-removal",
+          "pausedForMs": 4300,
+          "passed": true
+        },
+        {
+          "name": "built-sales-distinguishes-years",
+          "dates": [
+            "#990001\n9 Jan 2024, 12:00 PM",
+            "#990002\n9 Jan 2025, 12:00 PM"
+          ],
+          "passed": true
+        }
+      ],
+      "screenshots": [
+        {
+          "state": "held-floor",
+          "file": "light-1440-held-floor.png"
+        },
+        {
+          "state": "report-year-rows",
+          "file": "light-1440-report-year-rows.png"
+        },
+        {
+          "state": "sales-year-rows",
+          "file": "light-1440-sales-year-rows.png"
+        }
+      ],
+      "passed": true
+    },
+    {
+      "theme": "dark",
+      "width": 375,
+      "checks": [
+        {
+          "name": "held-queue-and-bookings-do-not-hide-floor",
+          "held": [
+            "/waitlist",
+            "/bookings"
+          ],
+          "tableActions": 6,
+          "heldVisibleForMs": 1800,
+          "passed": true
+        },
+        {
+          "name": "optional-panels-settle-after-release",
+          "passed": true
+        },
+        {
+          "name": "built-reports-distinguishes-years",
+          "dates": [
+            "9 Jan 2024, 12:00 PM",
+            "9 Jan 2025, 12:00 PM"
+          ],
+          "passed": true
+        },
+        {
+          "name": "built-sales-distinguishes-years",
+          "dates": [
+            "#990001\n9 Jan 2024, 12:00 PM",
+            "#990002\n9 Jan 2025, 12:00 PM"
+          ],
+          "passed": true
+        }
+      ],
+      "screenshots": [
+        {
+          "state": "held-floor",
+          "file": "dark-375-held-floor.png"
+        },
+        {
+          "state": "report-year-rows",
+          "file": "dark-375-report-year-rows.png"
+        },
+        {
+          "state": "sales-year-rows",
+          "file": "dark-375-sales-year-rows.png"
+        }
+      ],
+      "passed": true
+    },
+    {
+      "theme": "dark",
+      "width": 1440,
+      "checks": [
+        {
+          "name": "held-queue-and-bookings-do-not-hide-floor",
+          "held": [
+            "/waitlist",
+            "/bookings"
+          ],
+          "tableActions": 6,
+          "heldVisibleForMs": 1800,
+          "passed": true
+        },
+        {
+          "name": "optional-panels-settle-after-release",
+          "passed": true
+        },
+        {
+          "name": "built-reports-distinguishes-years",
+          "dates": [
+            "9 Jan 2024, 12:00 PM",
+            "9 Jan 2025, 12:00 PM"
+          ],
+          "passed": true
+        },
+        {
+          "name": "focused-toast-resumes-after-dialog-host-removal",
+          "pausedForMs": 4300,
+          "passed": true
+        },
+        {
+          "name": "built-sales-distinguishes-years",
+          "dates": [
+            "#990001\n9 Jan 2024, 12:00 PM",
+            "#990002\n9 Jan 2025, 12:00 PM"
+          ],
+          "passed": true
+        }
+      ],
+      "screenshots": [
+        {
+          "state": "held-floor",
+          "file": "dark-1440-held-floor.png"
+        },
+        {
+          "state": "report-year-rows",
+          "file": "dark-1440-report-year-rows.png"
+        },
+        {
+          "state": "sales-year-rows",
+          "file": "dark-1440-sales-year-rows.png"
+        }
+      ],
+      "passed": true
+    }
+  ],
+  "pageErrors": [],
+  "blockedWrites": [],
+  "forwardedBusinessWrites": 0,
+  "fixtures": {
+    "history": "Two stubbed bills, same date/time in 2024 and 2025",
+    "optional": "Held then fulfilled with empty arrays",
+    "export": "Stubbed CSV read"
+  },
+  "completedAt": "2026-10-19T20:48:57.756Z",
+  "passed": true
+}

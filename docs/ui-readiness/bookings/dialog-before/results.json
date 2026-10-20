@@ -1,0 +1,268 @@
+{
+  "checks": [
+    {
+      "phase": "before",
+      "theme": "dark",
+      "name": "booking",
+      "width": 375,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true
+    },
+    {
+      "phase": "before",
+      "theme": "dark",
+      "name": "booking",
+      "width": 768,
+      "overflow": 0,
+      "shortTargets": [
+        {
+          "label": "Close booking form",
+          "height": 36,
+          "className": "ui-button ui-button-native ui-button-md lf-icon-button"
+        },
+        {
+          "label": "Discard Booking",
+          "height": 36,
+          "className": "ui-button ui-button-native ui-button-md lf-secondary-button"
+        },
+        {
+          "label": "Create booking",
+          "height": 36,
+          "className": "ui-button ui-button-native ui-button-md lf-primary-button"
+        }
+      ],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true
+    },
+    {
+      "phase": "before",
+      "theme": "dark",
+      "name": "booking",
+      "width": 1024,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true
+    },
+    {
+      "phase": "before",
+      "theme": "dark",
+      "name": "booking",
+      "width": 1440,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true
+    },
+    {
+      "phase": "before",
+      "theme": "dark",
+      "name": "booking",
+      "width": 1920,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true
+    },
+    {
+      "phase": "before",
+      "theme": "light",
+      "name": "booking",
+      "width": 375,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true
+    },
+    {
+      "phase": "before",
+      "theme": "light",
+      "name": "booking",
+      "width": 768,
+      "overflow": 0,
+      "shortTargets": [
+        {
+          "label": "Close booking form",
+          "height": 36,
+          "className": "ui-button ui-button-native ui-button-md lf-icon-button"
+        },
+        {
+          "label": "Discard Booking",
+          "height": 36,
+          "className": "ui-button ui-button-native ui-button-md lf-secondary-button"
+        },
+        {
+          "label": "Create booking",
+          "height": 36,
+          "className": "ui-button ui-button-native ui-button-md lf-primary-button"
+        }
+      ],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true
+    },
+    {
+      "phase": "before",
+      "theme": "light",
+      "name": "booking",
+      "width": 1024,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true
+    },
+    {
+      "phase": "before",
+      "theme": "light",
+      "name": "booking",
+      "width": 1440,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true
+    },
+    {
+      "phase": "before",
+      "theme": "light",
+      "name": "booking",
+      "width": 1920,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true
+    }
+  ],
+  "contrast": [],
+  "errors": []
+}

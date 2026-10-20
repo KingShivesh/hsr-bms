@@ -1,0 +1,158 @@
+{
+  "route": "/customers",
+  "stage": "before",
+  "samples": [
+    {
+      "theme": "dark",
+      "width": 375,
+      "state": "extreme",
+      "file": "dark-375-extreme.png",
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [
+        "ui-button ui-button-native ui-button-md cf-page-primary-action"
+      ],
+      "unlabeledInputs": [
+        {
+          "tag": "INPUT",
+          "placeholder": "Search customer...",
+          "name": "",
+          "type": "text"
+        }
+      ],
+      "collectionSizes": {
+        ".op2-customer-card": 500,
+        ".sales-table tbody tr": 0
+      },
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "contrast": [],
+      "contrastScope": "visible viewport only; unpaginated baseline",
+      "retry": true,
+      "errors": []
+    },
+    {
+      "theme": "dark",
+      "width": 1024,
+      "state": "extreme",
+      "file": "dark-1024-extreme.png",
+      "overflow": 32,
+      "shortTargets": [],
+      "clipped": [
+        {
+          "text": "For relationship tracking: manage profiles, visits, spend and duplicate customer records.",
+          "width": 430,
+          "contentWidth": 576,
+          "className": ""
+        }
+      ],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [
+        "ui-button ui-button-native ui-button-md cf-page-primary-action"
+      ],
+      "unlabeledInputs": [
+        {
+          "tag": "INPUT",
+          "placeholder": "Search customer...",
+          "name": "",
+          "type": "text"
+        }
+      ],
+      "collectionSizes": {
+        ".op2-customer-card": 500,
+        ".sales-table tbody tr": 0
+      },
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "contrast": [],
+      "contrastScope": "visible viewport only; unpaginated baseline",
+      "retry": true,
+      "errors": []
+    },
+    {
+      "theme": "light",
+      "width": 375,
+      "state": "extreme",
+      "file": "light-375-extreme.png",
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [
+        "ui-button ui-button-native ui-button-md cf-page-primary-action"
+      ],
+      "unlabeledInputs": [
+        {
+          "tag": "INPUT",
+          "placeholder": "Search customer...",
+          "name": "",
+          "type": "text"
+        }
+      ],
+      "collectionSizes": {
+        ".op2-customer-card": 500,
+        ".sales-table tbody tr": 0
+      },
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "contrast": [],
+      "contrastScope": "visible viewport only; unpaginated baseline",
+      "retry": true,
+      "errors": []
+    },
+    {
+      "theme": "light",
+      "width": 1024,
+      "state": "extreme",
+      "file": "light-1024-extreme.png",
+      "overflow": 32,
+      "shortTargets": [],
+      "clipped": [
+        {
+          "text": "For relationship tracking: manage profiles, visits, spend and duplicate customer records.",
+          "width": 430,
+          "contentWidth": 576,
+          "className": ""
+        }
+      ],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [
+        "ui-button ui-button-native ui-button-md cf-page-primary-action"
+      ],
+      "unlabeledInputs": [
+        {
+          "tag": "INPUT",
+          "placeholder": "Search customer...",
+          "name": "",
+          "type": "text"
+        }
+      ],
+      "collectionSizes": {
+        ".op2-customer-card": 500,
+        ".sales-table tbody tr": 0
+      },
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "contrast": [],
+      "contrastScope": "visible viewport only; unpaginated baseline",
+      "retry": true,
+      "errors": []
+    }
+  ],
+  "errors": [],
+  "productionWrites": 0
+}

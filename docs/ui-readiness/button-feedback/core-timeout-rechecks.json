@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "recordedDate": "2026-10-20",
+  "sourceReport": "docs/ui-readiness/button-feedback/core-retry.json",
+  "app": "http://127.0.0.1:5181",
+  "api": "http://127.0.0.1:8006",
+  "scope": "Only the two previously recorded setup-timeout targets, not a new matrix",
+  "provenance": "Observed in the focused guarded replay executed in this chat before this JSON was written; measurements transcribed from its execution output. These are not results of the booking close-layer script.",
+  "configuration": {
+    "isolateReminders": true,
+    "deadlineMs": 200,
+    "outcomeMs": 250,
+    "formFilling": false,
+    "businessFixtures": false
+  },
+  "cases": [
+    {
+      "route": "/dashboard",
+      "theme": "dark",
+      "width": 1440,
+      "opener": "Refresh dashboard",
+      "target": "T2 running table card / Checkout / Close",
+      "previousStatus": "unreachable",
+      "previousReason": "page.waitForFunction: Timeout 12000ms exceeded during setup/replay",
+      "recheckStatus": "pass",
+      "pressedFeedbackMs": 7.8,
+      "clickResponseMs": 10,
+      "clickResponseKind": "navigation",
+      "actionOutcome": "navigation-observed",
+      "pageErrors": [],
+      "readErrors": [],
+      "businessWriteAttempts": []
+    },
+    {
+      "route": "/bookings",
+      "theme": "dark",
+      "width": 375,
+      "opener": null,
+      "target": "Learn more",
+      "previousStatus": "unreachable",
+      "previousReason": "page.waitForFunction: Timeout 12000ms exceeded during setup",
+      "recheckStatus": "pass",
+      "pressedFeedbackMs": 8.5,
+      "clickResponseMs": 31.9,
+      "clickResponseKind": "visible-dom-added",
+      "actionOutcome": "local-dom-response-observed",
+      "pageErrors": [],
+      "readErrors": [],
+      "businessWriteAttempts": []
+    }
+  ],
+  "conclusion": "Both previously unreachable targets passed on fresh scoped replay. Their earlier setup timeouts do not establish an application button bug.",
+  "safety": {
+    "authenticationPosts": 1,
+    "forwardedBusinessWrites": 0,
+    "expectedQaDatabase": "sqlite:////tmp/hsr-session-close-ui.db",
+    "databaseVerification": "Parent-provided isolation; not independently verified",
+    "policy": "Reused test-ui-button-feedback.mjs guarded createCase/openState/testButton helpers, with only local QA authentication as a POST exception. Browser business writes were blocked; approved GETs may reconcile QA state."
+  },
+  "limitations": [
+    "No claim of business success or zero database side effects.",
+    "This closes out only the two setup-timeout findings; it does not reclassify the four actual mobile booking-close layer failures or the four intentionally isolated reminder controls.",
+    "No app source, styles, build output or Git state was changed by these rechecks."
+  ]
+}

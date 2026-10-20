@@ -1,0 +1,49 @@
+{
+  "generatedAt": "2026-10-20T13:28:50.712Z",
+  "appUrl": "http://127.0.0.1:5181",
+  "apiUrl": "http://127.0.0.1:8006",
+  "routes": [
+    "/",
+    "/login",
+    "/dashboard",
+    "/live-floor",
+    "/inventory",
+    "/bookings",
+    "/customers",
+    "/sales",
+    "/analytics",
+    "/cafe-pos",
+    "/waitlist",
+    "/legacy-table-controls",
+    "/tournaments",
+    "/daily-closing",
+    "/pricing-rules",
+    "/audit-log",
+    "/settings",
+    "/help",
+    "/status",
+    "/changelog",
+    "/demo",
+    "/settings?section=club",
+    "/settings?section=team",
+    "/settings?section=account",
+    "/settings?section=activity",
+    "/settings?section=billing",
+    "/missing-page"
+  ],
+  "method": "composited foreground/background, inputs, placeholders, ancestor opacity; rendered pixel samples for gradients/images; WCAG large text 24px or 18.66px bold; disabled controls exempt",
+  "dynamicStatesIncluded": [
+    "default (including login)",
+    "login error and filled fields",
+    "notification popover",
+    "command palette",
+    "first safe action"
+  ],
+  "sourceReports": [
+    "contrast-core.json",
+    "contrast-extra.json"
+  ],
+  "note": "Combined successful core and supplemental runs against unchanged app source; not a single atomic scan. A full rerun interrupted during a Help click is not counted as a pass.",
+  "violations": [],
+  "errors": []
+}

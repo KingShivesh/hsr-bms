@@ -1,0 +1,97 @@
+{
+  "generatedAt": "2026-10-19T20:45:11.864Z",
+  "safety": {
+    "browserLaunched": false,
+    "networkRequests": 0,
+    "serversStarted": 0,
+    "businessWrites": 0
+  },
+  "scope": "Isolated REST interceptor, realtime manager, Login hook lifecycle and source markup regression checks",
+  "limitations": [
+    "No browser, layout or production-preview assertions; parent owns final browser verification."
+  ],
+  "passed": 20,
+  "failed": 0,
+  "checks": [
+    {
+      "name": "REST current-token 401 records notice and reloads only once",
+      "status": "pass"
+    },
+    {
+      "name": "REST stale 401 preserves newer login (plain)",
+      "status": "pass"
+    },
+    {
+      "name": "REST stale 401 preserves newer login (AxiosHeaders)",
+      "status": "pass"
+    },
+    {
+      "name": "REST request sent without auth cannot invalidate a later login",
+      "status": "pass"
+    },
+    {
+      "name": "REST stale response after logout does not recreate expiry notice",
+      "status": "pass"
+    },
+    {
+      "name": "Login 401 and protected 403/409 retain existing error handling",
+      "status": "pass"
+    },
+    {
+      "name": "REST expiry still ends session if notice storage is blocked",
+      "status": "pass"
+    },
+    {
+      "name": "SSE HTTP 401: current token expires with one-shot notice",
+      "status": "pass"
+    },
+    {
+      "name": "SSE HTTP 401: stale token preserves newer login and schedules ordinary reconnect",
+      "status": "pass"
+    },
+    {
+      "name": "SSE HTTP 401: stale callback is not invoked, matching callback receives original token",
+      "status": "pass"
+    },
+    {
+      "name": "SSE HTTP 401: late response after logout does not reload",
+      "status": "pass"
+    },
+    {
+      "name": "SSE auth_expired event: current token expires with one-shot notice",
+      "status": "pass"
+    },
+    {
+      "name": "SSE auth_expired event: stale token preserves newer login and schedules ordinary reconnect",
+      "status": "pass"
+    },
+    {
+      "name": "SSE auth_expired event: stale callback is not invoked, matching callback receives original token",
+      "status": "pass"
+    },
+    {
+      "name": "SSE auth_expired event: late response after logout does not reload",
+      "status": "pass"
+    },
+    {
+      "name": "Cancelled or superseded stream 401 cannot expire the current login",
+      "status": "pass"
+    },
+    {
+      "name": "SSE expiry still ends session if notice storage is blocked",
+      "status": "pass"
+    },
+    {
+      "name": "Login notice survives StrictMode double initialization and is consumed after mounting",
+      "status": "pass"
+    },
+    {
+      "name": "Login ordinary visits and blocked storage do not show an expiry notice",
+      "status": "pass"
+    },
+    {
+      "name": "Login notice markup uses a separate status and preserves credential-error association",
+      "status": "pass"
+    }
+  ]
+}

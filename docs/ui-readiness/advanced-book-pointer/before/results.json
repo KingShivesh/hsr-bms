@@ -1,0 +1,660 @@
+{
+  "phase": "before",
+  "app": "http://127.0.0.1:5181",
+  "api": "http://127.0.0.1:8006",
+  "startedAt": "2026-10-20T13:35:24.842Z",
+  "cases": [
+    {
+      "theme": "light",
+      "width": 375,
+      "writes": [],
+      "blockedReads": [],
+      "errors": [],
+      "hover": false,
+      "trustedClick": false,
+      "beforeHover": {
+        "button": {
+          "x": 93,
+          "y": 594.640625,
+          "width": 253,
+          "height": 44
+        },
+        "center": {
+          "x": 219.5,
+          "y": 616.640625
+        },
+        "hit": {
+          "tag": "DIV",
+          "className": "session-workspace-context",
+          "text": "BookingNo upcoming bookingBilling modeSingle"
+        },
+        "unobscured": false,
+        "viewport": {
+          "width": 375,
+          "height": 844
+        },
+        "workspace": {
+          "position": "fixed",
+          "top": "189px",
+          "bottom": "0px",
+          "left": "64px",
+          "zIndex": "50",
+          "maxHeight": "692.08px"
+        },
+        "dialogs": 0
+      },
+      "hoverError": "locator.hover: Timeout 1800ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Book table', exact: true })\u001b[22m\n\u001b[2m    - locator resolved to <button type=\"submit\" aria-label=\"Book table\" class=\"ui-button ui-button-native ui-button-md primary-action-btn\">Book table</button>\u001b[22m\n\u001b[2m  - attempting hover action\u001b[22m\n\u001b[2m    - waiting for element to be visible and stable\u001b[22m\n\u001b[2m    - element is visible and stable\u001b[22m\n\u001b[2m    - scrolling into view if needed\u001b[22m\n\u001b[2m    - done scrolling\u001b[22m\n\u001b[2m    - <div class=\"session-workspace-context\">…</div> from <div class=\"table-floor-layout\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m  - retrying hover action\u001b[22m\n\u001b[2m    - waiting for element to be visible and stable\u001b[22m\n\u001b[2m    - element is visible and stable\u001b[22m\n\u001b[2m    - scrolling into view if needed\u001b[22m\n\u001b[2m    - done scrolling\u001b[22m\n\u001b[2m    - <div class=\"session-workspace-actions\">…</div> from <div class=\"table-floor-layout\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m  - retrying hover action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible and stable\u001b[22m\n\u001b[2m      - element is visible and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div class=\"session-workspace-context\">…</div> from <div class=\"table-floor-layout\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m    - retrying hover action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    - waiting for element to be visible and stable\u001b[22m\n\u001b[2m    - element is visible and stable\u001b[22m\n\u001b[2m    - scrolling into view if needed\u001b[22m\n\u001b[2m    - done scrolling\u001b[22m\n\u001b[2m    - <div class=\"session-workspace-context\">…</div> from <div class=\"table-floor-layout\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m  - retrying hover action\u001b[22m\n\u001b[2m    - waiting 500ms\u001b[22m\n\u001b[2m    - waiting for element to be visible and stable\u001b[22m\n\u001b[2m    - element is visible and stable\u001b[22m\n\u001b[2m    - scrolling into view if needed\u001b[22m\n\u001b[2m    - done scrolling\u001b[22m\n\u001b[2m    - <div class=\"session-workspace-actions\">…</div> from <div class=\"table-floor-layout\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m  - retrying hover action\u001b[22m\n\u001b[2m    - waiting 500ms\u001b[22m\n\u001b[2m    - waiting for element to be visible and stable\u001b[22m\n\u001b[2m    - element is visible and stable\u001b[22m\n\u001b[2m    - scrolling into view if needed\u001b[22m\n\u001b[2m    - done scrolling\u001b[22m\n\u001b[2m    - <div class=\"session-workspace-context\">…</div> from <div class=\"table-floor-layout\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m  - retrying hover action\u001b[22m\n\u001b[2m    - waiting 500ms\u001b[22m\n",
+      "afterHover": {
+        "button": {
+          "x": 61,
+          "y": 594.640625,
+          "width": 253,
+          "height": 44
+        },
+        "center": {
+          "x": 187.5,
+          "y": 616.640625
+        },
+        "hit": {
+          "tag": "DIV",
+          "className": "session-workspace-context",
+          "text": "BookingNo upcoming bookingBilling modeSingle"
+        },
+        "unobscured": false,
+        "viewport": {
+          "width": 375,
+          "height": 844
+        },
+        "workspace": {
+          "position": "fixed",
+          "top": "189px",
+          "bottom": "0px",
+          "left": "64px",
+          "zIndex": "50",
+          "maxHeight": "692.08px"
+        },
+        "dialogs": 0
+      },
+      "screenshot": "/Users/shivanshgupta/.codex/worktrees/player-start-flow/billiards-bms:HSR/docs/ui-readiness/advanced-book-pointer/before/light-375-book-table.png",
+      "clickError": "locator.click: Timeout 1800ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Book table', exact: true })\u001b[22m\n\u001b[2m    - locator resolved to <button type=\"submit\" aria-label=\"Book table\" class=\"ui-button ui-button-native ui-button-md primary-action-btn\">Book table</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m    - element is visible, enabled and stable\u001b[22m\n\u001b[2m    - scrolling into view if needed\u001b[22m\n\u001b[2m    - done scrolling\u001b[22m\n\u001b[2m    - <div class=\"session-workspace-context\">…</div> from <div class=\"table-floor-layout\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m  - retrying click action\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m    - element is visible, enabled and stable\u001b[22m\n\u001b[2m    - scrolling into view if needed\u001b[22m\n\u001b[2m    - done scrolling\u001b[22m\n\u001b[2m    - <div class=\"session-workspace-actions\">…</div> from <div class=\"table-floor-layout\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m  - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div class=\"session-workspace-context\">…</div> from <div class=\"table-floor-layout\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m    - element is visible, enabled and stable\u001b[22m\n\u001b[2m    - scrolling into view if needed\u001b[22m\n\u001b[2m    - done scrolling\u001b[22m\n\u001b[2m    - <div class=\"session-workspace-context\">…</div> from <div class=\"table-floor-layout\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m  - retrying click action\u001b[22m\n\u001b[2m    - waiting 500ms\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m    - element is visible, enabled and stable\u001b[22m\n\u001b[2m    - scrolling into view if needed\u001b[22m\n\u001b[2m    - done scrolling\u001b[22m\n\u001b[2m    - <div class=\"session-workspace-actions\">…</div> from <div class=\"table-floor-layout\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m  - retrying click action\u001b[22m\n\u001b[2m    - waiting 500ms\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m    - element is visible, enabled and stable\u001b[22m\n\u001b[2m    - scrolling into view if needed\u001b[22m\n\u001b[2m    - done scrolling\u001b[22m\n\u001b[2m    - <div class=\"session-workspace-context\">…</div> from <div class=\"table-floor-layout\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m  - retrying click action\u001b[22m\n\u001b[2m    - waiting 500ms\u001b[22m\n",
+      "afterClick": {
+        "button": {
+          "x": 61,
+          "y": 594.640625,
+          "width": 253,
+          "height": 44
+        },
+        "center": {
+          "x": 187.5,
+          "y": 616.640625
+        },
+        "hit": {
+          "tag": "DIV",
+          "className": "session-workspace-context",
+          "text": "BookingNo upcoming bookingBilling modeSingle"
+        },
+        "unobscured": false,
+        "viewport": {
+          "width": 375,
+          "height": 844
+        },
+        "workspace": {
+          "position": "fixed",
+          "top": "189px",
+          "bottom": "0px",
+          "left": "64px",
+          "zIndex": "50",
+          "maxHeight": "692.08px"
+        },
+        "dialogs": 0
+      },
+      "workspaceInNormalFlow": false,
+      "passed": false
+    },
+    {
+      "theme": "light",
+      "width": 414,
+      "writes": [],
+      "blockedReads": [],
+      "errors": [],
+      "hover": false,
+      "trustedClick": false,
+      "beforeHover": {
+        "button": {
+          "x": 93,
+          "y": 594.640625,
+          "width": 292,
+          "height": 44
+        },
+        "center": {
+          "x": 239,
+          "y": 616.640625
+        },
+        "hit": {
+          "tag": "DIV",
+          "className": "session-workspace-context",
+          "text": "BookingNo upcoming bookingBilling modeSingle"
+        },
+        "unobscured": false,
+        "viewport": {
+          "width": 414,
+          "height": 844
+        },
+        "workspace": {
+          "position": "fixed",
+          "top": "189px",
+          "bottom": "0px",
+          "left": "64px",
+          "zIndex": "50",
+          "maxHeight": "692.08px"
+        },
+        "dialogs": 0
+      },
+      "hoverError": "locator.hover: Timeout 1800ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Book table', exact: true })\u001b[22m\n\u001b[2m    - locator resolved to <button type=\"submit\" aria-label=\"Book table\" class=\"ui-button ui-button-native ui-button-md primary-action-btn\">Book table</button>\u001b[22m\n\u001b[2m  - attempting hover action\u001b[22m\n\u001b[2m    - waiting for element to be visible and stable\u001b[22m\n\u001b[2m    - element is visible and stable\u001b[22m\n\u001b[2m    - scrolling into view if needed\u001b[22m\n\u001b[2m    - done scrolling\u001b[22m\n\u001b[2m    - <div class=\"session-workspace-context\">…</div> from <div class=\"table-floor-layout\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m  - retrying hover action\u001b[22m\n\u001b[2m    - waiting for element to be visible and stable\u001b[22m\n\u001b[2m    - element is visible and stable\u001b[22m\n\u001b[2m    - scrolling into view if needed\u001b[22m\n\u001b[2m    - done scrolling\u001b[22m\n\u001b[2m    - <div class=\"session-workspace-actions\">…</div> from <div class=\"table-floor-layout\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m  - retrying hover action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible and stable\u001b[22m\n\u001b[2m      - element is visible and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div class=\"session-workspace-context\">…</div> from <div class=\"table-floor-layout\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m    - retrying hover action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    - waiting for element to be visible and stable\u001b[22m\n\u001b[2m    - element is visible and stable\u001b[22m\n\u001b[2m    - scrolling into view if needed\u001b[22m\n\u001b[2m    - done scrolling\u001b[22m\n\u001b[2m    - <div class=\"session-workspace-context\">…</div> from <div class=\"table-floor-layout\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m  - retrying hover action\u001b[22m\n\u001b[2m    - waiting 500ms\u001b[22m\n\u001b[2m    - waiting for element to be visible and stable\u001b[22m\n\u001b[2m    - element is visible and stable\u001b[22m\n\u001b[2m    - scrolling into view if needed\u001b[22m\n\u001b[2m    - done scrolling\u001b[22m\n\u001b[2m    - <div class=\"session-workspace-actions\">…</div> from <div class=\"table-floor-layout\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m  - retrying hover action\u001b[22m\n\u001b[2m    - waiting 500ms\u001b[22m\n\u001b[2m    - waiting for element to be visible and stable\u001b[22m\n\u001b[2m    - element is visible and stable\u001b[22m\n\u001b[2m    - scrolling into view if needed\u001b[22m\n\u001b[2m    - done scrolling\u001b[22m\n\u001b[2m    - <div class=\"session-workspace-context\">…</div> from <div class=\"table-floor-layout\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m  - retrying hover action\u001b[22m\n\u001b[2m    - waiting 500ms\u001b[22m\n",
+      "afterHover": {
+        "button": {
+          "x": 93,
+          "y": 594.640625,
+          "width": 292,
+          "height": 44
+        },
+        "center": {
+          "x": 239,
+          "y": 616.640625
+        },
+        "hit": {
+          "tag": "DIV",
+          "className": "session-workspace-context",
+          "text": "BookingNo upcoming bookingBilling modeSingle"
+        },
+        "unobscured": false,
+        "viewport": {
+          "width": 414,
+          "height": 844
+        },
+        "workspace": {
+          "position": "fixed",
+          "top": "189px",
+          "bottom": "0px",
+          "left": "64px",
+          "zIndex": "50",
+          "maxHeight": "692.08px"
+        },
+        "dialogs": 0
+      },
+      "screenshot": "/Users/shivanshgupta/.codex/worktrees/player-start-flow/billiards-bms:HSR/docs/ui-readiness/advanced-book-pointer/before/light-414-book-table.png",
+      "clickError": "locator.click: Timeout 1800ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Book table', exact: true })\u001b[22m\n\u001b[2m    - locator resolved to <button type=\"submit\" aria-label=\"Book table\" class=\"ui-button ui-button-native ui-button-md primary-action-btn\">Book table</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m    - element is visible, enabled and stable\u001b[22m\n\u001b[2m    - scrolling into view if needed\u001b[22m\n\u001b[2m    - done scrolling\u001b[22m\n\u001b[2m    - <div class=\"session-workspace-context\">…</div> from <div class=\"table-floor-layout\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m  - retrying click action\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m    - element is visible, enabled and stable\u001b[22m\n\u001b[2m    - scrolling into view if needed\u001b[22m\n\u001b[2m    - done scrolling\u001b[22m\n\u001b[2m    - <div class=\"session-workspace-actions\">…</div> from <div class=\"table-floor-layout\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m  - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div class=\"session-workspace-context\">…</div> from <div class=\"table-floor-layout\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m    - element is visible, enabled and stable\u001b[22m\n\u001b[2m    - scrolling into view if needed\u001b[22m\n\u001b[2m    - done scrolling\u001b[22m\n\u001b[2m    - <div class=\"session-workspace-context\">…</div> from <div class=\"table-floor-layout\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m  - retrying click action\u001b[22m\n\u001b[2m    - waiting 500ms\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m    - element is visible, enabled and stable\u001b[22m\n\u001b[2m    - scrolling into view if needed\u001b[22m\n\u001b[2m    - done scrolling\u001b[22m\n\u001b[2m    - <div class=\"session-workspace-actions\">…</div> from <div class=\"table-floor-layout\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m  - retrying click action\u001b[22m\n\u001b[2m    - waiting 500ms\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m    - element is visible, enabled and stable\u001b[22m\n\u001b[2m    - scrolling into view if needed\u001b[22m\n\u001b[2m    - done scrolling\u001b[22m\n\u001b[2m    - <div class=\"session-workspace-context\">…</div> from <div class=\"table-floor-layout\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m  - retrying click action\u001b[22m\n\u001b[2m    - waiting 500ms\u001b[22m\n",
+      "afterClick": {
+        "button": {
+          "x": 93,
+          "y": 594.640625,
+          "width": 292,
+          "height": 44
+        },
+        "center": {
+          "x": 239,
+          "y": 616.640625
+        },
+        "hit": {
+          "tag": "DIV",
+          "className": "session-workspace-context",
+          "text": "BookingNo upcoming bookingBilling modeSingle"
+        },
+        "unobscured": false,
+        "viewport": {
+          "width": 414,
+          "height": 844
+        },
+        "workspace": {
+          "position": "fixed",
+          "top": "189px",
+          "bottom": "0px",
+          "left": "64px",
+          "zIndex": "50",
+          "maxHeight": "692.08px"
+        },
+        "dialogs": 0
+      },
+      "workspaceInNormalFlow": false,
+      "passed": false
+    },
+    {
+      "theme": "light",
+      "width": 1440,
+      "writes": [],
+      "blockedReads": [],
+      "errors": [],
+      "hover": true,
+      "trustedClick": true,
+      "beforeHover": {
+        "button": {
+          "x": 325,
+          "y": 754.640625,
+          "width": 173,
+          "height": 36
+        },
+        "center": {
+          "x": 411.5,
+          "y": 772.640625
+        },
+        "hit": {
+          "tag": "BUTTON",
+          "className": "ui-button ui-button-native ui-button-md primary-action-btn",
+          "text": "Book table"
+        },
+        "unobscured": true,
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        },
+        "workspace": {
+          "position": "sticky",
+          "top": "20px",
+          "bottom": "auto",
+          "left": "auto",
+          "zIndex": "auto",
+          "maxHeight": "850px"
+        },
+        "dialogs": 0
+      },
+      "afterHover": {
+        "button": {
+          "x": 325,
+          "y": 754.640625,
+          "width": 173,
+          "height": 36
+        },
+        "center": {
+          "x": 411.5,
+          "y": 772.640625
+        },
+        "hit": {
+          "tag": "BUTTON",
+          "className": "ui-button ui-button-native ui-button-md primary-action-btn",
+          "text": "Book table"
+        },
+        "unobscured": true,
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        },
+        "workspace": {
+          "position": "sticky",
+          "top": "20px",
+          "bottom": "auto",
+          "left": "auto",
+          "zIndex": "auto",
+          "maxHeight": "850px"
+        },
+        "dialogs": 0
+      },
+      "screenshot": "/Users/shivanshgupta/.codex/worktrees/player-start-flow/billiards-bms:HSR/docs/ui-readiness/advanced-book-pointer/before/light-1440-book-table.png",
+      "afterClick": {
+        "button": {
+          "x": 325,
+          "y": 753.640625,
+          "width": 173,
+          "height": 36
+        },
+        "center": {
+          "x": 411.5,
+          "y": 771.640625
+        },
+        "hit": {
+          "tag": "BUTTON",
+          "className": "ui-button ui-button-native ui-button-md primary-action-btn",
+          "text": "Book table"
+        },
+        "unobscured": true,
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        },
+        "workspace": {
+          "position": "sticky",
+          "top": "20px",
+          "bottom": "auto",
+          "left": "auto",
+          "zIndex": "auto",
+          "maxHeight": "850px"
+        },
+        "dialogs": 0
+      },
+      "workspaceInNormalFlow": false,
+      "passed": true
+    },
+    {
+      "theme": "dark",
+      "width": 375,
+      "writes": [],
+      "blockedReads": [],
+      "errors": [],
+      "hover": false,
+      "trustedClick": false,
+      "beforeHover": {
+        "button": {
+          "x": 93,
+          "y": 594.640625,
+          "width": 253,
+          "height": 44
+        },
+        "center": {
+          "x": 219.5,
+          "y": 616.640625
+        },
+        "hit": {
+          "tag": "DIV",
+          "className": "session-workspace-context",
+          "text": "BookingNo upcoming bookingBilling modeSingle"
+        },
+        "unobscured": false,
+        "viewport": {
+          "width": 375,
+          "height": 844
+        },
+        "workspace": {
+          "position": "fixed",
+          "top": "189px",
+          "bottom": "0px",
+          "left": "64px",
+          "zIndex": "50",
+          "maxHeight": "692.08px"
+        },
+        "dialogs": 0
+      },
+      "hoverError": "locator.hover: Timeout 1800ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Book table', exact: true })\u001b[22m\n\u001b[2m    - locator resolved to <button type=\"submit\" aria-label=\"Book table\" class=\"ui-button ui-button-native ui-button-md primary-action-btn\">Book table</button>\u001b[22m\n\u001b[2m  - attempting hover action\u001b[22m\n\u001b[2m    - waiting for element to be visible and stable\u001b[22m\n\u001b[2m    - element is visible and stable\u001b[22m\n\u001b[2m    - scrolling into view if needed\u001b[22m\n\u001b[2m    - done scrolling\u001b[22m\n\u001b[2m    - <div class=\"session-workspace-context\">…</div> from <div class=\"table-floor-layout\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m  - retrying hover action\u001b[22m\n\u001b[2m    - waiting for element to be visible and stable\u001b[22m\n\u001b[2m    - element is visible and stable\u001b[22m\n\u001b[2m    - scrolling into view if needed\u001b[22m\n\u001b[2m    - done scrolling\u001b[22m\n\u001b[2m    - <div class=\"session-workspace-actions\">…</div> from <div class=\"table-floor-layout\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m  - retrying hover action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible and stable\u001b[22m\n\u001b[2m      - element is visible and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div class=\"session-workspace-context\">…</div> from <div class=\"table-floor-layout\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m    - retrying hover action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    - waiting for element to be visible and stable\u001b[22m\n\u001b[2m    - element is visible and stable\u001b[22m\n\u001b[2m    - scrolling into view if needed\u001b[22m\n\u001b[2m    - done scrolling\u001b[22m\n\u001b[2m    - <div class=\"session-workspace-context\">…</div> from <div class=\"table-floor-layout\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m  - retrying hover action\u001b[22m\n\u001b[2m    - waiting 500ms\u001b[22m\n\u001b[2m    - waiting for element to be visible and stable\u001b[22m\n\u001b[2m    - element is visible and stable\u001b[22m\n\u001b[2m    - scrolling into view if needed\u001b[22m\n\u001b[2m    - done scrolling\u001b[22m\n\u001b[2m    - <div class=\"session-workspace-actions\">…</div> from <div class=\"table-floor-layout\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m  - retrying hover action\u001b[22m\n\u001b[2m    - waiting 500ms\u001b[22m\n\u001b[2m    - waiting for element to be visible and stable\u001b[22m\n\u001b[2m    - element is visible and stable\u001b[22m\n\u001b[2m    - scrolling into view if needed\u001b[22m\n\u001b[2m    - done scrolling\u001b[22m\n\u001b[2m    - <div class=\"session-workspace-context\">…</div> from <div class=\"table-floor-layout\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m  - retrying hover action\u001b[22m\n\u001b[2m    - waiting 500ms\u001b[22m\n",
+      "afterHover": {
+        "button": {
+          "x": 61,
+          "y": 594.640625,
+          "width": 253,
+          "height": 44
+        },
+        "center": {
+          "x": 187.5,
+          "y": 616.640625
+        },
+        "hit": {
+          "tag": "DIV",
+          "className": "session-workspace-context",
+          "text": "BookingNo upcoming bookingBilling modeSingle"
+        },
+        "unobscured": false,
+        "viewport": {
+          "width": 375,
+          "height": 844
+        },
+        "workspace": {
+          "position": "fixed",
+          "top": "189px",
+          "bottom": "0px",
+          "left": "64px",
+          "zIndex": "50",
+          "maxHeight": "692.08px"
+        },
+        "dialogs": 0
+      },
+      "screenshot": "/Users/shivanshgupta/.codex/worktrees/player-start-flow/billiards-bms:HSR/docs/ui-readiness/advanced-book-pointer/before/dark-375-book-table.png",
+      "clickError": "locator.click: Timeout 1800ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Book table', exact: true })\u001b[22m\n\u001b[2m    - locator resolved to <button type=\"submit\" aria-label=\"Book table\" class=\"ui-button ui-button-native ui-button-md primary-action-btn\">Book table</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m    - element is visible, enabled and stable\u001b[22m\n\u001b[2m    - scrolling into view if needed\u001b[22m\n\u001b[2m    - done scrolling\u001b[22m\n\u001b[2m    - <div class=\"session-workspace-context\">…</div> from <div class=\"table-floor-layout\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m  - retrying click action\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m    - element is visible, enabled and stable\u001b[22m\n\u001b[2m    - scrolling into view if needed\u001b[22m\n\u001b[2m    - done scrolling\u001b[22m\n\u001b[2m    - <div class=\"session-workspace-actions\">…</div> from <div class=\"table-floor-layout\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m  - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div class=\"session-workspace-context\">…</div> from <div class=\"table-floor-layout\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m    - element is visible, enabled and stable\u001b[22m\n\u001b[2m    - scrolling into view if needed\u001b[22m\n\u001b[2m    - done scrolling\u001b[22m\n\u001b[2m    - <div class=\"session-workspace-context\">…</div> from <div class=\"table-floor-layout\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m  - retrying click action\u001b[22m\n\u001b[2m    - waiting 500ms\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m    - element is visible, enabled and stable\u001b[22m\n\u001b[2m    - scrolling into view if needed\u001b[22m\n\u001b[2m    - done scrolling\u001b[22m\n\u001b[2m    - <div class=\"session-workspace-actions\">…</div> from <div class=\"table-floor-layout\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m  - retrying click action\u001b[22m\n\u001b[2m    - waiting 500ms\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m    - element is visible, enabled and stable\u001b[22m\n\u001b[2m    - scrolling into view if needed\u001b[22m\n\u001b[2m    - done scrolling\u001b[22m\n\u001b[2m    - <div class=\"session-workspace-context\">…</div> from <div class=\"table-floor-layout\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m  - retrying click action\u001b[22m\n\u001b[2m    - waiting 500ms\u001b[22m\n",
+      "afterClick": {
+        "button": {
+          "x": 61,
+          "y": 594.640625,
+          "width": 253,
+          "height": 44
+        },
+        "center": {
+          "x": 187.5,
+          "y": 616.640625
+        },
+        "hit": {
+          "tag": "DIV",
+          "className": "session-workspace-context",
+          "text": "BookingNo upcoming bookingBilling modeSingle"
+        },
+        "unobscured": false,
+        "viewport": {
+          "width": 375,
+          "height": 844
+        },
+        "workspace": {
+          "position": "fixed",
+          "top": "189px",
+          "bottom": "0px",
+          "left": "64px",
+          "zIndex": "50",
+          "maxHeight": "692.08px"
+        },
+        "dialogs": 0
+      },
+      "workspaceInNormalFlow": false,
+      "passed": false
+    },
+    {
+      "theme": "dark",
+      "width": 414,
+      "writes": [],
+      "blockedReads": [],
+      "errors": [],
+      "hover": false,
+      "trustedClick": false,
+      "beforeHover": {
+        "button": {
+          "x": 93,
+          "y": 594.640625,
+          "width": 292,
+          "height": 44
+        },
+        "center": {
+          "x": 239,
+          "y": 616.640625
+        },
+        "hit": {
+          "tag": "DIV",
+          "className": "session-workspace-context",
+          "text": "BookingNo upcoming bookingBilling modeSingle"
+        },
+        "unobscured": false,
+        "viewport": {
+          "width": 414,
+          "height": 844
+        },
+        "workspace": {
+          "position": "fixed",
+          "top": "189px",
+          "bottom": "0px",
+          "left": "64px",
+          "zIndex": "50",
+          "maxHeight": "692.08px"
+        },
+        "dialogs": 0
+      },
+      "hoverError": "locator.hover: Timeout 1800ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Book table', exact: true })\u001b[22m\n\u001b[2m    - locator resolved to <button type=\"submit\" aria-label=\"Book table\" class=\"ui-button ui-button-native ui-button-md primary-action-btn\">Book table</button>\u001b[22m\n\u001b[2m  - attempting hover action\u001b[22m\n\u001b[2m    - waiting for element to be visible and stable\u001b[22m\n\u001b[2m    - element is visible and stable\u001b[22m\n\u001b[2m    - scrolling into view if needed\u001b[22m\n\u001b[2m    - done scrolling\u001b[22m\n\u001b[2m    - <div class=\"session-workspace-context\">…</div> from <div class=\"table-floor-layout\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m  - retrying hover action\u001b[22m\n\u001b[2m    - waiting for element to be visible and stable\u001b[22m\n\u001b[2m    - element is visible and stable\u001b[22m\n\u001b[2m    - scrolling into view if needed\u001b[22m\n\u001b[2m    - done scrolling\u001b[22m\n\u001b[2m    - <div class=\"session-workspace-actions\">…</div> from <div class=\"table-floor-layout\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m  - retrying hover action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible and stable\u001b[22m\n\u001b[2m      - element is visible and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div class=\"session-workspace-context\">…</div> from <div class=\"table-floor-layout\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m    - retrying hover action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    - waiting for element to be visible and stable\u001b[22m\n\u001b[2m    - element is visible and stable\u001b[22m\n\u001b[2m    - scrolling into view if needed\u001b[22m\n\u001b[2m    - done scrolling\u001b[22m\n\u001b[2m    - <div class=\"session-workspace-context\">…</div> from <div class=\"table-floor-layout\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m  - retrying hover action\u001b[22m\n\u001b[2m    - waiting 500ms\u001b[22m\n\u001b[2m    - waiting for element to be visible and stable\u001b[22m\n\u001b[2m    - element is visible and stable\u001b[22m\n\u001b[2m    - scrolling into view if needed\u001b[22m\n\u001b[2m    - done scrolling\u001b[22m\n\u001b[2m    - <div class=\"session-workspace-actions\">…</div> from <div class=\"table-floor-layout\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m  - retrying hover action\u001b[22m\n\u001b[2m    - waiting 500ms\u001b[22m\n\u001b[2m    - waiting for element to be visible and stable\u001b[22m\n\u001b[2m    - element is visible and stable\u001b[22m\n\u001b[2m    - scrolling into view if needed\u001b[22m\n\u001b[2m    - done scrolling\u001b[22m\n\u001b[2m    - <div class=\"session-workspace-context\">…</div> from <div class=\"table-floor-layout\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m  - retrying hover action\u001b[22m\n\u001b[2m    - waiting 500ms\u001b[22m\n",
+      "afterHover": {
+        "button": {
+          "x": 93,
+          "y": 594.640625,
+          "width": 292,
+          "height": 44
+        },
+        "center": {
+          "x": 239,
+          "y": 616.640625
+        },
+        "hit": {
+          "tag": "DIV",
+          "className": "session-workspace-context",
+          "text": "BookingNo upcoming bookingBilling modeSingle"
+        },
+        "unobscured": false,
+        "viewport": {
+          "width": 414,
+          "height": 844
+        },
+        "workspace": {
+          "position": "fixed",
+          "top": "189px",
+          "bottom": "0px",
+          "left": "64px",
+          "zIndex": "50",
+          "maxHeight": "692.08px"
+        },
+        "dialogs": 0
+      },
+      "screenshot": "/Users/shivanshgupta/.codex/worktrees/player-start-flow/billiards-bms:HSR/docs/ui-readiness/advanced-book-pointer/before/dark-414-book-table.png",
+      "clickError": "locator.click: Timeout 1800ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Book table', exact: true })\u001b[22m\n\u001b[2m    - locator resolved to <button type=\"submit\" aria-label=\"Book table\" class=\"ui-button ui-button-native ui-button-md primary-action-btn\">Book table</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m    - element is visible, enabled and stable\u001b[22m\n\u001b[2m    - scrolling into view if needed\u001b[22m\n\u001b[2m    - done scrolling\u001b[22m\n\u001b[2m    - <div class=\"session-workspace-context\">…</div> from <div class=\"table-floor-layout\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m  - retrying click action\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m    - element is visible, enabled and stable\u001b[22m\n\u001b[2m    - scrolling into view if needed\u001b[22m\n\u001b[2m    - done scrolling\u001b[22m\n\u001b[2m    - <div class=\"session-workspace-actions\">…</div> from <div class=\"table-floor-layout\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m  - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div class=\"session-workspace-context\">…</div> from <div class=\"table-floor-layout\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m    - element is visible, enabled and stable\u001b[22m\n\u001b[2m    - scrolling into view if needed\u001b[22m\n\u001b[2m    - done scrolling\u001b[22m\n\u001b[2m    - <div class=\"session-workspace-context\">…</div> from <div class=\"table-floor-layout\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m  - retrying click action\u001b[22m\n\u001b[2m    - waiting 500ms\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m    - element is visible, enabled and stable\u001b[22m\n\u001b[2m    - scrolling into view if needed\u001b[22m\n\u001b[2m    - done scrolling\u001b[22m\n\u001b[2m    - <div class=\"session-workspace-actions\">…</div> from <div class=\"table-floor-layout\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m  - retrying click action\u001b[22m\n\u001b[2m    - waiting 500ms\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m    - element is visible, enabled and stable\u001b[22m\n\u001b[2m    - scrolling into view if needed\u001b[22m\n\u001b[2m    - done scrolling\u001b[22m\n\u001b[2m    - <div class=\"session-workspace-context\">…</div> from <div class=\"table-floor-layout\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m  - retrying click action\u001b[22m\n\u001b[2m    - waiting 500ms\u001b[22m\n",
+      "afterClick": {
+        "button": {
+          "x": 93,
+          "y": 594.640625,
+          "width": 292,
+          "height": 44
+        },
+        "center": {
+          "x": 239,
+          "y": 616.640625
+        },
+        "hit": {
+          "tag": "DIV",
+          "className": "session-workspace-context",
+          "text": "BookingNo upcoming bookingBilling modeSingle"
+        },
+        "unobscured": false,
+        "viewport": {
+          "width": 414,
+          "height": 844
+        },
+        "workspace": {
+          "position": "fixed",
+          "top": "189px",
+          "bottom": "0px",
+          "left": "64px",
+          "zIndex": "50",
+          "maxHeight": "692.08px"
+        },
+        "dialogs": 0
+      },
+      "workspaceInNormalFlow": false,
+      "passed": false
+    },
+    {
+      "theme": "dark",
+      "width": 1440,
+      "writes": [],
+      "blockedReads": [],
+      "errors": [],
+      "hover": true,
+      "trustedClick": true,
+      "beforeHover": {
+        "button": {
+          "x": 325,
+          "y": 754.640625,
+          "width": 173,
+          "height": 36
+        },
+        "center": {
+          "x": 411.5,
+          "y": 772.640625
+        },
+        "hit": {
+          "tag": "BUTTON",
+          "className": "ui-button ui-button-native ui-button-md primary-action-btn",
+          "text": "Book table"
+        },
+        "unobscured": true,
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        },
+        "workspace": {
+          "position": "sticky",
+          "top": "20px",
+          "bottom": "auto",
+          "left": "auto",
+          "zIndex": "auto",
+          "maxHeight": "850px"
+        },
+        "dialogs": 0
+      },
+      "afterHover": {
+        "button": {
+          "x": 325,
+          "y": 754.640625,
+          "width": 173,
+          "height": 36
+        },
+        "center": {
+          "x": 411.5,
+          "y": 772.640625
+        },
+        "hit": {
+          "tag": "BUTTON",
+          "className": "ui-button ui-button-native ui-button-md primary-action-btn",
+          "text": "Book table"
+        },
+        "unobscured": true,
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        },
+        "workspace": {
+          "position": "sticky",
+          "top": "20px",
+          "bottom": "auto",
+          "left": "auto",
+          "zIndex": "auto",
+          "maxHeight": "850px"
+        },
+        "dialogs": 0
+      },
+      "screenshot": "/Users/shivanshgupta/.codex/worktrees/player-start-flow/billiards-bms:HSR/docs/ui-readiness/advanced-book-pointer/before/dark-1440-book-table.png",
+      "afterClick": {
+        "button": {
+          "x": 325,
+          "y": 753.640625,
+          "width": 173,
+          "height": 36
+        },
+        "center": {
+          "x": 411.5,
+          "y": 771.640625
+        },
+        "hit": {
+          "tag": "BUTTON",
+          "className": "ui-button ui-button-native ui-button-md primary-action-btn",
+          "text": "Book table"
+        },
+        "unobscured": true,
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        },
+        "workspace": {
+          "position": "sticky",
+          "top": "20px",
+          "bottom": "auto",
+          "left": "auto",
+          "zIndex": "auto",
+          "maxHeight": "850px"
+        },
+        "dialogs": 0
+      },
+      "workspaceInNormalFlow": false,
+      "passed": true
+    }
+  ],
+  "errors": [],
+  "safety": {
+    "authPosts": 1,
+    "forwardedBusinessWrites": 0
+  },
+  "limits": "375/414 mobile and 1440 desktop, both themes. Alerts isolated, no modal dismissed or CSS injected. Booking name remains empty; all browser write methods blocked. Reviewed QA GETs may reconcile isolated local data.",
+  "finishedAt": "2026-10-20T13:35:57.061Z",
+  "summary": {
+    "cases": 6,
+    "passed": 2,
+    "failed": 4,
+    "errors": 0,
+    "forwardedBusinessWrites": 0
+  }
+}

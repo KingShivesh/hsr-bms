@@ -1,0 +1,45 @@
+{
+  "startedAt": "2026-10-20T13:30:43.020Z",
+  "sourceReport": "docs/ui-readiness/button-feedback/remaining-final.json",
+  "originalStatus": "unreachable",
+  "originalReason": "locator.click: Timeout 2500ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('button,[role=\"button\"],input[type=\"button\"],input[type=\"submit\"],input[type=\"reset\"]').nth(40)\u001b[22m\n\u001b[2m    - locator resolved to <button type=\"button\" aria-label=\"Start Table\" class=\"ui-button ui-button-native ui-button-md table-state-primary\">…</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m    - element is visible, enabled and stable\u001b[22m\n\u001b[2m    - scrolling into view if needed\u001b[22m\n\u001b[2m    - done scrolling\u001b[22m\n\u001b[2m    - performing click action\u001b[22m\n",
+  "route": "/legacy-table-controls",
+  "theme": "light",
+  "width": 1440,
+  "steps": [
+    {
+      "label": "Start Table",
+      "key": "[\"BUTTON\",\"\",\"\",null,\"Start Table\"]",
+      "occurrence": 2
+    }
+  ],
+  "target": "Open T4 history",
+  "status": "excluded-under-active-modal",
+  "measurementAttemptStatus": "setup-or-replay-unmeasured",
+  "explanation": "The exact Start Table replay completed and opened Choose a table at z-index 2000. The original history target was then unavailable to the guarded harness in that modal state. This is an active-modal target exclusion, not a passing history click or evidence of an application bug.",
+  "originalReplayTimeoutReproduced": false,
+  "targetClickAttempted": false,
+  "feedbackPassClaimed": false,
+  "limitations": [
+    "No target center-hit geometry or click timing was measured because findButton reported the target unavailable.",
+    "The dialog was not dismissed to manufacture a different reachable state; no alternate path or additional case was tested.",
+    "The attempt exited before screenshot capture; no screenshot is claimed."
+  ],
+  "rawReportNotModified": true,
+  "scope": "Exactly one recorded replay and target; no alternate paths or source changes",
+  "safety": {
+    "localAuthenticationPosts": 1,
+    "forwardedBusinessWrites": 0,
+    "expectedQaDatabase": "sqlite:////tmp/hsr-session-close-ui.db",
+    "policy": "Existing guarded harness: browser writes, streams and external origins blocked; only local authentication POST allowed. Approved GETs may reconcile QA state."
+  },
+  "activeModals": [
+    {
+      "label": "Choose a table",
+      "className": "ui-modal ui-modal-md lf-start-modal",
+      "zIndex": "2000"
+    }
+  ],
+  "error": "Button no longer rendered: Open T4 history",
+  "finishedAt": "2026-10-20T13:30:51.798Z"
+}

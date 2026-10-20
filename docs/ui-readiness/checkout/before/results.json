@@ -1,0 +1,2653 @@
+{
+  "stage": "before",
+  "samples": [
+    {
+      "theme": "dark",
+      "width": 375,
+      "state": "default",
+      "file": "dark-375-default.png",
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [
+        "ui-button ui-button-native ui-button-md cf-page-primary-action"
+      ],
+      "unlabeledInputs": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true,
+      "retry": true,
+      "contrast": []
+    },
+    {
+      "theme": "dark",
+      "width": 768,
+      "state": "default",
+      "file": "dark-768-default.png",
+      "overflow": 0,
+      "shortTargets": [
+        {
+          "label": "Collapse sidebar",
+          "height": 36,
+          "className": "ui-button ui-button-native ui-button-md cf-collapse-btn"
+        },
+        {
+          "label": "Live Floor",
+          "height": 42,
+          "className": "ui-button ui-button-native ui-button-md sb-item active"
+        },
+        {
+          "label": "Bookings",
+          "height": 42,
+          "className": "ui-button ui-button-native ui-button-md sb-item "
+        },
+        {
+          "label": "Cafe POS",
+          "height": 42,
+          "className": "ui-button ui-button-native ui-button-md sb-item "
+        },
+        {
+          "label": "Daily Closing",
+          "height": 42,
+          "className": "ui-button ui-button-native ui-button-md sb-item "
+        },
+        {
+          "label": "Logout",
+          "height": 42,
+          "className": "ui-button ui-button-native ui-button-md sb-item"
+        },
+        {
+          "label": "HSR Snooker Cafe BMS",
+          "height": 16,
+          "className": "ui-button ui-button-native ui-button-md"
+        },
+        {
+          "label": "Start Table",
+          "height": 36,
+          "className": "ui-button ui-button-native ui-button-md cf-page-primary-action"
+        },
+        {
+          "label": "Open notifications",
+          "height": 38,
+          "className": "ui-button ui-button-native ui-button-md topbar-icon-btn cf-notification-btn"
+        },
+        {
+          "label": "Switch to light mode",
+          "height": 38,
+          "className": "ui-button ui-button-native ui-button-md topbar-icon-btn"
+        },
+        {
+          "label": "New Booking",
+          "height": 36,
+          "className": "ui-button ui-button-native ui-button-md lf-secondary-button"
+        },
+        {
+          "label": "Add Customer",
+          "height": 36,
+          "className": "ui-button ui-button-native ui-button-md lf-secondary-button"
+        },
+        {
+          "label": "Start Table",
+          "height": 36,
+          "className": "ui-button ui-button-native ui-button-md lf-primary-button"
+        },
+        {
+          "label": "Advanced controls",
+          "height": 36,
+          "className": "ui-button ui-button-native ui-button-md lf-text-link"
+        },
+        {
+          "label": "View",
+          "height": 36,
+          "className": "ui-button ui-button-native ui-button-md app-toast-action"
+        },
+        {
+          "label": "Dismiss",
+          "height": 36,
+          "className": "ui-button ui-button-native ui-button-md app-toast-action"
+        },
+        {
+          "label": "View",
+          "height": 36,
+          "className": "ui-button ui-button-native ui-button-md app-toast-action"
+        },
+        {
+          "label": "Dismiss",
+          "height": 36,
+          "className": "ui-button ui-button-native ui-button-md app-toast-action"
+        },
+        {
+          "label": "Close panel",
+          "height": 36,
+          "className": "ui-button ui-button-icon ui-button-ghost ui-button-md"
+        },
+        {
+          "label": "Cancel",
+          "height": 40,
+          "className": "ui-button ui-button-ghost ui-button-md"
+        },
+        {
+          "label": "Confirm & Close · ₹477",
+          "height": 40,
+          "className": "ui-button ui-button-primary ui-button-md"
+        }
+      ],
+      "clipped": [
+        {
+          "text": "For counter staff: start tables, manage running sessions and move guests through checkout.",
+          "width": 163,
+          "contentWidth": 601,
+          "className": ""
+        }
+      ],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [
+        "ui-button ui-button-native ui-button-md cf-page-primary-action"
+      ],
+      "unlabeledInputs": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true,
+      "retry": true,
+      "contrast": []
+    },
+    {
+      "theme": "dark",
+      "width": 1024,
+      "state": "default",
+      "file": "dark-1024-default.png",
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [
+        {
+          "text": "For counter staff: start tables, manage running sessions and move guests through checkout.",
+          "width": 430,
+          "contentWidth": 601,
+          "className": ""
+        }
+      ],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [
+        "ui-button ui-button-native ui-button-md cf-page-primary-action"
+      ],
+      "unlabeledInputs": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true,
+      "retry": true,
+      "contrast": []
+    },
+    {
+      "theme": "dark",
+      "width": 1440,
+      "state": "default",
+      "file": "dark-1440-default.png",
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [
+        {
+          "text": "For counter staff: start tables, manage running sessions and move guests through checkout.",
+          "width": 561,
+          "contentWidth": 601,
+          "className": ""
+        }
+      ],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true,
+      "retry": true,
+      "contrast": []
+    },
+    {
+      "theme": "dark",
+      "width": 1920,
+      "state": "default",
+      "file": "dark-1920-default.png",
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true,
+      "retry": true,
+      "contrast": []
+    },
+    {
+      "theme": "dark",
+      "width": 375,
+      "state": "loading",
+      "file": "dark-375-loading.png",
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [
+        "ui-button ui-button-native ui-button-md cf-page-primary-action"
+      ],
+      "unlabeledInputs": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true,
+      "retry": true,
+      "contrast": []
+    },
+    {
+      "theme": "dark",
+      "width": 768,
+      "state": "loading",
+      "file": "dark-768-loading.png",
+      "overflow": 0,
+      "shortTargets": [
+        {
+          "label": "Collapse sidebar",
+          "height": 36,
+          "className": "ui-button ui-button-native ui-button-md cf-collapse-btn"
+        },
+        {
+          "label": "Live Floor",
+          "height": 42,
+          "className": "ui-button ui-button-native ui-button-md sb-item active"
+        },
+        {
+          "label": "Bookings",
+          "height": 42,
+          "className": "ui-button ui-button-native ui-button-md sb-item "
+        },
+        {
+          "label": "Cafe POS",
+          "height": 42,
+          "className": "ui-button ui-button-native ui-button-md sb-item "
+        },
+        {
+          "label": "Daily Closing",
+          "height": 42,
+          "className": "ui-button ui-button-native ui-button-md sb-item "
+        },
+        {
+          "label": "Logout",
+          "height": 42,
+          "className": "ui-button ui-button-native ui-button-md sb-item"
+        },
+        {
+          "label": "HSR Snooker Cafe BMS",
+          "height": 16,
+          "className": "ui-button ui-button-native ui-button-md"
+        },
+        {
+          "label": "Start Table",
+          "height": 36,
+          "className": "ui-button ui-button-native ui-button-md cf-page-primary-action"
+        },
+        {
+          "label": "Open notifications",
+          "height": 38,
+          "className": "ui-button ui-button-native ui-button-md topbar-icon-btn cf-notification-btn"
+        },
+        {
+          "label": "Switch to light mode",
+          "height": 38,
+          "className": "ui-button ui-button-native ui-button-md topbar-icon-btn"
+        },
+        {
+          "label": "New Booking",
+          "height": 36,
+          "className": "ui-button ui-button-native ui-button-md lf-secondary-button"
+        },
+        {
+          "label": "Add Customer",
+          "height": 36,
+          "className": "ui-button ui-button-native ui-button-md lf-secondary-button"
+        },
+        {
+          "label": "Start Table",
+          "height": 36,
+          "className": "ui-button ui-button-native ui-button-md lf-primary-button"
+        },
+        {
+          "label": "Advanced controls",
+          "height": 36,
+          "className": "ui-button ui-button-native ui-button-md lf-text-link"
+        },
+        {
+          "label": "View",
+          "height": 36,
+          "className": "ui-button ui-button-native ui-button-md app-toast-action"
+        },
+        {
+          "label": "Dismiss",
+          "height": 36,
+          "className": "ui-button ui-button-native ui-button-md app-toast-action"
+        },
+        {
+          "label": "Close panel",
+          "height": 36,
+          "className": "ui-button ui-button-icon ui-button-ghost ui-button-md"
+        }
+      ],
+      "clipped": [
+        {
+          "text": "For counter staff: start tables, manage running sessions and move guests through checkout.",
+          "width": 163,
+          "contentWidth": 601,
+          "className": ""
+        }
+      ],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [
+        "ui-button ui-button-native ui-button-md cf-page-primary-action"
+      ],
+      "unlabeledInputs": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true,
+      "retry": true,
+      "contrast": []
+    },
+    {
+      "theme": "dark",
+      "width": 1024,
+      "state": "loading",
+      "file": "dark-1024-loading.png",
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [
+        {
+          "text": "For counter staff: start tables, manage running sessions and move guests through checkout.",
+          "width": 430,
+          "contentWidth": 601,
+          "className": ""
+        }
+      ],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [
+        "ui-button ui-button-native ui-button-md cf-page-primary-action"
+      ],
+      "unlabeledInputs": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true,
+      "retry": true,
+      "contrast": []
+    },
+    {
+      "theme": "dark",
+      "width": 1440,
+      "state": "loading",
+      "file": "dark-1440-loading.png",
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [
+        {
+          "text": "For counter staff: start tables, manage running sessions and move guests through checkout.",
+          "width": 561,
+          "contentWidth": 601,
+          "className": ""
+        }
+      ],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true,
+      "retry": true,
+      "contrast": []
+    },
+    {
+      "theme": "dark",
+      "width": 1920,
+      "state": "loading",
+      "file": "dark-1920-loading.png",
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true,
+      "retry": true,
+      "contrast": []
+    },
+    {
+      "theme": "dark",
+      "width": 375,
+      "state": "error",
+      "file": "dark-375-error.png",
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [
+        "ui-button ui-button-native ui-button-md cf-page-primary-action"
+      ],
+      "unlabeledInputs": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true,
+      "retry": false,
+      "contrast": []
+    },
+    {
+      "theme": "dark",
+      "width": 768,
+      "state": "error",
+      "file": "dark-768-error.png",
+      "overflow": 0,
+      "shortTargets": [
+        {
+          "label": "Collapse sidebar",
+          "height": 36,
+          "className": "ui-button ui-button-native ui-button-md cf-collapse-btn"
+        },
+        {
+          "label": "Live Floor",
+          "height": 42,
+          "className": "ui-button ui-button-native ui-button-md sb-item active"
+        },
+        {
+          "label": "Bookings",
+          "height": 42,
+          "className": "ui-button ui-button-native ui-button-md sb-item "
+        },
+        {
+          "label": "Cafe POS",
+          "height": 42,
+          "className": "ui-button ui-button-native ui-button-md sb-item "
+        },
+        {
+          "label": "Daily Closing",
+          "height": 42,
+          "className": "ui-button ui-button-native ui-button-md sb-item "
+        },
+        {
+          "label": "Logout",
+          "height": 42,
+          "className": "ui-button ui-button-native ui-button-md sb-item"
+        },
+        {
+          "label": "HSR Snooker Cafe BMS",
+          "height": 16,
+          "className": "ui-button ui-button-native ui-button-md"
+        },
+        {
+          "label": "Start Table",
+          "height": 36,
+          "className": "ui-button ui-button-native ui-button-md cf-page-primary-action"
+        },
+        {
+          "label": "Open notifications",
+          "height": 38,
+          "className": "ui-button ui-button-native ui-button-md topbar-icon-btn cf-notification-btn"
+        },
+        {
+          "label": "Switch to light mode",
+          "height": 38,
+          "className": "ui-button ui-button-native ui-button-md topbar-icon-btn"
+        },
+        {
+          "label": "Retry",
+          "height": 32,
+          "className": "ui-button ui-button-native ui-button-md"
+        },
+        {
+          "label": "New Booking",
+          "height": 36,
+          "className": "ui-button ui-button-native ui-button-md lf-secondary-button"
+        },
+        {
+          "label": "Add Customer",
+          "height": 36,
+          "className": "ui-button ui-button-native ui-button-md lf-secondary-button"
+        },
+        {
+          "label": "Start Table",
+          "height": 36,
+          "className": "ui-button ui-button-native ui-button-md lf-primary-button"
+        },
+        {
+          "label": "Advanced controls",
+          "height": 36,
+          "className": "ui-button ui-button-native ui-button-md lf-text-link"
+        },
+        {
+          "label": "View",
+          "height": 36,
+          "className": "ui-button ui-button-native ui-button-md app-toast-action"
+        },
+        {
+          "label": "Dismiss",
+          "height": 36,
+          "className": "ui-button ui-button-native ui-button-md app-toast-action"
+        },
+        {
+          "label": "Close panel",
+          "height": 36,
+          "className": "ui-button ui-button-icon ui-button-ghost ui-button-md"
+        }
+      ],
+      "clipped": [
+        {
+          "text": "For counter staff: start tables, manage running sessions and move guests through checkout.",
+          "width": 163,
+          "contentWidth": 601,
+          "className": ""
+        }
+      ],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [
+        "ui-button ui-button-native ui-button-md cf-page-primary-action"
+      ],
+      "unlabeledInputs": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true,
+      "retry": false,
+      "contrast": []
+    },
+    {
+      "theme": "dark",
+      "width": 1024,
+      "state": "error",
+      "file": "dark-1024-error.png",
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [
+        {
+          "text": "For counter staff: start tables, manage running sessions and move guests through checkout.",
+          "width": 430,
+          "contentWidth": 601,
+          "className": ""
+        }
+      ],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [
+        "ui-button ui-button-native ui-button-md cf-page-primary-action"
+      ],
+      "unlabeledInputs": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true,
+      "retry": false,
+      "contrast": []
+    },
+    {
+      "theme": "dark",
+      "width": 1440,
+      "state": "error",
+      "file": "dark-1440-error.png",
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [
+        {
+          "text": "For counter staff: start tables, manage running sessions and move guests through checkout.",
+          "width": 561,
+          "contentWidth": 601,
+          "className": ""
+        }
+      ],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true,
+      "retry": false,
+      "contrast": []
+    },
+    {
+      "theme": "dark",
+      "width": 1920,
+      "state": "error",
+      "file": "dark-1920-error.png",
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true,
+      "retry": false,
+      "contrast": []
+    },
+    {
+      "theme": "dark",
+      "width": 375,
+      "state": "empty",
+      "file": "dark-375-empty.png",
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [
+        "ui-button ui-button-native ui-button-md cf-page-primary-action"
+      ],
+      "unlabeledInputs": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true,
+      "retry": false,
+      "contrast": []
+    },
+    {
+      "theme": "dark",
+      "width": 768,
+      "state": "empty",
+      "file": "dark-768-empty.png",
+      "overflow": 0,
+      "shortTargets": [
+        {
+          "label": "Collapse sidebar",
+          "height": 36,
+          "className": "ui-button ui-button-native ui-button-md cf-collapse-btn"
+        },
+        {
+          "label": "Live Floor",
+          "height": 42,
+          "className": "ui-button ui-button-native ui-button-md sb-item active"
+        },
+        {
+          "label": "Bookings",
+          "height": 42,
+          "className": "ui-button ui-button-native ui-button-md sb-item "
+        },
+        {
+          "label": "Cafe POS",
+          "height": 42,
+          "className": "ui-button ui-button-native ui-button-md sb-item "
+        },
+        {
+          "label": "Daily Closing",
+          "height": 42,
+          "className": "ui-button ui-button-native ui-button-md sb-item "
+        },
+        {
+          "label": "Logout",
+          "height": 42,
+          "className": "ui-button ui-button-native ui-button-md sb-item"
+        },
+        {
+          "label": "HSR Snooker Cafe BMS",
+          "height": 16,
+          "className": "ui-button ui-button-native ui-button-md"
+        },
+        {
+          "label": "Start Table",
+          "height": 36,
+          "className": "ui-button ui-button-native ui-button-md cf-page-primary-action"
+        },
+        {
+          "label": "Open notifications",
+          "height": 38,
+          "className": "ui-button ui-button-native ui-button-md topbar-icon-btn cf-notification-btn"
+        },
+        {
+          "label": "Switch to light mode",
+          "height": 38,
+          "className": "ui-button ui-button-native ui-button-md topbar-icon-btn"
+        },
+        {
+          "label": "New Booking",
+          "height": 36,
+          "className": "ui-button ui-button-native ui-button-md lf-secondary-button"
+        },
+        {
+          "label": "Add Customer",
+          "height": 36,
+          "className": "ui-button ui-button-native ui-button-md lf-secondary-button"
+        },
+        {
+          "label": "Start Table",
+          "height": 36,
+          "className": "ui-button ui-button-native ui-button-md lf-primary-button"
+        },
+        {
+          "label": "Advanced controls",
+          "height": 36,
+          "className": "ui-button ui-button-native ui-button-md lf-text-link"
+        },
+        {
+          "label": "View",
+          "height": 36,
+          "className": "ui-button ui-button-native ui-button-md app-toast-action"
+        },
+        {
+          "label": "Dismiss",
+          "height": 36,
+          "className": "ui-button ui-button-native ui-button-md app-toast-action"
+        },
+        {
+          "label": "Close panel",
+          "height": 36,
+          "className": "ui-button ui-button-icon ui-button-ghost ui-button-md"
+        }
+      ],
+      "clipped": [
+        {
+          "text": "For counter staff: start tables, manage running sessions and move guests through checkout.",
+          "width": 163,
+          "contentWidth": 601,
+          "className": ""
+        }
+      ],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [
+        "ui-button ui-button-native ui-button-md cf-page-primary-action"
+      ],
+      "unlabeledInputs": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true,
+      "retry": false,
+      "contrast": []
+    },
+    {
+      "theme": "dark",
+      "width": 1024,
+      "state": "empty",
+      "file": "dark-1024-empty.png",
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [
+        {
+          "text": "For counter staff: start tables, manage running sessions and move guests through checkout.",
+          "width": 430,
+          "contentWidth": 601,
+          "className": ""
+        }
+      ],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [
+        "ui-button ui-button-native ui-button-md cf-page-primary-action"
+      ],
+      "unlabeledInputs": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true,
+      "retry": false,
+      "contrast": []
+    },
+    {
+      "theme": "dark",
+      "width": 1440,
+      "state": "empty",
+      "file": "dark-1440-empty.png",
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [
+        {
+          "text": "For counter staff: start tables, manage running sessions and move guests through checkout.",
+          "width": 561,
+          "contentWidth": 601,
+          "className": ""
+        }
+      ],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true,
+      "retry": false,
+      "contrast": []
+    },
+    {
+      "theme": "dark",
+      "width": 1920,
+      "state": "empty",
+      "file": "dark-1920-empty.png",
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true,
+      "retry": false,
+      "contrast": []
+    },
+    {
+      "theme": "dark",
+      "width": 375,
+      "state": "partial",
+      "file": "dark-375-partial.png",
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [
+        "ui-button ui-button-native ui-button-md cf-page-primary-action"
+      ],
+      "unlabeledInputs": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true,
+      "retry": true,
+      "contrast": []
+    },
+    {
+      "theme": "dark",
+      "width": 768,
+      "state": "partial",
+      "file": "dark-768-partial.png",
+      "overflow": 0,
+      "shortTargets": [
+        {
+          "label": "Collapse sidebar",
+          "height": 36,
+          "className": "ui-button ui-button-native ui-button-md cf-collapse-btn"
+        },
+        {
+          "label": "Live Floor",
+          "height": 42,
+          "className": "ui-button ui-button-native ui-button-md sb-item active"
+        },
+        {
+          "label": "Bookings",
+          "height": 42,
+          "className": "ui-button ui-button-native ui-button-md sb-item "
+        },
+        {
+          "label": "Cafe POS",
+          "height": 42,
+          "className": "ui-button ui-button-native ui-button-md sb-item "
+        },
+        {
+          "label": "Daily Closing",
+          "height": 42,
+          "className": "ui-button ui-button-native ui-button-md sb-item "
+        },
+        {
+          "label": "Logout",
+          "height": 42,
+          "className": "ui-button ui-button-native ui-button-md sb-item"
+        },
+        {
+          "label": "HSR Snooker Cafe BMS",
+          "height": 16,
+          "className": "ui-button ui-button-native ui-button-md"
+        },
+        {
+          "label": "Start Table",
+          "height": 36,
+          "className": "ui-button ui-button-native ui-button-md cf-page-primary-action"
+        },
+        {
+          "label": "Open notifications",
+          "height": 38,
+          "className": "ui-button ui-button-native ui-button-md topbar-icon-btn cf-notification-btn"
+        },
+        {
+          "label": "Switch to light mode",
+          "height": 38,
+          "className": "ui-button ui-button-native ui-button-md topbar-icon-btn"
+        },
+        {
+          "label": "New Booking",
+          "height": 36,
+          "className": "ui-button ui-button-native ui-button-md lf-secondary-button"
+        },
+        {
+          "label": "Add Customer",
+          "height": 36,
+          "className": "ui-button ui-button-native ui-button-md lf-secondary-button"
+        },
+        {
+          "label": "Start Table",
+          "height": 36,
+          "className": "ui-button ui-button-native ui-button-md lf-primary-button"
+        },
+        {
+          "label": "Advanced controls",
+          "height": 36,
+          "className": "ui-button ui-button-native ui-button-md lf-text-link"
+        },
+        {
+          "label": "View",
+          "height": 36,
+          "className": "ui-button ui-button-native ui-button-md app-toast-action"
+        },
+        {
+          "label": "Dismiss",
+          "height": 36,
+          "className": "ui-button ui-button-native ui-button-md app-toast-action"
+        },
+        {
+          "label": "Close panel",
+          "height": 36,
+          "className": "ui-button ui-button-icon ui-button-ghost ui-button-md"
+        },
+        {
+          "label": "Cancel",
+          "height": 40,
+          "className": "ui-button ui-button-ghost ui-button-md"
+        },
+        {
+          "label": "Confirm & Close · ₹477",
+          "height": 40,
+          "className": "ui-button ui-button-primary ui-button-md"
+        }
+      ],
+      "clipped": [
+        {
+          "text": "For counter staff: start tables, manage running sessions and move guests through checkout.",
+          "width": 163,
+          "contentWidth": 601,
+          "className": ""
+        }
+      ],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [
+        "ui-button ui-button-native ui-button-md cf-page-primary-action"
+      ],
+      "unlabeledInputs": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true,
+      "retry": true,
+      "contrast": []
+    },
+    {
+      "theme": "dark",
+      "width": 1024,
+      "state": "partial",
+      "file": "dark-1024-partial.png",
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [
+        {
+          "text": "For counter staff: start tables, manage running sessions and move guests through checkout.",
+          "width": 430,
+          "contentWidth": 601,
+          "className": ""
+        }
+      ],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [
+        "ui-button ui-button-native ui-button-md cf-page-primary-action"
+      ],
+      "unlabeledInputs": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true,
+      "retry": true,
+      "contrast": []
+    },
+    {
+      "theme": "dark",
+      "width": 1440,
+      "state": "partial",
+      "file": "dark-1440-partial.png",
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [
+        {
+          "text": "For counter staff: start tables, manage running sessions and move guests through checkout.",
+          "width": 561,
+          "contentWidth": 601,
+          "className": ""
+        }
+      ],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true,
+      "retry": true,
+      "contrast": []
+    },
+    {
+      "theme": "dark",
+      "width": 1920,
+      "state": "partial",
+      "file": "dark-1920-partial.png",
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true,
+      "retry": true,
+      "contrast": []
+    },
+    {
+      "theme": "dark",
+      "width": 375,
+      "state": "extreme",
+      "file": "dark-375-extreme.png",
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [
+        "ui-button ui-button-native ui-button-md cf-page-primary-action"
+      ],
+      "unlabeledInputs": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true,
+      "retry": true,
+      "contrast": []
+    },
+    {
+      "theme": "dark",
+      "width": 768,
+      "state": "extreme",
+      "file": "dark-768-extreme.png",
+      "overflow": 0,
+      "shortTargets": [
+        {
+          "label": "Collapse sidebar",
+          "height": 36,
+          "className": "ui-button ui-button-native ui-button-md cf-collapse-btn"
+        },
+        {
+          "label": "Live Floor",
+          "height": 42,
+          "className": "ui-button ui-button-native ui-button-md sb-item active"
+        },
+        {
+          "label": "Bookings",
+          "height": 42,
+          "className": "ui-button ui-button-native ui-button-md sb-item "
+        },
+        {
+          "label": "Cafe POS",
+          "height": 42,
+          "className": "ui-button ui-button-native ui-button-md sb-item "
+        },
+        {
+          "label": "Daily Closing",
+          "height": 42,
+          "className": "ui-button ui-button-native ui-button-md sb-item "
+        },
+        {
+          "label": "Logout",
+          "height": 42,
+          "className": "ui-button ui-button-native ui-button-md sb-item"
+        },
+        {
+          "label": "HSR Snooker Cafe BMS",
+          "height": 16,
+          "className": "ui-button ui-button-native ui-button-md"
+        },
+        {
+          "label": "Start Table",
+          "height": 36,
+          "className": "ui-button ui-button-native ui-button-md cf-page-primary-action"
+        },
+        {
+          "label": "Open notifications",
+          "height": 38,
+          "className": "ui-button ui-button-native ui-button-md topbar-icon-btn cf-notification-btn"
+        },
+        {
+          "label": "Switch to light mode",
+          "height": 38,
+          "className": "ui-button ui-button-native ui-button-md topbar-icon-btn"
+        },
+        {
+          "label": "New Booking",
+          "height": 36,
+          "className": "ui-button ui-button-native ui-button-md lf-secondary-button"
+        },
+        {
+          "label": "Add Customer",
+          "height": 36,
+          "className": "ui-button ui-button-native ui-button-md lf-secondary-button"
+        },
+        {
+          "label": "Start Table",
+          "height": 36,
+          "className": "ui-button ui-button-native ui-button-md lf-primary-button"
+        },
+        {
+          "label": "Advanced controls",
+          "height": 36,
+          "className": "ui-button ui-button-native ui-button-md lf-text-link"
+        },
+        {
+          "label": "View",
+          "height": 36,
+          "className": "ui-button ui-button-native ui-button-md app-toast-action"
+        },
+        {
+          "label": "Dismiss",
+          "height": 36,
+          "className": "ui-button ui-button-native ui-button-md app-toast-action"
+        },
+        {
+          "label": "Close panel",
+          "height": 36,
+          "className": "ui-button ui-button-icon ui-button-ghost ui-button-md"
+        },
+        {
+          "label": "Cancel",
+          "height": 40,
+          "className": "ui-button ui-button-ghost ui-button-md"
+        },
+        {
+          "label": "Confirm & Close · ₹1,23,45,678.99",
+          "height": 40,
+          "className": "ui-button ui-button-primary ui-button-md"
+        }
+      ],
+      "clipped": [
+        {
+          "text": "For counter staff: start tables, manage running sessions and move guests through checkout.",
+          "width": 163,
+          "contentWidth": 601,
+          "className": ""
+        }
+      ],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [
+        "ui-button ui-button-native ui-button-md cf-page-primary-action"
+      ],
+      "unlabeledInputs": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true,
+      "retry": true,
+      "contrast": []
+    },
+    {
+      "theme": "dark",
+      "width": 1024,
+      "state": "extreme",
+      "file": "dark-1024-extreme.png",
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [
+        {
+          "text": "For counter staff: start tables, manage running sessions and move guests through checkout.",
+          "width": 430,
+          "contentWidth": 601,
+          "className": ""
+        }
+      ],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [
+        "ui-button ui-button-native ui-button-md cf-page-primary-action"
+      ],
+      "unlabeledInputs": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true,
+      "retry": true,
+      "contrast": []
+    },
+    {
+      "theme": "dark",
+      "width": 1440,
+      "state": "extreme",
+      "file": "dark-1440-extreme.png",
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [
+        {
+          "text": "For counter staff: start tables, manage running sessions and move guests through checkout.",
+          "width": 561,
+          "contentWidth": 601,
+          "className": ""
+        }
+      ],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true,
+      "retry": true,
+      "contrast": []
+    },
+    {
+      "theme": "dark",
+      "width": 1920,
+      "state": "extreme",
+      "file": "dark-1920-extreme.png",
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true,
+      "retry": true,
+      "contrast": []
+    },
+    {
+      "theme": "light",
+      "width": 375,
+      "state": "default",
+      "file": "light-375-default.png",
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [
+        "ui-button ui-button-native ui-button-md cf-page-primary-action"
+      ],
+      "unlabeledInputs": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true,
+      "retry": true,
+      "contrast": []
+    },
+    {
+      "theme": "light",
+      "width": 768,
+      "state": "default",
+      "file": "light-768-default.png",
+      "overflow": 0,
+      "shortTargets": [
+        {
+          "label": "Collapse sidebar",
+          "height": 36,
+          "className": "ui-button ui-button-native ui-button-md cf-collapse-btn"
+        },
+        {
+          "label": "Live Floor",
+          "height": 42,
+          "className": "ui-button ui-button-native ui-button-md sb-item active"
+        },
+        {
+          "label": "Bookings",
+          "height": 42,
+          "className": "ui-button ui-button-native ui-button-md sb-item "
+        },
+        {
+          "label": "Cafe POS",
+          "height": 42,
+          "className": "ui-button ui-button-native ui-button-md sb-item "
+        },
+        {
+          "label": "Daily Closing",
+          "height": 42,
+          "className": "ui-button ui-button-native ui-button-md sb-item "
+        },
+        {
+          "label": "Logout",
+          "height": 42,
+          "className": "ui-button ui-button-native ui-button-md sb-item"
+        },
+        {
+          "label": "HSR Snooker Cafe BMS",
+          "height": 16,
+          "className": "ui-button ui-button-native ui-button-md"
+        },
+        {
+          "label": "Start Table",
+          "height": 36,
+          "className": "ui-button ui-button-native ui-button-md cf-page-primary-action"
+        },
+        {
+          "label": "Open notifications",
+          "height": 38,
+          "className": "ui-button ui-button-native ui-button-md topbar-icon-btn cf-notification-btn"
+        },
+        {
+          "label": "Switch to dark mode",
+          "height": 38,
+          "className": "ui-button ui-button-native ui-button-md topbar-icon-btn"
+        },
+        {
+          "label": "New Booking",
+          "height": 36,
+          "className": "ui-button ui-button-native ui-button-md lf-secondary-button"
+        },
+        {
+          "label": "Add Customer",
+          "height": 36,
+          "className": "ui-button ui-button-native ui-button-md lf-secondary-button"
+        },
+        {
+          "label": "Start Table",
+          "height": 36,
+          "className": "ui-button ui-button-native ui-button-md lf-primary-button"
+        },
+        {
+          "label": "Advanced controls",
+          "height": 36,
+          "className": "ui-button ui-button-native ui-button-md lf-text-link"
+        },
+        {
+          "label": "View",
+          "height": 36,
+          "className": "ui-button ui-button-native ui-button-md app-toast-action"
+        },
+        {
+          "label": "Dismiss",
+          "height": 36,
+          "className": "ui-button ui-button-native ui-button-md app-toast-action"
+        },
+        {
+          "label": "View",
+          "height": 36,
+          "className": "ui-button ui-button-native ui-button-md app-toast-action"
+        },
+        {
+          "label": "Dismiss",
+          "height": 36,
+          "className": "ui-button ui-button-native ui-button-md app-toast-action"
+        },
+        {
+          "label": "Close panel",
+          "height": 36,
+          "className": "ui-button ui-button-icon ui-button-ghost ui-button-md"
+        },
+        {
+          "label": "Cancel",
+          "height": 40,
+          "className": "ui-button ui-button-ghost ui-button-md"
+        },
+        {
+          "label": "Confirm & Close · ₹483",
+          "height": 40,
+          "className": "ui-button ui-button-primary ui-button-md"
+        }
+      ],
+      "clipped": [
+        {
+          "text": "For counter staff: start tables, manage running sessions and move guests through checkout.",
+          "width": 163,
+          "contentWidth": 601,
+          "className": ""
+        }
+      ],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [
+        "ui-button ui-button-native ui-button-md cf-page-primary-action"
+      ],
+      "unlabeledInputs": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true,
+      "retry": true,
+      "contrast": []
+    },
+    {
+      "theme": "light",
+      "width": 1024,
+      "state": "default",
+      "file": "light-1024-default.png",
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [
+        {
+          "text": "For counter staff: start tables, manage running sessions and move guests through checkout.",
+          "width": 430,
+          "contentWidth": 601,
+          "className": ""
+        }
+      ],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [
+        "ui-button ui-button-native ui-button-md cf-page-primary-action"
+      ],
+      "unlabeledInputs": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true,
+      "retry": true,
+      "contrast": []
+    },
+    {
+      "theme": "light",
+      "width": 1440,
+      "state": "default",
+      "file": "light-1440-default.png",
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [
+        {
+          "text": "For counter staff: start tables, manage running sessions and move guests through checkout.",
+          "width": 561,
+          "contentWidth": 601,
+          "className": ""
+        }
+      ],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true,
+      "retry": true,
+      "contrast": []
+    },
+    {
+      "theme": "light",
+      "width": 1920,
+      "state": "default",
+      "file": "light-1920-default.png",
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true,
+      "retry": true,
+      "contrast": []
+    },
+    {
+      "theme": "light",
+      "width": 375,
+      "state": "loading",
+      "file": "light-375-loading.png",
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [
+        "ui-button ui-button-native ui-button-md cf-page-primary-action"
+      ],
+      "unlabeledInputs": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true,
+      "retry": true,
+      "contrast": []
+    },
+    {
+      "theme": "light",
+      "width": 768,
+      "state": "loading",
+      "file": "light-768-loading.png",
+      "overflow": 0,
+      "shortTargets": [
+        {
+          "label": "Collapse sidebar",
+          "height": 36,
+          "className": "ui-button ui-button-native ui-button-md cf-collapse-btn"
+        },
+        {
+          "label": "Live Floor",
+          "height": 42,
+          "className": "ui-button ui-button-native ui-button-md sb-item active"
+        },
+        {
+          "label": "Bookings",
+          "height": 42,
+          "className": "ui-button ui-button-native ui-button-md sb-item "
+        },
+        {
+          "label": "Cafe POS",
+          "height": 42,
+          "className": "ui-button ui-button-native ui-button-md sb-item "
+        },
+        {
+          "label": "Daily Closing",
+          "height": 42,
+          "className": "ui-button ui-button-native ui-button-md sb-item "
+        },
+        {
+          "label": "Logout",
+          "height": 42,
+          "className": "ui-button ui-button-native ui-button-md sb-item"
+        },
+        {
+          "label": "HSR Snooker Cafe BMS",
+          "height": 16,
+          "className": "ui-button ui-button-native ui-button-md"
+        },
+        {
+          "label": "Start Table",
+          "height": 36,
+          "className": "ui-button ui-button-native ui-button-md cf-page-primary-action"
+        },
+        {
+          "label": "Open notifications",
+          "height": 38,
+          "className": "ui-button ui-button-native ui-button-md topbar-icon-btn cf-notification-btn"
+        },
+        {
+          "label": "Switch to dark mode",
+          "height": 38,
+          "className": "ui-button ui-button-native ui-button-md topbar-icon-btn"
+        },
+        {
+          "label": "New Booking",
+          "height": 36,
+          "className": "ui-button ui-button-native ui-button-md lf-secondary-button"
+        },
+        {
+          "label": "Add Customer",
+          "height": 36,
+          "className": "ui-button ui-button-native ui-button-md lf-secondary-button"
+        },
+        {
+          "label": "Start Table",
+          "height": 36,
+          "className": "ui-button ui-button-native ui-button-md lf-primary-button"
+        },
+        {
+          "label": "Advanced controls",
+          "height": 36,
+          "className": "ui-button ui-button-native ui-button-md lf-text-link"
+        },
+        {
+          "label": "View",
+          "height": 36,
+          "className": "ui-button ui-button-native ui-button-md app-toast-action"
+        },
+        {
+          "label": "Dismiss",
+          "height": 36,
+          "className": "ui-button ui-button-native ui-button-md app-toast-action"
+        },
+        {
+          "label": "Close panel",
+          "height": 36,
+          "className": "ui-button ui-button-icon ui-button-ghost ui-button-md"
+        }
+      ],
+      "clipped": [
+        {
+          "text": "For counter staff: start tables, manage running sessions and move guests through checkout.",
+          "width": 166,
+          "contentWidth": 601,
+          "className": ""
+        }
+      ],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [
+        "ui-button ui-button-native ui-button-md cf-page-primary-action"
+      ],
+      "unlabeledInputs": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true,
+      "retry": true,
+      "contrast": []
+    },
+    {
+      "theme": "light",
+      "width": 1024,
+      "state": "loading",
+      "file": "light-1024-loading.png",
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [
+        {
+          "text": "For counter staff: start tables, manage running sessions and move guests through checkout.",
+          "width": 430,
+          "contentWidth": 601,
+          "className": ""
+        }
+      ],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [
+        "ui-button ui-button-native ui-button-md cf-page-primary-action"
+      ],
+      "unlabeledInputs": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true,
+      "retry": true,
+      "contrast": []
+    },
+    {
+      "theme": "light",
+      "width": 1440,
+      "state": "loading",
+      "file": "light-1440-loading.png",
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [
+        {
+          "text": "For counter staff: start tables, manage running sessions and move guests through checkout.",
+          "width": 561,
+          "contentWidth": 601,
+          "className": ""
+        }
+      ],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true,
+      "retry": true,
+      "contrast": []
+    },
+    {
+      "theme": "light",
+      "width": 1920,
+      "state": "loading",
+      "file": "light-1920-loading.png",
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true,
+      "retry": true,
+      "contrast": []
+    },
+    {
+      "theme": "light",
+      "width": 375,
+      "state": "error",
+      "file": "light-375-error.png",
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [
+        "ui-button ui-button-native ui-button-md cf-page-primary-action"
+      ],
+      "unlabeledInputs": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true,
+      "retry": false,
+      "contrast": []
+    },
+    {
+      "theme": "light",
+      "width": 768,
+      "state": "error",
+      "file": "light-768-error.png",
+      "overflow": 0,
+      "shortTargets": [
+        {
+          "label": "Collapse sidebar",
+          "height": 36,
+          "className": "ui-button ui-button-native ui-button-md cf-collapse-btn"
+        },
+        {
+          "label": "Live Floor",
+          "height": 42,
+          "className": "ui-button ui-button-native ui-button-md sb-item active"
+        },
+        {
+          "label": "Bookings",
+          "height": 42,
+          "className": "ui-button ui-button-native ui-button-md sb-item "
+        },
+        {
+          "label": "Cafe POS",
+          "height": 42,
+          "className": "ui-button ui-button-native ui-button-md sb-item "
+        },
+        {
+          "label": "Daily Closing",
+          "height": 42,
+          "className": "ui-button ui-button-native ui-button-md sb-item "
+        },
+        {
+          "label": "Logout",
+          "height": 42,
+          "className": "ui-button ui-button-native ui-button-md sb-item"
+        },
+        {
+          "label": "HSR Snooker Cafe BMS",
+          "height": 16,
+          "className": "ui-button ui-button-native ui-button-md"
+        },
+        {
+          "label": "Start Table",
+          "height": 36,
+          "className": "ui-button ui-button-native ui-button-md cf-page-primary-action"
+        },
+        {
+          "label": "Open notifications",
+          "height": 38,
+          "className": "ui-button ui-button-native ui-button-md topbar-icon-btn cf-notification-btn"
+        },
+        {
+          "label": "Switch to dark mode",
+          "height": 38,
+          "className": "ui-button ui-button-native ui-button-md topbar-icon-btn"
+        },
+        {
+          "label": "Retry",
+          "height": 32,
+          "className": "ui-button ui-button-native ui-button-md"
+        },
+        {
+          "label": "New Booking",
+          "height": 36,
+          "className": "ui-button ui-button-native ui-button-md lf-secondary-button"
+        },
+        {
+          "label": "Add Customer",
+          "height": 36,
+          "className": "ui-button ui-button-native ui-button-md lf-secondary-button"
+        },
+        {
+          "label": "Start Table",
+          "height": 36,
+          "className": "ui-button ui-button-native ui-button-md lf-primary-button"
+        },
+        {
+          "label": "Advanced controls",
+          "height": 36,
+          "className": "ui-button ui-button-native ui-button-md lf-text-link"
+        },
+        {
+          "label": "View",
+          "height": 36,
+          "className": "ui-button ui-button-native ui-button-md app-toast-action"
+        },
+        {
+          "label": "Dismiss",
+          "height": 36,
+          "className": "ui-button ui-button-native ui-button-md app-toast-action"
+        },
+        {
+          "label": "Close panel",
+          "height": 36,
+          "className": "ui-button ui-button-icon ui-button-ghost ui-button-md"
+        }
+      ],
+      "clipped": [
+        {
+          "text": "For counter staff: start tables, manage running sessions and move guests through checkout.",
+          "width": 163,
+          "contentWidth": 601,
+          "className": ""
+        }
+      ],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [
+        "ui-button ui-button-native ui-button-md cf-page-primary-action"
+      ],
+      "unlabeledInputs": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true,
+      "retry": false,
+      "contrast": []
+    },
+    {
+      "theme": "light",
+      "width": 1024,
+      "state": "error",
+      "file": "light-1024-error.png",
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [
+        {
+          "text": "For counter staff: start tables, manage running sessions and move guests through checkout.",
+          "width": 430,
+          "contentWidth": 601,
+          "className": ""
+        }
+      ],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [
+        "ui-button ui-button-native ui-button-md cf-page-primary-action"
+      ],
+      "unlabeledInputs": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true,
+      "retry": false,
+      "contrast": []
+    },
+    {
+      "theme": "light",
+      "width": 1440,
+      "state": "error",
+      "file": "light-1440-error.png",
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [
+        {
+          "text": "For counter staff: start tables, manage running sessions and move guests through checkout.",
+          "width": 561,
+          "contentWidth": 601,
+          "className": ""
+        }
+      ],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true,
+      "retry": false,
+      "contrast": []
+    },
+    {
+      "theme": "light",
+      "width": 1920,
+      "state": "error",
+      "file": "light-1920-error.png",
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true,
+      "retry": false,
+      "contrast": []
+    },
+    {
+      "theme": "light",
+      "width": 375,
+      "state": "empty",
+      "file": "light-375-empty.png",
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [
+        "ui-button ui-button-native ui-button-md cf-page-primary-action"
+      ],
+      "unlabeledInputs": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true,
+      "retry": false,
+      "contrast": []
+    },
+    {
+      "theme": "light",
+      "width": 768,
+      "state": "empty",
+      "file": "light-768-empty.png",
+      "overflow": 0,
+      "shortTargets": [
+        {
+          "label": "Collapse sidebar",
+          "height": 36,
+          "className": "ui-button ui-button-native ui-button-md cf-collapse-btn"
+        },
+        {
+          "label": "Live Floor",
+          "height": 42,
+          "className": "ui-button ui-button-native ui-button-md sb-item active"
+        },
+        {
+          "label": "Bookings",
+          "height": 42,
+          "className": "ui-button ui-button-native ui-button-md sb-item "
+        },
+        {
+          "label": "Cafe POS",
+          "height": 42,
+          "className": "ui-button ui-button-native ui-button-md sb-item "
+        },
+        {
+          "label": "Daily Closing",
+          "height": 42,
+          "className": "ui-button ui-button-native ui-button-md sb-item "
+        },
+        {
+          "label": "Logout",
+          "height": 42,
+          "className": "ui-button ui-button-native ui-button-md sb-item"
+        },
+        {
+          "label": "HSR Snooker Cafe BMS",
+          "height": 16,
+          "className": "ui-button ui-button-native ui-button-md"
+        },
+        {
+          "label": "Start Table",
+          "height": 36,
+          "className": "ui-button ui-button-native ui-button-md cf-page-primary-action"
+        },
+        {
+          "label": "Open notifications",
+          "height": 38,
+          "className": "ui-button ui-button-native ui-button-md topbar-icon-btn cf-notification-btn"
+        },
+        {
+          "label": "Switch to dark mode",
+          "height": 38,
+          "className": "ui-button ui-button-native ui-button-md topbar-icon-btn"
+        },
+        {
+          "label": "New Booking",
+          "height": 36,
+          "className": "ui-button ui-button-native ui-button-md lf-secondary-button"
+        },
+        {
+          "label": "Add Customer",
+          "height": 36,
+          "className": "ui-button ui-button-native ui-button-md lf-secondary-button"
+        },
+        {
+          "label": "Start Table",
+          "height": 36,
+          "className": "ui-button ui-button-native ui-button-md lf-primary-button"
+        },
+        {
+          "label": "Advanced controls",
+          "height": 36,
+          "className": "ui-button ui-button-native ui-button-md lf-text-link"
+        },
+        {
+          "label": "View",
+          "height": 36,
+          "className": "ui-button ui-button-native ui-button-md app-toast-action"
+        },
+        {
+          "label": "Dismiss",
+          "height": 36,
+          "className": "ui-button ui-button-native ui-button-md app-toast-action"
+        },
+        {
+          "label": "Close panel",
+          "height": 36,
+          "className": "ui-button ui-button-icon ui-button-ghost ui-button-md"
+        }
+      ],
+      "clipped": [
+        {
+          "text": "For counter staff: start tables, manage running sessions and move guests through checkout.",
+          "width": 163,
+          "contentWidth": 601,
+          "className": ""
+        }
+      ],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [
+        "ui-button ui-button-native ui-button-md cf-page-primary-action"
+      ],
+      "unlabeledInputs": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true,
+      "retry": false,
+      "contrast": []
+    },
+    {
+      "theme": "light",
+      "width": 1024,
+      "state": "empty",
+      "file": "light-1024-empty.png",
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [
+        {
+          "text": "For counter staff: start tables, manage running sessions and move guests through checkout.",
+          "width": 430,
+          "contentWidth": 601,
+          "className": ""
+        }
+      ],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [
+        "ui-button ui-button-native ui-button-md cf-page-primary-action"
+      ],
+      "unlabeledInputs": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true,
+      "retry": false,
+      "contrast": []
+    },
+    {
+      "theme": "light",
+      "width": 1440,
+      "state": "empty",
+      "file": "light-1440-empty.png",
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [
+        {
+          "text": "For counter staff: start tables, manage running sessions and move guests through checkout.",
+          "width": 561,
+          "contentWidth": 601,
+          "className": ""
+        }
+      ],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true,
+      "retry": false,
+      "contrast": []
+    },
+    {
+      "theme": "light",
+      "width": 1920,
+      "state": "empty",
+      "file": "light-1920-empty.png",
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true,
+      "retry": false,
+      "contrast": []
+    },
+    {
+      "theme": "light",
+      "width": 375,
+      "state": "partial",
+      "file": "light-375-partial.png",
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [
+        "ui-button ui-button-native ui-button-md cf-page-primary-action"
+      ],
+      "unlabeledInputs": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true,
+      "retry": true,
+      "contrast": []
+    },
+    {
+      "theme": "light",
+      "width": 768,
+      "state": "partial",
+      "file": "light-768-partial.png",
+      "overflow": 0,
+      "shortTargets": [
+        {
+          "label": "Collapse sidebar",
+          "height": 36,
+          "className": "ui-button ui-button-native ui-button-md cf-collapse-btn"
+        },
+        {
+          "label": "Live Floor",
+          "height": 42,
+          "className": "ui-button ui-button-native ui-button-md sb-item active"
+        },
+        {
+          "label": "Bookings",
+          "height": 42,
+          "className": "ui-button ui-button-native ui-button-md sb-item "
+        },
+        {
+          "label": "Cafe POS",
+          "height": 42,
+          "className": "ui-button ui-button-native ui-button-md sb-item "
+        },
+        {
+          "label": "Daily Closing",
+          "height": 42,
+          "className": "ui-button ui-button-native ui-button-md sb-item "
+        },
+        {
+          "label": "Logout",
+          "height": 42,
+          "className": "ui-button ui-button-native ui-button-md sb-item"
+        },
+        {
+          "label": "HSR Snooker Cafe BMS",
+          "height": 16,
+          "className": "ui-button ui-button-native ui-button-md"
+        },
+        {
+          "label": "Start Table",
+          "height": 36,
+          "className": "ui-button ui-button-native ui-button-md cf-page-primary-action"
+        },
+        {
+          "label": "Open notifications",
+          "height": 38,
+          "className": "ui-button ui-button-native ui-button-md topbar-icon-btn cf-notification-btn"
+        },
+        {
+          "label": "Switch to dark mode",
+          "height": 38,
+          "className": "ui-button ui-button-native ui-button-md topbar-icon-btn"
+        },
+        {
+          "label": "New Booking",
+          "height": 36,
+          "className": "ui-button ui-button-native ui-button-md lf-secondary-button"
+        },
+        {
+          "label": "Add Customer",
+          "height": 36,
+          "className": "ui-button ui-button-native ui-button-md lf-secondary-button"
+        },
+        {
+          "label": "Start Table",
+          "height": 36,
+          "className": "ui-button ui-button-native ui-button-md lf-primary-button"
+        },
+        {
+          "label": "Advanced controls",
+          "height": 36,
+          "className": "ui-button ui-button-native ui-button-md lf-text-link"
+        },
+        {
+          "label": "View",
+          "height": 36,
+          "className": "ui-button ui-button-native ui-button-md app-toast-action"
+        },
+        {
+          "label": "Dismiss",
+          "height": 36,
+          "className": "ui-button ui-button-native ui-button-md app-toast-action"
+        },
+        {
+          "label": "Close panel",
+          "height": 36,
+          "className": "ui-button ui-button-icon ui-button-ghost ui-button-md"
+        },
+        {
+          "label": "Cancel",
+          "height": 40,
+          "className": "ui-button ui-button-ghost ui-button-md"
+        },
+        {
+          "label": "Confirm & Close · ₹483",
+          "height": 40,
+          "className": "ui-button ui-button-primary ui-button-md"
+        }
+      ],
+      "clipped": [
+        {
+          "text": "For counter staff: start tables, manage running sessions and move guests through checkout.",
+          "width": 163,
+          "contentWidth": 601,
+          "className": ""
+        }
+      ],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [
+        "ui-button ui-button-native ui-button-md cf-page-primary-action"
+      ],
+      "unlabeledInputs": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true,
+      "retry": true,
+      "contrast": []
+    },
+    {
+      "theme": "light",
+      "width": 1024,
+      "state": "partial",
+      "file": "light-1024-partial.png",
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [
+        {
+          "text": "For counter staff: start tables, manage running sessions and move guests through checkout.",
+          "width": 430,
+          "contentWidth": 601,
+          "className": ""
+        }
+      ],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [
+        "ui-button ui-button-native ui-button-md cf-page-primary-action"
+      ],
+      "unlabeledInputs": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true,
+      "retry": true,
+      "contrast": []
+    },
+    {
+      "theme": "light",
+      "width": 1440,
+      "state": "partial",
+      "file": "light-1440-partial.png",
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [
+        {
+          "text": "For counter staff: start tables, manage running sessions and move guests through checkout.",
+          "width": 561,
+          "contentWidth": 601,
+          "className": ""
+        }
+      ],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true,
+      "retry": true,
+      "contrast": []
+    },
+    {
+      "theme": "light",
+      "width": 1920,
+      "state": "partial",
+      "file": "light-1920-partial.png",
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true,
+      "retry": true,
+      "contrast": []
+    },
+    {
+      "theme": "light",
+      "width": 375,
+      "state": "extreme",
+      "file": "light-375-extreme.png",
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [
+        "ui-button ui-button-native ui-button-md cf-page-primary-action"
+      ],
+      "unlabeledInputs": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true,
+      "retry": true,
+      "contrast": []
+    },
+    {
+      "theme": "light",
+      "width": 768,
+      "state": "extreme",
+      "file": "light-768-extreme.png",
+      "overflow": 0,
+      "shortTargets": [
+        {
+          "label": "Collapse sidebar",
+          "height": 36,
+          "className": "ui-button ui-button-native ui-button-md cf-collapse-btn"
+        },
+        {
+          "label": "Live Floor",
+          "height": 42,
+          "className": "ui-button ui-button-native ui-button-md sb-item active"
+        },
+        {
+          "label": "Bookings",
+          "height": 42,
+          "className": "ui-button ui-button-native ui-button-md sb-item "
+        },
+        {
+          "label": "Cafe POS",
+          "height": 42,
+          "className": "ui-button ui-button-native ui-button-md sb-item "
+        },
+        {
+          "label": "Daily Closing",
+          "height": 42,
+          "className": "ui-button ui-button-native ui-button-md sb-item "
+        },
+        {
+          "label": "Logout",
+          "height": 42,
+          "className": "ui-button ui-button-native ui-button-md sb-item"
+        },
+        {
+          "label": "HSR Snooker Cafe BMS",
+          "height": 16,
+          "className": "ui-button ui-button-native ui-button-md"
+        },
+        {
+          "label": "Start Table",
+          "height": 36,
+          "className": "ui-button ui-button-native ui-button-md cf-page-primary-action"
+        },
+        {
+          "label": "Open notifications",
+          "height": 38,
+          "className": "ui-button ui-button-native ui-button-md topbar-icon-btn cf-notification-btn"
+        },
+        {
+          "label": "Switch to dark mode",
+          "height": 38,
+          "className": "ui-button ui-button-native ui-button-md topbar-icon-btn"
+        },
+        {
+          "label": "New Booking",
+          "height": 36,
+          "className": "ui-button ui-button-native ui-button-md lf-secondary-button"
+        },
+        {
+          "label": "Add Customer",
+          "height": 36,
+          "className": "ui-button ui-button-native ui-button-md lf-secondary-button"
+        },
+        {
+          "label": "Start Table",
+          "height": 36,
+          "className": "ui-button ui-button-native ui-button-md lf-primary-button"
+        },
+        {
+          "label": "Advanced controls",
+          "height": 36,
+          "className": "ui-button ui-button-native ui-button-md lf-text-link"
+        },
+        {
+          "label": "View",
+          "height": 36,
+          "className": "ui-button ui-button-native ui-button-md app-toast-action"
+        },
+        {
+          "label": "Dismiss",
+          "height": 36,
+          "className": "ui-button ui-button-native ui-button-md app-toast-action"
+        },
+        {
+          "label": "Close panel",
+          "height": 36,
+          "className": "ui-button ui-button-icon ui-button-ghost ui-button-md"
+        },
+        {
+          "label": "Cancel",
+          "height": 40,
+          "className": "ui-button ui-button-ghost ui-button-md"
+        },
+        {
+          "label": "Confirm & Close · ₹1,23,45,678.99",
+          "height": 40,
+          "className": "ui-button ui-button-primary ui-button-md"
+        }
+      ],
+      "clipped": [
+        {
+          "text": "For counter staff: start tables, manage running sessions and move guests through checkout.",
+          "width": 163,
+          "contentWidth": 601,
+          "className": ""
+        }
+      ],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [
+        "ui-button ui-button-native ui-button-md cf-page-primary-action"
+      ],
+      "unlabeledInputs": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true,
+      "retry": true,
+      "contrast": []
+    },
+    {
+      "theme": "light",
+      "width": 1024,
+      "state": "extreme",
+      "file": "light-1024-extreme.png",
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [
+        {
+          "text": "For counter staff: start tables, manage running sessions and move guests through checkout.",
+          "width": 430,
+          "contentWidth": 601,
+          "className": ""
+        }
+      ],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [
+        "ui-button ui-button-native ui-button-md cf-page-primary-action"
+      ],
+      "unlabeledInputs": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true,
+      "retry": true,
+      "contrast": []
+    },
+    {
+      "theme": "light",
+      "width": 1440,
+      "state": "extreme",
+      "file": "light-1440-extreme.png",
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [
+        {
+          "text": "For counter staff: start tables, manage running sessions and move guests through checkout.",
+          "width": 561,
+          "contentWidth": 601,
+          "className": ""
+        }
+      ],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true,
+      "retry": true,
+      "contrast": []
+    },
+    {
+      "theme": "light",
+      "width": 1920,
+      "state": "extreme",
+      "file": "light-1920-extreme.png",
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true,
+      "retry": true,
+      "contrast": []
+    }
+  ],
+  "errors": [],
+  "settlementRequests": 0
+}

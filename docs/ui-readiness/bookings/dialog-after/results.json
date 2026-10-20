@@ -1,0 +1,270 @@
+{
+  "checks": [
+    {
+      "phase": "after",
+      "theme": "dark",
+      "switchChangesPosition": true,
+      "beforeTransform": "matrix(1, 0, 0, 1, 16, 0)",
+      "transform": "none",
+      "trustedStaffSettingUnchanged": true,
+      "savedToBackend": false
+    },
+    {
+      "phase": "after",
+      "theme": "dark",
+      "name": "booking",
+      "width": 375,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true
+    },
+    {
+      "phase": "after",
+      "theme": "dark",
+      "name": "booking",
+      "width": 768,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true
+    },
+    {
+      "phase": "after",
+      "theme": "dark",
+      "name": "booking",
+      "width": 1024,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true
+    },
+    {
+      "phase": "after",
+      "theme": "dark",
+      "name": "booking",
+      "width": 1440,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true
+    },
+    {
+      "phase": "after",
+      "theme": "dark",
+      "name": "booking",
+      "width": 1920,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true
+    },
+    {
+      "phase": "after",
+      "theme": "dark",
+      "name": "booking",
+      "forwardTrap": true,
+      "reverseTrap": true,
+      "escapeCloses": true
+    },
+    {
+      "phase": "after",
+      "theme": "light",
+      "switchChangesPosition": true,
+      "beforeTransform": "matrix(1, 0, 0, 1, 16, 0)",
+      "transform": "none",
+      "trustedStaffSettingUnchanged": true,
+      "savedToBackend": false
+    },
+    {
+      "phase": "after",
+      "theme": "light",
+      "name": "booking",
+      "width": 375,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true
+    },
+    {
+      "phase": "after",
+      "theme": "light",
+      "name": "booking",
+      "width": 768,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true
+    },
+    {
+      "phase": "after",
+      "theme": "light",
+      "name": "booking",
+      "width": 1024,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true
+    },
+    {
+      "phase": "after",
+      "theme": "light",
+      "name": "booking",
+      "width": 1440,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true
+    },
+    {
+      "phase": "after",
+      "theme": "light",
+      "name": "booking",
+      "width": 1920,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "withinViewport": true
+    },
+    {
+      "phase": "after",
+      "theme": "light",
+      "name": "booking",
+      "forwardTrap": true,
+      "reverseTrap": true,
+      "escapeCloses": true
+    }
+  ],
+  "contrast": [],
+  "errors": []
+}

@@ -1,0 +1,2060 @@
+{
+  "mode": "both",
+  "api": "http://127.0.0.1:8006",
+  "origins": {
+    "before": "http://127.0.0.1:5180",
+    "after": "http://127.0.0.1:5181"
+  },
+  "startedAt": "2026-10-17T21:04:44.673Z",
+  "domains": [
+    {
+      "id": "summary",
+      "tab": "history",
+      "path": "/reports/summary",
+      "loading": "Loading report summary..."
+    },
+    {
+      "id": "bills",
+      "tab": "history",
+      "path": "/reports/history",
+      "loading": "Loading bills..."
+    },
+    {
+      "id": "table-utilization",
+      "tab": "tables",
+      "path": "/reports/table-utilization",
+      "loading": "Loading table performance..."
+    },
+    {
+      "id": "top-customers",
+      "tab": "customers",
+      "path": "/reports/top-customers",
+      "loading": "Loading regular customers..."
+    },
+    {
+      "id": "analytics",
+      "tab": "advanced",
+      "path": "/reports/advanced-analytics",
+      "loading": "Loading advanced analytics..."
+    },
+    {
+      "id": "session-edits",
+      "tab": "session-edits",
+      "path": "/reports/session-edits",
+      "loading": "Loading session edits"
+    }
+  ],
+  "cases": [
+    {
+      "stage": "before",
+      "theme": "dark",
+      "id": "summary",
+      "checks": [
+        {
+          "name": "domain-loading-skeleton",
+          "passed": false
+        },
+        {
+          "name": "no-fake-summary-zeros",
+          "passed": false
+        },
+        {
+          "name": "forced-500-observed",
+          "passed": true,
+          "detail": {
+            "forced500s": 3
+          }
+        },
+        {
+          "name": "local-retry-notice",
+          "passed": true
+        },
+        {
+          "name": "real-api-recovery",
+          "passed": true,
+          "detail": {
+            "endpoint": "/reports/summary",
+            "synthetic": false
+          }
+        },
+        {
+          "name": "settled-after-recovery",
+          "passed": true
+        },
+        {
+          "name": "retry-without-reload",
+          "passed": true
+        },
+        {
+          "name": "reports-route-retained",
+          "passed": true
+        }
+      ],
+      "screenshots": [
+        {
+          "state": "loading",
+          "file": "before/dark/summary-loading.png"
+        },
+        {
+          "state": "error",
+          "file": "before/dark/summary-error.png"
+        },
+        {
+          "state": "recovered",
+          "file": "before/dark/summary-recovered.png"
+        }
+      ],
+      "recoveryMethod": "local Retry"
+    },
+    {
+      "stage": "before",
+      "theme": "dark",
+      "id": "bills",
+      "checks": [
+        {
+          "name": "domain-loading-skeleton",
+          "passed": false
+        },
+        {
+          "name": "no-false-empty-bills",
+          "passed": false
+        },
+        {
+          "name": "forced-500-observed",
+          "passed": true,
+          "detail": {
+            "forced500s": 3
+          }
+        },
+        {
+          "name": "local-retry-notice",
+          "passed": true
+        },
+        {
+          "name": "real-api-recovery",
+          "passed": true,
+          "detail": {
+            "endpoint": "/reports/history",
+            "synthetic": false
+          }
+        },
+        {
+          "name": "settled-after-recovery",
+          "passed": true
+        },
+        {
+          "name": "retry-without-reload",
+          "passed": true
+        },
+        {
+          "name": "reports-route-retained",
+          "passed": true
+        }
+      ],
+      "screenshots": [
+        {
+          "state": "loading",
+          "file": "before/dark/bills-loading.png"
+        },
+        {
+          "state": "error",
+          "file": "before/dark/bills-error.png"
+        },
+        {
+          "state": "recovered",
+          "file": "before/dark/bills-recovered.png"
+        }
+      ],
+      "recoveryMethod": "local Retry"
+    },
+    {
+      "stage": "before",
+      "theme": "dark",
+      "id": "table-utilization",
+      "checks": [
+        {
+          "name": "domain-loading-skeleton",
+          "passed": false
+        },
+        {
+          "name": "forced-500-observed",
+          "passed": true,
+          "detail": {
+            "forced500s": 3
+          }
+        },
+        {
+          "name": "local-retry-notice",
+          "passed": false
+        },
+        {
+          "name": "real-api-recovery",
+          "passed": true,
+          "detail": {
+            "endpoint": "/reports/table-utilization",
+            "synthetic": false
+          }
+        },
+        {
+          "name": "settled-after-recovery",
+          "passed": true
+        },
+        {
+          "name": "retry-without-reload",
+          "passed": false
+        },
+        {
+          "name": "reports-route-retained",
+          "passed": true
+        }
+      ],
+      "screenshots": [
+        {
+          "state": "loading",
+          "file": "before/dark/table-utilization-loading.png"
+        },
+        {
+          "state": "error",
+          "file": "before/dark/table-utilization-error.png"
+        },
+        {
+          "state": "recovered",
+          "file": "before/dark/table-utilization-recovered.png"
+        }
+      ],
+      "recoveryMethod": "baseline reload fallback (not Retry recovery)"
+    },
+    {
+      "stage": "before",
+      "theme": "dark",
+      "id": "top-customers",
+      "checks": [
+        {
+          "name": "domain-loading-skeleton",
+          "passed": false
+        },
+        {
+          "name": "forced-500-observed",
+          "passed": true,
+          "detail": {
+            "forced500s": 3
+          }
+        },
+        {
+          "name": "local-retry-notice",
+          "passed": false
+        },
+        {
+          "name": "real-api-recovery",
+          "passed": true,
+          "detail": {
+            "endpoint": "/reports/top-customers",
+            "synthetic": false
+          }
+        },
+        {
+          "name": "settled-after-recovery",
+          "passed": true
+        },
+        {
+          "name": "retry-without-reload",
+          "passed": false
+        },
+        {
+          "name": "reports-route-retained",
+          "passed": true
+        }
+      ],
+      "screenshots": [
+        {
+          "state": "loading",
+          "file": "before/dark/top-customers-loading.png"
+        },
+        {
+          "state": "error",
+          "file": "before/dark/top-customers-error.png"
+        },
+        {
+          "state": "recovered",
+          "file": "before/dark/top-customers-recovered.png"
+        }
+      ],
+      "recoveryMethod": "baseline reload fallback (not Retry recovery)"
+    },
+    {
+      "stage": "before",
+      "theme": "dark",
+      "id": "analytics",
+      "checks": [
+        {
+          "name": "domain-loading-skeleton",
+          "passed": true
+        },
+        {
+          "name": "forced-500-observed",
+          "passed": true,
+          "detail": {
+            "forced500s": 3
+          }
+        },
+        {
+          "name": "local-retry-notice",
+          "passed": false
+        },
+        {
+          "name": "real-api-recovery",
+          "passed": true,
+          "detail": {
+            "endpoint": "/reports/advanced-analytics",
+            "synthetic": false
+          }
+        },
+        {
+          "name": "settled-after-recovery",
+          "passed": true
+        },
+        {
+          "name": "retry-without-reload",
+          "passed": false
+        },
+        {
+          "name": "reports-route-retained",
+          "passed": true
+        }
+      ],
+      "screenshots": [
+        {
+          "state": "loading",
+          "file": "before/dark/analytics-loading.png"
+        },
+        {
+          "state": "error",
+          "file": "before/dark/analytics-error.png"
+        },
+        {
+          "state": "recovered",
+          "file": "before/dark/analytics-recovered.png"
+        }
+      ],
+      "recoveryMethod": "baseline reload fallback (not Retry recovery)"
+    },
+    {
+      "stage": "before",
+      "theme": "dark",
+      "id": "session-edits",
+      "checks": [
+        {
+          "name": "domain-loading-skeleton",
+          "passed": false
+        },
+        {
+          "name": "forced-500-observed",
+          "passed": true,
+          "detail": {
+            "forced500s": 3
+          }
+        },
+        {
+          "name": "local-retry-notice",
+          "passed": false
+        },
+        {
+          "name": "real-api-recovery",
+          "passed": true,
+          "detail": {
+            "endpoint": "/reports/session-edits",
+            "synthetic": false
+          }
+        },
+        {
+          "name": "settled-after-recovery",
+          "passed": true
+        },
+        {
+          "name": "retry-without-reload",
+          "passed": false
+        },
+        {
+          "name": "reports-route-retained",
+          "passed": true
+        }
+      ],
+      "screenshots": [
+        {
+          "state": "loading",
+          "file": "before/dark/session-edits-loading.png"
+        },
+        {
+          "state": "error",
+          "file": "before/dark/session-edits-error.png"
+        },
+        {
+          "state": "recovered",
+          "file": "before/dark/session-edits-recovered.png"
+        }
+      ],
+      "recoveryMethod": "baseline reload fallback (not Retry recovery)"
+    },
+    {
+      "stage": "before",
+      "theme": "dark",
+      "id": "bills-pagination",
+      "checks": [
+        {
+          "name": "initial-page-25-rows",
+          "passed": false,
+          "detail": {
+            "rows": 1000
+          }
+        },
+        {
+          "name": "receipt-id-attributes",
+          "passed": false
+        },
+        {
+          "name": "bills-pagination-present",
+          "passed": false
+        },
+        {
+          "name": "search-accessible-label",
+          "passed": false
+        },
+        {
+          "name": "baseline-fixture-records",
+          "passed": true
+        }
+      ],
+      "screenshots": [
+        {
+          "state": "page-1",
+          "file": "before/dark/bills-pagination-page-1.png"
+        }
+      ],
+      "pagination": {
+        "records": 1000,
+        "pages": 1,
+        "unpaginated": true
+      }
+    },
+    {
+      "stage": "before",
+      "theme": "dark",
+      "id": "top-customers-stale-period",
+      "checks": [
+        {
+          "name": "obsolete-period-response-ignored",
+          "passed": false
+        },
+        {
+          "name": "race-fixture-removed-real-api-success",
+          "passed": true
+        }
+      ],
+      "screenshots": [
+        {
+          "state": "newer-period",
+          "file": "before/dark/top-customers-stale-period-newer-period.png"
+        },
+        {
+          "state": "obsolete-response-released",
+          "file": "before/dark/top-customers-stale-period-obsolete-response-released.png"
+        },
+        {
+          "state": "real-data-recovered",
+          "file": "before/dark/top-customers-stale-period-real-data-recovered.png"
+        }
+      ]
+    },
+    {
+      "stage": "before",
+      "theme": "light",
+      "id": "summary",
+      "checks": [
+        {
+          "name": "domain-loading-skeleton",
+          "passed": false
+        },
+        {
+          "name": "no-fake-summary-zeros",
+          "passed": false
+        },
+        {
+          "name": "forced-500-observed",
+          "passed": true,
+          "detail": {
+            "forced500s": 3
+          }
+        },
+        {
+          "name": "local-retry-notice",
+          "passed": true
+        },
+        {
+          "name": "real-api-recovery",
+          "passed": true,
+          "detail": {
+            "endpoint": "/reports/summary",
+            "synthetic": false
+          }
+        },
+        {
+          "name": "settled-after-recovery",
+          "passed": true
+        },
+        {
+          "name": "retry-without-reload",
+          "passed": true
+        },
+        {
+          "name": "reports-route-retained",
+          "passed": true
+        }
+      ],
+      "screenshots": [
+        {
+          "state": "loading",
+          "file": "before/light/summary-loading.png"
+        },
+        {
+          "state": "error",
+          "file": "before/light/summary-error.png"
+        },
+        {
+          "state": "recovered",
+          "file": "before/light/summary-recovered.png"
+        }
+      ],
+      "recoveryMethod": "local Retry"
+    },
+    {
+      "stage": "before",
+      "theme": "light",
+      "id": "bills",
+      "checks": [
+        {
+          "name": "domain-loading-skeleton",
+          "passed": false
+        },
+        {
+          "name": "no-false-empty-bills",
+          "passed": false
+        },
+        {
+          "name": "forced-500-observed",
+          "passed": true,
+          "detail": {
+            "forced500s": 3
+          }
+        },
+        {
+          "name": "local-retry-notice",
+          "passed": true
+        },
+        {
+          "name": "real-api-recovery",
+          "passed": true,
+          "detail": {
+            "endpoint": "/reports/history",
+            "synthetic": false
+          }
+        },
+        {
+          "name": "settled-after-recovery",
+          "passed": true
+        },
+        {
+          "name": "retry-without-reload",
+          "passed": true
+        },
+        {
+          "name": "reports-route-retained",
+          "passed": true
+        }
+      ],
+      "screenshots": [
+        {
+          "state": "loading",
+          "file": "before/light/bills-loading.png"
+        },
+        {
+          "state": "error",
+          "file": "before/light/bills-error.png"
+        },
+        {
+          "state": "recovered",
+          "file": "before/light/bills-recovered.png"
+        }
+      ],
+      "recoveryMethod": "local Retry"
+    },
+    {
+      "stage": "before",
+      "theme": "light",
+      "id": "table-utilization",
+      "checks": [
+        {
+          "name": "domain-loading-skeleton",
+          "passed": false
+        },
+        {
+          "name": "forced-500-observed",
+          "passed": true,
+          "detail": {
+            "forced500s": 3
+          }
+        },
+        {
+          "name": "local-retry-notice",
+          "passed": false
+        },
+        {
+          "name": "real-api-recovery",
+          "passed": true,
+          "detail": {
+            "endpoint": "/reports/table-utilization",
+            "synthetic": false
+          }
+        },
+        {
+          "name": "settled-after-recovery",
+          "passed": true
+        },
+        {
+          "name": "retry-without-reload",
+          "passed": false
+        },
+        {
+          "name": "reports-route-retained",
+          "passed": true
+        }
+      ],
+      "screenshots": [
+        {
+          "state": "loading",
+          "file": "before/light/table-utilization-loading.png"
+        },
+        {
+          "state": "error",
+          "file": "before/light/table-utilization-error.png"
+        },
+        {
+          "state": "recovered",
+          "file": "before/light/table-utilization-recovered.png"
+        }
+      ],
+      "recoveryMethod": "baseline reload fallback (not Retry recovery)"
+    },
+    {
+      "stage": "before",
+      "theme": "light",
+      "id": "top-customers",
+      "checks": [
+        {
+          "name": "domain-loading-skeleton",
+          "passed": false
+        },
+        {
+          "name": "forced-500-observed",
+          "passed": true,
+          "detail": {
+            "forced500s": 3
+          }
+        },
+        {
+          "name": "local-retry-notice",
+          "passed": false
+        },
+        {
+          "name": "real-api-recovery",
+          "passed": true,
+          "detail": {
+            "endpoint": "/reports/top-customers",
+            "synthetic": false
+          }
+        },
+        {
+          "name": "settled-after-recovery",
+          "passed": true
+        },
+        {
+          "name": "retry-without-reload",
+          "passed": false
+        },
+        {
+          "name": "reports-route-retained",
+          "passed": true
+        }
+      ],
+      "screenshots": [
+        {
+          "state": "loading",
+          "file": "before/light/top-customers-loading.png"
+        },
+        {
+          "state": "error",
+          "file": "before/light/top-customers-error.png"
+        },
+        {
+          "state": "recovered",
+          "file": "before/light/top-customers-recovered.png"
+        }
+      ],
+      "recoveryMethod": "baseline reload fallback (not Retry recovery)"
+    },
+    {
+      "stage": "before",
+      "theme": "light",
+      "id": "analytics",
+      "checks": [
+        {
+          "name": "domain-loading-skeleton",
+          "passed": true
+        },
+        {
+          "name": "forced-500-observed",
+          "passed": true,
+          "detail": {
+            "forced500s": 3
+          }
+        },
+        {
+          "name": "local-retry-notice",
+          "passed": false
+        },
+        {
+          "name": "real-api-recovery",
+          "passed": true,
+          "detail": {
+            "endpoint": "/reports/advanced-analytics",
+            "synthetic": false
+          }
+        },
+        {
+          "name": "settled-after-recovery",
+          "passed": true
+        },
+        {
+          "name": "retry-without-reload",
+          "passed": false
+        },
+        {
+          "name": "reports-route-retained",
+          "passed": true
+        }
+      ],
+      "screenshots": [
+        {
+          "state": "loading",
+          "file": "before/light/analytics-loading.png"
+        },
+        {
+          "state": "error",
+          "file": "before/light/analytics-error.png"
+        },
+        {
+          "state": "recovered",
+          "file": "before/light/analytics-recovered.png"
+        }
+      ],
+      "recoveryMethod": "baseline reload fallback (not Retry recovery)"
+    },
+    {
+      "stage": "before",
+      "theme": "light",
+      "id": "session-edits",
+      "checks": [
+        {
+          "name": "domain-loading-skeleton",
+          "passed": false
+        },
+        {
+          "name": "forced-500-observed",
+          "passed": true,
+          "detail": {
+            "forced500s": 3
+          }
+        },
+        {
+          "name": "local-retry-notice",
+          "passed": false
+        },
+        {
+          "name": "real-api-recovery",
+          "passed": true,
+          "detail": {
+            "endpoint": "/reports/session-edits",
+            "synthetic": false
+          }
+        },
+        {
+          "name": "settled-after-recovery",
+          "passed": true
+        },
+        {
+          "name": "retry-without-reload",
+          "passed": false
+        },
+        {
+          "name": "reports-route-retained",
+          "passed": true
+        }
+      ],
+      "screenshots": [
+        {
+          "state": "loading",
+          "file": "before/light/session-edits-loading.png"
+        },
+        {
+          "state": "error",
+          "file": "before/light/session-edits-error.png"
+        },
+        {
+          "state": "recovered",
+          "file": "before/light/session-edits-recovered.png"
+        }
+      ],
+      "recoveryMethod": "baseline reload fallback (not Retry recovery)"
+    },
+    {
+      "stage": "before",
+      "theme": "light",
+      "id": "bills-pagination",
+      "checks": [
+        {
+          "name": "initial-page-25-rows",
+          "passed": false,
+          "detail": {
+            "rows": 1000
+          }
+        },
+        {
+          "name": "receipt-id-attributes",
+          "passed": false
+        },
+        {
+          "name": "bills-pagination-present",
+          "passed": false
+        },
+        {
+          "name": "search-accessible-label",
+          "passed": false
+        },
+        {
+          "name": "baseline-fixture-records",
+          "passed": true
+        }
+      ],
+      "screenshots": [
+        {
+          "state": "page-1",
+          "file": "before/light/bills-pagination-page-1.png"
+        }
+      ],
+      "pagination": {
+        "records": 1000,
+        "pages": 1,
+        "unpaginated": true
+      }
+    },
+    {
+      "stage": "before",
+      "theme": "light",
+      "id": "top-customers-stale-period",
+      "checks": [
+        {
+          "name": "obsolete-period-response-ignored",
+          "passed": false
+        },
+        {
+          "name": "race-fixture-removed-real-api-success",
+          "passed": true
+        }
+      ],
+      "screenshots": [
+        {
+          "state": "newer-period",
+          "file": "before/light/top-customers-stale-period-newer-period.png"
+        },
+        {
+          "state": "obsolete-response-released",
+          "file": "before/light/top-customers-stale-period-obsolete-response-released.png"
+        },
+        {
+          "state": "real-data-recovered",
+          "file": "before/light/top-customers-stale-period-real-data-recovered.png"
+        }
+      ]
+    },
+    {
+      "stage": "after",
+      "theme": "dark",
+      "id": "summary",
+      "checks": [
+        {
+          "name": "domain-loading-skeleton",
+          "passed": true
+        },
+        {
+          "name": "no-fake-summary-zeros",
+          "passed": true
+        },
+        {
+          "name": "forced-500-observed",
+          "passed": true,
+          "detail": {
+            "forced500s": 3
+          }
+        },
+        {
+          "name": "local-retry-notice",
+          "passed": true
+        },
+        {
+          "name": "real-api-recovery",
+          "passed": true,
+          "detail": {
+            "endpoint": "/reports/summary",
+            "synthetic": false
+          }
+        },
+        {
+          "name": "settled-after-recovery",
+          "passed": true
+        },
+        {
+          "name": "retry-without-reload",
+          "passed": true
+        },
+        {
+          "name": "reports-route-retained",
+          "passed": true
+        }
+      ],
+      "screenshots": [
+        {
+          "state": "loading",
+          "file": "after/dark/summary-loading.png"
+        },
+        {
+          "state": "error",
+          "file": "after/dark/summary-error.png"
+        },
+        {
+          "state": "recovered",
+          "file": "after/dark/summary-recovered.png"
+        }
+      ],
+      "recoveryMethod": "local Retry"
+    },
+    {
+      "stage": "after",
+      "theme": "dark",
+      "id": "bills",
+      "checks": [
+        {
+          "name": "domain-loading-skeleton",
+          "passed": true
+        },
+        {
+          "name": "no-false-empty-bills",
+          "passed": true
+        },
+        {
+          "name": "forced-500-observed",
+          "passed": true,
+          "detail": {
+            "forced500s": 3
+          }
+        },
+        {
+          "name": "local-retry-notice",
+          "passed": true
+        },
+        {
+          "name": "real-api-recovery",
+          "passed": true,
+          "detail": {
+            "endpoint": "/reports/history",
+            "synthetic": false
+          }
+        },
+        {
+          "name": "settled-after-recovery",
+          "passed": true
+        },
+        {
+          "name": "retry-without-reload",
+          "passed": true
+        },
+        {
+          "name": "reports-route-retained",
+          "passed": true
+        }
+      ],
+      "screenshots": [
+        {
+          "state": "loading",
+          "file": "after/dark/bills-loading.png"
+        },
+        {
+          "state": "error",
+          "file": "after/dark/bills-error.png"
+        },
+        {
+          "state": "recovered",
+          "file": "after/dark/bills-recovered.png"
+        }
+      ],
+      "recoveryMethod": "local Retry"
+    },
+    {
+      "stage": "after",
+      "theme": "dark",
+      "id": "table-utilization",
+      "checks": [
+        {
+          "name": "domain-loading-skeleton",
+          "passed": true
+        },
+        {
+          "name": "forced-500-observed",
+          "passed": true,
+          "detail": {
+            "forced500s": 3
+          }
+        },
+        {
+          "name": "local-retry-notice",
+          "passed": true
+        },
+        {
+          "name": "real-api-recovery",
+          "passed": true,
+          "detail": {
+            "endpoint": "/reports/table-utilization",
+            "synthetic": false
+          }
+        },
+        {
+          "name": "settled-after-recovery",
+          "passed": true
+        },
+        {
+          "name": "retry-without-reload",
+          "passed": true
+        },
+        {
+          "name": "reports-route-retained",
+          "passed": true
+        }
+      ],
+      "screenshots": [
+        {
+          "state": "loading",
+          "file": "after/dark/table-utilization-loading.png"
+        },
+        {
+          "state": "error",
+          "file": "after/dark/table-utilization-error.png"
+        },
+        {
+          "state": "recovered",
+          "file": "after/dark/table-utilization-recovered.png"
+        }
+      ],
+      "recoveryMethod": "local Retry"
+    },
+    {
+      "stage": "after",
+      "theme": "dark",
+      "id": "top-customers",
+      "checks": [
+        {
+          "name": "domain-loading-skeleton",
+          "passed": true
+        },
+        {
+          "name": "forced-500-observed",
+          "passed": true,
+          "detail": {
+            "forced500s": 3
+          }
+        },
+        {
+          "name": "local-retry-notice",
+          "passed": true
+        },
+        {
+          "name": "real-api-recovery",
+          "passed": true,
+          "detail": {
+            "endpoint": "/reports/top-customers",
+            "synthetic": false
+          }
+        },
+        {
+          "name": "settled-after-recovery",
+          "passed": true
+        },
+        {
+          "name": "retry-without-reload",
+          "passed": true
+        },
+        {
+          "name": "reports-route-retained",
+          "passed": true
+        }
+      ],
+      "screenshots": [
+        {
+          "state": "loading",
+          "file": "after/dark/top-customers-loading.png"
+        },
+        {
+          "state": "error",
+          "file": "after/dark/top-customers-error.png"
+        },
+        {
+          "state": "recovered",
+          "file": "after/dark/top-customers-recovered.png"
+        }
+      ],
+      "recoveryMethod": "local Retry"
+    },
+    {
+      "stage": "after",
+      "theme": "dark",
+      "id": "analytics",
+      "checks": [
+        {
+          "name": "domain-loading-skeleton",
+          "passed": true
+        },
+        {
+          "name": "forced-500-observed",
+          "passed": true,
+          "detail": {
+            "forced500s": 3
+          }
+        },
+        {
+          "name": "local-retry-notice",
+          "passed": true
+        },
+        {
+          "name": "real-api-recovery",
+          "passed": true,
+          "detail": {
+            "endpoint": "/reports/advanced-analytics",
+            "synthetic": false
+          }
+        },
+        {
+          "name": "settled-after-recovery",
+          "passed": true
+        },
+        {
+          "name": "retry-without-reload",
+          "passed": true
+        },
+        {
+          "name": "reports-route-retained",
+          "passed": true
+        }
+      ],
+      "screenshots": [
+        {
+          "state": "loading",
+          "file": "after/dark/analytics-loading.png"
+        },
+        {
+          "state": "error",
+          "file": "after/dark/analytics-error.png"
+        },
+        {
+          "state": "recovered",
+          "file": "after/dark/analytics-recovered.png"
+        }
+      ],
+      "recoveryMethod": "local Retry"
+    },
+    {
+      "stage": "after",
+      "theme": "dark",
+      "id": "session-edits",
+      "checks": [
+        {
+          "name": "domain-loading-skeleton",
+          "passed": true
+        },
+        {
+          "name": "forced-500-observed",
+          "passed": true,
+          "detail": {
+            "forced500s": 3
+          }
+        },
+        {
+          "name": "local-retry-notice",
+          "passed": true
+        },
+        {
+          "name": "real-api-recovery",
+          "passed": true,
+          "detail": {
+            "endpoint": "/reports/session-edits",
+            "synthetic": false
+          }
+        },
+        {
+          "name": "settled-after-recovery",
+          "passed": true
+        },
+        {
+          "name": "retry-without-reload",
+          "passed": true
+        },
+        {
+          "name": "reports-route-retained",
+          "passed": true
+        }
+      ],
+      "screenshots": [
+        {
+          "state": "loading",
+          "file": "after/dark/session-edits-loading.png"
+        },
+        {
+          "state": "error",
+          "file": "after/dark/session-edits-error.png"
+        },
+        {
+          "state": "recovered",
+          "file": "after/dark/session-edits-recovered.png"
+        }
+      ],
+      "recoveryMethod": "local Retry"
+    },
+    {
+      "stage": "after",
+      "theme": "dark",
+      "id": "bills-pagination",
+      "checks": [
+        {
+          "name": "initial-page-25-rows",
+          "passed": true,
+          "detail": {
+            "rows": 25
+          }
+        },
+        {
+          "name": "receipt-id-attributes",
+          "passed": true
+        },
+        {
+          "name": "bills-pagination-present",
+          "passed": true
+        },
+        {
+          "name": "search-accessible-label",
+          "passed": true
+        },
+        {
+          "name": "all-1000-ids-no-missing-or-duplicates",
+          "passed": true
+        },
+        {
+          "name": "page-40-next-disabled",
+          "passed": true
+        },
+        {
+          "name": "search-from-page-40-finds-first-record",
+          "passed": true
+        },
+        {
+          "name": "clear-search-resets-page-1",
+          "passed": true
+        },
+        {
+          "name": "period-resets-page-1",
+          "passed": true
+        },
+        {
+          "name": "date-resets-page-1",
+          "passed": true
+        },
+        {
+          "name": "data-shrink-clamps-page",
+          "passed": true
+        },
+        {
+          "name": "short-result-hides-pagination",
+          "passed": true
+        }
+      ],
+      "screenshots": [
+        {
+          "state": "page-1",
+          "file": "after/dark/bills-pagination-page-1.png"
+        },
+        {
+          "state": "page-40",
+          "file": "after/dark/bills-pagination-page-40.png"
+        },
+        {
+          "state": "search-date-clamp",
+          "file": "after/dark/bills-pagination-search-date-clamp.png"
+        }
+      ],
+      "pagination": {
+        "records": 1000,
+        "pages": 40,
+        "pageSize": 25,
+        "duplicates": 0
+      }
+    },
+    {
+      "stage": "after",
+      "theme": "dark",
+      "id": "top-customers-stale-period",
+      "checks": [
+        {
+          "name": "obsolete-period-response-ignored",
+          "passed": true
+        },
+        {
+          "name": "race-fixture-removed-real-api-success",
+          "passed": true
+        }
+      ],
+      "screenshots": [
+        {
+          "state": "newer-period",
+          "file": "after/dark/top-customers-stale-period-newer-period.png"
+        },
+        {
+          "state": "obsolete-response-released",
+          "file": "after/dark/top-customers-stale-period-obsolete-response-released.png"
+        },
+        {
+          "state": "real-data-recovered",
+          "file": "after/dark/top-customers-stale-period-real-data-recovered.png"
+        }
+      ]
+    },
+    {
+      "stage": "after",
+      "theme": "light",
+      "id": "summary",
+      "checks": [
+        {
+          "name": "domain-loading-skeleton",
+          "passed": true
+        },
+        {
+          "name": "no-fake-summary-zeros",
+          "passed": true
+        },
+        {
+          "name": "forced-500-observed",
+          "passed": true,
+          "detail": {
+            "forced500s": 3
+          }
+        },
+        {
+          "name": "local-retry-notice",
+          "passed": true
+        },
+        {
+          "name": "real-api-recovery",
+          "passed": true,
+          "detail": {
+            "endpoint": "/reports/summary",
+            "synthetic": false
+          }
+        },
+        {
+          "name": "settled-after-recovery",
+          "passed": true
+        },
+        {
+          "name": "retry-without-reload",
+          "passed": true
+        },
+        {
+          "name": "reports-route-retained",
+          "passed": true
+        }
+      ],
+      "screenshots": [
+        {
+          "state": "loading",
+          "file": "after/light/summary-loading.png"
+        },
+        {
+          "state": "error",
+          "file": "after/light/summary-error.png"
+        },
+        {
+          "state": "recovered",
+          "file": "after/light/summary-recovered.png"
+        }
+      ],
+      "recoveryMethod": "local Retry"
+    },
+    {
+      "stage": "after",
+      "theme": "light",
+      "id": "bills",
+      "checks": [
+        {
+          "name": "domain-loading-skeleton",
+          "passed": true
+        },
+        {
+          "name": "no-false-empty-bills",
+          "passed": true
+        },
+        {
+          "name": "forced-500-observed",
+          "passed": true,
+          "detail": {
+            "forced500s": 3
+          }
+        },
+        {
+          "name": "local-retry-notice",
+          "passed": true
+        },
+        {
+          "name": "real-api-recovery",
+          "passed": true,
+          "detail": {
+            "endpoint": "/reports/history",
+            "synthetic": false
+          }
+        },
+        {
+          "name": "settled-after-recovery",
+          "passed": true
+        },
+        {
+          "name": "retry-without-reload",
+          "passed": true
+        },
+        {
+          "name": "reports-route-retained",
+          "passed": true
+        }
+      ],
+      "screenshots": [
+        {
+          "state": "loading",
+          "file": "after/light/bills-loading.png"
+        },
+        {
+          "state": "error",
+          "file": "after/light/bills-error.png"
+        },
+        {
+          "state": "recovered",
+          "file": "after/light/bills-recovered.png"
+        }
+      ],
+      "recoveryMethod": "local Retry"
+    },
+    {
+      "stage": "after",
+      "theme": "light",
+      "id": "table-utilization",
+      "checks": [
+        {
+          "name": "domain-loading-skeleton",
+          "passed": true
+        },
+        {
+          "name": "forced-500-observed",
+          "passed": true,
+          "detail": {
+            "forced500s": 3
+          }
+        },
+        {
+          "name": "local-retry-notice",
+          "passed": true
+        },
+        {
+          "name": "real-api-recovery",
+          "passed": true,
+          "detail": {
+            "endpoint": "/reports/table-utilization",
+            "synthetic": false
+          }
+        },
+        {
+          "name": "settled-after-recovery",
+          "passed": true
+        },
+        {
+          "name": "retry-without-reload",
+          "passed": true
+        },
+        {
+          "name": "reports-route-retained",
+          "passed": true
+        }
+      ],
+      "screenshots": [
+        {
+          "state": "loading",
+          "file": "after/light/table-utilization-loading.png"
+        },
+        {
+          "state": "error",
+          "file": "after/light/table-utilization-error.png"
+        },
+        {
+          "state": "recovered",
+          "file": "after/light/table-utilization-recovered.png"
+        }
+      ],
+      "recoveryMethod": "local Retry"
+    },
+    {
+      "stage": "after",
+      "theme": "light",
+      "id": "top-customers",
+      "checks": [
+        {
+          "name": "domain-loading-skeleton",
+          "passed": true
+        },
+        {
+          "name": "forced-500-observed",
+          "passed": true,
+          "detail": {
+            "forced500s": 3
+          }
+        },
+        {
+          "name": "local-retry-notice",
+          "passed": true
+        },
+        {
+          "name": "real-api-recovery",
+          "passed": true,
+          "detail": {
+            "endpoint": "/reports/top-customers",
+            "synthetic": false
+          }
+        },
+        {
+          "name": "settled-after-recovery",
+          "passed": true
+        },
+        {
+          "name": "retry-without-reload",
+          "passed": true
+        },
+        {
+          "name": "reports-route-retained",
+          "passed": true
+        }
+      ],
+      "screenshots": [
+        {
+          "state": "loading",
+          "file": "after/light/top-customers-loading.png"
+        },
+        {
+          "state": "error",
+          "file": "after/light/top-customers-error.png"
+        },
+        {
+          "state": "recovered",
+          "file": "after/light/top-customers-recovered.png"
+        }
+      ],
+      "recoveryMethod": "local Retry"
+    },
+    {
+      "stage": "after",
+      "theme": "light",
+      "id": "analytics",
+      "checks": [
+        {
+          "name": "domain-loading-skeleton",
+          "passed": true
+        },
+        {
+          "name": "forced-500-observed",
+          "passed": true,
+          "detail": {
+            "forced500s": 3
+          }
+        },
+        {
+          "name": "local-retry-notice",
+          "passed": true
+        },
+        {
+          "name": "real-api-recovery",
+          "passed": true,
+          "detail": {
+            "endpoint": "/reports/advanced-analytics",
+            "synthetic": false
+          }
+        },
+        {
+          "name": "settled-after-recovery",
+          "passed": true
+        },
+        {
+          "name": "retry-without-reload",
+          "passed": true
+        },
+        {
+          "name": "reports-route-retained",
+          "passed": true
+        }
+      ],
+      "screenshots": [
+        {
+          "state": "loading",
+          "file": "after/light/analytics-loading.png"
+        },
+        {
+          "state": "error",
+          "file": "after/light/analytics-error.png"
+        },
+        {
+          "state": "recovered",
+          "file": "after/light/analytics-recovered.png"
+        }
+      ],
+      "recoveryMethod": "local Retry"
+    },
+    {
+      "stage": "after",
+      "theme": "light",
+      "id": "session-edits",
+      "checks": [
+        {
+          "name": "domain-loading-skeleton",
+          "passed": true
+        },
+        {
+          "name": "forced-500-observed",
+          "passed": true,
+          "detail": {
+            "forced500s": 3
+          }
+        },
+        {
+          "name": "local-retry-notice",
+          "passed": true
+        },
+        {
+          "name": "real-api-recovery",
+          "passed": true,
+          "detail": {
+            "endpoint": "/reports/session-edits",
+            "synthetic": false
+          }
+        },
+        {
+          "name": "settled-after-recovery",
+          "passed": true
+        },
+        {
+          "name": "retry-without-reload",
+          "passed": true
+        },
+        {
+          "name": "reports-route-retained",
+          "passed": true
+        }
+      ],
+      "screenshots": [
+        {
+          "state": "loading",
+          "file": "after/light/session-edits-loading.png"
+        },
+        {
+          "state": "error",
+          "file": "after/light/session-edits-error.png"
+        },
+        {
+          "state": "recovered",
+          "file": "after/light/session-edits-recovered.png"
+        }
+      ],
+      "recoveryMethod": "local Retry"
+    },
+    {
+      "stage": "after",
+      "theme": "light",
+      "id": "bills-pagination",
+      "checks": [
+        {
+          "name": "initial-page-25-rows",
+          "passed": true,
+          "detail": {
+            "rows": 25
+          }
+        },
+        {
+          "name": "receipt-id-attributes",
+          "passed": true
+        },
+        {
+          "name": "bills-pagination-present",
+          "passed": true
+        },
+        {
+          "name": "search-accessible-label",
+          "passed": true
+        },
+        {
+          "name": "all-1000-ids-no-missing-or-duplicates",
+          "passed": true
+        },
+        {
+          "name": "page-40-next-disabled",
+          "passed": true
+        },
+        {
+          "name": "search-from-page-40-finds-first-record",
+          "passed": true
+        },
+        {
+          "name": "clear-search-resets-page-1",
+          "passed": true
+        },
+        {
+          "name": "period-resets-page-1",
+          "passed": true
+        },
+        {
+          "name": "date-resets-page-1",
+          "passed": true
+        },
+        {
+          "name": "data-shrink-clamps-page",
+          "passed": true
+        },
+        {
+          "name": "short-result-hides-pagination",
+          "passed": true
+        }
+      ],
+      "screenshots": [
+        {
+          "state": "page-1",
+          "file": "after/light/bills-pagination-page-1.png"
+        },
+        {
+          "state": "page-40",
+          "file": "after/light/bills-pagination-page-40.png"
+        },
+        {
+          "state": "search-date-clamp",
+          "file": "after/light/bills-pagination-search-date-clamp.png"
+        }
+      ],
+      "pagination": {
+        "records": 1000,
+        "pages": 40,
+        "pageSize": 25,
+        "duplicates": 0
+      }
+    },
+    {
+      "stage": "after",
+      "theme": "light",
+      "id": "top-customers-stale-period",
+      "checks": [
+        {
+          "name": "obsolete-period-response-ignored",
+          "passed": true
+        },
+        {
+          "name": "race-fixture-removed-real-api-success",
+          "passed": true
+        }
+      ],
+      "screenshots": [
+        {
+          "state": "newer-period",
+          "file": "after/light/top-customers-stale-period-newer-period.png"
+        },
+        {
+          "state": "obsolete-response-released",
+          "file": "after/light/top-customers-stale-period-obsolete-response-released.png"
+        },
+        {
+          "state": "real-data-recovered",
+          "file": "after/light/top-customers-stale-period-real-data-recovered.png"
+        }
+      ]
+    }
+  ],
+  "pageErrors": [],
+  "failures": [],
+  "baselineObservations": [
+    {
+      "stage": "before",
+      "theme": "dark",
+      "case": "summary",
+      "check": "domain-loading-skeleton"
+    },
+    {
+      "stage": "before",
+      "theme": "dark",
+      "case": "summary",
+      "check": "no-fake-summary-zeros"
+    },
+    {
+      "stage": "before",
+      "theme": "dark",
+      "case": "bills",
+      "check": "domain-loading-skeleton"
+    },
+    {
+      "stage": "before",
+      "theme": "dark",
+      "case": "bills",
+      "check": "no-false-empty-bills"
+    },
+    {
+      "stage": "before",
+      "theme": "dark",
+      "case": "table-utilization",
+      "check": "domain-loading-skeleton"
+    },
+    {
+      "stage": "before",
+      "theme": "dark",
+      "case": "table-utilization",
+      "check": "local-retry-notice"
+    },
+    {
+      "stage": "before",
+      "theme": "dark",
+      "case": "table-utilization",
+      "check": "retry-without-reload"
+    },
+    {
+      "stage": "before",
+      "theme": "dark",
+      "case": "top-customers",
+      "check": "domain-loading-skeleton"
+    },
+    {
+      "stage": "before",
+      "theme": "dark",
+      "case": "top-customers",
+      "check": "local-retry-notice"
+    },
+    {
+      "stage": "before",
+      "theme": "dark",
+      "case": "top-customers",
+      "check": "retry-without-reload"
+    },
+    {
+      "stage": "before",
+      "theme": "dark",
+      "case": "analytics",
+      "check": "local-retry-notice"
+    },
+    {
+      "stage": "before",
+      "theme": "dark",
+      "case": "analytics",
+      "check": "retry-without-reload"
+    },
+    {
+      "stage": "before",
+      "theme": "dark",
+      "case": "session-edits",
+      "check": "domain-loading-skeleton"
+    },
+    {
+      "stage": "before",
+      "theme": "dark",
+      "case": "session-edits",
+      "check": "local-retry-notice"
+    },
+    {
+      "stage": "before",
+      "theme": "dark",
+      "case": "session-edits",
+      "check": "retry-without-reload"
+    },
+    {
+      "stage": "before",
+      "theme": "dark",
+      "case": "bills-pagination",
+      "check": "initial-page-25-rows",
+      "detail": {
+        "rows": 1000
+      }
+    },
+    {
+      "stage": "before",
+      "theme": "dark",
+      "case": "bills-pagination",
+      "check": "receipt-id-attributes"
+    },
+    {
+      "stage": "before",
+      "theme": "dark",
+      "case": "bills-pagination",
+      "check": "bills-pagination-present"
+    },
+    {
+      "stage": "before",
+      "theme": "dark",
+      "case": "bills-pagination",
+      "check": "search-accessible-label"
+    },
+    {
+      "stage": "before",
+      "theme": "dark",
+      "case": "top-customers-stale-period",
+      "check": "obsolete-period-response-ignored"
+    },
+    {
+      "stage": "before",
+      "theme": "light",
+      "case": "summary",
+      "check": "domain-loading-skeleton"
+    },
+    {
+      "stage": "before",
+      "theme": "light",
+      "case": "summary",
+      "check": "no-fake-summary-zeros"
+    },
+    {
+      "stage": "before",
+      "theme": "light",
+      "case": "bills",
+      "check": "domain-loading-skeleton"
+    },
+    {
+      "stage": "before",
+      "theme": "light",
+      "case": "bills",
+      "check": "no-false-empty-bills"
+    },
+    {
+      "stage": "before",
+      "theme": "light",
+      "case": "table-utilization",
+      "check": "domain-loading-skeleton"
+    },
+    {
+      "stage": "before",
+      "theme": "light",
+      "case": "table-utilization",
+      "check": "local-retry-notice"
+    },
+    {
+      "stage": "before",
+      "theme": "light",
+      "case": "table-utilization",
+      "check": "retry-without-reload"
+    },
+    {
+      "stage": "before",
+      "theme": "light",
+      "case": "top-customers",
+      "check": "domain-loading-skeleton"
+    },
+    {
+      "stage": "before",
+      "theme": "light",
+      "case": "top-customers",
+      "check": "local-retry-notice"
+    },
+    {
+      "stage": "before",
+      "theme": "light",
+      "case": "top-customers",
+      "check": "retry-without-reload"
+    },
+    {
+      "stage": "before",
+      "theme": "light",
+      "case": "analytics",
+      "check": "local-retry-notice"
+    },
+    {
+      "stage": "before",
+      "theme": "light",
+      "case": "analytics",
+      "check": "retry-without-reload"
+    },
+    {
+      "stage": "before",
+      "theme": "light",
+      "case": "session-edits",
+      "check": "domain-loading-skeleton"
+    },
+    {
+      "stage": "before",
+      "theme": "light",
+      "case": "session-edits",
+      "check": "local-retry-notice"
+    },
+    {
+      "stage": "before",
+      "theme": "light",
+      "case": "session-edits",
+      "check": "retry-without-reload"
+    },
+    {
+      "stage": "before",
+      "theme": "light",
+      "case": "bills-pagination",
+      "check": "initial-page-25-rows",
+      "detail": {
+        "rows": 1000
+      }
+    },
+    {
+      "stage": "before",
+      "theme": "light",
+      "case": "bills-pagination",
+      "check": "receipt-id-attributes"
+    },
+    {
+      "stage": "before",
+      "theme": "light",
+      "case": "bills-pagination",
+      "check": "bills-pagination-present"
+    },
+    {
+      "stage": "before",
+      "theme": "light",
+      "case": "bills-pagination",
+      "check": "search-accessible-label"
+    },
+    {
+      "stage": "before",
+      "theme": "light",
+      "case": "top-customers-stale-period",
+      "check": "obsolete-period-response-ignored"
+    }
+  ],
+  "safety": {
+    "authPosts": 1,
+    "forwardedBusinessMutations": 0,
+    "blockedRequests": [],
+    "blockedWebSockets": 0
+  },
+  "finishedAt": "2026-10-17T21:11:21.884Z"
+}

@@ -1,0 +1,351 @@
+{
+  "checks": [
+    {
+      "theme": "dark",
+      "successDefault4000ms": true,
+      "infoDefault6000ms": true,
+      "errorVisibleAfter6100ms": true,
+      "hoverSurvives5000ms": true,
+      "focusedUndoSurvives5500ms": true,
+      "undoCalls": 1,
+      "exitMs": 128.3999999910593,
+      "scrollRestored": true,
+      "focusedToastResumesAfterHostCloses": true,
+      "contrast": []
+    }
+  ],
+  "errors": [],
+  "scope": "Isolated real-component lifecycle tests, not business-action success",
+  "businessWrites": 0,
+  "diagnostics": [
+    {
+      "theme": "light",
+      "step": "success-default",
+      "status": "fail",
+      "error": "AssertionError [ERR_ASSERTION]: false == true\n    at file:///Users/shivanshgupta/.codex/worktrees/player-start-flow/billiards-bms:HSR/frontend/scripts/test-feedback-lifecycle.mjs:30:79\n    at runNextTicks (node:internal/process/task_queues:65:5)\n    at process.processImmediate (node:internal/timers:473:9)",
+      "trace": []
+    },
+    {
+      "theme": "dark",
+      "step": "dialog-relocation",
+      "status": "pass",
+      "trace": [
+        {
+          "kind": "toast-dom-change",
+          "at": 4072.3999999910593,
+          "active": "<body class=\"dark\">\n    <div id=\"root\"><div class=\"login-container cf-login-container bg-bg-base text-text-primary\"><div class=\"login-shell cf-login-shell\"><section class=\"login-showcase\" aria-label=\"HSR Snooker Cafe BMS\"><div class=\"login-",
+          "toasts": [
+            {
+              "message": "QA success",
+              "exiting": false,
+              "focused": false
+            }
+          ]
+        },
+        {
+          "kind": "toast-dom-change",
+          "at": 8078.70000000298,
+          "active": "<body class=\"dark\">\n    <div id=\"root\"><div class=\"login-container cf-login-container bg-bg-base text-text-primary\"><div class=\"login-shell cf-login-shell\"><section class=\"login-showcase\" aria-label=\"HSR Snooker Cafe BMS\"><div class=\"login-",
+          "toasts": [
+            {
+              "message": "QA success",
+              "exiting": true,
+              "focused": false
+            }
+          ]
+        },
+        {
+          "kind": "toast-dom-change",
+          "at": 8196.09999999404,
+          "active": "<body class=\"dark\">\n    <div id=\"root\"><div class=\"login-container cf-login-container bg-bg-base text-text-primary\"><div class=\"login-shell cf-login-shell\"><section class=\"login-showcase\" aria-label=\"HSR Snooker Cafe BMS\"><div class=\"login-",
+          "toasts": []
+        },
+        {
+          "kind": "toast-dom-change",
+          "at": 8286.89999999106,
+          "active": "<body class=\"dark\">\n    <div id=\"root\"><div class=\"login-container cf-login-container bg-bg-base text-text-primary\"><div class=\"login-shell cf-login-shell\"><section class=\"login-showcase\" aria-label=\"HSR Snooker Cafe BMS\"><div class=\"login-",
+          "toasts": [
+            {
+              "message": "QA information",
+              "exiting": false,
+              "focused": false
+            }
+          ]
+        },
+        {
+          "kind": "toast-dom-change",
+          "at": 14295,
+          "active": "<body class=\"dark\">\n    <div id=\"root\"><div class=\"login-container cf-login-container bg-bg-base text-text-primary\"><div class=\"login-shell cf-login-shell\"><section class=\"login-showcase\" aria-label=\"HSR Snooker Cafe BMS\"><div class=\"login-",
+          "toasts": [
+            {
+              "message": "QA information",
+              "exiting": true,
+              "focused": false
+            }
+          ]
+        },
+        {
+          "kind": "toast-dom-change",
+          "at": 14409.39999999106,
+          "active": "<body class=\"dark\">\n    <div id=\"root\"><div class=\"login-container cf-login-container bg-bg-base text-text-primary\"><div class=\"login-shell cf-login-shell\"><section class=\"login-showcase\" aria-label=\"HSR Snooker Cafe BMS\"><div class=\"login-",
+          "toasts": []
+        },
+        {
+          "kind": "toast-dom-change",
+          "at": 14593.09999999404,
+          "active": "<body class=\"dark\">\n    <div id=\"root\"><div class=\"login-container cf-login-container bg-bg-base text-text-primary\"><div class=\"login-shell cf-login-shell\"><section class=\"login-showcase\" aria-label=\"HSR Snooker Cafe BMS\"><div class=\"login-",
+          "toasts": [
+            {
+              "message": "QA failure",
+              "exiting": false,
+              "focused": false
+            }
+          ]
+        },
+        {
+          "kind": "pointerover",
+          "at": 21795.89999999106,
+          "target": "<path d=\"m6 6 12 12\"></path>",
+          "active": "<body class=\"dark\">\n    <div id=\"root\"><div class=\"login-container cf-login-container bg-bg-base text-text-primary\"><div class=\"login-shell cf-login-shell\"><section class=\"login-showcase\" aria-label=\"HSR Snooker Cafe BMS\"><div class=\"login-",
+          "toasts": [
+            {
+              "message": "QA failure",
+              "exiting": false,
+              "focused": false
+            }
+          ]
+        },
+        {
+          "kind": "focusin",
+          "at": 21801.70000000298,
+          "target": "<button type=\"button\" class=\"ui-button ui-button-icon ui-button-ghost ui-button-md app-toast-close\" aria-label=\"Dismiss notification\" data-tooltip=\"Dismiss notification\"><i class=\"ti ti-x ui-icon\" aria-hidden=\"true\"><svg xmlns=\"http://www.w",
+          "active": "<button type=\"button\" class=\"ui-button ui-button-icon ui-button-ghost ui-button-md app-toast-close\" aria-label=\"Dismiss notification\" data-tooltip=\"Dismiss notification\"><i class=\"ti ti-x ui-icon\" aria-hidden=\"true\"><svg xmlns=\"http://www.w",
+          "toasts": [
+            {
+              "message": "QA failure",
+              "exiting": false,
+              "focused": true
+            }
+          ]
+        },
+        {
+          "kind": "toast-dom-change",
+          "at": 21811.20000000298,
+          "active": "<button type=\"button\" class=\"ui-button ui-button-icon ui-button-ghost ui-button-md app-toast-close\" aria-label=\"Dismiss notification\" data-tooltip=\"Dismiss notification\" style=\"--button-busy-ink: rgb(250, 250, 250);\"><i class=\"ti ti-x ui-ic",
+          "toasts": [
+            {
+              "message": "QA failure",
+              "exiting": true,
+              "focused": true
+            }
+          ]
+        },
+        {
+          "kind": "focusout",
+          "at": 21927,
+          "target": "<button type=\"button\" class=\"ui-button ui-button-icon ui-button-ghost ui-button-md app-toast-close\" aria-label=\"Dismiss notification\" data-tooltip=\"Dismiss notification\" style=\"--button-busy-ink: rgb(250, 250, 250);\"><i class=\"ti ti-x ui-ic",
+          "active": "<body class=\"dark\">\n    <div id=\"root\"><div class=\"login-container cf-login-container bg-bg-base text-text-primary\"><div class=\"login-shell cf-login-shell\"><section class=\"login-showcase\" aria-label=\"HSR Snooker Cafe BMS\"><div class=\"login-",
+          "toasts": [
+            {
+              "message": "QA failure",
+              "exiting": true,
+              "focused": false
+            }
+          ]
+        },
+        {
+          "kind": "toast-dom-change",
+          "at": 21928.70000000298,
+          "active": "<body class=\"dark\">\n    <div id=\"root\"><div class=\"login-container cf-login-container bg-bg-base text-text-primary\"><div class=\"login-shell cf-login-shell\"><section class=\"login-showcase\" aria-label=\"HSR Snooker Cafe BMS\"><div class=\"login-",
+          "toasts": []
+        },
+        {
+          "kind": "toast-dom-change",
+          "at": 22097.59999999404,
+          "active": "<body class=\"dark\">\n    <div id=\"root\"><div class=\"login-container cf-login-container bg-bg-base text-text-primary\"><div class=\"login-shell cf-login-shell\"><section class=\"login-showcase\" aria-label=\"HSR Snooker Cafe BMS\"><div class=\"login-",
+          "toasts": [
+            {
+              "message": "QA hover pause",
+              "exiting": false,
+              "focused": false
+            }
+          ]
+        },
+        {
+          "kind": "pointerover",
+          "at": 24821.89999999106,
+          "target": "<span class=\"app-toast-message\">QA hover pause</span>",
+          "active": "<body class=\"dark\">\n    <div id=\"root\"><div class=\"login-container cf-login-container bg-bg-base text-text-primary\"><div class=\"login-shell cf-login-shell\"><section class=\"login-showcase\" aria-label=\"HSR Snooker Cafe BMS\"><div class=\"login-",
+          "toasts": [
+            {
+              "message": "QA hover pause",
+              "exiting": false,
+              "focused": false
+            }
+          ]
+        },
+        {
+          "kind": "pointerout",
+          "at": 30210.79999999702,
+          "target": "<span class=\"app-toast-message\">QA hover pause</span>",
+          "active": "<body class=\"dark\">\n    <div id=\"root\"><div class=\"login-container cf-login-container bg-bg-base text-text-primary\"><div class=\"login-shell cf-login-shell\"><section class=\"login-showcase\" aria-label=\"HSR Snooker Cafe BMS\"><div class=\"login-",
+          "toasts": [
+            {
+              "message": "QA hover pause",
+              "exiting": false,
+              "focused": false
+            }
+          ]
+        },
+        {
+          "kind": "toast-dom-change",
+          "at": 31501.09999999404,
+          "active": "<body class=\"dark\">\n    <div id=\"root\"><div class=\"login-container cf-login-container bg-bg-base text-text-primary\"><div class=\"login-shell cf-login-shell\"><section class=\"login-showcase\" aria-label=\"HSR Snooker Cafe BMS\"><div class=\"login-",
+          "toasts": [
+            {
+              "message": "QA hover pause",
+              "exiting": true,
+              "focused": false
+            }
+          ]
+        },
+        {
+          "kind": "toast-dom-change",
+          "at": 31615.89999999106,
+          "active": "<body class=\"dark\">\n    <div id=\"root\"><div class=\"login-container cf-login-container bg-bg-base text-text-primary\"><div class=\"login-shell cf-login-shell\"><section class=\"login-showcase\" aria-label=\"HSR Snooker Cafe BMS\"><div class=\"login-",
+          "toasts": []
+        },
+        {
+          "kind": "toast-dom-change",
+          "at": 32179.70000000298,
+          "active": "<body class=\"dark\">\n    <div id=\"root\"><div class=\"login-container cf-login-container bg-bg-base text-text-primary\"><div class=\"login-shell cf-login-shell\"><section class=\"login-showcase\" aria-label=\"HSR Snooker Cafe BMS\"><div class=\"login-",
+          "toasts": [
+            {
+              "message": "QA undo",
+              "exiting": false,
+              "focused": false
+            }
+          ]
+        },
+        {
+          "kind": "focusin",
+          "at": 32726.89999999106,
+          "target": "<button type=\"button\" class=\"ui-button ui-button-native ui-button-md app-toast-action\" aria-label=\"Undo\">Undo</button>",
+          "active": "<button type=\"button\" class=\"ui-button ui-button-native ui-button-md app-toast-action\" aria-label=\"Undo\">Undo</button>",
+          "toasts": [
+            {
+              "message": "QA undo",
+              "exiting": false,
+              "focused": true
+            }
+          ]
+        },
+        {
+          "kind": "toast-dom-change",
+          "at": 38976.59999999404,
+          "active": "<button type=\"button\" class=\"ui-button ui-button-native ui-button-md is-loading app-toast-action\" aria-label=\"Undo\" style=\"--button-busy-ink: rgb(0, 255, 127); width: 67.6562px; height: 44px;\" disabled=\"\" aria-busy=\"true\" data-loading=\"true",
+          "toasts": [
+            {
+              "message": "QA undo",
+              "exiting": true,
+              "focused": true
+            }
+          ]
+        },
+        {
+          "kind": "focusout",
+          "at": 39087.39999999106,
+          "target": "<button type=\"button\" class=\"ui-button ui-button-native ui-button-md app-toast-action\" aria-label=\"Undo\" style=\"--button-busy-ink: rgb(0, 255, 127);\">Undo</button>",
+          "active": "<body class=\"dark\">\n    <div id=\"root\"><div class=\"login-container cf-login-container bg-bg-base text-text-primary\"><div class=\"login-shell cf-login-shell\"><section class=\"login-showcase\" aria-label=\"HSR Snooker Cafe BMS\"><div class=\"login-",
+          "toasts": [
+            {
+              "message": "QA undo",
+              "exiting": true,
+              "focused": false
+            }
+          ]
+        },
+        {
+          "kind": "toast-dom-change",
+          "at": 39089.29999999702,
+          "active": "<body class=\"dark\">\n    <div id=\"root\"><div class=\"login-container cf-login-container bg-bg-base text-text-primary\"><div class=\"login-shell cf-login-shell\"><section class=\"login-showcase\" aria-label=\"HSR Snooker Cafe BMS\"><div class=\"login-",
+          "toasts": []
+        },
+        {
+          "kind": "toast-dom-change",
+          "at": 39507.59999999404,
+          "active": "<button type=\"button\" class=\"ui-button ui-button-icon ui-button-ghost ui-button-md\" aria-label=\"Close dialog\" data-tooltip=\"Close dialog\" aria-describedby=\"_r_0_\"><i class=\"ti ti-x ui-icon\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/2",
+          "toasts": [
+            {
+              "message": "QA relocation",
+              "exiting": false,
+              "focused": false
+            }
+          ]
+        },
+        {
+          "kind": "focusin",
+          "at": 39564.79999999702,
+          "target": "<button type=\"button\" class=\"ui-button ui-button-native ui-button-md app-toast-action\" aria-label=\"Details\">Details</button>",
+          "active": "<button type=\"button\" class=\"ui-button ui-button-native ui-button-md app-toast-action\" aria-label=\"Details\">Details</button>",
+          "toasts": [
+            {
+              "message": "QA relocation",
+              "exiting": false,
+              "focused": true
+            }
+          ]
+        },
+        {
+          "kind": "focusout",
+          "at": 39705.70000000298,
+          "target": "<button type=\"button\" class=\"ui-button ui-button-native ui-button-md app-toast-action\" aria-label=\"Details\">Details</button>",
+          "active": "<body class=\"dark\" style=\"\">\n    <div id=\"root\"><div class=\"login-container cf-login-container bg-bg-base text-text-primary\"><div class=\"login-shell cf-login-shell\"><section class=\"login-showcase\" aria-label=\"HSR Snooker Cafe BMS\"><div clas",
+          "toasts": [
+            {
+              "message": "QA relocation",
+              "exiting": false,
+              "focused": false
+            }
+          ]
+        },
+        {
+          "kind": "toast-dom-change",
+          "at": 39825.5,
+          "active": "<body class=\"dark\" style=\"\">\n    <div id=\"root\"><div class=\"login-container cf-login-container bg-bg-base text-text-primary\"><div class=\"login-shell cf-login-shell\"><section class=\"login-showcase\" aria-label=\"HSR Snooker Cafe BMS\"><div clas",
+          "toasts": []
+        },
+        {
+          "kind": "toast-dom-change",
+          "at": 39828.29999999702,
+          "active": "<body class=\"dark\" style=\"\">\n    <div id=\"root\"><div class=\"login-container cf-login-container bg-bg-base text-text-primary\"><div class=\"login-shell cf-login-shell\"><section class=\"login-showcase\" aria-label=\"HSR Snooker Cafe BMS\"><div clas",
+          "toasts": [
+            {
+              "message": "QA relocation",
+              "exiting": false,
+              "focused": false
+            }
+          ]
+        },
+        {
+          "kind": "toast-dom-change",
+          "at": 40348.59999999404,
+          "active": "<body class=\"dark\" style=\"\">\n    <div id=\"root\"><div class=\"login-container cf-login-container bg-bg-base text-text-primary\"><div class=\"login-shell cf-login-shell\"><section class=\"login-showcase\" aria-label=\"HSR Snooker Cafe BMS\"><div clas",
+          "toasts": [
+            {
+              "message": "QA relocation",
+              "exiting": true,
+              "focused": false
+            }
+          ]
+        },
+        {
+          "kind": "toast-dom-change",
+          "at": 40468.09999999404,
+          "active": "<body class=\"dark\" style=\"\">\n    <div id=\"root\"><div class=\"login-container cf-login-container bg-bg-base text-text-primary\"><div class=\"login-shell cf-login-shell\"><section class=\"login-showcase\" aria-label=\"HSR Snooker Cafe BMS\"><div clas",
+          "toasts": []
+        }
+      ]
+    }
+  ]
+}
