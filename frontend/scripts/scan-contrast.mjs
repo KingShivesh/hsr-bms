@@ -5,7 +5,10 @@ import { scanRenderedContrast } from "./rendered-contrast.mjs";
 const appUrl = process.env.CONTRAST_APP_URL || "http://127.0.0.1:5173";
 const apiUrl = process.env.CONTRAST_API_URL || process.env.VITE_API_URL || "http://127.0.0.1:8000";
 const source = await fs.readFile("src/App.jsx", "utf8");
-const routes = [...new Set([...source.matchAll(/<Route\s+path="([^"*][^"]*)"/g)].map(m => m[1]).concat(JSON.parse(process.env.CONTRAST_EXTRA_ROUTES || "[]")))];
+const discoveredRoutes = [...new Set([...source.matchAll(/<Route\s+path="([^"*][^"]*)"/g)].map(m => m[1]).concat(JSON.parse(process.env.CONTRAST_EXTRA_ROUTES || "[]")))];
+const onlyRoutes = JSON.parse(process.env.CONTRAST_ONLY_ROUTES || "null");
+if (onlyRoutes && (!Array.isArray(onlyRoutes) || onlyRoutes.some(route => !discoveredRoutes.includes(route)))) throw new Error("Contrast route filter must contain reviewed routes");
+const routes = onlyRoutes || discoveredRoutes;
 const response = await fetch(apiUrl + "/auth/login", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ username: process.env.CONTRAST_USERNAME || "admin", password: process.env.CONTRAST_PASSWORD || "admin123" }) });
 if (!response.ok) throw new Error(`QA login failed: ${response.status}`);
 const auth = await response.json();
@@ -79,7 +82,12 @@ try {
     }
     await context.close();
   }
-} finally { await browser.close(); }
-if (process.env.CONTRAST_REPORT_PATH) await fs.writeFile(process.env.CONTRAST_REPORT_PATH, JSON.stringify(report, null, 2));
+} catch (error) {
+  report.errors.push(error.message);
+  throw error;
+} finally {
+  await browser.close();
+  if (process.env.CONTRAST_REPORT_PATH) await fs.writeFile(process.env.CONTRAST_REPORT_PATH, JSON.stringify(report, null, 2));
+}
 console.log(JSON.stringify(report, null, 2));
 process.exitCode = report.violations.length || report.errors.length ? 2 : 0;
