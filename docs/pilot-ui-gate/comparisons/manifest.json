@@ -47,7 +47,7 @@
           "theme": "light",
           "stage": "before",
           "path": "before/light-375-member-error.png",
-          "sha256": "2f0f701f0034e838a1275e510cfbb808d23b36ddd150e1353fbbcddde6152370",
+          "sha256": "574c2bc76962783d509307f55583f9cad63e14314a31456ed1e4770638085972",
           "width": 375,
           "height": 844
         },
@@ -55,7 +55,7 @@
           "theme": "light",
           "stage": "after",
           "path": "after/light-375-member-error.png",
-          "sha256": "262798d4a713c6175ea1ea4d488a04f3b038e2fceb9209560cc6ee3f9e1c166d",
+          "sha256": "73ba15cf2d841bac1ecb06133fc8d30d44f953c6aaa7da03ac4fcaf4af2bd91a",
           "width": 375,
           "height": 844
         },
@@ -63,7 +63,7 @@
           "theme": "dark",
           "stage": "before",
           "path": "before/dark-375-member-error.png",
-          "sha256": "2949d26f1d0496fd02c79619ac123fdcdb85b0840c6bdb3c5c420a84b1615332",
+          "sha256": "e01e3382aab0132c5f3bdcdac303651a7c24bff2545f880e31549abe4a26b406",
           "width": 375,
           "height": 844
         },
@@ -71,7 +71,7 @@
           "theme": "dark",
           "stage": "after",
           "path": "after/dark-375-member-error.png",
-          "sha256": "59c13b2e1b430d0b6e192ac6bd758a350b8cf75cc8756fdbe797cbaf71bbdc4c",
+          "sha256": "5c2c0e3242c22c140e8635d8a801e7ec7a0353c6c6657bae365b763ec6529e9c",
           "width": 375,
           "height": 844
         }
@@ -85,7 +85,7 @@
           "theme": "light",
           "stage": "before",
           "path": "before/light-375-member-empty.png",
-          "sha256": "2f0f701f0034e838a1275e510cfbb808d23b36ddd150e1353fbbcddde6152370",
+          "sha256": "f7bab2f8a70e6d988b5d86860b13a9d77660740276b9468ce30ef7026eda514f",
           "width": 375,
           "height": 844
         },
@@ -93,7 +93,7 @@
           "theme": "light",
           "stage": "after",
           "path": "after/light-375-member-empty.png",
-          "sha256": "7bc0205db9362a33f30e609f8ae7ddbc9a9a65d9365721ec6565ee3ed0db3fb0",
+          "sha256": "39ff106206ee3e35c9ba85153cc7e63f0916ad682a2c9d2f2c8ae3a278bac0d4",
           "width": 375,
           "height": 844
         },
@@ -101,7 +101,7 @@
           "theme": "dark",
           "stage": "before",
           "path": "before/dark-375-member-empty.png",
-          "sha256": "2949d26f1d0496fd02c79619ac123fdcdb85b0840c6bdb3c5c420a84b1615332",
+          "sha256": "a3e8a3acd363775408e79baf11e6916c4f052d424ab741cccf8f4830eee0e424",
           "width": 375,
           "height": 844
         },
@@ -109,7 +109,7 @@
           "theme": "dark",
           "stage": "after",
           "path": "after/dark-375-member-empty.png",
-          "sha256": "e66c9ae31a2fba3003fa338b20c34113ead99bdedb7fa8e43932a542a3e8ea6f",
+          "sha256": "36d326c057b470236923418e4327f525c9889256e1c123d3c4e496677ba02c7f",
           "width": 375,
           "height": 844
         }
@@ -123,7 +123,7 @@
           "theme": "light",
           "stage": "before",
           "path": "before/light-375-member-partial.png",
-          "sha256": "ef038525b8606ab5f1351fdd05db9d17375957310697ea9a16716fe37a128ae8",
+          "sha256": "b15973c9cc3eb8f184355b726fe1f6da5ba94ce6412b9c985ea8a9fc372d7d31",
           "width": 375,
           "height": 844
         },
@@ -131,7 +131,7 @@
           "theme": "light",
           "stage": "after",
           "path": "after/light-375-member-partial.png",
-          "sha256": "729a2f8e17e712e53c220fa88f5f3deadb7496d9ffce6ad60c15caf936b8cc84",
+          "sha256": "a43aec600a61b1c06d08ab55b786545696cd91c468e94aeda64c0c3897652300",
           "width": 375,
           "height": 844
         },
@@ -139,7 +139,7 @@
           "theme": "dark",
           "stage": "before",
           "path": "before/dark-375-member-partial.png",
-          "sha256": "214a0e1516dbc246d4068c2016ef604adf5e2a2941df6501ffc38c48e85c37ce",
+          "sha256": "2596cbbe636e9ab5fe62a1364d550cf24e07041939471331c95b48a75a528c77",
           "width": 375,
           "height": 844
         },
@@ -147,7 +147,7 @@
           "theme": "dark",
           "stage": "after",
           "path": "after/dark-375-member-partial.png",
-          "sha256": "d9e7d80b70e083cade1d2747dd650205539d219eb659123d70b6a8ebb57a91d7",
+          "sha256": "3e54d0df81541e7273ca4f140dd490c2528e61e0812601c891fd4f57e6e3405e",
           "width": 375,
           "height": 844
         }

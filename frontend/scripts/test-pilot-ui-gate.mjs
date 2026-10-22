@@ -48,6 +48,13 @@ try {
     async function capture(state) {
       await page.evaluate(() => document.fonts.ready);
       await page.waitForTimeout(200);
+      if (["member-error", "member-empty"].includes(state)) {
+        await page.locator(".checkout-section:has(.checkout-customer-paths)").evaluate(section => {
+          const target = section.querySelector('.retry-notice, .ui-empty-state, [role="status"]') || section.lastElementChild;
+          const body = section.closest(".ui-overlay-body");
+          body.scrollTop += target.getBoundingClientRect().top - body.getBoundingClientRect().top - 80;
+        });
+      }
       const violations = await scanRenderedContrast(page, { route: new URL(page.url()).pathname, theme, state, minimumContrast: 4.5, includeDisabled: true, viewportOnly: true });
       report.violations.push(...violations.map(row => ({ ...row, width })));
       const file = `${theme}-${width}-${state}.png`;
