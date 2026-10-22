@@ -18,5 +18,9 @@ try {
   });
   const covered = await scanRenderedContrast(page, { route: "fixture", theme: "light", state: "occluded-text" });
   assert.equal(covered.some(row => row.text === "Visible low contrast"), false);
-  console.log(JSON.stringify({ clippedTextExcluded: true, fixedModalPixelOffsetCorrect: true, realVisibleViolationDetected: true, occludedTextExcluded: true }));
+  await page.setContent('<body style="background:white"><input disabled value="Painted gray" style="color:black;-webkit-text-fill-color:#888;background:white;font:16px Arial"></body>');
+  const painted = await scanRenderedContrast(page, { state: "disabled-text-fill", minimumContrast: 4.5, includeDisabled: true });
+  assert.equal(painted.length, 1);
+  assert.equal(painted[0].ratio, 3.54);
+  console.log(JSON.stringify({ clippedTextExcluded: true, fixedModalPixelOffsetCorrect: true, realVisibleViolationDetected: true, occludedTextExcluded: true, actualTextFillChecked: true }));
 } finally { await browser.close(); }

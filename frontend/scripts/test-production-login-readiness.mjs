@@ -6,7 +6,8 @@ import { scanRenderedContrast } from "./rendered-contrast.mjs";
 
 const app = "https://hsr-bms.vercel.app";
 const api = "https://hsr-bms-backend.onrender.com";
-const output = "../docs/ui-readiness/production-login";
+const output = process.env.PRODUCTION_LOGIN_OUTPUT || "../docs/ui-readiness/production-login";
+const strictPilot = process.env.CONTRAST_STRICT_PILOT === "true";
 const report = { app, startedAt: new Date().toISOString(), cases: [], errors: [], blockedWrites: [], loginAttempts: 0, scope: "Unauthenticated live deployment; no business writes or credential submissions" };
 await fs.mkdir(output, { recursive: true });
 const browser = await chromium.launch({ executablePath: "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome", headless: true });
@@ -31,7 +32,7 @@ try {
       await page.getByTestId("login-button").waitFor();
       await page.evaluate(() => document.fonts.ready);
       const metrics = await page.evaluate(measureUi);
-      const contrast = await scanRenderedContrast(page, { theme, route: "/login", state: "live-production-default" });
+      const contrast = await scanRenderedContrast(page, { theme, route: "/login", state: "live-production-default", ...(strictPilot ? { minimumContrast: 4.5, includeDisabled: true } : {}) });
       const image = `${theme}-${width}.png`;
       await page.screenshot({ path: `${output}/${image}`, fullPage: true, animations: "disabled" });
       report.cases.push({ theme, width, image, ...metrics, contrast });

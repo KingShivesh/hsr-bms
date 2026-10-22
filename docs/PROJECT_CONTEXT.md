@@ -86,8 +86,13 @@ are mapped with `@theme inline` in `index.css`; do not add Tailwind v3 config.
 - `npm run scan:contrast` now includes login, input values/placeholders, alpha
   compositing and foreground dialogs. Gradients/images are checked using rendered
   background pixel samples. It must wait for loaded data, not accept skeletons
-  as a passing page. Disabled controls are WCAG-exempt; their semantic pair is
-  independently tested. `npm run test:theme-runtime` checks theme bootstrap,
+  as a passing page. The pilot minimum is stricter than WCAG's disabled/large-text
+  exceptions: run with `CONTRAST_STRICT_PILOT=true` for 4.5:1 on all sampled text,
+  including large text and disabled controls. Also run
+  `node scripts/test-pilot-ui-gate.mjs after` against its isolated QA environment
+  for pending login, checkout recovery, and mobile member-result overflow. A
+  default-mode zero is not proof of the stricter pilot gate. See
+  `docs/pilot-ui-gate/README.md`. `npm run test:theme-runtime` checks theme bootstrap,
   storage/system preference, persistence, cross-tab changes, paired-token
   contrast, mobile readability and preservation of saturated Live Floor cards.
 - Text on neutral panels must not use `--text-on-brand` / `--text-on-accent`.

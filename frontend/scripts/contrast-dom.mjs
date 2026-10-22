@@ -1,5 +1,5 @@
 // Run inside the page: flatten translucent layers instead of skipping faint text.
-export function scanTextContrast({ route, theme, state, collect = false, viewportOnly = false }) {
+export function scanTextContrast({ route, theme, state, collect = false, viewportOnly = false, minimumContrast = null, includeDisabled = false }) {
   const canvas = document.createElement("canvas");
   canvas.width = canvas.height = 1;
   const ctx = canvas.getContext("2d", { willReadFrequently: true });
@@ -42,7 +42,7 @@ export function scanTextContrast({ route, theme, state, collect = false, viewpor
       opacity *= Number(ns.opacity);
       if (ns.display === "none" || ns.visibility !== "visible" || n.inert || n.getAttribute("aria-hidden") === "true") hidden = true;
     }
-    if (hidden || opacity < 0.01 || el.matches(":disabled") || el.closest("button:disabled,[aria-disabled='true']")) continue;
+    if (hidden || opacity < 0.01 || (!includeDisabled && (el.matches(":disabled") || el.closest("button:disabled,[aria-disabled='true']")))) continue;
     let text = [...el.childNodes].filter(n => n.nodeType === Node.TEXT_NODE).map(n => n.textContent.trim()).join(" ").trim();
     let style = s, kind = "text";
     if (el.matches("input:not([type=checkbox]):not([type=radio]):not([type=hidden]),textarea,select")) {
@@ -51,12 +51,12 @@ export function scanTextContrast({ route, theme, state, collect = false, viewpor
       if (!text && el.placeholder) { text = el.placeholder; style = getComputedStyle(el, "::placeholder"); kind = "placeholder"; }
     }
     if (!text) continue;
-    const paint = el.namespaceURI === "http://www.w3.org/2000/svg" && el.matches("text,tspan") ? s.fill : style.color;
+    const paint = el.namespaceURI === "http://www.w3.org/2000/svg" && el.matches("text,tspan") ? s.fill : style.webkitTextFillColor || style.color;
     const bg = background(el), fg = parse(paint);
     fg.a *= opacity * (kind === "placeholder" ? Number(style.opacity) : 1);
     const actual = ratio(composite(fg, bg), bg);
     const size = parseFloat(style.fontSize), weight = parseInt(style.fontWeight) || 400;
-    const required = size >= 24 || (size >= 18.66 && weight >= 700) ? 3 : 4.5;
+    const required = minimumContrast ?? (size >= 24 || (size >= 18.66 && weight >= 700) ? 3 : 4.5);
     let gradient = false;
     for (let n = el; n; n = n.parentElement) if (getComputedStyle(n).backgroundImage !== "none") gradient = true;
     let boxes = [rect];

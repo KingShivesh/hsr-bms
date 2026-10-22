@@ -4,6 +4,7 @@ import { scanRenderedContrast } from "./rendered-contrast.mjs";
 
 const appUrl = process.env.CONTRAST_APP_URL || "http://127.0.0.1:5173";
 const apiUrl = process.env.CONTRAST_API_URL || process.env.VITE_API_URL || "http://127.0.0.1:8000";
+const strictPilot = process.env.CONTRAST_STRICT_PILOT === "true";
 const source = await fs.readFile("src/App.jsx", "utf8");
 const discoveredRoutes = [...new Set([...source.matchAll(/<Route\s+path="([^"*][^"]*)"/g)].map(m => m[1]).concat(JSON.parse(process.env.CONTRAST_EXTRA_ROUTES || "[]")))];
 const onlyRoutes = JSON.parse(process.env.CONTRAST_ONLY_ROUTES || "null");
@@ -14,6 +15,8 @@ if (!response.ok) throw new Error(`QA login failed: ${response.status}`);
 const auth = await response.json();
 const browser = await chromium.launch({ executablePath: process.env.CHROME_PATH || "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome", headless: true });
 const report = { generatedAt: new Date().toISOString(), appUrl, apiUrl, routes, dynamicStatesIncluded: ["default (including login)", "login error and filled fields", "notification popover", "command palette", "first safe action"], method: "composited foreground/background, inputs, placeholders, ancestor opacity; rendered pixel samples for gradients/images; WCAG large text 24px or 18.66px bold; disabled controls exempt", violations: [], errors: [] };
+if (strictPilot) report.method = "Pilot minimum 4.5:1 for every rendered text sample, including large text and disabled controls; composited opacity and rendered gradient backgrounds";
+report.strictPilot = strictPilot;
 try {
   for (const theme of ["light", "dark"]) {
     const context = await browser.newContext({ viewport: { width: 1440, height: 1000 }, colorScheme: theme });
@@ -42,7 +45,7 @@ try {
           await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
           await Promise.all(document.getAnimations().filter(animation => animation.playState === "running" && animation.effect?.getComputedTiming().iterations !== Infinity).map(animation => animation.finished.catch(() => {})));
         });
-        report.violations.push(...await scanRenderedContrast(page, { theme, route, state }));
+        report.violations.push(...await scanRenderedContrast(page, { theme, route, state, ...(strictPilot ? { minimumContrast: 4.5, includeDisabled: true } : {}) }));
       };
       await check("default");
       if (route === "/login") {
