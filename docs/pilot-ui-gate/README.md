@@ -24,7 +24,8 @@ for this gate. Preserve the approved Syne / DM Mono fonts and both palettes.
   in the captured states. Browser business writes blocked; none attempted.
 - Strict route scan: 27 reviewed paths including Settings subroutes and a 404,
   both themes, loaded data plus safe actions, command palette and popovers.
-  [Raw result](routes-after.json); the previous default-route baseline was also
+  Zero violations and zero runtime errors. [Raw result](routes-after.json);
+  the previous default-route baseline was also
   zero, so only the held pending-login test exposed the disabled-text fault.
 - Shared button feedback: 6.8ms dark / 2.7ms light, stable 162.25px button width,
   visible spinner, bounded tooltip. Fourteen held-read checks (seven pages in
@@ -34,7 +35,7 @@ for this gate. Preserve the approved Syne / DM Mono fonts and both palettes.
   excluding clipped/occluded text, and detect a disabled input whose actual
   text-fill is weaker than its CSS color. These are expected failing fixtures,
   not app violations.
-- Lint, theme-token guard and production build passed. No backend source or
+- Lint, theme-token guard, backend syntax and production build passed. No backend source or
   dependency changes; no production business mutations or credential attempts.
 
 ## Visual Evidence
@@ -72,6 +73,14 @@ all business writes and intercepts the login submission/member lookup fixtures.
 
 ## Release
 
-Pending merge and production bundle verification. A successful push alone is
-not deployment proof; the release record must match all JS/CSS SHA-256 hashes
-and confirm backend revision ancestry and readiness.
+Merged by fast-forward and pushed to `main` at `83da816`, without conflicts.
+[Production verification](deployment.json) confirms all 23 release JS/CSS
+SHA-256 hashes match. Frontend, backend health and database readiness return
+200. The unchanged backend revision is
+`e014ff4caf9182797dc4e341f6c491fad80bfafa`, with ancestry verified.
+[Live login checks](production-login/results.json): both themes at
+375/768/1024/1440/1920px, strict 4.5:1 scan, zero faults or page errors and zero
+credential submissions. Authenticated checkout cases were verified locally,
+not by making production transactions.
+Disposable local QA database cleaned: zero rows in every guarded QA table.
+Temporary QA servers stopped; the user's existing checkout/server was untouched.

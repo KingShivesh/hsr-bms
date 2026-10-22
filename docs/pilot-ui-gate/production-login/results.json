@@ -1,0 +1,241 @@
+{
+  "app": "https://hsr-bms.vercel.app",
+  "startedAt": "2026-10-22T09:25:02.410Z",
+  "cases": [
+    {
+      "theme": "light",
+      "width": 375,
+      "image": "light-375.png",
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "contrast": []
+    },
+    {
+      "theme": "light",
+      "width": 768,
+      "image": "light-768.png",
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "contrast": []
+    },
+    {
+      "theme": "light",
+      "width": 1024,
+      "image": "light-1024.png",
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "contrast": []
+    },
+    {
+      "theme": "light",
+      "width": 1440,
+      "image": "light-1440.png",
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "contrast": []
+    },
+    {
+      "theme": "light",
+      "width": 1920,
+      "image": "light-1920.png",
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "contrast": []
+    },
+    {
+      "theme": "dark",
+      "width": 375,
+      "image": "dark-375.png",
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "contrast": []
+    },
+    {
+      "theme": "dark",
+      "width": 768,
+      "image": "dark-768.png",
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "contrast": []
+    },
+    {
+      "theme": "dark",
+      "width": 1024,
+      "image": "dark-1024.png",
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "contrast": []
+    },
+    {
+      "theme": "dark",
+      "width": 1440,
+      "image": "dark-1440.png",
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "contrast": []
+    },
+    {
+      "theme": "dark",
+      "width": 1920,
+      "image": "dark-1920.png",
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "contrast": []
+    }
+  ],
+  "errors": [],
+  "blockedWrites": [],
+  "loginAttempts": 0,
+  "scope": "Unauthenticated live deployment; no business writes or credential submissions",
+  "finishedAt": "2026-10-22T09:25:11.683Z"
+}
