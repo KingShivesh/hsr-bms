@@ -17,7 +17,9 @@ b, strong { font-weight: 500; }
 .ui-select-wrap > .ui-select { appearance: none; background-image: none; width: 100%; padding-right: var(--space-10); cursor: pointer; }
 .ui-select-chevron { position: absolute; right: var(--space-3); top: 50%; transform: translateY(-50%); pointer-events: none; color: var(--text-secondary); }
 .ui-select:not(:disabled):hover { border-color: var(--border-strong); background-color: var(--bg-surface-hover); }
-.ui-input:disabled, .ui-select:disabled, .ui-textarea:disabled { opacity: .5; cursor: not-allowed; }
+.ui-input:disabled, .ui-select:disabled, .ui-textarea:disabled { opacity: 1; cursor: not-allowed; color: var(--text-secondary); -webkit-text-fill-color: var(--text-secondary); border-style: dashed; }
+.ui-button:not(.table-state-card):disabled { opacity: 1; }
+.ui-button:not(.table-state-card):disabled:not([data-loading="true"]) { color: var(--text-secondary) !important; background: var(--bg-inset) !important; border-color: var(--border-strong) !important; border-style: dashed; box-shadow: none !important; }
 .ui-switch { display: flex; align-items: center; gap: var(--space-3); min-height: 44px; position: relative; cursor: pointer; font-size: var(--text-sm); font-weight: 500; }
 .ui-switch input { position: absolute; width: 40px; height: 24px; opacity: 0; margin: 0; }
 .ui-switch-track { width: 40px; height: 24px; flex: 0 0 40px; padding: 3px; border: 1px solid var(--border-strong); border-radius: 999px; background: var(--bg-inset); transition: background-color 120ms ease-out; }
@@ -25,7 +27,8 @@ b, strong { font-weight: 500; }
 .ui-switch input:checked + .ui-switch-track { background: var(--accent); border-color: var(--accent); }
 .ui-switch input:checked + .ui-switch-track > span { transform: translateX(16px); background: var(--on-accent); }
 .ui-switch input:focus-visible + .ui-switch-track { outline: 2px solid var(--border-focus); outline-offset: 2px; }
-.ui-switch:has(input:disabled) { opacity: .5; cursor: not-allowed; }
+.ui-switch:has(input:disabled) { opacity: 1; cursor: not-allowed; color: var(--text-secondary); }
+.ui-switch input:disabled + .ui-switch-track { border-style: dashed; background: var(--bg-inset); }
 .ui-disclosure { border: 1px solid var(--border-default); border-radius: var(--radius-md); background: var(--surface); min-width: 0; overflow: clip; }
 .ui-disclosure-trigger.ui-button { display: flex; width: 100%; justify-content: flex-start; gap: var(--space-3); min-height: 48px; padding: var(--space-3) var(--space-5); border: 0; border-radius: 0 !important; background: var(--bg-surface-hover); color: var(--text-primary); font-size: var(--text-sm); font-weight: 500; text-align: left; }
 .ui-disclosure-trigger.ui-button:hover:not(:disabled) { background: var(--bg-inset); }
@@ -58,6 +61,8 @@ b, strong { font-weight: 500; }
 .checkout-panel .ui-overlay-head p { font-size: var(--text-sm); }
 .checkout-section { border-radius: var(--radius-md); gap: var(--space-4); }
 .checkout-section h4 { margin: 0; font-size: var(--text-lg); line-height: var(--leading-lg); font-weight: 500; }
+.session-choice.ui-button { min-width: 0; grid-template-columns: minmax(0, 1fr); white-space: normal; }
+.session-choice .ui-button-content, .session-choice .ui-button-content > span { display: grid; min-width: 0; gap: var(--space-1); text-align: left; }
 .checkout-field > span { font-size: var(--text-xs); line-height: var(--leading-xs); font-weight: 500; }
 .checkout-field :is(.ui-input, .ui-select, .ui-textarea) { width: 100%; font-size: var(--text-sm); font-weight: 400; }
 .checkout-field .ui-input { min-height: 44px; padding-inline: var(--space-3); }

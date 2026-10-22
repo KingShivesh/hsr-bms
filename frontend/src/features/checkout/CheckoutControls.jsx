@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { Button, Input, Select, Textarea, Alert, Disclosure, SkeletonBlock } from "../../components/ui/index.js";
+import { Button, Input, Select, Textarea, Alert, Disclosure, SkeletonBlock, EmptyState } from "../../components/ui/index.js";
+import RetryNotice from "../../components/RetryNotice.jsx";
 import { getRecentMembers, searchMembers } from "../../api/index.js";
 import { formatCurrency } from "../../utils/format.js";
 import ContextHelp from "../../product/ContextHelp.jsx";
@@ -20,18 +21,22 @@ export function CustomerAtClose({ value, onChange, onDraftChange, disabled }) {
   const [rows, setRows] = useState([]);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [retry, setRetry] = useState(0);
   useEffect(() => {
     if (path !== "member") return;
     let active = true;
     setLoading(true); setError("");
     const timer = setTimeout(() => {
       const request = query.trim().length >= 3 ? searchMembers(query.trim()) : getRecentMembers();
-      request.then(({ data }) => { if (active) setRows(data); })
+      request.then(({ data }) => {
+        if (!Array.isArray(data)) throw new Error("Member lookup returned incomplete data.");
+        if (active) setRows(data.filter(member => member && member.id != null));
+      })
         .catch(err => { if (active) { setRows([]); setError(err.userMessage || "Member lookup failed."); } })
         .finally(() => { if (active) setLoading(false); });
     }, query ? 250 : 0);
     return () => { active = false; clearTimeout(timer); };
-  }, [query, path]);
+  }, [query, path, retry]);
   function choosePath(next) {
     setPath(next); setQuery("");
     onChange({ name: next === "name" ? "" : null, recalculate_rate: false });
@@ -43,8 +48,8 @@ export function CustomerAtClose({ value, onChange, onDraftChange, disabled }) {
     </div>
     {path === "member" && <>
       <label className="checkout-field"><span>Search by phone or name</span><Input autoFocus value={query} disabled={disabled} onChange={event => setQuery(event.target.value)} /></label>
-      {loading ? <SkeletonBlock rows={2} label="Loading members" /> : <p role="status">{error || (query.length < 3 ? "Recent members" : !rows.length ? "No matching members" : "")}</p>}
-      {rows.map(member => <Button key={member.id} variant="secondary" className="session-choice" disabled={disabled} aria-pressed={value?.member_id === member.id} onClick={() => onChange({ member_id: member.id, recalculate_rate: true })}>
+      {loading ? <SkeletonBlock rows={2} label="Loading members" /> : error ? <RetryNotice message={error} onRetry={() => { setLoading(true); setError(""); setRetry(value => value + 1); }} /> : !rows.length ? <EmptyState icon="ti-users" title={query.trim().length >= 3 ? "No matching members" : "No recent members"} description="Search for another member, or continue with a guest name." secondaryAction={false} action={<Button onClick={() => choosePath("name")}>Use guest name</Button>} /> : <p role="status">{query.trim().length < 3 ? "Recent members" : "Matching members"}</p>}
+      {!loading && !error && rows.map(member => <Button key={member.id} variant="secondary" className="session-choice" disabled={disabled} aria-pressed={value?.member_id === member.id} onClick={() => onChange({ member_id: member.id, recalculate_rate: true })}>
         <strong>{member.nm || member.phone || "Member"}</strong><span>{member.phone || "No phone on file"} · {member.typ}</span><span>{member.hourly_rate ? `${formatCurrency(member.hourly_rate)}/hr` : "Club standard rate"}</span>
       </Button>)}
     </>}
