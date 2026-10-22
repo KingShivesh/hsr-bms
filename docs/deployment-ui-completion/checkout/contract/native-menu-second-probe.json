@@ -1,0 +1,124 @@
+{
+  "cases": [
+    {
+      "username": "staff",
+      "theme": "light",
+      "width": 375,
+      "equalPaymentWidths": [
+        82.47493743896484,
+        82.47494506835938,
+        82.49040222167969
+      ],
+      "error": "Expected values to be strictly equal:\n+ actual - expected\n\n+ 'matrix(-1, 1.27679e-07, -1.27679e-07, -1, 0, 0)'\n- 'matrix(-1, 0, 0, -1, 0, 0)'\n              ^\n"
+    },
+    {
+      "username": "staff",
+      "theme": "light",
+      "width": 1440,
+      "equalPaymentWidths": [
+        137.8128662109375,
+        137.8282470703125,
+        137.8282470703125
+      ],
+      "chevron": {
+        "transform": "matrix(-1, 0, 0, -1, 0, 0)",
+        "duration": "0.15s"
+      },
+      "error": "Expected values to be strictly equal:\n+ actual - expected\n\n+ ''\n- 'staff_forgot_to_start'\n"
+    },
+    {
+      "username": "staff",
+      "theme": "dark",
+      "width": 375,
+      "equalPaymentWidths": [
+        83.06720733642578,
+        83.06721496582031,
+        83.08279418945312
+      ],
+      "chevron": {
+        "transform": "matrix(-1, 0, 0, -1, 0, 0)",
+        "duration": "0.15s"
+      },
+      "error": "Expected values to be strictly equal:\n+ actual - expected\n\n+ ''\n- 'staff_forgot_to_start'\n"
+    },
+    {
+      "username": "staff",
+      "theme": "dark",
+      "width": 1440,
+      "equalPaymentWidths": [
+        138.93719482421875,
+        138.9527587890625,
+        138.9527587890625
+      ],
+      "chevron": {
+        "transform": "matrix(-1, 0, 0, -1, 0, 0)",
+        "duration": "0.15s"
+      },
+      "error": "Expected values to be strictly equal:\n+ actual - expected\n\n+ ''\n- 'staff_forgot_to_start'\n"
+    },
+    {
+      "username": "admin",
+      "theme": "light",
+      "width": 375,
+      "equalPaymentWidths": [
+        83.06794738769531,
+        83.06794738769531,
+        83.08352661132812
+      ],
+      "chevron": {
+        "transform": "matrix(-1, 0, 0, -1, 0, 0)",
+        "duration": "0.15s"
+      },
+      "error": "Expected values to be strictly equal:\n+ actual - expected\n\n+ ''\n- 'staff_forgot_to_start'\n"
+    },
+    {
+      "username": "admin",
+      "theme": "light",
+      "width": 1440,
+      "equalPaymentWidths": [
+        138.93658447265625,
+        138.9521484375,
+        138.9521484375
+      ],
+      "chevron": {
+        "transform": "matrix(-1, 0, 0, -1, 0, 0)",
+        "duration": "0.15s"
+      },
+      "error": "Expected values to be strictly equal:\n+ actual - expected\n\n+ ''\n- 'staff_forgot_to_start'\n"
+    },
+    {
+      "username": "admin",
+      "theme": "dark",
+      "width": 375,
+      "equalPaymentWidths": [
+        82.22695922851562,
+        82.22695922851562,
+        82.24240112304688
+      ],
+      "chevron": {
+        "transform": "matrix(-1, 0, 0, -1, 0, 0)",
+        "duration": "0.15s"
+      },
+      "error": "Expected values to be strictly equal:\n+ actual - expected\n\n+ ''\n- 'staff_forgot_to_start'\n"
+    },
+    {
+      "username": "admin",
+      "theme": "dark",
+      "width": 1440,
+      "equalPaymentWidths": [
+        137.81103515625,
+        137.826416015625,
+        137.826416015625
+      ],
+      "chevron": {
+        "transform": "matrix(-1, 0, 0, -1, 0, 0)",
+        "duration": "0.15s"
+      },
+      "error": "Expected values to be strictly equal:\n+ actual - expected\n\n+ ''\n- 'staff_forgot_to_start'\n"
+    }
+  ],
+  "errors": [],
+  "blockedBusinessWrites": [],
+  "readOnlyPreviews": 0,
+  "scope": "Disposable local QA only; POST checkout-preview is read-only; settlement and every other write blocked"
+}

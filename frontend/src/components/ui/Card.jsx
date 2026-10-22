@@ -8,11 +8,11 @@ export function Panel({ children, className = "", as = "section", ...props }) {
   );
 }
 
-export default function Card({ children, className = "", interactive = false, as = "div", ...props }) {
+export default function Card({ children, className = "", interactive = false, tone = "default", as = "div", ...props }) {
   return createElement(
     as,
     {
-      className: ["ui-card", interactive ? "is-interactive" : "", className].filter(Boolean).join(" "),
+      className: ["ui-card", tone !== "default" ? `ui-card-${tone}` : "", interactive ? "is-interactive" : "", className].filter(Boolean).join(" "),
       ...props,
     },
     children,

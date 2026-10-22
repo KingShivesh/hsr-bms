@@ -18,8 +18,8 @@ export function measureUi({ minimumTextSize = 0 } = {}) {
     invalidCopy: [...new Set((document.body.innerText.match(/\bNaN\b|\bundefined\b|\bnull\b|\bTODO\b|Lorem ipsum|\[object Object\]|Invalid Date/g) || []))],
     unlabeledButtons: buttons.filter(node => !node.innerText.trim() && !node.getAttribute("aria-label") && !node.title).map(node => node.className),
     unlabeledInputs: [...scope.querySelectorAll('input:not([type="hidden"]),select,textarea')].filter(visible).filter(node => !node.labels?.length && !node.getAttribute("aria-label") && !node.getAttribute("aria-labelledby") && !node.title).map(node => ({tag:node.tagName,placeholder:node.placeholder || "",name:node.name || "",type:node.type})),
-    collectionSizes: Object.fromEntries([".op2-customer-card", ".sales-table tbody tr"].map(selector => [selector,document.querySelectorAll(selector).length])),
-    contentOverflow: [...scope.querySelectorAll(".ui-overlay-body,.op2-metric-grid > div,.op2-customer-stats > div,.checkout-summary-grid > div,.ops-kpi,.lf-table-money,.report-empty-panel")].filter(visible).filter(node=>node.scrollWidth>node.clientWidth+2).map(node=>({className:node.className,width:node.clientWidth,contentWidth:node.scrollWidth})),
+    collectionSizes: Object.fromEntries([".op2-customer-card", ".sales-table tbody tr", ".lf-table-card"].map(selector => [selector,document.querySelectorAll(selector).length])),
+    contentOverflow: [...scope.querySelectorAll(".ui-overlay-body,.op2-metric-grid > div,.op2-customer-stats > div,.checkout-summary-grid > *,.ops-kpi,.lf-table-money,.report-empty-panel")].filter(visible).filter(node=>node.scrollWidth>node.clientWidth+2).map(node=>({className:node.className,width:node.clientWidth,contentWidth:node.scrollWidth})),
     palette: { accent: getComputedStyle(document.body).getPropertyValue("--accent").trim(), font: getComputedStyle(document.body).fontFamily },
   };
 }

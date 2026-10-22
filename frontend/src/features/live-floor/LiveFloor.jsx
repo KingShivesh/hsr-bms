@@ -14,6 +14,7 @@ import SessionOrders from "../orders/SessionOrders.jsx";
 import CheckoutPanel from "../checkout/CheckoutPanel.jsx";
 import { useCachedState, hasCachedState } from "../../hooks/useCachedState.js";
 import { changeFood, pauseTable } from "./optimistic.js";
+import { readableFloorSnapshot } from "./floorData.js";
 
 function todayLabel() {
   return new Date().toLocaleDateString("en-IN", {
@@ -87,7 +88,7 @@ export default function LiveFloor({ role = "admin", onNavigate, newSessionReques
     try {
       const res = await getLiveFloor();
       if (version !== loadVersion.current) return;
-      const nextFloor = res.data?.floor || {
+      const nextFloor = readableFloorSnapshot(res.data?.floor || {
         tables: res.data?.tables || [],
         sessions: res.data?.active_sessions || [],
         summary: {
@@ -97,7 +98,7 @@ export default function LiveFloor({ role = "admin", onNavigate, newSessionReques
           live_value: 0,
         },
         attention: [],
-      };
+      });
       setFloor(nextFloor);
       setSelectedTableId((current) => {
         if (current && nextFloor.tables?.some((table) => table.id === current)) return current;
@@ -338,7 +339,7 @@ export default function LiveFloor({ role = "admin", onNavigate, newSessionReques
                 onOrders={orders}
                 busyTables={busyTables}
                 onReviewBooking={booking}
-                onSaveRate={saveInlineRate}
+                onSaveRate={role === "admin" ? saveInlineRate : undefined}
                 onInvalidRate={invalidRate}
                 onReload={() => loadFloor({ showLoading: true })}
               />

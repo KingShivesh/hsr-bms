@@ -1,0 +1,91 @@
+{
+  "stage": "after",
+  "cases": [
+    {
+      "username": "admin",
+      "theme": "light",
+      "width": 375,
+      "editableRateButtons": 1,
+      "appearance": {
+        "border": "1px",
+        "background": "rgba(0, 0, 0, 0)",
+        "height": 44,
+        "pencil": true
+      },
+      "ownerEditAndCancel": true,
+      "ratesUnchanged": true
+    },
+    {
+      "username": "admin",
+      "theme": "light",
+      "width": 1440,
+      "editableRateButtons": 1,
+      "appearance": {
+        "border": "1px",
+        "background": "rgba(0, 0, 0, 0)",
+        "height": 44,
+        "pencil": true
+      },
+      "ownerEditAndCancel": true,
+      "ratesUnchanged": true
+    },
+    {
+      "username": "admin",
+      "theme": "dark",
+      "width": 375,
+      "editableRateButtons": 1,
+      "appearance": {
+        "border": "1px",
+        "background": "rgba(0, 0, 0, 0)",
+        "height": 44,
+        "pencil": true
+      },
+      "ownerEditAndCancel": true,
+      "ratesUnchanged": true
+    },
+    {
+      "username": "admin",
+      "theme": "dark",
+      "width": 1440,
+      "editableRateButtons": 1,
+      "appearance": {
+        "border": "1px",
+        "background": "rgba(0, 0, 0, 0)",
+        "height": 44,
+        "pencil": true
+      },
+      "ownerEditAndCancel": true,
+      "ratesUnchanged": true
+    },
+    {
+      "username": "staff",
+      "theme": "light",
+      "width": 375,
+      "editableRateButtons": 0,
+      "ratesUnchanged": true
+    },
+    {
+      "username": "staff",
+      "theme": "light",
+      "width": 1440,
+      "editableRateButtons": 0,
+      "ratesUnchanged": true
+    },
+    {
+      "username": "staff",
+      "theme": "dark",
+      "width": 375,
+      "editableRateButtons": 0,
+      "ratesUnchanged": true
+    },
+    {
+      "username": "staff",
+      "theme": "dark",
+      "width": 1440,
+      "editableRateButtons": 0,
+      "ratesUnchanged": true
+    }
+  ],
+  "writes": [],
+  "scope": "Guarded local QA; only before-phase Staff rate submission allowed to reproduce rejection; all other business writes blocked"
+}

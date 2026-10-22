@@ -10,7 +10,7 @@ server-authoritative payment/receipt confirmation. No feature or role expansion.
 | --- | --- | --- |
 | Login/auth | 48 before and 48 after samples pass; four widths, both themes, six states | `login/before/`, `login/after/` |
 | Dashboard/shared cards | 48 after samples pass; all four widths/both themes/six states. Shared MetricCard + 14 Card/Panel roots; 12px minimum; long-text and dense-number overflow fixed | `dashboard/before/`, `dashboard/after/` |
-| Live Floor / checkout | Pending current-build rerun | Not a pass |
+| Live Floor / checkout | 48 + 48 final samples pass; all five table states, null rows and missing-status recovery also pass. Eight actual role/theme/mobile checkout contract cases pass | `live-floor/`, `checkout/` |
 | Members / bookings / Cafe | Pending current-build rerun and component consolidation | Not a pass |
 | Finance / reports / Settings / error routes | Pending current-build rerun and component consolidation | Not a pass |
 | Shared overlays / menus / action states | Pending consolidation and interaction rerun | Not a pass |
@@ -34,6 +34,12 @@ transition and retains reduced-motion behavior.
 | Dashboard | Duplicate KPI markup | Shared cards | Removed local KpiCard; lead and summary metrics use MetricCard, itself backed by Card | `comparisons/dashboard-default-1440.png` |
 | Dashboard | Long comparison text widened KPI card; oversized lead amount clipped on mobile | Bounded content, full-value access | Shared delta ellipsis/title; shared dense-number token also covers lead values | `comparisons/dashboard-extreme-1440.png` |
 | Dashboard | Long table labels squeezed table ID out of view | Identity must remain readable | Bounded grid track; fixed ID track; label/player-name ellipsis with full-text title | Full `dashboard/before/` / `dashboard/after/` captures |
+| Live Floor | Null table/order records crashed the route | Partial data must not crash | Guard the snapshot before rendering; keep valid records and authoritative totals | `live-floor/null-rows-before/` / `live-floor/null-rows-after/` |
+| Live Floor | Missing status fell back to Available | Never invent availability | Reject an unrecognized status and show the existing recovery path | `live-floor/unknown-status-before/` / `live-floor/unknown-status-after/` |
+| Checkout | Large totals widened the drawer by 36px; narrow summary cells overflowed | Bounded, readable values | Shared compact MetricCard grid, shared dense MetricValue, bounded/wrapping total header | `comparisons/checkout-extreme-1440.png` |
+| Checkout | Recalculation used only status text | Shaped loading feedback | Existing quote stays visible with a shared one-row skeleton; instant pending state is retained | `checkout/contract/` |
+| Live Floor | Staff saw an editable rate, then received HTTP 403 `Admin access required`; Owner edit control had no border or icon | Match existing permissions; visible action | Staff sees a read-only rate; Owner gets the shared bordered 44px button with pencil. No backend permission change | `live-floor/rate-role-before/` / `live-floor/rate-role-after/` |
+| Live Floor | Card padding was 16px rather than the shared 20px contract | Shared spacing | Uses the existing 20px token, without changing status palette or cues | `comparisons/table-states-before.png` / `comparisons/table-states-after.png` |
 
 The first shared-change regression is 20 main routes x four widths x both themes
 (160 loaded/default captures), all clean. It is not certification of all their
@@ -42,3 +48,43 @@ network/error/empty states; those are still being re-run in the ordered pass.
 zero React color-utility/literal violations or raw form/table primitives, but
 278 CSS color declarations still require token consolidation, 649 literal spacing
 declarations, and remaining surface/dialog roots are tracked rather than passed.
+
+## Operational Verification
+
+Final Live Floor and Staff checkout matrices each contain 48 clean samples
+(six data states x four widths x two themes), including disabled-text contrast
+at 4.5:1, minimum 12px text, named controls, 44px mobile buttons and content
+overflow. Null-row and unknown-status follow-ups each contain eight after
+samples; all five valid tables survive null rows, while missing availability
+exposes Retry with no invented idle cards. Server totals are not recalculated
+by the new presentation guard. The pure snapshot unit regression also passes.
+
+All five states have full-page and per-card captures at every requested width;
+the fixture isolates global notification popups so the cards can be inspected.
+Card-level attention remains. See `comparisons/table-states-after.png` (light
+above dark) and its before counterpart. These are browser read fixtures, not
+production data or a billing-calculation test.
+
+The eight checkout contract cases cover actual Owner/Staff, both themes and
+375/1440px: native select type-ahead + Enter, read-only one-minute time preview,
+Reset, focus trap, Escape and restored opener focus. The chevron reaches 180
+degrees with a 150ms transition. Three payment options differ by <1px in width.
+Only read-only preview POSTs are allowed; every business write is blocked.
+The initial native-menu probes are retained separately: native popup ArrowDown
+automation fails on a bare select as well in this Chrome build. It is NOT an
+application failure or a certified arrow-key pass. OS-level testing remains
+part of the physical-device gate. Tiny CSS matrix rounding is compared with
+numeric tolerance, not exact string equality. `contract/results.json` is the
+final passing contract; `*-probe.json` and failure PNGs are diagnostic history.
+
+Dashboard/shared-text cluster `0893bc4` and tooling/evidence `cb49102` were
+fast-forward merged and pushed. `deployment-dashboard.json` matches all 23
+live JS/CSS hashes, with health/readiness 200 and unchanged backend ancestry.
+Operational cluster deployment is pending; its completed verification is not
+being left on a branch after closeout.
+
+The final rate-action regression contains eight actual role/theme/width cases.
+All four baseline Staff submissions returned 403 and left stored rates unchanged.
+Afterward Staff has no edit control, and Owner has a 1px bordered, pencil-marked
+44px control; opening and cancelling preserves rates. The final 48-case floor
+matrix and eight all-state captures were rerun after this correction and pass.

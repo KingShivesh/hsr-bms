@@ -510,7 +510,7 @@
 
 .lf-table-card.table-state-card {
   min-height: 290px;
-  padding: 16px;
+  padding: var(--space-5);
   border-radius: var(--radius-md);
   transition: background-color 150ms ease, transform 100ms ease;
 }
@@ -554,6 +554,21 @@
 .lf-table-card[data-table-state="reserved"] .lf-table-card-body { grid-template-columns: 1fr; }
 .lf-table-card[data-table-state="available"] .lf-table-card-body > div:first-child { display: none; }
 .lf-table-card .lf-inline-rate { min-height: 44px; text-align: left; }
+.lf-table-card .table-state-edit-action {
+  border: 1px solid currentColor;
+  border-radius: var(--radius-sm);
+  padding-inline: var(--space-2);
+  background: transparent;
+  cursor: pointer;
+}
+.lf-table-card .table-state-edit-action:hover:not(:disabled) {
+  background: var(--table-card-hover) !important;
+  text-decoration: underline;
+}
+.lf-table-card .table-state-edit-action:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
 .lf-table-card .lf-rate-editor input {
   color: var(--text-primary);
   background: var(--surface);

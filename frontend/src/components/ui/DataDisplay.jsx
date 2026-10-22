@@ -1,6 +1,7 @@
 import { Icon as HsrIcon } from "./index.js";
 import { formatCurrency } from "../../utils/format.js";
 import Card from "./Card.jsx";
+import { createElement } from "react";
 export function CurrencyAmount({ value = 0, className = "" }) {
   return (
     <span className={["ui-currency", className].filter(Boolean).join(" ")}>
@@ -13,8 +14,8 @@ export function Timer({ value = "00:00", className = "" }) {
   return <span className={["ui-timer", className].filter(Boolean).join(" ")}>{value}</span>;
 }
 
-export function MetricValue({ children, ...props }) {
-  return <strong data-dense={String(children ?? "").length > 12} {...props}>{children}</strong>;
+export function MetricValue({ children, as = "strong", className = "", ...props }) {
+  return createElement(as, { className: ["ui-metric-value", className].filter(Boolean).join(" "), "data-dense": String(children ?? "").length > 12, ...props }, children);
 }
 
 export function MetricCard({ label, value, context, icon, delta, className = "", style, variant = "default", children }) {

@@ -59,10 +59,12 @@ are mapped with `@theme inline` in `index.css`; do not add Tailwind v3 config.
 - The user chose to retain Syne + DM Mono after the Inter comparison
   (2026-10-12). Evidence is in `docs/presentation-polish/font-comparison/`;
   that preview is not permission to switch application fonts.
-- Presentation contract: seven text sizes (11/13/14/16/20/24/32px) with matching
+- Presentation contract: seven text sizes (12/13/14/16/20/24/32px) with matching
   leading tokens; `presentation.css` loads last. Use shared Button, Input,
   Select, Textarea and Table. The `native` Button adapter preserves existing
   DOM content and native form semantics while adding common feedback.
+  The October 22 deployment brief raised the minimum from 11px to 12px;
+  preserve that minimum in future normalization and browser checks.
 - Lucide is the single icon source. `ui/Icon.jsx` maps legacy semantic names
   to self-hosted SVG glyphs at stroke 1.5; do not restore the external icon-font
   stylesheet. Mobile touch targets remain 44px. Approved status borders and

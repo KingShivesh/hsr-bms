@@ -1,3 +1,4 @@
+import { Card as HsrCard } from "../../components/ui/index.js";
 import { formatDuration as polishDuration } from "../../utils/format.js";
 import { Input as HsrInput, Button as HsrButton, Icon as HsrIcon } from "../../components/ui/index.js";
 import { memo, useEffect, useRef, useState } from "react";
@@ -131,7 +132,7 @@ function TableCard({
   }
 
   return (
-    <article
+    <HsrCard as="article"
       className={`lf-table-card table-state-card ${selected ? "is-selected" : ""}`}
       {...tableStateAttributes(status.key)}
       data-attention={attention ? "true" : "false"}
@@ -217,12 +218,13 @@ function TableCard({
               {rateError && <em>{rateError}</em>}
             </div>
           ) : canEditRate ? (
-            <HsrButton native
+            <HsrButton variant="ghost"
               type="button"
-              className="lf-inline-rate"
+              className="lf-inline-rate table-state-edit-action"
               onClick={beginRateEdit}
               title={`Edit ₹${shownRate}/hr`}
             >
+              <HsrIcon name="pencil" />
               ₹{shownRate}/hr
             </HsrButton>
           ) : (
@@ -284,6 +286,6 @@ function TableCard({
           </HsrButton>
         )}
       </div>
-    </article>
+    </HsrCard>
   );
 }

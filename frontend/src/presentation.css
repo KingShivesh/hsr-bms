@@ -20,6 +20,9 @@ h3 { font-size: var(--text-lg); line-height: var(--leading-lg); font-weight: 500
 .ui-page-header p, .ui-section-header p { font-size: var(--text-sm); line-height: var(--leading-sm); margin: var(--space-1) 0 0; }
 .ui-page-actions, .ui-section-actions { gap: var(--space-2); margin-left: auto; }
 .ui-card, .ui-panel, .ui-metric-card { border: 1px solid var(--border-default); border-radius: var(--radius-md); padding: var(--space-5); box-shadow: none !important; }
+.ui-card.ui-card-accent { background: linear-gradient(135deg, var(--accent-soft), var(--surface)) !important; border-color: var(--accent-border) !important; }
+.ui-metric-card-compact { min-height: 88px; }
+.ui-metric-card-compact > strong { margin-top: var(--space-2); font-size: var(--text-lg); line-height: var(--leading-lg); }
 .ui-card.is-interactive { transition: border-color 80ms var(--ease-out), transform 120ms var(--ease-out); }
 .ui-card.is-interactive:hover { border-color: var(--border-strong); transform: translateY(-1px); }
 .ui-metric-head, .ui-eyebrow, .metric-label { font-size: var(--text-xs); line-height: var(--leading-xs); font-weight: 500 !important; letter-spacing: 0; }

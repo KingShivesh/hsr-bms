@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Button, Input, Select, Textarea, Alert, Disclosure, SkeletonBlock, EmptyState } from "../../components/ui/index.js";
+import { Button, Input, Select, Textarea, Alert, Disclosure, SkeletonBlock, EmptyState, Panel } from "../../components/ui/index.js";
 import RetryNotice from "../../components/RetryNotice.jsx";
 import { getRecentMembers, searchMembers } from "../../api/index.js";
 import { formatCurrency } from "../../utils/format.js";
@@ -41,7 +41,7 @@ export function CustomerAtClose({ value, onChange, onDraftChange, disabled }) {
     setPath(next); setQuery("");
     onChange({ name: next === "name" ? "" : null, recalculate_rate: false });
   }
-  return <section className="checkout-section">
+  return <Panel className="checkout-section">
     <h4>Customer (optional)</h4>
     <div className="checkout-button-grid checkout-customer-paths" role="group" aria-label="Customer at close">
       {[["member", "Search LP Member"], ["name", "Add name"], ["skip", "Skip"]].map(([key, label]) => <Button key={key} variant="secondary" className={path === key ? "is-active" : ""} disabled={disabled} aria-pressed={path === key} onClick={() => choosePath(key)}>{label}</Button>)}
@@ -56,7 +56,7 @@ export function CustomerAtClose({ value, onChange, onDraftChange, disabled }) {
     {path === "name" && <>
       <label className="checkout-field"><span>Name (optional)</span><Input maxLength={80} disabled={disabled} value={value?.name || ""} onChange={event => (onDraftChange || onChange)({ ...value, name: event.target.value })} onBlur={() => onChange(value)} onKeyDown={event => { if (event.key === "Enter") { event.preventDefault(); event.currentTarget.blur(); } }} /></label>
     </>}
-  </section>;
+  </Panel>;
 }
 
 export function AdjustSessionTime({ quote, value, onChange, onDirtyChange, disabled }) {

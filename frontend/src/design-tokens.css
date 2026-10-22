@@ -11,6 +11,7 @@
   --space-10: 40px;
   --space-12: 48px;
   --space-16: 64px;
+  --metric-min-inline-size: 180px;
   --text-xs: 12px;
   --text-sm: 13px;
   --text-base: 14px;

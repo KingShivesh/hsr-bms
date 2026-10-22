@@ -47,7 +47,7 @@ try {
             const style = getComputedStyle(node);
             const size = parseFloat(style.fontSize);
             fontSizes.add(size); weights.add(style.fontWeight);
-            if (![11,13,14,16,20,24,32].includes(size)) offScale.push({ text: node.textContent.trim().slice(0,60), size, className: node.className });
+            if (![12,13,14,16,20,24,32].includes(size)) offScale.push({ text: node.textContent.trim().slice(0,60), size, className: node.className });
           }
           const controls = [...document.querySelectorAll("button,input:not([type=checkbox]):not([type=radio]),select,textarea")].filter(visible);
           const rows = [...document.querySelectorAll("tbody tr")].filter(visible).slice(0,5).map(node => Math.round(node.getBoundingClientRect().height));

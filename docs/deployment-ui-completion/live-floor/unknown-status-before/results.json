@@ -1,0 +1,867 @@
+{
+  "route": "/live-floor",
+  "stage": "before",
+  "username": "admin",
+  "samples": [
+    {
+      "theme": "dark",
+      "width": 375,
+      "state": "partial",
+      "file": "dark-375-partial.png",
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "smallText": [
+        {
+          "text": "v0.1.0",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "Status",
+          "fontSize": "11px",
+          "className": "ui-button ui-button-native ui-button-md"
+        },
+        {
+          "text": "Changelog",
+          "fontSize": "11px",
+          "className": "ui-button ui-button-native ui-button-md"
+        },
+        {
+          "text": "HSR Snooker Cafe BMS",
+          "fontSize": "11px",
+          "className": "ui-button ui-button-native ui-button-md"
+        },
+        {
+          "text": "Live Floor",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "8",
+          "fontSize": "11px",
+          "className": "cf-notification-dot"
+        },
+        {
+          "text": "AD",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "Live sync",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "Thursday, 22 Oct · Admin console",
+          "fontSize": "11px",
+          "className": "lf-date"
+        },
+        {
+          "text": "2 active",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "3 available",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "0 reserved",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "1 attention",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "Running now",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "No paused sessions",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "Live floor value",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "Estimated from open sessions",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "Open tables",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "Ready to seat guests",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "Bookings today",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "0 currently reserved",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "Running",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "Table",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "Canteen",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "Running total",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "Overdue",
+          "fontSize": "11px",
+          "className": "table-state-attention"
+        },
+        {
+          "text": "Running",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "Table",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "Running total",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "Available",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "Available",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "Available",
+          "fontSize": "11px",
+          "className": ""
+        }
+      ],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0,
+        ".lf-table-card": 5
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "loadingIndicator": true,
+      "settled": true,
+      "contrast": [],
+      "contrastScope": "all rendered page text",
+      "retry": true,
+      "errors": []
+    },
+    {
+      "theme": "dark",
+      "width": 1440,
+      "state": "partial",
+      "file": "dark-1440-partial.png",
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "smallText": [
+        {
+          "text": "Single-club workspace",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "Owner access",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "Operate",
+          "fontSize": "11px",
+          "className": "sb-section"
+        },
+        {
+          "text": "2 Active",
+          "fontSize": "11px",
+          "className": "sb-badge"
+        },
+        {
+          "text": "Business",
+          "fontSize": "11px",
+          "className": "sb-section"
+        },
+        {
+          "text": "Club",
+          "fontSize": "11px",
+          "className": "sb-section"
+        },
+        {
+          "text": "Admin",
+          "fontSize": "11px",
+          "className": "sb-section"
+        },
+        {
+          "text": "v0.1.0",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "Status",
+          "fontSize": "11px",
+          "className": "ui-button ui-button-native ui-button-md"
+        },
+        {
+          "text": "Changelog",
+          "fontSize": "11px",
+          "className": "ui-button ui-button-native ui-button-md"
+        },
+        {
+          "text": "Signed in",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "HSR Snooker Cafe BMS",
+          "fontSize": "11px",
+          "className": "ui-button ui-button-native ui-button-md"
+        },
+        {
+          "text": "Live Floor",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "⌘K",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "8",
+          "fontSize": "11px",
+          "className": "cf-notification-dot"
+        },
+        {
+          "text": "AD",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "Live sync",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "Thursday, 22 Oct · Admin console",
+          "fontSize": "11px",
+          "className": "lf-date"
+        },
+        {
+          "text": "2 active",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "3 available",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "0 reserved",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "1 attention",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "Running now",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "No paused sessions",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "Live floor value",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "Estimated from open sessions",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "Open tables",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "Ready to seat guests",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "Bookings today",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "0 currently reserved",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "Running",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "Table",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "Canteen",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "Running total",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "Overdue",
+          "fontSize": "11px",
+          "className": "table-state-attention"
+        },
+        {
+          "text": "Running",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "Table",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "Running total",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "Available",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "Available",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "Available",
+          "fontSize": "11px",
+          "className": ""
+        }
+      ],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0,
+        ".lf-table-card": 5
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "loadingIndicator": true,
+      "settled": true,
+      "contrast": [],
+      "contrastScope": "all rendered page text",
+      "retry": true,
+      "errors": []
+    },
+    {
+      "theme": "light",
+      "width": 375,
+      "state": "partial",
+      "file": "light-375-partial.png",
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "smallText": [
+        {
+          "text": "v0.1.0",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "Status",
+          "fontSize": "11px",
+          "className": "ui-button ui-button-native ui-button-md"
+        },
+        {
+          "text": "Changelog",
+          "fontSize": "11px",
+          "className": "ui-button ui-button-native ui-button-md"
+        },
+        {
+          "text": "HSR Snooker Cafe BMS",
+          "fontSize": "11px",
+          "className": "ui-button ui-button-native ui-button-md"
+        },
+        {
+          "text": "Live Floor",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "8",
+          "fontSize": "11px",
+          "className": "cf-notification-dot"
+        },
+        {
+          "text": "AD",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "Live sync",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "Thursday, 22 Oct · Admin console",
+          "fontSize": "11px",
+          "className": "lf-date"
+        },
+        {
+          "text": "2 active",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "3 available",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "0 reserved",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "1 attention",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "Running now",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "No paused sessions",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "Live floor value",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "Estimated from open sessions",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "Open tables",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "Ready to seat guests",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "Bookings today",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "0 currently reserved",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "Running",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "Table",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "Canteen",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "Running total",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "Overdue",
+          "fontSize": "11px",
+          "className": "table-state-attention"
+        },
+        {
+          "text": "Running",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "Table",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "Running total",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "Available",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "Available",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "Available",
+          "fontSize": "11px",
+          "className": ""
+        }
+      ],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0,
+        ".lf-table-card": 5
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "loadingIndicator": true,
+      "settled": true,
+      "contrast": [],
+      "contrastScope": "all rendered page text",
+      "retry": true,
+      "errors": []
+    },
+    {
+      "theme": "light",
+      "width": 1440,
+      "state": "partial",
+      "file": "light-1440-partial.png",
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "smallText": [
+        {
+          "text": "Single-club workspace",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "Owner access",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "Operate",
+          "fontSize": "11px",
+          "className": "sb-section"
+        },
+        {
+          "text": "2 Active",
+          "fontSize": "11px",
+          "className": "sb-badge"
+        },
+        {
+          "text": "Business",
+          "fontSize": "11px",
+          "className": "sb-section"
+        },
+        {
+          "text": "Club",
+          "fontSize": "11px",
+          "className": "sb-section"
+        },
+        {
+          "text": "Admin",
+          "fontSize": "11px",
+          "className": "sb-section"
+        },
+        {
+          "text": "v0.1.0",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "Status",
+          "fontSize": "11px",
+          "className": "ui-button ui-button-native ui-button-md"
+        },
+        {
+          "text": "Changelog",
+          "fontSize": "11px",
+          "className": "ui-button ui-button-native ui-button-md"
+        },
+        {
+          "text": "Signed in",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "HSR Snooker Cafe BMS",
+          "fontSize": "11px",
+          "className": "ui-button ui-button-native ui-button-md"
+        },
+        {
+          "text": "Live Floor",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "⌘K",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "8",
+          "fontSize": "11px",
+          "className": "cf-notification-dot"
+        },
+        {
+          "text": "AD",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "Live sync",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "Thursday, 22 Oct · Admin console",
+          "fontSize": "11px",
+          "className": "lf-date"
+        },
+        {
+          "text": "2 active",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "3 available",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "0 reserved",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "1 attention",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "Running now",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "No paused sessions",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "Live floor value",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "Estimated from open sessions",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "Open tables",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "Ready to seat guests",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "Bookings today",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "0 currently reserved",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "Running",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "Table",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "Canteen",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "Running total",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "Overdue",
+          "fontSize": "11px",
+          "className": "table-state-attention"
+        },
+        {
+          "text": "Running",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "Table",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "Running total",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "Available",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "Available",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "Available",
+          "fontSize": "11px",
+          "className": ""
+        }
+      ],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0,
+        ".lf-table-card": 5
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "loadingIndicator": true,
+      "settled": true,
+      "contrast": [],
+      "contrastScope": "all rendered page text",
+      "retry": true,
+      "errors": []
+    }
+  ],
+  "errors": [],
+  "productionWrites": 0
+}

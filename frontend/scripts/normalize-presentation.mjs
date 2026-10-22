@@ -7,7 +7,7 @@ import postcss from "postcss";
 
 const traverse = traverseModule.default;
 const generate = generatorModule.default;
-const sizes = { xs: 11, sm: 13, base: 14, lg: 16, xl: 20, "2xl": 24, "3xl": 32 };
+const sizes = { xs: 12, sm: 13, base: 14, lg: 16, xl: 20, "2xl": 24, "3xl": 32 };
 const nearest = value => Object.keys(sizes).reduce((best, key) => Math.abs(sizes[key] - value) < Math.abs(sizes[best] - value) ? key : best, "base");
 const grid = [0,4,8,12,16,20,24,32,40,48,64];
 const snap = value => grid.reduce((best, step) => Math.abs(step-value) < Math.abs(best-value) ? step : best, 0);

@@ -2,7 +2,7 @@ import { formatCurrency as polishCurrency, formatDateTime as polishDateTime } fr
 import { Icon as HsrIcon, Button as HsrButton, Input as HsrInput } from "../../components/ui/index.js";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { quoteSession, stopSession, previewCheckout, closeWithProposal } from "../../api/index.js";
-import { Alert, Badge, Button, Drawer } from "../../components/ui/index.js";
+import { Alert, Badge, Button, Drawer, Card, Panel, MetricCard, MetricValue, SkeletonBlock } from "../../components/ui/index.js";
 import { useToast } from "../../components/toastContext.js";
 import { tariffDescription } from "../sessions/tariffs.js";
 import { CustomerAtClose, AdjustSessionTime } from "./CheckoutControls.jsx";
@@ -280,40 +280,40 @@ export default function CheckoutPanel({ table, open, onClose, onComplete, onPend
         <div className="checkout-flow">
           <ContextHelp label="Help with checkout">Review the frozen quote before confirming. Cash and UPI record a payment; verify the transfer before confirming UPI. Credit requires a linked member and leaves the bill outstanding in their ledger. A time correction needs a reason and remains in the audit trail.</ContextHelp>
           {loading && !quote && <div className="page-skeleton compact" role="status" aria-label="Preparing frozen bill"><div className="skeleton-line skeleton-title" /><div className="skeleton-panel" /></div>}
-          {loading && quote && <p role="status">Recalculating bill…</p>}
+          {loading && quote && <SkeletonBlock rows={1} label="Recalculating bill" />}
           {finalizing && <p role="status">Closing table…</p>}
           {error && <Alert tone="danger" title="Checkout needs attention">{error}
             {!quote && <Button variant="secondary" loading={loading} onClick={() => loadQuote({ nextPaymentMethod: paymentMethod, nextDiscountType: discountType, nextDiscountValue: discountValue, nextClosedAtMs: closedAtMs })}>Retry quote</Button>}
           </Alert>}
           {quote && (
             <>
-              <div className="checkout-total-card">
+              <Card tone="accent" className="checkout-total-card">
                 <div>
                   <Badge tone="running" dot>{String(quote.billing_mode || "single").toUpperCase()}</Badge>
-                  <h3>{money(finalTotal)}</h3>
+                  <MetricValue as="h3">{money(finalTotal)}</MetricValue>
                   <p>{quote.nm || `${quote.tbl || tableId.toUpperCase()} · Guest`} · {quote.tariff_mode && quote.tariff_mode !== "hourly" ? tariffDescription(quote) : `${quote.dur || 0} billable min`}</p>
                 </div>
                 <div className="checkout-freeze-pill">
                   <HsrIcon className="ti ti-snowflake" aria-hidden="true" />
                   Frozen {formatDateTime(quote.session_ended_at || closedAtMs)}
                 </div>
-              </div>
+              </Card>
 
               {quote.checkout_blocked && <Alert tone="warning">Close the open frame before checkout.</Alert>}
               {quote.time_edit && <Alert tone="warning" title="Duration adjusted">{quote.dur} min (adjusted from {quote.time_edit.original_duration} min) · {quote.time_edit.reason_label} · {quote.time_edit.staff}</Alert>}
               {Number.isFinite(quote.rate_delta) && quote.rate_delta !== 0 && <Alert tone="info">Member rate {money(quote.original_rate)}/hr → {money(quote.rate)}/hr · Bill change {money(quote.rate_delta)}</Alert>}
               <div className="checkout-summary-grid">
-                <div><span>Table</span><strong>{money(quote.ply)}</strong></div>
-                <div><span>Food</span><strong>{money(quote.famt)}</strong></div>
-                <div><span>Before discount</span><strong>{money(rawTotal)}</strong></div>
-                <div><span>Discount</span><strong>{money(discountAmount)}</strong></div>
+                <MetricCard variant="compact" label="Table" value={money(quote.ply)} />
+                <MetricCard variant="compact" label="Food" value={money(quote.famt)} />
+                <MetricCard variant="compact" label="Before discount" value={money(rawTotal)} />
+                <MetricCard variant="compact" label="Discount" value={money(discountAmount)} />
               </div>
 
               {quote.can_edit_time && <AdjustSessionTime quote={quote} value={proposal.time_override} onDirtyChange={setTimeDraftDirty} onChange={value => updateProposal("time_override", value)} disabled={finalizing || loading} />}
               {quote.can_edit_time != null && <CustomerAtClose value={proposal.customer} onDraftChange={value => { proposalRef.current = { ...proposalRef.current, customer: value }; setProposal(proposalRef.current); }} onChange={value => updateProposal("customer", value)} disabled={finalizing} />}
 
               {!!splitRows.length && (
-                <section className="checkout-section">
+                <Panel className="checkout-section">
                   <div className="checkout-section-head">
                     <h4>Who pays what</h4>
                     <span>{splitRows.length} customer{splitRows.length > 1 ? "s" : ""}</span>
@@ -332,10 +332,10 @@ export default function CheckoutPanel({ table, open, onClose, onComplete, onPend
                       </div>
                     ))}
                   </div>
-                </section>
+                </Panel>
               )}
 
-              <section className="checkout-section">
+              <Panel className="checkout-section">
                 <div className="checkout-section-head">
                   <h4>Discount</h4>
                   <span>Admin controlled</span>
@@ -379,9 +379,9 @@ export default function CheckoutPanel({ table, open, onClose, onComplete, onPend
                     />
                   </label>
                 )}
-              </section>
+              </Panel>
 
-              <section className="checkout-section">
+              <Panel className="checkout-section">
                 <div className="checkout-section-head">
                   <h4>Payment method</h4>
                   <span>{paymentMethod}</span>
@@ -407,7 +407,7 @@ export default function CheckoutPanel({ table, open, onClose, onComplete, onPend
                   {quote.payment_methods && <label className="checkout-field"><span>UPI reference (optional)</span><HsrInput maxLength={120} value={paymentReference} disabled={finalizing} onChange={event => setPaymentReference(event.target.value)} /></label>}
                 </div>}
                 {paymentMethod === "Credit" && <p>Charge {money(finalTotal)} to {quote.nm || "the linked member"}. Payment remains outstanding.</p>}
-              </section>
+              </Panel>
 
               <div className="checkout-actions checkout-actions-sticky">
                 <Button variant="ghost" onClick={requestDismiss} disabled={finalizing}>

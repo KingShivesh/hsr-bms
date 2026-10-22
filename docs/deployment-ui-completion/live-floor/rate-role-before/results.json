@@ -1,0 +1,160 @@
+{
+  "stage": "before",
+  "cases": [
+    {
+      "username": "admin",
+      "theme": "light",
+      "width": 375,
+      "editableRateButtons": 1,
+      "appearance": {
+        "border": "0px",
+        "background": "rgba(0, 0, 0, 0)",
+        "height": 44,
+        "pencil": false
+      },
+      "ownerEditAndCancel": true,
+      "ratesUnchanged": true
+    },
+    {
+      "username": "admin",
+      "theme": "light",
+      "width": 1440,
+      "editableRateButtons": 1,
+      "appearance": {
+        "border": "0px",
+        "background": "rgba(0, 0, 0, 0)",
+        "height": 44,
+        "pencil": false
+      },
+      "ownerEditAndCancel": true,
+      "ratesUnchanged": true
+    },
+    {
+      "username": "admin",
+      "theme": "dark",
+      "width": 375,
+      "editableRateButtons": 1,
+      "appearance": {
+        "border": "0px",
+        "background": "rgba(0, 0, 0, 0)",
+        "height": 44,
+        "pencil": false
+      },
+      "ownerEditAndCancel": true,
+      "ratesUnchanged": true
+    },
+    {
+      "username": "admin",
+      "theme": "dark",
+      "width": 1440,
+      "editableRateButtons": 1,
+      "appearance": {
+        "border": "0px",
+        "background": "rgba(0, 0, 0, 0)",
+        "height": 44,
+        "pencil": false
+      },
+      "ownerEditAndCancel": true,
+      "ratesUnchanged": true
+    },
+    {
+      "username": "staff",
+      "theme": "light",
+      "width": 375,
+      "editableRateButtons": 1,
+      "appearance": {
+        "border": "0px",
+        "background": "rgba(0, 0, 0, 0)",
+        "height": 44,
+        "pencil": false
+      },
+      "response": {
+        "status": 403,
+        "body": {
+          "detail": "Admin access required"
+        }
+      },
+      "ratesUnchanged": true
+    },
+    {
+      "username": "staff",
+      "theme": "light",
+      "width": 1440,
+      "editableRateButtons": 1,
+      "appearance": {
+        "border": "0px",
+        "background": "rgba(0, 0, 0, 0)",
+        "height": 44,
+        "pencil": false
+      },
+      "response": {
+        "status": 403,
+        "body": {
+          "detail": "Admin access required"
+        }
+      },
+      "ratesUnchanged": true
+    },
+    {
+      "username": "staff",
+      "theme": "dark",
+      "width": 375,
+      "editableRateButtons": 1,
+      "appearance": {
+        "border": "0px",
+        "background": "rgba(0, 0, 0, 0)",
+        "height": 44,
+        "pencil": false
+      },
+      "response": {
+        "status": 403,
+        "body": {
+          "detail": "Admin access required"
+        }
+      },
+      "ratesUnchanged": true
+    },
+    {
+      "username": "staff",
+      "theme": "dark",
+      "width": 1440,
+      "editableRateButtons": 1,
+      "appearance": {
+        "border": "0px",
+        "background": "rgba(0, 0, 0, 0)",
+        "height": 44,
+        "pencil": false
+      },
+      "response": {
+        "status": 403,
+        "body": {
+          "detail": "Admin access required"
+        }
+      },
+      "ratesUnchanged": true
+    }
+  ],
+  "writes": [
+    {
+      "username": "staff",
+      "method": "POST",
+      "path": "/settings/rates"
+    },
+    {
+      "username": "staff",
+      "method": "POST",
+      "path": "/settings/rates"
+    },
+    {
+      "username": "staff",
+      "method": "POST",
+      "path": "/settings/rates"
+    },
+    {
+      "username": "staff",
+      "method": "POST",
+      "path": "/settings/rates"
+    }
+  ],
+  "scope": "Guarded local QA; only before-phase Staff rate submission allowed to reproduce rejection; all other business writes blocked"
+}

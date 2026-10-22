@@ -1,0 +1,383 @@
+{
+  "route": "/live-floor",
+  "stage": "before",
+  "username": "admin",
+  "samples": [
+    {
+      "theme": "dark",
+      "width": 375,
+      "state": "partial",
+      "file": "dark-375-partial.png",
+      "applicationCrashed": true,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "smallText": [
+        {
+          "text": "v0.1.0",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "Status",
+          "fontSize": "11px",
+          "className": "ui-button ui-button-native ui-button-md"
+        },
+        {
+          "text": "Changelog",
+          "fontSize": "11px",
+          "className": "ui-button ui-button-native ui-button-md"
+        },
+        {
+          "text": "HSR Snooker Cafe BMS",
+          "fontSize": "11px",
+          "className": "ui-button ui-button-native ui-button-md"
+        },
+        {
+          "text": "Live Floor",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "8",
+          "fontSize": "11px",
+          "className": "cf-notification-dot"
+        },
+        {
+          "text": "AD",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "Live sync",
+          "fontSize": "11px",
+          "className": ""
+        }
+      ],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "loadingIndicator": true,
+      "settled": true,
+      "contrast": [],
+      "contrastScope": "all rendered page text",
+      "retry": true,
+      "errors": []
+    },
+    {
+      "theme": "dark",
+      "width": 1440,
+      "state": "partial",
+      "file": "dark-1440-partial.png",
+      "applicationCrashed": true,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "smallText": [
+        {
+          "text": "Single-club workspace",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "Owner access",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "Operate",
+          "fontSize": "11px",
+          "className": "sb-section"
+        },
+        {
+          "text": "2 Active",
+          "fontSize": "11px",
+          "className": "sb-badge"
+        },
+        {
+          "text": "Business",
+          "fontSize": "11px",
+          "className": "sb-section"
+        },
+        {
+          "text": "Club",
+          "fontSize": "11px",
+          "className": "sb-section"
+        },
+        {
+          "text": "Admin",
+          "fontSize": "11px",
+          "className": "sb-section"
+        },
+        {
+          "text": "v0.1.0",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "Status",
+          "fontSize": "11px",
+          "className": "ui-button ui-button-native ui-button-md"
+        },
+        {
+          "text": "Changelog",
+          "fontSize": "11px",
+          "className": "ui-button ui-button-native ui-button-md"
+        },
+        {
+          "text": "Signed in",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "HSR Snooker Cafe BMS",
+          "fontSize": "11px",
+          "className": "ui-button ui-button-native ui-button-md"
+        },
+        {
+          "text": "Live Floor",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "⌘K",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "8",
+          "fontSize": "11px",
+          "className": "cf-notification-dot"
+        },
+        {
+          "text": "AD",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "Live sync",
+          "fontSize": "11px",
+          "className": ""
+        }
+      ],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "loadingIndicator": true,
+      "settled": true,
+      "contrast": [],
+      "contrastScope": "all rendered page text",
+      "retry": true,
+      "errors": []
+    },
+    {
+      "theme": "light",
+      "width": 375,
+      "state": "partial",
+      "file": "light-375-partial.png",
+      "applicationCrashed": true,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "smallText": [
+        {
+          "text": "v0.1.0",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "Status",
+          "fontSize": "11px",
+          "className": "ui-button ui-button-native ui-button-md"
+        },
+        {
+          "text": "Changelog",
+          "fontSize": "11px",
+          "className": "ui-button ui-button-native ui-button-md"
+        },
+        {
+          "text": "HSR Snooker Cafe BMS",
+          "fontSize": "11px",
+          "className": "ui-button ui-button-native ui-button-md"
+        },
+        {
+          "text": "Live Floor",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "8",
+          "fontSize": "11px",
+          "className": "cf-notification-dot"
+        },
+        {
+          "text": "AD",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "Live sync",
+          "fontSize": "11px",
+          "className": ""
+        }
+      ],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "loadingIndicator": true,
+      "settled": true,
+      "contrast": [],
+      "contrastScope": "all rendered page text",
+      "retry": true,
+      "errors": []
+    },
+    {
+      "theme": "light",
+      "width": 1440,
+      "state": "partial",
+      "file": "light-1440-partial.png",
+      "applicationCrashed": true,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "smallText": [
+        {
+          "text": "Single-club workspace",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "Owner access",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "Operate",
+          "fontSize": "11px",
+          "className": "sb-section"
+        },
+        {
+          "text": "2 Active",
+          "fontSize": "11px",
+          "className": "sb-badge"
+        },
+        {
+          "text": "Business",
+          "fontSize": "11px",
+          "className": "sb-section"
+        },
+        {
+          "text": "Club",
+          "fontSize": "11px",
+          "className": "sb-section"
+        },
+        {
+          "text": "Admin",
+          "fontSize": "11px",
+          "className": "sb-section"
+        },
+        {
+          "text": "v0.1.0",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "Status",
+          "fontSize": "11px",
+          "className": "ui-button ui-button-native ui-button-md"
+        },
+        {
+          "text": "Changelog",
+          "fontSize": "11px",
+          "className": "ui-button ui-button-native ui-button-md"
+        },
+        {
+          "text": "Signed in",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "HSR Snooker Cafe BMS",
+          "fontSize": "11px",
+          "className": "ui-button ui-button-native ui-button-md"
+        },
+        {
+          "text": "Live Floor",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "⌘K",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "8",
+          "fontSize": "11px",
+          "className": "cf-notification-dot"
+        },
+        {
+          "text": "AD",
+          "fontSize": "11px",
+          "className": ""
+        },
+        {
+          "text": "Live sync",
+          "fontSize": "11px",
+          "className": ""
+        }
+      ],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".sales-table tbody tr": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "loadingIndicator": true,
+      "settled": true,
+      "contrast": [],
+      "contrastScope": "all rendered page text",
+      "retry": true,
+      "errors": []
+    }
+  ],
+  "errors": [],
+  "productionWrites": 0
+}

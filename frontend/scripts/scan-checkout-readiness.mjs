@@ -7,6 +7,7 @@ import { measureUi } from "./ui-readiness-metrics.mjs";
 const stage = process.argv[2] || "after", api = "http://127.0.0.1:8006";
 const origin = `http://127.0.0.1:${stage === "before" ? 5180 : 5181}`;
 const output = process.env.UI_OUTPUT_DIR || `../docs/ui-readiness/checkout/${stage}`;
+const strict = process.env.UI_STRICT_PILOT === "true";
 await fs.mkdir(output,{recursive:true});
 const report = {stage,samples:[],errors:[],settlementRequests:0,recoveryChecks:[]};
 const browser = await chromium.launch({executablePath:"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",headless:true});
@@ -35,15 +36,15 @@ try {
       if(state==="loading")await dialog.getByRole("status",{name:"Preparing frozen bill"}).waitFor();
       else await page.waitForFunction(()=>!document.querySelector('.checkout-panel .page-skeleton'),null,{timeout:12000});
       await page.evaluate(()=>document.fonts.ready);
-      for(const width of [375,768,1024,1440,1920]) {
+      for(const width of process.env.UI_WIDTHS?.split(",").map(Number) || [375,768,1024,1440,1920]) {
         await page.setViewportSize({width,height:width===375?844:1000});
         await page.waitForTimeout(150);
-        const metrics=await page.evaluate(measureUi);
+        const metrics=await page.evaluate(measureUi,{minimumTextSize:strict?12:0});
         const rect=await dialog.boundingBox();
         const retry=!["error","empty"].includes(state)||await dialog.getByRole("button",{name:/retry/i}).count()>0;
         const file=`${theme}-${width}-${state}.png`;
         await page.screenshot({path:`${output}/${file}`,animations:"disabled"});
-        report.samples.push({theme,width,state,file,...metrics,withinViewport:rect.x>=0&&rect.y>=0&&rect.x+rect.width<=width+1&&rect.height<=(width===375?844:1000)+1,retry,contrast:await scanRenderedContrast(page,{theme,state,route:"checkout"})});
+        report.samples.push({theme,width,state,file,...metrics,withinViewport:rect.x>=0&&rect.y>=0&&rect.x+rect.width<=width+1&&rect.height<=(width===375?844:1000)+1,retry,contrast:await scanRenderedContrast(page,{theme,state,route:"checkout",...(strict?{minimumContrast:4.5,includeDisabled:true}:{})})});
       }
       release();await page.unrouteAll({behavior:"wait"});
       if(stage==="after"&&["error","empty"].includes(state)) {
@@ -57,6 +58,6 @@ try {
     await context.close();
   }
 } finally {await browser.close();await fs.writeFile(`${output}/results.json`,JSON.stringify(report,null,2));}
-const faults=report.samples.filter(r=>!r.withinViewport||!r.retry||r.overflow||r.shortTargets.length||r.clipped.length||r.invalidCopy.length||r.unlabeledButtons.length||r.unlabeledInputs.length||r.contrast.length);
+const faults=report.samples.filter(r=>!r.withinViewport||!r.retry||r.overflow||r.contentOverflow.length||r.smallText.length||r.shortTargets.length||r.clipped.length||r.invalidCopy.length||r.unlabeledButtons.length||r.unlabeledInputs.length||r.contrast.length);
 console.log(JSON.stringify({stage,samples:report.samples.length,faults,errors:report.errors,settlementRequests:report.settlementRequests},null,2));
 if(stage==="after"){assert.equal(faults.length,0);assert.equal(report.errors.length,0);assert.equal(report.settlementRequests,0);}

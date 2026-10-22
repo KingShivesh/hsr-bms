@@ -24,7 +24,8 @@ const domains = {
 };
 const target = process.env.UI_DATA_PATH ? new RegExp(process.env.UI_DATA_PATH) : domains[route] || (route.startsWith("/settings?") ? /^\/product\// : /^\/ready$/);
 const states = process.env.UI_STATES?.split(",") || ["default", "loading", "error", "empty", "partial", "extreme"];
-const report = { route, stage, samples: [], errors: [], productionWrites: 0 };
+const username = process.env.UI_USERNAME || "admin";
+const report = { route, stage, username, samples: [], errors: [], productionWrites: 0 };
 function empty(value, field = "") {
   if (Array.isArray(value)) return [];
   if (value && typeof value === "object") return Object.fromEntries(Object.entries(value).map(([k,v]) => [k, empty(v,k)]));
@@ -49,6 +50,23 @@ const bookingFixture = {id:99001,customer_name:"QA Booking",phone:"9000000000",t
 const billFixture = {id:99001,nm:"QA Customer",tbl:"T1",ts:Date.now(),date:new Intl.DateTimeFormat("en-GB",{timeZone:"Asia/Kolkata",day:"2-digit",month:"2-digit",year:"numeric"}).format(new Date()),dur:60,ply:320,famt:120,tot:440,payment_method:"Cash",tariff_mode:"hourly"};
 function fixture(data, pathname, state) {
   pathname = pathname.replace(/\/$/, "");
+  if (pathname === "/sessions/live-floor" && state === "table-states") {
+    const template = data.tables.find(table => table.session).session;
+    const states = ["running", "paused", "available", "reserved", "maintenance"];
+    const tables = data.tables.map((table, index) => ({ ...table, status_key: states[index], status_label: states[index][0].toUpperCase() + states[index].slice(1), elapsed_seconds: index < 2 ? 7200 : 0, running_total: index < 2 ? 500 : 0,
+      session: index < 2 ? { ...template, table_id: table.id, session_key: `qa-ui-state-${table.id}`, customer_name: "QA Current Player", paused: index === 1, elapsed_seconds: 7200, food_items: [] } : null,
+      booking: index === 3 ? { customer_name: "QA Reserved Player", booking_time: "2099-10-22T18:00:00+05:30" } : null,
+      maintenance: index === 4 ? { reason: "QA maintenance fixture" } : null }));
+    return { ...data, tables, ...(data.floor ? { floor: { ...data.floor, tables, summary: { ...data.floor.summary, active_tables: 2, idle_tables: 1 } } } : {}) };
+  }
+  if (pathname === "/sessions/live-floor" && state === "partial" && process.env.UI_PARTIAL_NULL_ROWS === "true") {
+    const inject = tables => [null, ...tables.map(table => table.session ? { ...table, session: { ...table.session, food_items: [null, ...table.session.food_items] } } : table)];
+    return { ...data, tables: inject(data.tables), ...(data.floor ? { floor: { ...data.floor, tables: inject(data.floor.tables) } } : {}) };
+  }
+  if (pathname === "/sessions/live-floor" && state === "partial" && process.env.UI_UNKNOWN_FLOOR_STATUS === "true") {
+    const obscure = tables => tables.map((table, index) => index === 2 ? { ...table, status_key: null } : table);
+    return { ...data, tables: obscure(data.tables), ...(data.floor ? { floor: { ...data.floor, tables: obscure(data.floor.tables) } } : {}) };
+  }
   if(pathname === "/product/account" && state === "partial") return {...data, team:null, members:null, tables:null};
   if(pathname === "/operations/audit-logs" && state === "partial") return [{id:99001,ts:null,date:null,staff:null,action:null,detail:null}];
   if(pathname === "/reports/top-customers") return {...data,customers:[{name:"QA Regular",visits:12,play:3200,food:400,spent:3600}]};
@@ -64,10 +82,11 @@ function fixture(data, pathname, state) {
 const browser = await chromium.launch({ executablePath: "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome", headless: true });
 try {
   for (const theme of ["dark", "light"]) {
-    const auth = await fetch(api + "/auth/login", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ username: "admin", password: "admin123" }) }).then(r => r.json());
+    const auth = await fetch(api + "/auth/login", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ username, password: process.env.UI_PASSWORD || (username === "staff" ? "staff123" : "admin123") }) }).then(r => r.json());
     const context = await browser.newContext({ viewport: { width: 1440, height: 1000 }, reducedMotion: "reduce" });
     await context.addInitScript(({auth,theme,reportTab}) => { localStorage.setItem("theme",theme); if(reportTab)localStorage.setItem("reportsDefaultTab",reportTab); for (const k of ["token","role","username"]) localStorage.setItem(k,auth[k]); }, {auth,theme,reportTab:process.env.UI_REPORT_TAB});
     const page = await context.newPage();
+    if (states.includes("table-states")) await context.route(api + "/sessions/alerts", handler => handler.fulfill({ json: { alerts: [], owner_summaries: [], config: {} } }));
     await context.route(api + "/product/setup", async handler => {
       const response = await handler.fetch(), data = await response.json();
       await handler.fulfill({response, json:{...data,setup:{...data.setup,collapsed:true}}});
@@ -83,7 +102,7 @@ try {
         if (state === "error") return handler.fulfill({ status: 500, json: {detail:"QA simulated service failure"} });
         if (state === "default") return handler.continue();
         const response = await handler.fetch(), data = await response.json();
-        const payload = state === "empty" ? pathname === "/settings/menu" ? {} : empty(data) : state === "extreme" ? extreme(fixture(data,pathname,state)) : partial(fixture(data,pathname,state));
+        const payload = state === "empty" ? pathname === "/settings/menu" ? {} : empty(data) : state === "table-states" ? fixture(data,pathname,state) : state === "extreme" ? extreme(fixture(data,pathname,state)) : partial(fixture(data,pathname,state));
         return handler.fulfill({ response, json: payload });
       });
       await page.goto(origin + route, {waitUntil:"domcontentloaded"});
@@ -108,8 +127,14 @@ try {
         const viewportOnly = await page.evaluate(()=>document.documentElement.scrollHeight >= 16000);
         const contrast = await scanRenderedContrast(page,{route,theme,state,viewportOnly,...(strict ? { minimumContrast: 4.5, includeDisabled: true } : {})});
         const file = `${theme}-${width}-${state}.png`;
-        const fullPage = ["default","extreme"].includes(state) && await page.evaluate(()=>document.documentElement.scrollHeight < 16000);
+        const fullPage = ["default","extreme","table-states"].includes(state) && await page.evaluate(()=>document.documentElement.scrollHeight < 16000);
         await page.screenshot({path:`${output}/${file}`,animations:"disabled",fullPage});
+        if (state === "table-states") {
+          for (const card of await page.locator(".lf-table-card").all()) {
+            const key = await card.getAttribute("data-table-state");
+            await card.screenshot({ path: `${output}/${theme}-${width}-card-${key}.png`, animations: "disabled" });
+          }
+        }
         const noRequestNeeded = route === "/settings?section=billing" && stage === "after";
         const retry = state === "error" && !noRequestNeeded ? await page.getByRole("button",{name:/retry|try again|check again/i}).count() > 0 : true;
         report.samples.push({theme,width,state,file,...metrics,loadingIndicator,settled,contrast,contrastScope:viewportOnly?"visible viewport only; unpaginated baseline":"all rendered page text",retry,errors:[...errors]});
@@ -122,4 +147,8 @@ try {
 } finally { await browser.close(); await fs.writeFile(`${output}/results.json`,JSON.stringify(report,null,2)); }
 const faults = report.samples.filter(r => !r.loadingIndicator || !r.settled || r.applicationCrashed || r.overflow || r.smallText.length || r.contentOverflow.length || r.shortTargets.length || r.clipped.length || r.invalidCopy.length || r.unlabeledButtons.length || r.unlabeledInputs.length || r.brokenImages.length || r.contrast.length || r.errors.length || !r.retry);
 console.log(JSON.stringify({route,stage,samples:report.samples.length,faults:faults.map(r=>({theme:r.theme,width:r.width,state:r.state,applicationCrashed:r.applicationCrashed,overflow:r.overflow,contentOverflow:r.contentOverflow,shortTargets:r.shortTargets,clipped:r.clipped,unlabeledInputs:r.unlabeledInputs,contrast:r.contrast,errors:r.errors,retry:r.retry}))},null,2));
-if (stage === "after") { assert.equal(faults.length,0); assert.equal(report.errors.length,0); }
+if (stage === "after") {
+  assert.equal(faults.length,0); assert.equal(report.errors.length,0);
+  if (process.env.UI_PARTIAL_NULL_ROWS === "true") assert.ok(report.samples.every(row => row.collectionSizes[".lf-table-card"] === 5));
+  if (process.env.UI_UNKNOWN_FLOOR_STATUS === "true") assert.ok(report.samples.every(row => row.collectionSizes[".lf-table-card"] === 0));
+}
