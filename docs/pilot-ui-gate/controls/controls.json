@@ -1,0 +1,115 @@
+{
+  "controls": [
+    {
+      "theme": "dark",
+      "feedbackMs": 6.800000011920929,
+      "widthBefore": 162.25,
+      "widthLoading": 162.25,
+      "spinnerColor": "rgb(7, 18, 13)",
+      "tooltip": {
+        "text": "Switch to light mode",
+        "visible": "1",
+        "x": 1307,
+        "right": 1431.59375
+      }
+    },
+    {
+      "theme": "light",
+      "feedbackMs": 2.7000000029802322,
+      "widthBefore": 162.25,
+      "widthLoading": 162.25,
+      "spinnerColor": "rgb(250, 250, 250)",
+      "tooltip": {
+        "text": "Switch to dark mode",
+        "visible": "1",
+        "x": 1306,
+        "right": 1431.859375
+      }
+    }
+  ],
+  "loading": [
+    {
+      "theme": "dark",
+      "route": "/dashboard",
+      "skeletonVisible": true
+    },
+    {
+      "theme": "dark",
+      "route": "/bookings",
+      "skeletonVisible": true
+    },
+    {
+      "theme": "dark",
+      "route": "/customers",
+      "skeletonVisible": true
+    },
+    {
+      "theme": "dark",
+      "route": "/sales",
+      "skeletonVisible": true
+    },
+    {
+      "theme": "dark",
+      "route": "/cafe-pos",
+      "skeletonVisible": true
+    },
+    {
+      "theme": "dark",
+      "route": "/inventory",
+      "skeletonVisible": true
+    },
+    {
+      "theme": "dark",
+      "route": "/settings",
+      "skeletonVisible": true
+    },
+    {
+      "theme": "light",
+      "route": "/dashboard",
+      "skeletonVisible": true
+    },
+    {
+      "theme": "light",
+      "route": "/bookings",
+      "skeletonVisible": true
+    },
+    {
+      "theme": "light",
+      "route": "/customers",
+      "skeletonVisible": true
+    },
+    {
+      "theme": "light",
+      "route": "/sales",
+      "skeletonVisible": true
+    },
+    {
+      "theme": "light",
+      "route": "/cafe-pos",
+      "skeletonVisible": true
+    },
+    {
+      "theme": "light",
+      "route": "/inventory",
+      "skeletonVisible": true
+    },
+    {
+      "theme": "light",
+      "route": "/settings",
+      "skeletonVisible": true
+    }
+  ],
+  "errors": [
+    {
+      "theme": "dark",
+      "failedSettingsDoNotShowEditableDefaults": true,
+      "retryVisible": true
+    },
+    {
+      "theme": "light",
+      "failedSettingsDoNotShowEditableDefaults": true,
+      "retryVisible": true
+    }
+  ],
+  "apiMutations": 0
+}

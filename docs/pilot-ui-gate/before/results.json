@@ -1,0 +1,970 @@
+{
+  "stage": "before",
+  "minimumContrast": 4.5,
+  "includeDisabled": true,
+  "cases": [
+    {
+      "theme": "light",
+      "width": 375,
+      "checks": {
+        "pendingLoginDisabled": true,
+        "adjustTimeHasAffordance": true,
+        "adjustTimeExpands": true,
+        "memberFailureHasRetry": false,
+        "emptyMembersHasAction": false,
+        "partialMemberRowsDoNotCrash": false
+      },
+      "captures": [
+        {
+          "state": "login-pending",
+          "file": "light-375-login-pending.png",
+          "violations": 2,
+          "applicationCrashed": false,
+          "overflow": 0,
+          "shortTargets": [],
+          "clipped": [],
+          "brokenImages": [],
+          "invalidCopy": [],
+          "unlabeledButtons": [],
+          "unlabeledInputs": [],
+          "collectionSizes": {
+            ".op2-customer-card": 0,
+            ".sales-table tbody tr": 0
+          },
+          "contentOverflow": [],
+          "palette": {
+            "accent": "#006b3c",
+            "font": "\"Syne Variable\", Syne, sans-serif"
+          }
+        },
+        {
+          "state": "login-error",
+          "file": "light-375-login-error.png",
+          "violations": 0,
+          "applicationCrashed": false,
+          "overflow": 0,
+          "shortTargets": [],
+          "clipped": [],
+          "brokenImages": [],
+          "invalidCopy": [],
+          "unlabeledButtons": [],
+          "unlabeledInputs": [],
+          "collectionSizes": {
+            ".op2-customer-card": 0,
+            ".sales-table tbody tr": 0
+          },
+          "contentOverflow": [],
+          "palette": {
+            "accent": "#006b3c",
+            "font": "\"Syne Variable\", Syne, sans-serif"
+          }
+        },
+        {
+          "state": "checkout-disabled-payment",
+          "file": "light-375-checkout-disabled-payment.png",
+          "violations": 0,
+          "applicationCrashed": false,
+          "overflow": 0,
+          "shortTargets": [],
+          "clipped": [],
+          "brokenImages": [],
+          "invalidCopy": [],
+          "unlabeledButtons": [],
+          "unlabeledInputs": [],
+          "collectionSizes": {
+            ".op2-customer-card": 0,
+            ".sales-table tbody tr": 0
+          },
+          "contentOverflow": [],
+          "palette": {
+            "accent": "#006b3c",
+            "font": "\"Syne Variable\", Syne, sans-serif"
+          }
+        },
+        {
+          "state": "adjust-time-expanded",
+          "file": "light-375-adjust-time-expanded.png",
+          "violations": 0,
+          "applicationCrashed": false,
+          "overflow": 0,
+          "shortTargets": [],
+          "clipped": [],
+          "brokenImages": [],
+          "invalidCopy": [],
+          "unlabeledButtons": [],
+          "unlabeledInputs": [],
+          "collectionSizes": {
+            ".op2-customer-card": 0,
+            ".sales-table tbody tr": 0
+          },
+          "contentOverflow": [],
+          "palette": {
+            "accent": "#006b3c",
+            "font": "\"Syne Variable\", Syne, sans-serif"
+          }
+        },
+        {
+          "state": "member-loading",
+          "file": "light-375-member-loading.png",
+          "violations": 0,
+          "applicationCrashed": false,
+          "overflow": 0,
+          "shortTargets": [],
+          "clipped": [],
+          "brokenImages": [],
+          "invalidCopy": [],
+          "unlabeledButtons": [],
+          "unlabeledInputs": [],
+          "collectionSizes": {
+            ".op2-customer-card": 0,
+            ".sales-table tbody tr": 0
+          },
+          "contentOverflow": [],
+          "palette": {
+            "accent": "#006b3c",
+            "font": "\"Syne Variable\", Syne, sans-serif"
+          }
+        },
+        {
+          "state": "member-error",
+          "file": "light-375-member-error.png",
+          "violations": 0,
+          "applicationCrashed": false,
+          "overflow": 0,
+          "shortTargets": [],
+          "clipped": [],
+          "brokenImages": [],
+          "invalidCopy": [],
+          "unlabeledButtons": [],
+          "unlabeledInputs": [],
+          "collectionSizes": {
+            ".op2-customer-card": 0,
+            ".sales-table tbody tr": 0
+          },
+          "contentOverflow": [],
+          "palette": {
+            "accent": "#006b3c",
+            "font": "\"Syne Variable\", Syne, sans-serif"
+          }
+        },
+        {
+          "state": "member-empty",
+          "file": "light-375-member-empty.png",
+          "violations": 0,
+          "applicationCrashed": false,
+          "overflow": 0,
+          "shortTargets": [],
+          "clipped": [],
+          "brokenImages": [],
+          "invalidCopy": [],
+          "unlabeledButtons": [],
+          "unlabeledInputs": [],
+          "collectionSizes": {
+            ".op2-customer-card": 0,
+            ".sales-table tbody tr": 0
+          },
+          "contentOverflow": [],
+          "palette": {
+            "accent": "#006b3c",
+            "font": "\"Syne Variable\", Syne, sans-serif"
+          }
+        },
+        {
+          "state": "member-partial",
+          "file": "light-375-member-partial.png",
+          "violations": 0,
+          "applicationCrashed": true,
+          "overflow": 0,
+          "shortTargets": [],
+          "clipped": [],
+          "brokenImages": [],
+          "invalidCopy": [],
+          "unlabeledButtons": [],
+          "unlabeledInputs": [],
+          "collectionSizes": {
+            ".op2-customer-card": 0,
+            ".sales-table tbody tr": 0
+          },
+          "contentOverflow": [],
+          "palette": {
+            "accent": "#006b3c",
+            "font": "\"Syne Variable\", Syne, sans-serif"
+          }
+        }
+      ],
+      "pendingFieldContrast": [
+        {
+          "selector": "#login-username",
+          "ratio": 3.35
+        },
+        {
+          "selector": "#login-password",
+          "ratio": 3.35
+        }
+      ],
+      "actionAppearance": {
+        "background": "rgb(250, 250, 250)",
+        "borderWidth": "0px",
+        "containerBorderWidth": "1px",
+        "height": 44,
+        "chevron": true,
+        "expanded": "false"
+      }
+    },
+    {
+      "theme": "light",
+      "width": 1440,
+      "checks": {
+        "pendingLoginDisabled": true,
+        "adjustTimeHasAffordance": true,
+        "adjustTimeExpands": true,
+        "memberFailureHasRetry": false,
+        "emptyMembersHasAction": false,
+        "partialMemberRowsDoNotCrash": false
+      },
+      "captures": [
+        {
+          "state": "login-pending",
+          "file": "light-1440-login-pending.png",
+          "violations": 2,
+          "applicationCrashed": false,
+          "overflow": 0,
+          "shortTargets": [],
+          "clipped": [],
+          "brokenImages": [],
+          "invalidCopy": [],
+          "unlabeledButtons": [],
+          "unlabeledInputs": [],
+          "collectionSizes": {
+            ".op2-customer-card": 0,
+            ".sales-table tbody tr": 0
+          },
+          "contentOverflow": [],
+          "palette": {
+            "accent": "#006b3c",
+            "font": "\"Syne Variable\", Syne, sans-serif"
+          }
+        },
+        {
+          "state": "login-error",
+          "file": "light-1440-login-error.png",
+          "violations": 0,
+          "applicationCrashed": false,
+          "overflow": 0,
+          "shortTargets": [],
+          "clipped": [],
+          "brokenImages": [],
+          "invalidCopy": [],
+          "unlabeledButtons": [],
+          "unlabeledInputs": [],
+          "collectionSizes": {
+            ".op2-customer-card": 0,
+            ".sales-table tbody tr": 0
+          },
+          "contentOverflow": [],
+          "palette": {
+            "accent": "#006b3c",
+            "font": "\"Syne Variable\", Syne, sans-serif"
+          }
+        },
+        {
+          "state": "checkout-disabled-payment",
+          "file": "light-1440-checkout-disabled-payment.png",
+          "violations": 0,
+          "applicationCrashed": false,
+          "overflow": 0,
+          "shortTargets": [],
+          "clipped": [],
+          "brokenImages": [],
+          "invalidCopy": [],
+          "unlabeledButtons": [],
+          "unlabeledInputs": [],
+          "collectionSizes": {
+            ".op2-customer-card": 0,
+            ".sales-table tbody tr": 0
+          },
+          "contentOverflow": [],
+          "palette": {
+            "accent": "#006b3c",
+            "font": "\"Syne Variable\", Syne, sans-serif"
+          }
+        },
+        {
+          "state": "adjust-time-expanded",
+          "file": "light-1440-adjust-time-expanded.png",
+          "violations": 0,
+          "applicationCrashed": false,
+          "overflow": 0,
+          "shortTargets": [],
+          "clipped": [],
+          "brokenImages": [],
+          "invalidCopy": [],
+          "unlabeledButtons": [],
+          "unlabeledInputs": [],
+          "collectionSizes": {
+            ".op2-customer-card": 0,
+            ".sales-table tbody tr": 0
+          },
+          "contentOverflow": [],
+          "palette": {
+            "accent": "#006b3c",
+            "font": "\"Syne Variable\", Syne, sans-serif"
+          }
+        },
+        {
+          "state": "member-loading",
+          "file": "light-1440-member-loading.png",
+          "violations": 0,
+          "applicationCrashed": false,
+          "overflow": 0,
+          "shortTargets": [],
+          "clipped": [],
+          "brokenImages": [],
+          "invalidCopy": [],
+          "unlabeledButtons": [],
+          "unlabeledInputs": [],
+          "collectionSizes": {
+            ".op2-customer-card": 0,
+            ".sales-table tbody tr": 0
+          },
+          "contentOverflow": [],
+          "palette": {
+            "accent": "#006b3c",
+            "font": "\"Syne Variable\", Syne, sans-serif"
+          }
+        },
+        {
+          "state": "member-error",
+          "file": "light-1440-member-error.png",
+          "violations": 0,
+          "applicationCrashed": false,
+          "overflow": 0,
+          "shortTargets": [],
+          "clipped": [],
+          "brokenImages": [],
+          "invalidCopy": [],
+          "unlabeledButtons": [],
+          "unlabeledInputs": [],
+          "collectionSizes": {
+            ".op2-customer-card": 0,
+            ".sales-table tbody tr": 0
+          },
+          "contentOverflow": [],
+          "palette": {
+            "accent": "#006b3c",
+            "font": "\"Syne Variable\", Syne, sans-serif"
+          }
+        },
+        {
+          "state": "member-empty",
+          "file": "light-1440-member-empty.png",
+          "violations": 0,
+          "applicationCrashed": false,
+          "overflow": 0,
+          "shortTargets": [],
+          "clipped": [],
+          "brokenImages": [],
+          "invalidCopy": [],
+          "unlabeledButtons": [],
+          "unlabeledInputs": [],
+          "collectionSizes": {
+            ".op2-customer-card": 0,
+            ".sales-table tbody tr": 0
+          },
+          "contentOverflow": [],
+          "palette": {
+            "accent": "#006b3c",
+            "font": "\"Syne Variable\", Syne, sans-serif"
+          }
+        },
+        {
+          "state": "member-partial",
+          "file": "light-1440-member-partial.png",
+          "violations": 0,
+          "applicationCrashed": true,
+          "overflow": 0,
+          "shortTargets": [],
+          "clipped": [],
+          "brokenImages": [],
+          "invalidCopy": [],
+          "unlabeledButtons": [],
+          "unlabeledInputs": [],
+          "collectionSizes": {
+            ".op2-customer-card": 0,
+            ".sales-table tbody tr": 0
+          },
+          "contentOverflow": [],
+          "palette": {
+            "accent": "#006b3c",
+            "font": "\"Syne Variable\", Syne, sans-serif"
+          }
+        }
+      ],
+      "pendingFieldContrast": [
+        {
+          "selector": "#login-username",
+          "ratio": 3.35
+        },
+        {
+          "selector": "#login-password",
+          "ratio": 3.35
+        }
+      ],
+      "actionAppearance": {
+        "background": "rgb(250, 250, 250)",
+        "borderWidth": "0px",
+        "containerBorderWidth": "1px",
+        "height": 48,
+        "chevron": true,
+        "expanded": "false"
+      }
+    },
+    {
+      "theme": "dark",
+      "width": 375,
+      "checks": {
+        "pendingLoginDisabled": true,
+        "adjustTimeHasAffordance": true,
+        "adjustTimeExpands": true,
+        "memberFailureHasRetry": false,
+        "emptyMembersHasAction": false,
+        "partialMemberRowsDoNotCrash": false
+      },
+      "captures": [
+        {
+          "state": "login-pending",
+          "file": "dark-375-login-pending.png",
+          "violations": 0,
+          "applicationCrashed": false,
+          "overflow": 0,
+          "shortTargets": [],
+          "clipped": [],
+          "brokenImages": [],
+          "invalidCopy": [],
+          "unlabeledButtons": [],
+          "unlabeledInputs": [],
+          "collectionSizes": {
+            ".op2-customer-card": 0,
+            ".sales-table tbody tr": 0
+          },
+          "contentOverflow": [],
+          "palette": {
+            "accent": "#00ff7f",
+            "font": "\"Syne Variable\", Syne, sans-serif"
+          }
+        },
+        {
+          "state": "login-error",
+          "file": "dark-375-login-error.png",
+          "violations": 0,
+          "applicationCrashed": false,
+          "overflow": 0,
+          "shortTargets": [],
+          "clipped": [],
+          "brokenImages": [],
+          "invalidCopy": [],
+          "unlabeledButtons": [],
+          "unlabeledInputs": [],
+          "collectionSizes": {
+            ".op2-customer-card": 0,
+            ".sales-table tbody tr": 0
+          },
+          "contentOverflow": [],
+          "palette": {
+            "accent": "#00ff7f",
+            "font": "\"Syne Variable\", Syne, sans-serif"
+          }
+        },
+        {
+          "state": "checkout-disabled-payment",
+          "file": "dark-375-checkout-disabled-payment.png",
+          "violations": 0,
+          "applicationCrashed": false,
+          "overflow": 0,
+          "shortTargets": [],
+          "clipped": [],
+          "brokenImages": [],
+          "invalidCopy": [],
+          "unlabeledButtons": [],
+          "unlabeledInputs": [],
+          "collectionSizes": {
+            ".op2-customer-card": 0,
+            ".sales-table tbody tr": 0
+          },
+          "contentOverflow": [],
+          "palette": {
+            "accent": "#00ff7f",
+            "font": "\"Syne Variable\", Syne, sans-serif"
+          }
+        },
+        {
+          "state": "adjust-time-expanded",
+          "file": "dark-375-adjust-time-expanded.png",
+          "violations": 0,
+          "applicationCrashed": false,
+          "overflow": 0,
+          "shortTargets": [],
+          "clipped": [],
+          "brokenImages": [],
+          "invalidCopy": [],
+          "unlabeledButtons": [],
+          "unlabeledInputs": [],
+          "collectionSizes": {
+            ".op2-customer-card": 0,
+            ".sales-table tbody tr": 0
+          },
+          "contentOverflow": [],
+          "palette": {
+            "accent": "#00ff7f",
+            "font": "\"Syne Variable\", Syne, sans-serif"
+          }
+        },
+        {
+          "state": "member-loading",
+          "file": "dark-375-member-loading.png",
+          "violations": 0,
+          "applicationCrashed": false,
+          "overflow": 0,
+          "shortTargets": [],
+          "clipped": [],
+          "brokenImages": [],
+          "invalidCopy": [],
+          "unlabeledButtons": [],
+          "unlabeledInputs": [],
+          "collectionSizes": {
+            ".op2-customer-card": 0,
+            ".sales-table tbody tr": 0
+          },
+          "contentOverflow": [],
+          "palette": {
+            "accent": "#00ff7f",
+            "font": "\"Syne Variable\", Syne, sans-serif"
+          }
+        },
+        {
+          "state": "member-error",
+          "file": "dark-375-member-error.png",
+          "violations": 0,
+          "applicationCrashed": false,
+          "overflow": 0,
+          "shortTargets": [],
+          "clipped": [],
+          "brokenImages": [],
+          "invalidCopy": [],
+          "unlabeledButtons": [],
+          "unlabeledInputs": [],
+          "collectionSizes": {
+            ".op2-customer-card": 0,
+            ".sales-table tbody tr": 0
+          },
+          "contentOverflow": [],
+          "palette": {
+            "accent": "#00ff7f",
+            "font": "\"Syne Variable\", Syne, sans-serif"
+          }
+        },
+        {
+          "state": "member-empty",
+          "file": "dark-375-member-empty.png",
+          "violations": 0,
+          "applicationCrashed": false,
+          "overflow": 0,
+          "shortTargets": [],
+          "clipped": [],
+          "brokenImages": [],
+          "invalidCopy": [],
+          "unlabeledButtons": [],
+          "unlabeledInputs": [],
+          "collectionSizes": {
+            ".op2-customer-card": 0,
+            ".sales-table tbody tr": 0
+          },
+          "contentOverflow": [],
+          "palette": {
+            "accent": "#00ff7f",
+            "font": "\"Syne Variable\", Syne, sans-serif"
+          }
+        },
+        {
+          "state": "member-partial",
+          "file": "dark-375-member-partial.png",
+          "violations": 0,
+          "applicationCrashed": true,
+          "overflow": 0,
+          "shortTargets": [],
+          "clipped": [],
+          "brokenImages": [],
+          "invalidCopy": [],
+          "unlabeledButtons": [],
+          "unlabeledInputs": [],
+          "collectionSizes": {
+            ".op2-customer-card": 0,
+            ".sales-table tbody tr": 0
+          },
+          "contentOverflow": [],
+          "palette": {
+            "accent": "#00ff7f",
+            "font": "\"Syne Variable\", Syne, sans-serif"
+          }
+        }
+      ],
+      "pendingFieldContrast": [
+        {
+          "selector": "#login-username",
+          "ratio": 5.16
+        },
+        {
+          "selector": "#login-password",
+          "ratio": 5.16
+        }
+      ],
+      "actionAppearance": {
+        "background": "rgb(26, 26, 34)",
+        "borderWidth": "0px",
+        "containerBorderWidth": "1px",
+        "height": 44,
+        "chevron": true,
+        "expanded": "false"
+      }
+    },
+    {
+      "theme": "dark",
+      "width": 1440,
+      "checks": {
+        "pendingLoginDisabled": true,
+        "adjustTimeHasAffordance": true,
+        "adjustTimeExpands": true,
+        "memberFailureHasRetry": false,
+        "emptyMembersHasAction": false,
+        "partialMemberRowsDoNotCrash": false
+      },
+      "captures": [
+        {
+          "state": "login-pending",
+          "file": "dark-1440-login-pending.png",
+          "violations": 0,
+          "applicationCrashed": false,
+          "overflow": 0,
+          "shortTargets": [],
+          "clipped": [],
+          "brokenImages": [],
+          "invalidCopy": [],
+          "unlabeledButtons": [],
+          "unlabeledInputs": [],
+          "collectionSizes": {
+            ".op2-customer-card": 0,
+            ".sales-table tbody tr": 0
+          },
+          "contentOverflow": [],
+          "palette": {
+            "accent": "#00ff7f",
+            "font": "\"Syne Variable\", Syne, sans-serif"
+          }
+        },
+        {
+          "state": "login-error",
+          "file": "dark-1440-login-error.png",
+          "violations": 0,
+          "applicationCrashed": false,
+          "overflow": 0,
+          "shortTargets": [],
+          "clipped": [],
+          "brokenImages": [],
+          "invalidCopy": [],
+          "unlabeledButtons": [],
+          "unlabeledInputs": [],
+          "collectionSizes": {
+            ".op2-customer-card": 0,
+            ".sales-table tbody tr": 0
+          },
+          "contentOverflow": [],
+          "palette": {
+            "accent": "#00ff7f",
+            "font": "\"Syne Variable\", Syne, sans-serif"
+          }
+        },
+        {
+          "state": "checkout-disabled-payment",
+          "file": "dark-1440-checkout-disabled-payment.png",
+          "violations": 0,
+          "applicationCrashed": false,
+          "overflow": 0,
+          "shortTargets": [],
+          "clipped": [],
+          "brokenImages": [],
+          "invalidCopy": [],
+          "unlabeledButtons": [],
+          "unlabeledInputs": [],
+          "collectionSizes": {
+            ".op2-customer-card": 0,
+            ".sales-table tbody tr": 0
+          },
+          "contentOverflow": [],
+          "palette": {
+            "accent": "#00ff7f",
+            "font": "\"Syne Variable\", Syne, sans-serif"
+          }
+        },
+        {
+          "state": "adjust-time-expanded",
+          "file": "dark-1440-adjust-time-expanded.png",
+          "violations": 0,
+          "applicationCrashed": false,
+          "overflow": 0,
+          "shortTargets": [],
+          "clipped": [],
+          "brokenImages": [],
+          "invalidCopy": [],
+          "unlabeledButtons": [],
+          "unlabeledInputs": [],
+          "collectionSizes": {
+            ".op2-customer-card": 0,
+            ".sales-table tbody tr": 0
+          },
+          "contentOverflow": [],
+          "palette": {
+            "accent": "#00ff7f",
+            "font": "\"Syne Variable\", Syne, sans-serif"
+          }
+        },
+        {
+          "state": "member-loading",
+          "file": "dark-1440-member-loading.png",
+          "violations": 0,
+          "applicationCrashed": false,
+          "overflow": 0,
+          "shortTargets": [],
+          "clipped": [],
+          "brokenImages": [],
+          "invalidCopy": [],
+          "unlabeledButtons": [],
+          "unlabeledInputs": [],
+          "collectionSizes": {
+            ".op2-customer-card": 0,
+            ".sales-table tbody tr": 0
+          },
+          "contentOverflow": [],
+          "palette": {
+            "accent": "#00ff7f",
+            "font": "\"Syne Variable\", Syne, sans-serif"
+          }
+        },
+        {
+          "state": "member-error",
+          "file": "dark-1440-member-error.png",
+          "violations": 0,
+          "applicationCrashed": false,
+          "overflow": 0,
+          "shortTargets": [],
+          "clipped": [],
+          "brokenImages": [],
+          "invalidCopy": [],
+          "unlabeledButtons": [],
+          "unlabeledInputs": [],
+          "collectionSizes": {
+            ".op2-customer-card": 0,
+            ".sales-table tbody tr": 0
+          },
+          "contentOverflow": [],
+          "palette": {
+            "accent": "#00ff7f",
+            "font": "\"Syne Variable\", Syne, sans-serif"
+          }
+        },
+        {
+          "state": "member-empty",
+          "file": "dark-1440-member-empty.png",
+          "violations": 0,
+          "applicationCrashed": false,
+          "overflow": 0,
+          "shortTargets": [],
+          "clipped": [],
+          "brokenImages": [],
+          "invalidCopy": [],
+          "unlabeledButtons": [],
+          "unlabeledInputs": [],
+          "collectionSizes": {
+            ".op2-customer-card": 0,
+            ".sales-table tbody tr": 0
+          },
+          "contentOverflow": [],
+          "palette": {
+            "accent": "#00ff7f",
+            "font": "\"Syne Variable\", Syne, sans-serif"
+          }
+        },
+        {
+          "state": "member-partial",
+          "file": "dark-1440-member-partial.png",
+          "violations": 0,
+          "applicationCrashed": true,
+          "overflow": 0,
+          "shortTargets": [],
+          "clipped": [],
+          "brokenImages": [],
+          "invalidCopy": [],
+          "unlabeledButtons": [],
+          "unlabeledInputs": [],
+          "collectionSizes": {
+            ".op2-customer-card": 0,
+            ".sales-table tbody tr": 0
+          },
+          "contentOverflow": [],
+          "palette": {
+            "accent": "#00ff7f",
+            "font": "\"Syne Variable\", Syne, sans-serif"
+          }
+        }
+      ],
+      "pendingFieldContrast": [
+        {
+          "selector": "#login-username",
+          "ratio": 5.16
+        },
+        {
+          "selector": "#login-password",
+          "ratio": 5.16
+        }
+      ],
+      "actionAppearance": {
+        "background": "rgb(26, 26, 34)",
+        "borderWidth": "0px",
+        "containerBorderWidth": "1px",
+        "height": 48,
+        "chevron": true,
+        "expanded": "false"
+      }
+    }
+  ],
+  "violations": [
+    {
+      "route": "/login",
+      "theme": "light",
+      "state": "login-pending",
+      "selector": "#login-username",
+      "kind": "input-value",
+      "text": "QA pilot fixture",
+      "color": "rgb(24, 24, 27)",
+      "background": {
+        "r": 250,
+        "g": 250,
+        "b": 250,
+        "a": 1
+      },
+      "fontSize": "13px",
+      "fontWeight": "600",
+      "ratio": 3.35,
+      "required": 4.5,
+      "gradient": false,
+      "width": 375
+    },
+    {
+      "route": "/login",
+      "theme": "light",
+      "state": "login-pending",
+      "selector": "#login-password",
+      "kind": "input-value",
+      "text": "not-a-real-credential",
+      "color": "rgb(24, 24, 27)",
+      "background": {
+        "r": 250,
+        "g": 250,
+        "b": 250,
+        "a": 1
+      },
+      "fontSize": "13px",
+      "fontWeight": "600",
+      "ratio": 3.35,
+      "required": 4.5,
+      "gradient": false,
+      "width": 375
+    },
+    {
+      "route": "/login",
+      "theme": "light",
+      "state": "login-pending",
+      "selector": "#login-username",
+      "kind": "input-value",
+      "text": "QA pilot fixture",
+      "color": "rgb(24, 24, 27)",
+      "background": {
+        "r": 250,
+        "g": 250,
+        "b": 250,
+        "a": 1
+      },
+      "fontSize": "13px",
+      "fontWeight": "600",
+      "ratio": 3.35,
+      "required": 4.5,
+      "gradient": false,
+      "width": 1440
+    },
+    {
+      "route": "/login",
+      "theme": "light",
+      "state": "login-pending",
+      "selector": "#login-password",
+      "kind": "input-value",
+      "text": "not-a-real-credential",
+      "color": "rgb(24, 24, 27)",
+      "background": {
+        "r": 250,
+        "g": 250,
+        "b": 250,
+        "a": 1
+      },
+      "fontSize": "13px",
+      "fontWeight": "600",
+      "ratio": 3.35,
+      "required": 4.5,
+      "gradient": false,
+      "width": 1440
+    }
+  ],
+  "errors": [],
+  "businessWrites": [],
+  "scope": "Local seeded database; browser member reads are controlled fixtures; credential submission intercepted; no business writes forwarded",
+  "scannerGuard": {
+    "standardViolations": 0,
+    "strictViolations": 2,
+    "strict": [
+      {
+        "state": "scanner-guard",
+        "selector": "h1",
+        "kind": "text",
+        "text": "Large threshold fixture",
+        "color": "rgb(136, 136, 136)",
+        "background": {
+          "r": 255,
+          "g": 255,
+          "b": 255,
+          "a": 1
+        },
+        "fontSize": "32px",
+        "fontWeight": "400",
+        "ratio": 3.54,
+        "required": 4.5,
+        "gradient": false
+      },
+      {
+        "state": "scanner-guard",
+        "selector": "button",
+        "kind": "text",
+        "text": "Disabled threshold fixture",
+        "color": "rgb(136, 136, 136)",
+        "background": {
+          "r": 255,
+          "g": 255,
+          "b": 255,
+          "a": 1
+        },
+        "fontSize": "32px",
+        "fontWeight": "400",
+        "ratio": 1.75,
+        "required": 4.5,
+        "gradient": false
+      }
+    ]
+  }
+}
