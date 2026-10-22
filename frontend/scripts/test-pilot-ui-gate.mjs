@@ -111,6 +111,10 @@ try {
       test.checks.emptyMembersHasAction = await drawer.getByRole("button", { name: "Use guest name", exact: true }).count() > 0;
       await (test.checks.emptyMembersHasAction ? drawer.getByRole("button", { name: "Use guest name", exact: true }) : drawer.locator(".checkout-section:has(.checkout-customer-paths) [role=status]")).scrollIntoViewIfNeeded();
       await capture("member-empty");
+      if (test.checks.emptyMembersHasAction) {
+        await drawer.getByRole("button", { name: "Use guest name", exact: true }).click();
+        test.checks.emptyMembersActionWorks = await drawer.getByLabel("Name (optional)", { exact: true }).isVisible();
+      }
       memberMode = "partial";
       const partialResponse = page.waitForResponse(response => new URL(response.url()).pathname === "/members/recent" && response.status() === 200);
       await drawer.getByRole("button", { name: "Add name", exact: true }).click();
