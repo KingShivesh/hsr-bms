@@ -11,7 +11,8 @@ server-authoritative payment/receipt confirmation. No feature or role expansion.
 | Login/auth | 48 before and 48 after samples pass; four widths, both themes, six states | `login/before/`, `login/after/` |
 | Dashboard/shared cards | 48 after samples pass; all four widths/both themes/six states. Shared MetricCard + 14 Card/Panel roots; 12px minimum; long-text and dense-number overflow fixed | `dashboard/before/`, `dashboard/after/` |
 | Live Floor / checkout | 48 + 48 final samples pass; all five table states, null rows and missing-status recovery also pass. Eight actual role/theme/mobile checkout contract cases pass | `live-floor/`, `checkout/` |
-| Members / bookings / Cafe | Pending current-build rerun and component consolidation | Not a pass |
+| Members / bookings | 48 final samples per page; eight null-row samples per page; 16 role-Owner dialog cases across both themes/four widths pass | `customers/`, `bookings/`, `member-booking-dialogs/after-final/` |
+| Cafe | Baseline captured; pending consolidation and current-build rerun | Not a pass |
 | Finance / reports / Settings / error routes | Pending current-build rerun and component consolidation | Not a pass |
 | Shared overlays / menus / action states | Pending consolidation and interaction rerun | Not a pass |
 | Local operational lifecycle | Pending 20-cycle role/theme/mobile exercise | Not a pass |
@@ -40,6 +41,10 @@ transition and retains reduced-motion behavior.
 | Checkout | Recalculation used only status text | Shaped loading feedback | Existing quote stays visible with a shared one-row skeleton; instant pending state is retained | `checkout/contract/` |
 | Live Floor | Staff saw an editable rate, then received HTTP 403 `Admin access required`; Owner edit control had no border or icon | Match existing permissions; visible action | Staff sees a read-only rate; Owner gets the shared bordered 44px button with pencil. No backend permission change | `live-floor/rate-role-before/` / `live-floor/rate-role-after/` |
 | Live Floor | Card padding was 16px rather than the shared 20px contract | Shared spacing | Uses the existing 20px token, without changing status palette or cues | `comparisons/table-states-before.png` / `comparisons/table-states-after.png` |
+| Members / bookings | Null API rows crashed each route | Partial data must not crash | Filter malformed records at the read boundary; preserve valid records and server values | Per-page `null-rows-before/` / `null-rows-after/` |
+| Members / bookings | Local summary/card markup duplicated shared primitives | Shared component contract | Shared MetricCard for summaries and member profile; five remaining Card/Panel roots migrated | `comparisons/customers-default-1440.png`, `comparisons/bookings-default-1440.png` |
+| Booking form | Private modal frame duplicated shared overlay behavior | One dialog system | Shared Modal, sticky footer, existing dirty-backdrop guard and saving-dismissal lock | `member-booking-dialogs/before/` / `member-booking-dialogs/after-final/` |
+| Bookings | Missing/failed availability displayed five Available cards | Never invent availability | Only render known table states; missing states show refresh recovery and cannot be check-in candidates | `bookings/before/*-error.png` / `bookings/after/*-error.png` |
 
 The first shared-change regression is 20 main routes x four widths x both themes
 (160 loaded/default captures), all clean. It is not certification of all their
@@ -80,11 +85,23 @@ final passing contract; `*-probe.json` and failure PNGs are diagnostic history.
 Dashboard/shared-text cluster `0893bc4` and tooling/evidence `cb49102` were
 fast-forward merged and pushed. `deployment-dashboard.json` matches all 23
 live JS/CSS hashes, with health/readiness 200 and unchanged backend ancestry.
-Operational cluster deployment is pending; its completed verification is not
-being left on a branch after closeout.
+Operational cluster `e06b2f0` is merged, pushed and production-verified in
+`deployment-operations.json`; all 23 assets match and health/readiness return 200.
 
 The final rate-action regression contains eight actual role/theme/width cases.
 All four baseline Staff submissions returned 403 and left stored rates unchanged.
 Afterward Staff has no edit control, and Owner has a 1px bordered, pencil-marked
 44px control; opening and cancelling preserves rates. The final 48-case floor
 matrix and eight all-state captures were rerun after this correction and pass.
+
+Member/profile and Booking dialog verification has 16 final cases (two dialogs,
+two themes, four widths). Tab, Shift+Tab, Escape and opener restoration pass;
+the test waits for the shared focus-restoration animation frame instead of
+sampling before it runs. Initial probes remain under `after/`, not the final
+passing record. Eight Booking cases additionally browser-mock a held POST then
+HTTP 500: visible pending feedback is <=200ms, close stays disabled, Escape cannot
+dismiss while saving, failure preserves input and reenables submission. No such
+POST reaches the backend. No new member or booking was created by these checks.
+Measured Booking pending feedback was 14.0-15.6ms in these eight local cases.
+The final Booking matrix also asserts zero status cards for failed/empty table
+responses, rather than accepting visually polished but invented Available states.

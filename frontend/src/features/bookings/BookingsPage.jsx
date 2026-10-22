@@ -1,6 +1,6 @@
-import { Icon as HsrIcon, Button as HsrButton, Input as HsrInput, Select as HsrSelect, Textarea as HsrTextarea, EmptyState, Button } from "../../components/ui/index.js";
+import { Card as HsrCard, Panel as HsrPanel } from "../../components/ui/index.js";
+import { Icon as HsrIcon, Button as HsrButton, Input as HsrInput, Select as HsrSelect, Textarea as HsrTextarea, EmptyState, Button, MetricCard, Modal } from "../../components/ui/index.js";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { createPortal } from "react-dom";
 import { useCachedState, hasCachedState } from "../../hooks/useCachedState.js";
 import {
   cancelBooking,
@@ -12,8 +12,6 @@ import {
 } from "../../api/index.js";
 import RetryNotice from "../../components/RetryNotice.jsx";
 import { TableAttentionBadge, TablePrimaryAction, TableStateBadge } from "../../components/TableStateUI.jsx";
-import { useEscapeKey } from "../../components/ui/index.js";
-import { useDialogFocus } from "../../components/ui/useDialogFocus.js";
 import { useToast } from "../../components/toastContext.js";
 import { HSR_TABLES, getTableRate } from "../../config/hsrTables.js";
 import { tableActionNavigation, tableStateAttributes, getTableAttention, getTableStatus } from "../../config/tableStatus.js";
@@ -40,11 +38,8 @@ function shortDuration(seconds = 0) {
 }
 
 function asArray(value) {
-  if (Array.isArray(value)) return value;
-  if (Array.isArray(value?.items)) return value.items;
-  if (Array.isArray(value?.data)) return value.data;
-  if (Array.isArray(value?.bookings)) return value.bookings;
-  return [];
+  const rows = [value, value?.items, value?.data, value?.bookings].find(Array.isArray) || [];
+  return rows.filter(row => row && typeof row === "object");
 }
 
 function defaultForm() {
@@ -76,25 +71,15 @@ function BookingSkeleton() {
 }
 
 function BookingModal({ form, setForm, saving, onClose, onSubmit, error }) {
-  const dialogRef = useRef(null);
-  useDialogFocus(dialogRef, true);
-  useEscapeKey(saving ? undefined : onClose, true, dialogRef);
-
-  return createPortal(
-    <div className="lf-modal-backdrop" style={{ zIndex: 2000 }} role="presentation" onMouseDown={event => {
-      if (event.target === event.currentTarget && !saving && !form.customer_name.trim() && !form.phone.trim() && !form.notes.trim()) onClose();
-    }}>
-      <form ref={dialogRef} tabIndex={-1} className="op2-modal" onSubmit={onSubmit} role="dialog" aria-modal="true" aria-label="Reserve a table" aria-busy={saving || undefined}>
-        <div className="order-selector-head">
-          <div>
-            <span className="lf-eyebrow">Booking</span>
-            <h3>Reserve a table</h3>
-          </div>
-          <HsrButton native type="button" className="lf-icon-button" disabled={saving} onClick={onClose} aria-label="Close booking form">
-            <HsrIcon className="ti ti-x" aria-hidden="true" />
-          </HsrButton>
-        </div>
-
+  return (
+    <Modal open portal title="Reserve a table" onClose={onClose} closeDisabled={saving}
+      dismissOnBackdrop={!form.customer_name.trim() && !form.phone.trim() && !form.notes.trim()}
+      footer={<>
+        <Button variant="secondary" disabled={saving} onClick={onClose}>Cancel</Button>
+        <Button variant="primary" type="submit" form="create-booking-form" icon="ti-calendar-plus" loading={saving}>Create booking</Button>
+      </>}
+    >
+      <form id="create-booking-form" className="op2-modal-body" onSubmit={onSubmit} aria-busy={saving || undefined}>
         <label className="lf-field">
           <span>Customer name</span>
           <HsrInput
@@ -188,16 +173,8 @@ function BookingModal({ form, setForm, saving, onClose, onSubmit, error }) {
         </label>
 
         {error && <p role="alert" className="ui-field-error">{error}</p>}
-        <div className="op2-modal-actions">
-          <HsrButton native type="button" className="lf-secondary-button" disabled={saving} onClick={onClose}>Cancel</HsrButton>
-          <HsrButton native type="submit" className="lf-primary-button" loading={saving}>
-            <HsrIcon className="ti ti-calendar-plus" aria-hidden="true" />
-            {saving ? "Creating..." : "Create booking"}
-          </HsrButton>
-        </div>
       </form>
-    </div>,
-    document.body,
+    </Modal>
   );
 }
 
@@ -295,6 +272,7 @@ export default function BookingsPage({ onNavigate }) {
     state: tableState.find((row) => String(row.id || row.table_id || "").toLowerCase() === table.id),
     bookings: booked.filter((booking) => String(booking.table_id || "").toLowerCase() === table.id),
   }));
+  const knownTableBookings = tableBookings.filter(row => row.state);
 
   function tableAvailability(table, state) {
     return getTableStatus({
@@ -312,7 +290,8 @@ export default function BookingsPage({ onNavigate }) {
       .map((table) => ({
         table,
         state: tableState.find((row) => String(row.id || row.table_id || "").toLowerCase() === table.id),
-      }));
+      }))
+      .filter(row => row.state);
     return candidates.find(({ table, state }) => tableAvailability(table, state).key === "available") || null;
   }
 
@@ -424,20 +403,20 @@ export default function BookingsPage({ onNavigate }) {
       </div>
 
       <div className="op2-metric-grid">
-        <div><span>Active bookings</span><strong>{booked.length}</strong><em>{nextHour.length} due within 1 hour</em></div>
-        <div><span>Tables covered</span><strong>{tableBookings.filter((row) => row.bookings.length).length}</strong><em>of {HSR_TABLES.length} tables</em></div>
-        <div><span>Missed bookings</span><strong>{missed.length}</strong><em>needs review before close</em></div>
+        <MetricCard label="Active bookings" value={booked.length} context={`${nextHour.length} due within 1 hour`} />
+        <MetricCard label="Tables covered" value={tableBookings.filter((row) => row.bookings.length).length} context={`of ${HSR_TABLES.length} tables`} />
+        <MetricCard label="Missed bookings" value={missed.length} context="needs review before close" />
       </div>
 
       <div className="op2-board">
-        {tableBookings.map(({ table, state, bookings: rows }) => {
+        {knownTableBookings.map(({ table, state, bookings: rows }) => {
           const status = getTableStatus({
             session: state?.session,
             booking: state?.booking || rows[0],
             maintenance: state?.maintenance,
           });
           return (
-            <article className="op2-table-booking-card table-state-card" {...tableStateAttributes(status.key)} key={table.id}>
+            <HsrCard as="article" className="op2-table-booking-card table-state-card" {...tableStateAttributes(status.key)} key={table.id}>
               <div>
                 <strong>T{table.num}</strong>
                 <span>{table.label}</span>
@@ -473,12 +452,20 @@ export default function BookingsPage({ onNavigate }) {
                 statusKey={status.key}
                 onClick={() => handleTableAction(table.id, status.key)}
               />
-            </article>
+            </HsrCard>
           );
         })}
+        {knownTableBookings.length < HSR_TABLES.length && <EmptyState
+          className="op2-availability-recovery"
+          icon="ti-wifi-off"
+          title="Table availability is incomplete"
+          description="Refresh table status before choosing a table for check-in."
+          secondaryAction={false}
+          action={<Button icon="ti-refresh" onClick={() => loadBookings({ showLoading: true })}>Refresh availability</Button>}
+        />}
       </div>
 
-      <section className="op2-panel">
+      <HsrPanel as="section" className="op2-panel">
         <div className="op2-panel-head">
           <div>
             <span className="lf-eyebrow">Register</span>
@@ -543,7 +530,7 @@ export default function BookingsPage({ onNavigate }) {
             )}
           />
         )}
-      </section>
+      </HsrPanel>
 
       {showModal && (
         <BookingModal

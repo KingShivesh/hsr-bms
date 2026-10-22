@@ -1,5 +1,6 @@
+import { Panel as HsrPanel, Card as HsrCard } from "../../components/ui/index.js";
 import { formatCurrency as polishCurrency } from "../../utils/format.js";
-import { Icon as HsrIcon, Input as HsrInput, Button as HsrButton, EmptyState } from "../../components/ui/index.js";
+import { Icon as HsrIcon, Input as HsrInput, Button as HsrButton, EmptyState, MetricCard } from "../../components/ui/index.js";
 import ContextHelp from "../../product/ContextHelp.jsx";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useCachedState, hasCachedState } from "../../hooks/useCachedState.js";
@@ -83,8 +84,10 @@ export default function CustomersPage() {
     setError("");
     try {
       const [memberRes, duplicateRes] = await Promise.all([getMembers(), getMemberDuplicates()]);
-      setMembers(Array.isArray(memberRes.data) ? memberRes.data : []);
-      setDuplicates(Array.isArray(duplicateRes.data) ? duplicateRes.data : []);
+      setMembers(Array.isArray(memberRes.data) ? memberRes.data.filter(member => member && memberId(member)) : []);
+      setDuplicates(Array.isArray(duplicateRes.data) ? duplicateRes.data
+        .filter(group => group?.primary?.id && Array.isArray(group.matches))
+        .map(group => ({ ...group, matches: group.matches.filter(match => match?.id) })) : []);
     } catch (err) {
       setError(err.userMessage || "Customers could not load.");
     } finally {
@@ -250,13 +253,13 @@ export default function CustomersPage() {
       {formError && <p id="customer-form-error" className="ui-field-error" role="alert">{formError}</p>}
 
       <div className="op2-metric-grid">
-        <div><span>Total customers</span><strong>{members.length}</strong><em>{duplicates.length} duplicate group(s)</em></div>
-        <div><span>Premium</span><strong>{totals.premium}</strong><em>high-value profiles</em></div>
-        <div><span>Total spend</span><strong data-dense={money(totals.totalSpend).length > 12}>{money(totals.totalSpend)}</strong><em>{totals.totalVisits} recorded visits</em></div>
+        <MetricCard label="Total customers" value={members.length} context={`${duplicates.length} duplicate group(s)`} />
+        <MetricCard label="Premium" value={totals.premium} context="high-value profiles" />
+        <MetricCard label="Total spend" value={money(totals.totalSpend)} context={`${totals.totalVisits} recorded visits`} />
       </div>
 
       {!!duplicates.length && (
-        <section className="op2-panel">
+        <HsrPanel as="section" className="op2-panel">
           <div className="op2-panel-head">
             <div>
               <span className="lf-eyebrow">Data quality</span>
@@ -288,10 +291,10 @@ export default function CustomersPage() {
               )),
             )}
           </div>
-        </section>
+        </HsrPanel>
       )}
 
-      <section className="op2-panel">
+      <HsrPanel as="section" className="op2-panel">
         <div className="op2-panel-head">
           <div>
             <span className="lf-eyebrow">Register</span>
@@ -309,7 +312,7 @@ export default function CustomersPage() {
               const tier = memberTier(member);
               const premium = /premium/i.test(tier);
               return (
-                <article
+                <HsrCard as="article"
                   className="op2-customer-card"
                   key={id || memberName(member)}
                   data-customer-id={id}
@@ -362,7 +365,7 @@ export default function CustomersPage() {
                       {busy === `delete-${id}` ? "Deleting..." : "Delete Customer"}
                     </HsrButton>
                   </div>
-                </article>
+                </HsrCard>
               );
             })}
           </div>
@@ -379,7 +382,7 @@ export default function CustomersPage() {
           />
         )}
         <Pagination total={visibleMembers.length} page={safePage} pageSize={pageSize} onPageChange={setPage} label="Customers" />
-      </section>
+      </HsrPanel>
 
       <Drawer
         open={!!selectedCustomer}
@@ -400,11 +403,11 @@ export default function CustomersPage() {
               </div>
             </div>
             <div className="checkout-summary-grid">
-              <div><span>Visits</span><strong>{selectedCustomer.vis || 0}</strong></div>
-              <div className={money(selectedCustomer.spt).length > 12 ? "is-wide" : undefined}><span>Spent</span><strong>{money(selectedCustomer.spt)}</strong></div>
-              <div className={money(selectedCustomer.current_balance).length > 12 ? "is-wide" : undefined}><span>Credit outstanding</span><strong>{money(selectedCustomer.current_balance || 0)}</strong></div>
-              <div><span>Customer ID</span><strong>{memberId(selectedCustomer) || "-"}</strong></div>
-              <div><span>Tier</span><strong>{memberTier(selectedCustomer)}</strong></div>
+              <MetricCard variant="compact" label="Visits" value={selectedCustomer.vis || 0} />
+              <MetricCard variant="compact" label="Spent" value={money(selectedCustomer.spt)} />
+              <MetricCard variant="compact" label="Credit outstanding" value={money(selectedCustomer.current_balance || 0)} />
+              <MetricCard variant="compact" label="Customer ID" value={memberId(selectedCustomer) || "-"} />
+              <MetricCard variant="compact" label="Tier" value={memberTier(selectedCustomer)} />
             </div>
             <ContextHelp label="Help with member credit">Credit outstanding is the member's unpaid balance, not cash collected. Only an existing loyalty member can receive a Credit settlement. Closing a session on Credit updates the balance atomically with its bill; changing a guest name does not create a credit account.</ContextHelp>
             <div className="customer-profile-note">

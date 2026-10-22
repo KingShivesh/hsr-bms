@@ -50,6 +50,7 @@ const bookingFixture = {id:99001,customer_name:"QA Booking",phone:"9000000000",t
 const billFixture = {id:99001,nm:"QA Customer",tbl:"T1",ts:Date.now(),date:new Intl.DateTimeFormat("en-GB",{timeZone:"Asia/Kolkata",day:"2-digit",month:"2-digit",year:"numeric"}).format(new Date()),dur:60,ply:320,famt:120,tot:440,payment_method:"Cash",tariff_mode:"hourly"};
 function fixture(data, pathname, state) {
   pathname = pathname.replace(/\/$/, "");
+  if (state === "partial" && process.env.UI_PARTIAL_NULL_ROWS === "true" && Array.isArray(data) && ["/members", "/members/duplicates", "/bookings", "/food/orders", "/food/stats"].includes(pathname)) return [null, ...(pathname === "/bookings" && !data.length ? [bookingFixture] : data)];
   if (pathname === "/sessions/live-floor" && state === "table-states") {
     const template = data.tables.find(table => table.session).session;
     const states = ["running", "paused", "available", "reserved", "maintenance"];
@@ -149,6 +150,7 @@ const faults = report.samples.filter(r => !r.loadingIndicator || !r.settled || r
 console.log(JSON.stringify({route,stage,samples:report.samples.length,faults:faults.map(r=>({theme:r.theme,width:r.width,state:r.state,applicationCrashed:r.applicationCrashed,overflow:r.overflow,contentOverflow:r.contentOverflow,shortTargets:r.shortTargets,clipped:r.clipped,unlabeledInputs:r.unlabeledInputs,contrast:r.contrast,errors:r.errors,retry:r.retry}))},null,2));
 if (stage === "after") {
   assert.equal(faults.length,0); assert.equal(report.errors.length,0);
-  if (process.env.UI_PARTIAL_NULL_ROWS === "true") assert.ok(report.samples.every(row => row.collectionSizes[".lf-table-card"] === 5));
+  if (process.env.UI_PARTIAL_NULL_ROWS === "true" && route === "/live-floor") assert.ok(report.samples.every(row => row.collectionSizes[".lf-table-card"] === 5));
   if (process.env.UI_UNKNOWN_FLOOR_STATUS === "true") assert.ok(report.samples.every(row => row.collectionSizes[".lf-table-card"] === 0));
+  if (route === "/bookings" && !process.env.UI_DATA_PATH) assert.ok(report.samples.filter(row => ["empty", "error"].includes(row.state)).every(row => row.collectionSizes[".op2-table-booking-card"] === 0), "Unknown availability must not render available table cards");
 }

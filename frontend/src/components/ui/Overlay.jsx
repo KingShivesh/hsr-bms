@@ -24,12 +24,14 @@ export function Modal({
   className = "",
   size = "md",
   portal = false,
+  dismissOnBackdrop = true,
+  closeDisabled = false,
 }) {
   const titleId = useId();
   const dialogRef = useRef(null);
   const present = usePresence(open);
   useDialogFocus(dialogRef, open);
-  useEscapeKey(onClose, open, dialogRef);
+  useEscapeKey(closeDisabled ? undefined : onClose, open, dialogRef);
 
   if (!present) return null;
 
@@ -41,7 +43,7 @@ export function Modal({
       inert={!open ? true : undefined}
       role="presentation"
       onMouseDown={(e) => {
-        if (e.target === e.currentTarget && onClose) onClose();
+        if (e.target === e.currentTarget && dismissOnBackdrop && !closeDisabled && onClose) onClose();
       }}
     >
       <section
@@ -57,7 +59,7 @@ export function Modal({
             {title && <h2 id={titleId} title={title}>{title}</h2>}
             {description && <p>{description}</p>}
           </div>
-          {onClose && <IconButton label="Close dialog" icon="ti-x" variant="ghost" onClick={onClose} />}
+          {onClose && <IconButton label="Close dialog" icon="ti-x" variant="ghost" disabled={closeDisabled} onClick={onClose} />}
         </div>
         <div className="ui-overlay-body">{children}</div>
         {footer && <div className="ui-overlay-footer">{footer}</div>}
