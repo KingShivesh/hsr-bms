@@ -1,4 +1,4 @@
-export function measureUi() {
+export function measureUi({ minimumTextSize = 0 } = {}) {
   const scope = [...document.querySelectorAll('[role="dialog"][aria-modal="true"]')].filter(node => node.getClientRects().length).at(-1) || document;
   const visible = node => {
     if (!node.getClientRects().length || node.closest('[hidden],[inert],[aria-hidden="true"]')) return false;
@@ -13,6 +13,7 @@ export function measureUi() {
     applicationCrashed: document.body.innerText.includes("This page could not open."),
     overflow: Math.max(0, document.documentElement.scrollWidth - innerWidth),
     shortTargets, clipped,
+    smallText: minimumTextSize ? [...scope.querySelectorAll("*")].filter(visible).filter(node => [...node.childNodes].some(child => child.nodeType === Node.TEXT_NODE && child.textContent.trim()) || node.matches('input:not([type=checkbox]):not([type=radio]),textarea,select')).filter(node => parseFloat(getComputedStyle(node).fontSize) < minimumTextSize).map(node => ({ text: label(node), fontSize: getComputedStyle(node).fontSize, className: node.getAttribute("class") || "" })) : [],
     brokenImages: [...document.images].filter(node => visible(node) && (!node.complete || node.naturalWidth === 0)).map(node => node.alt),
     invalidCopy: [...new Set((document.body.innerText.match(/\bNaN\b|\bundefined\b|\bnull\b|\bTODO\b|Lorem ipsum|\[object Object\]|Invalid Date/g) || []))],
     unlabeledButtons: buttons.filter(node => !node.innerText.trim() && !node.getAttribute("aria-label") && !node.title).map(node => node.className),

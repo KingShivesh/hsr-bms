@@ -8,6 +8,7 @@ const route = process.argv[2] || "/dashboard", stage = process.argv[3] || "after
 const origin = `http://127.0.0.1:${stage === "before" ? 5180 : 5181}`, api = "http://127.0.0.1:8006";
 const key = route.replaceAll(/[/?=]/g, "-").replace(/^-/, "");
 const output = process.env.UI_OUTPUT_DIR || `../docs/ui-readiness/${key}/${stage}`;
+const strict = process.env.UI_STRICT_PILOT === "true";
 await fs.mkdir(output, { recursive: true });
 const domains = {
   "/dashboard": /^\/reports\/dashboard$/, "/live-floor": /^\/sessions\/live-floor$/,
@@ -103,9 +104,9 @@ try {
           await Promise.all(document.getAnimations().filter(animation => animation.effect?.getTiming().iterations !== Infinity).map(animation => animation.finished.catch(() => {})));
           await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
         });
-        const metrics = await page.evaluate(measureUi);
+        const metrics = await page.evaluate(measureUi, { minimumTextSize: strict ? 12 : 0 });
         const viewportOnly = await page.evaluate(()=>document.documentElement.scrollHeight >= 16000);
-        const contrast = await scanRenderedContrast(page,{route,theme,state,viewportOnly});
+        const contrast = await scanRenderedContrast(page,{route,theme,state,viewportOnly,...(strict ? { minimumContrast: 4.5, includeDisabled: true } : {})});
         const file = `${theme}-${width}-${state}.png`;
         const fullPage = ["default","extreme"].includes(state) && await page.evaluate(()=>document.documentElement.scrollHeight < 16000);
         await page.screenshot({path:`${output}/${file}`,animations:"disabled",fullPage});
@@ -119,6 +120,6 @@ try {
     await context.close();
   }
 } finally { await browser.close(); await fs.writeFile(`${output}/results.json`,JSON.stringify(report,null,2)); }
-const faults = report.samples.filter(r => !r.loadingIndicator || !r.settled || r.applicationCrashed || r.overflow || r.contentOverflow.length || r.shortTargets.length || r.clipped.length || r.invalidCopy.length || r.unlabeledButtons.length || r.unlabeledInputs.length || r.brokenImages.length || r.contrast.length || r.errors.length || !r.retry);
+const faults = report.samples.filter(r => !r.loadingIndicator || !r.settled || r.applicationCrashed || r.overflow || r.smallText.length || r.contentOverflow.length || r.shortTargets.length || r.clipped.length || r.invalidCopy.length || r.unlabeledButtons.length || r.unlabeledInputs.length || r.brokenImages.length || r.contrast.length || r.errors.length || !r.retry);
 console.log(JSON.stringify({route,stage,samples:report.samples.length,faults:faults.map(r=>({theme:r.theme,width:r.width,state:r.state,applicationCrashed:r.applicationCrashed,overflow:r.overflow,contentOverflow:r.contentOverflow,shortTargets:r.shortTargets,clipped:r.clipped,unlabeledInputs:r.unlabeledInputs,contrast:r.contrast,errors:r.errors,retry:r.retry}))},null,2));
 if (stage === "after") { assert.equal(faults.length,0); assert.equal(report.errors.length,0); }
