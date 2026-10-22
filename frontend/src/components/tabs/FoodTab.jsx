@@ -1,4 +1,5 @@
-import { Icon as HsrIcon, Input as HsrInput, Button as HsrButton, Select as HsrSelect, Table as HsrTable, MetricValue } from "../ui/index.js";
+import { Card as HsrCard, Panel as HsrPanel } from "../ui/index.js";
+import { Icon as HsrIcon, Input as HsrInput, Button as HsrButton, Select as HsrSelect, Table as HsrTable, MetricValue, EmptyState, SkeletonBlock, Modal, Button } from "../ui/index.js";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useCachedState, hasCachedState } from "../../hooks/useCachedState.js";
 import {
@@ -12,10 +13,10 @@ import {
   getFoodStats,
 } from "../../api/index.js";
 import { useToast } from "../toastContext.js";
-import { Checkbox, useEscapeKey } from "../ui/index.js";
+import { Checkbox } from "../ui/index.js";
 import { useRealtimeSubscription } from "../../realtime/useRealtimeSubscription.js";
-import { useDialogFocus } from "../ui/useDialogFocus.js";
 import { formatCurrency, formatDateTime } from "../../utils/format.js";
+import Pagination from "../ui/Pagination.jsx";
 
 const CATEGORIES = [
   "All",
@@ -30,19 +31,6 @@ const CATEGORIES = [
 
 const tableKey = (tableId) => String(tableId || "").trim().toLowerCase();
 
-function EmptyState({ icon = "ti-info-circle", title, detail, action }) {
-  return (
-    <div className="empty-state">
-      <div className="empty-state-icon">
-        <HsrIcon className={`ti ${icon}`} aria-hidden="true" />
-      </div>
-      <div className="empty-state-title">{title}</div>
-      {detail && <div className="empty-state-detail">{detail}</div>}
-      {action}
-    </div>
-  );
-}
-
 function FoodPosSkeleton() {
   const menuCards = Array.from({ length: 10 });
   const categories = Array.from({ length: 8 });
@@ -51,12 +39,6 @@ function FoodPosSkeleton() {
     <div className="cafe-pos-page page-skeleton food-pos-skeleton" role="status" aria-live="polite" aria-label="Loading Food and Cafe POS">
       <div className="page-skeleton-status">
         <span>Loading Food & Cafe POS...</span>
-      </div>
-      <div className="segmented-control page-tabs cafe-pos-tabs skeleton-tabs">
-        <span className="skeleton-pill wide" />
-        <span className="skeleton-pill" />
-        <span className="skeleton-pill wide" />
-        <span className="skeleton-pill" />
       </div>
       <div className="food-order-layout">
         <div className="cafe-products-region">
@@ -71,17 +53,17 @@ function FoodPosSkeleton() {
           </div>
           <div className="food-menu-grid">
             {menuCards.map((_, index) => (
-              <div className="food-menu-card skeleton-menu-card" key={index}>
+              <HsrCard as="div" className="food-menu-card skeleton-menu-card" key={index}>
                 <span className="skeleton-media" />
                 <span className="skeleton-line skeleton-menu-name" />
                 <span className="skeleton-line skeleton-menu-price" />
                 <span className="skeleton-line skeleton-menu-category" />
-              </div>
+              </HsrCard>
             ))}
           </div>
         </div>
         <aside className="cafe-order-region" aria-label="Loading current order">
-          <div className="panel food-cart-panel skeleton-order-panel">
+          <HsrPanel as="div" className="panel food-cart-panel skeleton-order-panel">
             <div className="food-cart-head">
               <div className="skeleton-order-heading">
                 <span className="skeleton-line skeleton-title" />
@@ -101,7 +83,7 @@ function FoodPosSkeleton() {
               <span className="skeleton-line skeleton-menu-name" />
               <span className="skeleton-line skeleton-subtitle" />
             </div>
-          </div>
+          </HsrPanel>
         </aside>
       </div>
     </div>
@@ -115,6 +97,9 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
   const [orders, setOrders] = useCachedState("cafe-orders", []);
   const [activeSessions, setActiveSessions] = useCachedState("cafe-sessions", []);
   const [loading, setLoading] = useState(() => !hasCachedState("cafe-menu"));
+  const [statsLoading, setStatsLoading] = useState(() => !hasCachedState("cafe-stats"));
+  const [ordersLoading, setOrdersLoading] = useState(() => !hasCachedState("cafe-orders"));
+  const [failedSections, setFailedSections] = useState([]);
   const [loadError, setLoadError] = useState("");
   const [cart, setCart] = useState([]);
   const [customerName, setCustomerName] = useState("");
@@ -123,6 +108,8 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
   const [selectedTable, setSelectedTable] = useState("");
   const [selectedPlayer, setSelectedPlayer] = useState("");
   const [activeTab, setActiveTab] = useState("order");
+  const [statsPage, setStatsPage] = useState(1);
+  const [historyPage, setHistoryPage] = useState(1);
   const [activeCat, setActiveCat] = useState("All");
   const [menuSearch, setMenuSearch] = useState("");
   const [placing, setPlacing] = useState(false);
@@ -132,40 +119,39 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
   const orderRefreshTimerRef = useRef(null);
   const [lastOrder, setLastOrder] = useState(null);
   const [cigaretteDraft, setCigaretteDraft] = useState({ name: "", mrp: "" });
-  const priceDialogRef = useRef(null);
-  useDialogFocus(priceDialogRef, !!cigaretteDraft.name);
-  useEscapeKey(() => setCigaretteDraft({ name: "", mrp: "" }), !!cigaretteDraft.name, priceDialogRef);
+  const priceInputRef = useRef(null);
 
   const fetchAll = useCallback(async ({ showLoading = false } = {}) => {
     if (showLoading && !hasCachedState("cafe-menu")) setLoading(true);
+    if (showLoading && !hasCachedState("cafe-stats")) setStatsLoading(true);
+    if (showLoading && !hasCachedState("cafe-orders")) setOrdersLoading(true);
     setLoadError("");
+    setFailedSections([]);
     try {
-      const requests = [
-        getMenu(),
-        getFoodStats(),
-        getFoodOrders(),
-        getLiveFloor(),
-      ];
       const labels = ["menu items", "food stats", "order history", "active tables"];
+      const requests = [
+        getMenu().then(response => { setMenu(response.data || {}); return response; }),
+        getFoodStats().then(response => { setStats(Array.isArray(response.data) ? response.data.filter(row => row && typeof row === "object") : []); return response; }).finally(() => setStatsLoading(false)),
+        getFoodOrders().then(response => { setOrders(Array.isArray(response.data) ? response.data.filter(row => row && typeof row === "object") : []); return response; }).finally(() => setOrdersLoading(false)),
+        getLiveFloor().then(response => {
+          const sessions = response.data?.floor?.sessions || response.data?.active_sessions || [];
+          setActiveSessions((Array.isArray(sessions) ? sessions : []).filter(session => session?.table_id).map(session => ({ ...session, table_id: tableKey(session.table_id) })));
+          return response;
+        }),
+      ].map((request, index) => request.catch(error => {
+        const label = labels[index];
+        setFailedSections(current => current.includes(label) ? current : [...current, label]);
+        setLoadError(`Could not load ${label}. Retry once the backend responds.`);
+        throw error;
+      }));
+      // Counter readiness must not wait for the history and performance reads.
+      Promise.allSettled([requests[0], requests[3]]).then(() => setLoading(false));
       const [menuRes, statsRes, ordersRes, activeRes] = await Promise.allSettled(requests);
       const failed = [menuRes, statsRes, ordersRes, activeRes]
         .map((result, index) => (result.status === "rejected" ? labels[index] : ""))
         .filter(Boolean);
 
-      if (menuRes.status === "fulfilled") setMenu(menuRes.value.data || {});
-      if (statsRes.status === "fulfilled") setStats(Array.isArray(statsRes.value.data) ? statsRes.value.data : []);
-      if (ordersRes.status === "fulfilled") setOrders(Array.isArray(ordersRes.value.data) ? ordersRes.value.data : []);
-      if (activeRes.status === "fulfilled") {
-        const sessions =
-          activeRes.value.data?.floor?.sessions ||
-          activeRes.value.data?.active_sessions ||
-          [];
-        setActiveSessions((Array.isArray(sessions) ? sessions : []).map((session) => ({
-          ...session,
-          table_id: tableKey(session.table_id),
-        })));
-      }
-
+      setFailedSections(failed);
       if (failed.length) {
         const message = `Could not load ${failed.join(", ")}. Retry once the backend responds.`;
         setLoadError(message);
@@ -195,8 +181,8 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
   const refreshOrders = useCallback(async () => {
     try {
       const [ordersRes, statsRes] = await Promise.all([getFoodOrders(), getFoodStats()]);
-      setOrders(Array.isArray(ordersRes.data) ? ordersRes.data : []);
-      setStats(Array.isArray(statsRes.data) ? statsRes.data : []);
+      setOrders(Array.isArray(ordersRes.data) ? ordersRes.data.filter(row => row && typeof row === "object") : []);
+      setStats(Array.isArray(statsRes.data) ? statsRes.data.filter(row => row && typeof row === "object") : []);
     } catch {
       // The realtime hook keeps polling while disconnected; the global API banner handles failures.
     }
@@ -331,7 +317,7 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
       showToast("Enter customer name", "error");
       return;
     }
-    if (orderTarget === "table" && (!selectedTable || !selectedPlayer)) {
+    if (orderTarget === "table" && (!selectedSession || (selectedSessionPlayers.length > 0 && !selectedPlayer))) {
       showToast("Select table and player", "error");
       return;
     }
@@ -350,6 +336,7 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
             item.qty,
             item.mrp,
             selectedPlayer,
+            selectedSession.session_key,
           );
           placedItems.push({
             item: item.mrp ? `${item.item} (MRP ₹${item.mrp} + ₹3)` : item.item,
@@ -359,7 +346,7 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
           });
         }
         setLastOrder({
-          customer: `${selectedPlayer} · ${selectedTable.toUpperCase()}`,
+          customer: `${selectedPlayer || "Guest"} · ${selectedTable.toUpperCase()}`,
           items: placedItems,
           total: placedItems.reduce((sum, item) => sum + item.price, 0),
           paymentMethod: "Added to table bill",
@@ -447,13 +434,18 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
           .flatMap((name) => String(name).split(",").map((part) => part.trim()).filter(Boolean));
   const cartItemCount = cart.reduce((sum, item) => sum + item.qty, 0);
   const cartTotalValue = cartTotal();
+  const pageSize = 25;
+  const safeStatsPage = Math.min(statsPage, Math.max(1, Math.ceil(stats.length / pageSize)));
+  const safeHistoryPage = Math.min(historyPage, Math.max(1, Math.ceil(orders.length / pageSize)));
+  const visibleStats = stats.slice((safeStatsPage - 1) * pageSize, safeStatsPage * pageSize);
+  const visibleOrders = orders.slice((safeHistoryPage - 1) * pageSize, safeHistoryPage * pageSize);
   const canPlaceOrder =
     cart.length > 0 &&
     !placing &&
     (
       orderTarget === "standalone"
         ? !!customerName.trim()
-        : !!selectedTable && !!selectedPlayer
+        : !!selectedSession && (selectedSessionPlayers.length === 0 || !!selectedPlayer)
     );
   const placeOrderLabel =
     orderTarget === "table"
@@ -489,39 +481,26 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
     }
   }, [orderTarget, selectedTable, selectedPlayer, selectedSessionPlayers]);
 
-  if (loading) {
-    return <FoodPosSkeleton />;
-  }
-
   return (
     <div className="cafe-pos-page" data-realtime-state={realtimeState}>
       {cigaretteDraft.name && (
-        <div className="app-confirm-backdrop" role="presentation">
-          <form
-            ref={priceDialogRef}
-            tabIndex={-1}
-            className="app-confirm-dialog food-price-dialog"
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="food-price-dialog-title"
-            onSubmit={handleCigarettePriceSubmit}
-          >
-            <div className="app-confirm-copy">
-              <h3 id="food-price-dialog-title">
-                Enter cigarette MRP
-              </h3>
-              <p className="app-confirm-message">
-                {cigaretteDraft.name} will be billed at MRP plus ₹3.
-              </p>
-            </div>
+        <Modal open portal title="Enter cigarette MRP" description={`${cigaretteDraft.name} will be billed at MRP plus ₹3.`}
+          initialFocusRef={priceInputRef}
+          onClose={() => setCigaretteDraft({ name: "", mrp: "" })}
+          footer={<>
+            <Button variant="secondary" onClick={() => setCigaretteDraft({ name: "", mrp: "" })}>Discard Item</Button>
+            <Button variant="primary" type="submit" form="cafe-price-form">Add Cigarette</Button>
+          </>}
+        >
+          <form id="cafe-price-form" onSubmit={handleCigarettePriceSubmit}>
             <label className="food-price-field">
               <span>MRP</span>
               <HsrInput
+                ref={priceInputRef}
                 className="input-field"
                 type="number"
                 min="1"
                 inputMode="numeric"
-                autoFocus
                 value={cigaretteDraft.mrp}
                 onChange={(event) =>
                   setCigaretteDraft((current) => ({
@@ -531,20 +510,8 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
                 }
               />
             </label>
-            <div className="app-confirm-actions">
-              <HsrButton native
-                type="button"
-                className="app-confirm-btn secondary"
-                onClick={() => setCigaretteDraft({ name: "", mrp: "" })}
-              >
-                Discard Item
-              </HsrButton>
-              <HsrButton native type="submit" className="app-confirm-btn primary">
-                Add Cigarette
-              </HsrButton>
-            </div>
           </form>
-        </div>
+        </Modal>
       )}
 
       {loadError && (
@@ -580,7 +547,7 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
       </div>
 
       {/* ── New Order ── */}
-      {activeTab === "order" && (
+      {activeTab === "order" && (loading ? <FoodPosSkeleton /> : (
         <div className="food-order-layout">
           {/* Menu grid */}
           <div className="cafe-products-region">
@@ -626,7 +593,7 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
               {filteredMenu.map(([name, v]) => {
                 const inCart = cart.find((i) => i.item === name);
                 return (
-                  <HsrButton native
+                  <HsrCard as={HsrButton} native
                     type="button"
                     key={name}
                     onClick={() => addToCart(name)}
@@ -650,7 +617,7 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
                         × {inCart.qty} in cart
                       </div>
                     )}
-                  </HsrButton>
+                  </HsrCard>
                 );
               })}
               {filteredMenu.length === 0 && (
@@ -658,7 +625,7 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
                   <EmptyState
                     icon="ti-tools-kitchen-2"
                     title={menuSearch.trim() ? "No matching items" : "No items in this category"}
-                    detail={menuSearch.trim() ? "Clear the search or try a shorter item name." : role === "admin" ? "Try another category or manage menu items from Inventory & Stocks." : "Try another category or ask an admin to update the menu."}
+                    description={menuSearch.trim() ? "Clear the search or try a shorter item name." : role === "admin" ? "Try another category or manage menu items from Inventory & Stocks." : "Try another category or ask an admin to update the menu."}
                     action={menuSearch.trim() ? (
                       <HsrButton native type="button" className="lf-secondary-button empty-action-button" onClick={() => setMenuSearch("")}>
                         <HsrIcon className="ti ti-x" aria-hidden="true" />
@@ -678,7 +645,7 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
 
           {/* Cart */}
           <aside className="cafe-order-region" aria-label="Current order">
-            <div className="panel food-cart-panel">
+            <HsrPanel as="div" className="panel food-cart-panel">
               <div className="food-cart-head">
                 <div>
                   <div className="section-heading">
@@ -759,11 +726,11 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
                     <option value="">Select table</option>
                     {activeSessions.map((session) => (
                       <option key={session.table_id} value={session.table_id}>
-                        {session.table_id.toUpperCase()} · {session.customer_name}
+                        {session.table_id.toUpperCase()} · {session.customer_name || "Guest"}
                       </option>
                     ))}
                   </HsrSelect>
-                  <HsrSelect
+                  {selectedSessionPlayers.length > 0 ? <HsrSelect
                     className="input-field"
                     aria-label="Order player"
                     value={selectedPlayer}
@@ -776,7 +743,7 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
                         {player}
                       </option>
                     ))}
-                  </HsrSelect>
+                  </HsrSelect> : selectedSession ? <p className="food-table-target-note">Guest session · No player name recorded</p> : null}
                 </div>
               ) : (
                 <>
@@ -817,7 +784,7 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
                 <EmptyState
                   icon="ti-shopping-cart-plus"
                   title="Cart is empty"
-                  detail="Click menu items to add them to this order."
+                  description="Click menu items to add them to this order."
                   action={filteredMenu.length > 0 ? (
                     <HsrButton native type="button" className="lf-secondary-button empty-action-button" onClick={() => document.querySelector(".food-menu-card")?.focus()}>
                       <HsrIcon className="ti ti-arrow-left" aria-hidden="true" />
@@ -927,10 +894,10 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
                   </div>
                 </div>
               )}
-            </div>
+            </HsrPanel>
           </aside>
         </div>
-      )}
+      ))}
 
       {/* ── Food Stats ── */}
       {activeTab === "stats" && (
@@ -940,11 +907,13 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
             >
             Food Item Performance
           </div>
-          {stats.length === 0 ? (
+          {statsLoading ? <SkeletonBlock rows={5} label="Loading food performance" /> : failedSections.includes("food stats") ? (
+            <EmptyState icon="ti-alert-circle" title="Food performance could not load" description="Retry to see the latest item performance." secondaryAction={false} action={<Button icon="ti-refresh" onClick={() => fetchAll({ showLoading: true })}>Retry stats</Button>} />
+          ) : stats.length === 0 ? (
             <EmptyState
               icon="ti-chart-bar"
               title="No food orders yet"
-              detail="Food performance will appear after the first order."
+              description="Food performance will appear after the first order."
               action={<HsrButton onClick={() => setActiveTab("order")}>New Order</HsrButton>}
             />
           ) : (
@@ -960,17 +929,18 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
                   </tr>
                 </thead>
                 <tbody>
-                  {stats.map((s, i) => {
+                  {visibleStats.map((s, i) => {
+                    const rankIndex = (safeStatsPage - 1) * pageSize + i;
                     const maxQty = stats[0]?.qty || 1;
                     const pct = Math.max(0, Math.min(100, Math.round(((Number(s.qty) || 0) / maxQty) * 100)));
                     return (
                       <tr key={i}>
                         <td className="type-sm polish-color-text-muted" >
-                          #{i + 1}
+                          #{rankIndex + 1}
                         </td>
-                        <td className="polish-font-weight-weight-medium" >{s.name}</td>
+                        <td className="polish-font-weight-weight-medium" >{s.name || "-"}</td>
                         <td data-type="number" className="polish-color-accent polish-font-weight-weight-semibold" >
-                          {s.qty}
+                          {Number(s.qty) || 0}
                         </td>
                         <td data-type="number" className="polish-color-success polish-font-weight-weight-semibold" >
                           {formatCurrency(s.revenue)}
@@ -984,9 +954,9 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
                             >
                               <div
                                 className="polish-height-6px polish-border-radius-radius-sm" style={{ width: `${pct}%`, background:
-                                    i === 0
+                                    rankIndex === 0
                                       ? "var(--success)"
-                                      : i === stats.length - 1
+                                      : rankIndex === stats.length - 1
                                         ? "var(--danger)"
                                         : "var(--accent)" }}
                               />
@@ -1003,6 +973,7 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
                   })}
                 </tbody>
               </HsrTable>
+              <Pagination total={stats.length} page={safeStatsPage} pageSize={pageSize} onPageChange={setStatsPage} label="Food performance" />
             </div>
           )}
         </div>
@@ -1016,11 +987,13 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
             >
             Food-Only Orders
           </div>
-          {orders.length === 0 ? (
+          {ordersLoading ? <SkeletonBlock rows={5} label="Loading order history" /> : failedSections.includes("order history") ? (
+            <EmptyState icon="ti-alert-circle" title="Order history could not load" description="Retry to see the latest counter orders." secondaryAction={false} action={<Button icon="ti-refresh" onClick={() => fetchAll({ showLoading: true })}>Retry history</Button>} />
+          ) : orders.length === 0 ? (
             <EmptyState
               icon="ti-receipt"
               title="No standalone food orders yet"
-              detail="Orders placed without a table session will show here."
+              description="Orders placed without a table session will show here."
               action={<HsrButton onClick={() => setActiveTab("order")}>New Order</HsrButton>}
             />
           ) : (
@@ -1037,7 +1010,7 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
                   </tr>
                 </thead>
                 <tbody>
-                  {orders.map((o, i) => (
+                  {visibleOrders.map((o, i) => (
                     <tr key={o.id || i}>
                       <td className="type-sm polish-color-text-muted" >
                         {o.ts ? formatDateTime(o.ts) : o.date || "-"}
@@ -1046,8 +1019,8 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
                       <td className="type-sm polish-color-text-secondary" >
                         {Array.isArray(o.items) && o.items.length ? o.items.filter(Boolean).map((x) => `${x.item || "Item"} x${Number(x.qty) || 0}`).join(", ") : "No item details"}
                       </td>
-                      <td className="polish-font-weight-weight-bold" style={{ color: o.payment_method === "UPI" ? "var(--accent)" : "var(--success)" }}>
-                        {o.payment_method || "Cash"}
+                      <td className="polish-font-weight-weight-bold" style={{ color: !o.payment_method ? "var(--text-muted)" : o.payment_method === "UPI" ? "var(--accent)" : "var(--success)" }}>
+                        {o.payment_method || "-"}
                       </td>
                       <td data-type="number" className="polish-font-weight-weight-semibold polish-color-success" >
                         {formatCurrency(o.total)}
@@ -1068,6 +1041,7 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
                   ))}
                 </tbody>
               </HsrTable>
+              <Pagination total={orders.length} page={safeHistoryPage} pageSize={pageSize} onPageChange={setHistoryPage} label="Order history" />
             </div>
           )}
         </div>

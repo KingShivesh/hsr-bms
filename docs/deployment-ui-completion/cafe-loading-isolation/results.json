@@ -1,0 +1,78 @@
+{
+  "scope": "Local Staff read-only: hold history and stats independently while menu and floor REST remain available",
+  "cases": [
+    {
+      "theme": "light",
+      "width": 375,
+      "counterReadyWhileBothHeld": true,
+      "statsHasOwnSkeleton": true,
+      "historyHasOwnSkeleton": true,
+      "statsReadyWhileHistoryHeld": true,
+      "historyRecovered": true
+    },
+    {
+      "theme": "light",
+      "width": 768,
+      "counterReadyWhileBothHeld": true,
+      "statsHasOwnSkeleton": true,
+      "historyHasOwnSkeleton": true,
+      "statsReadyWhileHistoryHeld": true,
+      "historyRecovered": true
+    },
+    {
+      "theme": "light",
+      "width": 1024,
+      "counterReadyWhileBothHeld": true,
+      "statsHasOwnSkeleton": true,
+      "historyHasOwnSkeleton": true,
+      "statsReadyWhileHistoryHeld": true,
+      "historyRecovered": true
+    },
+    {
+      "theme": "light",
+      "width": 1440,
+      "counterReadyWhileBothHeld": true,
+      "statsHasOwnSkeleton": true,
+      "historyHasOwnSkeleton": true,
+      "statsReadyWhileHistoryHeld": true,
+      "historyRecovered": true
+    },
+    {
+      "theme": "dark",
+      "width": 375,
+      "counterReadyWhileBothHeld": true,
+      "statsHasOwnSkeleton": true,
+      "historyHasOwnSkeleton": true,
+      "statsReadyWhileHistoryHeld": true,
+      "historyRecovered": true
+    },
+    {
+      "theme": "dark",
+      "width": 768,
+      "counterReadyWhileBothHeld": true,
+      "statsHasOwnSkeleton": true,
+      "historyHasOwnSkeleton": true,
+      "statsReadyWhileHistoryHeld": true,
+      "historyRecovered": true
+    },
+    {
+      "theme": "dark",
+      "width": 1024,
+      "counterReadyWhileBothHeld": true,
+      "statsHasOwnSkeleton": true,
+      "historyHasOwnSkeleton": true,
+      "statsReadyWhileHistoryHeld": true,
+      "historyRecovered": true
+    },
+    {
+      "theme": "dark",
+      "width": 1440,
+      "counterReadyWhileBothHeld": true,
+      "statsHasOwnSkeleton": true,
+      "historyHasOwnSkeleton": true,
+      "statsReadyWhileHistoryHeld": true,
+      "historyRecovered": true
+    }
+  ],
+  "blockedWrites": []
+}

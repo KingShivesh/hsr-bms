@@ -1,0 +1,41 @@
+{
+  "legend": "Before left, after right; light above dark. Original pixels, first 1000px of tall captures. Full source captures retained.",
+  "sources": [
+    {
+      "theme": "light",
+      "stage": "before",
+      "path": "cafe-pos/before/light-1440-default.png",
+      "sha256": "a1eb1a421828df4b6993293cbe92df6a45451b8e4f453b472159a32d35b11524",
+      "width": 1440,
+      "height": 1000,
+      "croppedHeight": 1000
+    },
+    {
+      "theme": "light",
+      "stage": "after",
+      "path": "cafe-pos/after/light-1440-default.png",
+      "sha256": "8d17bd4ff7d9c623922c71b292be4c3c1bfa226a857f750db6e57d10a68ab44f",
+      "width": 1440,
+      "height": 1000,
+      "croppedHeight": 1000
+    },
+    {
+      "theme": "dark",
+      "stage": "before",
+      "path": "cafe-pos/before/dark-1440-default.png",
+      "sha256": "2e5215b0b7a5adb1a544246dbdb8ee67425a378af9832a499dde7f146a85c48f",
+      "width": 1440,
+      "height": 1000,
+      "croppedHeight": 1000
+    },
+    {
+      "theme": "dark",
+      "stage": "after",
+      "path": "cafe-pos/after/dark-1440-default.png",
+      "sha256": "203740e3e381082c57f774752fbc21587310a31ec1788b734014f5a23b740d20",
+      "width": 1440,
+      "height": 1000,
+      "croppedHeight": 1000
+    }
+  ]
+}

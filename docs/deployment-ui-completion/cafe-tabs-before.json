@@ -1,0 +1,29 @@
+{
+  "group": "cafe-tabs",
+  "stage": "before",
+  "widths": [
+    375,
+    768,
+    1024,
+    1440
+  ],
+  "strictPilot": true,
+  "results": [
+    {
+      "route": "/cafe-pos",
+      "tab": "Food Stats",
+      "key": "cafe-stats",
+      "data": "^/food/stats$",
+      "status": 0,
+      "output": "../docs/deployment-ui-completion/cafe-stats/before"
+    },
+    {
+      "route": "/cafe-pos",
+      "tab": "Order History",
+      "key": "cafe-history",
+      "data": "^/food/orders$",
+      "status": 0,
+      "output": "../docs/deployment-ui-completion/cafe-history/before"
+    }
+  ]
+}

@@ -26,11 +26,12 @@ export function Modal({
   portal = false,
   dismissOnBackdrop = true,
   closeDisabled = false,
+  initialFocusRef,
 }) {
   const titleId = useId();
   const dialogRef = useRef(null);
   const present = usePresence(open);
-  useDialogFocus(dialogRef, open);
+  useDialogFocus(dialogRef, open, initialFocusRef);
   useEscapeKey(closeDisabled ? undefined : onClose, open, dialogRef);
 
   if (!present) return null;

@@ -1,0 +1,743 @@
+{
+  "stage": "after",
+  "cases": [
+    {
+      "username": "admin",
+      "theme": "light",
+      "width": 375,
+      "priceFocused": true,
+      "metrics": {
+        "applicationCrashed": false,
+        "overflow": 0,
+        "shortTargets": [],
+        "clipped": [],
+        "smallText": [],
+        "brokenImages": [],
+        "invalidCopy": [],
+        "unlabeledButtons": [],
+        "unlabeledInputs": [],
+        "collectionSizes": {
+          ".op2-customer-card": 0,
+          ".op2-table-booking-card": 0,
+          ".sales-table tbody tr": 0,
+          ".lf-table-card": 0
+        },
+        "contentOverflow": [],
+        "palette": {
+          "accent": "#006b3c",
+          "font": "\"Syne Variable\", Syne, sans-serif"
+        }
+      },
+      "contrast": [],
+      "focusRestored": true,
+      "cartQuantity": "2",
+      "cartPrice": "₹23 × 2",
+      "pagination": [
+        {
+          "tab": "Food Stats",
+          "count": 60,
+          "renderedRows": 25,
+          "secondPage": true
+        },
+        {
+          "tab": "Order History",
+          "count": 1000,
+          "renderedRows": 25,
+          "secondPage": true
+        }
+      ]
+    },
+    {
+      "username": "admin",
+      "theme": "light",
+      "width": 768,
+      "priceFocused": true,
+      "metrics": {
+        "applicationCrashed": false,
+        "overflow": 0,
+        "shortTargets": [],
+        "clipped": [],
+        "smallText": [],
+        "brokenImages": [],
+        "invalidCopy": [],
+        "unlabeledButtons": [],
+        "unlabeledInputs": [],
+        "collectionSizes": {
+          ".op2-customer-card": 0,
+          ".op2-table-booking-card": 0,
+          ".sales-table tbody tr": 0,
+          ".lf-table-card": 0
+        },
+        "contentOverflow": [],
+        "palette": {
+          "accent": "#006b3c",
+          "font": "\"Syne Variable\", Syne, sans-serif"
+        }
+      },
+      "contrast": [],
+      "focusRestored": true,
+      "cartQuantity": "2",
+      "cartPrice": "₹23 × 2",
+      "pagination": [
+        {
+          "tab": "Food Stats",
+          "count": 60,
+          "renderedRows": 25,
+          "secondPage": true
+        },
+        {
+          "tab": "Order History",
+          "count": 1000,
+          "renderedRows": 25,
+          "secondPage": true
+        }
+      ]
+    },
+    {
+      "username": "admin",
+      "theme": "light",
+      "width": 1024,
+      "priceFocused": true,
+      "metrics": {
+        "applicationCrashed": false,
+        "overflow": 0,
+        "shortTargets": [],
+        "clipped": [],
+        "smallText": [],
+        "brokenImages": [],
+        "invalidCopy": [],
+        "unlabeledButtons": [],
+        "unlabeledInputs": [],
+        "collectionSizes": {
+          ".op2-customer-card": 0,
+          ".op2-table-booking-card": 0,
+          ".sales-table tbody tr": 0,
+          ".lf-table-card": 0
+        },
+        "contentOverflow": [],
+        "palette": {
+          "accent": "#006b3c",
+          "font": "\"Syne Variable\", Syne, sans-serif"
+        }
+      },
+      "contrast": [],
+      "focusRestored": true,
+      "cartQuantity": "2",
+      "cartPrice": "₹23 × 2",
+      "pagination": [
+        {
+          "tab": "Food Stats",
+          "count": 60,
+          "renderedRows": 25,
+          "secondPage": true
+        },
+        {
+          "tab": "Order History",
+          "count": 1000,
+          "renderedRows": 25,
+          "secondPage": true
+        }
+      ]
+    },
+    {
+      "username": "admin",
+      "theme": "light",
+      "width": 1440,
+      "priceFocused": true,
+      "metrics": {
+        "applicationCrashed": false,
+        "overflow": 0,
+        "shortTargets": [],
+        "clipped": [],
+        "smallText": [],
+        "brokenImages": [],
+        "invalidCopy": [],
+        "unlabeledButtons": [],
+        "unlabeledInputs": [],
+        "collectionSizes": {
+          ".op2-customer-card": 0,
+          ".op2-table-booking-card": 0,
+          ".sales-table tbody tr": 0,
+          ".lf-table-card": 0
+        },
+        "contentOverflow": [],
+        "palette": {
+          "accent": "#006b3c",
+          "font": "\"Syne Variable\", Syne, sans-serif"
+        }
+      },
+      "contrast": [],
+      "focusRestored": true,
+      "cartQuantity": "2",
+      "cartPrice": "₹23 × 2",
+      "pagination": [
+        {
+          "tab": "Food Stats",
+          "count": 60,
+          "renderedRows": 25,
+          "secondPage": true
+        },
+        {
+          "tab": "Order History",
+          "count": 1000,
+          "renderedRows": 25,
+          "secondPage": true
+        }
+      ]
+    },
+    {
+      "username": "admin",
+      "theme": "dark",
+      "width": 375,
+      "priceFocused": true,
+      "metrics": {
+        "applicationCrashed": false,
+        "overflow": 0,
+        "shortTargets": [],
+        "clipped": [],
+        "smallText": [],
+        "brokenImages": [],
+        "invalidCopy": [],
+        "unlabeledButtons": [],
+        "unlabeledInputs": [],
+        "collectionSizes": {
+          ".op2-customer-card": 0,
+          ".op2-table-booking-card": 0,
+          ".sales-table tbody tr": 0,
+          ".lf-table-card": 0
+        },
+        "contentOverflow": [],
+        "palette": {
+          "accent": "#00ff7f",
+          "font": "\"Syne Variable\", Syne, sans-serif"
+        }
+      },
+      "contrast": [],
+      "focusRestored": true,
+      "cartQuantity": "2",
+      "cartPrice": "₹23 × 2",
+      "pagination": [
+        {
+          "tab": "Food Stats",
+          "count": 60,
+          "renderedRows": 25,
+          "secondPage": true
+        },
+        {
+          "tab": "Order History",
+          "count": 1000,
+          "renderedRows": 25,
+          "secondPage": true
+        }
+      ]
+    },
+    {
+      "username": "admin",
+      "theme": "dark",
+      "width": 768,
+      "priceFocused": true,
+      "metrics": {
+        "applicationCrashed": false,
+        "overflow": 0,
+        "shortTargets": [],
+        "clipped": [],
+        "smallText": [],
+        "brokenImages": [],
+        "invalidCopy": [],
+        "unlabeledButtons": [],
+        "unlabeledInputs": [],
+        "collectionSizes": {
+          ".op2-customer-card": 0,
+          ".op2-table-booking-card": 0,
+          ".sales-table tbody tr": 0,
+          ".lf-table-card": 0
+        },
+        "contentOverflow": [],
+        "palette": {
+          "accent": "#00ff7f",
+          "font": "\"Syne Variable\", Syne, sans-serif"
+        }
+      },
+      "contrast": [],
+      "focusRestored": true,
+      "cartQuantity": "2",
+      "cartPrice": "₹23 × 2",
+      "pagination": [
+        {
+          "tab": "Food Stats",
+          "count": 60,
+          "renderedRows": 25,
+          "secondPage": true
+        },
+        {
+          "tab": "Order History",
+          "count": 1000,
+          "renderedRows": 25,
+          "secondPage": true
+        }
+      ]
+    },
+    {
+      "username": "admin",
+      "theme": "dark",
+      "width": 1024,
+      "priceFocused": true,
+      "metrics": {
+        "applicationCrashed": false,
+        "overflow": 0,
+        "shortTargets": [],
+        "clipped": [],
+        "smallText": [],
+        "brokenImages": [],
+        "invalidCopy": [],
+        "unlabeledButtons": [],
+        "unlabeledInputs": [],
+        "collectionSizes": {
+          ".op2-customer-card": 0,
+          ".op2-table-booking-card": 0,
+          ".sales-table tbody tr": 0,
+          ".lf-table-card": 0
+        },
+        "contentOverflow": [],
+        "palette": {
+          "accent": "#00ff7f",
+          "font": "\"Syne Variable\", Syne, sans-serif"
+        }
+      },
+      "contrast": [],
+      "focusRestored": true,
+      "cartQuantity": "2",
+      "cartPrice": "₹23 × 2",
+      "pagination": [
+        {
+          "tab": "Food Stats",
+          "count": 60,
+          "renderedRows": 25,
+          "secondPage": true
+        },
+        {
+          "tab": "Order History",
+          "count": 1000,
+          "renderedRows": 25,
+          "secondPage": true
+        }
+      ]
+    },
+    {
+      "username": "admin",
+      "theme": "dark",
+      "width": 1440,
+      "priceFocused": true,
+      "metrics": {
+        "applicationCrashed": false,
+        "overflow": 0,
+        "shortTargets": [],
+        "clipped": [],
+        "smallText": [],
+        "brokenImages": [],
+        "invalidCopy": [],
+        "unlabeledButtons": [],
+        "unlabeledInputs": [],
+        "collectionSizes": {
+          ".op2-customer-card": 0,
+          ".op2-table-booking-card": 0,
+          ".sales-table tbody tr": 0,
+          ".lf-table-card": 0
+        },
+        "contentOverflow": [],
+        "palette": {
+          "accent": "#00ff7f",
+          "font": "\"Syne Variable\", Syne, sans-serif"
+        }
+      },
+      "contrast": [],
+      "focusRestored": true,
+      "cartQuantity": "2",
+      "cartPrice": "₹23 × 2",
+      "pagination": [
+        {
+          "tab": "Food Stats",
+          "count": 60,
+          "renderedRows": 25,
+          "secondPage": true
+        },
+        {
+          "tab": "Order History",
+          "count": 1000,
+          "renderedRows": 25,
+          "secondPage": true
+        }
+      ]
+    },
+    {
+      "username": "staff",
+      "theme": "light",
+      "width": 375,
+      "priceFocused": true,
+      "metrics": {
+        "applicationCrashed": false,
+        "overflow": 0,
+        "shortTargets": [],
+        "clipped": [],
+        "smallText": [],
+        "brokenImages": [],
+        "invalidCopy": [],
+        "unlabeledButtons": [],
+        "unlabeledInputs": [],
+        "collectionSizes": {
+          ".op2-customer-card": 0,
+          ".op2-table-booking-card": 0,
+          ".sales-table tbody tr": 0,
+          ".lf-table-card": 0
+        },
+        "contentOverflow": [],
+        "palette": {
+          "accent": "#006b3c",
+          "font": "\"Syne Variable\", Syne, sans-serif"
+        }
+      },
+      "contrast": [],
+      "focusRestored": true,
+      "cartQuantity": "2",
+      "cartPrice": "₹23 × 2",
+      "pagination": [
+        {
+          "tab": "Food Stats",
+          "count": 60,
+          "renderedRows": 25,
+          "secondPage": true
+        },
+        {
+          "tab": "Order History",
+          "count": 1000,
+          "renderedRows": 25,
+          "secondPage": true
+        }
+      ]
+    },
+    {
+      "username": "staff",
+      "theme": "light",
+      "width": 768,
+      "priceFocused": true,
+      "metrics": {
+        "applicationCrashed": false,
+        "overflow": 0,
+        "shortTargets": [],
+        "clipped": [],
+        "smallText": [],
+        "brokenImages": [],
+        "invalidCopy": [],
+        "unlabeledButtons": [],
+        "unlabeledInputs": [],
+        "collectionSizes": {
+          ".op2-customer-card": 0,
+          ".op2-table-booking-card": 0,
+          ".sales-table tbody tr": 0,
+          ".lf-table-card": 0
+        },
+        "contentOverflow": [],
+        "palette": {
+          "accent": "#006b3c",
+          "font": "\"Syne Variable\", Syne, sans-serif"
+        }
+      },
+      "contrast": [],
+      "focusRestored": true,
+      "cartQuantity": "2",
+      "cartPrice": "₹23 × 2",
+      "pagination": [
+        {
+          "tab": "Food Stats",
+          "count": 60,
+          "renderedRows": 25,
+          "secondPage": true
+        },
+        {
+          "tab": "Order History",
+          "count": 1000,
+          "renderedRows": 25,
+          "secondPage": true
+        }
+      ]
+    },
+    {
+      "username": "staff",
+      "theme": "light",
+      "width": 1024,
+      "priceFocused": true,
+      "metrics": {
+        "applicationCrashed": false,
+        "overflow": 0,
+        "shortTargets": [],
+        "clipped": [],
+        "smallText": [],
+        "brokenImages": [],
+        "invalidCopy": [],
+        "unlabeledButtons": [],
+        "unlabeledInputs": [],
+        "collectionSizes": {
+          ".op2-customer-card": 0,
+          ".op2-table-booking-card": 0,
+          ".sales-table tbody tr": 0,
+          ".lf-table-card": 0
+        },
+        "contentOverflow": [],
+        "palette": {
+          "accent": "#006b3c",
+          "font": "\"Syne Variable\", Syne, sans-serif"
+        }
+      },
+      "contrast": [],
+      "focusRestored": true,
+      "cartQuantity": "2",
+      "cartPrice": "₹23 × 2",
+      "pagination": [
+        {
+          "tab": "Food Stats",
+          "count": 60,
+          "renderedRows": 25,
+          "secondPage": true
+        },
+        {
+          "tab": "Order History",
+          "count": 1000,
+          "renderedRows": 25,
+          "secondPage": true
+        }
+      ]
+    },
+    {
+      "username": "staff",
+      "theme": "light",
+      "width": 1440,
+      "priceFocused": true,
+      "metrics": {
+        "applicationCrashed": false,
+        "overflow": 0,
+        "shortTargets": [],
+        "clipped": [],
+        "smallText": [],
+        "brokenImages": [],
+        "invalidCopy": [],
+        "unlabeledButtons": [],
+        "unlabeledInputs": [],
+        "collectionSizes": {
+          ".op2-customer-card": 0,
+          ".op2-table-booking-card": 0,
+          ".sales-table tbody tr": 0,
+          ".lf-table-card": 0
+        },
+        "contentOverflow": [],
+        "palette": {
+          "accent": "#006b3c",
+          "font": "\"Syne Variable\", Syne, sans-serif"
+        }
+      },
+      "contrast": [],
+      "focusRestored": true,
+      "cartQuantity": "2",
+      "cartPrice": "₹23 × 2",
+      "pagination": [
+        {
+          "tab": "Food Stats",
+          "count": 60,
+          "renderedRows": 25,
+          "secondPage": true
+        },
+        {
+          "tab": "Order History",
+          "count": 1000,
+          "renderedRows": 25,
+          "secondPage": true
+        }
+      ]
+    },
+    {
+      "username": "staff",
+      "theme": "dark",
+      "width": 375,
+      "priceFocused": true,
+      "metrics": {
+        "applicationCrashed": false,
+        "overflow": 0,
+        "shortTargets": [],
+        "clipped": [],
+        "smallText": [],
+        "brokenImages": [],
+        "invalidCopy": [],
+        "unlabeledButtons": [],
+        "unlabeledInputs": [],
+        "collectionSizes": {
+          ".op2-customer-card": 0,
+          ".op2-table-booking-card": 0,
+          ".sales-table tbody tr": 0,
+          ".lf-table-card": 0
+        },
+        "contentOverflow": [],
+        "palette": {
+          "accent": "#00ff7f",
+          "font": "\"Syne Variable\", Syne, sans-serif"
+        }
+      },
+      "contrast": [],
+      "focusRestored": true,
+      "cartQuantity": "2",
+      "cartPrice": "₹23 × 2",
+      "pagination": [
+        {
+          "tab": "Food Stats",
+          "count": 60,
+          "renderedRows": 25,
+          "secondPage": true
+        },
+        {
+          "tab": "Order History",
+          "count": 1000,
+          "renderedRows": 25,
+          "secondPage": true
+        }
+      ]
+    },
+    {
+      "username": "staff",
+      "theme": "dark",
+      "width": 768,
+      "priceFocused": true,
+      "metrics": {
+        "applicationCrashed": false,
+        "overflow": 0,
+        "shortTargets": [],
+        "clipped": [],
+        "smallText": [],
+        "brokenImages": [],
+        "invalidCopy": [],
+        "unlabeledButtons": [],
+        "unlabeledInputs": [],
+        "collectionSizes": {
+          ".op2-customer-card": 0,
+          ".op2-table-booking-card": 0,
+          ".sales-table tbody tr": 0,
+          ".lf-table-card": 0
+        },
+        "contentOverflow": [],
+        "palette": {
+          "accent": "#00ff7f",
+          "font": "\"Syne Variable\", Syne, sans-serif"
+        }
+      },
+      "contrast": [],
+      "focusRestored": true,
+      "cartQuantity": "2",
+      "cartPrice": "₹23 × 2",
+      "pagination": [
+        {
+          "tab": "Food Stats",
+          "count": 60,
+          "renderedRows": 25,
+          "secondPage": true
+        },
+        {
+          "tab": "Order History",
+          "count": 1000,
+          "renderedRows": 25,
+          "secondPage": true
+        }
+      ]
+    },
+    {
+      "username": "staff",
+      "theme": "dark",
+      "width": 1024,
+      "priceFocused": true,
+      "metrics": {
+        "applicationCrashed": false,
+        "overflow": 0,
+        "shortTargets": [],
+        "clipped": [],
+        "smallText": [],
+        "brokenImages": [],
+        "invalidCopy": [],
+        "unlabeledButtons": [],
+        "unlabeledInputs": [],
+        "collectionSizes": {
+          ".op2-customer-card": 0,
+          ".op2-table-booking-card": 0,
+          ".sales-table tbody tr": 0,
+          ".lf-table-card": 0
+        },
+        "contentOverflow": [],
+        "palette": {
+          "accent": "#00ff7f",
+          "font": "\"Syne Variable\", Syne, sans-serif"
+        }
+      },
+      "contrast": [],
+      "focusRestored": true,
+      "cartQuantity": "2",
+      "cartPrice": "₹23 × 2",
+      "pagination": [
+        {
+          "tab": "Food Stats",
+          "count": 60,
+          "renderedRows": 25,
+          "secondPage": true
+        },
+        {
+          "tab": "Order History",
+          "count": 1000,
+          "renderedRows": 25,
+          "secondPage": true
+        }
+      ]
+    },
+    {
+      "username": "staff",
+      "theme": "dark",
+      "width": 1440,
+      "priceFocused": true,
+      "metrics": {
+        "applicationCrashed": false,
+        "overflow": 0,
+        "shortTargets": [],
+        "clipped": [],
+        "smallText": [],
+        "brokenImages": [],
+        "invalidCopy": [],
+        "unlabeledButtons": [],
+        "unlabeledInputs": [],
+        "collectionSizes": {
+          ".op2-customer-card": 0,
+          ".op2-table-booking-card": 0,
+          ".sales-table tbody tr": 0,
+          ".lf-table-card": 0
+        },
+        "contentOverflow": [],
+        "palette": {
+          "accent": "#00ff7f",
+          "font": "\"Syne Variable\", Syne, sans-serif"
+        }
+      },
+      "contrast": [],
+      "focusRestored": true,
+      "cartQuantity": "2",
+      "cartPrice": "₹23 × 2",
+      "pagination": [
+        {
+          "tab": "Food Stats",
+          "count": 60,
+          "renderedRows": 25,
+          "secondPage": true
+        },
+        {
+          "tab": "Order History",
+          "count": 1000,
+          "renderedRows": 25,
+          "secondPage": true
+        }
+      ]
+    }
+  ],
+  "blockedWrites": [],
+  "scope": "Local browser read fixtures; cart changes only, no order/settlement writes. Unrelated aged-session reminders isolated; normal cart notifications dismissed with their real close button before paging"
+}

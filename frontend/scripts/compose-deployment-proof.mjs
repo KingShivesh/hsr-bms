@@ -7,7 +7,9 @@ if (!cluster || !/^[a-z0-9-]+$/.test(cluster) || !/^[a-z0-9-]+$/.test(state) || 
 const root = new URL("../../docs/deployment-ui-completion/", import.meta.url);
 const sources = [];
 for (const theme of ["light", "dark"]) for (const stage of ["before", "after"]) {
-  const path = `${cluster}/${stage}/${theme}-${width}-${state}.png`;
+  const pattern = stage === "before" ? process.env.UI_BEFORE_CAPTURE : process.env.UI_AFTER_CAPTURE;
+  if (pattern && (pattern.includes("..") || pattern.startsWith("/"))) throw new Error("Capture patterns must stay inside the evidence directory");
+  const path = pattern ? pattern.replaceAll("{theme}", theme).replaceAll("{width}", width) : `${cluster}/${stage}/${theme}-${width}-${state}.png`;
   const bytes = await fs.readFile(new URL(path, root));
   sources.push({ theme, stage, path, sha256: createHash("sha256").update(bytes).digest("hex"), image: PNG.sync.read(bytes) });
 }

@@ -1,0 +1,120 @@
+{
+  "stage": "before",
+  "cases": [
+    {
+      "username": "admin",
+      "theme": "light",
+      "width": 375,
+      "submitDisabled": true,
+      "playerOptions": 1
+    },
+    {
+      "username": "admin",
+      "theme": "light",
+      "width": 768,
+      "submitDisabled": true,
+      "playerOptions": 1
+    },
+    {
+      "username": "admin",
+      "theme": "light",
+      "width": 1024,
+      "submitDisabled": true,
+      "playerOptions": 1
+    },
+    {
+      "username": "admin",
+      "theme": "light",
+      "width": 1440,
+      "submitDisabled": true,
+      "playerOptions": 1
+    },
+    {
+      "username": "admin",
+      "theme": "dark",
+      "width": 375,
+      "submitDisabled": true,
+      "playerOptions": 1
+    },
+    {
+      "username": "admin",
+      "theme": "dark",
+      "width": 768,
+      "submitDisabled": true,
+      "playerOptions": 1
+    },
+    {
+      "username": "admin",
+      "theme": "dark",
+      "width": 1024,
+      "submitDisabled": true,
+      "playerOptions": 1
+    },
+    {
+      "username": "admin",
+      "theme": "dark",
+      "width": 1440,
+      "submitDisabled": true,
+      "playerOptions": 1
+    },
+    {
+      "username": "staff",
+      "theme": "light",
+      "width": 375,
+      "submitDisabled": true,
+      "playerOptions": 1
+    },
+    {
+      "username": "staff",
+      "theme": "light",
+      "width": 768,
+      "submitDisabled": true,
+      "playerOptions": 1
+    },
+    {
+      "username": "staff",
+      "theme": "light",
+      "width": 1024,
+      "submitDisabled": true,
+      "playerOptions": 1
+    },
+    {
+      "username": "staff",
+      "theme": "light",
+      "width": 1440,
+      "submitDisabled": true,
+      "playerOptions": 1
+    },
+    {
+      "username": "staff",
+      "theme": "dark",
+      "width": 375,
+      "submitDisabled": true,
+      "playerOptions": 1
+    },
+    {
+      "username": "staff",
+      "theme": "dark",
+      "width": 768,
+      "submitDisabled": true,
+      "playerOptions": 1
+    },
+    {
+      "username": "staff",
+      "theme": "dark",
+      "width": 1024,
+      "submitDisabled": true,
+      "playerOptions": 1
+    },
+    {
+      "username": "staff",
+      "theme": "dark",
+      "width": 1440,
+      "submitDisabled": true,
+      "playerOptions": 1
+    }
+  ],
+  "mockedWrites": [],
+  "blockedWrites": [],
+  "scope": "Guarded local anonymous sessions; food POST is browser-mocked as HTTP 500, never persisted"
+}

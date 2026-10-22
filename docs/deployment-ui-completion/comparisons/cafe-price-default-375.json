@@ -1,0 +1,41 @@
+{
+  "legend": "Before left, after right; light above dark. Original pixels, first 1000px of tall captures. Full source captures retained.",
+  "sources": [
+    {
+      "theme": "light",
+      "stage": "before",
+      "path": "cafe-contract/before-final/admin-light-375-price.png",
+      "sha256": "f4b2fdf3db9c5a233b7c3ff2eed56352bb6ed057f362526c7ddc867995dbe0ce",
+      "width": 375,
+      "height": 844,
+      "croppedHeight": 844
+    },
+    {
+      "theme": "light",
+      "stage": "after",
+      "path": "cafe-contract/after-verified/admin-light-375-price.png",
+      "sha256": "cc90052e22d28b0726d950c64dc1e0b8b9c8ad9ed70b605dc181b3b4fd7dcf51",
+      "width": 375,
+      "height": 844,
+      "croppedHeight": 844
+    },
+    {
+      "theme": "dark",
+      "stage": "before",
+      "path": "cafe-contract/before-final/admin-dark-375-price.png",
+      "sha256": "62fa5e71cb5f9b28f8638162f3c4fecaa459fa8aee2adf8a595fa2f760138fa6",
+      "width": 375,
+      "height": 844,
+      "croppedHeight": 844
+    },
+    {
+      "theme": "dark",
+      "stage": "after",
+      "path": "cafe-contract/after-verified/admin-dark-375-price.png",
+      "sha256": "3aad6b90f0439533677b6f9ba2784bf4de60ff2cf37cae64c6d9e9c9be18e7b5",
+      "width": 375,
+      "height": 844,
+      "croppedHeight": 844
+    }
+  ]
+}

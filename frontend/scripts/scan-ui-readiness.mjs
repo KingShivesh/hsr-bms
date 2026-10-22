@@ -50,7 +50,7 @@ const bookingFixture = {id:99001,customer_name:"QA Booking",phone:"9000000000",t
 const billFixture = {id:99001,nm:"QA Customer",tbl:"T1",ts:Date.now(),date:new Intl.DateTimeFormat("en-GB",{timeZone:"Asia/Kolkata",day:"2-digit",month:"2-digit",year:"numeric"}).format(new Date()),dur:60,ply:320,famt:120,tot:440,payment_method:"Cash",tariff_mode:"hourly"};
 function fixture(data, pathname, state) {
   pathname = pathname.replace(/\/$/, "");
-  if (state === "partial" && process.env.UI_PARTIAL_NULL_ROWS === "true" && Array.isArray(data) && ["/members", "/members/duplicates", "/bookings", "/food/orders", "/food/stats"].includes(pathname)) return [null, ...(pathname === "/bookings" && !data.length ? [bookingFixture] : data)];
+  if (state === "partial" && process.env.UI_PARTIAL_NULL_ROWS === "true" && Array.isArray(data) && ["/members", "/members/duplicates", "/bookings", "/food/orders", "/food/stats"].includes(pathname)) return [null, ...fixture(data, pathname, "default")];
   if (pathname === "/sessions/live-floor" && state === "table-states") {
     const template = data.tables.find(table => table.session).session;
     const states = ["running", "paused", "available", "reserved", "maintenance"];
@@ -72,6 +72,7 @@ function fixture(data, pathname, state) {
   if(pathname === "/operations/audit-logs" && state === "partial") return [{id:99001,ts:null,date:null,staff:null,action:null,detail:null}];
   if(pathname === "/reports/top-customers") return {...data,customers:[{name:"QA Regular",visits:12,play:3200,food:400,spent:3600}]};
   if (!Array.isArray(data)) return data;
+  if (["/food/orders", "/food/stats"].includes(pathname) && state === "extreme") return Array.from({ length: pathname === "/food/orders" ? 1000 : 60 }, (_, i) => ({ ...fixture(data, pathname, "default")[0], id: 99001 + i }));
   if (pathname === "/bookings" && !data.length) return [bookingFixture];
   if (pathname === "/reports/history" && state === "extreme") return Array.from({length:1000},(_,i)=>({...billFixture,id:99001+i}));
   if (pathname === "/reports/history" && !data.length) return [billFixture];
@@ -108,13 +109,15 @@ try {
       });
       await page.goto(origin + route, {waitUntil:"domcontentloaded"});
       await page.locator(".topbar-title").waitFor();
+      let tabSelected = !process.env.UI_TAB;
+      if (process.env.UI_TAB && (state !== "loading" || stage === "after")) {
+        const tab = page.getByRole("button", { name: process.env.UI_TAB, exact: true });
+        await tab.click();
+        tabSelected = (await tab.getAttribute("class", { timeout: 1000 }).catch(() => null))?.split(/\s+/).includes("active") || false;
+      }
       let loadingIndicator = true, settled = true;
       if (state === "loading") loadingIndicator = await page.locator(".page-skeleton,.ui-skeleton-stack,.ui-skeleton-grid,.lf-skeleton").first().waitFor({timeout:3000}).then(()=>true,()=>false);
       else settled = await page.waitForFunction(() => ![...document.querySelectorAll(".page-skeleton,.ui-skeleton-stack,.ui-skeleton-grid,.lf-skeleton")].some(n => n.getClientRects().length), null, {timeout:12000}).then(()=>true,()=>false);
-      if (process.env.UI_TAB && state !== "loading") {
-        await page.getByRole("button",{name:process.env.UI_TAB,exact:true}).click();
-        await page.waitForTimeout(200);
-      }
       await page.evaluate(() => document.fonts.ready);
       for (const width of process.env.UI_WIDTHS?.split(",").map(Number) || [375,768,1024,1440,1920]) {
         await page.setViewportSize({width,height:width===375?844:1000});
@@ -138,7 +141,7 @@ try {
         }
         const noRequestNeeded = route === "/settings?section=billing" && stage === "after";
         const retry = state === "error" && !noRequestNeeded ? await page.getByRole("button",{name:/retry|try again|check again/i}).count() > 0 : true;
-        report.samples.push({theme,width,state,file,...metrics,loadingIndicator,settled,contrast,contrastScope:viewportOnly?"visible viewport only; unpaginated baseline":"all rendered page text",retry,errors:[...errors]});
+        report.samples.push({theme,width,state,file,requestedTab:process.env.UI_TAB,tabSelected,...metrics,loadingIndicator,settled,contrast,contrastScope:viewportOnly?"visible viewport only; unpaginated baseline":"all rendered page text",retry,errors:[...errors]});
       }
       release(); await page.unrouteAll({ behavior: "wait" }); errors=[];
       console.log(`${stage} ${route} ${theme} ${state}`);
@@ -150,6 +153,7 @@ const faults = report.samples.filter(r => !r.loadingIndicator || !r.settled || r
 console.log(JSON.stringify({route,stage,samples:report.samples.length,faults:faults.map(r=>({theme:r.theme,width:r.width,state:r.state,applicationCrashed:r.applicationCrashed,overflow:r.overflow,contentOverflow:r.contentOverflow,shortTargets:r.shortTargets,clipped:r.clipped,unlabeledInputs:r.unlabeledInputs,contrast:r.contrast,errors:r.errors,retry:r.retry}))},null,2));
 if (stage === "after") {
   assert.equal(faults.length,0); assert.equal(report.errors.length,0);
+  assert.ok(report.samples.every(row => row.tabSelected), "Requested sub-tab must actually be selected, including loading state");
   if (process.env.UI_PARTIAL_NULL_ROWS === "true" && route === "/live-floor") assert.ok(report.samples.every(row => row.collectionSizes[".lf-table-card"] === 5));
   if (process.env.UI_UNKNOWN_FLOOR_STATUS === "true") assert.ok(report.samples.every(row => row.collectionSizes[".lf-table-card"] === 0));
   if (route === "/bookings" && !process.env.UI_DATA_PATH) assert.ok(report.samples.filter(row => ["empty", "error"].includes(row.state)).every(row => row.collectionSizes[".op2-table-booking-card"] === 0), "Unknown availability must not render available table cards");

@@ -1,0 +1,761 @@
+{
+  "stage": "after",
+  "cases": [
+    {
+      "username": "admin",
+      "theme": "light",
+      "width": 375,
+      "submitDisabled": false,
+      "playerOptions": 0,
+      "metrics": {
+        "applicationCrashed": false,
+        "overflow": 0,
+        "shortTargets": [],
+        "clipped": [],
+        "smallText": [],
+        "brokenImages": [],
+        "invalidCopy": [],
+        "unlabeledButtons": [],
+        "unlabeledInputs": [],
+        "collectionSizes": {
+          ".op2-customer-card": 0,
+          ".op2-table-booking-card": 0,
+          ".sales-table tbody tr": 0,
+          ".lf-table-card": 0
+        },
+        "contentOverflow": [],
+        "palette": {
+          "accent": "#006b3c",
+          "font": "\"Syne Variable\", Syne, sans-serif"
+        }
+      },
+      "contrast": [],
+      "pendingFeedback": {
+        "ms": 30.599999994039536,
+        "pending": true
+      },
+      "cartRetainedAfterFailure": true
+    },
+    {
+      "username": "admin",
+      "theme": "light",
+      "width": 768,
+      "submitDisabled": false,
+      "playerOptions": 0,
+      "metrics": {
+        "applicationCrashed": false,
+        "overflow": 0,
+        "shortTargets": [],
+        "clipped": [],
+        "smallText": [],
+        "brokenImages": [],
+        "invalidCopy": [],
+        "unlabeledButtons": [],
+        "unlabeledInputs": [],
+        "collectionSizes": {
+          ".op2-customer-card": 0,
+          ".op2-table-booking-card": 0,
+          ".sales-table tbody tr": 0,
+          ".lf-table-card": 0
+        },
+        "contentOverflow": [],
+        "palette": {
+          "accent": "#006b3c",
+          "font": "\"Syne Variable\", Syne, sans-serif"
+        }
+      },
+      "contrast": [],
+      "pendingFeedback": {
+        "ms": 11.200000002980232,
+        "pending": true
+      },
+      "cartRetainedAfterFailure": true
+    },
+    {
+      "username": "admin",
+      "theme": "light",
+      "width": 1024,
+      "submitDisabled": false,
+      "playerOptions": 0,
+      "metrics": {
+        "applicationCrashed": false,
+        "overflow": 0,
+        "shortTargets": [],
+        "clipped": [],
+        "smallText": [],
+        "brokenImages": [],
+        "invalidCopy": [],
+        "unlabeledButtons": [],
+        "unlabeledInputs": [],
+        "collectionSizes": {
+          ".op2-customer-card": 0,
+          ".op2-table-booking-card": 0,
+          ".sales-table tbody tr": 0,
+          ".lf-table-card": 0
+        },
+        "contentOverflow": [],
+        "palette": {
+          "accent": "#006b3c",
+          "font": "\"Syne Variable\", Syne, sans-serif"
+        }
+      },
+      "contrast": [],
+      "pendingFeedback": {
+        "ms": 24.099999994039536,
+        "pending": true
+      },
+      "cartRetainedAfterFailure": true
+    },
+    {
+      "username": "admin",
+      "theme": "light",
+      "width": 1440,
+      "submitDisabled": false,
+      "playerOptions": 0,
+      "metrics": {
+        "applicationCrashed": false,
+        "overflow": 0,
+        "shortTargets": [],
+        "clipped": [],
+        "smallText": [],
+        "brokenImages": [],
+        "invalidCopy": [],
+        "unlabeledButtons": [],
+        "unlabeledInputs": [],
+        "collectionSizes": {
+          ".op2-customer-card": 0,
+          ".op2-table-booking-card": 0,
+          ".sales-table tbody tr": 0,
+          ".lf-table-card": 0
+        },
+        "contentOverflow": [],
+        "palette": {
+          "accent": "#006b3c",
+          "font": "\"Syne Variable\", Syne, sans-serif"
+        }
+      },
+      "contrast": [],
+      "pendingFeedback": {
+        "ms": 17.5,
+        "pending": true
+      },
+      "cartRetainedAfterFailure": true
+    },
+    {
+      "username": "admin",
+      "theme": "dark",
+      "width": 375,
+      "submitDisabled": false,
+      "playerOptions": 0,
+      "metrics": {
+        "applicationCrashed": false,
+        "overflow": 0,
+        "shortTargets": [],
+        "clipped": [],
+        "smallText": [],
+        "brokenImages": [],
+        "invalidCopy": [],
+        "unlabeledButtons": [],
+        "unlabeledInputs": [],
+        "collectionSizes": {
+          ".op2-customer-card": 0,
+          ".op2-table-booking-card": 0,
+          ".sales-table tbody tr": 0,
+          ".lf-table-card": 0
+        },
+        "contentOverflow": [],
+        "palette": {
+          "accent": "#00ff7f",
+          "font": "\"Syne Variable\", Syne, sans-serif"
+        }
+      },
+      "contrast": [],
+      "pendingFeedback": {
+        "ms": 22.700000002980232,
+        "pending": true
+      },
+      "cartRetainedAfterFailure": true
+    },
+    {
+      "username": "admin",
+      "theme": "dark",
+      "width": 768,
+      "submitDisabled": false,
+      "playerOptions": 0,
+      "metrics": {
+        "applicationCrashed": false,
+        "overflow": 0,
+        "shortTargets": [],
+        "clipped": [],
+        "smallText": [],
+        "brokenImages": [],
+        "invalidCopy": [],
+        "unlabeledButtons": [],
+        "unlabeledInputs": [],
+        "collectionSizes": {
+          ".op2-customer-card": 0,
+          ".op2-table-booking-card": 0,
+          ".sales-table tbody tr": 0,
+          ".lf-table-card": 0
+        },
+        "contentOverflow": [],
+        "palette": {
+          "accent": "#00ff7f",
+          "font": "\"Syne Variable\", Syne, sans-serif"
+        }
+      },
+      "contrast": [],
+      "pendingFeedback": {
+        "ms": 25.799999997019768,
+        "pending": true
+      },
+      "cartRetainedAfterFailure": true
+    },
+    {
+      "username": "admin",
+      "theme": "dark",
+      "width": 1024,
+      "submitDisabled": false,
+      "playerOptions": 0,
+      "metrics": {
+        "applicationCrashed": false,
+        "overflow": 0,
+        "shortTargets": [],
+        "clipped": [],
+        "smallText": [],
+        "brokenImages": [],
+        "invalidCopy": [],
+        "unlabeledButtons": [],
+        "unlabeledInputs": [],
+        "collectionSizes": {
+          ".op2-customer-card": 0,
+          ".op2-table-booking-card": 0,
+          ".sales-table tbody tr": 0,
+          ".lf-table-card": 0
+        },
+        "contentOverflow": [],
+        "palette": {
+          "accent": "#00ff7f",
+          "font": "\"Syne Variable\", Syne, sans-serif"
+        }
+      },
+      "contrast": [],
+      "pendingFeedback": {
+        "ms": 27.700000002980232,
+        "pending": true
+      },
+      "cartRetainedAfterFailure": true
+    },
+    {
+      "username": "admin",
+      "theme": "dark",
+      "width": 1440,
+      "submitDisabled": false,
+      "playerOptions": 0,
+      "metrics": {
+        "applicationCrashed": false,
+        "overflow": 0,
+        "shortTargets": [],
+        "clipped": [],
+        "smallText": [],
+        "brokenImages": [],
+        "invalidCopy": [],
+        "unlabeledButtons": [],
+        "unlabeledInputs": [],
+        "collectionSizes": {
+          ".op2-customer-card": 0,
+          ".op2-table-booking-card": 0,
+          ".sales-table tbody tr": 0,
+          ".lf-table-card": 0
+        },
+        "contentOverflow": [],
+        "palette": {
+          "accent": "#00ff7f",
+          "font": "\"Syne Variable\", Syne, sans-serif"
+        }
+      },
+      "contrast": [],
+      "pendingFeedback": {
+        "ms": 21.200000002980232,
+        "pending": true
+      },
+      "cartRetainedAfterFailure": true
+    },
+    {
+      "username": "staff",
+      "theme": "light",
+      "width": 375,
+      "submitDisabled": false,
+      "playerOptions": 0,
+      "metrics": {
+        "applicationCrashed": false,
+        "overflow": 0,
+        "shortTargets": [],
+        "clipped": [],
+        "smallText": [],
+        "brokenImages": [],
+        "invalidCopy": [],
+        "unlabeledButtons": [],
+        "unlabeledInputs": [],
+        "collectionSizes": {
+          ".op2-customer-card": 0,
+          ".op2-table-booking-card": 0,
+          ".sales-table tbody tr": 0,
+          ".lf-table-card": 0
+        },
+        "contentOverflow": [],
+        "palette": {
+          "accent": "#006b3c",
+          "font": "\"Syne Variable\", Syne, sans-serif"
+        }
+      },
+      "contrast": [],
+      "pendingFeedback": {
+        "ms": 27.299999997019768,
+        "pending": true
+      },
+      "cartRetainedAfterFailure": true
+    },
+    {
+      "username": "staff",
+      "theme": "light",
+      "width": 768,
+      "submitDisabled": false,
+      "playerOptions": 0,
+      "metrics": {
+        "applicationCrashed": false,
+        "overflow": 0,
+        "shortTargets": [],
+        "clipped": [],
+        "smallText": [],
+        "brokenImages": [],
+        "invalidCopy": [],
+        "unlabeledButtons": [],
+        "unlabeledInputs": [],
+        "collectionSizes": {
+          ".op2-customer-card": 0,
+          ".op2-table-booking-card": 0,
+          ".sales-table tbody tr": 0,
+          ".lf-table-card": 0
+        },
+        "contentOverflow": [],
+        "palette": {
+          "accent": "#006b3c",
+          "font": "\"Syne Variable\", Syne, sans-serif"
+        }
+      },
+      "contrast": [],
+      "pendingFeedback": {
+        "ms": 29.599999994039536,
+        "pending": true
+      },
+      "cartRetainedAfterFailure": true
+    },
+    {
+      "username": "staff",
+      "theme": "light",
+      "width": 1024,
+      "submitDisabled": false,
+      "playerOptions": 0,
+      "metrics": {
+        "applicationCrashed": false,
+        "overflow": 0,
+        "shortTargets": [],
+        "clipped": [],
+        "smallText": [],
+        "brokenImages": [],
+        "invalidCopy": [],
+        "unlabeledButtons": [],
+        "unlabeledInputs": [],
+        "collectionSizes": {
+          ".op2-customer-card": 0,
+          ".op2-table-booking-card": 0,
+          ".sales-table tbody tr": 0,
+          ".lf-table-card": 0
+        },
+        "contentOverflow": [],
+        "palette": {
+          "accent": "#006b3c",
+          "font": "\"Syne Variable\", Syne, sans-serif"
+        }
+      },
+      "contrast": [],
+      "pendingFeedback": {
+        "ms": 29.400000005960464,
+        "pending": true
+      },
+      "cartRetainedAfterFailure": true
+    },
+    {
+      "username": "staff",
+      "theme": "light",
+      "width": 1440,
+      "submitDisabled": false,
+      "playerOptions": 0,
+      "metrics": {
+        "applicationCrashed": false,
+        "overflow": 0,
+        "shortTargets": [],
+        "clipped": [],
+        "smallText": [],
+        "brokenImages": [],
+        "invalidCopy": [],
+        "unlabeledButtons": [],
+        "unlabeledInputs": [],
+        "collectionSizes": {
+          ".op2-customer-card": 0,
+          ".op2-table-booking-card": 0,
+          ".sales-table tbody tr": 0,
+          ".lf-table-card": 0
+        },
+        "contentOverflow": [],
+        "palette": {
+          "accent": "#006b3c",
+          "font": "\"Syne Variable\", Syne, sans-serif"
+        }
+      },
+      "contrast": [],
+      "pendingFeedback": {
+        "ms": 30.100000008940697,
+        "pending": true
+      },
+      "cartRetainedAfterFailure": true
+    },
+    {
+      "username": "staff",
+      "theme": "dark",
+      "width": 375,
+      "submitDisabled": false,
+      "playerOptions": 0,
+      "metrics": {
+        "applicationCrashed": false,
+        "overflow": 0,
+        "shortTargets": [],
+        "clipped": [],
+        "smallText": [],
+        "brokenImages": [],
+        "invalidCopy": [],
+        "unlabeledButtons": [],
+        "unlabeledInputs": [],
+        "collectionSizes": {
+          ".op2-customer-card": 0,
+          ".op2-table-booking-card": 0,
+          ".sales-table tbody tr": 0,
+          ".lf-table-card": 0
+        },
+        "contentOverflow": [],
+        "palette": {
+          "accent": "#00ff7f",
+          "font": "\"Syne Variable\", Syne, sans-serif"
+        }
+      },
+      "contrast": [],
+      "pendingFeedback": {
+        "ms": 28.900000005960464,
+        "pending": true
+      },
+      "cartRetainedAfterFailure": true
+    },
+    {
+      "username": "staff",
+      "theme": "dark",
+      "width": 768,
+      "submitDisabled": false,
+      "playerOptions": 0,
+      "metrics": {
+        "applicationCrashed": false,
+        "overflow": 0,
+        "shortTargets": [],
+        "clipped": [],
+        "smallText": [],
+        "brokenImages": [],
+        "invalidCopy": [],
+        "unlabeledButtons": [],
+        "unlabeledInputs": [],
+        "collectionSizes": {
+          ".op2-customer-card": 0,
+          ".op2-table-booking-card": 0,
+          ".sales-table tbody tr": 0,
+          ".lf-table-card": 0
+        },
+        "contentOverflow": [],
+        "palette": {
+          "accent": "#00ff7f",
+          "font": "\"Syne Variable\", Syne, sans-serif"
+        }
+      },
+      "contrast": [],
+      "pendingFeedback": {
+        "ms": 29.900000005960464,
+        "pending": true
+      },
+      "cartRetainedAfterFailure": true
+    },
+    {
+      "username": "staff",
+      "theme": "dark",
+      "width": 1024,
+      "submitDisabled": false,
+      "playerOptions": 0,
+      "metrics": {
+        "applicationCrashed": false,
+        "overflow": 0,
+        "shortTargets": [],
+        "clipped": [],
+        "smallText": [],
+        "brokenImages": [],
+        "invalidCopy": [],
+        "unlabeledButtons": [],
+        "unlabeledInputs": [],
+        "collectionSizes": {
+          ".op2-customer-card": 0,
+          ".op2-table-booking-card": 0,
+          ".sales-table tbody tr": 0,
+          ".lf-table-card": 0
+        },
+        "contentOverflow": [],
+        "palette": {
+          "accent": "#00ff7f",
+          "font": "\"Syne Variable\", Syne, sans-serif"
+        }
+      },
+      "contrast": [],
+      "pendingFeedback": {
+        "ms": 30.399999991059303,
+        "pending": true
+      },
+      "cartRetainedAfterFailure": true
+    },
+    {
+      "username": "staff",
+      "theme": "dark",
+      "width": 1440,
+      "submitDisabled": false,
+      "playerOptions": 0,
+      "metrics": {
+        "applicationCrashed": false,
+        "overflow": 0,
+        "shortTargets": [],
+        "clipped": [],
+        "smallText": [],
+        "brokenImages": [],
+        "invalidCopy": [],
+        "unlabeledButtons": [],
+        "unlabeledInputs": [],
+        "collectionSizes": {
+          ".op2-customer-card": 0,
+          ".op2-table-booking-card": 0,
+          ".sales-table tbody tr": 0,
+          ".lf-table-card": 0
+        },
+        "contentOverflow": [],
+        "palette": {
+          "accent": "#00ff7f",
+          "font": "\"Syne Variable\", Syne, sans-serif"
+        }
+      },
+      "contrast": [],
+      "pendingFeedback": {
+        "ms": 29.80000001192093,
+        "pending": true
+      },
+      "cartRetainedAfterFailure": true
+    }
+  ],
+  "mockedWrites": [
+    {
+      "username": "admin",
+      "theme": "light",
+      "width": 375,
+      "payload": {
+        "item": "QA Snack",
+        "qty": 1,
+        "mrp": null,
+        "player_name": "",
+        "session_key": "qa-close-t1"
+      }
+    },
+    {
+      "username": "admin",
+      "theme": "light",
+      "width": 768,
+      "payload": {
+        "item": "QA Snack",
+        "qty": 1,
+        "mrp": null,
+        "player_name": "",
+        "session_key": "qa-close-t1"
+      }
+    },
+    {
+      "username": "admin",
+      "theme": "light",
+      "width": 1024,
+      "payload": {
+        "item": "QA Snack",
+        "qty": 1,
+        "mrp": null,
+        "player_name": "",
+        "session_key": "qa-close-t1"
+      }
+    },
+    {
+      "username": "admin",
+      "theme": "light",
+      "width": 1440,
+      "payload": {
+        "item": "QA Snack",
+        "qty": 1,
+        "mrp": null,
+        "player_name": "",
+        "session_key": "qa-close-t1"
+      }
+    },
+    {
+      "username": "admin",
+      "theme": "dark",
+      "width": 375,
+      "payload": {
+        "item": "QA Snack",
+        "qty": 1,
+        "mrp": null,
+        "player_name": "",
+        "session_key": "qa-close-t1"
+      }
+    },
+    {
+      "username": "admin",
+      "theme": "dark",
+      "width": 768,
+      "payload": {
+        "item": "QA Snack",
+        "qty": 1,
+        "mrp": null,
+        "player_name": "",
+        "session_key": "qa-close-t1"
+      }
+    },
+    {
+      "username": "admin",
+      "theme": "dark",
+      "width": 1024,
+      "payload": {
+        "item": "QA Snack",
+        "qty": 1,
+        "mrp": null,
+        "player_name": "",
+        "session_key": "qa-close-t1"
+      }
+    },
+    {
+      "username": "admin",
+      "theme": "dark",
+      "width": 1440,
+      "payload": {
+        "item": "QA Snack",
+        "qty": 1,
+        "mrp": null,
+        "player_name": "",
+        "session_key": "qa-close-t1"
+      }
+    },
+    {
+      "username": "staff",
+      "theme": "light",
+      "width": 375,
+      "payload": {
+        "item": "QA Snack",
+        "qty": 1,
+        "mrp": null,
+        "player_name": "",
+        "session_key": "qa-close-t1"
+      }
+    },
+    {
+      "username": "staff",
+      "theme": "light",
+      "width": 768,
+      "payload": {
+        "item": "QA Snack",
+        "qty": 1,
+        "mrp": null,
+        "player_name": "",
+        "session_key": "qa-close-t1"
+      }
+    },
+    {
+      "username": "staff",
+      "theme": "light",
+      "width": 1024,
+      "payload": {
+        "item": "QA Snack",
+        "qty": 1,
+        "mrp": null,
+        "player_name": "",
+        "session_key": "qa-close-t1"
+      }
+    },
+    {
+      "username": "staff",
+      "theme": "light",
+      "width": 1440,
+      "payload": {
+        "item": "QA Snack",
+        "qty": 1,
+        "mrp": null,
+        "player_name": "",
+        "session_key": "qa-close-t1"
+      }
+    },
+    {
+      "username": "staff",
+      "theme": "dark",
+      "width": 375,
+      "payload": {
+        "item": "QA Snack",
+        "qty": 1,
+        "mrp": null,
+        "player_name": "",
+        "session_key": "qa-close-t1"
+      }
+    },
+    {
+      "username": "staff",
+      "theme": "dark",
+      "width": 768,
+      "payload": {
+        "item": "QA Snack",
+        "qty": 1,
+        "mrp": null,
+        "player_name": "",
+        "session_key": "qa-close-t1"
+      }
+    },
+    {
+      "username": "staff",
+      "theme": "dark",
+      "width": 1024,
+      "payload": {
+        "item": "QA Snack",
+        "qty": 1,
+        "mrp": null,
+        "player_name": "",
+        "session_key": "qa-close-t1"
+      }
+    },
+    {
+      "username": "staff",
+      "theme": "dark",
+      "width": 1440,
+      "payload": {
+        "item": "QA Snack",
+        "qty": 1,
+        "mrp": null,
+        "player_name": "",
+        "session_key": "qa-close-t1"
+      }
+    }
+  ],
+  "blockedWrites": [],
+  "scope": "Guarded local anonymous sessions; food POST is browser-mocked as HTTP 500, never persisted"
+}

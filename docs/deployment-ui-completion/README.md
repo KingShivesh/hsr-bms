@@ -12,7 +12,7 @@ server-authoritative payment/receipt confirmation. No feature or role expansion.
 | Dashboard/shared cards | 48 after samples pass; all four widths/both themes/six states. Shared MetricCard + 14 Card/Panel roots; 12px minimum; long-text and dense-number overflow fixed | `dashboard/before/`, `dashboard/after/` |
 | Live Floor / checkout | 48 + 48 final samples pass; all five table states, null rows and missing-status recovery also pass. Eight actual role/theme/mobile checkout contract cases pass | `live-floor/`, `checkout/` |
 | Members / bookings | 48 final samples per page; eight null-row samples per page; 16 role-Owner dialog cases across both themes/four widths pass | `customers/`, `bookings/`, `member-booking-dialogs/after-final/` |
-| Cafe | Baseline captured; pending consolidation and current-build rerun | Not a pass |
+| Cafe | Main order view and both tabs: 48 final samples each. 16 price/cart/pagination contracts, 16 anonymous-target contracts and eight independent-read cases pass | `cafe-pos/`, `cafe-stats/`, `cafe-history/`, `cafe-contract/after-verified/`, `cafe-guest-target/`, `cafe-loading-isolation/` |
 | Finance / reports / Settings / error routes | Pending current-build rerun and component consolidation | Not a pass |
 | Shared overlays / menus / action states | Pending consolidation and interaction rerun | Not a pass |
 | Local operational lifecycle | Pending 20-cycle role/theme/mobile exercise | Not a pass |
@@ -45,6 +45,12 @@ transition and retains reduced-motion behavior.
 | Members / bookings | Local summary/card markup duplicated shared primitives | Shared component contract | Shared MetricCard for summaries and member profile; five remaining Card/Panel roots migrated | `comparisons/customers-default-1440.png`, `comparisons/bookings-default-1440.png` |
 | Booking form | Private modal frame duplicated shared overlay behavior | One dialog system | Shared Modal, sticky footer, existing dirty-backdrop guard and saving-dismissal lock | `member-booking-dialogs/before/` / `member-booking-dialogs/after-final/` |
 | Bookings | Missing/failed availability displayed five Available cards | Never invent availability | Only render known table states; missing states show refresh recovery and cannot be check-in candidates | `bookings/before/*-error.png` / `bookings/after/*-error.png` |
+| Cafe | Slow stats/history held the whole counter behind a loader | Independent shaped loading states | Counter waits only for menu/floor; each data tab has its own skeleton and recoverable error state | `cafe-loading-isolation/results.json`, per-tab before/after loading captures |
+| Cafe | Null history/stat rows crashed the route | Partial data must not crash | Filter malformed read records on initial and realtime refreshes, preserving valid rows | `cafe-stats/null-rows-*`, `cafe-history/null-rows-*` |
+| Cafe | Price dialog was clipped/under navigation on mobile; actions looked like plain text; Escape lost opener focus | Shared modal and actionable controls | Shared Modal, bordered/primary buttons, explicit price-field initial focus without early autofocus | `comparisons/cafe-price-default-375.png`, `cafe-contract/before-final/`, `cafe-contract/after-verified/` |
+| Cafe | History and performance tables rendered unbounded rows | Bounded shared tables | Shared pagination renders at most 25 rows, preserves global ranks, clamps after deletion | `comparisons/cafe-history-extreme-1440.png`, `cafe-contract/after-verified/` |
+| Cafe | Missing payment method was labeled Cash | Do not invent financial metadata | Missing method displays a neutral dash; recorded methods and palette unchanged | `FoodTab.jsx` history fallback |
+| Cafe | Anonymous running session could not receive food because an empty player selector blocked submission | Honor existing anonymous-session contract | No player required if the session has no names; no invented name sent; existing session key included | `cafe-guest-target/before/`, `cafe-guest-target/after/` |
 
 The first shared-change regression is 20 main routes x four widths x both themes
 (160 loaded/default captures), all clean. It is not certification of all their
@@ -105,3 +111,36 @@ POST reaches the backend. No new member or booking was created by these checks.
 Measured Booking pending feedback was 14.0-15.6ms in these eight local cases.
 The final Booking matrix also asserts zero status cards for failed/empty table
 responses, rather than accepting visually polished but invented Available states.
+
+Members/Bookings cluster `cf3bb21` is merged, pushed and production-verified:
+`deployment-members-bookings.json` matches all 23 assets and backend readiness.
+
+## Cafe Verification
+
+The main order view, Food Stats and Order History each have 48 final strict
+samples (six states, four widths, both themes). Tab loading is genuinely the
+selected tab, not a successful screenshot of the main POS loader. The baseline
+could not select tabs until all four reads completed; that limitation is recorded
+as `tabSelected: false` on baseline loading samples. The final stress fixture is
+60 ranked items and 1,000 orders; all after text is checked on bounded pages,
+while the unpaginated baseline is explicitly viewport-only above 16,000px.
+
+Sixteen Owner/Staff price/cart/pagination cases pass in `cafe-contract/after-verified`:
+price focus, Escape/restored opener, quantity 2 at MRP 20 + 3, second page
+26-50, and 25 rendered rows. Sixteen real anonymous-local-session cases pass in
+`cafe-guest-target/after`: submission enabled without a name, one browser-mocked
+HTTP 500 request, immediate pending feedback, retained cart, no false settlement
+success, blank player name and nonempty session key. No food/order/payment write
+reaches the backend. This does not replace the pending real 20-cycle workflow.
+
+Eight held-read cases prove the counter loads with BOTH history/stats held;
+stats can finish independently while history still shows its own skeleton.
+Null-row baseline crashes are captured separately for both tabs; each after
+follow-up has eight clean samples retaining the valid read fixture.
+
+Early `cafe-contract/after` probes used the wrong text assertion for a numeric
+input. `after-final` records real overlay interception by undismissed notifications
+at smaller widths, not a passing pager check. The final isolated price/paging
+contract suppresses unrelated aged-session reminders and dismisses ordinary cart
+feedback using its actual close button. Cross-cutting notification occlusion is
+still OPEN for the shared-overlay cluster; it is not silently treated as fixed.

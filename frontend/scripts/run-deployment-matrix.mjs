@@ -7,7 +7,7 @@ const routes = ["/dashboard", "/live-floor", "/customers", "/bookings", "/cafe-p
 const groups = {
   default: routes.map(route => ({ route, states: "default" })),
   core: ["/live-floor", "/customers", "/bookings", "/cafe-pos", "/sales", "/analytics", "/settings"].map(route => ({ route })),
-  "cafe-tabs": [{ route: "/cafe-pos", tab: "Stats", key: "cafe-stats", data: "^/food/stats$" }, { route: "/cafe-pos", tab: "Order History", key: "cafe-history", data: "^/food/orders$" }],
+  "cafe-tabs": [{ route: "/cafe-pos", tab: "Food Stats", key: "cafe-stats", data: "^/food/stats$" }, { route: "/cafe-pos", tab: "Order History", key: "cafe-history", data: "^/food/orders$" }],
 };
 if (!groups[group]) throw new Error("Unknown deployment matrix group");
 const root = process.env.UI_OUTPUT_ROOT || "../docs/deployment-ui-completion";
