@@ -1,5 +1,10 @@
 /* Existing palette and type scale; shared affordances, not a new theme. */
 b, strong { font-weight: 500; }
+.ops-table-top > strong { flex: 0 0 auto; }
+.ops-table-top > span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ops-table-card.table-state-card { grid-template-columns: minmax(0, 1fr); }
+.ops-table-top, .ops-table-main, .ops-table-meta { min-width: 0; }
+.ops-table-meta > span[title] { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .product-context-help summary { border: 1px solid var(--border-default); border-radius: var(--radius-sm); background: var(--surface); transition: background-color 80ms ease-out, border-color 80ms ease-out; }
 .product-context-help summary:hover { background: var(--bg-surface-hover); border-color: var(--border-strong); }
 .product-context-help summary:focus-visible { outline: 2px solid var(--border-focus); outline-offset: 2px; }
@@ -93,7 +98,7 @@ b, strong { font-weight: 500; }
 .ui-input[aria-invalid="true"]:hover, .ui-textarea[aria-invalid="true"]:hover { border-color: var(--status-error-text); }
 .op2-metric-grid > div, .op2-customer-main > div { min-width: 0; }
 .op2-metric-grid strong[data-dense="true"] { font-size: var(--text-lg) !important; line-height: var(--leading-lg); white-space: nowrap; }
-.ui-metric-card > strong[data-dense="true"] { font-size: var(--text-lg); line-height: var(--leading-lg); white-space: nowrap; }
+.ui-metric-card strong[data-dense="true"] { font-size: var(--text-lg) !important; line-height: var(--leading-lg) !important; white-space: nowrap; }
 .sales-receipt-trigger { display: block; border: 0; padding-inline: 0; background: transparent; color: var(--text-primary); }
 .sales-customer-cell { max-width: 240px; overflow: hidden; text-overflow: ellipsis; }
 .op2-customer-main > div { flex: 1; }

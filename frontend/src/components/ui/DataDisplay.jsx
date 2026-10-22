@@ -1,5 +1,6 @@
 import { Icon as HsrIcon } from "./index.js";
 import { formatCurrency } from "../../utils/format.js";
+import Card from "./Card.jsx";
 export function CurrencyAmount({ value = 0, className = "" }) {
   return (
     <span className={["ui-currency", className].filter(Boolean).join(" ")}>
@@ -16,16 +17,19 @@ export function MetricValue({ children, ...props }) {
   return <strong data-dense={String(children ?? "").length > 12} {...props}>{children}</strong>;
 }
 
-export function MetricCard({ label, value, context, icon, delta, className = "", style }) {
+export function MetricCard({ label, value, context, icon, delta, className = "", style, variant = "default", children }) {
+  const comparison = delta && <small className={`ui-metric-delta ${delta.tone || "neutral"}`}>
+    {delta.icon && <HsrIcon className={`ti ${delta.icon}`} aria-hidden="true" />}<span className="ui-metric-delta-label" title={delta.label}>{delta.label}</span>
+  </small>;
   return (
-    <article className={["ui-metric-card", className].filter(Boolean).join(" ")} style={style}>
+    <Card as="article" className={["ui-metric-card", `ui-metric-card-${variant}`, className].filter(Boolean).join(" ")} style={style}>
       <div className="ui-metric-head">
         <span>{label}</span>
         {icon && <HsrIcon className={`ti ${icon}`} aria-hidden="true" />}
       </div>
-      <MetricValue>{value}</MetricValue>
-      {delta && <small className={`ui-metric-delta ${delta.tone || "neutral"}`}>{delta.label}</small>}
+      {variant === "lead" ? <div className="ui-metric-value-row"><MetricValue>{value}</MetricValue>{comparison}</div> : <><MetricValue>{value}</MetricValue>{comparison}</>}
       {context && <p>{context}</p>}
-    </article>
+      {children}
+    </Card>
   );
 }

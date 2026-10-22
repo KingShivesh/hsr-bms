@@ -1,5 +1,6 @@
+import { Panel as HsrPanel, Card as HsrCard } from "./ui/index.js";
 import { formatCurrency as polishCurrency, formatDuration as polishDuration, formatDateTime as polishDateTime } from "../utils/format.js";
-import { SkeletonGrid, SkeletonBlock, EmptyState } from "./ui/index.js";
+import { SkeletonGrid, SkeletonBlock, EmptyState, MetricCard } from "./ui/index.js";
 import RetryNotice from "./RetryNotice.jsx";
 import { Button as HsrButton, Icon as HsrIcon, Select as HsrSelect, Table as HsrTable } from "./ui/index.js";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
@@ -252,25 +253,6 @@ function QuickOperations({ onNavigate }) {
   );
 }
 
-function KpiCard({ label, value, sub, icon, trend, empty = false }) {
-  return (
-    <article className={`ops-kpi ${empty ? "is-empty" : ""}`}>
-      <div className="ops-kpi-top">
-        <span>{label}</span>
-        <HsrIcon className={`ti ${icon}`} aria-hidden="true" />
-      </div>
-      <strong>{value}</strong>
-      {trend && (
-        <em className={`ops-kpi-trend ${trend.tone || "neutral"}`}>
-          <HsrIcon className={`ti ${trend.icon || "ti-minus"}`} aria-hidden="true" />
-          {trend.label}
-        </em>
-      )}
-      <p>{sub}</p>
-    </article>
-  );
-}
-
 function KeyMetricsSection({
   dateRange,
   onDateRangeChange,
@@ -320,19 +302,10 @@ function KeyMetricsSection({
         </div>
       </div>
       <div className="ops-reference-grid">
-        <article className={`ops-kpi ops-kpi-lead ${!hasClosedSessions ? "is-empty" : ""}`}>
-          <div className="ops-kpi-top">
-            <span>{dateRange === "today" ? "Today Revenue" : `${periodLabel} Revenue`}</span>
-            <HsrIcon className="ti ti-cash" aria-hidden="true" />
-          </div>
-          <div className="ops-kpi-lead-value">
-            <strong>{money(ownerTotal)}</strong>
-            <em className={`ops-kpi-trend ${revenueTrend.tone || "neutral"}`}>
-              <HsrIcon className={`ti ${revenueTrend.icon || "ti-minus"}`} aria-hidden="true" />
-              {revenueTrend.label}
-            </em>
-          </div>
-          <p>{hasClosedSessions ? `${sessionCount} sessions closed in range` : "No closed sessions in range"}</p>
+        <MetricCard className={`ops-kpi ops-kpi-lead ${!hasClosedSessions ? "is-empty" : ""}`} variant="lead"
+          label={dateRange === "today" ? "Today Revenue" : `${periodLabel} Revenue`}
+          value={money(ownerTotal)} icon="ti-cash" delta={revenueTrend}
+          context={hasClosedSessions ? `${sessionCount} sessions closed in range` : "No closed sessions in range"}>
           <div className="ops-kpi-support">
             <div>
               <span>Live floor value</span>
@@ -345,22 +318,20 @@ function KeyMetricsSection({
               <small>{periodLabel || "Today"} register</small>
             </div>
           </div>
-        </article>
-        <KpiCard
+        </MetricCard>
+        <MetricCard className={`ops-kpi ${!hasActiveTables ? "is-empty" : ""}`}
           label="Active Tables"
           value={`${activeCount}/${TOTAL_TABLES}`}
-          sub={hasActiveTables ? `${occupancyPercent}% occupancy right now` : "Floor is fully ready to seat"}
+          context={hasActiveTables ? `${occupancyPercent}% occupancy right now` : "Floor is fully ready to seat"}
           icon="ti-layout-grid"
-          trend={activeTrend}
-          empty={!hasActiveTables}
+          delta={activeTrend}
         />
-        <KpiCard
+        <MetricCard className={`ops-kpi ${!hasFoodRevenue ? "is-empty" : ""}`}
           label="Food Attach"
           value={`${foodAttachment}%`}
-          sub={hasFoodRevenue ? `${money(foodRevenue)} food revenue` : "No cafe orders in range"}
+          context={hasFoodRevenue ? `${money(foodRevenue)} food revenue` : "No cafe orders in range"}
           icon="ti-tools-kitchen-2"
-          trend={foodTrend}
-          empty={!hasFoodRevenue}
+          delta={foodTrend}
         />
       </div>
     </section>
@@ -393,7 +364,7 @@ function LiveFloor({ tables, elapsed, onNavigate }) {
           ? "Floor active"
           : "Ready";
   return (
-    <section className="ops-panel ops-floor-panel">
+    <HsrPanel as="section" className="ops-panel ops-floor-panel">
       <SectionHead
         title={`Live Floor — ${!tables.length ? "no tables" : activeCount ? `${activeCount} running / ${idleCount} idle` : `${idleCount} idle`}`}
         action={
@@ -417,7 +388,7 @@ function LiveFloor({ tables, elapsed, onNavigate }) {
           const attention = getTableAttention({ session, elapsedSeconds: elapsedSecs });
           const runningTotal = table.running_total || session?.running_total || 0;
           return (
-            <HsrButton native
+            <HsrCard as={HsrButton} native
               type="button"
               key={table.id}
               className="ops-table-card table-state-card"
@@ -429,7 +400,7 @@ function LiveFloor({ tables, elapsed, onNavigate }) {
             >
               <div className="ops-table-top">
                 <strong>T{table.num}</strong>
-                <span>{getTableLabel(table)}</span>
+                <span title={getTableLabel(table)}>{getTableLabel(table)}</span>
               </div>
               <div className="table-state-card-flags">
                 <TableAttentionBadge attention={attention} />
@@ -444,12 +415,12 @@ function LiveFloor({ tables, elapsed, onNavigate }) {
               <div className="ops-table-meta">
                 {active ? (
                   <>
-                    <span>{session.customer_name || "Guest"}</span>
+                    <span title={session.customer_name || "Guest"}>{session.customer_name || "Guest"}</span>
                     <span>{session.billing_mode || "single"} · Food {money(session.food_total || 0)}</span>
                   </>
                 ) : (
                   <span>{status.key === "reserved"
-                    ? `${new Date(table.booking?.booking_time).toLocaleTimeString("en-IN", { hour: "2-digit", minute: "2-digit" })} · ${table.booking?.customer_name || "Reserved guest"}`
+                    ? `${fmtShortDateTime(table.booking?.booking_time)} · ${table.booking?.customer_name || "Reserved guest"}`
                     : status.key === "maintenance" ? table.maintenance?.reason || "Unavailable"
                     : "Ready to start"}</span>
                 )}
@@ -458,11 +429,11 @@ function LiveFloor({ tables, elapsed, onNavigate }) {
                 <HsrIcon className={`ti ${status.primaryAction.icon}`} aria-hidden="true" />
                 {status.key === "available" ? "Start Session" : status.primaryAction.label}
               </span>
-            </HsrButton>
+            </HsrCard>
           );
         })}
       </div>
-    </section>
+    </HsrPanel>
   );
 }
 
@@ -488,7 +459,7 @@ function AttentionPanel({ actions, onNavigate }) {
   }
 
   return (
-    <section className="ops-panel ops-attention-panel">
+    <HsrPanel as="section" className="ops-panel ops-attention-panel">
       <SectionHead title="Attention" />
       <div className="ops-attention-list">
         {uniqueItems.map((item) => (
@@ -506,7 +477,7 @@ function AttentionPanel({ actions, onNavigate }) {
           </HsrButton>
         ))}
       </div>
-    </section>
+    </HsrPanel>
   );
 }
 
@@ -516,7 +487,7 @@ function CloseReadiness({ digest, activeCount, onNavigate }) {
   const closed = Boolean(report?.day_close?.closed);
   const ready = !openTables && !closed;
   return (
-    <section className={`ops-panel ops-close-card ${closed ? "closed" : ready ? "ready" : "blocked"}`}>
+    <HsrPanel as="section" className={`ops-panel ops-close-card ${closed ? "closed" : ready ? "ready" : "blocked"}`}>
       <SectionHead
         eyebrow="End of day"
         title={closed ? "Day Already Closed" : ready ? "Ready To Close" : "Closing Blocked"}
@@ -547,7 +518,7 @@ function CloseReadiness({ digest, activeCount, onNavigate }) {
             ? "All tables are clear. Count cash and lock the shift."
             : "Close running tables first, then complete cash and payment reconciliation."}
       </p>
-    </section>
+    </HsrPanel>
   );
 }
 
@@ -559,7 +530,7 @@ function PaymentMix({ cashTotal, upiTotal, cardTotal }) {
   ];
   const total = rows.reduce((sum, row) => sum + row.value, 0);
   return (
-    <section className="ops-panel">
+    <HsrPanel as="section" className="ops-panel">
       <SectionHead eyebrow="Collection" title="Payment Mix" />
       <div className="ops-payment-list">
         {rows.map((row) => {
@@ -578,14 +549,14 @@ function PaymentMix({ cashTotal, upiTotal, cardTotal }) {
           );
         })}
       </div>
-    </section>
+    </HsrPanel>
   );
 }
 
 function Insights({ digest }) {
   const insights = digest?.insights?.insights?.slice(0, 3) || [];
   return (
-    <section className="ops-panel">
+    <HsrPanel as="section" className="ops-panel">
       <SectionHead eyebrow="Owner digest" title="Smart Checks" />
       <div className="ops-insights">
         {insights.length ? (
@@ -608,7 +579,7 @@ function Insights({ digest }) {
           </div>
         )}
       </div>
-    </section>
+    </HsrPanel>
   );
 }
 
@@ -619,7 +590,7 @@ function QueueBookings({ waitlist, bookings, onNavigate }) {
   const missedCount = bookings.filter((booking) => booking.status === "missed").length;
 
   return (
-    <section className="ops-panel">
+    <HsrPanel as="section" className="ops-panel">
       <SectionHead
         eyebrow="Reception"
         title="Queue & Bookings"
@@ -676,7 +647,7 @@ function QueueBookings({ waitlist, bookings, onNavigate }) {
           </div>
         )}
       </div>
-    </section>
+    </HsrPanel>
   );
 }
 
@@ -684,7 +655,7 @@ function PopularFood({ foodStats, foodOrders, onNavigate }) {
   const topItems = foodStats.slice(0, 5);
   const recentOrders = foodOrders.slice(0, 2);
   return (
-    <section className="ops-panel">
+    <HsrPanel as="section" className="ops-panel">
       <SectionHead
         eyebrow="Cafe"
         title="Food Demand"
@@ -728,7 +699,7 @@ function PopularFood({ foodStats, foodOrders, onNavigate }) {
           ))}
         </div>
       )}
-    </section>
+    </HsrPanel>
   );
 }
 
@@ -757,7 +728,7 @@ function RecentActivity({ auditLogs, runningTables, foodOrders }) {
   const rows = [...liveRows, ...orderRows, ...auditRows].slice(0, 6);
 
   return (
-    <section className="ops-panel">
+    <HsrPanel as="section" className="ops-panel">
       <SectionHead eyebrow="Audit trail" title="Recent Activity" />
       <div className="ops-timeline">
         {rows.length ? (
@@ -780,7 +751,7 @@ function RecentActivity({ auditLogs, runningTables, foodOrders }) {
           </div>
         )}
       </div>
-    </section>
+    </HsrPanel>
   );
 }
 
@@ -826,7 +797,7 @@ function TodayTimeline({ runningTables, foodOrders, bookings, auditLogs, onNavig
   ].filter((row) => role === "admin" || !row.adminOnly).slice(0, 9);
 
   return (
-    <section className="ops-panel ops-today-panel">
+    <HsrPanel as="section" className="ops-panel ops-today-panel">
       <SectionHead
         eyebrow="Today timeline"
         title="Live Activity Feed"
@@ -863,7 +834,7 @@ function TodayTimeline({ runningTables, foodOrders, bookings, auditLogs, onNavig
           </div>
         )}
       </div>
-    </section>
+    </HsrPanel>
   );
 }
 
@@ -927,7 +898,7 @@ function OwnerIntelligence({ utilization, foodAttachment, longRunningCount, wait
   ];
 
   return (
-    <section className="ops-panel ops-owner-intel">
+    <HsrPanel as="section" className="ops-panel ops-owner-intel">
       <SectionHead
         eyebrow="Owner intelligence"
         title="What To Act On"
@@ -958,7 +929,7 @@ function OwnerIntelligence({ utilization, foodAttachment, longRunningCount, wait
           </div>
         ))}
       </div>
-    </section>
+    </HsrPanel>
   );
 }
 
@@ -991,7 +962,7 @@ function DashboardDataTable({ rows, sort, onSortChange, page, onPageChange, page
   }
 
   return (
-    <section className="ops-panel ops-data-table-panel">
+    <HsrPanel as="section" className="ops-panel ops-data-table-panel">
       <SectionHead eyebrow="Operations table" title="Live Work Register" />
       <div className="ops-data-table-wrap">
         <HsrTable className="ops-data-table">
@@ -1057,14 +1028,14 @@ function DashboardDataTable({ rows, sort, onSortChange, page, onPageChange, page
           </HsrButton>
         </div>
       </div>
-    </section>
+    </HsrPanel>
   );
 }
 
 function Charts({ analytics, pieData }) {
   return (
     <div className="ops-chart-grid">
-      <section className="ops-panel">
+      <HsrPanel as="section" className="ops-panel">
         <SectionHead eyebrow="Trend" title="Revenue Last 7 Days" />
         {analytics ? (
           <ResponsiveContainer width="100%" height={220}>
@@ -1090,9 +1061,9 @@ function Charts({ analytics, pieData }) {
         ) : (
           <SkeletonBlock rows={4} label="Fetching revenue history" />
         )}
-      </section>
+      </HsrPanel>
 
-      <section className="ops-panel">
+      <HsrPanel as="section" className="ops-panel">
         <SectionHead eyebrow="Source" title="Revenue Split" />
         {pieData.length ? (
           <div className="ops-breakdown">
@@ -1119,7 +1090,7 @@ function Charts({ analytics, pieData }) {
         ) : (
           <div className="ops-empty-chart">No revenue split yet</div>
         )}
-      </section>
+      </HsrPanel>
     </div>
   );
 }
