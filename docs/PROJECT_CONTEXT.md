@@ -60,7 +60,14 @@ are mapped with `@theme inline` in `index.css`; do not add Tailwind v3 config.
   (2026-10-12). Evidence is in `docs/presentation-polish/font-comparison/`;
   that preview is not permission to switch application fonts.
 - Presentation contract: seven text sizes (12/13/14/16/20/24/32px) with matching
-  leading tokens; `presentation.css` loads last. Use shared Button, Input,
+  leading tokens; `presentation.css` owns the shared scale but does NOT load last.
+  `perceived-speed.css`, product shell, legacy presentation and
+  `interaction-polish.css` follow it in `main.jsx`. Check the actual winning
+  computed rule rather than adding a duplicate that a later stylesheet overrides.
+  Notification stack geometry lives in the existing interaction-polish rules;
+  stack containers must not transition, including under reduced motion, because
+  their measured position reserves page-end scroll space. Individual toast
+  entrance/exit animations remain separate. Use shared Button, Input,
   Select, Textarea and Table. The `native` Button adapter preserves existing
   DOM content and native form semantics while adding common feedback.
   The October 22 deployment brief raised the minimum from 11px to 12px;

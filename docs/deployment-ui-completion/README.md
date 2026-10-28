@@ -16,9 +16,10 @@ server-authoritative payment/receipt confirmation. No feature or role expansion.
 | Finance / reports | Three main screens + four reachable report sub-tabs: 336 final samples pass; eight receipt/paging cases and two eight-case data-integrity follow-ups pass | `sales/`, `analytics/`, `daily-closing/`, `reports-*/` |
 | Settings | Six sections: 256 final strict samples pass. Eight missing-data, tariff recovery and pending-save contracts pass; three shared Panel roots migrated | `settings-*/`, `settings-contract/after/` |
 | Remaining operations / error routes | Pending current-build rerun and component consolidation | Not a pass |
-| Shared overlays / menus / action states | Pending consolidation and interaction rerun | Not a pass |
+| Shared notifications | Ten before/after cases, 16 real-Cafe contracts and both-theme lifecycle tests pass; 160 loaded-route checks pass; strict contrast scanner: 0 violations / 0 errors | `notification-clearance/`, `notification-cafe/`, `notification-lifecycle/`, `notification-regression/`, `notification-contrast.json` |
+| Remaining overlays / menus / action states | Pending consolidation and interaction rerun | Not a pass |
 | Local operational lifecycle | Pending 20-cycle role/theme/mobile exercise | Not a pass |
-| Production release | Dashboard, operations, members/bookings, Cafe and Finance are live-verified; Settings release verification follows its commit | A push alone is not proof |
+| Production release | Dashboard, operations, members/bookings, Cafe, Finance and Settings are live-verified; notifications release verification follows its commit | A push alone is not proof |
 | Real devices / unfamiliar human | External acceptance remains unverified | Browser viewports are not physical-device testing |
 
 All current captures use a guarded disposable local database. No production
@@ -62,6 +63,7 @@ transition and retains reduced-motion behavior.
 | Settings | Legacy `height: 100%` stretched every operations panel to the whole stack | Content-sized panels | Scoped automatic height; shared Panel for settings, tariffs and session controls | `comparisons/settings-operations-default-375.png` |
 | Account / Team | Missing counts appeared as zero; unavailable team details could be marked reviewed | Do not invent state | Unknown counts show a dash and Retry; unknown team details have Retry and cannot be marked reviewed | `comparisons/settings-account-missing-counts-375.png`, `settings-contract/` |
 | Tariffs | Plain loading text; null package list crashed the whole route | Shaped loading and partial-data recovery | Shared skeleton and RetryNotice; incomplete editable settings are rejected before rendering or saving | `comparisons/settings-tariffs-loading-1440.png`, `settings-contract/` |
+| Notifications | Persistent reminders covered final page actions; ordinary feedback overlapped reminders | Reachable actions and separate layers | Measured scroll clearance, separate bounded stacks, in-flow dialog feedback; Undo/Dismiss and hover/focus timing retained | `comparisons/notifications-page-375.png`, `comparisons/notifications-dialog-375.png` |
 
 The first shared-change regression is 20 main routes x four widths x both themes
 (160 loaded/default captures), all clean. It is not certification of all their
@@ -153,8 +155,8 @@ Early `cafe-contract/after` probes used the wrong text assertion for a numeric
 input. `after-final` records real overlay interception by undismissed notifications
 at smaller widths, not a passing pager check. The final isolated price/paging
 contract suppresses unrelated aged-session reminders and dismisses ordinary cart
-feedback using its actual close button. Cross-cutting notification occlusion is
-still OPEN for the shared-overlay cluster; it is not silently treated as fixed.
+feedback using its actual close button. That isolated Cafe pass did not certify
+notification occlusion; see the later notification cluster below for its fix.
 
 Cafe cluster `4e1b05e` is merged, pushed and live: `deployment-cafe.json`
 matches all 23 assets, with backend health/readiness 200 and unchanged ancestry.
@@ -174,7 +176,8 @@ Escape and restored opener. The same eight cases click Session Edits Next and
 verify records 26-50 of 1,000 with 25 rows. All business writes are blocked.
 `sales/receipt-before/` retains the original notification-occlusion failures;
 `receipt-before-final/` and `receipt-after/` use the same isolated-reminder
-fixture for the receipt-specific comparison. Shared-toast occlusion stays open.
+fixture for the receipt-specific comparison. Notification occlusion is addressed
+in the later shared-notification cluster below.
 
 The eight-case null-row follow-up no longer crashes. The eight missing-method
 cases measure actual rendered summary values: the baseline counted the read
@@ -222,5 +225,55 @@ for the actual failed response. Only the final passing run is acceptance evidenc
 Before/after composites retain original pixels: before left, after right, light
 above dark. Full-screen sources and cropped tariff-panel sources are both kept.
 Fonts, colors, credential policy, trusted Staff time permissions and backend
-financial rules are unchanged. Shared notification occlusion and remaining
-operations/overlay/lifecycle/source-token work remain OPEN.
+financial rules are unchanged. The later shared-notification cluster addresses
+notification occlusion. Remaining operations/overlay/lifecycle/source-token work
+is still OPEN.
+
+Settings source `b8e9c68` and evidence through `5ca22d3` are merged, pushed and live.
+`deployment-settings.json` verifies all 23 asset hashes and unchanged backend
+ancestry, with health/readiness 200.
+
+## Notification Verification
+
+The same isolated real-component fixture runs against the frozen baseline and
+the current source at 375/414/768/1024/1440px in light and dark mode. All ten
+baseline cases block the final page action. Stack overlap is 43,218px² at 375px,
+26,740px² at 414px, 25,442.8125px² at 768px and 22,039.0625px² at 1024/1440px.
+All ten final cases have zero overlap and a reachable final action. The app
+reserves measured scroll clearance only while notifications are present; this
+allows page-end controls to scroll above the floating stacks, not an unsupported
+claim that a floating notification never covers any content. Clearance resets to
+zero after dismissal. No pointer-events bypass hides or disables toast actions.
+
+Actual pointer clicks confirm Undo once, warning Dismiss once and a successful
+dialog Retry, with no business writes. Ordinary dialog feedback is inside the
+dialog layout and does not intersect its footer action (0px²). Strict rendered
+toast contrast is clean. Final reduced-motion page feedback measures 44.7-54.7ms.
+
+Screenshot review caught two incomplete initial fixes: the later interaction
+stylesheet overrode the stack offset, and the global reduced-motion rule added
+a tiny unintended position transition that made the first clearance read stale.
+The existing authoritative toast rule now owns the offset; stack containers do
+not transition, while individual toast animations retain reduced-motion support.
+The regression explicitly measures stack overlap as well as reachability.
+Initial probes and the resource-contention latency miss are not final passes.
+
+The final Cafe integration keeps actual disposable-database session reminders
+and ordinary cart notifications visible, rather than suppressing them or clicking
+them away. The focus/cart/pagination contract covers actual Owner and Staff,
+both themes and four widths; food stats have 60 rows and order history has 1,000
+read-fixture rows, bounded to 25 displayed records. No order or payment is posted.
+The shared lifecycle regression also checks default success/info duration,
+persistent errors, hover/focus pause, keyboard Undo, dialog relocation and scroll
+restoration. These are notification checks, not a substitute for the pending
+20-cycle real operational workflow or physical-device acceptance.
+
+Final notification source passes lint, theme guard and build. The final strict
+contrast scan covers 21 routes in both themes plus login errors, popovers, command
+palette and safe dialogs: zero violations and zero errors. The loaded/default
+regression has 160 passing samples. It does not close all page-specific states.
+Manual screenshot review also flagged a clipped Inventory maintenance form that
+the original overflow guard missed; that is an explicit remaining Operations
+item, not a claim that every visual detail is now clean. Initial notification
+failure images are kept under `notification-clearance/probes/`, separately from
+the final passing `after/` captures.

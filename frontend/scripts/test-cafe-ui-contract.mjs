@@ -8,8 +8,9 @@ const stage = process.argv[2] || "after";
 assert.ok(["before", "after"].includes(stage));
 const app = `http://127.0.0.1:${stage === "before" ? 5180 : 5181}`, api = "http://127.0.0.1:8006";
 const output = process.env.UI_CAFE_OUTPUT_DIR || `../docs/deployment-ui-completion/cafe-contract/${stage}`;
+const keepNotifications = process.env.UI_CAFE_KEEP_NOTIFICATIONS === "true";
 await fs.mkdir(output, { recursive: true });
-const report = { stage, cases: [], blockedWrites: [], scope: "Local browser read fixtures; cart changes only, no order/settlement writes. Unrelated aged-session reminders isolated; normal cart notifications dismissed with their real close button before paging" };
+const report = { stage, cases: [], blockedWrites: [], scope: keepNotifications ? "Local browser read fixtures; actual QA session reminders and ordinary cart notifications retained during price/cart/paging checks. No order/settlement writes." : "Local browser read fixtures; cart changes only, no order/settlement writes. Unrelated aged-session reminders isolated; normal cart notifications dismissed with their real close button before paging" };
 const browser = await chromium.launch({ executablePath: "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome", headless: true });
 try {
   for (const username of ["admin", "staff"]) for (const theme of ["light", "dark"]) for (const width of [375, 768, 1024, 1440]) {
@@ -20,7 +21,7 @@ try {
       const request = handler.request(), url = new URL(request.url());
       if (![app, api].includes(url.origin)) return handler.abort("blockedbyclient");
       if (!["GET", "HEAD", "OPTIONS"].includes(request.method())) { report.blockedWrites.push({ method: request.method(), path: url.pathname }); return handler.abort("blockedbyclient"); }
-      if (url.origin === api && url.pathname === "/sessions/alerts") return handler.fulfill({ json: { alerts: [], owner_summaries: [], config: {} } });
+      if (!keepNotifications && url.origin === api && url.pathname === "/sessions/alerts") return handler.fulfill({ json: { alerts: [], owner_summaries: [], config: {} } });
       if (url.origin === api && url.pathname === "/settings/menu") return handler.fulfill({ json: { "QA Cigarette": { price: 20, category: "Cigarettes", available: true }, "QA Snack": { price: 30, category: "Veg Snacks", available: true } } });
       if (stage === "after" && url.origin === api && url.pathname === "/food/orders") return handler.fulfill({ json: Array.from({ length: 1000 }, (_, i) => ({ id: i + 99001, customer_name: `QA Order ${i + 1}`, items: [{ item: "QA Snack", qty: 1 }], payment_method: "Cash", total: 30, ts: 1792264200000 })) });
       if (stage === "after" && url.origin === api && url.pathname === "/food/stats") return handler.fulfill({ json: Array.from({ length: 60 }, (_, i) => ({ name: `QA Item ${i + 1}`, qty: 60 - i, revenue: (60 - i) * 30 })) });
@@ -30,6 +31,11 @@ try {
     report.cases.push(result);
     try {
       await page.goto(app + "/cafe-pos");
+      if (keepNotifications) {
+        await page.locator(".app-toast-warning").first().waitFor();
+        result.actualSessionReminders = await page.locator(".app-toast-warning").count();
+        assert.ok(result.actualSessionReminders > 0);
+      }
       const opener = page.getByRole("button", { name: "Add QA Cigarette to order", exact: true });
       await opener.click();
       const dialog = page.getByRole("dialog");
@@ -55,7 +61,7 @@ try {
       result.cartPrice = await cart.locator(".cart-line-meta").innerText();
       assert.match(result.cartPrice, /23.*2/);
       await page.screenshot({ path: `${output}/${username}-${theme}-${width}-cart.png`, animations: "disabled" });
-      for (const dismiss of await page.getByRole("button", { name: "Dismiss notification", exact: true }).all()) await dismiss.click();
+      if (!keepNotifications) for (const dismiss of await page.getByRole("button", { name: "Dismiss notification", exact: true }).all()) await dismiss.click();
       if (stage === "after") {
         const m = result.metrics;
         for (const key of ["smallText", "contentOverflow", "shortTargets", "clipped", "unlabeledButtons", "unlabeledInputs", "invalidCopy"]) assert.equal(m[key].length, 0, key);

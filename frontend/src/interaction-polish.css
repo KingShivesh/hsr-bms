@@ -48,7 +48,12 @@ b, strong { font-weight: 500; }
 @keyframes readiness-overlay-out { to { opacity: 0; } }
 @keyframes readiness-dialog-out { to { opacity: 0; transform: scale(.98); } }
 .ui-overlay-body { overscroll-behavior: contain; }
-.app-toast-container:not(.app-session-alert-container) { top: auto; bottom: var(--space-5); max-height: 50dvh; max-width: calc(100vw - 32px); overflow-y: auto; overscroll-behavior: contain; }
+html { scroll-padding-bottom: var(--toast-page-clearance, 0px); }
+.main-content::after { content: ""; display: block; height: var(--toast-page-clearance, 0px); flex: 0 0 auto; grid-column: 1 / -1; pointer-events: none; }
+.app-toast-container { transition-property: none; }
+.app-toast-container:not(.app-session-alert-container) { top: auto; bottom: max(var(--space-5), var(--toast-feedback-offset, 0px)); max-height: calc(50dvh - var(--toast-feedback-offset, 0px)); max-width: calc(100vw - 32px); overflow-y: auto; overscroll-behavior: contain; }
+.app-toast-container.app-dialog-feedback { position: static; inset: auto; max-width: none; max-height: 25dvh; flex: 0 0 auto; margin: var(--space-3) var(--space-5); overflow-y: auto; }
+.app-dialog-feedback:empty { display: none; }
 .app-toast { min-width: 0; flex-wrap: wrap; max-width: min(400px, calc(100vw - 32px)); animation: readiness-toast-in 150ms ease-out both; }
 .app-toast.is-exiting { animation: readiness-toast-out 120ms ease-out both; }
 .app-toast-message { overflow-wrap: anywhere; }

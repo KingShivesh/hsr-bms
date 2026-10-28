@@ -1,0 +1,507 @@
+{
+  "stage": "after",
+  "cases": [
+    {
+      "theme": "light",
+      "width": 375,
+      "pageAction": {
+        "rect": {
+          "x": 241.953125,
+          "y": 405,
+          "width": 113.046875,
+          "height": 44,
+          "top": 405,
+          "right": 355,
+          "bottom": 449,
+          "left": 241.953125
+        },
+        "reachable": true,
+        "clearance": "365px"
+      },
+      "stackOverlap": 0,
+      "contrast": [],
+      "feedback": {
+        "ms": 44.69999998807907,
+        "visible": true
+      },
+      "dialog": {
+        "button": {
+          "x": 207.109375,
+          "y": 390,
+          "width": 130.890625,
+          "height": 44,
+          "top": 390,
+          "right": 338,
+          "bottom": 434,
+          "left": 207.109375
+        },
+        "toast": {
+          "x": 37,
+          "y": 474,
+          "width": 301,
+          "height": 104,
+          "top": 474,
+          "right": 338,
+          "bottom": 578,
+          "left": 37
+        },
+        "overlap": 0
+      },
+      "undoCalls": 1,
+      "warningDismissCalls": 1,
+      "clearanceResets": true
+    },
+    {
+      "theme": "light",
+      "width": 414,
+      "pageAction": {
+        "rect": {
+          "x": 280.953125,
+          "y": 461,
+          "width": 113.046875,
+          "height": 44,
+          "top": 461,
+          "right": 394,
+          "bottom": 505,
+          "left": 280.953125
+        },
+        "reachable": true,
+        "clearance": "309px"
+      },
+      "stackOverlap": 0,
+      "contrast": [],
+      "feedback": {
+        "ms": 51.19999998807907,
+        "visible": true
+      },
+      "dialog": {
+        "button": {
+          "x": 246.109375,
+          "y": 379,
+          "width": 130.890625,
+          "height": 44,
+          "top": 379,
+          "right": 377,
+          "bottom": 423,
+          "left": 246.109375
+        },
+        "toast": {
+          "x": 37,
+          "y": 463,
+          "width": 340,
+          "height": 126,
+          "top": 463,
+          "right": 377,
+          "bottom": 589,
+          "left": 37
+        },
+        "overlap": 0
+      },
+      "undoCalls": 1,
+      "warningDismissCalls": 1,
+      "clearanceResets": true
+    },
+    {
+      "theme": "light",
+      "width": 768,
+      "pageAction": {
+        "rect": {
+          "x": 634.953125,
+          "y": 570,
+          "width": 113.046875,
+          "height": 44,
+          "top": 570,
+          "right": 748,
+          "bottom": 614,
+          "left": 634.953125
+        },
+        "reachable": true,
+        "clearance": "356px"
+      },
+      "stackOverlap": 0,
+      "contrast": [],
+      "feedback": {
+        "ms": 54.70000001788139,
+        "visible": true
+      },
+      "dialog": {
+        "button": {
+          "x": 552.109375,
+          "y": 485,
+          "width": 130.890625,
+          "height": 44,
+          "top": 485,
+          "right": 683,
+          "bottom": 529,
+          "left": 552.109375
+        },
+        "toast": {
+          "x": 85,
+          "y": 569,
+          "width": 400,
+          "height": 70,
+          "top": 569,
+          "right": 485,
+          "bottom": 639,
+          "left": 85
+        },
+        "overlap": 0
+      },
+      "undoCalls": 1,
+      "warningDismissCalls": 1,
+      "clearanceResets": true
+    },
+    {
+      "theme": "light",
+      "width": 1024,
+      "pageAction": {
+        "rect": {
+          "x": 890.953125,
+          "y": 604,
+          "width": 113.046875,
+          "height": 36,
+          "top": 604,
+          "right": 1004,
+          "bottom": 640,
+          "left": 890.953125
+        },
+        "reachable": true,
+        "clearance": "326px"
+      },
+      "stackOverlap": 0,
+      "contrast": [],
+      "feedback": {
+        "ms": 49.599999994039536,
+        "visible": true
+      },
+      "dialog": {
+        "button": {
+          "x": 680.109375,
+          "y": 493,
+          "width": 130.890625,
+          "height": 36,
+          "top": 493,
+          "right": 811,
+          "bottom": 529,
+          "left": 680.109375
+        },
+        "toast": {
+          "x": 213,
+          "y": 569,
+          "width": 400,
+          "height": 62,
+          "top": 569,
+          "right": 613,
+          "bottom": 631,
+          "left": 213
+        },
+        "overlap": 0
+      },
+      "undoCalls": 1,
+      "warningDismissCalls": 1,
+      "clearanceResets": true
+    },
+    {
+      "theme": "light",
+      "width": 1440,
+      "pageAction": {
+        "rect": {
+          "x": 1306.953125,
+          "y": 604,
+          "width": 113.046875,
+          "height": 36,
+          "top": 604,
+          "right": 1420,
+          "bottom": 640,
+          "left": 1306.953125
+        },
+        "reachable": true,
+        "clearance": "326px"
+      },
+      "stackOverlap": 0,
+      "contrast": [],
+      "feedback": {
+        "ms": 52.80000001192093,
+        "visible": true
+      },
+      "dialog": {
+        "button": {
+          "x": 888.109375,
+          "y": 493,
+          "width": 130.890625,
+          "height": 36,
+          "top": 493,
+          "right": 1019,
+          "bottom": 529,
+          "left": 888.109375
+        },
+        "toast": {
+          "x": 421,
+          "y": 569,
+          "width": 400,
+          "height": 62,
+          "top": 569,
+          "right": 821,
+          "bottom": 631,
+          "left": 421
+        },
+        "overlap": 0
+      },
+      "undoCalls": 1,
+      "warningDismissCalls": 1,
+      "clearanceResets": true
+    },
+    {
+      "theme": "dark",
+      "width": 375,
+      "pageAction": {
+        "rect": {
+          "x": 241.953125,
+          "y": 405,
+          "width": 113.046875,
+          "height": 44,
+          "top": 405,
+          "right": 355,
+          "bottom": 449,
+          "left": 241.953125
+        },
+        "reachable": true,
+        "clearance": "365px"
+      },
+      "stackOverlap": 0,
+      "contrast": [],
+      "feedback": {
+        "ms": 49,
+        "visible": true
+      },
+      "dialog": {
+        "button": {
+          "x": 207.109375,
+          "y": 390,
+          "width": 130.890625,
+          "height": 44,
+          "top": 390,
+          "right": 338,
+          "bottom": 434,
+          "left": 207.109375
+        },
+        "toast": {
+          "x": 37,
+          "y": 474,
+          "width": 301,
+          "height": 104,
+          "top": 474,
+          "right": 338,
+          "bottom": 578,
+          "left": 37
+        },
+        "overlap": 0
+      },
+      "undoCalls": 1,
+      "warningDismissCalls": 1,
+      "clearanceResets": true
+    },
+    {
+      "theme": "dark",
+      "width": 414,
+      "pageAction": {
+        "rect": {
+          "x": 280.953125,
+          "y": 461,
+          "width": 113.046875,
+          "height": 44,
+          "top": 461,
+          "right": 394,
+          "bottom": 505,
+          "left": 280.953125
+        },
+        "reachable": true,
+        "clearance": "309px"
+      },
+      "stackOverlap": 0,
+      "contrast": [],
+      "feedback": {
+        "ms": 49.69999998807907,
+        "visible": true
+      },
+      "dialog": {
+        "button": {
+          "x": 246.109375,
+          "y": 379,
+          "width": 130.890625,
+          "height": 44,
+          "top": 379,
+          "right": 377,
+          "bottom": 423,
+          "left": 246.109375
+        },
+        "toast": {
+          "x": 37,
+          "y": 463,
+          "width": 340,
+          "height": 126,
+          "top": 463,
+          "right": 377,
+          "bottom": 589,
+          "left": 37
+        },
+        "overlap": 0
+      },
+      "undoCalls": 1,
+      "warningDismissCalls": 1,
+      "clearanceResets": true
+    },
+    {
+      "theme": "dark",
+      "width": 768,
+      "pageAction": {
+        "rect": {
+          "x": 634.953125,
+          "y": 570,
+          "width": 113.046875,
+          "height": 44,
+          "top": 570,
+          "right": 748,
+          "bottom": 614,
+          "left": 634.953125
+        },
+        "reachable": true,
+        "clearance": "356px"
+      },
+      "stackOverlap": 0,
+      "contrast": [],
+      "feedback": {
+        "ms": 51.400000005960464,
+        "visible": true
+      },
+      "dialog": {
+        "button": {
+          "x": 552.109375,
+          "y": 485,
+          "width": 130.890625,
+          "height": 44,
+          "top": 485,
+          "right": 683,
+          "bottom": 529,
+          "left": 552.109375
+        },
+        "toast": {
+          "x": 85,
+          "y": 569,
+          "width": 400,
+          "height": 70,
+          "top": 569,
+          "right": 485,
+          "bottom": 639,
+          "left": 85
+        },
+        "overlap": 0
+      },
+      "undoCalls": 1,
+      "warningDismissCalls": 1,
+      "clearanceResets": true
+    },
+    {
+      "theme": "dark",
+      "width": 1024,
+      "pageAction": {
+        "rect": {
+          "x": 890.953125,
+          "y": 604,
+          "width": 113.046875,
+          "height": 36,
+          "top": 604,
+          "right": 1004,
+          "bottom": 640,
+          "left": 890.953125
+        },
+        "reachable": true,
+        "clearance": "326px"
+      },
+      "stackOverlap": 0,
+      "contrast": [],
+      "feedback": {
+        "ms": 52.900000005960464,
+        "visible": true
+      },
+      "dialog": {
+        "button": {
+          "x": 680.109375,
+          "y": 493,
+          "width": 130.890625,
+          "height": 36,
+          "top": 493,
+          "right": 811,
+          "bottom": 529,
+          "left": 680.109375
+        },
+        "toast": {
+          "x": 213,
+          "y": 569,
+          "width": 400,
+          "height": 62,
+          "top": 569,
+          "right": 613,
+          "bottom": 631,
+          "left": 213
+        },
+        "overlap": 0
+      },
+      "undoCalls": 1,
+      "warningDismissCalls": 1,
+      "clearanceResets": true
+    },
+    {
+      "theme": "dark",
+      "width": 1440,
+      "pageAction": {
+        "rect": {
+          "x": 1306.953125,
+          "y": 604,
+          "width": 113.046875,
+          "height": 36,
+          "top": 604,
+          "right": 1420,
+          "bottom": 640,
+          "left": 1306.953125
+        },
+        "reachable": true,
+        "clearance": "326px"
+      },
+      "stackOverlap": 0,
+      "contrast": [],
+      "feedback": {
+        "ms": 49.30000001192093,
+        "visible": true
+      },
+      "dialog": {
+        "button": {
+          "x": 888.109375,
+          "y": 493,
+          "width": 130.890625,
+          "height": 36,
+          "top": 493,
+          "right": 1019,
+          "bottom": 529,
+          "left": 888.109375
+        },
+        "toast": {
+          "x": 421,
+          "y": 569,
+          "width": 400,
+          "height": 62,
+          "top": 569,
+          "right": 821,
+          "bottom": 631,
+          "left": 421
+        },
+        "overlap": 0
+      },
+      "undoCalls": 1,
+      "warningDismissCalls": 1,
+      "clearanceResets": true
+    }
+  ],
+  "businessWrites": 0,
+  "scope": "Same isolated fixture and actual shared Toast/Modal/Button components; frozen baseline source on 5183, current source on 5182. No club mutations."
+}

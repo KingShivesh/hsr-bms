@@ -3,7 +3,7 @@ import fs from "node:fs/promises";
 import assert from "node:assert/strict";
 import { scanRenderedContrast } from "./rendered-contrast.mjs";
 
-const app = "http://127.0.0.1:5182", output = "../docs/ui-readiness/feedback-lifecycle";
+const app = "http://127.0.0.1:5182", output = process.env.UI_FEEDBACK_OUTPUT_DIR || "../docs/ui-readiness/feedback-lifecycle";
 await fs.mkdir(output, {recursive:true});
 const report = {checks:[],errors:[],scope:"Isolated real-component lifecycle tests, not business-action success",businessWrites:0,diagnostics:[],isolation:"Vite reload/update/prune messages are recorded but not applied; component code and lifecycle assertions are unchanged."};
 const browser = await chromium.launch({executablePath:"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",headless:true});

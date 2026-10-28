@@ -1,0 +1,217 @@
+{
+  "stage": "before",
+  "cases": [
+    {
+      "theme": "light",
+      "width": 375,
+      "pageAction": {
+        "rect": {
+          "x": 241.953125,
+          "y": 770,
+          "width": 113.046875,
+          "height": 44,
+          "top": 770,
+          "right": 355,
+          "bottom": 814,
+          "left": 241.953125
+        },
+        "reachable": false,
+        "interceptor": "QA order change savedUndo",
+        "clearance": ""
+      },
+      "stackOverlap": 43218,
+      "contrast": []
+    },
+    {
+      "theme": "light",
+      "width": 414,
+      "pageAction": {
+        "rect": {
+          "x": 280.953125,
+          "y": 770,
+          "width": 113.046875,
+          "height": 44,
+          "top": 770,
+          "right": 394,
+          "bottom": 814,
+          "left": 280.953125
+        },
+        "reachable": false,
+        "interceptor": "QA order change savedUndo",
+        "clearance": ""
+      },
+      "stackOverlap": 26740,
+      "contrast": []
+    },
+    {
+      "theme": "light",
+      "width": 768,
+      "pageAction": {
+        "rect": {
+          "x": 634.953125,
+          "y": 926,
+          "width": 113.046875,
+          "height": 44,
+          "top": 926,
+          "right": 748,
+          "bottom": 970,
+          "left": 634.953125
+        },
+        "reachable": false,
+        "interceptor": "QA order change savedUndo",
+        "clearance": ""
+      },
+      "stackOverlap": 25442.8125,
+      "contrast": []
+    },
+    {
+      "theme": "light",
+      "width": 1024,
+      "pageAction": {
+        "rect": {
+          "x": 890.953125,
+          "y": 930,
+          "width": 113.046875,
+          "height": 36,
+          "top": 930,
+          "right": 1004,
+          "bottom": 966,
+          "left": 890.953125
+        },
+        "reachable": false,
+        "interceptor": "QA order change savedUndo",
+        "clearance": ""
+      },
+      "stackOverlap": 22039.0625,
+      "contrast": []
+    },
+    {
+      "theme": "light",
+      "width": 1440,
+      "pageAction": {
+        "rect": {
+          "x": 1306.953125,
+          "y": 930,
+          "width": 113.046875,
+          "height": 36,
+          "top": 930,
+          "right": 1420,
+          "bottom": 966,
+          "left": 1306.953125
+        },
+        "reachable": false,
+        "interceptor": "QA order change savedUndo",
+        "clearance": ""
+      },
+      "stackOverlap": 22039.0625,
+      "contrast": []
+    },
+    {
+      "theme": "dark",
+      "width": 375,
+      "pageAction": {
+        "rect": {
+          "x": 241.953125,
+          "y": 770,
+          "width": 113.046875,
+          "height": 44,
+          "top": 770,
+          "right": 355,
+          "bottom": 814,
+          "left": 241.953125
+        },
+        "reachable": false,
+        "interceptor": "QA order change savedUndo",
+        "clearance": ""
+      },
+      "stackOverlap": 43218,
+      "contrast": []
+    },
+    {
+      "theme": "dark",
+      "width": 414,
+      "pageAction": {
+        "rect": {
+          "x": 280.953125,
+          "y": 770,
+          "width": 113.046875,
+          "height": 44,
+          "top": 770,
+          "right": 394,
+          "bottom": 814,
+          "left": 280.953125
+        },
+        "reachable": false,
+        "interceptor": "QA order change savedUndo",
+        "clearance": ""
+      },
+      "stackOverlap": 26740,
+      "contrast": []
+    },
+    {
+      "theme": "dark",
+      "width": 768,
+      "pageAction": {
+        "rect": {
+          "x": 634.953125,
+          "y": 926,
+          "width": 113.046875,
+          "height": 44,
+          "top": 926,
+          "right": 748,
+          "bottom": 970,
+          "left": 634.953125
+        },
+        "reachable": false,
+        "interceptor": "QA order change savedUndo",
+        "clearance": ""
+      },
+      "stackOverlap": 25442.8125,
+      "contrast": []
+    },
+    {
+      "theme": "dark",
+      "width": 1024,
+      "pageAction": {
+        "rect": {
+          "x": 890.953125,
+          "y": 930,
+          "width": 113.046875,
+          "height": 36,
+          "top": 930,
+          "right": 1004,
+          "bottom": 966,
+          "left": 890.953125
+        },
+        "reachable": false,
+        "interceptor": "QA order change savedUndo",
+        "clearance": ""
+      },
+      "stackOverlap": 22039.0625,
+      "contrast": []
+    },
+    {
+      "theme": "dark",
+      "width": 1440,
+      "pageAction": {
+        "rect": {
+          "x": 1306.953125,
+          "y": 930,
+          "width": 113.046875,
+          "height": 36,
+          "top": 930,
+          "right": 1420,
+          "bottom": 966,
+          "left": 1306.953125
+        },
+        "reachable": false,
+        "interceptor": "QA order change savedUndo",
+        "clearance": ""
+      },
+      "stackOverlap": 22039.0625,
+      "contrast": []
+    }
+  ],
+  "businessWrites": 0,
+  "scope": "Same isolated fixture and actual shared Toast/Modal/Button components; frozen baseline source on 5183, current source on 5182. No club mutations."
+}

@@ -1,0 +1,41 @@
+{
+  "legend": "Before left, after right; light above dark. Original pixels, first 1000px of tall captures. Full source captures retained.",
+  "sources": [
+    {
+      "theme": "light",
+      "stage": "before",
+      "path": "notification-clearance/before/light-375-dialog.png",
+      "sha256": "7fb30a0f2d8a84fd8bca2e0c49d67ee7afb876b47e1e7a994dd7f43cdbeb99ee",
+      "width": 375,
+      "height": 844,
+      "croppedHeight": 844
+    },
+    {
+      "theme": "light",
+      "stage": "after",
+      "path": "notification-clearance/after/light-375-dialog.png",
+      "sha256": "8434a2b2fb0beea065360affd12d6e10a73e1fac463dc2dfe1bdfce34c2fa413",
+      "width": 375,
+      "height": 844,
+      "croppedHeight": 844
+    },
+    {
+      "theme": "dark",
+      "stage": "before",
+      "path": "notification-clearance/before/dark-375-dialog.png",
+      "sha256": "91690754263dd0919c181be708f8e6d26f310958e3c1c200664ab8ef55cee733",
+      "width": 375,
+      "height": 844,
+      "croppedHeight": 844
+    },
+    {
+      "theme": "dark",
+      "stage": "after",
+      "path": "notification-clearance/after/dark-375-dialog.png",
+      "sha256": "4976e6946f78958ea7f8b7edb4477fe8d44adb3f3e17fc8974ca17d567145ba4",
+      "width": 375,
+      "height": 844,
+      "croppedHeight": 844
+    }
+  ]
+}

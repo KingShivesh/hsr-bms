@@ -1,0 +1,133 @@
+{
+  "group": "default",
+  "stage": "after",
+  "widths": [
+    375,
+    768,
+    1024,
+    1440
+  ],
+  "strictPilot": true,
+  "results": [
+    {
+      "route": "/dashboard",
+      "states": "default",
+      "status": 0,
+      "output": "../docs/deployment-ui-completion/notification-regression/shared-regression/dashboard/after"
+    },
+    {
+      "route": "/live-floor",
+      "states": "default",
+      "status": 0,
+      "output": "../docs/deployment-ui-completion/notification-regression/shared-regression/live-floor/after"
+    },
+    {
+      "route": "/customers",
+      "states": "default",
+      "status": 0,
+      "output": "../docs/deployment-ui-completion/notification-regression/shared-regression/customers/after"
+    },
+    {
+      "route": "/bookings",
+      "states": "default",
+      "status": 0,
+      "output": "../docs/deployment-ui-completion/notification-regression/shared-regression/bookings/after"
+    },
+    {
+      "route": "/cafe-pos",
+      "states": "default",
+      "status": 0,
+      "output": "../docs/deployment-ui-completion/notification-regression/shared-regression/cafe-pos/after"
+    },
+    {
+      "route": "/sales",
+      "states": "default",
+      "status": 0,
+      "output": "../docs/deployment-ui-completion/notification-regression/shared-regression/sales/after"
+    },
+    {
+      "route": "/analytics",
+      "states": "default",
+      "status": 0,
+      "output": "../docs/deployment-ui-completion/notification-regression/shared-regression/analytics/after"
+    },
+    {
+      "route": "/settings",
+      "states": "default",
+      "status": 0,
+      "output": "../docs/deployment-ui-completion/notification-regression/shared-regression/settings/after"
+    },
+    {
+      "route": "/inventory",
+      "states": "default",
+      "status": 0,
+      "output": "../docs/deployment-ui-completion/notification-regression/shared-regression/inventory/after"
+    },
+    {
+      "route": "/waitlist",
+      "states": "default",
+      "status": 0,
+      "output": "../docs/deployment-ui-completion/notification-regression/shared-regression/waitlist/after"
+    },
+    {
+      "route": "/legacy-table-controls",
+      "states": "default",
+      "status": 0,
+      "output": "../docs/deployment-ui-completion/notification-regression/shared-regression/legacy-table-controls/after"
+    },
+    {
+      "route": "/tournaments",
+      "states": "default",
+      "status": 0,
+      "output": "../docs/deployment-ui-completion/notification-regression/shared-regression/tournaments/after"
+    },
+    {
+      "route": "/daily-closing",
+      "states": "default",
+      "status": 0,
+      "output": "../docs/deployment-ui-completion/notification-regression/shared-regression/daily-closing/after"
+    },
+    {
+      "route": "/pricing-rules",
+      "states": "default",
+      "status": 0,
+      "output": "../docs/deployment-ui-completion/notification-regression/shared-regression/pricing-rules/after"
+    },
+    {
+      "route": "/audit-log",
+      "states": "default",
+      "status": 0,
+      "output": "../docs/deployment-ui-completion/notification-regression/shared-regression/audit-log/after"
+    },
+    {
+      "route": "/status",
+      "states": "default",
+      "status": 0,
+      "output": "../docs/deployment-ui-completion/notification-regression/shared-regression/status/after"
+    },
+    {
+      "route": "/help",
+      "states": "default",
+      "status": 0,
+      "output": "../docs/deployment-ui-completion/notification-regression/shared-regression/help/after"
+    },
+    {
+      "route": "/changelog",
+      "states": "default",
+      "status": 0,
+      "output": "../docs/deployment-ui-completion/notification-regression/shared-regression/changelog/after"
+    },
+    {
+      "route": "/demo",
+      "states": "default",
+      "status": 0,
+      "output": "../docs/deployment-ui-completion/notification-regression/shared-regression/demo/after"
+    },
+    {
+      "route": "/missing-page",
+      "states": "default",
+      "status": 0,
+      "output": "../docs/deployment-ui-completion/notification-regression/shared-regression/missing-page/after"
+    }
+  ]
+}

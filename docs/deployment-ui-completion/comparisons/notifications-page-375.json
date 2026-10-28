@@ -1,0 +1,41 @@
+{
+  "legend": "Before left, after right; light above dark. Original pixels, first 1000px of tall captures. Full source captures retained.",
+  "sources": [
+    {
+      "theme": "light",
+      "stage": "before",
+      "path": "notification-clearance/before/light-375-page.png",
+      "sha256": "e0487266cf3044eb69c3fb63942c6fc9737ca7a41a00a4112d9d6d9aea00654b",
+      "width": 375,
+      "height": 844,
+      "croppedHeight": 844
+    },
+    {
+      "theme": "light",
+      "stage": "after",
+      "path": "notification-clearance/after/light-375-page.png",
+      "sha256": "c71e36e41e91e29ecffa0e92c62d5aa1a9dcd3d2cf4d48477f45856275b135a4",
+      "width": 375,
+      "height": 844,
+      "croppedHeight": 844
+    },
+    {
+      "theme": "dark",
+      "stage": "before",
+      "path": "notification-clearance/before/dark-375-page.png",
+      "sha256": "25d8d71296f23cf916474363020fe7dd44e7939b4a0e9d08a8b4de57a8197052",
+      "width": 375,
+      "height": 844,
+      "croppedHeight": 844
+    },
+    {
+      "theme": "dark",
+      "stage": "after",
+      "path": "notification-clearance/after/dark-375-page.png",
+      "sha256": "93a30cd8e4b13d2c92bc4b3946da4b1b4b59a33610dc80d5b12f2132c435deeb",
+      "width": 375,
+      "height": 844,
+      "croppedHeight": 844
+    }
+  ]
+}

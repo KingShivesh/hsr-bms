@@ -1,0 +1,39 @@
+{
+  "generatedAt": "2026-10-28T15:58:35.621Z",
+  "appUrl": "http://127.0.0.1:5181",
+  "apiUrl": "http://127.0.0.1:8006",
+  "routes": [
+    "/",
+    "/login",
+    "/dashboard",
+    "/live-floor",
+    "/inventory",
+    "/bookings",
+    "/customers",
+    "/sales",
+    "/analytics",
+    "/cafe-pos",
+    "/waitlist",
+    "/legacy-table-controls",
+    "/tournaments",
+    "/daily-closing",
+    "/pricing-rules",
+    "/audit-log",
+    "/settings",
+    "/help",
+    "/status",
+    "/changelog",
+    "/demo"
+  ],
+  "dynamicStatesIncluded": [
+    "default (including login)",
+    "login error and filled fields",
+    "notification popover",
+    "command palette",
+    "first safe action"
+  ],
+  "method": "Pilot minimum 4.5:1 for every rendered text sample, including large text and disabled controls; composited opacity and rendered gradient backgrounds",
+  "violations": [],
+  "errors": [],
+  "strictPilot": true
+}
