@@ -1,0 +1,41 @@
+{
+  "legend": "Before left, after right; light above dark. Original pixels, first 1000px of tall captures. Full source captures retained.",
+  "sources": [
+    {
+      "theme": "light",
+      "stage": "before",
+      "path": "daily-closing/before/light-1440-default.png",
+      "sha256": "a72fa086ec48f24b1c901aa741afc78787ec8c131e72168a6cc33194479d5105",
+      "width": 1440,
+      "height": 1916,
+      "croppedHeight": 1000
+    },
+    {
+      "theme": "light",
+      "stage": "after",
+      "path": "daily-closing/after/light-1440-default.png",
+      "sha256": "991ff38cd42b58228edde4e222437043eb74f30279a471d07905bb829a94da87",
+      "width": 1440,
+      "height": 1964,
+      "croppedHeight": 1000
+    },
+    {
+      "theme": "dark",
+      "stage": "before",
+      "path": "daily-closing/before/dark-1440-default.png",
+      "sha256": "1e735114a4cd6af9795e7f928c0e477862cc8750c69bfb2dc81e136a17ca6c8f",
+      "width": 1440,
+      "height": 1916,
+      "croppedHeight": 1000
+    },
+    {
+      "theme": "dark",
+      "stage": "after",
+      "path": "daily-closing/after/dark-1440-default.png",
+      "sha256": "68175997353f530e8810b4407a9c10ab57fa34e6686e499c1bcd1ca81fd77234",
+      "width": 1440,
+      "height": 1964,
+      "croppedHeight": 1000
+    }
+  ]
+}

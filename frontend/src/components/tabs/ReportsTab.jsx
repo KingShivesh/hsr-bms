@@ -15,7 +15,7 @@ import {
   getAdvancedAnalytics,
 } from "../../api/index.js";
 import { CSV_PREFIX } from "../../config/hsrTables.js";
-import { MetricCard } from "../ui/index.js";
+import { MetricCard, EmptyState } from "../ui/index.js";
 import { useToast } from "../toastContext.js";
 import RetryNotice from "../RetryNotice.jsx";
 import Pagination from "../ui/Pagination.jsx";
@@ -109,19 +109,6 @@ function StatCard({ label, value, color, context, empty = false }) {
   );
 }
 
-function EmptyState({ icon = "ti-chart-bar", title, detail, action }) {
-  return (
-    <div className="empty-state">
-      <div className="empty-state-icon">
-        <HsrIcon className={`ti ${icon}`} aria-hidden="true" />
-      </div>
-      <div className="empty-state-title">{title}</div>
-      {detail && <div className="empty-state-detail">{detail}</div>}
-      {action}
-    </div>
-  );
-}
-
 function LoadingState({ title = "Loading report..." }) {
   return (
     <div className="page-skeleton compact" role="status" aria-live="polite" aria-label={title}>
@@ -135,58 +122,6 @@ function LoadingState({ title = "Loading report..." }) {
         <div className="skeleton-card" />
       </div>
       <div className="skeleton-panel" />
-    </div>
-  );
-}
-
-function ReportEmptyTable({ title, detail, columns, rows = 4 }) {
-  return (
-    <div className="report-empty-panel" role="status">
-      <div className="report-empty-head">
-        <div>
-          <span>No data in range</span>
-          <strong>{title}</strong>
-        </div>
-        <HsrIcon className="ti ti-chart-dots" aria-hidden="true" />
-      </div>
-      <p>{detail}</p>
-      <div className="report-empty-table" aria-hidden="true">
-        <div className="report-empty-row report-empty-row-head">
-          {columns.map((column) => (
-            <span key={column}>{column}</span>
-          ))}
-        </div>
-        {Array.from({ length: rows }).map((_, index) => (
-          <div className="report-empty-row" key={index}>
-            {columns.map((column, columnIndex) => (
-              <span key={`${column}-${index}`} className={columnIndex === 0 ? "label" : ""} />
-            ))}
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-function ReportEmptyList({ title, detail, rows }) {
-  return (
-    <div className="report-empty-panel compact" role="status">
-      <div className="report-empty-head">
-        <div>
-          <span>No traffic pattern yet</span>
-          <strong>{title}</strong>
-        </div>
-        <HsrIcon className="ti ti-clock-hour-4" aria-hidden="true" />
-      </div>
-      <p>{detail}</p>
-      <div className="report-empty-list" aria-hidden="true">
-        {rows.map((row) => (
-          <div className="report-empty-list-row" key={row}>
-            <span>{row}</span>
-            <em>No sessions</em>
-          </div>
-        ))}
-      </div>
     </div>
   );
 }
@@ -313,7 +248,7 @@ function HistoryView({ history, period, onPeriodChange, selectedDate, onDateChan
                   <EmptyState
                     icon="ti-receipt"
                     title="No transactions found"
-                    detail="Try a different period or search term."
+                    description="Try a different period or search term."
                     action={(search || period !== "all") && <HsrButton variant="secondary" icon="ti-filter-off" onClick={() => { setSearch(""); onDateChange(""); onPeriodChange("all"); }}>Clear filters</HsrButton>}
                   />
                 </td>
@@ -414,7 +349,7 @@ function TopCustomersView() {
         <EmptyState
           icon="ti-users"
           title="No customer data yet"
-          detail="Customer rankings will appear once sessions are completed."
+          description="Customer rankings will appear once sessions are completed."
           action={<HsrButton variant="secondary" icon="ti-refresh" onClick={() => setRetry(value => value + 1)}>Refresh</HsrButton>}
         />
       ) : (
@@ -483,7 +418,7 @@ function UtilizationView() {
 
   if (loading) return <LoadingState title="Loading table performance..." />;
   if (error) return <RetryNotice message={error} onRetry={() => setRetry(value => value + 1)} />;
-  if (data.length === 0) return <EmptyState title="No table performance data" detail="No table sessions are available in this report." action={<HsrButton variant="secondary" icon="ti-refresh" onClick={() => setRetry(value => value + 1)}>Refresh</HsrButton>} />;
+  if (data.length === 0) return <EmptyState title="No table performance data" description="No table sessions are available in this report." action={<HsrButton variant="secondary" icon="ti-refresh" onClick={() => setRetry(value => value + 1)}>Refresh</HsrButton>} />;
 
   const maxRevenue = Math.max(...data.map((d) => numberOrZero(d.revenue)), 1);
 
@@ -609,7 +544,7 @@ function ClosingReportView({ onNavigate }) {
       <EmptyState
         icon="ti-clipboard-text"
         title="No closing report data"
-        detail="Run sessions today and the closing report will populate."
+        description="Run sessions today and the closing report will populate."
       />
     );
 
@@ -772,7 +707,7 @@ function ClosingReportView({ onNavigate }) {
         <EmptyState
           icon="ti-clock-hour-4"
           title="No sessions recorded today"
-          detail="Today's table sessions will appear in this closing report."
+          description="Today's table sessions will appear in this closing report."
         />
       )}
     </div>
@@ -865,7 +800,7 @@ function AuditLogView() {
                 <EmptyState
                   icon="ti-shield-check"
                   title="No audit events yet"
-                  detail="Sensitive actions and anti-leakage events will be tracked here."
+                  description="Sensitive actions and anti-leakage events will be tracked here."
                 />
               </td>
             </tr>
@@ -952,11 +887,11 @@ function AdvancedAnalyticsView() {
         <div className="history-section">
           <div className="section-heading">Table profitability</div>
           {tableProfitability.length === 0 ? (
-            <ReportEmptyTable
-              title="Table profitability is ready"
-              detail="Close table sessions in this range and the report will fill the same columns instead of showing a blank gap."
-              columns={["Table", "Sessions", "Revenue", "Avg Duration", "Revenue / Session"]}
-              rows={5}
+            <EmptyState
+              icon="ti-chart-bar"
+              title="No table profitability data yet"
+              description="Completed sessions provide revenue and duration comparisons for each table."
+              action={<HsrButton icon="ti-refresh" onClick={() => setRetry(value => value + 1)}>Refresh analytics</HsrButton>}
             />
           ) : (
             <HsrTable className="data-table">
@@ -987,10 +922,11 @@ function AdvancedAnalyticsView() {
         <div className="history-section">
           <div className="section-heading">Quiet hours</div>
           {!hasQuietHourSignals ? (
-            <ReportEmptyList
-              title="Quiet-hour analysis is waiting"
-              detail="Once checkout history exists, this panel ranks the lower-traffic slots instead of leaving the card visually empty."
-              rows={["Opening block", "Midday block", "Closing block"]}
+            <EmptyState
+              icon="ti-clock"
+              title="No quiet-hour pattern yet"
+              description="Completed sessions reveal which hours have lower table traffic."
+              action={<HsrButton icon="ti-refresh" onClick={() => setRetry(value => value + 1)}>Refresh analytics</HsrButton>}
             />
           ) : (
             <>

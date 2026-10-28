@@ -8,6 +8,13 @@ const groups = {
   default: routes.map(route => ({ route, states: "default" })),
   core: ["/live-floor", "/customers", "/bookings", "/cafe-pos", "/sales", "/analytics", "/settings"].map(route => ({ route })),
   "cafe-tabs": [{ route: "/cafe-pos", tab: "Food Stats", key: "cafe-stats", data: "^/food/stats$" }, { route: "/cafe-pos", tab: "Order History", key: "cafe-history", data: "^/food/orders$" }],
+  finance: ["/sales", "/analytics", "/daily-closing"].map(route => ({ route })),
+  "report-tabs": [
+    { route: "/analytics", key: "reports-tables", reportTab: "tables", data: "^/reports/table-utilization$" },
+    { route: "/analytics", key: "reports-customers", reportTab: "customers", data: "^/reports/top-customers$" },
+    { route: "/analytics", key: "reports-advanced", reportTab: "advanced", data: "^/reports/advanced-analytics$" },
+    { route: "/analytics", key: "reports-session-edits", reportTab: "session-edits", data: "^/reports/session-edits$" },
+  ],
 };
 if (!groups[group]) throw new Error("Unknown deployment matrix group");
 const root = process.env.UI_OUTPUT_ROOT || "../docs/deployment-ui-completion";
@@ -18,9 +25,11 @@ for (const row of groups[group]) {
   const env = { ...process.env, UI_OUTPUT_DIR: `${root}/${group === "default" ? "shared-regression/" : ""}${key}/${stage}`, UI_WIDTHS: "375,768,1024,1440", UI_STRICT_PILOT: "true" };
   if (row.states) env.UI_STATES = row.states; else delete env.UI_STATES;
   if (row.tab) env.UI_TAB = row.tab; else delete env.UI_TAB;
+  if (row.reportTab) env.UI_REPORT_TAB = row.reportTab; else delete env.UI_REPORT_TAB;
   if (row.data) env.UI_DATA_PATH = row.data; else delete env.UI_DATA_PATH;
   const result = spawnSync(process.execPath, ["scripts/scan-ui-readiness.mjs", row.route, stage], { env, encoding: "utf8", maxBuffer: 16 * 1024 * 1024 });
-  await fs.writeFile(`${env.UI_OUTPUT_DIR}/run.log`, (result.stdout || "") + (result.stderr || ""));
+  const log = ((result.stdout || "") + (result.stderr || "")).replace(/Bearer [\w.-]+/g, "Bearer [redacted QA token]");
+  await fs.writeFile(`${env.UI_OUTPUT_DIR}/run.log`, log);
   report.results.push({ ...row, status: result.status, error: result.error?.message, output: env.UI_OUTPUT_DIR });
   console.log(JSON.stringify(report.results.at(-1)));
 }

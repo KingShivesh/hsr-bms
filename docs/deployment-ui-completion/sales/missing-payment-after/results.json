@@ -1,0 +1,369 @@
+{
+  "route": "/sales",
+  "stage": "after",
+  "username": "admin",
+  "samples": [
+    {
+      "theme": "dark",
+      "width": 375,
+      "state": "missing-payment",
+      "file": "dark-375-missing-payment.png",
+      "tabSelected": true,
+      "paymentSummary": {
+        "values": {
+          "Total sales": "₹500",
+          "Table revenue": "₹320",
+          "Food revenue": "₹180",
+          "Cash": "₹0",
+          "UPI": "₹0",
+          "Card": "₹0",
+          "Credit": "₹0"
+        },
+        "unspecifiedWarning": true
+      },
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "smallText": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".op2-table-booking-card": 0,
+        ".sales-table tbody tr": 1,
+        ".lf-table-card": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "loadingIndicator": true,
+      "settled": true,
+      "contrast": [],
+      "contrastScope": "all rendered page text",
+      "retry": true,
+      "errors": []
+    },
+    {
+      "theme": "dark",
+      "width": 768,
+      "state": "missing-payment",
+      "file": "dark-768-missing-payment.png",
+      "tabSelected": true,
+      "paymentSummary": {
+        "values": {
+          "Total sales": "₹500",
+          "Table revenue": "₹320",
+          "Food revenue": "₹180",
+          "Cash": "₹0",
+          "UPI": "₹0",
+          "Card": "₹0",
+          "Credit": "₹0"
+        },
+        "unspecifiedWarning": true
+      },
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "smallText": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".op2-table-booking-card": 0,
+        ".sales-table tbody tr": 1,
+        ".lf-table-card": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "loadingIndicator": true,
+      "settled": true,
+      "contrast": [],
+      "contrastScope": "all rendered page text",
+      "retry": true,
+      "errors": []
+    },
+    {
+      "theme": "dark",
+      "width": 1024,
+      "state": "missing-payment",
+      "file": "dark-1024-missing-payment.png",
+      "tabSelected": true,
+      "paymentSummary": {
+        "values": {
+          "Total sales": "₹500",
+          "Table revenue": "₹320",
+          "Food revenue": "₹180",
+          "Cash": "₹0",
+          "UPI": "₹0",
+          "Card": "₹0",
+          "Credit": "₹0"
+        },
+        "unspecifiedWarning": true
+      },
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "smallText": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".op2-table-booking-card": 0,
+        ".sales-table tbody tr": 1,
+        ".lf-table-card": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "loadingIndicator": true,
+      "settled": true,
+      "contrast": [],
+      "contrastScope": "all rendered page text",
+      "retry": true,
+      "errors": []
+    },
+    {
+      "theme": "dark",
+      "width": 1440,
+      "state": "missing-payment",
+      "file": "dark-1440-missing-payment.png",
+      "tabSelected": true,
+      "paymentSummary": {
+        "values": {
+          "Total sales": "₹500",
+          "Table revenue": "₹320",
+          "Food revenue": "₹180",
+          "Cash": "₹0",
+          "UPI": "₹0",
+          "Card": "₹0",
+          "Credit": "₹0"
+        },
+        "unspecifiedWarning": true
+      },
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "smallText": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".op2-table-booking-card": 0,
+        ".sales-table tbody tr": 1,
+        ".lf-table-card": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#00ff7f",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "loadingIndicator": true,
+      "settled": true,
+      "contrast": [],
+      "contrastScope": "all rendered page text",
+      "retry": true,
+      "errors": []
+    },
+    {
+      "theme": "light",
+      "width": 375,
+      "state": "missing-payment",
+      "file": "light-375-missing-payment.png",
+      "tabSelected": true,
+      "paymentSummary": {
+        "values": {
+          "Total sales": "₹500",
+          "Table revenue": "₹320",
+          "Food revenue": "₹180",
+          "Cash": "₹0",
+          "UPI": "₹0",
+          "Card": "₹0",
+          "Credit": "₹0"
+        },
+        "unspecifiedWarning": true
+      },
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "smallText": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".op2-table-booking-card": 0,
+        ".sales-table tbody tr": 1,
+        ".lf-table-card": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "loadingIndicator": true,
+      "settled": true,
+      "contrast": [],
+      "contrastScope": "all rendered page text",
+      "retry": true,
+      "errors": []
+    },
+    {
+      "theme": "light",
+      "width": 768,
+      "state": "missing-payment",
+      "file": "light-768-missing-payment.png",
+      "tabSelected": true,
+      "paymentSummary": {
+        "values": {
+          "Total sales": "₹500",
+          "Table revenue": "₹320",
+          "Food revenue": "₹180",
+          "Cash": "₹0",
+          "UPI": "₹0",
+          "Card": "₹0",
+          "Credit": "₹0"
+        },
+        "unspecifiedWarning": true
+      },
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "smallText": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".op2-table-booking-card": 0,
+        ".sales-table tbody tr": 1,
+        ".lf-table-card": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "loadingIndicator": true,
+      "settled": true,
+      "contrast": [],
+      "contrastScope": "all rendered page text",
+      "retry": true,
+      "errors": []
+    },
+    {
+      "theme": "light",
+      "width": 1024,
+      "state": "missing-payment",
+      "file": "light-1024-missing-payment.png",
+      "tabSelected": true,
+      "paymentSummary": {
+        "values": {
+          "Total sales": "₹500",
+          "Table revenue": "₹320",
+          "Food revenue": "₹180",
+          "Cash": "₹0",
+          "UPI": "₹0",
+          "Card": "₹0",
+          "Credit": "₹0"
+        },
+        "unspecifiedWarning": true
+      },
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "smallText": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".op2-table-booking-card": 0,
+        ".sales-table tbody tr": 1,
+        ".lf-table-card": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "loadingIndicator": true,
+      "settled": true,
+      "contrast": [],
+      "contrastScope": "all rendered page text",
+      "retry": true,
+      "errors": []
+    },
+    {
+      "theme": "light",
+      "width": 1440,
+      "state": "missing-payment",
+      "file": "light-1440-missing-payment.png",
+      "tabSelected": true,
+      "paymentSummary": {
+        "values": {
+          "Total sales": "₹500",
+          "Table revenue": "₹320",
+          "Food revenue": "₹180",
+          "Cash": "₹0",
+          "UPI": "₹0",
+          "Card": "₹0",
+          "Credit": "₹0"
+        },
+        "unspecifiedWarning": true
+      },
+      "applicationCrashed": false,
+      "overflow": 0,
+      "shortTargets": [],
+      "clipped": [],
+      "smallText": [],
+      "brokenImages": [],
+      "invalidCopy": [],
+      "unlabeledButtons": [],
+      "unlabeledInputs": [],
+      "collectionSizes": {
+        ".op2-customer-card": 0,
+        ".op2-table-booking-card": 0,
+        ".sales-table tbody tr": 1,
+        ".lf-table-card": 0
+      },
+      "contentOverflow": [],
+      "palette": {
+        "accent": "#006b3c",
+        "font": "\"Syne Variable\", Syne, sans-serif"
+      },
+      "loadingIndicator": true,
+      "settled": true,
+      "contrast": [],
+      "contrastScope": "all rendered page text",
+      "retry": true,
+      "errors": []
+    }
+  ],
+  "errors": [],
+  "productionWrites": 0
+}

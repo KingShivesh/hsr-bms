@@ -5,21 +5,13 @@ import { closeDay, getClosingInsights, getClosingReport } from "../../api/index.
 import { useToast } from "../toastContext.js";
 import { useConfirm } from "../confirmContext.js";
 import RetryNotice from "../RetryNotice.jsx";
-import { Button } from "../ui/index.js";
+import { Button, MetricCard } from "../ui/index.js";
 
 function money(value) { return polishCurrency(value); }
 const clippedText = { minWidth: 0, maxWidth: "100%", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" };
 
 function ClosingMetric({ label, value, icon, tone = "neutral" }) {
-  return (
-    <div className={`closing-metric ${tone}`}>
-      <HsrIcon className={`ti ${icon}`} aria-hidden="true" />
-      <div style={{ minWidth: 0 }}>
-        <span>{label}</span>
-        <strong title={String(value ?? "")} style={{ ...clippedText, display: "block" }}>{value}</strong>
-      </div>
-    </div>
-  );
+  return <MetricCard variant="inline" className={`closing-metric ${tone}`} label={label} value={value} icon={icon} />;
 }
 
 function ChecklistRow({ ok, label, detail }) {

@@ -103,7 +103,7 @@ b, strong { font-weight: 500; }
 .ui-metric-value[data-dense="true"], .ui-metric-card strong[data-dense="true"] { font-size: var(--text-lg) !important; line-height: var(--leading-lg) !important; white-space: nowrap; }
 .checkout-total-card > div { min-width: 0; }
 .checkout-total-card { flex-wrap: wrap; }
-.sales-receipt-trigger { display: block; border: 0; padding-inline: 0; background: transparent; color: var(--text-primary); }
+.sales-receipt-trigger { display: inline-flex; }
 .sales-customer-cell { max-width: 240px; overflow: hidden; text-overflow: ellipsis; }
 .op2-customer-main > div { flex: 1; }
 .op2-customer-card { min-width: 0; grid-template-columns: minmax(0, 1fr); }

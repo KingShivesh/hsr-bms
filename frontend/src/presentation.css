@@ -22,6 +22,9 @@ h3 { font-size: var(--text-lg); line-height: var(--leading-lg); font-weight: 500
 .ui-card, .ui-panel, .ui-metric-card { border: 1px solid var(--border-default); border-radius: var(--radius-md); padding: var(--space-5); box-shadow: none !important; }
 .ui-card.ui-card-accent { background: linear-gradient(135deg, var(--accent-soft), var(--surface)) !important; border-color: var(--accent-border) !important; }
 .ui-metric-card-compact { min-height: 88px; }
+.ui-metric-card-inline { display: flex; align-items: center; gap: var(--space-3); min-height: 88px; }
+.ui-metric-inline-copy { min-width: 0; flex: 1; }
+.ui-metric-inline-copy > strong { margin-top: var(--space-1); max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .ui-metric-card-compact > strong { margin-top: var(--space-2); font-size: var(--text-lg); line-height: var(--leading-lg); }
 .ui-card.is-interactive { transition: border-color 80ms var(--ease-out), transform 120ms var(--ease-out); }
 .ui-card.is-interactive:hover { border-color: var(--border-strong); transform: translateY(-1px); }

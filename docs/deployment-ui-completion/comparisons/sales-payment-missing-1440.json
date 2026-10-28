@@ -1,0 +1,41 @@
+{
+  "legend": "Before left, after right; light above dark. Original pixels, first 1000px of tall captures. Full source captures retained.",
+  "sources": [
+    {
+      "theme": "light",
+      "stage": "before",
+      "path": "sales/missing-payment-before/light-1440-missing-payment.png",
+      "sha256": "089fd51babf33144307700d65025a6b3cad7b9996a309e60835ef76d5842641a",
+      "width": 1440,
+      "height": 1057,
+      "croppedHeight": 1000
+    },
+    {
+      "theme": "light",
+      "stage": "after",
+      "path": "sales/missing-payment-after/light-1440-missing-payment.png",
+      "sha256": "de512d4afaf53c685939d257282d66323ab64a028e6176ab5e9c2b18fbddeb6c",
+      "width": 1440,
+      "height": 1241,
+      "croppedHeight": 1000
+    },
+    {
+      "theme": "dark",
+      "stage": "before",
+      "path": "sales/missing-payment-before/dark-1440-missing-payment.png",
+      "sha256": "00a3bd6be248b7442ebe10845487db5ac626b122a1249c436359f3625f5da1a4",
+      "width": 1440,
+      "height": 1057,
+      "croppedHeight": 1000
+    },
+    {
+      "theme": "dark",
+      "stage": "after",
+      "path": "sales/missing-payment-after/dark-1440-missing-payment.png",
+      "sha256": "ed3a34a3860f19e56d3e318934ca9b181cdb23b8e1d02f7f41a8f8c792447d82",
+      "width": 1440,
+      "height": 1241,
+      "croppedHeight": 1000
+    }
+  ]
+}

@@ -19,6 +19,17 @@ export function MetricValue({ children, as = "strong", className = "", ...props 
 }
 
 export function MetricCard({ label, value, context, icon, delta, className = "", style, variant = "default", children }) {
+  if (variant === "inline") return (
+    <Card as="article" className={["ui-metric-card", "ui-metric-card-inline", className].filter(Boolean).join(" ")} style={style}>
+      {icon && <HsrIcon className={`ti ${icon}`} aria-hidden="true" />}
+      <div className="ui-metric-inline-copy">
+        <span>{label}</span>
+        <MetricValue title={String(value ?? "")}>{value}</MetricValue>
+        {context && <p>{context}</p>}
+      </div>
+      {children}
+    </Card>
+  );
   const comparison = delta && <small className={`ui-metric-delta ${delta.tone || "neutral"}`}>
     {delta.icon && <HsrIcon className={`ti ${delta.icon}`} aria-hidden="true" />}<span className="ui-metric-delta-label" title={delta.label}>{delta.label}</span>
   </small>;

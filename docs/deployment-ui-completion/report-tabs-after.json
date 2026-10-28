@@ -1,0 +1,45 @@
+{
+  "group": "report-tabs",
+  "stage": "after",
+  "widths": [
+    375,
+    768,
+    1024,
+    1440
+  ],
+  "strictPilot": true,
+  "results": [
+    {
+      "route": "/analytics",
+      "key": "reports-tables",
+      "reportTab": "tables",
+      "data": "^/reports/table-utilization$",
+      "status": 0,
+      "output": "../docs/deployment-ui-completion/reports-tables/after"
+    },
+    {
+      "route": "/analytics",
+      "key": "reports-customers",
+      "reportTab": "customers",
+      "data": "^/reports/top-customers$",
+      "status": 0,
+      "output": "../docs/deployment-ui-completion/reports-customers/after"
+    },
+    {
+      "route": "/analytics",
+      "key": "reports-advanced",
+      "reportTab": "advanced",
+      "data": "^/reports/advanced-analytics$",
+      "status": 0,
+      "output": "../docs/deployment-ui-completion/reports-advanced/after"
+    },
+    {
+      "route": "/analytics",
+      "key": "reports-session-edits",
+      "reportTab": "session-edits",
+      "data": "^/reports/session-edits$",
+      "status": 0,
+      "output": "../docs/deployment-ui-completion/reports-session-edits/after"
+    }
+  ]
+}

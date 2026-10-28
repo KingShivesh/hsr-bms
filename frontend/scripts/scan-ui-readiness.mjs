@@ -14,7 +14,7 @@ const domains = {
   "/dashboard": /^\/reports\/dashboard$/, "/live-floor": /^\/sessions\/live-floor$/,
   "/customers": /^\/members(?:\/duplicates)?\/?$/, "/bookings": /^\/(bookings|sessions\/tables)$/,
   "/cafe-pos": /^\/(settings\/menu|sessions\/live-floor|food\/(orders|stats))$/,
-  "/sales": /^\/reports\/history$/, "/analytics": /^\/reports\/(summary|history|analytics)$/,
+  "/sales": /^\/(reports\/history|food\/orders)$/, "/analytics": /^\/reports\/(summary|history|analytics)$/,
   "/inventory": /^\/(settings\/menu|sessions\/tables)$/,
   "/waitlist": /^\/(waitlist|bookings|sessions\/tables)$/,
   "/legacy-table-controls": /^\/(sessions\/(active|tables|live-floor|maintenance)|waitlist|bookings|settings\/rates|operations\/(gst|current-rate))$/,
@@ -50,7 +50,8 @@ const bookingFixture = {id:99001,customer_name:"QA Booking",phone:"9000000000",t
 const billFixture = {id:99001,nm:"QA Customer",tbl:"T1",ts:Date.now(),date:new Intl.DateTimeFormat("en-GB",{timeZone:"Asia/Kolkata",day:"2-digit",month:"2-digit",year:"numeric"}).format(new Date()),dur:60,ply:320,famt:120,tot:440,payment_method:"Cash",tariff_mode:"hourly"};
 function fixture(data, pathname, state) {
   pathname = pathname.replace(/\/$/, "");
-  if (state === "partial" && process.env.UI_PARTIAL_NULL_ROWS === "true" && Array.isArray(data) && ["/members", "/members/duplicates", "/bookings", "/food/orders", "/food/stats"].includes(pathname)) return [null, ...fixture(data, pathname, "default")];
+  if (state === "partial" && process.env.UI_PARTIAL_NULL_ROWS === "true" && Array.isArray(data) && ["/members", "/members/duplicates", "/bookings", "/food/orders", "/food/stats", "/reports/history"].includes(pathname)) return [null, ...fixture(data, pathname, "default")];
+  if (state === "missing-payment" && Array.isArray(data) && ["/reports/history", "/food/orders"].includes(pathname)) return fixture(data, pathname, "default").map(row => ({ ...row, payment_method: null }));
   if (pathname === "/sessions/live-floor" && state === "table-states") {
     const template = data.tables.find(table => table.session).session;
     const states = ["running", "paused", "available", "reserved", "maintenance"];
@@ -72,6 +73,8 @@ function fixture(data, pathname, state) {
   if(pathname === "/operations/audit-logs" && state === "partial") return [{id:99001,ts:null,date:null,staff:null,action:null,detail:null}];
   if(pathname === "/reports/top-customers") return {...data,customers:[{name:"QA Regular",visits:12,play:3200,food:400,spent:3600}]};
   if (!Array.isArray(data)) return data;
+  if (pathname === "/reports/session-edits" && state === "extreme") return Array.from({ length: 1000 }, (_, i) => ({ ...fixture(data, pathname, "default")[0], id: 99001 + i }));
+  if (pathname === "/reports/session-edits" && !data.length) return [{ id: 99001, date: "22/10/2026", table: "T1", staff: "QA Staff", original_duration: 60, new_duration: 59, reason_label: "Started too early", category: "correction", notes: "QA read fixture", delta: -5 }];
   if (["/food/orders", "/food/stats"].includes(pathname) && state === "extreme") return Array.from({ length: pathname === "/food/orders" ? 1000 : 60 }, (_, i) => ({ ...fixture(data, pathname, "default")[0], id: 99001 + i }));
   if (pathname === "/bookings" && !data.length) return [bookingFixture];
   if (pathname === "/reports/history" && state === "extreme") return Array.from({length:1000},(_,i)=>({...billFixture,id:99001+i}));
@@ -104,7 +107,7 @@ try {
         if (state === "error") return handler.fulfill({ status: 500, json: {detail:"QA simulated service failure"} });
         if (state === "default") return handler.continue();
         const response = await handler.fetch(), data = await response.json();
-        const payload = state === "empty" ? pathname === "/settings/menu" ? {} : empty(data) : state === "table-states" ? fixture(data,pathname,state) : state === "extreme" ? extreme(fixture(data,pathname,state)) : partial(fixture(data,pathname,state));
+        const payload = state === "empty" ? pathname === "/settings/menu" ? {} : empty(data) : ["table-states", "missing-payment"].includes(state) ? fixture(data,pathname,state) : state === "extreme" ? extreme(fixture(data,pathname,state)) : partial(fixture(data,pathname,state));
         return handler.fulfill({ response, json: payload });
       });
       await page.goto(origin + route, {waitUntil:"domcontentloaded"});
@@ -128,10 +131,14 @@ try {
           await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
         });
         const metrics = await page.evaluate(measureUi, { minimumTextSize: strict ? 12 : 0 });
+        const paymentSummary = route === "/sales" ? await page.evaluate(() => ({
+          values: Object.fromEntries([...document.querySelectorAll(".sales-metrics > *")].map(node => [node.querySelector("span")?.textContent, node.querySelector("strong")?.textContent])),
+          unspecifiedWarning: document.body.textContent.includes("Some payment methods are unspecified"),
+        })) : undefined;
         const viewportOnly = await page.evaluate(()=>document.documentElement.scrollHeight >= 16000);
         const contrast = await scanRenderedContrast(page,{route,theme,state,viewportOnly,...(strict ? { minimumContrast: 4.5, includeDisabled: true } : {})});
         const file = `${theme}-${width}-${state}.png`;
-        const fullPage = ["default","extreme","table-states"].includes(state) && await page.evaluate(()=>document.documentElement.scrollHeight < 16000);
+        const fullPage = ["default","extreme","table-states","missing-payment"].includes(state) && await page.evaluate(()=>document.documentElement.scrollHeight < 16000);
         await page.screenshot({path:`${output}/${file}`,animations:"disabled",fullPage});
         if (state === "table-states") {
           for (const card of await page.locator(".lf-table-card").all()) {
@@ -141,7 +148,7 @@ try {
         }
         const noRequestNeeded = route === "/settings?section=billing" && stage === "after";
         const retry = state === "error" && !noRequestNeeded ? await page.getByRole("button",{name:/retry|try again|check again/i}).count() > 0 : true;
-        report.samples.push({theme,width,state,file,requestedTab:process.env.UI_TAB,tabSelected,...metrics,loadingIndicator,settled,contrast,contrastScope:viewportOnly?"visible viewport only; unpaginated baseline":"all rendered page text",retry,errors:[...errors]});
+        report.samples.push({theme,width,state,file,requestedTab:process.env.UI_TAB,tabSelected,paymentSummary,...metrics,loadingIndicator,settled,contrast,contrastScope:viewportOnly?"visible viewport only; unpaginated baseline":"all rendered page text",retry,errors:[...errors]});
       }
       release(); await page.unrouteAll({ behavior: "wait" }); errors=[];
       console.log(`${stage} ${route} ${theme} ${state}`);
@@ -157,4 +164,5 @@ if (stage === "after") {
   if (process.env.UI_PARTIAL_NULL_ROWS === "true" && route === "/live-floor") assert.ok(report.samples.every(row => row.collectionSizes[".lf-table-card"] === 5));
   if (process.env.UI_UNKNOWN_FLOOR_STATUS === "true") assert.ok(report.samples.every(row => row.collectionSizes[".lf-table-card"] === 0));
   if (route === "/bookings" && !process.env.UI_DATA_PATH) assert.ok(report.samples.filter(row => ["empty", "error"].includes(row.state)).every(row => row.collectionSizes[".op2-table-booking-card"] === 0), "Unknown availability must not render available table cards");
+  if (route === "/sales") assert.ok(report.samples.filter(row => row.state === "missing-payment").every(row => row.paymentSummary.unspecifiedWarning && Number(row.paymentSummary.values.Cash?.replace(/[^\d.-]/g, "")) === 0), "Missing payment methods must not be reported as Cash");
 }

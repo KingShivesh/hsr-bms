@@ -1,0 +1,490 @@
+{
+  "stage": "before",
+  "cases": [
+    {
+      "route": "sales",
+      "theme": "light",
+      "width": 375,
+      "receiptAction": {
+        "border": "0px",
+        "icon": false
+      },
+      "error": "locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('.sales-receipt-trigger').first()\u001b[22m\n\u001b[2m    - locator resolved to <button aria-label=\"Open receipt 99001\" data-tooltip=\"Open receipt 99001\" class=\"ui-button ui-button-native ui-button-md sales-receipt-trigger\">#99001</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m    - element is visible, enabled and stable\u001b[22m\n\u001b[2m    - scrolling into view if needed\u001b[22m\n\u001b[2m    - done scrolling\u001b[22m\n\u001b[2m    - <span class=\"app-toast-message\">T2 — 1260 min played · ₹3,840 accrued</span> from <div aria-live=\"polite\" class=\"app-toast-container app-session-alert-container\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m  - retrying click action\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m    - element is visible, enabled and stable\u001b[22m\n\u001b[2m    - scrolling into view if needed\u001b[22m\n\u001b[2m    - done scrolling\u001b[22m\n\u001b[2m    - <div class=\"app-toast app-toast-warning is-exiting\">…</div> from <div aria-live=\"polite\" class=\"app-toast-container app-session-alert-container\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m  - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m    - element is visible, enabled and stable\u001b[22m\n\u001b[2m    - scrolling into view if needed\u001b[22m\n\u001b[2m    - done scrolling\u001b[22m\n\u001b[2m    - <div class=\"app-toast app-toast-warning \">…</div> from <div aria-live=\"polite\" class=\"app-toast-container app-session-alert-container\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m  2 × retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m      - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <button type=\"button\" aria-label=\"Dismiss\" class=\"ui-button ui-button-native ui-button-md app-toast-action\">Dismiss</button> from <div aria-live=\"polite\" class=\"app-toast-container app-session-alert-container\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m  14 × retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n\u001b[2m       - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is visible, enabled and stable\u001b[22m\n\u001b[2m       - scrolling into view if needed\u001b[22m\n\u001b[2m       - done scrolling\u001b[22m\n\u001b[2m       - <div class=\"app-toast app-toast-warning \">…</div> from <div aria-live=\"polite\" class=\"app-toast-container app-session-alert-container\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m     - retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n\u001b[2m       - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is visible, enabled and stable\u001b[22m\n\u001b[2m       - scrolling into view if needed\u001b[22m\n\u001b[2m       - done scrolling\u001b[22m\n\u001b[2m       - <div class=\"app-toast app-toast-warning \">…</div> from <div aria-live=\"polite\" class=\"app-toast-container app-session-alert-container\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m     - retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n\u001b[2m       - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is visible, enabled and stable\u001b[22m\n\u001b[2m       - scrolling into view if needed\u001b[22m\n\u001b[2m       - done scrolling\u001b[22m\n\u001b[2m       - <button type=\"button\" aria-label=\"Dismiss\" class=\"ui-button ui-button-native ui-button-md app-toast-action\">Dismiss</button> from <div aria-live=\"polite\" class=\"app-toast-container app-session-alert-container\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m     - retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n\u001b[2m       - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is visible, enabled and stable\u001b[22m\n\u001b[2m       - scrolling into view if needed\u001b[22m\n\u001b[2m       - done scrolling\u001b[22m\n\u001b[2m       - <button type=\"button\" aria-label=\"Dismiss\" class=\"ui-button ui-button-native ui-button-md app-toast-action\">Dismiss</button> from <div aria-live=\"polite\" class=\"app-toast-container app-session-alert-container\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m  - retrying click action\u001b[22m\n\u001b[2m    - waiting 500ms\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m    - element is visible, enabled and stable\u001b[22m\n\u001b[2m    - scrolling into view if needed\u001b[22m\n\u001b[2m    - done scrolling\u001b[22m\n\u001b[2m    - <div class=\"app-toast app-toast-warning \">…</div> from <div aria-live=\"polite\" class=\"app-toast-container app-session-alert-container\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m  - retrying click action\u001b[22m\n\u001b[2m    - waiting 500ms\u001b[22m\n"
+    },
+    {
+      "route": "sales",
+      "theme": "light",
+      "width": 768,
+      "receiptAction": {
+        "border": "0px",
+        "icon": false
+      },
+      "metrics": {
+        "applicationCrashed": false,
+        "overflow": 0,
+        "shortTargets": [],
+        "clipped": [],
+        "smallText": [
+          {
+            "text": "Date",
+            "fontSize": "11px",
+            "className": ""
+          },
+          {
+            "text": "Table",
+            "fontSize": "11px",
+            "className": ""
+          },
+          {
+            "text": "Payment",
+            "fontSize": "11px",
+            "className": ""
+          },
+          {
+            "text": "Duration",
+            "fontSize": "11px",
+            "className": ""
+          },
+          {
+            "text": "Tariff",
+            "fontSize": "11px",
+            "className": ""
+          },
+          {
+            "text": "Table charge",
+            "fontSize": "11px",
+            "className": ""
+          },
+          {
+            "text": "Food",
+            "fontSize": "11px",
+            "className": ""
+          },
+          {
+            "text": "Total",
+            "fontSize": "11px",
+            "className": ""
+          }
+        ],
+        "brokenImages": [],
+        "invalidCopy": [],
+        "unlabeledButtons": [],
+        "unlabeledInputs": [],
+        "collectionSizes": {
+          ".op2-customer-card": 0,
+          ".op2-table-booking-card": 0,
+          ".sales-table tbody tr": 1,
+          ".lf-table-card": 0
+        },
+        "contentOverflow": [],
+        "palette": {
+          "accent": "#006b3c",
+          "font": "\"Syne Variable\", Syne, sans-serif"
+        }
+      },
+      "contrast": [],
+      "tabTrapped": true,
+      "reverseTabTrapped": true,
+      "escaped": true,
+      "focusRestored": true
+    },
+    {
+      "route": "sales",
+      "theme": "light",
+      "width": 1024,
+      "receiptAction": {
+        "border": "0px",
+        "icon": false
+      },
+      "metrics": {
+        "applicationCrashed": false,
+        "overflow": 0,
+        "shortTargets": [],
+        "clipped": [],
+        "smallText": [
+          {
+            "text": "Date",
+            "fontSize": "11px",
+            "className": ""
+          },
+          {
+            "text": "Table",
+            "fontSize": "11px",
+            "className": ""
+          },
+          {
+            "text": "Payment",
+            "fontSize": "11px",
+            "className": ""
+          },
+          {
+            "text": "Duration",
+            "fontSize": "11px",
+            "className": ""
+          },
+          {
+            "text": "Tariff",
+            "fontSize": "11px",
+            "className": ""
+          },
+          {
+            "text": "Table charge",
+            "fontSize": "11px",
+            "className": ""
+          },
+          {
+            "text": "Food",
+            "fontSize": "11px",
+            "className": ""
+          },
+          {
+            "text": "Total",
+            "fontSize": "11px",
+            "className": ""
+          }
+        ],
+        "brokenImages": [],
+        "invalidCopy": [],
+        "unlabeledButtons": [],
+        "unlabeledInputs": [],
+        "collectionSizes": {
+          ".op2-customer-card": 0,
+          ".op2-table-booking-card": 0,
+          ".sales-table tbody tr": 1,
+          ".lf-table-card": 0
+        },
+        "contentOverflow": [],
+        "palette": {
+          "accent": "#006b3c",
+          "font": "\"Syne Variable\", Syne, sans-serif"
+        }
+      },
+      "contrast": [],
+      "tabTrapped": true,
+      "reverseTabTrapped": true,
+      "escaped": true,
+      "focusRestored": true
+    },
+    {
+      "route": "sales",
+      "theme": "light",
+      "width": 1440,
+      "receiptAction": {
+        "border": "0px",
+        "icon": false
+      },
+      "metrics": {
+        "applicationCrashed": false,
+        "overflow": 0,
+        "shortTargets": [],
+        "clipped": [],
+        "smallText": [
+          {
+            "text": "Date",
+            "fontSize": "11px",
+            "className": ""
+          },
+          {
+            "text": "Table",
+            "fontSize": "11px",
+            "className": ""
+          },
+          {
+            "text": "Payment",
+            "fontSize": "11px",
+            "className": ""
+          },
+          {
+            "text": "Duration",
+            "fontSize": "11px",
+            "className": ""
+          },
+          {
+            "text": "Tariff",
+            "fontSize": "11px",
+            "className": ""
+          },
+          {
+            "text": "Table charge",
+            "fontSize": "11px",
+            "className": ""
+          },
+          {
+            "text": "Food",
+            "fontSize": "11px",
+            "className": ""
+          },
+          {
+            "text": "Total",
+            "fontSize": "11px",
+            "className": ""
+          }
+        ],
+        "brokenImages": [],
+        "invalidCopy": [],
+        "unlabeledButtons": [],
+        "unlabeledInputs": [],
+        "collectionSizes": {
+          ".op2-customer-card": 0,
+          ".op2-table-booking-card": 0,
+          ".sales-table tbody tr": 1,
+          ".lf-table-card": 0
+        },
+        "contentOverflow": [],
+        "palette": {
+          "accent": "#006b3c",
+          "font": "\"Syne Variable\", Syne, sans-serif"
+        }
+      },
+      "contrast": [],
+      "tabTrapped": true,
+      "reverseTabTrapped": true,
+      "escaped": true,
+      "focusRestored": true
+    },
+    {
+      "route": "sales",
+      "theme": "dark",
+      "width": 375,
+      "receiptAction": {
+        "border": "0px",
+        "icon": false
+      },
+      "error": "locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('.sales-receipt-trigger').first()\u001b[22m\n\u001b[2m    - locator resolved to <button aria-label=\"Open receipt 99001\" data-tooltip=\"Open receipt 99001\" class=\"ui-button ui-button-native ui-button-md sales-receipt-trigger\">#99001</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m    - element is visible, enabled and stable\u001b[22m\n\u001b[2m    - scrolling into view if needed\u001b[22m\n\u001b[2m    - done scrolling\u001b[22m\n\u001b[2m    - <span class=\"app-toast-message\">T2 — 1260 min played · ₹3,840 accrued</span> from <div aria-live=\"polite\" class=\"app-toast-container app-session-alert-container\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m  - retrying click action\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m    - element is visible, enabled and stable\u001b[22m\n\u001b[2m    - scrolling into view if needed\u001b[22m\n\u001b[2m    - done scrolling\u001b[22m\n\u001b[2m    - <div class=\"app-toast app-toast-warning is-exiting\">…</div> from <div aria-live=\"polite\" class=\"app-toast-container app-session-alert-container\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m  - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m    - element is visible, enabled and stable\u001b[22m\n\u001b[2m    - scrolling into view if needed\u001b[22m\n\u001b[2m    - done scrolling\u001b[22m\n\u001b[2m    - <div class=\"app-toast app-toast-warning \">…</div> from <div aria-live=\"polite\" class=\"app-toast-container app-session-alert-container\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m  2 × retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m      - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <button type=\"button\" aria-label=\"Dismiss\" class=\"ui-button ui-button-native ui-button-md app-toast-action\">Dismiss</button> from <div aria-live=\"polite\" class=\"app-toast-container app-session-alert-container\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m  14 × retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n\u001b[2m       - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is visible, enabled and stable\u001b[22m\n\u001b[2m       - scrolling into view if needed\u001b[22m\n\u001b[2m       - done scrolling\u001b[22m\n\u001b[2m       - <div class=\"app-toast app-toast-warning \">…</div> from <div aria-live=\"polite\" class=\"app-toast-container app-session-alert-container\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m     - retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n\u001b[2m       - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is visible, enabled and stable\u001b[22m\n\u001b[2m       - scrolling into view if needed\u001b[22m\n\u001b[2m       - done scrolling\u001b[22m\n\u001b[2m       - <div class=\"app-toast app-toast-warning \">…</div> from <div aria-live=\"polite\" class=\"app-toast-container app-session-alert-container\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m     - retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n\u001b[2m       - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is visible, enabled and stable\u001b[22m\n\u001b[2m       - scrolling into view if needed\u001b[22m\n\u001b[2m       - done scrolling\u001b[22m\n\u001b[2m       - <button type=\"button\" aria-label=\"Dismiss\" class=\"ui-button ui-button-native ui-button-md app-toast-action\">Dismiss</button> from <div aria-live=\"polite\" class=\"app-toast-container app-session-alert-container\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m     - retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n\u001b[2m       - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is visible, enabled and stable\u001b[22m\n\u001b[2m       - scrolling into view if needed\u001b[22m\n\u001b[2m       - done scrolling\u001b[22m\n\u001b[2m       - <button type=\"button\" aria-label=\"Dismiss\" class=\"ui-button ui-button-native ui-button-md app-toast-action\">Dismiss</button> from <div aria-live=\"polite\" class=\"app-toast-container app-session-alert-container\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m  - retrying click action\u001b[22m\n\u001b[2m    - waiting 500ms\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m    - element is visible, enabled and stable\u001b[22m\n\u001b[2m    - scrolling into view if needed\u001b[22m\n\u001b[2m    - done scrolling\u001b[22m\n\u001b[2m    - <div class=\"app-toast app-toast-warning \">…</div> from <div aria-live=\"polite\" class=\"app-toast-container app-session-alert-container\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m  - retrying click action\u001b[22m\n\u001b[2m    - waiting 500ms\u001b[22m\n"
+    },
+    {
+      "route": "sales",
+      "theme": "dark",
+      "width": 768,
+      "receiptAction": {
+        "border": "0px",
+        "icon": false
+      },
+      "metrics": {
+        "applicationCrashed": false,
+        "overflow": 0,
+        "shortTargets": [],
+        "clipped": [],
+        "smallText": [
+          {
+            "text": "Date",
+            "fontSize": "11px",
+            "className": ""
+          },
+          {
+            "text": "Table",
+            "fontSize": "11px",
+            "className": ""
+          },
+          {
+            "text": "Payment",
+            "fontSize": "11px",
+            "className": ""
+          },
+          {
+            "text": "Duration",
+            "fontSize": "11px",
+            "className": ""
+          },
+          {
+            "text": "Tariff",
+            "fontSize": "11px",
+            "className": ""
+          },
+          {
+            "text": "Table charge",
+            "fontSize": "11px",
+            "className": ""
+          },
+          {
+            "text": "Food",
+            "fontSize": "11px",
+            "className": ""
+          },
+          {
+            "text": "Total",
+            "fontSize": "11px",
+            "className": ""
+          }
+        ],
+        "brokenImages": [],
+        "invalidCopy": [],
+        "unlabeledButtons": [],
+        "unlabeledInputs": [],
+        "collectionSizes": {
+          ".op2-customer-card": 0,
+          ".op2-table-booking-card": 0,
+          ".sales-table tbody tr": 1,
+          ".lf-table-card": 0
+        },
+        "contentOverflow": [],
+        "palette": {
+          "accent": "#00ff7f",
+          "font": "\"Syne Variable\", Syne, sans-serif"
+        }
+      },
+      "contrast": [],
+      "tabTrapped": true,
+      "reverseTabTrapped": true,
+      "escaped": true,
+      "focusRestored": true
+    },
+    {
+      "route": "sales",
+      "theme": "dark",
+      "width": 1024,
+      "receiptAction": {
+        "border": "0px",
+        "icon": false
+      },
+      "metrics": {
+        "applicationCrashed": false,
+        "overflow": 0,
+        "shortTargets": [],
+        "clipped": [],
+        "smallText": [
+          {
+            "text": "Date",
+            "fontSize": "11px",
+            "className": ""
+          },
+          {
+            "text": "Table",
+            "fontSize": "11px",
+            "className": ""
+          },
+          {
+            "text": "Payment",
+            "fontSize": "11px",
+            "className": ""
+          },
+          {
+            "text": "Duration",
+            "fontSize": "11px",
+            "className": ""
+          },
+          {
+            "text": "Tariff",
+            "fontSize": "11px",
+            "className": ""
+          },
+          {
+            "text": "Table charge",
+            "fontSize": "11px",
+            "className": ""
+          },
+          {
+            "text": "Food",
+            "fontSize": "11px",
+            "className": ""
+          },
+          {
+            "text": "Total",
+            "fontSize": "11px",
+            "className": ""
+          }
+        ],
+        "brokenImages": [],
+        "invalidCopy": [],
+        "unlabeledButtons": [],
+        "unlabeledInputs": [],
+        "collectionSizes": {
+          ".op2-customer-card": 0,
+          ".op2-table-booking-card": 0,
+          ".sales-table tbody tr": 1,
+          ".lf-table-card": 0
+        },
+        "contentOverflow": [],
+        "palette": {
+          "accent": "#00ff7f",
+          "font": "\"Syne Variable\", Syne, sans-serif"
+        }
+      },
+      "contrast": [],
+      "tabTrapped": true,
+      "reverseTabTrapped": true,
+      "escaped": true,
+      "focusRestored": true
+    },
+    {
+      "route": "sales",
+      "theme": "dark",
+      "width": 1440,
+      "receiptAction": {
+        "border": "0px",
+        "icon": false
+      },
+      "metrics": {
+        "applicationCrashed": false,
+        "overflow": 0,
+        "shortTargets": [],
+        "clipped": [],
+        "smallText": [
+          {
+            "text": "Date",
+            "fontSize": "11px",
+            "className": ""
+          },
+          {
+            "text": "Table",
+            "fontSize": "11px",
+            "className": ""
+          },
+          {
+            "text": "Payment",
+            "fontSize": "11px",
+            "className": ""
+          },
+          {
+            "text": "Duration",
+            "fontSize": "11px",
+            "className": ""
+          },
+          {
+            "text": "Tariff",
+            "fontSize": "11px",
+            "className": ""
+          },
+          {
+            "text": "Table charge",
+            "fontSize": "11px",
+            "className": ""
+          },
+          {
+            "text": "Food",
+            "fontSize": "11px",
+            "className": ""
+          },
+          {
+            "text": "Total",
+            "fontSize": "11px",
+            "className": ""
+          }
+        ],
+        "brokenImages": [],
+        "invalidCopy": [],
+        "unlabeledButtons": [],
+        "unlabeledInputs": [],
+        "collectionSizes": {
+          ".op2-customer-card": 0,
+          ".op2-table-booking-card": 0,
+          ".sales-table tbody tr": 1,
+          ".lf-table-card": 0
+        },
+        "contentOverflow": [],
+        "palette": {
+          "accent": "#00ff7f",
+          "font": "\"Syne Variable\", Syne, sans-serif"
+        }
+      },
+      "contrast": [],
+      "tabTrapped": true,
+      "reverseTabTrapped": true,
+      "escaped": true,
+      "focusRestored": true
+    }
+  ],
+  "blockedWrites": [],
+  "mockedBookingWrites": 0,
+  "scope": "Local dialogs; booking submission is browser-mocked pending then HTTP 500. No business writes reach backend"
+}

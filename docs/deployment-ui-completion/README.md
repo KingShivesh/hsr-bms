@@ -13,7 +13,8 @@ server-authoritative payment/receipt confirmation. No feature or role expansion.
 | Live Floor / checkout | 48 + 48 final samples pass; all five table states, null rows and missing-status recovery also pass. Eight actual role/theme/mobile checkout contract cases pass | `live-floor/`, `checkout/` |
 | Members / bookings | 48 final samples per page; eight null-row samples per page; 16 role-Owner dialog cases across both themes/four widths pass | `customers/`, `bookings/`, `member-booking-dialogs/after-final/` |
 | Cafe | Main order view and both tabs: 48 final samples each. 16 price/cart/pagination contracts, 16 anonymous-target contracts and eight independent-read cases pass | `cafe-pos/`, `cafe-stats/`, `cafe-history/`, `cafe-contract/after-verified/`, `cafe-guest-target/`, `cafe-loading-isolation/` |
-| Finance / reports / Settings / error routes | Pending current-build rerun and component consolidation | Not a pass |
+| Finance / reports | Three main screens + four reachable report sub-tabs: 336 final samples pass; eight receipt/paging cases and two eight-case data-integrity follow-ups pass | `sales/`, `analytics/`, `daily-closing/`, `reports-*/` |
+| Settings / remaining operations / error routes | Pending current-build rerun and component consolidation | Not a pass |
 | Shared overlays / menus / action states | Pending consolidation and interaction rerun | Not a pass |
 | Local operational lifecycle | Pending 20-cycle role/theme/mobile exercise | Not a pass |
 | Production release | Pending each verified cluster | A push alone is not proof |
@@ -51,6 +52,12 @@ transition and retains reduced-motion behavior.
 | Cafe | History and performance tables rendered unbounded rows | Bounded shared tables | Shared pagination renders at most 25 rows, preserves global ranks, clamps after deletion | `comparisons/cafe-history-extreme-1440.png`, `cafe-contract/after-verified/` |
 | Cafe | Missing payment method was labeled Cash | Do not invent financial metadata | Missing method displays a neutral dash; recorded methods and palette unchanged | `FoodTab.jsx` history fallback |
 | Cafe | Anonymous running session could not receive food because an empty player selector blocked submission | Honor existing anonymous-session contract | No player required if the session has no names; no invented name sent; existing session key included | `cafe-guest-target/before/`, `cafe-guest-target/after/` |
+| Sales | Null read rows crashed the register | Partial data recovery | Filter malformed rows before summaries and rendering | `sales/null-rows-before/` / `sales/null-rows-after/` |
+| Sales | Missing payment methods were counted as Cash | No invented financial metadata | Keep total sales unchanged; exclude unclassified methods from named payment buckets and show a recoverable warning | `comparisons/sales-payment-missing-1440.png` |
+| Sales | Receipt number looked like plain text | Actionable controls | Shared outlined receipt button with Lucide icon | `sales/receipt-before-final/` / `sales/receipt-after/` |
+| Sales / Closing | Duplicate summary-card markup | Shared components | Shared MetricCard for seven Sales and seven Closing values; Closing retains its inline structure and approved tones | `comparisons/sales-default-1440.png`, `comparisons/daily-closing-default-1440.png` |
+| Reports | Private empty states, including decorative fake rows with no action | Truthful, actionable empty state | Shared EmptyState with refresh/filter actions; no fabricated profitability or hour rows | `comparisons/reports-advanced-empty-1440.png` |
+| Session Edits | Unbounded table | Responsive, bounded records | Shared 25-row pagination; global row identity retained, numeric columns right-aligned | `reports-session-edits/`, `sales/receipt-after/*-edits-page-2.png` |
 
 The first shared-change regression is 20 main routes x four widths x both themes
 (160 loaded/default captures), all clean. It is not certification of all their
@@ -144,3 +151,30 @@ at smaller widths, not a passing pager check. The final isolated price/paging
 contract suppresses unrelated aged-session reminders and dismisses ordinary cart
 feedback using its actual close button. Cross-cutting notification occlusion is
 still OPEN for the shared-overlay cluster; it is not silently treated as fixed.
+
+Cafe cluster `4e1b05e` is merged, pushed and live: `deployment-cafe.json`
+matches all 23 assets, with backend health/readiness 200 and unchanged ancestry.
+
+## Finance Verification
+
+Sales, Bills and Closing each pass 48 final strict samples. Table Performance,
+Regular Customers, advanced Analytics and Session Edits each pass another 48:
+336 total. Report tabs are selected through their real saved-tab mechanism and
+their own endpoints are intercepted, not the Bills endpoint. The Session Edits
+extreme read fixture has 1,000 records; after rendering is bounded to 25.
+The Regular Customers endpoint is already server-bounded to its top ten.
+
+Eight Owner receipt cases pass both themes/four widths: visible bordered/icon
+action, strict contrast/overflow checks on a large receipt, Tab/Shift+Tab trap,
+Escape and restored opener. The same eight cases click Session Edits Next and
+verify records 26-50 of 1,000 with 25 rows. All business writes are blocked.
+`sales/receipt-before/` retains the original notification-occlusion failures;
+`receipt-before-final/` and `receipt-after/` use the same isolated-reminder
+fixture for the receipt-specific comparison. Shared-toast occlusion stays open.
+
+The eight-case null-row follow-up no longer crashes. The eight missing-method
+cases measure actual rendered summary values: the baseline counted the read
+fixture's entire 500 as Cash; afterward Total sales remains 500, Cash is 0 and
+the unspecified-method warning is visible. No stored transaction, payment,
+discount, tax, receipt or close-day rule was changed. Initial infrastructure
+timeouts were not counted as passes; the final serial reruns are complete.

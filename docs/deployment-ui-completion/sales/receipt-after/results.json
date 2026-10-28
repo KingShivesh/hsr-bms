@@ -1,0 +1,328 @@
+{
+  "stage": "after",
+  "cases": [
+    {
+      "route": "sales",
+      "theme": "light",
+      "width": 375,
+      "receiptAction": {
+        "border": "1px",
+        "icon": true
+      },
+      "metrics": {
+        "applicationCrashed": false,
+        "overflow": 0,
+        "shortTargets": [],
+        "clipped": [],
+        "smallText": [],
+        "brokenImages": [],
+        "invalidCopy": [],
+        "unlabeledButtons": [],
+        "unlabeledInputs": [],
+        "collectionSizes": {
+          ".op2-customer-card": 0,
+          ".op2-table-booking-card": 0,
+          ".sales-table tbody tr": 1,
+          ".lf-table-card": 0
+        },
+        "contentOverflow": [],
+        "palette": {
+          "accent": "#006b3c",
+          "font": "\"Syne Variable\", Syne, sans-serif"
+        }
+      },
+      "contrast": [],
+      "tabTrapped": true,
+      "reverseTabTrapped": true,
+      "escaped": true,
+      "focusRestored": true,
+      "editsPagination": {
+        "status": "26-50 of 1000 · Page 2 of 40",
+        "rows": 25
+      }
+    },
+    {
+      "route": "sales",
+      "theme": "light",
+      "width": 768,
+      "receiptAction": {
+        "border": "1px",
+        "icon": true
+      },
+      "metrics": {
+        "applicationCrashed": false,
+        "overflow": 0,
+        "shortTargets": [],
+        "clipped": [],
+        "smallText": [],
+        "brokenImages": [],
+        "invalidCopy": [],
+        "unlabeledButtons": [],
+        "unlabeledInputs": [],
+        "collectionSizes": {
+          ".op2-customer-card": 0,
+          ".op2-table-booking-card": 0,
+          ".sales-table tbody tr": 1,
+          ".lf-table-card": 0
+        },
+        "contentOverflow": [],
+        "palette": {
+          "accent": "#006b3c",
+          "font": "\"Syne Variable\", Syne, sans-serif"
+        }
+      },
+      "contrast": [],
+      "tabTrapped": true,
+      "reverseTabTrapped": true,
+      "escaped": true,
+      "focusRestored": true,
+      "editsPagination": {
+        "status": "26-50 of 1000 · Page 2 of 40",
+        "rows": 25
+      }
+    },
+    {
+      "route": "sales",
+      "theme": "light",
+      "width": 1024,
+      "receiptAction": {
+        "border": "1px",
+        "icon": true
+      },
+      "metrics": {
+        "applicationCrashed": false,
+        "overflow": 0,
+        "shortTargets": [],
+        "clipped": [],
+        "smallText": [],
+        "brokenImages": [],
+        "invalidCopy": [],
+        "unlabeledButtons": [],
+        "unlabeledInputs": [],
+        "collectionSizes": {
+          ".op2-customer-card": 0,
+          ".op2-table-booking-card": 0,
+          ".sales-table tbody tr": 1,
+          ".lf-table-card": 0
+        },
+        "contentOverflow": [],
+        "palette": {
+          "accent": "#006b3c",
+          "font": "\"Syne Variable\", Syne, sans-serif"
+        }
+      },
+      "contrast": [],
+      "tabTrapped": true,
+      "reverseTabTrapped": true,
+      "escaped": true,
+      "focusRestored": true,
+      "editsPagination": {
+        "status": "26-50 of 1000 · Page 2 of 40",
+        "rows": 25
+      }
+    },
+    {
+      "route": "sales",
+      "theme": "light",
+      "width": 1440,
+      "receiptAction": {
+        "border": "1px",
+        "icon": true
+      },
+      "metrics": {
+        "applicationCrashed": false,
+        "overflow": 0,
+        "shortTargets": [],
+        "clipped": [],
+        "smallText": [],
+        "brokenImages": [],
+        "invalidCopy": [],
+        "unlabeledButtons": [],
+        "unlabeledInputs": [],
+        "collectionSizes": {
+          ".op2-customer-card": 0,
+          ".op2-table-booking-card": 0,
+          ".sales-table tbody tr": 1,
+          ".lf-table-card": 0
+        },
+        "contentOverflow": [],
+        "palette": {
+          "accent": "#006b3c",
+          "font": "\"Syne Variable\", Syne, sans-serif"
+        }
+      },
+      "contrast": [],
+      "tabTrapped": true,
+      "reverseTabTrapped": true,
+      "escaped": true,
+      "focusRestored": true,
+      "editsPagination": {
+        "status": "26-50 of 1000 · Page 2 of 40",
+        "rows": 25
+      }
+    },
+    {
+      "route": "sales",
+      "theme": "dark",
+      "width": 375,
+      "receiptAction": {
+        "border": "1px",
+        "icon": true
+      },
+      "metrics": {
+        "applicationCrashed": false,
+        "overflow": 0,
+        "shortTargets": [],
+        "clipped": [],
+        "smallText": [],
+        "brokenImages": [],
+        "invalidCopy": [],
+        "unlabeledButtons": [],
+        "unlabeledInputs": [],
+        "collectionSizes": {
+          ".op2-customer-card": 0,
+          ".op2-table-booking-card": 0,
+          ".sales-table tbody tr": 1,
+          ".lf-table-card": 0
+        },
+        "contentOverflow": [],
+        "palette": {
+          "accent": "#00ff7f",
+          "font": "\"Syne Variable\", Syne, sans-serif"
+        }
+      },
+      "contrast": [],
+      "tabTrapped": true,
+      "reverseTabTrapped": true,
+      "escaped": true,
+      "focusRestored": true,
+      "editsPagination": {
+        "status": "26-50 of 1000 · Page 2 of 40",
+        "rows": 25
+      }
+    },
+    {
+      "route": "sales",
+      "theme": "dark",
+      "width": 768,
+      "receiptAction": {
+        "border": "1px",
+        "icon": true
+      },
+      "metrics": {
+        "applicationCrashed": false,
+        "overflow": 0,
+        "shortTargets": [],
+        "clipped": [],
+        "smallText": [],
+        "brokenImages": [],
+        "invalidCopy": [],
+        "unlabeledButtons": [],
+        "unlabeledInputs": [],
+        "collectionSizes": {
+          ".op2-customer-card": 0,
+          ".op2-table-booking-card": 0,
+          ".sales-table tbody tr": 1,
+          ".lf-table-card": 0
+        },
+        "contentOverflow": [],
+        "palette": {
+          "accent": "#00ff7f",
+          "font": "\"Syne Variable\", Syne, sans-serif"
+        }
+      },
+      "contrast": [],
+      "tabTrapped": true,
+      "reverseTabTrapped": true,
+      "escaped": true,
+      "focusRestored": true,
+      "editsPagination": {
+        "status": "26-50 of 1000 · Page 2 of 40",
+        "rows": 25
+      }
+    },
+    {
+      "route": "sales",
+      "theme": "dark",
+      "width": 1024,
+      "receiptAction": {
+        "border": "1px",
+        "icon": true
+      },
+      "metrics": {
+        "applicationCrashed": false,
+        "overflow": 0,
+        "shortTargets": [],
+        "clipped": [],
+        "smallText": [],
+        "brokenImages": [],
+        "invalidCopy": [],
+        "unlabeledButtons": [],
+        "unlabeledInputs": [],
+        "collectionSizes": {
+          ".op2-customer-card": 0,
+          ".op2-table-booking-card": 0,
+          ".sales-table tbody tr": 1,
+          ".lf-table-card": 0
+        },
+        "contentOverflow": [],
+        "palette": {
+          "accent": "#00ff7f",
+          "font": "\"Syne Variable\", Syne, sans-serif"
+        }
+      },
+      "contrast": [],
+      "tabTrapped": true,
+      "reverseTabTrapped": true,
+      "escaped": true,
+      "focusRestored": true,
+      "editsPagination": {
+        "status": "26-50 of 1000 · Page 2 of 40",
+        "rows": 25
+      }
+    },
+    {
+      "route": "sales",
+      "theme": "dark",
+      "width": 1440,
+      "receiptAction": {
+        "border": "1px",
+        "icon": true
+      },
+      "metrics": {
+        "applicationCrashed": false,
+        "overflow": 0,
+        "shortTargets": [],
+        "clipped": [],
+        "smallText": [],
+        "brokenImages": [],
+        "invalidCopy": [],
+        "unlabeledButtons": [],
+        "unlabeledInputs": [],
+        "collectionSizes": {
+          ".op2-customer-card": 0,
+          ".op2-table-booking-card": 0,
+          ".sales-table tbody tr": 1,
+          ".lf-table-card": 0
+        },
+        "contentOverflow": [],
+        "palette": {
+          "accent": "#00ff7f",
+          "font": "\"Syne Variable\", Syne, sans-serif"
+        }
+      },
+      "contrast": [],
+      "tabTrapped": true,
+      "reverseTabTrapped": true,
+      "escaped": true,
+      "focusRestored": true,
+      "editsPagination": {
+        "status": "26-50 of 1000 · Page 2 of 40",
+        "rows": 25
+      }
+    }
+  ],
+  "blockedWrites": [],
+  "mockedBookingWrites": 0,
+  "scope": "Local dialogs; booking submission is browser-mocked pending then HTTP 500. No business writes reach backend"
+}

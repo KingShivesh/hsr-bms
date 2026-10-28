@@ -1,16 +1,17 @@
+import { Panel as HsrPanel } from "../../components/ui/index.js";
 import { formatCurrency as polishCurrency, formatDateTime } from "../../utils/format.js";
 import { Icon as HsrIcon, Button as HsrButton, Input as HsrInput, Table as HsrTable } from "../../components/ui/index.js";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useCachedState, hasCachedState } from "../../hooks/useCachedState.js";
 import { getFoodOrders, getHistory } from "../../api/index.js";
 import RetryNotice from "../../components/RetryNotice.jsx";
-import { Button, Drawer, MetricValue } from "../../components/ui/index.js";
+import { Button, Drawer, MetricCard, EmptyState } from "../../components/ui/index.js";
 import Pagination from "../../components/ui/Pagination.jsx";
 import { useRealtimeSubscription } from "../../realtime/useRealtimeSubscription.js";
 import { tariffDescription } from "../sessions/tariffs.js";
 
 function asArray(value) {
-  return Array.isArray(value) ? value : [];
+  return Array.isArray(value) ? value.filter(row => row && typeof row === "object") : [];
 }
 
 function money(value = 0) { return polishCurrency(value); }
@@ -38,7 +39,7 @@ function billDate(row) {
 }
 
 function paymentMethod(row) {
-  return String(row?.payment_method || "Cash");
+  return String(row?.payment_method || "Unspecified");
 }
 
 function SalesSkeleton() {
@@ -124,14 +125,19 @@ export default function SalesPage() {
     const tableRevenue = history.reduce((sum, row) => sum + billTableCharge(row), 0);
     const attachedFood = history.reduce((sum, row) => sum + billFoodCharge(row), 0);
     const counterFood = foodOrders.reduce((sum, row) => sum + Number(row.total || 0), 0);
-    const payment = { Cash: 0, UPI: 0, Card: 0, Credit: 0 };
+    const payment = { Cash: 0, UPI: 0, Card: 0, Credit: 0, Unspecified: 0 };
+    let unclassifiedCount = 0;
     history.forEach((row) => {
       const method = paymentMethod(row);
-      payment[method in payment ? method : "Cash"] += billTotal(row);
+      const recognized = method !== "Unspecified" && Object.hasOwn(payment, method);
+      if (!recognized) unclassifiedCount += 1;
+      payment[recognized ? method : "Unspecified"] += billTotal(row);
     });
     foodOrders.forEach((row) => {
       const method = paymentMethod(row);
-      payment[method in payment ? method : "Cash"] += Number(row.total || 0);
+      const recognized = method !== "Unspecified" && Object.hasOwn(payment, method);
+      if (!recognized) unclassifiedCount += 1;
+      payment[recognized ? method : "Unspecified"] += Number(row.total || 0);
     });
     return {
       total: tableRevenue + attachedFood + counterFood,
@@ -140,6 +146,7 @@ export default function SalesPage() {
       sessions: history.length,
       foodOrders: foodOrders.length,
       payment,
+      unclassifiedCount,
     };
   }, [history, foodOrders]);
 
@@ -186,18 +193,23 @@ export default function SalesPage() {
           onRetry={() => loadSales({ showLoading: true })}
         />
       )}
+      {summary.unclassifiedCount > 0 && <RetryNotice
+        message="Some payment methods are unspecified"
+        detail={`${summary.unclassifiedCount} transaction(s), ${money(summary.payment.Unspecified)} not assigned to Cash, UPI, Card or Credit. Stored transactions are unchanged.`}
+        onRetry={() => loadSales({ showLoading: true })}
+      />}
 
       <div className="op2-metric-grid sales-metrics">
-        <div><span>Total sales</span><MetricValue>{money(summary.total)}</MetricValue><em>{summary.sessions} table session(s)</em></div>
-        <div><span>Table revenue</span><MetricValue>{money(summary.tableRevenue)}</MetricValue><em>Time-based sales</em></div>
-        <div><span>Food revenue</span><MetricValue>{money(summary.foodRevenue)}</MetricValue><em>{summary.foodOrders} counter order(s)</em></div>
-        <div><span>Cash</span><MetricValue>{money(summary.payment.Cash)}</MetricValue><em>Collected in cash</em></div>
-        <div><span>UPI</span><MetricValue>{money(summary.payment.UPI)}</MetricValue><em>Digital payments</em></div>
-        <div><span>Card</span><MetricValue>{money(summary.payment.Card)}</MetricValue><em>Card payments</em></div>
-        <div><span>Credit</span><MetricValue>{money(summary.payment.Credit)}</MetricValue><em>Outstanding, not collected</em></div>
+        <MetricCard label="Total sales" value={money(summary.total)} context={`${summary.sessions} table session(s)`} />
+        <MetricCard label="Table revenue" value={money(summary.tableRevenue)} context="Time-based sales" />
+        <MetricCard label="Food revenue" value={money(summary.foodRevenue)} context={`${summary.foodOrders} counter order(s)`} />
+        <MetricCard label="Cash" value={money(summary.payment.Cash)} context="Collected in cash" />
+        <MetricCard label="UPI" value={money(summary.payment.UPI)} context="Digital payments" />
+        <MetricCard label="Card" value={money(summary.payment.Card)} context="Card payments" />
+        <MetricCard label="Credit" value={money(summary.payment.Credit)} context="Outstanding, not collected" />
       </div>
 
-      <div className="op2-panel">
+      <HsrPanel as="div" className="op2-panel">
         <div className="op2-panel-head">
           <div>
             <span>Transactions</span>
@@ -222,8 +234,8 @@ export default function SalesPage() {
                   <th>Customer</th>
                   <th>Table</th>
                   <th>Payment</th>
-                  <th>Duration</th>
-                  <th>Table</th>
+                  <th data-type="number">Duration</th>
+                  <th data-type="number">Table charge</th>
                   <th data-type="number">Food</th>
                   <th data-type="number">Total</th>
                 </tr>
@@ -232,7 +244,7 @@ export default function SalesPage() {
                 {rows.map((row) => (
                   <tr data-receipt-id={row.id} key={row.id || `${row.ts}-${row.tbl}`} onClick={() => setSelected(row)}>
                     <td>
-                      <HsrButton native className="sales-receipt-trigger" aria-label={`Open receipt ${row.id || "details"}`} onClick={() => setSelected(row)}>#{row.id || "-"}</HsrButton>
+                      <HsrButton variant="secondary" icon="ti-receipt" className="sales-receipt-trigger" aria-label={`Open receipt ${row.id || "details"}`} onClick={() => setSelected(row)}>#{row.id || "-"}</HsrButton>
                       <span>{billDate(row)}</span>
                     </td>
                     <td className="sales-customer-cell" title={billCustomer(row)}>{billCustomer(row)}</td>
@@ -248,14 +260,13 @@ export default function SalesPage() {
             </HsrTable>
           </div>
         ) : (
-          <div className="op2-empty">
-            <HsrIcon className="ti ti-receipt" aria-hidden="true" />
-            <strong>No sales found</strong>
-            <span>Completed sessions and food orders will appear here after checkout.</span>
-          </div>
+          <EmptyState icon="ti-receipt" title={query ? "No matching sales" : "No sales found"}
+            description={query ? "No receipts match this customer, table or payment search." : "Completed sessions and food orders appear here after checkout."}
+            action={query ? <Button icon="ti-x" onClick={() => setQuery("")}>Clear search</Button> : <Button icon="ti-refresh" onClick={() => loadSales({ showLoading: true })}>Refresh sales</Button>}
+          />
         )}
         <Pagination total={filteredRows.length} page={safePage} pageSize={pageSize} onPageChange={setPage} label="Sales" />
-      </div>
+      </HsrPanel>
 
       <Drawer
         portal

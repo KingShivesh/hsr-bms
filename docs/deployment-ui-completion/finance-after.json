@@ -1,0 +1,28 @@
+{
+  "group": "finance",
+  "stage": "after",
+  "widths": [
+    375,
+    768,
+    1024,
+    1440
+  ],
+  "strictPilot": true,
+  "results": [
+    {
+      "route": "/sales",
+      "status": 0,
+      "output": "../docs/deployment-ui-completion/sales/after"
+    },
+    {
+      "route": "/analytics",
+      "status": 0,
+      "output": "../docs/deployment-ui-completion/analytics/after"
+    },
+    {
+      "route": "/daily-closing",
+      "status": 0,
+      "output": "../docs/deployment-ui-completion/daily-closing/after"
+    }
+  ]
+}
