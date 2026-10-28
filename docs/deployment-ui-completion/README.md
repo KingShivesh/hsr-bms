@@ -14,10 +14,11 @@ server-authoritative payment/receipt confirmation. No feature or role expansion.
 | Members / bookings | 48 final samples per page; eight null-row samples per page; 16 role-Owner dialog cases across both themes/four widths pass | `customers/`, `bookings/`, `member-booking-dialogs/after-final/` |
 | Cafe | Main order view and both tabs: 48 final samples each. 16 price/cart/pagination contracts, 16 anonymous-target contracts and eight independent-read cases pass | `cafe-pos/`, `cafe-stats/`, `cafe-history/`, `cafe-contract/after-verified/`, `cafe-guest-target/`, `cafe-loading-isolation/` |
 | Finance / reports | Three main screens + four reachable report sub-tabs: 336 final samples pass; eight receipt/paging cases and two eight-case data-integrity follow-ups pass | `sales/`, `analytics/`, `daily-closing/`, `reports-*/` |
-| Settings / remaining operations / error routes | Pending current-build rerun and component consolidation | Not a pass |
+| Settings | Six sections: 256 final strict samples pass. Eight missing-data, tariff recovery and pending-save contracts pass; three shared Panel roots migrated | `settings-*/`, `settings-contract/after/` |
+| Remaining operations / error routes | Pending current-build rerun and component consolidation | Not a pass |
 | Shared overlays / menus / action states | Pending consolidation and interaction rerun | Not a pass |
 | Local operational lifecycle | Pending 20-cycle role/theme/mobile exercise | Not a pass |
-| Production release | Pending each verified cluster | A push alone is not proof |
+| Production release | Dashboard, operations, members/bookings, Cafe and Finance are live-verified; Settings release verification follows its commit | A push alone is not proof |
 | Real devices / unfamiliar human | External acceptance remains unverified | Browser viewports are not physical-device testing |
 
 All current captures use a guarded disposable local database. No production
@@ -58,6 +59,9 @@ transition and retains reduced-motion behavior.
 | Sales / Closing | Duplicate summary-card markup | Shared components | Shared MetricCard for seven Sales and seven Closing values; Closing retains its inline structure and approved tones | `comparisons/sales-default-1440.png`, `comparisons/daily-closing-default-1440.png` |
 | Reports | Private empty states, including decorative fake rows with no action | Truthful, actionable empty state | Shared EmptyState with refresh/filter actions; no fabricated profitability or hour rows | `comparisons/reports-advanced-empty-1440.png` |
 | Session Edits | Unbounded table | Responsive, bounded records | Shared 25-row pagination; global row identity retained, numeric columns right-aligned | `reports-session-edits/`, `sales/receipt-after/*-edits-page-2.png` |
+| Settings | Legacy `height: 100%` stretched every operations panel to the whole stack | Content-sized panels | Scoped automatic height; shared Panel for settings, tariffs and session controls | `comparisons/settings-operations-default-375.png` |
+| Account / Team | Missing counts appeared as zero; unavailable team details could be marked reviewed | Do not invent state | Unknown counts show a dash and Retry; unknown team details have Retry and cannot be marked reviewed | `comparisons/settings-account-missing-counts-375.png`, `settings-contract/` |
+| Tariffs | Plain loading text; null package list crashed the whole route | Shaped loading and partial-data recovery | Shared skeleton and RetryNotice; incomplete editable settings are rejected before rendering or saving | `comparisons/settings-tariffs-loading-1440.png`, `settings-contract/` |
 
 The first shared-change regression is 20 main routes x four widths x both themes
 (160 loaded/default captures), all clean. It is not certification of all their
@@ -178,3 +182,45 @@ fixture's entire 500 as Cash; afterward Total sales remains 500, Cash is 0 and
 the unspecified-method warning is visible. No stored transaction, payment,
 discount, tax, receipt or close-day rule was changed. Initial infrastructure
 timeouts were not counted as passes; the final serial reruns are complete.
+
+Finance source `151ccd9` and its evidence through `e9c197f` are merged and pushed.
+`deployment-finance.json` verifies all 23 live asset hashes, backend ancestry,
+health 200 and database readiness 200. The original unpublished combined commit
+was split into small fast-forward commits after repeated HTTP 408 upload failures;
+the final Git tree was verified identical, and no screenshot was discarded.
+
+## Settings Verification
+
+Operations, Club Profile, Team, Activity and Account each pass 48 strict samples;
+Billing passes 16 applicable static/error-isolation samples: 256 total across
+375/768/1024/1440px and both themes. Billing does not invent a network dependency
+or a subscription feature. The final Operations rerun follows the height fix.
+
+Actual screenshot inspection caught an error missed by the general scanner:
+legacy full-height panels inherited the entire Settings stack height. In the
+matched tariff-held contract the first panel measured 3,580.5 -> 326.5px at 375px,
+2,228.5 -> 204.5px at 768px, 2,330.5 -> 204.5px at 1024px and
+2,304.5 -> 184.5px at 1440px, identical in both themes. The normal loaded build
+also measured a 4,106.5px first panel before correction. The new contract rejects
+a first panel taller than 600px, and retains per-panel measurements and screenshots.
+
+Eight final contract cases prove missing account counts stay unknown rather than
+becoming zero, unavailable team data cannot be marked reviewed, a failed Retry
+can recover, and a null tariff package list no longer crashes Settings. The
+before route crash is explicitly recorded in every baseline case. Partial editable
+tariffs are not silently converted to empty packages that could overwrite saved
+configuration. Shared skeletons replace the plain tariff loading text.
+
+All eight held tariff submissions visibly enter pending in 11.5-14.2ms. The
+browser returns HTTP 500, the actual entered rate remains, and there is exactly
+one mocked submission per case. No business write reaches the backend. Global
+session reminders are isolated for these targeted contracts, not declared fixed.
+Initial contract selectors confused the existing notice/global server banner with
+the panel response; the final test scopes actions to their owning panel and waits
+for the actual failed response. Only the final passing run is acceptance evidence.
+
+Before/after composites retain original pixels: before left, after right, light
+above dark. Full-screen sources and cropped tariff-panel sources are both kept.
+Fonts, colors, credential policy, trusted Staff time permissions and backend
+financial rules are unchanged. Shared notification occlusion and remaining
+operations/overlay/lifecycle/source-token work remain OPEN.

@@ -1,0 +1,634 @@
+{
+  "stage": "after",
+  "cases": [
+    {
+      "theme": "light",
+      "width": 375,
+      "missingCounts": {
+        "Club": "HSR Snooker Cafe BMS",
+        "Deployment": "Single club",
+        "Plan": "No subscription configured",
+        "Customers": "—",
+        "Tables": "—",
+        "Role logins": "—",
+        "Version": "v0.1.0"
+      },
+      "unknownTeamReviewDisabled": true,
+      "teamRecovered": true,
+      "settingsPanelHeights": [
+        {
+          "title": "Table Operations",
+          "height": 326.5
+        },
+        {
+          "title": "HSR Table Rates",
+          "height": 460.5
+        },
+        {
+          "title": "Frame & Package Tariffs",
+          "height": 272.5
+        },
+        {
+          "title": "Session reminders & time corrections",
+          "height": 984
+        },
+        {
+          "title": "Minimum Session Time",
+          "height": 264.5
+        },
+        {
+          "title": "Booking Grace Period",
+          "height": 332.5
+        },
+        {
+          "title": "Food Menu",
+          "height": 364.5
+        },
+        {
+          "title": "Admin Credentials",
+          "height": 288.5
+        },
+        {
+          "title": "Staff Credentials",
+          "height": 268.5
+        },
+        {
+          "title": "Danger Zone",
+          "height": 176.5
+        }
+      ],
+      "tableOperationsHeight": 326.5,
+      "tariffLoadingSkeleton": true,
+      "incompleteTariffCrashesPage": false,
+      "incompleteTariffHasSave": false,
+      "pendingFeedback": {
+        "ms": 14.199999988079071,
+        "pending": true
+      },
+      "rateRetained": true
+    },
+    {
+      "theme": "light",
+      "width": 768,
+      "missingCounts": {
+        "Club": "HSR Snooker Cafe BMS",
+        "Deployment": "Single club",
+        "Plan": "No subscription configured",
+        "Customers": "—",
+        "Tables": "—",
+        "Role logins": "—",
+        "Version": "v0.1.0"
+      },
+      "unknownTeamReviewDisabled": true,
+      "teamRecovered": true,
+      "settingsPanelHeights": [
+        {
+          "title": "Table Operations",
+          "height": 204.5
+        },
+        {
+          "title": "HSR Table Rates",
+          "height": 248.5
+        },
+        {
+          "title": "Frame & Package Tariffs",
+          "height": 272.5
+        },
+        {
+          "title": "Session reminders & time corrections",
+          "height": 398
+        },
+        {
+          "title": "Minimum Session Time",
+          "height": 188.5
+        },
+        {
+          "title": "Booking Grace Period",
+          "height": 216.5
+        },
+        {
+          "title": "Food Menu",
+          "height": 204.5
+        },
+        {
+          "title": "Admin Credentials",
+          "height": 248.5
+        },
+        {
+          "title": "Staff Credentials",
+          "height": 248.5
+        },
+        {
+          "title": "Danger Zone",
+          "height": 156.5
+        }
+      ],
+      "tableOperationsHeight": 204.5,
+      "tariffLoadingSkeleton": true,
+      "incompleteTariffCrashesPage": false,
+      "incompleteTariffHasSave": false,
+      "pendingFeedback": {
+        "ms": 11.5,
+        "pending": true
+      },
+      "rateRetained": true
+    },
+    {
+      "theme": "light",
+      "width": 1024,
+      "missingCounts": {
+        "Club": "HSR Snooker Cafe BMS",
+        "Deployment": "Single club",
+        "Plan": "No subscription configured",
+        "Customers": "—",
+        "Tables": "—",
+        "Role logins": "—",
+        "Version": "v0.1.0"
+      },
+      "unknownTeamReviewDisabled": true,
+      "teamRecovered": true,
+      "settingsPanelHeights": [
+        {
+          "title": "Table Operations",
+          "height": 204.5
+        },
+        {
+          "title": "HSR Table Rates",
+          "height": 240.5
+        },
+        {
+          "title": "Frame & Package Tariffs",
+          "height": 272.5
+        },
+        {
+          "title": "Session reminders & time corrections",
+          "height": 380
+        },
+        {
+          "title": "Minimum Session Time",
+          "height": 180.5
+        },
+        {
+          "title": "Booking Grace Period",
+          "height": 208.5
+        },
+        {
+          "title": "Food Menu",
+          "height": 204.5
+        },
+        {
+          "title": "Admin Credentials",
+          "height": 240.5
+        },
+        {
+          "title": "Staff Credentials",
+          "height": 240.5
+        },
+        {
+          "title": "Danger Zone",
+          "height": 156.5
+        }
+      ],
+      "tableOperationsHeight": 204.5,
+      "tariffLoadingSkeleton": true,
+      "incompleteTariffCrashesPage": false,
+      "incompleteTariffHasSave": false,
+      "pendingFeedback": {
+        "ms": 13.600000023841858,
+        "pending": true
+      },
+      "rateRetained": true
+    },
+    {
+      "theme": "light",
+      "width": 1440,
+      "missingCounts": {
+        "Club": "HSR Snooker Cafe BMS",
+        "Deployment": "Single club",
+        "Plan": "No subscription configured",
+        "Customers": "—",
+        "Tables": "—",
+        "Role logins": "—",
+        "Version": "v0.1.0"
+      },
+      "unknownTeamReviewDisabled": true,
+      "teamRecovered": true,
+      "settingsPanelHeights": [
+        {
+          "title": "Table Operations",
+          "height": 184.5
+        },
+        {
+          "title": "HSR Table Rates",
+          "height": 240.5
+        },
+        {
+          "title": "Frame & Package Tariffs",
+          "height": 272.5
+        },
+        {
+          "title": "Session reminders & time corrections",
+          "height": 374
+        },
+        {
+          "title": "Minimum Session Time",
+          "height": 180.5
+        },
+        {
+          "title": "Booking Grace Period",
+          "height": 208.5
+        },
+        {
+          "title": "Food Menu",
+          "height": 204.5
+        },
+        {
+          "title": "Admin Credentials",
+          "height": 240.5
+        },
+        {
+          "title": "Staff Credentials",
+          "height": 240.5
+        },
+        {
+          "title": "Danger Zone",
+          "height": 156.5
+        }
+      ],
+      "tableOperationsHeight": 184.5,
+      "tariffLoadingSkeleton": true,
+      "incompleteTariffCrashesPage": false,
+      "incompleteTariffHasSave": false,
+      "pendingFeedback": {
+        "ms": 12,
+        "pending": true
+      },
+      "rateRetained": true
+    },
+    {
+      "theme": "dark",
+      "width": 375,
+      "missingCounts": {
+        "Club": "HSR Snooker Cafe BMS",
+        "Deployment": "Single club",
+        "Plan": "No subscription configured",
+        "Customers": "—",
+        "Tables": "—",
+        "Role logins": "—",
+        "Version": "v0.1.0"
+      },
+      "unknownTeamReviewDisabled": true,
+      "teamRecovered": true,
+      "settingsPanelHeights": [
+        {
+          "title": "Table Operations",
+          "height": 326.5
+        },
+        {
+          "title": "HSR Table Rates",
+          "height": 460.5
+        },
+        {
+          "title": "Frame & Package Tariffs",
+          "height": 272.5
+        },
+        {
+          "title": "Session reminders & time corrections",
+          "height": 984
+        },
+        {
+          "title": "Minimum Session Time",
+          "height": 264.5
+        },
+        {
+          "title": "Booking Grace Period",
+          "height": 332.5
+        },
+        {
+          "title": "Food Menu",
+          "height": 364.5
+        },
+        {
+          "title": "Admin Credentials",
+          "height": 288.5
+        },
+        {
+          "title": "Staff Credentials",
+          "height": 268.5
+        },
+        {
+          "title": "Danger Zone",
+          "height": 176.5
+        }
+      ],
+      "tableOperationsHeight": 326.5,
+      "tariffLoadingSkeleton": true,
+      "incompleteTariffCrashesPage": false,
+      "incompleteTariffHasSave": false,
+      "pendingFeedback": {
+        "ms": 12.099999994039536,
+        "pending": true
+      },
+      "rateRetained": true
+    },
+    {
+      "theme": "dark",
+      "width": 768,
+      "missingCounts": {
+        "Club": "HSR Snooker Cafe BMS",
+        "Deployment": "Single club",
+        "Plan": "No subscription configured",
+        "Customers": "—",
+        "Tables": "—",
+        "Role logins": "—",
+        "Version": "v0.1.0"
+      },
+      "unknownTeamReviewDisabled": true,
+      "teamRecovered": true,
+      "settingsPanelHeights": [
+        {
+          "title": "Table Operations",
+          "height": 204.5
+        },
+        {
+          "title": "HSR Table Rates",
+          "height": 248.5
+        },
+        {
+          "title": "Frame & Package Tariffs",
+          "height": 272.5
+        },
+        {
+          "title": "Session reminders & time corrections",
+          "height": 398
+        },
+        {
+          "title": "Minimum Session Time",
+          "height": 188.5
+        },
+        {
+          "title": "Booking Grace Period",
+          "height": 216.5
+        },
+        {
+          "title": "Food Menu",
+          "height": 204.5
+        },
+        {
+          "title": "Admin Credentials",
+          "height": 248.5
+        },
+        {
+          "title": "Staff Credentials",
+          "height": 248.5
+        },
+        {
+          "title": "Danger Zone",
+          "height": 156.5
+        }
+      ],
+      "tableOperationsHeight": 204.5,
+      "tariffLoadingSkeleton": true,
+      "incompleteTariffCrashesPage": false,
+      "incompleteTariffHasSave": false,
+      "pendingFeedback": {
+        "ms": 13.099999994039536,
+        "pending": true
+      },
+      "rateRetained": true
+    },
+    {
+      "theme": "dark",
+      "width": 1024,
+      "missingCounts": {
+        "Club": "HSR Snooker Cafe BMS",
+        "Deployment": "Single club",
+        "Plan": "No subscription configured",
+        "Customers": "—",
+        "Tables": "—",
+        "Role logins": "—",
+        "Version": "v0.1.0"
+      },
+      "unknownTeamReviewDisabled": true,
+      "teamRecovered": true,
+      "settingsPanelHeights": [
+        {
+          "title": "Table Operations",
+          "height": 204.5
+        },
+        {
+          "title": "HSR Table Rates",
+          "height": 240.5
+        },
+        {
+          "title": "Frame & Package Tariffs",
+          "height": 272.5
+        },
+        {
+          "title": "Session reminders & time corrections",
+          "height": 380
+        },
+        {
+          "title": "Minimum Session Time",
+          "height": 180.5
+        },
+        {
+          "title": "Booking Grace Period",
+          "height": 208.5
+        },
+        {
+          "title": "Food Menu",
+          "height": 204.5
+        },
+        {
+          "title": "Admin Credentials",
+          "height": 240.5
+        },
+        {
+          "title": "Staff Credentials",
+          "height": 240.5
+        },
+        {
+          "title": "Danger Zone",
+          "height": 156.5
+        }
+      ],
+      "tableOperationsHeight": 204.5,
+      "tariffLoadingSkeleton": true,
+      "incompleteTariffCrashesPage": false,
+      "incompleteTariffHasSave": false,
+      "pendingFeedback": {
+        "ms": 13.399999976158142,
+        "pending": true
+      },
+      "rateRetained": true
+    },
+    {
+      "theme": "dark",
+      "width": 1440,
+      "missingCounts": {
+        "Club": "HSR Snooker Cafe BMS",
+        "Deployment": "Single club",
+        "Plan": "No subscription configured",
+        "Customers": "—",
+        "Tables": "—",
+        "Role logins": "—",
+        "Version": "v0.1.0"
+      },
+      "unknownTeamReviewDisabled": true,
+      "teamRecovered": true,
+      "settingsPanelHeights": [
+        {
+          "title": "Table Operations",
+          "height": 184.5
+        },
+        {
+          "title": "HSR Table Rates",
+          "height": 240.5
+        },
+        {
+          "title": "Frame & Package Tariffs",
+          "height": 272.5
+        },
+        {
+          "title": "Session reminders & time corrections",
+          "height": 374
+        },
+        {
+          "title": "Minimum Session Time",
+          "height": 180.5
+        },
+        {
+          "title": "Booking Grace Period",
+          "height": 208.5
+        },
+        {
+          "title": "Food Menu",
+          "height": 204.5
+        },
+        {
+          "title": "Admin Credentials",
+          "height": 240.5
+        },
+        {
+          "title": "Staff Credentials",
+          "height": 240.5
+        },
+        {
+          "title": "Danger Zone",
+          "height": 156.5
+        }
+      ],
+      "tableOperationsHeight": 184.5,
+      "tariffLoadingSkeleton": true,
+      "incompleteTariffCrashesPage": false,
+      "incompleteTariffHasSave": false,
+      "pendingFeedback": {
+        "ms": 13.5,
+        "pending": true
+      },
+      "rateRetained": true
+    }
+  ],
+  "blockedWrites": [],
+  "mockedWrites": [
+    {
+      "theme": "light",
+      "width": 375,
+      "payload": {
+        "frame_rates": {
+          "wr": 100,
+          "sr": 90,
+          "pr": 60
+        },
+        "packages": []
+      }
+    },
+    {
+      "theme": "light",
+      "width": 768,
+      "payload": {
+        "frame_rates": {
+          "wr": 100,
+          "sr": 90,
+          "pr": 60
+        },
+        "packages": []
+      }
+    },
+    {
+      "theme": "light",
+      "width": 1024,
+      "payload": {
+        "frame_rates": {
+          "wr": 100,
+          "sr": 90,
+          "pr": 60
+        },
+        "packages": []
+      }
+    },
+    {
+      "theme": "light",
+      "width": 1440,
+      "payload": {
+        "frame_rates": {
+          "wr": 100,
+          "sr": 90,
+          "pr": 60
+        },
+        "packages": []
+      }
+    },
+    {
+      "theme": "dark",
+      "width": 375,
+      "payload": {
+        "frame_rates": {
+          "wr": 100,
+          "sr": 90,
+          "pr": 60
+        },
+        "packages": []
+      }
+    },
+    {
+      "theme": "dark",
+      "width": 768,
+      "payload": {
+        "frame_rates": {
+          "wr": 100,
+          "sr": 90,
+          "pr": 60
+        },
+        "packages": []
+      }
+    },
+    {
+      "theme": "dark",
+      "width": 1024,
+      "payload": {
+        "frame_rates": {
+          "wr": 100,
+          "sr": 90,
+          "pr": 60
+        },
+        "packages": []
+      }
+    },
+    {
+      "theme": "dark",
+      "width": 1440,
+      "payload": {
+        "frame_rates": {
+          "wr": 100,
+          "sr": 90,
+          "pr": 60
+        },
+        "packages": []
+      }
+    }
+  ],
+  "businessWrites": 0,
+  "scope": "Isolated local QA. Alerts held empty to isolate Settings; tariff POST is held then mocked HTTP 500, never sent to the backend."
+}

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Button, Input, Switch } from "../../components/ui/index.js";
+import { Button, Input, Switch, Panel } from "../../components/ui/index.js";
 import { getSessionControls, saveSessionControls } from "../../api/index.js";
 import { useToast } from "../../components/toastContext.js";
 
@@ -25,7 +25,7 @@ export default function SessionControlsSettings() {
     catch (err) { setError(typeof err.response?.data?.detail === "string" ? err.response.data.detail : "Check the reminder and guardrail values."); }
     finally { setBusy(false); }
   }
-  return <section className="settings-panel">
+  return <Panel className="settings-panel">
     <h3>Session reminders & time corrections</h3>
     {error && <div role="alert"><p>{error}</p>{!values && <Button onClick={() => setRetry(value => value + 1)}>Retry</Button>}</div>}
     {!values && !error ? <div className="page-skeleton compact" role="status" aria-label="Loading session controls"><div className="skeleton-line skeleton-title" /><div className="skeleton-panel" /></div> : values && <form onSubmit={save}><fieldset disabled={busy} className="session-controls-settings">
@@ -34,5 +34,5 @@ export default function SessionControlsSettings() {
       <label>Club UPI ID (optional)<Input maxLength={120} value={values.upiId} onChange={event => setValues(current => ({ ...current, upiId: event.target.value.trim() }))} /></label>
       <Button variant="primary" type="submit" loading={busy}>Save Session Controls</Button>
     </fieldset></form>}
-  </section>;
+  </Panel>;
 }

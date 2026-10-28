@@ -1,4 +1,4 @@
-import { Button as HsrButton, Icon as HsrIcon, Input as HsrInput, SkeletonGrid } from "../ui/index.js";
+import { Button as HsrButton, Icon as HsrIcon, Input as HsrInput, SkeletonGrid, Panel } from "../ui/index.js";
 import { useState, useEffect } from "react";
 import {
   getRates,
@@ -19,13 +19,13 @@ import RetryNotice from "../RetryNotice.jsx";
 
 function SettingsCard({ title, description, children }) {
   return (
-    <div className="settings-panel">
+    <Panel as="div" className="settings-panel">
       <div className="settings-card-heading">
         <div className="settings-panel-title">{title}</div>
         {description && <div className="settings-card-description">{description}</div>}
       </div>
       {children}
-    </div>
+    </Panel>
   );
 }
 

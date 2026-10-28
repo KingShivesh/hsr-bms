@@ -1,7 +1,8 @@
-import { Button as HsrButton, Input as HsrInput, Select as HsrSelect, Icon as HsrIcon } from "../../components/ui/index.js";
+import { Button as HsrButton, Input as HsrInput, Select as HsrSelect, Icon as HsrIcon, Panel, SkeletonBlock } from "../../components/ui/index.js";
 import { useEffect, useState } from "react";
 import { getTariffs, saveTariffs } from "../../api/index.js";
 import { useToast } from "../../components/toastContext.js";
+import RetryNotice from "../../components/RetryNotice.jsx";
 
 const groups = [["wr", "Wiraka T1/T2"], ["sr", "English T3/T4"], ["pr", "Pool T5"]];
 
@@ -12,7 +13,13 @@ export default function TariffSettings() {
   const [busy, setBusy] = useState(false);
   async function load() {
     setError("");
-    try { setCatalog((await getTariffs()).data); }
+    try {
+      const { data } = await getTariffs();
+      if (!data?.frame_rates || !groups.every(([key]) => typeof data.frame_rates[key] === "number" && Number.isFinite(data.frame_rates[key])) || !Array.isArray(data.packages) || !data.packages.every(row => row && typeof row.id === "string" && typeof row.name === "string" && typeof row.price === "number" && typeof row.table_group === "string")) {
+        throw new Error("Incomplete tariff settings");
+      }
+      setCatalog(data);
+    }
     catch { setError("Could not load tariff settings."); }
   }
   useEffect(() => { load(); }, []);
@@ -32,9 +39,10 @@ export default function TariffSettings() {
     } finally { setBusy(false); }
   }
   return (
-    <section className="settings-panel" aria-label="Frame and package tariffs">
+    <Panel className="settings-panel" aria-label="Frame and package tariffs">
       <div className="settings-card-heading"><div className="settings-panel-title">Frame & Package Tariffs</div></div>
-      {!catalog ? <div role="status">{error || "Loading tariffs..."}{error && <HsrButton native type="button" className="btn btn-outline" onClick={load}>Retry</HsrButton>}</div> : (
+      {error && <RetryNotice message={error} onRetry={load} />}
+      {!catalog ? !error && <SkeletonBlock rows={4} label="Loading tariff settings" /> : (
         <form onSubmit={save}>
           <fieldset disabled={busy} className="tariff-fieldset">
             <div className="settings-form-grid">
@@ -55,6 +63,6 @@ export default function TariffSettings() {
           </fieldset>
         </form>
       )}
-    </section>
+    </Panel>
   );
 }

@@ -1,0 +1,41 @@
+{
+  "legend": "Before left, after right; light above dark. Original pixels, first 1000px of tall captures. Full source captures retained.",
+  "sources": [
+    {
+      "theme": "light",
+      "stage": "before",
+      "path": "settings-contract/before/light-1440-tariff-loading-panel.png",
+      "sha256": "5ac2d53e76214ef93721c0eae8b69eb8f27ef0a6fe2f09df1f9482e161bcfa62",
+      "width": 780,
+      "height": 2305,
+      "croppedHeight": 1000
+    },
+    {
+      "theme": "light",
+      "stage": "after",
+      "path": "settings-contract/after/light-1440-tariff-loading-panel.png",
+      "sha256": "31907e01ce0364b736fd6f7d02c4e74d0c32d58a11a21b87abad788af26d2637",
+      "width": 780,
+      "height": 273,
+      "croppedHeight": 273
+    },
+    {
+      "theme": "dark",
+      "stage": "before",
+      "path": "settings-contract/before/dark-1440-tariff-loading-panel.png",
+      "sha256": "2862500502287168855cac4177d1480380d1c2fa361d0ac9237e30a07fc582f2",
+      "width": 780,
+      "height": 2305,
+      "croppedHeight": 1000
+    },
+    {
+      "theme": "dark",
+      "stage": "after",
+      "path": "settings-contract/after/dark-1440-tariff-loading-panel.png",
+      "sha256": "d6923b70b7ebbc0c9bd9b1d16972b323394d2641288c58c666688f7f3581241e",
+      "width": 780,
+      "height": 273,
+      "croppedHeight": 273
+    }
+  ]
+}

@@ -4,6 +4,8 @@ const [group, stage = "after"] = process.argv.slice(2);
 if (!["before", "after"].includes(stage)) throw new Error("Choose before or after");
 const groups = {
   settings: [
+    ["settings-operations", "/settings"],
+    ["settings-club", "/settings?section=club", "^/product/context$"],
     ["settings-team", "/settings?section=team", "^/product/account$"],
     ["settings-account", "/settings?section=account", "^/product/account$"],
     ["settings-activity", "/settings?section=activity", "^/operations/audit-logs$"],

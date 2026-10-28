@@ -57,9 +57,27 @@ function AccountSection({ section }) {
   useEffect(() => { if (section !== "billing") load(); }, [section]);
   if (section === "billing") return <section className="product-settings-section"><h2>Subscription billing</h2><EmptyState icon="ti-receipt" title="No subscription billing configured" description="This deployment has no paid plan, subscription invoices or upgrade checkout. Club sales and receipts remain in Sales." action={<Button onClick={() => p.onNavigate("billing")}>Open club sales</Button>} secondaryAction={<a href={supportLink()}>Contact support</a>} /></section>;
   if (!data) return error ? <RetryNotice message={error} onRetry={load} /> : <SkeletonBlock rows={5} label="Loading account" />;
-  const team = Array.isArray(data.team) ? data.team.filter(Boolean) : [];
-  if (section === "team") return <section className="product-settings-section"><h2>Team access</h2><p>Two role-based logins are available in this single-club deployment. Staff share one login; individual accounts and invitations are not available yet.</p><DataTable rows={team} rowKey="role" columns={[{ key: "username", label: "Login" }, { key: "role", label: "Role" }]} /><div className="product-actions"><Button variant="primary" onClick={() => p.onNavigate("settings", { section: "operations" })}>Manage credentials</Button><Button onClick={() => p.updateSetup({ team_reviewed: true })}>Mark access reviewed</Button></div><p>Older audit records may identify a shared role rather than an individual employee.</p></section>;
-  return <section className="product-settings-section"><h2>Account</h2><dl className="product-details"><dt>Club</dt><dd>{p.profile?.name}</dd><dt>Deployment</dt><dd>{data.deployment}</dd><dt>Plan</dt><dd>No subscription configured</dd><dt>Customers</dt><dd>{data.members ?? 0}</dd><dt>Tables</dt><dd>{data.tables ?? 0}</dd><dt>Role logins</dt><dd>{team.length}</dd><dt>Version</dt><dd>v{APP_VERSION}</dd></dl><p>No plan quotas or paid upgrades are enforced. Multi-club switching and individual staff invitations are not supported in this deployment.</p><div className="product-actions"><Button onClick={() => p.updateSetup({ dismissed: false, collapsed: false }).then(() => p.onNavigate("dashboard"))}>Reopen setup checklist</Button><Button onClick={p.startTour}>Take a tour</Button></div></section>;
+  const teamKnown = Array.isArray(data.team);
+  const team = teamKnown ? data.team.filter(row => row && typeof row === "object") : [];
+  const count = value => typeof value === "number" && Number.isFinite(value) && value >= 0 ? value : "—";
+  if (section === "team") return <section className="product-settings-section">
+    <h2>Team access</h2>
+    <p>Two role-based logins are available in this single-club deployment. Staff share one login; individual accounts and invitations are not available yet.</p>
+    {error && <RetryNotice message={error} onRetry={load} />}
+    {!teamKnown ? !error && <RetryNotice message="Team access details are unavailable." onRetry={load} /> : <DataTable rows={team} rowKey="role" columns={[
+      { key: "username", label: "Login", render: row => row.username || "—" },
+      { key: "role", label: "Role", render: row => row.role || "—" },
+    ]} empty={<EmptyState title="No role logins returned" description="Refresh the access details before reviewing this club’s credentials." action={<Button onClick={load}>Refresh team access</Button>} />} />}
+    <div className="product-actions"><Button variant="primary" onClick={() => p.onNavigate("settings", { section: "operations" })}>Manage credentials</Button><Button disabled={!teamKnown || !!error} onClick={() => p.updateSetup({ team_reviewed: true })}>Mark access reviewed</Button></div>
+    <p>Older audit records may identify a shared role rather than an individual employee.</p>
+  </section>;
+  return <section className="product-settings-section">
+    <h2>Account</h2>
+    {error && <RetryNotice message={error} onRetry={load} />}
+    {!error && (!teamKnown || count(data.members) === "—" || count(data.tables) === "—") && <RetryNotice message="Some account counts are unavailable. Existing club data has not been changed." onRetry={load} />}
+    <dl className="product-details"><dt>Club</dt><dd>{p.profile?.name || "—"}</dd><dt>Deployment</dt><dd>{data.deployment || "—"}</dd><dt>Plan</dt><dd>No subscription configured</dd><dt>Customers</dt><dd>{count(data.members)}</dd><dt>Tables</dt><dd>{count(data.tables)}</dd><dt>Role logins</dt><dd>{teamKnown ? team.length : "—"}</dd><dt>Version</dt><dd>v{APP_VERSION}</dd></dl>
+    <p>No plan quotas or paid upgrades are enforced. Multi-club switching and individual staff invitations are not supported in this deployment.</p><div className="product-actions"><Button onClick={() => p.updateSetup({ dismissed: false, collapsed: false }).then(() => p.onNavigate("dashboard"))}>Reopen setup checklist</Button><Button onClick={p.startTour}>Take a tour</Button></div>
+  </section>;
 }
 
 function Activity() {

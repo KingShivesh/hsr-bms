@@ -47,6 +47,7 @@ h3 { font-size: var(--text-lg); line-height: var(--leading-lg); font-weight: 500
 .lucide { stroke-width: 1.5; }
 .login-greeting { font-size: var(--text-sm); line-height: var(--leading-sm); color: var(--text-secondary); margin-top: var(--space-1); }
 .settings-panel, .ops-panel, .op2-panel, .cf-panel, .lf-panel { border-radius: var(--radius-md); border-width: 1px; }
+.settings-page-shell > .settings-panel { height: auto; }
 :root.dark :is(.ui-card, .ui-metric-card, .ops-kpi, .settings-panel, .ops-panel, .cf-panel) { box-shadow: inset 0 1px 0 rgb(255 255 255 / 3%) !important; }
 .ui-button-primary, .cf-page-primary-action { box-shadow: inset 0 1px 0 rgb(255 255 255 / 15%), inset 0 -1px 0 rgb(0 0 0 / 10%) !important; }
 .ops-dashboard { gap: var(--space-10); }
