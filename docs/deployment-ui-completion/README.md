@@ -20,7 +20,7 @@ server-authoritative payment/receipt confirmation. No feature or role expansion.
 | Shared notifications | Ten before/after cases, 16 real-Cafe contracts and both-theme lifecycle tests pass; 160 loaded-route checks pass; strict contrast scanner: 0 violations / 0 errors | `notification-clearance/`, `notification-cafe/`, `notification-lifecycle/`, `notification-regression/`, `notification-contrast.json` |
 | Remaining overlays / menus / action states | Pending consolidation and interaction rerun | Not a pass |
 | Local operational lifecycle | Pending 20-cycle role/theme/mobile exercise | Not a pass |
-| Production release | Dashboard, Live Floor, members/bookings, Cafe, Finance, Settings and notifications are live-verified; remaining Operations release verification follows its commit | `deployment-*.json`; a push alone is not proof |
+| Production release | Dashboard, Live Floor, members/bookings, Cafe, Finance, Settings, notifications and Inventory/Waitlist/Legacy/Tournaments are live-verified | `deployment-*.json`; a push alone is not proof |
 | Real devices / unfamiliar human | External acceptance remains unverified | Browser viewports are not physical-device testing |
 
 All current captures use a guarded disposable local database. No production
@@ -352,3 +352,10 @@ availability helper excludes active and maintenance tables but does not consult
 bookings. The UI now refuses a reserved recommendation using canonical table
 status; server-side reservation/seating policy still needs its own reviewed
 contract rather than a silent policy change in a presentation pass.
+
+Operations source `70b6d33` and evidence through `e32ebba` are merged, pushed and
+production-verified. `deployment-remaining-operations.json` matches all 24 current
+JS/CSS hashes, confirms unchanged backend ancestry and health/database readiness
+200. The first backend probe timed out and was not accepted as deployment proof;
+the following complete observation passed. After verification, guarded local
+fixture cleanup confirmed zero rows in every disposable QA database table.
