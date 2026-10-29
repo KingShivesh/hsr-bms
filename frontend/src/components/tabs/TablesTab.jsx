@@ -36,6 +36,7 @@ import { useDialogFocus } from "../ui/useDialogFocus.js";
 import { TableAttentionBadge, TablePrimaryAction, TableStateBadge } from "../TableStateUI.jsx";
 import { HSR_TABLES, getTableLabel, getTableRate } from "../../config/hsrTables.js";
 import { tableStateAttributes, getTableAttention, getTableStatus } from "../../config/tableStatus.js";
+import { readableFloorSnapshot } from "../../features/live-floor/floorData.js";
 import StartSessionModal from "../../features/sessions/StartSessionModal.jsx";
 import FrameControls from "../../features/sessions/FrameControls.jsx";
 import { tariffDescription } from "../../features/sessions/tariffs.js";
@@ -1901,7 +1902,7 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0, onOpenF
       const floor = res.data?.floor || {};
       const payload = floor.tables || res.data?.tables;
       if (!Array.isArray(payload)) throw new Error("Floor data unavailable");
-      const tableRows = payload.filter(Boolean);
+      const tableRows = readableFloorSnapshot({ tables: payload }).tables;
       const floorResources = floor.resources || {};
       const s = {},
         n = {};

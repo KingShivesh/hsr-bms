@@ -18,7 +18,7 @@ const domains = {
   "/inventory": /^\/(settings\/menu|sessions\/tables)$/,
   "/waitlist": /^\/(waitlist|bookings|sessions\/tables)$/,
   "/legacy-table-controls": /^\/(sessions\/(active|tables|live-floor|maintenance)|waitlist|bookings|settings\/rates|operations\/(gst|current-rate))$/,
-  "/tournaments": /^\/tournaments\/?$/, "/daily-closing": /^\/reports\/closing-report$/,
+  "/tournaments": /^\/tournaments(?:\/\d+)?\/?$/, "/daily-closing": /^\/reports\/closing-report$/,
   "/pricing-rules": /^\/operations\//, "/audit-log": /^\/operations\/audit-logs$/,
   "/settings": /^\/settings\/(rates|tariffs|min-session|booking-grace|session-controls)$/,
 };
@@ -48,8 +48,12 @@ function partial(value, field = "") {
 }
 const bookingFixture = {id:99001,customer_name:"QA Booking",phone:"9000000000",table_id:"t3",table_type:"SNOOKER",booking_time:"2099-10-18T18:00:00",duration_mins:60,status:"booked"};
 const billFixture = {id:99001,nm:"QA Customer",tbl:"T1",ts:Date.now(),date:new Intl.DateTimeFormat("en-GB",{timeZone:"Asia/Kolkata",day:"2-digit",month:"2-digit",year:"numeric"}).format(new Date()),dur:60,ply:320,famt:120,tot:440,payment_method:"Cash",tariff_mode:"hourly"};
+const tournamentFixture = { id: 99001, name: "QA read-only tournament", game_type: "8 Ball", entry_fee: 100, status: "active", winner_name: "", created_at: "28 Oct 2026", players: [{ id: 99001, name: "QA Player One", seed: 1, eliminated: false }, { id: 99002, name: "QA Player Two", seed: 2, eliminated: false }], matches: [{ id: 99001, round_no: 1, match_no: 1, player1: "QA Player One", player2: "QA Player Two", winner: "", status: "scheduled", completed_at: "" }] };
 function fixture(data, pathname, state) {
   pathname = pathname.replace(/\/$/, "");
+  if (pathname === "/tournaments/99001") return tournamentFixture;
+  if (pathname === "/tournaments" && Array.isArray(data) && !data.length) return [tournamentFixture];
+  if (pathname === "/waitlist" && Array.isArray(data) && !data.length) return [{ id: 99001, position: 1, customer_name: "QA Waiting Guest", party_size: 2, preferred_type: "ANY", wait_mins: 10, recommended_table: { id: "t3" } }];
   if (state === "partial" && process.env.UI_PARTIAL_NULL_ROWS === "true" && Array.isArray(data) && ["/members", "/members/duplicates", "/bookings", "/food/orders", "/food/stats", "/reports/history"].includes(pathname)) return [null, ...fixture(data, pathname, "default")];
   if (state === "missing-payment" && Array.isArray(data) && ["/reports/history", "/food/orders"].includes(pathname)) return fixture(data, pathname, "default").map(row => ({ ...row, payment_method: null }));
   if (pathname === "/sessions/live-floor" && state === "table-states") {
@@ -108,7 +112,7 @@ try {
         if (state === "default") return handler.continue();
         const response = await handler.fetch(), data = await response.json();
         const payload = state === "empty" ? pathname === "/settings/menu" ? {} : empty(data) : ["table-states", "missing-payment"].includes(state) ? fixture(data,pathname,state) : state === "extreme" ? extreme(fixture(data,pathname,state)) : partial(fixture(data,pathname,state));
-        return handler.fulfill({ response, json: payload });
+        return handler.fulfill({ response, status: pathname === "/tournaments/99001" ? 200 : response.status(), json: payload });
       });
       await page.goto(origin + route, {waitUntil:"domcontentloaded"});
       await page.locator(".topbar-title").waitFor();
@@ -131,6 +135,7 @@ try {
           await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
         });
         const metrics = await page.evaluate(measureUi, { minimumTextSize: strict ? 12 : 0 });
+        const populatedBracketVisible = route === "/tournaments" && ["partial", "extreme"].includes(state) ? await page.getByRole("button", { name: /QA Player One/ }).count() > 0 : undefined;
         const paymentSummary = route === "/sales" ? await page.evaluate(() => ({
           values: Object.fromEntries([...document.querySelectorAll(".sales-metrics > *")].map(node => [node.querySelector("span")?.textContent, node.querySelector("strong")?.textContent])),
           unspecifiedWarning: document.body.textContent.includes("Some payment methods are unspecified"),
@@ -148,7 +153,7 @@ try {
         }
         const noRequestNeeded = route === "/settings?section=billing" && stage === "after";
         const retry = state === "error" && !noRequestNeeded ? await page.getByRole("button",{name:/retry|try again|check again/i}).count() > 0 : true;
-        report.samples.push({theme,width,state,file,requestedTab:process.env.UI_TAB,tabSelected,paymentSummary,...metrics,loadingIndicator,settled,contrast,contrastScope:viewportOnly?"visible viewport only; unpaginated baseline":"all rendered page text",retry,errors:[...errors]});
+        report.samples.push({theme,width,state,file,requestedTab:process.env.UI_TAB,tabSelected,paymentSummary,populatedBracketVisible,...metrics,loadingIndicator,settled,contrast,contrastScope:viewportOnly?"visible viewport only; unpaginated baseline":"all rendered page text",retry,errors:[...errors]});
       }
       release(); await page.unrouteAll({ behavior: "wait" }); errors=[];
       console.log(`${stage} ${route} ${theme} ${state}`);
@@ -156,10 +161,11 @@ try {
     await context.close();
   }
 } finally { await browser.close(); await fs.writeFile(`${output}/results.json`,JSON.stringify(report,null,2)); }
-const faults = report.samples.filter(r => !r.loadingIndicator || !r.settled || r.applicationCrashed || r.overflow || r.smallText.length || r.contentOverflow.length || r.shortTargets.length || r.clipped.length || r.invalidCopy.length || r.unlabeledButtons.length || r.unlabeledInputs.length || r.brokenImages.length || r.contrast.length || r.errors.length || !r.retry);
-console.log(JSON.stringify({route,stage,samples:report.samples.length,faults:faults.map(r=>({theme:r.theme,width:r.width,state:r.state,applicationCrashed:r.applicationCrashed,overflow:r.overflow,contentOverflow:r.contentOverflow,shortTargets:r.shortTargets,clipped:r.clipped,unlabeledInputs:r.unlabeledInputs,contrast:r.contrast,errors:r.errors,retry:r.retry}))},null,2));
+const faults = report.samples.filter(r => !r.loadingIndicator || !r.settled || r.applicationCrashed || r.overflow || r.smallText.length || r.contentOverflow.length || r.shortTargets.length || r.clipped.length || r.clippedControls.length || r.invalidCopy.length || r.unlabeledButtons.length || r.unlabeledInputs.length || r.brokenImages.length || r.contrast.length || r.errors.length || !r.retry);
+console.log(JSON.stringify({route,stage,samples:report.samples.length,faults:faults.map(r=>({theme:r.theme,width:r.width,state:r.state,loadingIndicator:r.loadingIndicator,settled:r.settled,applicationCrashed:r.applicationCrashed,overflow:r.overflow,contentOverflow:r.contentOverflow,shortTargets:r.shortTargets,clipped:r.clipped,clippedControls:r.clippedControls,unlabeledInputs:r.unlabeledInputs,contrast:r.contrast,errors:r.errors,retry:r.retry}))},null,2));
 if (stage === "after") {
   assert.equal(faults.length,0); assert.equal(report.errors.length,0);
+  assert.ok(report.samples.every(row => row.populatedBracketVisible !== false), "Populated bracket fixture must actually load, not pass as a failed detail request");
   assert.ok(report.samples.every(row => row.tabSelected), "Requested sub-tab must actually be selected, including loading state");
   if (process.env.UI_PARTIAL_NULL_ROWS === "true" && route === "/live-floor") assert.ok(report.samples.every(row => row.collectionSizes[".lf-table-card"] === 5));
   if (process.env.UI_UNKNOWN_FLOOR_STATUS === "true") assert.ok(report.samples.every(row => row.collectionSizes[".lf-table-card"] === 0));

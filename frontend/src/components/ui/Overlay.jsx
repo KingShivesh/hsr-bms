@@ -21,6 +21,7 @@ export function Modal({
   children,
   footer,
   onClose,
+  onEscape,
   className = "",
   size = "md",
   portal = false,
@@ -32,7 +33,7 @@ export function Modal({
   const dialogRef = useRef(null);
   const present = usePresence(open);
   useDialogFocus(dialogRef, open, initialFocusRef);
-  useEscapeKey(closeDisabled ? undefined : onClose, open, dialogRef);
+  useEscapeKey(closeDisabled ? undefined : onEscape || onClose, open, dialogRef);
 
   if (!present) return null;
 

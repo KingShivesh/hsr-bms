@@ -15,11 +15,12 @@ server-authoritative payment/receipt confirmation. No feature or role expansion.
 | Cafe | Main order view and both tabs: 48 final samples each. 16 price/cart/pagination contracts, 16 anonymous-target contracts and eight independent-read cases pass | `cafe-pos/`, `cafe-stats/`, `cafe-history/`, `cafe-contract/after-verified/`, `cafe-guest-target/`, `cafe-loading-isolation/` |
 | Finance / reports | Three main screens + four reachable report sub-tabs: 336 final samples pass; eight receipt/paging cases and two eight-case data-integrity follow-ups pass | `sales/`, `analytics/`, `daily-closing/`, `reports-*/` |
 | Settings | Six sections: 256 final strict samples pass. Eight missing-data, tariff recovery and pending-save contracts pass; three shared Panel roots migrated | `settings-*/`, `settings-contract/after/` |
-| Remaining operations / error routes | Pending current-build rerun and component consolidation | Not a pass |
+| Inventory / Waitlist / Legacy / Tournaments | 192 final strict samples; 28 unknown-data cases; 24 Owner/Staff dialog cases and eight Booking regressions pass | `inventory/after-final/`, `waitlist/after/`, `legacy-table-controls/after/`, `tournaments/after-serial/`, `operations-read-contract/`, `operations-dialogs/` |
+| Auxiliary operations / error routes | Pricing, Audit and service/static-page applicable-state verification still pending | Not a pass |
 | Shared notifications | Ten before/after cases, 16 real-Cafe contracts and both-theme lifecycle tests pass; 160 loaded-route checks pass; strict contrast scanner: 0 violations / 0 errors | `notification-clearance/`, `notification-cafe/`, `notification-lifecycle/`, `notification-regression/`, `notification-contrast.json` |
 | Remaining overlays / menus / action states | Pending consolidation and interaction rerun | Not a pass |
 | Local operational lifecycle | Pending 20-cycle role/theme/mobile exercise | Not a pass |
-| Production release | Dashboard, operations, members/bookings, Cafe, Finance and Settings are live-verified; notifications release verification follows its commit | A push alone is not proof |
+| Production release | Dashboard, Live Floor, members/bookings, Cafe, Finance, Settings and notifications are live-verified; remaining Operations release verification follows its commit | `deployment-*.json`; a push alone is not proof |
 | Real devices / unfamiliar human | External acceptance remains unverified | Browser viewports are not physical-device testing |
 
 All current captures use a guarded disposable local database. No production
@@ -64,6 +65,11 @@ transition and retains reduced-motion behavior.
 | Account / Team | Missing counts appeared as zero; unavailable team details could be marked reviewed | Do not invent state | Unknown counts show a dash and Retry; unknown team details have Retry and cannot be marked reviewed | `comparisons/settings-account-missing-counts-375.png`, `settings-contract/` |
 | Tariffs | Plain loading text; null package list crashed the whole route | Shaped loading and partial-data recovery | Shared skeleton and RetryNotice; incomplete editable settings are rejected before rendering or saving | `comparisons/settings-tariffs-loading-1440.png`, `settings-contract/` |
 | Notifications | Persistent reminders covered final page actions; ordinary feedback overlapped reminders | Reachable actions and separate layers | Measured scroll clearance, separate bounded stacks, in-flow dialog feedback; Undo/Dismiss and hover/focus timing retained | `comparisons/notifications-page-375.png`, `comparisons/notifications-dialog-375.png` |
+| Inventory | Maintenance fields extended 31.65625px past the 375px viewport in both themes | Controls must remain reachable | Header wraps the form below its title; all three controls now have 0px viewport overflow | `comparisons/inventory-maintenance-default-375.png`, `inventory-maintenance/results.json` |
+| Waitlist | Desktop action controls reduced guest-name width to 0px | Identity cannot disappear | Guest details retain their first row; actions occupy a second row. Width becomes 426px at 1440px and 163px at 375px | `comparisons/waitlist-queue-default-1440.png` |
+| Operations reads | Failed/missing reads looked empty or available; null stock/price looked in-stock/free | Unknown is not zero or Available | Track successful resource reads, show Retry/dashes, guard status snapshots; reserved tables cannot be offered for seating; incomplete items cannot be deleted into an invented Undo payload | `operations-read-contract/` |
+| Tournament | Populated bracket widened mobile controls to x=474.296875 at 375px; selected-event metadata contrast was 1.10:1 light / 2.28:1 dark | Bounded layout and 4.5:1 text | Shrinkable grid children/header, full-width error notice, existing text-on-accent token; final matrices have no clipping or contrast faults | `comparisons/tournaments-partial-375.png`, `tournaments/after-serial/` |
+| Inventory / Waitlist forms | Private frame duplicated focus logic; pending saves could be discarded | Shared dialog contract | Shared Modal with saving dismissal lock; preserve filled-field Escape guard independently from one-click close icon | `comparisons/inventory-dialog-default-375.png`, `operations-dialogs/after-owner/`, `operations-dialogs/after-staff/` |
 
 The first shared-change regression is 20 main routes x four widths x both themes
 (160 loaded/default captures), all clean. It is not certification of all their
@@ -277,3 +283,72 @@ the original overflow guard missed; that is an explicit remaining Operations
 item, not a claim that every visual detail is now clean. Initial notification
 failure images are kept under `notification-clearance/probes/`, separately from
 the final passing `after/` captures.
+
+Notifications source `71475f4` and evidence through `608ecf1` are merged and live.
+`deployment-notifications.json` confirms all 23 asset hashes, unchanged backend
+ancestry and health/readiness 200.
+
+## Remaining Operations Verification
+
+Inventory (`after-final`), Waitlist (`after`), Legacy Table Controls (`after`)
+and Tournaments (`after-serial`) each pass 48 strict samples: default, loading,
+error, empty, partial and extreme, at 375/768/1024/1440px in both themes. This is
+192 final page samples, not a claim that every operational mutation is tested.
+Shared Panel/Card roots replace three private surface roots; the workspace
+frame now uses shared Modal. Colors, fonts, table-state cues, trusted Staff
+permissions, financial logic and SSE rollout scope are unchanged.
+
+The focused Inventory comparison uses the same real read-only QA data against
+the frozen baseline and candidate. All three maintenance controls measured
+x=249.15625..406.65625 before at 375px (31.65625px off-screen), and
+x=101..338 after (0px off-screen), identically in both themes. Actual panel
+screenshots retain the clipped baseline, not a diagram or reconstructed mockup.
+
+Populated read fixtures uncovered defects the initially empty database missed.
+Desktop queue controls consumed the entire guest-name track; its measured width
+was zero. It is now 426px at 1440px and 163px at 375px. Missing guest information
+is explicitly unavailable, not rendered as literal null or an invented name.
+The strengthened scanner catches controls clipped by ancestors even when the
+root reports no horizontal overflow, and zero-width text even with a tooltip.
+
+Twenty-eight read-only contract cases prove null menu entries do not fabricate
+items; unknown stock/price remains unavailable/a dash, not in-stock/zero; unknown
+maintenance is not an empty maintenance list; and an unavailable primary menu
+is not an empty menu. Both row and bulk deletion are disabled for incompletely
+loaded menu details, preventing Undo from restoring guessed fields. Reserved
+tables are excluded from seating options even when the backend recommends one.
+An unknown table status disables seating or exposes Retry with no Available
+cards on Legacy/Tournament floors. All writes and external requests are blocked.
+
+Tournament fixtures follow the actual backend serializer, including list/detail
+endpoints and players/matches. An initial invented detail response incorrectly
+retained the backend's 404; it is not acceptance evidence. The test now explicitly
+returns 200 for that read fixture and asserts the bracket really loaded. That
+exposed the real 99.296875px mobile control overflow and selected-event contrast
+failures in both themes. The final populated partial/extreme samples pass. A
+concurrent-run initial-read deadline miss is retained under `tournaments/after`;
+the final serial six-state result is `tournaments/after-serial`, all 48 clean.
+
+Sixteen Owner Inventory/Waitlist dialog cases and eight Staff Waitlist cases
+pass: pending feedback 28.0-179.7ms, exactly one browser-mocked held submission
+then HTTP 500 per case, disabled close/discard while pending, retained form input,
+strict error contrast, Tab/Shift+Tab containment, filled-field Escape guard,
+Escape dismissal/opener restoration, and one-click close with filled fields.
+No business submission reaches the backend. Eight final Booking regressions
+also pass in `operations-dialog-regression-final`; an earlier opener timeout
+under concurrent browser load is not counted as a pass. Failure diagnostics now
+retain screenshots and page/API error metadata instead of only a timeout string.
+
+The strict 21-route contrast rerun, including safe dialogs/menus, reports zero
+violations and zero errors in `operations-contrast.json`. Lint, theme guard,
+production build and all 47 backend Python syntax checks pass. The current source
+inventory is `source-operations.json`: five private surface roots and six private
+dialog roots remain; CSS token/spacing cleanup and the 20-cycle real UI lifecycle
+are still OPEN. Browser widths do not certify physical devices or a full-day
+unfamiliar-user trial.
+
+Separate backend discovery, not changed in this UI release: Waitlist's backend
+availability helper excludes active and maintenance tables but does not consult
+bookings. The UI now refuses a reserved recommendation using canonical table
+status; server-side reservation/seating policy still needs its own reviewed
+contract rather than a silent policy change in a presentation pass.

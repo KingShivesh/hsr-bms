@@ -1,0 +1,202 @@
+[
+  {
+    "stage": "before",
+    "theme": "light",
+    "width": 375,
+    "controls": [
+      {
+        "label": "Table for maintenance",
+        "left": 249.15625,
+        "right": 406.65625,
+        "overflow": 31.65625
+      },
+      {
+        "label": "Maintenance reason",
+        "left": 249.15625,
+        "right": 406.65625,
+        "overflow": 31.65625
+      },
+      {
+        "label": "Mark",
+        "left": 249.15625,
+        "right": 406.65625,
+        "overflow": 31.65625
+      }
+    ]
+  },
+  {
+    "stage": "before",
+    "theme": "light",
+    "width": 1440,
+    "controls": [
+      {
+        "label": "Table for maintenance",
+        "left": 1178.65625,
+        "right": 1250.65625,
+        "overflow": 0
+      },
+      {
+        "label": "Maintenance reason",
+        "left": 1178.65625,
+        "right": 1358.65625,
+        "overflow": 0
+      },
+      {
+        "label": "Mark",
+        "left": 1178.65625,
+        "right": 1272.40625,
+        "overflow": 0
+      }
+    ]
+  },
+  {
+    "stage": "before",
+    "theme": "dark",
+    "width": 375,
+    "controls": [
+      {
+        "label": "Table for maintenance",
+        "left": 249.15625,
+        "right": 406.65625,
+        "overflow": 31.65625
+      },
+      {
+        "label": "Maintenance reason",
+        "left": 249.15625,
+        "right": 406.65625,
+        "overflow": 31.65625
+      },
+      {
+        "label": "Mark",
+        "left": 249.15625,
+        "right": 406.65625,
+        "overflow": 31.65625
+      }
+    ]
+  },
+  {
+    "stage": "before",
+    "theme": "dark",
+    "width": 1440,
+    "controls": [
+      {
+        "label": "Table for maintenance",
+        "left": 1178.65625,
+        "right": 1250.65625,
+        "overflow": 0
+      },
+      {
+        "label": "Maintenance reason",
+        "left": 1178.65625,
+        "right": 1358.65625,
+        "overflow": 0
+      },
+      {
+        "label": "Mark",
+        "left": 1178.65625,
+        "right": 1272.40625,
+        "overflow": 0
+      }
+    ]
+  },
+  {
+    "stage": "after",
+    "theme": "light",
+    "width": 375,
+    "controls": [
+      {
+        "label": "Table for maintenance",
+        "left": 101,
+        "right": 338,
+        "overflow": 0
+      },
+      {
+        "label": "Maintenance reason",
+        "left": 101,
+        "right": 338,
+        "overflow": 0
+      },
+      {
+        "label": "Mark",
+        "left": 101,
+        "right": 338,
+        "overflow": 0
+      }
+    ]
+  },
+  {
+    "stage": "after",
+    "theme": "light",
+    "width": 1440,
+    "controls": [
+      {
+        "label": "Table for maintenance",
+        "left": 1030.5,
+        "right": 1102.5,
+        "overflow": 0
+      },
+      {
+        "label": "Maintenance reason",
+        "left": 1110.5,
+        "right": 1290.5,
+        "overflow": 0
+      },
+      {
+        "label": "Mark",
+        "left": 1030.5,
+        "right": 1127.5,
+        "overflow": 0
+      }
+    ]
+  },
+  {
+    "stage": "after",
+    "theme": "dark",
+    "width": 375,
+    "controls": [
+      {
+        "label": "Table for maintenance",
+        "left": 101,
+        "right": 338,
+        "overflow": 0
+      },
+      {
+        "label": "Maintenance reason",
+        "left": 101,
+        "right": 338,
+        "overflow": 0
+      },
+      {
+        "label": "Mark",
+        "left": 101,
+        "right": 338,
+        "overflow": 0
+      }
+    ]
+  },
+  {
+    "stage": "after",
+    "theme": "dark",
+    "width": 1440,
+    "controls": [
+      {
+        "label": "Table for maintenance",
+        "left": 1030.5,
+        "right": 1102.5,
+        "overflow": 0
+      },
+      {
+        "label": "Maintenance reason",
+        "left": 1110.5,
+        "right": 1290.5,
+        "overflow": 0
+      },
+      {
+        "label": "Mark",
+        "left": 1030.5,
+        "right": 1127.5,
+        "overflow": 0
+      }
+    ]
+  }
+]

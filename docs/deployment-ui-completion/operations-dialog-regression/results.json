@@ -1,0 +1,289 @@
+{
+  "stage": "after",
+  "username": "admin",
+  "cases": [
+    {
+      "route": "bookings",
+      "theme": "light",
+      "width": 375,
+      "metrics": {
+        "applicationCrashed": false,
+        "overflow": 0,
+        "shortTargets": [],
+        "clipped": [],
+        "clippedControls": [],
+        "smallText": [],
+        "brokenImages": [],
+        "invalidCopy": [],
+        "unlabeledButtons": [],
+        "unlabeledInputs": [],
+        "collectionSizes": {
+          ".op2-customer-card": 0,
+          ".op2-table-booking-card": 5,
+          ".sales-table tbody tr": 0,
+          ".lf-table-card": 0
+        },
+        "contentOverflow": [],
+        "palette": {
+          "accent": "#006b3c",
+          "font": "\"Syne Variable\", Syne, sans-serif"
+        }
+      },
+      "contrast": [],
+      "pendingFeedback": {
+        "ms": 49.80000001192093,
+        "pending": true
+      },
+      "closeDisabledWhileSaving": true,
+      "errorPreservesInput": true,
+      "tabTrapped": true,
+      "reverseTabTrapped": true,
+      "escaped": true,
+      "focusRestored": true
+    },
+    {
+      "route": "bookings",
+      "theme": "light",
+      "width": 768,
+      "metrics": {
+        "applicationCrashed": false,
+        "overflow": 0,
+        "shortTargets": [],
+        "clipped": [],
+        "clippedControls": [],
+        "smallText": [],
+        "brokenImages": [],
+        "invalidCopy": [],
+        "unlabeledButtons": [],
+        "unlabeledInputs": [],
+        "collectionSizes": {
+          ".op2-customer-card": 0,
+          ".op2-table-booking-card": 5,
+          ".sales-table tbody tr": 0,
+          ".lf-table-card": 0
+        },
+        "contentOverflow": [],
+        "palette": {
+          "accent": "#006b3c",
+          "font": "\"Syne Variable\", Syne, sans-serif"
+        }
+      },
+      "contrast": [],
+      "pendingFeedback": {
+        "ms": 55.099999994039536,
+        "pending": true
+      },
+      "closeDisabledWhileSaving": true,
+      "errorPreservesInput": true,
+      "tabTrapped": true,
+      "reverseTabTrapped": true,
+      "escaped": true,
+      "focusRestored": true
+    },
+    {
+      "route": "bookings",
+      "theme": "light",
+      "width": 1024,
+      "metrics": {
+        "applicationCrashed": false,
+        "overflow": 0,
+        "shortTargets": [],
+        "clipped": [],
+        "clippedControls": [],
+        "smallText": [],
+        "brokenImages": [],
+        "invalidCopy": [],
+        "unlabeledButtons": [],
+        "unlabeledInputs": [],
+        "collectionSizes": {
+          ".op2-customer-card": 0,
+          ".op2-table-booking-card": 5,
+          ".sales-table tbody tr": 0,
+          ".lf-table-card": 0
+        },
+        "contentOverflow": [],
+        "palette": {
+          "accent": "#006b3c",
+          "font": "\"Syne Variable\", Syne, sans-serif"
+        }
+      },
+      "contrast": [],
+      "pendingFeedback": {
+        "ms": 58.39999997615814,
+        "pending": true
+      },
+      "closeDisabledWhileSaving": true,
+      "errorPreservesInput": true,
+      "tabTrapped": true,
+      "reverseTabTrapped": true,
+      "escaped": true,
+      "focusRestored": true
+    },
+    {
+      "route": "bookings",
+      "theme": "light",
+      "width": 1440,
+      "metrics": {
+        "applicationCrashed": false,
+        "overflow": 0,
+        "shortTargets": [],
+        "clipped": [],
+        "clippedControls": [],
+        "smallText": [],
+        "brokenImages": [],
+        "invalidCopy": [],
+        "unlabeledButtons": [],
+        "unlabeledInputs": [],
+        "collectionSizes": {
+          ".op2-customer-card": 0,
+          ".op2-table-booking-card": 5,
+          ".sales-table tbody tr": 0,
+          ".lf-table-card": 0
+        },
+        "contentOverflow": [],
+        "palette": {
+          "accent": "#006b3c",
+          "font": "\"Syne Variable\", Syne, sans-serif"
+        }
+      },
+      "contrast": [],
+      "pendingFeedback": {
+        "ms": 35,
+        "pending": true
+      },
+      "closeDisabledWhileSaving": true,
+      "errorPreservesInput": true,
+      "tabTrapped": true,
+      "reverseTabTrapped": true,
+      "escaped": true,
+      "focusRestored": true
+    },
+    {
+      "route": "bookings",
+      "theme": "dark",
+      "width": 375,
+      "metrics": {
+        "applicationCrashed": false,
+        "overflow": 0,
+        "shortTargets": [],
+        "clipped": [],
+        "clippedControls": [],
+        "smallText": [],
+        "brokenImages": [],
+        "invalidCopy": [],
+        "unlabeledButtons": [],
+        "unlabeledInputs": [],
+        "collectionSizes": {
+          ".op2-customer-card": 0,
+          ".op2-table-booking-card": 5,
+          ".sales-table tbody tr": 0,
+          ".lf-table-card": 0
+        },
+        "contentOverflow": [],
+        "palette": {
+          "accent": "#00ff7f",
+          "font": "\"Syne Variable\", Syne, sans-serif"
+        }
+      },
+      "contrast": [],
+      "pendingFeedback": {
+        "ms": 59.70000001788139,
+        "pending": true
+      },
+      "closeDisabledWhileSaving": true,
+      "errorPreservesInput": true,
+      "tabTrapped": true,
+      "reverseTabTrapped": true,
+      "escaped": true,
+      "focusRestored": true
+    },
+    {
+      "route": "bookings",
+      "theme": "dark",
+      "width": 768,
+      "metrics": {
+        "applicationCrashed": false,
+        "overflow": 0,
+        "shortTargets": [],
+        "clipped": [],
+        "clippedControls": [],
+        "smallText": [],
+        "brokenImages": [],
+        "invalidCopy": [],
+        "unlabeledButtons": [],
+        "unlabeledInputs": [],
+        "collectionSizes": {
+          ".op2-customer-card": 0,
+          ".op2-table-booking-card": 5,
+          ".sales-table tbody tr": 0,
+          ".lf-table-card": 0
+        },
+        "contentOverflow": [],
+        "palette": {
+          "accent": "#00ff7f",
+          "font": "\"Syne Variable\", Syne, sans-serif"
+        }
+      },
+      "contrast": [],
+      "pendingFeedback": {
+        "ms": 20.5,
+        "pending": true
+      },
+      "closeDisabledWhileSaving": true,
+      "errorPreservesInput": true,
+      "tabTrapped": true,
+      "reverseTabTrapped": true,
+      "escaped": true,
+      "focusRestored": true
+    },
+    {
+      "route": "bookings",
+      "theme": "dark",
+      "width": 1024,
+      "metrics": {
+        "applicationCrashed": false,
+        "overflow": 0,
+        "shortTargets": [],
+        "clipped": [],
+        "clippedControls": [],
+        "smallText": [],
+        "brokenImages": [],
+        "invalidCopy": [],
+        "unlabeledButtons": [],
+        "unlabeledInputs": [],
+        "collectionSizes": {
+          ".op2-customer-card": 0,
+          ".op2-table-booking-card": 5,
+          ".sales-table tbody tr": 0,
+          ".lf-table-card": 0
+        },
+        "contentOverflow": [],
+        "palette": {
+          "accent": "#00ff7f",
+          "font": "\"Syne Variable\", Syne, sans-serif"
+        }
+      },
+      "contrast": [],
+      "pendingFeedback": {
+        "ms": 24.80000001192093,
+        "pending": true
+      },
+      "closeDisabledWhileSaving": true,
+      "errorPreservesInput": true,
+      "tabTrapped": true,
+      "reverseTabTrapped": true,
+      "escaped": true,
+      "focusRestored": true
+    },
+    {
+      "route": "bookings",
+      "theme": "dark",
+      "width": 1440,
+      "error": "locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'New booking', exact: true }).first()\u001b[22m\n"
+    }
+  ],
+  "blockedWrites": [],
+  "mockedBookingWrites": 7,
+  "mockedWorkspaceWrites": [],
+  "scope": "Local dialogs; booking/workspace submissions are browser-mocked pending then HTTP 500. No business writes reach backend. Workspace reminders isolated for form-specific checks."
+}

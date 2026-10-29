@@ -1,3 +1,4 @@
+import { Panel as HsrPanel } from "../ui/index.js";
 import { formatCurrency as polishCurrency } from "../../utils/format.js";
 import { Icon as HsrIcon, Input as HsrInput, Select as HsrSelect, Textarea as HsrTextarea, Button as HsrButton, SkeletonBlock, EmptyState } from "../ui/index.js";
 import { useEffect, useMemo, useState } from "react";
@@ -10,11 +11,12 @@ import {
   recordTournamentWinner,
 } from "../../api/index.js";
 import { HSR_TABLES } from "../../config/hsrTables.js";
-import { tableActionNavigation } from "../../config/tableStatus.js";
+import { tableActionNavigation, TABLE_STATUS } from "../../config/tableStatus.js";
 import TableStatusCard from "../TableStatusCard.jsx";
 import { useToast } from "../toastContext.js";
 import { useConfirm } from "../confirmContext.js";
 import RetryNotice from "../RetryNotice.jsx";
+import { readableFloorSnapshot } from "../../features/live-floor/floorData.js";
 
 const GAME_TYPES = ["8 Ball", "9 Ball", "10 Ball", "Snooker", "Straight Pool"];
 const clippedText = { display: "block", minWidth: 0, maxWidth: "100%", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" };
@@ -25,13 +27,13 @@ function recommendedTypeForGame(gameType) {
 
 function Panel({ title, children, action }) {
   return (
-    <div className="settings-panel">
+    <HsrPanel as="div" className="settings-panel">
       <div className="settings-panel-header">
         <div className="settings-panel-title" title={title} style={clippedText}>{title}</div>
         {action}
       </div>
       {children}
-    </div>
+    </HsrPanel>
   );
 }
 
@@ -110,7 +112,8 @@ export default function TournamentTab({ onNavigate }) {
     try {
       setLoadError("");
       const res = await getTournaments();
-      const events = Array.isArray(res.data) ? res.data.filter((event) => event && typeof event === "object") : [];
+      if (!Array.isArray(res.data)) throw new Error("Tournament events unavailable");
+      const events = res.data.filter((event) => event && typeof event === "object");
       setTournaments(events);
       const id = nextSelectedId || (events.some((event) => event.id === selected?.id) ? selected.id : events[0]?.id);
       if (id) {
@@ -131,7 +134,7 @@ export default function TournamentTab({ onNavigate }) {
       setTableLoadError("");
       const res = await getTableState();
       if (!Array.isArray(res.data?.tables)) throw new Error("Live table status unavailable");
-      setTableState(res.data.tables.filter((table) => table && typeof table === "object"));
+      setTableState(readableFloorSnapshot(res.data).tables);
       setRates(res.data.rates || { wr: 320, pr: 170, sr: 270 });
     } catch (e) {
       console.error(e);
@@ -239,7 +242,7 @@ export default function TournamentTab({ onNavigate }) {
     }, Object.create(null))
   ), [tableState]);
   const playerCount = Array.isArray(selected?.players) ? selected.players.filter(Boolean).length : null;
-  const tableDataComplete = HSR_TABLES.every((table) => tableStateById[table.id]);
+  const tableDataComplete = HSR_TABLES.every((table) => Object.hasOwn(TABLE_STATUS, tableStateById[table.id]?.status_key));
 
   if (loading) {
     return (
@@ -322,9 +325,7 @@ export default function TournamentTab({ onNavigate }) {
 
         <Panel title="Events">
           {tournaments.length === 0 ? (
-            <div className="type-sm polish-color-text-muted polish-padding-8px-0" >
-              {loadError ? "Tournament events unavailable. Retry to reload." : "No tournaments yet"}
-            </div>
+            loadError ? <RetryNotice message="Tournament events are unavailable." onRetry={() => fetchAll()} /> : <EmptyState icon="ti-trophy" title="No tournaments yet" description="No tournament matches are scheduled." action={<HsrButton icon="ti-plus" onClick={() => document.getElementById("tournament-name")?.focus()}>New tournament</HsrButton>} />
           ) : (
             tournaments.map((t) => (
               <HsrButton native
@@ -340,8 +341,8 @@ export default function TournamentTab({ onNavigate }) {
                   </span>
                   <StatusPill status={t.status} />
                 </div>
-                <div className="type-xs polish-margin-top-4px" style={{ color: selected?.id === t.id ? "var(--text-muted)" : "var(--text-secondary)" }}>
-                  {t.game_type} · ₹{t.entry_fee || 0}
+                <div className="type-xs polish-margin-top-4px" style={{ color: selected?.id === t.id ? "var(--text-on-accent)" : "var(--text-secondary)" }}>
+                  {t.game_type || "—"} · {t.entry_fee == null ? "—" : polishCurrency(t.entry_fee)}
                 </div>
               </HsrButton>
             ))
@@ -364,13 +365,11 @@ export default function TournamentTab({ onNavigate }) {
 
         {!selected ? (
           <Panel title="Bracket">
-            <div className="polish-color-text-muted polish-padding-32px polish-text-align-center" >
-              Create or select a tournament
-            </div>
+            {loadError ? <RetryNotice message="Tournament bracket is unavailable." onRetry={() => fetchAll()} /> : <EmptyState icon="ti-trophy" title="No bracket selected" description="There are no matches in this view." action={<HsrButton onClick={() => document.getElementById("tournament-name")?.focus()}>New tournament</HsrButton>} />}
           </Panel>
         ) : (
           <Panel
-            title={selected.name}
+            title={selected.name || "Tournament"}
             action={
               <div className="polish-display-flex polish-gap-8px polish-align-items-center" >
                 <StatusPill status={selected.status} />
@@ -386,7 +385,7 @@ export default function TournamentTab({ onNavigate }) {
               className="polish-display-grid polish-grid-template-columns-repeat-4-1fr polish-gap-12px polish-margin-bottom-16px"
             >
               {[
-                ["Game", selected.game_type],
+                ["Game", selected.game_type || "—"],
                 ["Players", playerCount ?? "—"],
                 ["Pot", playerCount === null || selected.entry_fee == null ? "—" : polishCurrency(selected.entry_fee * playerCount)],
                 ["Winner", selected.winner_name || "—"],

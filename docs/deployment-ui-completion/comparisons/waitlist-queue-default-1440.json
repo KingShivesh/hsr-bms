@@ -1,0 +1,41 @@
+{
+  "legend": "Before left, after right; light above dark. Original pixels, first 1000px of tall captures. Full source captures retained.",
+  "sources": [
+    {
+      "theme": "light",
+      "stage": "before",
+      "path": "operations-read-probes/queue-before/waitlist-reserved-light-1440-failure.png",
+      "sha256": "cb1f1af804769d055dbba1c9ca92d076984b21d76c400e5c25182914084cb014",
+      "width": 1440,
+      "height": 1000,
+      "croppedHeight": 1000
+    },
+    {
+      "theme": "light",
+      "stage": "after",
+      "path": "operations-read-contract/waitlist-reserved-light-1440.png",
+      "sha256": "2b3a79fbbb0f9de68fbdd2ed20ad428e4e8456264b16e95d90b343cc324bded1",
+      "width": 1440,
+      "height": 1000,
+      "croppedHeight": 1000
+    },
+    {
+      "theme": "dark",
+      "stage": "before",
+      "path": "operations-read-probes/queue-before/waitlist-reserved-dark-1440-failure.png",
+      "sha256": "9cdb7c636e4d8de560584e8bed2ffcab734a0bc5f044196e106fdcd8255555d5",
+      "width": 1440,
+      "height": 1000,
+      "croppedHeight": 1000
+    },
+    {
+      "theme": "dark",
+      "stage": "after",
+      "path": "operations-read-contract/waitlist-reserved-dark-1440.png",
+      "sha256": "5d369d12c8e2453de35a03ef5c07bdef7ef72c4687af057c8b476e6db6010673",
+      "width": 1440,
+      "height": 1000,
+      "croppedHeight": 1000
+    }
+  ]
+}

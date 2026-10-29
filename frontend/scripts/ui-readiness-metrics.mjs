@@ -8,11 +8,21 @@ export function measureUi({ minimumTextSize = 0 } = {}) {
   const label = node => (node.getAttribute("aria-label") || node.textContent || node.placeholder || node.name || node.tagName).trim().slice(0, 90);
   const buttons = [...scope.querySelectorAll('button,a[role="button"]')].filter(visible);
   const shortTargets = innerWidth > 768 ? [] : buttons.filter(node => node.getBoundingClientRect().height < 43.9).map(node => ({ label: label(node), height: node.getBoundingClientRect().height, className: node.className }));
-  const clipped = [...scope.querySelectorAll("h1,h2,h3,h4,p,td,th,span,strong,button")].filter(visible).filter(node => node.scrollWidth > node.clientWidth + 2 && node.clientWidth > 0 && getComputedStyle(node).overflowX === "hidden" && !node.title && !node.closest('[title]')).map(node => ({ text: label(node), width: node.clientWidth, contentWidth: node.scrollWidth, className: node.className }));
+  const clipped = [...scope.querySelectorAll("h1,h2,h3,h4,p,td,th,span,strong,button")].filter(visible).filter(node => node.scrollWidth > node.clientWidth + 2 && getComputedStyle(node).overflowX === "hidden" && (node.clientWidth === 0 || (!node.title && !node.closest('[title]')))).map(node => ({ text: label(node), width: node.clientWidth, contentWidth: node.scrollWidth, className: node.className }));
+  const clippedControls = [...scope.querySelectorAll("button,input:not([type=hidden]),select,textarea")].filter(visible).filter(node => !node.closest(".cf-sidebar")).flatMap(node => {
+    const rect = node.getBoundingClientRect();
+    for (let parent = node.parentElement; parent && parent !== document.body; parent = parent.parentElement) {
+      const style = getComputedStyle(parent);
+      if (["auto", "scroll"].includes(style.overflowX) && parent.scrollWidth > parent.clientWidth + 2) break;
+      const bounds = parent.getBoundingClientRect();
+      if (["hidden", "clip"].includes(style.overflowX) && (rect.left < bounds.left - 2 || rect.right > bounds.right + 2)) return [{ label: label(node), left: rect.left, right: rect.right, clippedBy: parent.className, boundaryLeft: bounds.left, boundaryRight: bounds.right }];
+    }
+    return [];
+  });
   return {
     applicationCrashed: document.body.innerText.includes("This page could not open."),
     overflow: Math.max(0, document.documentElement.scrollWidth - innerWidth),
-    shortTargets, clipped,
+    shortTargets, clipped, clippedControls,
     smallText: minimumTextSize ? [...scope.querySelectorAll("*")].filter(visible).filter(node => [...node.childNodes].some(child => child.nodeType === Node.TEXT_NODE && child.textContent.trim()) || node.matches('input:not([type=checkbox]):not([type=radio]),textarea,select')).filter(node => parseFloat(getComputedStyle(node).fontSize) < minimumTextSize).map(node => ({ text: label(node), fontSize: getComputedStyle(node).fontSize, className: node.getAttribute("class") || "" })) : [],
     brokenImages: [...document.images].filter(node => visible(node) && (!node.complete || node.naturalWidth === 0)).map(node => node.alt),
     invalidCopy: [...new Set((document.body.innerText.match(/\bNaN\b|\bundefined\b|\bnull\b|\bTODO\b|Lorem ipsum|\[object Object\]|Invalid Date/g) || []))],

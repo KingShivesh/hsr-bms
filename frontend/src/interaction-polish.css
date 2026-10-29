@@ -59,6 +59,15 @@ html { scroll-padding-bottom: var(--toast-page-clearance, 0px); }
 .app-toast-message { overflow-wrap: anywhere; }
 .app-toast-close.ui-button { flex: 0 0 auto; color: inherit; }
 .app-toast-close:hover { background: color-mix(in srgb, currentColor 10%, transparent); }
+.cf-section-head:has(> .cf-inline-form) { flex-wrap: wrap; }
+.cf-section-head > .cf-inline-form { flex-basis: 100%; min-width: 0; }
+.cf-page-queue .cf-row { grid-template-columns: var(--icon-box-md) minmax(0, 1fr) !important; }
+.cf-page-queue .cf-row-actions { grid-column: 1 / -1; min-width: 0; justify-content: flex-end; }
+.ui-modal.cf-modal { padding: 0; overflow: hidden; max-height: min(720px, calc(100dvh - var(--space-8))); }
+.tournament-layout > div { min-width: 0; }
+.tournament-layout > .retry-notice { grid-column: 1 / -1; }
+.tournament-layout .settings-panel-header { flex-wrap: wrap; }
+.tournament-layout .settings-panel-header > :first-child { flex: 1; min-width: 0; }
 @keyframes readiness-toast-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
 @keyframes readiness-toast-out { to { opacity: 0; transform: translateY(8px); } }
 .ui-drawer { animation: presentation-modal-in 150ms ease-out; }

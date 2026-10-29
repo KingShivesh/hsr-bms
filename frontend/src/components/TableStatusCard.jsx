@@ -1,3 +1,4 @@
+import { Card as HsrCard } from "./ui/index.js";
 import { formatDuration as polishDuration } from "../utils/format.js";
 import { TableAttentionBadge, TablePrimaryAction, TableStateBadge } from "./TableStateUI.jsx";
 import { getTableLabel, getTableRate } from "../config/hsrTables.js";
@@ -34,7 +35,7 @@ export default function TableStatusCard({
   const attention = getTableAttention({ session: resolvedSession, elapsedSeconds });
 
   return (
-    <article className="table-status-card table-state-card" {...tableStateAttributes(status.key)} data-attention={attention ? "true" : "false"}>
+    <HsrCard as="article" className="table-status-card table-state-card" {...tableStateAttributes(status.key)} data-attention={attention ? "true" : "false"}>
       <div className="table-status-card-head">
         <div className="table-status-card-index">T{table.num}</div>
         <div className="table-state-card-flags">
@@ -57,6 +58,6 @@ export default function TableStatusCard({
         {resolvedBooking ? `${resolvedBooking.customer_name} · Reserved` : detail || tableState?.detail || (recommended ? recommendedLabel : "Backup table")}
       </div>
       <TablePrimaryAction statusKey={status.key} onClick={onAction} />
-    </article>
+    </HsrCard>
   );
 }

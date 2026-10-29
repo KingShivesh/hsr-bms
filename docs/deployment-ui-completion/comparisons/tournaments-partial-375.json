@@ -1,0 +1,41 @@
+{
+  "legend": "Before left, after right; light above dark. Original pixels, first 1000px of tall captures. Full source captures retained.",
+  "sources": [
+    {
+      "theme": "light",
+      "stage": "before",
+      "path": "operations-read-probes/tournament-before/light-375-partial.png",
+      "sha256": "1598bf7b8aab60ffa7bd987fce8ba82959d101c9eea0236ea728aeb7002da82c",
+      "width": 375,
+      "height": 844,
+      "croppedHeight": 844
+    },
+    {
+      "theme": "light",
+      "stage": "after",
+      "path": "tournaments/after-serial/light-375-partial.png",
+      "sha256": "dc899f7a5afd21aa5fdf8f676ef2e6c5a928d150014c973f852d08dcdaf6379c",
+      "width": 375,
+      "height": 844,
+      "croppedHeight": 844
+    },
+    {
+      "theme": "dark",
+      "stage": "before",
+      "path": "operations-read-probes/tournament-before/dark-375-partial.png",
+      "sha256": "6ebfcaf1a071379ac0a9dff037763fd679f5bc9a91d0edc72e161836c6339200",
+      "width": 375,
+      "height": 844,
+      "croppedHeight": 844
+    },
+    {
+      "theme": "dark",
+      "stage": "after",
+      "path": "tournaments/after-serial/dark-375-partial.png",
+      "sha256": "d100ef222e3da4c667d13caeb2b9acf9c223a26ece50ebe2db23c7b1aa7b31cf",
+      "width": 375,
+      "height": 844,
+      "croppedHeight": 844
+    }
+  ]
+}

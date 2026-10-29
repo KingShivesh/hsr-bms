@@ -1,5 +1,6 @@
+import { Panel as HsrPanel } from "../ui/index.js";
 import { formatCurrency as polishCurrency } from "../../utils/format.js";
-import { Icon as HsrIcon, Button as HsrButton, Select as HsrSelect, Input as HsrInput, Textarea as HsrTextarea, EmptyState, Button } from "../ui/index.js";
+import { Icon as HsrIcon, Button as HsrButton, Select as HsrSelect, Input as HsrInput, Textarea as HsrTextarea, EmptyState, Button, Modal as SharedModal } from "../ui/index.js";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useCachedState, hasCachedState } from "../../hooks/useCachedState.js";
 import {
@@ -26,12 +27,13 @@ import {
   updateMenuItem,
 } from "../../api/index.js";
 import { HSR_TABLES } from "../../config/hsrTables.js";
-import { getTableStatus } from "../../config/tableStatus.js";
+import { getTableStatus, TABLE_STATUS } from "../../config/tableStatus.js";
 import { MetricCard } from "../ui/index.js";
 import { useToast } from "../toastContext.js";
 import { useConfirm } from "../confirmContext.js";
 import { useRealtimeSubscription } from "../../realtime/useRealtimeSubscription.js";
-import { topDialog, useDialogFocus } from "../ui/useDialogFocus.js";
+import RetryNotice from "../RetryNotice.jsx";
+import { readableFloorSnapshot } from "../../features/live-floor/floorData.js";
 
 function money(value = 0) { return polishCurrency(value); }
 
@@ -41,7 +43,7 @@ function asArray(value) {
   if (Object.hasOwn(value, "items")) return asArray(value.items);
   if (Object.hasOwn(value, "menu")) return asArray(value.menu);
   if (Object.hasOwn(value, "data")) return asArray(value.data);
-  return Object.entries(value).map(([name, item]) => (
+  return Object.entries(value).filter(([, item]) => item != null).map(([name, item]) => (
     item && typeof item === "object"
       ? { name, ...item }
       : { name, price: Number(item || 0), available: true }
@@ -98,7 +100,7 @@ function menuItemRestorePayload(item = {}) {
 
 function Section({ eyebrow, title, action, children }) {
   return (
-    <section className="cf-panel">
+    <HsrPanel as="section" className="cf-panel">
       <div className="cf-section-head">
         <div>
           <span>{eyebrow}</span>
@@ -107,12 +109,13 @@ function Section({ eyebrow, title, action, children }) {
         {action}
       </div>
       {children}
-    </section>
+    </HsrPanel>
   );
 }
 
 function emptyWorkspaceData() {
   return {
+    known: {},
     waitlist: [],
     bookings: [],
     activeSessions: [],
@@ -189,63 +192,16 @@ function ActionButton({ tone = "default", icon, children, className = "", ...pro
   );
 }
 
-function Modal({ title, onClose, children }) {
-  const modalRef = useRef(null);
-  const closeRef = useRef(null);
-  const onCloseRef = useRef(onClose);
-  const titleId = `cf-modal-title-${title.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`;
-  useDialogFocus(modalRef, true, closeRef);
-
-  useEffect(() => {
-    onCloseRef.current = onClose;
-  }, [onClose]);
-
-  useEffect(() => {
-    function onKeyDown(event) {
-      if (event.defaultPrevented || topDialog() !== modalRef.current) return;
-      if (event.key === "Escape") {
-        const activeEl = document.activeElement;
-        const isInput =
-          activeEl &&
-          (activeEl.tagName === "INPUT" ||
-            activeEl.tagName === "TEXTAREA" ||
-            activeEl.tagName === "SELECT");
-
-        if (isInput && activeEl.value && String(activeEl.value).trim().length > 0) {
-          activeEl.blur();
-          event.preventDefault();
-          event.stopPropagation();
-          return;
-        }
-
-        event.preventDefault();
-        onCloseRef.current?.();
-      }
+function Modal({ title, onClose, children, busy = false }) {
+  function close() {
+    const active = document.activeElement;
+    if (active?.matches("input,textarea,select") && String(active.value || "").trim()) {
+      active.blur();
+      return;
     }
-    window.addEventListener("keydown", onKeyDown);
-    return () => window.removeEventListener("keydown", onKeyDown);
-  }, []);
-
-  return (
-    <div className="cf-modal-backdrop" role="presentation">
-      <div
-        ref={modalRef}
-        className="cf-modal"
-        role="dialog"
-        tabIndex={-1}
-        aria-modal="true"
-        aria-labelledby={titleId}
-      >
-        <div className="cf-modal-head">
-          <h3 id={titleId}>{title}</h3>
-          <HsrButton native ref={closeRef} type="button" onClick={onClose} aria-label="Close">
-            <HsrIcon className="ti ti-x" aria-hidden="true" />
-          </HsrButton>
-        </div>
-        {children}
-      </div>
-    </div>
-  );
+    onClose();
+  }
+  return <SharedModal open portal title={title} onClose={onClose} onEscape={close} closeDisabled={busy} dismissOnBackdrop={false} className="cf-modal">{children}</SharedModal>;
 }
 
 function FormField({ label, children }) {
@@ -289,7 +245,7 @@ function RowList({ rows, emptyTitle = "Nothing pending", emptyDetail = "New acti
   );
 }
 
-function WaitlistView({ waitlist, bookings, activeSessions, tableState, maintenance, actions, busy, activeAction, showToast }) {
+function WaitlistView({ waitlist, bookings, tableState, known, onRetry, actions, busy, activeAction, showToast }) {
   const [showAdd, setShowAdd] = useState(false);
   const [seatTarget, setSeatTarget] = useState({});
   const [form, setForm] = useState({
@@ -301,11 +257,9 @@ function WaitlistView({ waitlist, bookings, activeSessions, tableState, maintena
   });
   const missed = bookings.filter((booking) => booking.status === "missed");
   const upcoming = bookings.filter((booking) => booking.status === "booked");
-  const activeIds = new Set(activeSessions.map((session) => String(session.table_id || "").toLowerCase()));
-  const maintenanceIds = new Set(maintenance.map((row) => String(row.table_id || "").toLowerCase()));
-  const tableDataComplete = HSR_TABLES.every((table) => tableState.some((row) => String(row.id).toLowerCase() === table.id));
+  const tableDataComplete = HSR_TABLES.every((table) => tableState.some((row) => String(row.id).toLowerCase() === table.id && Object.hasOwn(TABLE_STATUS, row.status_key)));
   const availableTables = tableDataComplete ? HSR_TABLES.filter(
-    (table) => !activeIds.has(table.id) && !maintenanceIds.has(table.id),
+    (table) => tableState.some(row => String(row.id).toLowerCase() === table.id && row.status_key === "available"),
   ) : [];
 
   async function submitWaitlist(event) {
@@ -317,8 +271,9 @@ function WaitlistView({ waitlist, bookings, activeSessions, tableState, maintena
   }
 
   async function seatEntry(entry) {
-    const tableId = seatTarget[entry.id] || entry.recommended_table?.id || availableTables[0]?.id || "";
-    if (!tableId) {
+    const recommended = availableTables.find(table => table.id === entry.recommended_table?.id);
+    const tableId = seatTarget[entry.id] || recommended?.id || availableTables[0]?.id || "";
+    if (!availableTables.some(table => table.id === tableId)) {
       showToast("No available table to seat this customer.", "error");
       return;
     }
@@ -338,8 +293,8 @@ function WaitlistView({ waitlist, bookings, activeSessions, tableState, maintena
       </div>
       <div className="cf-stat-grid">
         <Stat label="Waiting" value={waitlist.length} />
-        <Stat label="Upcoming Bookings" value={upcoming.length} />
-        <Stat label="Missed Bookings" value={missed.length} />
+        <Stat label="Upcoming Bookings" value={known.bookings ? upcoming.length : "—"} />
+        <Stat label="Missed Bookings" value={known.bookings ? missed.length : "—"} />
       </div>
       <div className="cf-two-col">
         <Section eyebrow="Queue" title="Walk-ins Waiting">
@@ -351,13 +306,13 @@ function WaitlistView({ waitlist, bookings, activeSessions, tableState, maintena
             rows={waitlist.map((entry) => ({
               id: `wait-${entry.id}`,
               icon: "ti-clock",
-              title: `${entry.position}. ${entry.customer_name}${entry.pending ? " · Saving…" : ""}`,
-              detail: `${entry.party_size} player(s) · ${entry.preferred_type || "Any table"} · ${entry.wait_mins || 0} min wait`,
+              title: `${entry.position == null ? "" : `${entry.position}. `}${entry.customer_name || "Name unavailable"}${entry.pending ? " · Saving…" : ""}`,
+              detail: `${entry.party_size ?? "—"} player(s) · ${entry.preferred_type || "Any table"} · ${entry.wait_mins ?? "—"} min wait`,
               action: (
                 <div className="cf-row-actions">
                   <HsrSelect
                     aria-label={`Table for ${entry.customer_name || "waiting guest"}`}
-                    value={seatTarget[entry.id] || entry.recommended_table?.id || availableTables[0]?.id || ""}
+                    value={seatTarget[entry.id] || availableTables.find(table => table.id === entry.recommended_table?.id)?.id || availableTables[0]?.id || ""}
                     onChange={(event) => setSeatTarget((prev) => ({ ...prev, [entry.id]: event.target.value }))}
                     disabled={busy}
                   >
@@ -380,7 +335,7 @@ function WaitlistView({ waitlist, bookings, activeSessions, tableState, maintena
           />
         </Section>
         <Section eyebrow="Bookings" title="Upcoming / Missed">
-          <RowList
+          {!known.bookings ? <RetryNotice message="Booking details are unavailable." onRetry={onRetry} /> : <RowList
             emptyTitle="No bookings to review"
             emptyDetail="Upcoming and missed bookings will appear here."
             rows={[...upcoming, ...missed].slice(0, 10).map((booking) => ({
@@ -389,11 +344,11 @@ function WaitlistView({ waitlist, bookings, activeSessions, tableState, maintena
               title: booking.customer_name,
               detail: `${booking.table_id || "ANY"} · ${shortDate(booking.booking_time)} · ${booking.status}`,
             }))}
-          />
+          />}
         </Section>
       </div>
       {showAdd && (
-        <Modal title="Add Walk-in Guest" onClose={() => setShowAdd(false)}>
+        <Modal title="Add Walk-in Guest" onClose={() => setShowAdd(false)} busy={busy}>
           <form className="cf-form" onSubmit={submitWaitlist}>
             <FormField label="Customer full name">
               <HsrInput
@@ -438,7 +393,7 @@ function WaitlistView({ waitlist, bookings, activeSessions, tableState, maintena
               />
             </FormField>
             <div className="cf-modal-actions">
-              <ActionButton onClick={() => setShowAdd(false)}>Discard Walk-in</ActionButton>
+              <ActionButton disabled={busy} onClick={() => setShowAdd(false)}>Discard Walk-in</ActionButton>
               <HsrButton native className="cf-action-btn primary" type="submit" loading={busy}>
                 <HsrIcon className="ti ti-user-plus" aria-hidden="true" />
                 <span>{activeAction === "wait-add" ? "Adding..." : "Add Walk-in"}</span>
@@ -725,7 +680,17 @@ function BillingView({ history, foodOrders, actions, busy, activeAction }) {
   );
 }
 
-function InventoryView({ menu, maintenance, actions, busy, activeAction, showToast }) {
+function inventoryDetail(item) {
+  const price = typeof item.price === "number" && Number.isFinite(item.price) ? money(item.price) : "—";
+  const stock = typeof item.available !== "boolean" ? "Stock unavailable" : item.available ? "In stock" : "Out of stock";
+  return `${item.category || "Menu"} · ${price} · ${stock}`;
+}
+
+function restorableMenuItem(item) {
+  return typeof item.price === "number" && Number.isFinite(item.price) && item.price >= 0 && typeof item.available === "boolean";
+}
+
+function InventoryView({ menu, maintenance, known, onRetry, actions, busy, activeAction, showToast }) {
   const [showAdd, setShowAdd] = useState(false);
   const [editing, setEditing] = useState(null);
   const [selectedItems, setSelectedItems] = useState(() => new Set());
@@ -737,6 +702,7 @@ function InventoryView({ menu, maintenance, actions, busy, activeAction, showToa
     category: "Veg Snacks",
   });
   const unavailable = menu.filter((item) => item.available === false);
+  const stockComplete = menu.every(item => typeof item.available === "boolean");
   const cigarettes = menu.filter((item) => /cig|cigg|cigarette/i.test(item.name));
   const categories = [
     "Veg Snacks",
@@ -754,6 +720,7 @@ function InventoryView({ menu, maintenance, actions, busy, activeAction, showToa
   const visibleMenu = menu;
   const selectedVisibleItems = visibleMenu.filter((item) => selectedItems.has(item.name));
   const selectedCount = selectedItems.size;
+  const selectedDetailsComplete = selectedVisibleItems.every(restorableMenuItem);
   const allVisibleSelected = visibleMenu.length > 0 && visibleMenu.every((item) => selectedItems.has(item.name));
 
   function toggleItemSelection(name, checked) {
@@ -811,6 +778,10 @@ function InventoryView({ menu, maintenance, actions, busy, activeAction, showToa
   async function runBulkDelete() {
     if (!selectedVisibleItems.length) {
       showToast("Select at least one visible menu item.", "error");
+      return;
+    }
+    if (!selectedDetailsComplete) {
+      showToast("Reload the selected item details before deleting.", "error");
       return;
     }
     const succeeded = [];
@@ -876,11 +847,12 @@ function InventoryView({ menu, maintenance, actions, busy, activeAction, showToa
       </div>
       <div className="cf-stat-grid">
         <Stat label="Menu Items" value={menu.length} />
-        <Stat label="Out of Stock" value={unavailable.length} />
+        <Stat label="Out of Stock" value={stockComplete ? unavailable.length : "—"} />
         <Stat label="Cigarette Items" value={cigarettes.length} />
       </div>
       <div className="cf-inventory-grid">
         <Section eyebrow="Menu CRUD" title="Food Menu & Availability">
+          {!stockComplete && <RetryNotice message="Some stock statuses are unavailable." onRetry={onRetry} />}
           {menu.length > 0 && (
             <div className={`cf-bulk-bar${selectedCount || bulkResult ? " is-active" : ""}`} aria-live="polite">
               <label className="cf-select-all">
@@ -915,7 +887,8 @@ function InventoryView({ menu, maintenance, actions, busy, activeAction, showToa
                         tone="danger"
                         icon="ti-trash"
                         onClick={runBulkDelete}
-                        disabled={busy || !selectedVisibleItems.length}
+                        disabled={busy || !selectedVisibleItems.length || !selectedDetailsComplete}
+                        title={!selectedDetailsComplete ? "Reload item details before deleting" : undefined}
                       >
                         Delete Items
                       </ActionButton>
@@ -959,7 +932,7 @@ function InventoryView({ menu, maintenance, actions, busy, activeAction, showToa
                 </label>
                 <div style={{ minWidth: 0 }}>
                   <strong title={item.name} style={{ display: "block", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{item.name}</strong>
-                  <span title={item.category || "Menu"} style={{ display: "block", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{item.category || "Menu"} · {money(item.price)} · {item.available === false ? "Out of stock" : "In stock"}</span>
+                  <span title={inventoryDetail(item)} style={{ display: "block", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{inventoryDetail(item)}</span>
                 </div>
                 <div className="cf-row-actions">
                   <ActionButton
@@ -978,12 +951,12 @@ function InventoryView({ menu, maintenance, actions, busy, activeAction, showToa
                   </ActionButton>
                   <ActionButton
                     className="cf-icon-action"
-                    tone={item.available === false ? "success" : "warning"}
+                    tone={typeof item.available !== "boolean" ? "default" : item.available === false ? "success" : "warning"}
                     icon={activeAction === `stock-${item.name}` ? "ti-loader-2" : item.available === false ? "ti-check" : "ti-package-off"}
-                    aria-label={activeAction === `stock-${item.name}` ? `Saving ${item.name}` : item.available === false ? `Mark ${item.name} in stock` : `Mark ${item.name} out of stock`}
-                    title={item.available === false ? "Mark in stock" : "Mark out of stock"}
+                    aria-label={typeof item.available !== "boolean" ? `Stock status unavailable for ${item.name}` : activeAction === `stock-${item.name}` ? `Saving ${item.name}` : item.available === false ? `Mark ${item.name} in stock` : `Mark ${item.name} out of stock`}
+                    title={typeof item.available !== "boolean" ? "Stock status unavailable" : item.available === false ? "Mark in stock" : "Mark out of stock"}
                     onClick={() => actions.setItemAvailability(item.name, item.available === false)}
-                    disabled={busy}
+                    disabled={busy || typeof item.available !== "boolean"}
                   >
                     {activeAction === `stock-${item.name}` ? "Saving" : item.available === false ? "In stock" : "Out of stock"}
                   </ActionButton>
@@ -992,9 +965,9 @@ function InventoryView({ menu, maintenance, actions, busy, activeAction, showToa
                     tone="danger"
                     icon={activeAction === `menu-delete-${item.name}` ? "ti-loader-2" : "ti-trash"}
                     aria-label={activeAction === `menu-delete-${item.name}` ? `Deleting ${item.name}` : `Delete ${item.name}`}
-                    title="Delete item"
+                    title={restorableMenuItem(item) ? "Delete item" : "Reload item details before deleting"}
                     onClick={() => actions.deleteMenuItem(item)}
-                    disabled={busy}
+                    disabled={busy || !restorableMenuItem(item)}
                   >
                     {activeAction === `menu-delete-${item.name}` ? "Deleting" : "Delete"}
                   </ActionButton>
@@ -1006,6 +979,7 @@ function InventoryView({ menu, maintenance, actions, busy, activeAction, showToa
                 icon="ti-package"
                 title="No menu items"
                 description="Add snacks, drinks or cigarettes to start building the menu."
+                action={<Button icon="ti-plus" onClick={() => setShowAdd(true)}>Add menu item</Button>}
               />
             )}
           </div>
@@ -1018,6 +992,7 @@ function InventoryView({ menu, maintenance, actions, busy, activeAction, showToa
             <form className="cf-inline-form" onSubmit={submitMaintenance}>
               <HsrSelect
                 aria-label="Table for maintenance"
+                disabled={busy || !known.tableState}
                 value={maintenanceForm.table_id}
                 onChange={(event) => setMaintenanceForm((prev) => ({ ...prev, table_id: event.target.value }))}
               >
@@ -1029,18 +1004,19 @@ function InventoryView({ menu, maintenance, actions, busy, activeAction, showToa
               </HsrSelect>
               <HsrInput
                 aria-label="Maintenance reason"
+                disabled={busy || !known.tableState}
                 value={maintenanceForm.reason}
                 onChange={(event) => setMaintenanceForm((prev) => ({ ...prev, reason: event.target.value }))}
                 placeholder="Reason"
               />
-              <HsrButton native className="cf-action-btn warning" type="submit" loading={busy}>
+              <HsrButton native className="cf-action-btn warning" type="submit" loading={busy} disabled={!known.tableState}>
                 <HsrIcon className="ti ti-tool" aria-hidden="true" />
                 <span>{activeAction === "maintenance-set" ? "Saving..." : "Mark"}</span>
               </HsrButton>
             </form>
           }
         >
-          <RowList
+          {!known.tableState ? <RetryNotice message="Table maintenance details are unavailable." onRetry={onRetry} /> : <RowList
             emptyTitle="No tables in maintenance"
             emptyDetail="Tables marked unavailable will show here until cleared."
             rows={maintenance.map((row) => ({
@@ -1061,11 +1037,11 @@ function InventoryView({ menu, maintenance, actions, busy, activeAction, showToa
                 </div>
               ),
             }))}
-          />
+          />}
         </Section>
       </div>
       {showAdd && (
-        <Modal title="Add Menu Item" onClose={() => setShowAdd(false)}>
+        <Modal title="Add Menu Item" onClose={() => setShowAdd(false)} busy={busy}>
           <form className="cf-form" onSubmit={submitMenuItem}>
             <FormField label="Item name">
               <HsrInput
@@ -1097,7 +1073,7 @@ function InventoryView({ menu, maintenance, actions, busy, activeAction, showToa
               </FormField>
             </div>
             <div className="cf-modal-actions">
-              <ActionButton onClick={() => setShowAdd(false)}>Discard Menu Item</ActionButton>
+              <ActionButton disabled={busy} onClick={() => setShowAdd(false)}>Discard Menu Item</ActionButton>
               <HsrButton native className="cf-action-btn primary" type="submit" loading={busy}>
                 <HsrIcon className="ti ti-package-plus" aria-hidden="true" />
                 <span>{activeAction === "menu-add" ? "Adding..." : "Add Menu Item"}</span>
@@ -1107,7 +1083,7 @@ function InventoryView({ menu, maintenance, actions, busy, activeAction, showToa
         </Modal>
       )}
       {editing && (
-        <Modal title="Edit Menu Item" onClose={() => setEditing(null)}>
+        <Modal title="Edit Menu Item" onClose={() => setEditing(null)} busy={busy}>
           <form className="cf-form" onSubmit={submitEdit}>
             <FormField label="Item name">
               <HsrInput
@@ -1138,7 +1114,7 @@ function InventoryView({ menu, maintenance, actions, busy, activeAction, showToa
               </FormField>
             </div>
             <div className="cf-modal-actions">
-              <ActionButton onClick={() => setEditing(null)}>Discard Changes</ActionButton>
+              <ActionButton disabled={busy} onClick={() => setEditing(null)}>Discard Changes</ActionButton>
               <HsrButton native className="cf-action-btn primary" type="submit" loading={busy}>
                 <HsrIcon className="ti ti-device-floppy" aria-hidden="true" />
                 <span>{activeAction === `menu-edit-${editing.oldName}` ? "Saving..." : "Save Menu Item"}</span>
@@ -1207,24 +1183,30 @@ export default function ClubSuiteTab({ view }) {
       const failed = results
         .map((result, index) => (result.status === "rejected" ? loaders[index].label : ""))
         .filter(Boolean);
-      const nextData = {};
+      const nextData = { known: {} };
       results.forEach((result, index) => {
         if (result.status !== "fulfilled") return;
         const key = loaders[index].key;
-        const payload = result.value.data || {};
+        const payload = result.value.data;
+        if (!payload || typeof payload !== "object") { failed.push(loaders[index].label); return; }
         if (key === "tableState") {
           if (!Array.isArray(payload.tables)) {
             failed.push(loaders[index].label);
             return;
           }
+          let snapshot;
+          try { snapshot = readableFloorSnapshot(payload); }
+          catch { failed.push(loaders[index].label); return; }
           nextData.activeSessions = asArray(payload.active_sessions);
-          nextData.tableState = asArray(payload.tables);
+          nextData.tableState = snapshot.tables;
           nextData.maintenance = asMaintenanceRows(payload.maintenance);
+          nextData.known.tableState = true;
           return;
         }
         nextData[key] = asArray(payload);
+        nextData.known[key] = true;
       });
-      setData(current => ({ ...current, ...nextData }));
+      setData(current => ({ ...current, ...nextData, known: { ...current.known, ...nextData.known } }));
       setLoadError(
         failed.length
           ? `Could not load ${failed.join(", ")}. Retry once the backend responds.`
@@ -1448,13 +1430,16 @@ export default function ClubSuiteTab({ view }) {
   }), [loadData, runAction, showToast]);
 
   const props = useMemo(() => {
-    const rows = Object.fromEntries(Object.keys(emptyWorkspaceData()).map((key) => [key, asArray(data?.[key])]));
-    return { ...(optimistic ? optimistic(rows) : rows), actions, busy, activeAction, showToast };
-  }, [data, optimistic, actions, busy, activeAction, showToast]);
+    const rows = Object.fromEntries(Object.keys(emptyWorkspaceData()).filter(key => key !== "known").map((key) => [key, asArray(data?.[key])]));
+    return { ...(optimistic ? optimistic(rows) : rows), known: data.known || {}, onRetry: () => loadData(), actions, busy, activeAction, showToast };
+  }, [data, optimistic, loadData, actions, busy, activeAction, showToast]);
 
   if (loading) {
     return <div data-realtime-state={realtimeState}><WorkspaceLoading /></div>;
   }
+
+  const primaryKey = { reservations: "bookings", billing: "history", inventory: "menu", staff: "auditLogs", waitlist: "waitlist" }[view] || "waitlist";
+  if (!data.known?.[primaryKey]) return <RetryNotice message={loadError || "Workspace data is unavailable."} onRetry={() => loadData(() => true, { showLoading: true })} />;
 
   const content =
     view === "reservations" ? <ReservationsView {...props} /> :
