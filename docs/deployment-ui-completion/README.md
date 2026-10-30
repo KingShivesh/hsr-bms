@@ -20,7 +20,7 @@ server-authoritative payment/receipt confirmation. No feature or role expansion.
 | Shared notifications | Ten before/after cases, 16 real-Cafe contracts and both-theme lifecycle tests pass; 160 loaded-route checks pass; strict contrast scanner: 0 violations / 0 errors | `notification-clearance/`, `notification-cafe/`, `notification-lifecycle/`, `notification-regression/`, `notification-contrast.json` |
 | Remaining overlays / menus / action states | Pending consolidation and interaction rerun | Not a pass |
 | Local operational lifecycle | Pending 20-cycle role/theme/mobile exercise | Not a pass |
-| Production release | Dashboard, Live Floor, members/bookings, Cafe, Finance, Settings, notifications and Inventory/Waitlist/Legacy/Tournaments are live-verified | `deployment-*.json`; a push alone is not proof |
+| Production release | All completed clusters above, including pricing/audit/service-page fixes, are live-verified | `deployment-*.json`; a push alone is not proof |
 | Real devices / unfamiliar human | External acceptance remains unverified | Browser viewports are not physical-device testing |
 
 All current captures use a guarded disposable local database. No production
@@ -422,4 +422,20 @@ still records four private session-money surface roots, six private dialog
 roots and outstanding CSS color/spacing token consolidation. Remaining shared
 overlay/menu/action coverage and the real 20-cycle UI lifecycle are OPEN; physical
 devices and unfamiliar-user full-day acceptance are not certified. SSE expansion
-remains paused. This cluster still requires its separate merge/deployment proof.
+remains paused.
+
+Service-page source `9e439ec` and its evidence through `0edabe1` are merged and
+pushed. `deployment-service-pages.json` verifies all 24 production JS/CSS hashes,
+unchanged backend ancestry, health 200 and database readiness 200. Initial backend
+timeouts were not accepted as readiness proof; the subsequent complete observation
+passed. Evidence uploads needed resumptions after HTTP 408 and a transient GitHub
+DNS failure. Remote receipt/ancestry was checked, with no force-push or rewriting
+of published commits. The guarded disposable database was cleared again: zero
+rows remained. All five temporary QA servers exited; the user's original checkout
+and port 5173 server were not touched.
+
+Separate real-time observation: when collecting the stopped local QA backend's
+output, `sse_starlette.sse.SendTimeoutError` traces were present. The captured
+output does not establish timestamped attribution or production relevance. This
+UI pass does not certify SSE soak/memory behavior; retain this diagnostic for the
+paused real-time work rather than silently claiming a clean SSE soak.
