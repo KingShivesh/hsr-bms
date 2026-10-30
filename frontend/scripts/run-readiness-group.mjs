@@ -16,7 +16,8 @@ const groups = {
     ["legacy-table-controls", "/legacy-table-controls"], ["tournaments", "/tournaments"],
   ],
   remaining: [
-    ["daily-closing", "/daily-closing"], ["pricing-rules", "/pricing-rules"],
+    ["pricing-rules", "/pricing-rules"],
+    ["pricing-gst", "/pricing-rules", "^/operations/gst$", null, "Tax / GST"],
     ["audit-log", "/audit-log"], ["status", "/status"],
     ["help", "/help", null, "default"], ["changelog", "/changelog", null, "default"],
     ["demo", "/demo", null, "default"], ["not-found", "/missing-page", null, "default"],
@@ -24,10 +25,11 @@ const groups = {
 };
 if (!groups[group]) throw new Error("Unknown readiness group");
 const failures = [];
-for (const [name, route, path, states] of groups[group]) {
+for (const [name, route, path, states, tab] of groups[group]) {
   const env = { ...process.env, UI_OUTPUT_DIR: `${process.env.UI_OUTPUT_ROOT || "../docs/ui-readiness"}/${name}/${stage}` };
   if (path) env.UI_DATA_PATH = path; else delete env.UI_DATA_PATH;
   if (states) env.UI_STATES = states; else delete env.UI_STATES;
+  if (tab) env.UI_TAB = tab; else delete env.UI_TAB;
   const result = spawnSync(process.execPath, ["scripts/scan-ui-readiness.mjs", route, stage], { env, stdio: "inherit" });
   if (result.status !== 0) failures.push({ name, status: result.status });
 }

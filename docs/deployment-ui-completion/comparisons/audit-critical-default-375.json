@@ -1,0 +1,41 @@
+{
+  "legend": "Before left, after right; light above dark. Original pixels, first 1000px of tall captures. Full source captures retained.",
+  "sources": [
+    {
+      "theme": "light",
+      "stage": "before",
+      "path": "service-contract/before/audit-critical-light-375.png",
+      "sha256": "74e5715c3963022687efb059db10c55640d1f740928c62fdd14f7a278c6fc758",
+      "width": 375,
+      "height": 844,
+      "croppedHeight": 844
+    },
+    {
+      "theme": "light",
+      "stage": "after",
+      "path": "service-contract/after-final/audit-critical-light-375.png",
+      "sha256": "664467f407e306f4daff9f4a673d047a63a3c738719ed4eefe2bb147210a32d9",
+      "width": 375,
+      "height": 844,
+      "croppedHeight": 844
+    },
+    {
+      "theme": "dark",
+      "stage": "before",
+      "path": "service-contract/before/audit-critical-dark-375.png",
+      "sha256": "cf41a6c46c694406f273b3e204e8ccf13bf2fbd901bb7e8410347514c6e44049",
+      "width": 375,
+      "height": 844,
+      "croppedHeight": 844
+    },
+    {
+      "theme": "dark",
+      "stage": "after",
+      "path": "service-contract/after-final/audit-critical-dark-375.png",
+      "sha256": "871fa03bf7468dfc636446be3cfabc817e9a4184779b69d1bd4e99166fb685cd",
+      "width": 375,
+      "height": 844,
+      "croppedHeight": 844
+    }
+  ]
+}

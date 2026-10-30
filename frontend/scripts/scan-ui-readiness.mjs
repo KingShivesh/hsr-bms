@@ -74,9 +74,13 @@ function fixture(data, pathname, state) {
     return { ...data, tables: obscure(data.tables), ...(data.floor ? { floor: { ...data.floor, tables: obscure(data.floor.tables) } } : {}) };
   }
   if(pathname === "/product/account" && state === "partial") return {...data, team:null, members:null, tables:null};
+  if(pathname === "/ready" && state === "partial") return {...data, status:null, database:null};
+  if(pathname === "/operations/current-rate" && state === "partial") return {...data, is_peak:null, multiplier:null, label:null};
   if(pathname === "/operations/audit-logs" && state === "partial") return [{id:99001,ts:null,date:null,staff:null,action:null,detail:null}];
   if(pathname === "/reports/top-customers") return {...data,customers:[{name:"QA Regular",visits:12,play:3200,food:400,spent:3600}]};
   if (!Array.isArray(data)) return data;
+  if (pathname === "/operations/peak-hours" && !data.length) return [{ id: 99001, start_hour: 18, end_hour: 22, multiplier: 1.5, label: "QA Peak Rule" }];
+  if (pathname === "/operations/audit-logs" && !data.length) return [{ id: 99001, date: "29 Oct 2026", ts: Date.now(), staff: "QA Staff", action: "qa_read_fixture", detail: "Read-only fixture", severity: "info", amount: 0 }];
   if (pathname === "/reports/session-edits" && state === "extreme") return Array.from({ length: 1000 }, (_, i) => ({ ...fixture(data, pathname, "default")[0], id: 99001 + i }));
   if (pathname === "/reports/session-edits" && !data.length) return [{ id: 99001, date: "22/10/2026", table: "T1", staff: "QA Staff", original_duration: 60, new_duration: 59, reason_label: "Started too early", category: "correction", notes: "QA read fixture", delta: -5 }];
   if (["/food/orders", "/food/stats"].includes(pathname) && state === "extreme") return Array.from({ length: pathname === "/food/orders" ? 1000 : 60 }, (_, i) => ({ ...fixture(data, pathname, "default")[0], id: 99001 + i }));

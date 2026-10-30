@@ -1127,31 +1127,33 @@ function InventoryView({ menu, maintenance, known, onRetry, actions, busy, activ
   );
 }
 
-function StaffView({ auditLogs }) {
+function StaffView({ auditLogs, onRetry }) {
+  const actorsKnown = auditLogs.every(log => typeof log.staff === "string" && log.staff.trim());
+  const severitiesKnown = auditLogs.every(log => ["info", "warning", "danger", "critical"].includes(log.severity));
   const staffMap = auditLogs.reduce((acc, log) => {
-    const key = log.staff || "system";
-    acc[key] = acc[key] || { actions: 0, risk: 0 };
+    const key = log.staff || "Unknown actor";
+    acc[key] = acc[key] || { actions: 0, risk: 0, riskKnown: true };
     acc[key].actions += 1;
-    if (log.severity === "danger") acc[key].risk += 1;
+    if (!["info", "warning", "danger", "critical"].includes(log.severity)) acc[key].riskKnown = false;
+    if (["danger", "critical"].includes(log.severity)) acc[key].risk += 1;
     return acc;
   }, Object.create(null));
   const rows = Object.entries(staffMap).map(([staff, value]) => ({
     id: staff,
     icon: "ti-user-check",
     title: staff,
-    detail: `${value.actions} logged action(s) · ${value.risk} risk action(s)`,
+    tone: value.risk > 0 ? "warning" : "",
+    detail: `${value.actions} logged action(s) · ${value.riskKnown ? value.risk : "—"} risk action(s)`,
   }));
   return (
     <div className="cf-page cf-page-staff">
       <div className="cf-stat-grid">
-        <Stat label="Staff/System Actors" value={rows.length} />
+        <Stat label="Staff/System Actors" value={actorsKnown ? rows.length : "—"} />
         <Stat label="Logged Actions" value={auditLogs.length} />
-        <Stat label="Risk Actions" value={rows.reduce((sum, row) => {
-          const match = row.detail.match(/(\d+) risk/);
-          return sum + (match ? Number(match[1]) : 0);
-        }, 0)} />
+        <Stat label="Risk Actions" value={severitiesKnown ? Object.values(staffMap).reduce((sum, row) => sum + row.risk, 0) : "—"} />
       </div>
       <Section eyebrow="Activity" title="Staff Action Summary">
+        {(!actorsKnown || !severitiesKnown) && <RetryNotice message="Some audit details are unavailable." onRetry={onRetry} />}
         <RowList
           emptyTitle="No staff activity yet"
           emptyDetail="Staff and system actions will appear as the venue is used."
@@ -1189,6 +1191,7 @@ export default function ClubSuiteTab({ view }) {
         const key = loaders[index].key;
         const payload = result.value.data;
         if (!payload || typeof payload !== "object") { failed.push(loaders[index].label); return; }
+        if (!["tableState", "menu"].includes(key) && !Array.isArray(payload)) { failed.push(loaders[index].label); return; }
         if (key === "tableState") {
           if (!Array.isArray(payload.tables)) {
             failed.push(loaders[index].label);

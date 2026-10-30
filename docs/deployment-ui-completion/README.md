@@ -16,7 +16,7 @@ server-authoritative payment/receipt confirmation. No feature or role expansion.
 | Finance / reports | Three main screens + four reachable report sub-tabs: 336 final samples pass; eight receipt/paging cases and two eight-case data-integrity follow-ups pass | `sales/`, `analytics/`, `daily-closing/`, `reports-*/` |
 | Settings | Six sections: 256 final strict samples pass. Eight missing-data, tariff recovery and pending-save contracts pass; three shared Panel roots migrated | `settings-*/`, `settings-contract/after/` |
 | Inventory / Waitlist / Legacy / Tournaments | 192 final strict samples; 28 unknown-data cases; 24 Owner/Staff dialog cases and eight Booking regressions pass | `inventory/after-final/`, `waitlist/after/`, `legacy-table-controls/after/`, `tournaments/after-serial/`, `operations-read-contract/`, `operations-dialogs/` |
-| Auxiliary operations / error routes | Pricing, Audit and service/static-page applicable-state verification still pending | Not a pass |
+| Auxiliary operations / error routes | Both Pricing tabs, Audit and Status: 48 samples each; Help, Changelog, Sample Workspace and 404: eight applicable samples each. 52 focused cases pass | `pricing-*/after-final/`, `audit-log/after/`, `status/after/`, static-route `after/`, `service-contract/after-final/` |
 | Shared notifications | Ten before/after cases, 16 real-Cafe contracts and both-theme lifecycle tests pass; 160 loaded-route checks pass; strict contrast scanner: 0 violations / 0 errors | `notification-clearance/`, `notification-cafe/`, `notification-lifecycle/`, `notification-regression/`, `notification-contrast.json` |
 | Remaining overlays / menus / action states | Pending consolidation and interaction rerun | Not a pass |
 | Local operational lifecycle | Pending 20-cycle role/theme/mobile exercise | Not a pass |
@@ -70,6 +70,10 @@ transition and retains reduced-motion behavior.
 | Operations reads | Failed/missing reads looked empty or available; null stock/price looked in-stock/free | Unknown is not zero or Available | Track successful resource reads, show Retry/dashes, guard status snapshots; reserved tables cannot be offered for seating; incomplete items cannot be deleted into an invented Undo payload | `operations-read-contract/` |
 | Tournament | Populated bracket widened mobile controls to x=474.296875 at 375px; selected-event metadata contrast was 1.10:1 light / 2.28:1 dark | Bounded layout and 4.5:1 text | Shrinkable grid children/header, full-width error notice, existing text-on-accent token; final matrices have no clipping or contrast faults | `comparisons/tournaments-partial-375.png`, `tournaments/after-serial/` |
 | Inventory / Waitlist forms | Private frame duplicated focus logic; pending saves could be discarded | Shared dialog contract | Shared Modal with saving dismissal lock; preserve filled-field Escape guard independently from one-click close icon | `comparisons/inventory-dialog-default-375.png`, `operations-dialogs/after-owner/`, `operations-dialogs/after-staff/` |
+| Pricing | Mobile rule controls reduced the rule label to 0px and clipped Delete; panel title split across three lines | Readable identity and reachable actions | Responsive rule/action rows, stacked panel heading/description, shared Panel and actionable empty state | `comparisons/pricing-rules-extreme-375.png` |
+| Pricing | GST UI allowed 100 although the backend accepts at most 28; missing current-rate data claimed Standard active | Match existing server constraints; do not invent state | GST 0–28 and peak-hour validation before requests; missing rate/list data shows Retry | `service-contract/after-final/`, `service-contract/after-pricing-final/` |
+| Audit | Critical actions counted as zero risk; missing actor/severity looked known | Truthful operational state | Count danger and critical; warning cue for risk rows, dashes/Retry for missing details; reject malformed collections | `comparisons/audit-critical-default-375.png` |
+| Status | An empty HTTP 200 body claimed backend/database Ready | Readiness needs evidence | Require the existing readiness payload's status and database to both be ok | `comparisons/service-readiness-default-375.png` |
 
 The first shared-change regression is 20 main routes x four widths x both themes
 (160 loaded/default captures), all clean. It is not certification of all their
@@ -359,3 +363,63 @@ JS/CSS hashes, confirms unchanged backend ancestry and health/database readiness
 200. The first backend probe timed out and was not accepted as deployment proof;
 the following complete observation passed. After verification, guarded local
 fixture cleanup confirmed zero rows in every disposable QA database table.
+
+## Service-Page Verification
+
+Final Peak Hour Rates and GST matrices are `pricing-rules/after-final` and
+`pricing-gst/after-final`, 48 samples each after the final header correction.
+Audit and Status each pass 48 in `after`; Help, Changelog, Sample Workspace and
+404 each pass eight applicable default samples. Total: 224 final page samples
+at 375/768/1024/1440px in light/dark. Static pages are not assigned fictional
+loading/error states. GST's earlier concurrent initial-read deadline misses
+remain under `pricing-gst/after`; the isolated rerun and final rerun pass.
+Chrome launch timeouts on Sample Workspace were infrastructure failures, not
+passes; its baseline and after captures were subsequently completed.
+
+The current pre-service pricing captures are kept under `service-initial`.
+They expose zero-width mobile rule labels and Delete extending to
+x=379.484375 at a 375px viewport. Afterward neither text nor controls clip.
+The panel title/description now stack inside the existing structure; rates,
+fonts and palette do not change. Peak Hours uses shared Panel and EmptyState.
+GST's maximum now matches the existing backend's 28 rather than 100, and empty,
+out-of-range or nonfinite form values cannot become accidental zero/default
+writes. These are server-contract alignment fixes, not tax/business-policy changes.
+
+`service-contract/after-final` has 52 passing cases: 20 malformed/read-integrity
+cases, 24 held-save cases and eight isolated sample-data lifecycles. Each save
+is browser-mocked pending then HTTP 500; no business write reaches the backend.
+After the final pricing header adjustment, all 16 affected save cases were rerun
+in `after-pricing-final`: pending feedback 12.8–14.5ms, invalid GST/hour inputs
+produce no request, valid input remains after failure, exactly one mocked save
+per case, clean settled hover/default contrast. The guide-review action already
+uses the shared async-button feedback; its measured 48.2–74.3ms is a verification,
+not a newly invented UI fix. Its Shortcuts dialog opens, traps focus and closes
+with Escape. Sample tabs contain 5 tables / 10 members / 3 bookings / 2 orders;
+clicks close a sample table, navigate tabs with Home, reset and delete the data,
+all without database writes.
+
+All four before read cases falsely claim Ready for an empty HTTP 200 readiness
+body; all four final cases correctly withhold that claim. All four before
+unknown-rate cases claim Standard active; none do afterward. A single critical
+audit row produces Risk Actions 0 before -> 1 after, with a redundant warning
+cue. Missing actor/severity produces known-looking 1/0 before -> dashes and
+recovery afterward. A malformed audit object is not reported as an empty list.
+The same 28 Operations read contracts pass again in
+`service-operations-regression`, covering the shared collection-shape guard.
+
+The initial Help test intercepted POST but the actual setup method is PATCH;
+eight writes were safely blocked, not sent. Those probes are not passes. The
+corrected baseline is `before-help-final` and the complete final test mocks the
+actual PATCH. An initial post-enable/pre-paint contrast sample is not treated
+as a settled hover result: the final contract waits finite transitions and two
+paint frames, then separately checks hover and default states using the same
+rendered-contrast method as the main scanner. Earlier probe reports/captures are
+retained under `service-contract/before` and `after`, not used as final acceptance.
+
+The final strict 21-route scanner reports zero violations and zero errors in
+`service-contrast.json`; lint/theme guard pass. `source-service-pages.json`
+still records four private session-money surface roots, six private dialog
+roots and outstanding CSS color/spacing token consolidation. Remaining shared
+overlay/menu/action coverage and the real 20-cycle UI lifecycle are OPEN; physical
+devices and unfamiliar-user full-day acceptance are not certified. SSE expansion
+remains paused. This cluster still requires its separate merge/deployment proof.

@@ -1,0 +1,1808 @@
+{
+  "stage": "after",
+  "scope": "Isolated local QA; read fixtures and browser-mocked held HTTP 500 saves; no backend business writes",
+  "cases": [
+    {
+      "name": "status-unknown",
+      "route": "/status",
+      "theme": "light",
+      "width": 375,
+      "errors": [],
+      "readyClaim": false,
+      "metrics": {
+        "applicationCrashed": false,
+        "overflow": 0,
+        "shortTargets": [],
+        "clipped": [],
+        "clippedControls": [],
+        "smallText": [],
+        "brokenImages": [],
+        "invalidCopy": [],
+        "unlabeledButtons": [],
+        "unlabeledInputs": [],
+        "collectionSizes": {
+          ".op2-customer-card": 0,
+          ".op2-table-booking-card": 0,
+          ".sales-table tbody tr": 0,
+          ".lf-table-card": 0
+        },
+        "contentOverflow": [],
+        "palette": {
+          "accent": "#006b3c",
+          "font": "\"Syne Variable\", Syne, sans-serif"
+        }
+      },
+      "contrast": []
+    },
+    {
+      "name": "status-unknown",
+      "route": "/status",
+      "theme": "light",
+      "width": 1440,
+      "errors": [],
+      "readyClaim": false,
+      "metrics": {
+        "applicationCrashed": false,
+        "overflow": 0,
+        "shortTargets": [],
+        "clipped": [],
+        "clippedControls": [],
+        "smallText": [],
+        "brokenImages": [],
+        "invalidCopy": [],
+        "unlabeledButtons": [],
+        "unlabeledInputs": [],
+        "collectionSizes": {
+          ".op2-customer-card": 0,
+          ".op2-table-booking-card": 0,
+          ".sales-table tbody tr": 0,
+          ".lf-table-card": 0
+        },
+        "contentOverflow": [],
+        "palette": {
+          "accent": "#006b3c",
+          "font": "\"Syne Variable\", Syne, sans-serif"
+        }
+      },
+      "contrast": []
+    },
+    {
+      "name": "status-unknown",
+      "route": "/status",
+      "theme": "dark",
+      "width": 375,
+      "errors": [],
+      "readyClaim": false,
+      "metrics": {
+        "applicationCrashed": false,
+        "overflow": 0,
+        "shortTargets": [],
+        "clipped": [],
+        "clippedControls": [],
+        "smallText": [],
+        "brokenImages": [],
+        "invalidCopy": [],
+        "unlabeledButtons": [],
+        "unlabeledInputs": [],
+        "collectionSizes": {
+          ".op2-customer-card": 0,
+          ".op2-table-booking-card": 0,
+          ".sales-table tbody tr": 0,
+          ".lf-table-card": 0
+        },
+        "contentOverflow": [],
+        "palette": {
+          "accent": "#00ff7f",
+          "font": "\"Syne Variable\", Syne, sans-serif"
+        }
+      },
+      "contrast": []
+    },
+    {
+      "name": "status-unknown",
+      "route": "/status",
+      "theme": "dark",
+      "width": 1440,
+      "errors": [],
+      "readyClaim": false,
+      "metrics": {
+        "applicationCrashed": false,
+        "overflow": 0,
+        "shortTargets": [],
+        "clipped": [],
+        "clippedControls": [],
+        "smallText": [],
+        "brokenImages": [],
+        "invalidCopy": [],
+        "unlabeledButtons": [],
+        "unlabeledInputs": [],
+        "collectionSizes": {
+          ".op2-customer-card": 0,
+          ".op2-table-booking-card": 0,
+          ".sales-table tbody tr": 0,
+          ".lf-table-card": 0
+        },
+        "contentOverflow": [],
+        "palette": {
+          "accent": "#00ff7f",
+          "font": "\"Syne Variable\", Syne, sans-serif"
+        }
+      },
+      "contrast": []
+    },
+    {
+      "name": "peak-unknown",
+      "route": "/pricing-rules",
+      "theme": "light",
+      "width": 375,
+      "errors": [],
+      "standardClaim": false,
+      "metrics": {
+        "applicationCrashed": false,
+        "overflow": 0,
+        "shortTargets": [],
+        "clipped": [],
+        "clippedControls": [],
+        "smallText": [],
+        "brokenImages": [],
+        "invalidCopy": [],
+        "unlabeledButtons": [],
+        "unlabeledInputs": [],
+        "collectionSizes": {
+          ".op2-customer-card": 0,
+          ".op2-table-booking-card": 0,
+          ".sales-table tbody tr": 0,
+          ".lf-table-card": 0
+        },
+        "contentOverflow": [],
+        "palette": {
+          "accent": "#006b3c",
+          "font": "\"Syne Variable\", Syne, sans-serif"
+        }
+      },
+      "contrast": []
+    },
+    {
+      "name": "peak-unknown",
+      "route": "/pricing-rules",
+      "theme": "light",
+      "width": 1440,
+      "errors": [],
+      "standardClaim": false,
+      "metrics": {
+        "applicationCrashed": false,
+        "overflow": 0,
+        "shortTargets": [],
+        "clipped": [],
+        "clippedControls": [],
+        "smallText": [],
+        "brokenImages": [],
+        "invalidCopy": [],
+        "unlabeledButtons": [],
+        "unlabeledInputs": [],
+        "collectionSizes": {
+          ".op2-customer-card": 0,
+          ".op2-table-booking-card": 0,
+          ".sales-table tbody tr": 0,
+          ".lf-table-card": 0
+        },
+        "contentOverflow": [],
+        "palette": {
+          "accent": "#006b3c",
+          "font": "\"Syne Variable\", Syne, sans-serif"
+        }
+      },
+      "contrast": []
+    },
+    {
+      "name": "peak-unknown",
+      "route": "/pricing-rules",
+      "theme": "dark",
+      "width": 375,
+      "errors": [],
+      "standardClaim": false,
+      "metrics": {
+        "applicationCrashed": false,
+        "overflow": 0,
+        "shortTargets": [],
+        "clipped": [],
+        "clippedControls": [],
+        "smallText": [],
+        "brokenImages": [],
+        "invalidCopy": [],
+        "unlabeledButtons": [],
+        "unlabeledInputs": [],
+        "collectionSizes": {
+          ".op2-customer-card": 0,
+          ".op2-table-booking-card": 0,
+          ".sales-table tbody tr": 0,
+          ".lf-table-card": 0
+        },
+        "contentOverflow": [],
+        "palette": {
+          "accent": "#00ff7f",
+          "font": "\"Syne Variable\", Syne, sans-serif"
+        }
+      },
+      "contrast": []
+    },
+    {
+      "name": "peak-unknown",
+      "route": "/pricing-rules",
+      "theme": "dark",
+      "width": 1440,
+      "errors": [],
+      "standardClaim": false,
+      "metrics": {
+        "applicationCrashed": false,
+        "overflow": 0,
+        "shortTargets": [],
+        "clipped": [],
+        "clippedControls": [],
+        "smallText": [],
+        "brokenImages": [],
+        "invalidCopy": [],
+        "unlabeledButtons": [],
+        "unlabeledInputs": [],
+        "collectionSizes": {
+          ".op2-customer-card": 0,
+          ".op2-table-booking-card": 0,
+          ".sales-table tbody tr": 0,
+          ".lf-table-card": 0
+        },
+        "contentOverflow": [],
+        "palette": {
+          "accent": "#00ff7f",
+          "font": "\"Syne Variable\", Syne, sans-serif"
+        }
+      },
+      "contrast": []
+    },
+    {
+      "name": "audit-critical",
+      "route": "/audit-log",
+      "theme": "light",
+      "width": 375,
+      "errors": [],
+      "values": {
+        "Staff/System Actors": "1",
+        "Logged Actions": "1",
+        "Risk Actions": "1"
+      },
+      "metrics": {
+        "applicationCrashed": false,
+        "overflow": 0,
+        "shortTargets": [],
+        "clipped": [],
+        "clippedControls": [],
+        "smallText": [],
+        "brokenImages": [],
+        "invalidCopy": [],
+        "unlabeledButtons": [],
+        "unlabeledInputs": [],
+        "collectionSizes": {
+          ".op2-customer-card": 0,
+          ".op2-table-booking-card": 0,
+          ".sales-table tbody tr": 0,
+          ".lf-table-card": 0
+        },
+        "contentOverflow": [],
+        "palette": {
+          "accent": "#006b3c",
+          "font": "\"Syne Variable\", Syne, sans-serif"
+        }
+      },
+      "contrast": []
+    },
+    {
+      "name": "audit-critical",
+      "route": "/audit-log",
+      "theme": "light",
+      "width": 1440,
+      "errors": [],
+      "values": {
+        "Staff/System Actors": "1",
+        "Logged Actions": "1",
+        "Risk Actions": "1"
+      },
+      "metrics": {
+        "applicationCrashed": false,
+        "overflow": 0,
+        "shortTargets": [],
+        "clipped": [],
+        "clippedControls": [],
+        "smallText": [],
+        "brokenImages": [],
+        "invalidCopy": [],
+        "unlabeledButtons": [],
+        "unlabeledInputs": [],
+        "collectionSizes": {
+          ".op2-customer-card": 0,
+          ".op2-table-booking-card": 0,
+          ".sales-table tbody tr": 0,
+          ".lf-table-card": 0
+        },
+        "contentOverflow": [],
+        "palette": {
+          "accent": "#006b3c",
+          "font": "\"Syne Variable\", Syne, sans-serif"
+        }
+      },
+      "contrast": []
+    },
+    {
+      "name": "audit-critical",
+      "route": "/audit-log",
+      "theme": "dark",
+      "width": 375,
+      "errors": [],
+      "values": {
+        "Staff/System Actors": "1",
+        "Logged Actions": "1",
+        "Risk Actions": "1"
+      },
+      "metrics": {
+        "applicationCrashed": false,
+        "overflow": 0,
+        "shortTargets": [],
+        "clipped": [],
+        "clippedControls": [],
+        "smallText": [],
+        "brokenImages": [],
+        "invalidCopy": [],
+        "unlabeledButtons": [],
+        "unlabeledInputs": [],
+        "collectionSizes": {
+          ".op2-customer-card": 0,
+          ".op2-table-booking-card": 0,
+          ".sales-table tbody tr": 0,
+          ".lf-table-card": 0
+        },
+        "contentOverflow": [],
+        "palette": {
+          "accent": "#00ff7f",
+          "font": "\"Syne Variable\", Syne, sans-serif"
+        }
+      },
+      "contrast": []
+    },
+    {
+      "name": "audit-critical",
+      "route": "/audit-log",
+      "theme": "dark",
+      "width": 1440,
+      "errors": [],
+      "values": {
+        "Staff/System Actors": "1",
+        "Logged Actions": "1",
+        "Risk Actions": "1"
+      },
+      "metrics": {
+        "applicationCrashed": false,
+        "overflow": 0,
+        "shortTargets": [],
+        "clipped": [],
+        "clippedControls": [],
+        "smallText": [],
+        "brokenImages": [],
+        "invalidCopy": [],
+        "unlabeledButtons": [],
+        "unlabeledInputs": [],
+        "collectionSizes": {
+          ".op2-customer-card": 0,
+          ".op2-table-booking-card": 0,
+          ".sales-table tbody tr": 0,
+          ".lf-table-card": 0
+        },
+        "contentOverflow": [],
+        "palette": {
+          "accent": "#00ff7f",
+          "font": "\"Syne Variable\", Syne, sans-serif"
+        }
+      },
+      "contrast": []
+    },
+    {
+      "name": "audit-partial",
+      "route": "/audit-log",
+      "theme": "light",
+      "width": 375,
+      "errors": [],
+      "values": {
+        "Staff/System Actors": "—",
+        "Logged Actions": "1",
+        "Risk Actions": "—"
+      },
+      "metrics": {
+        "applicationCrashed": false,
+        "overflow": 0,
+        "shortTargets": [],
+        "clipped": [],
+        "clippedControls": [],
+        "smallText": [],
+        "brokenImages": [],
+        "invalidCopy": [],
+        "unlabeledButtons": [],
+        "unlabeledInputs": [],
+        "collectionSizes": {
+          ".op2-customer-card": 0,
+          ".op2-table-booking-card": 0,
+          ".sales-table tbody tr": 0,
+          ".lf-table-card": 0
+        },
+        "contentOverflow": [],
+        "palette": {
+          "accent": "#006b3c",
+          "font": "\"Syne Variable\", Syne, sans-serif"
+        }
+      },
+      "contrast": []
+    },
+    {
+      "name": "audit-partial",
+      "route": "/audit-log",
+      "theme": "light",
+      "width": 1440,
+      "errors": [],
+      "values": {
+        "Staff/System Actors": "—",
+        "Logged Actions": "1",
+        "Risk Actions": "—"
+      },
+      "metrics": {
+        "applicationCrashed": false,
+        "overflow": 0,
+        "shortTargets": [],
+        "clipped": [],
+        "clippedControls": [],
+        "smallText": [],
+        "brokenImages": [],
+        "invalidCopy": [],
+        "unlabeledButtons": [],
+        "unlabeledInputs": [],
+        "collectionSizes": {
+          ".op2-customer-card": 0,
+          ".op2-table-booking-card": 0,
+          ".sales-table tbody tr": 0,
+          ".lf-table-card": 0
+        },
+        "contentOverflow": [],
+        "palette": {
+          "accent": "#006b3c",
+          "font": "\"Syne Variable\", Syne, sans-serif"
+        }
+      },
+      "contrast": []
+    },
+    {
+      "name": "audit-partial",
+      "route": "/audit-log",
+      "theme": "dark",
+      "width": 375,
+      "errors": [],
+      "values": {
+        "Staff/System Actors": "—",
+        "Logged Actions": "1",
+        "Risk Actions": "—"
+      },
+      "metrics": {
+        "applicationCrashed": false,
+        "overflow": 0,
+        "shortTargets": [],
+        "clipped": [],
+        "clippedControls": [],
+        "smallText": [],
+        "brokenImages": [],
+        "invalidCopy": [],
+        "unlabeledButtons": [],
+        "unlabeledInputs": [],
+        "collectionSizes": {
+          ".op2-customer-card": 0,
+          ".op2-table-booking-card": 0,
+          ".sales-table tbody tr": 0,
+          ".lf-table-card": 0
+        },
+        "contentOverflow": [],
+        "palette": {
+          "accent": "#00ff7f",
+          "font": "\"Syne Variable\", Syne, sans-serif"
+        }
+      },
+      "contrast": []
+    },
+    {
+      "name": "audit-partial",
+      "route": "/audit-log",
+      "theme": "dark",
+      "width": 1440,
+      "errors": [],
+      "values": {
+        "Staff/System Actors": "—",
+        "Logged Actions": "1",
+        "Risk Actions": "—"
+      },
+      "metrics": {
+        "applicationCrashed": false,
+        "overflow": 0,
+        "shortTargets": [],
+        "clipped": [],
+        "clippedControls": [],
+        "smallText": [],
+        "brokenImages": [],
+        "invalidCopy": [],
+        "unlabeledButtons": [],
+        "unlabeledInputs": [],
+        "collectionSizes": {
+          ".op2-customer-card": 0,
+          ".op2-table-booking-card": 0,
+          ".sales-table tbody tr": 0,
+          ".lf-table-card": 0
+        },
+        "contentOverflow": [],
+        "palette": {
+          "accent": "#00ff7f",
+          "font": "\"Syne Variable\", Syne, sans-serif"
+        }
+      },
+      "contrast": []
+    },
+    {
+      "name": "audit-malformed",
+      "route": "/audit-log",
+      "theme": "light",
+      "width": 375,
+      "errors": [],
+      "values": {},
+      "metrics": {
+        "applicationCrashed": false,
+        "overflow": 0,
+        "shortTargets": [],
+        "clipped": [],
+        "clippedControls": [],
+        "smallText": [],
+        "brokenImages": [],
+        "invalidCopy": [],
+        "unlabeledButtons": [],
+        "unlabeledInputs": [],
+        "collectionSizes": {
+          ".op2-customer-card": 0,
+          ".op2-table-booking-card": 0,
+          ".sales-table tbody tr": 0,
+          ".lf-table-card": 0
+        },
+        "contentOverflow": [],
+        "palette": {
+          "accent": "#006b3c",
+          "font": "\"Syne Variable\", Syne, sans-serif"
+        }
+      },
+      "contrast": []
+    },
+    {
+      "name": "audit-malformed",
+      "route": "/audit-log",
+      "theme": "light",
+      "width": 1440,
+      "errors": [],
+      "values": {},
+      "metrics": {
+        "applicationCrashed": false,
+        "overflow": 0,
+        "shortTargets": [],
+        "clipped": [],
+        "clippedControls": [],
+        "smallText": [],
+        "brokenImages": [],
+        "invalidCopy": [],
+        "unlabeledButtons": [],
+        "unlabeledInputs": [],
+        "collectionSizes": {
+          ".op2-customer-card": 0,
+          ".op2-table-booking-card": 0,
+          ".sales-table tbody tr": 0,
+          ".lf-table-card": 0
+        },
+        "contentOverflow": [],
+        "palette": {
+          "accent": "#006b3c",
+          "font": "\"Syne Variable\", Syne, sans-serif"
+        }
+      },
+      "contrast": []
+    },
+    {
+      "name": "audit-malformed",
+      "route": "/audit-log",
+      "theme": "dark",
+      "width": 375,
+      "errors": [],
+      "values": {},
+      "metrics": {
+        "applicationCrashed": false,
+        "overflow": 0,
+        "shortTargets": [],
+        "clipped": [],
+        "clippedControls": [],
+        "smallText": [],
+        "brokenImages": [],
+        "invalidCopy": [],
+        "unlabeledButtons": [],
+        "unlabeledInputs": [],
+        "collectionSizes": {
+          ".op2-customer-card": 0,
+          ".op2-table-booking-card": 0,
+          ".sales-table tbody tr": 0,
+          ".lf-table-card": 0
+        },
+        "contentOverflow": [],
+        "palette": {
+          "accent": "#00ff7f",
+          "font": "\"Syne Variable\", Syne, sans-serif"
+        }
+      },
+      "contrast": []
+    },
+    {
+      "name": "audit-malformed",
+      "route": "/audit-log",
+      "theme": "dark",
+      "width": 1440,
+      "errors": [],
+      "values": {},
+      "metrics": {
+        "applicationCrashed": false,
+        "overflow": 0,
+        "shortTargets": [],
+        "clipped": [],
+        "clippedControls": [],
+        "smallText": [],
+        "brokenImages": [],
+        "invalidCopy": [],
+        "unlabeledButtons": [],
+        "unlabeledInputs": [],
+        "collectionSizes": {
+          ".op2-customer-card": 0,
+          ".op2-table-booking-card": 0,
+          ".sales-table tbody tr": 0,
+          ".lf-table-card": 0
+        },
+        "contentOverflow": [],
+        "palette": {
+          "accent": "#00ff7f",
+          "font": "\"Syne Variable\", Syne, sans-serif"
+        }
+      },
+      "contrast": []
+    },
+    {
+      "name": "gst-save",
+      "route": "/pricing-rules",
+      "theme": "light",
+      "width": 375,
+      "errors": [],
+      "gstMaximum": "28",
+      "pendingFeedback": {
+        "ms": 4.5,
+        "pending": true
+      },
+      "preservedGst": "7.5",
+      "metrics": {
+        "applicationCrashed": false,
+        "overflow": 0,
+        "shortTargets": [],
+        "clipped": [],
+        "clippedControls": [],
+        "smallText": [],
+        "brokenImages": [],
+        "invalidCopy": [],
+        "unlabeledButtons": [],
+        "unlabeledInputs": [],
+        "collectionSizes": {
+          ".op2-customer-card": 0,
+          ".op2-table-booking-card": 0,
+          ".sales-table tbody tr": 0,
+          ".lf-table-card": 0
+        },
+        "contentOverflow": [],
+        "palette": {
+          "accent": "#006b3c",
+          "font": "\"Syne Variable\", Syne, sans-serif"
+        }
+      },
+      "contrast": []
+    },
+    {
+      "name": "gst-save",
+      "route": "/pricing-rules",
+      "theme": "light",
+      "width": 768,
+      "errors": [],
+      "gstMaximum": "28",
+      "pendingFeedback": {
+        "ms": 8.699999988079071,
+        "pending": true
+      },
+      "preservedGst": "7.5",
+      "metrics": {
+        "applicationCrashed": false,
+        "overflow": 0,
+        "shortTargets": [],
+        "clipped": [],
+        "clippedControls": [],
+        "smallText": [],
+        "brokenImages": [],
+        "invalidCopy": [],
+        "unlabeledButtons": [],
+        "unlabeledInputs": [],
+        "collectionSizes": {
+          ".op2-customer-card": 0,
+          ".op2-table-booking-card": 0,
+          ".sales-table tbody tr": 0,
+          ".lf-table-card": 0
+        },
+        "contentOverflow": [],
+        "palette": {
+          "accent": "#006b3c",
+          "font": "\"Syne Variable\", Syne, sans-serif"
+        }
+      },
+      "contrast": []
+    },
+    {
+      "name": "gst-save",
+      "route": "/pricing-rules",
+      "theme": "light",
+      "width": 1024,
+      "errors": [],
+      "gstMaximum": "28",
+      "pendingFeedback": {
+        "ms": 9.300000011920929,
+        "pending": true
+      },
+      "preservedGst": "7.5",
+      "metrics": {
+        "applicationCrashed": false,
+        "overflow": 0,
+        "shortTargets": [],
+        "clipped": [],
+        "clippedControls": [],
+        "smallText": [],
+        "brokenImages": [],
+        "invalidCopy": [],
+        "unlabeledButtons": [],
+        "unlabeledInputs": [],
+        "collectionSizes": {
+          ".op2-customer-card": 0,
+          ".op2-table-booking-card": 0,
+          ".sales-table tbody tr": 0,
+          ".lf-table-card": 0
+        },
+        "contentOverflow": [],
+        "palette": {
+          "accent": "#006b3c",
+          "font": "\"Syne Variable\", Syne, sans-serif"
+        }
+      },
+      "contrast": []
+    },
+    {
+      "name": "gst-save",
+      "route": "/pricing-rules",
+      "theme": "light",
+      "width": 1440,
+      "errors": [],
+      "gstMaximum": "28",
+      "pendingFeedback": {
+        "ms": 6.399999976158142,
+        "pending": true
+      },
+      "preservedGst": "7.5",
+      "metrics": {
+        "applicationCrashed": false,
+        "overflow": 0,
+        "shortTargets": [],
+        "clipped": [],
+        "clippedControls": [],
+        "smallText": [],
+        "brokenImages": [],
+        "invalidCopy": [],
+        "unlabeledButtons": [],
+        "unlabeledInputs": [],
+        "collectionSizes": {
+          ".op2-customer-card": 0,
+          ".op2-table-booking-card": 0,
+          ".sales-table tbody tr": 0,
+          ".lf-table-card": 0
+        },
+        "contentOverflow": [],
+        "palette": {
+          "accent": "#006b3c",
+          "font": "\"Syne Variable\", Syne, sans-serif"
+        }
+      },
+      "contrast": []
+    },
+    {
+      "name": "gst-save",
+      "route": "/pricing-rules",
+      "theme": "dark",
+      "width": 375,
+      "errors": [],
+      "gstMaximum": "28",
+      "pendingFeedback": {
+        "ms": 5.0999999940395355,
+        "pending": true
+      },
+      "preservedGst": "7.5",
+      "metrics": {
+        "applicationCrashed": false,
+        "overflow": 0,
+        "shortTargets": [],
+        "clipped": [],
+        "clippedControls": [],
+        "smallText": [],
+        "brokenImages": [],
+        "invalidCopy": [],
+        "unlabeledButtons": [],
+        "unlabeledInputs": [],
+        "collectionSizes": {
+          ".op2-customer-card": 0,
+          ".op2-table-booking-card": 0,
+          ".sales-table tbody tr": 0,
+          ".lf-table-card": 0
+        },
+        "contentOverflow": [],
+        "palette": {
+          "accent": "#00ff7f",
+          "font": "\"Syne Variable\", Syne, sans-serif"
+        }
+      },
+      "contrast": []
+    },
+    {
+      "name": "gst-save",
+      "route": "/pricing-rules",
+      "theme": "dark",
+      "width": 768,
+      "errors": [],
+      "gstMaximum": "28",
+      "pendingFeedback": {
+        "ms": 9.599999994039536,
+        "pending": true
+      },
+      "preservedGst": "7.5",
+      "metrics": {
+        "applicationCrashed": false,
+        "overflow": 0,
+        "shortTargets": [],
+        "clipped": [],
+        "clippedControls": [],
+        "smallText": [],
+        "brokenImages": [],
+        "invalidCopy": [],
+        "unlabeledButtons": [],
+        "unlabeledInputs": [],
+        "collectionSizes": {
+          ".op2-customer-card": 0,
+          ".op2-table-booking-card": 0,
+          ".sales-table tbody tr": 0,
+          ".lf-table-card": 0
+        },
+        "contentOverflow": [],
+        "palette": {
+          "accent": "#00ff7f",
+          "font": "\"Syne Variable\", Syne, sans-serif"
+        }
+      },
+      "contrast": []
+    },
+    {
+      "name": "gst-save",
+      "route": "/pricing-rules",
+      "theme": "dark",
+      "width": 1024,
+      "errors": [],
+      "gstMaximum": "28",
+      "pendingFeedback": {
+        "ms": 10.199999988079071,
+        "pending": true
+      },
+      "preservedGst": "7.5",
+      "metrics": {
+        "applicationCrashed": false,
+        "overflow": 0,
+        "shortTargets": [],
+        "clipped": [],
+        "clippedControls": [],
+        "smallText": [],
+        "brokenImages": [],
+        "invalidCopy": [],
+        "unlabeledButtons": [],
+        "unlabeledInputs": [],
+        "collectionSizes": {
+          ".op2-customer-card": 0,
+          ".op2-table-booking-card": 0,
+          ".sales-table tbody tr": 0,
+          ".lf-table-card": 0
+        },
+        "contentOverflow": [],
+        "palette": {
+          "accent": "#00ff7f",
+          "font": "\"Syne Variable\", Syne, sans-serif"
+        }
+      },
+      "contrast": []
+    },
+    {
+      "name": "gst-save",
+      "route": "/pricing-rules",
+      "theme": "dark",
+      "width": 1440,
+      "errors": [],
+      "gstMaximum": "28",
+      "pendingFeedback": {
+        "ms": 10.799999982118607,
+        "pending": true
+      },
+      "preservedGst": "7.5",
+      "metrics": {
+        "applicationCrashed": false,
+        "overflow": 0,
+        "shortTargets": [],
+        "clipped": [],
+        "clippedControls": [],
+        "smallText": [],
+        "brokenImages": [],
+        "invalidCopy": [],
+        "unlabeledButtons": [],
+        "unlabeledInputs": [],
+        "collectionSizes": {
+          ".op2-customer-card": 0,
+          ".op2-table-booking-card": 0,
+          ".sales-table tbody tr": 0,
+          ".lf-table-card": 0
+        },
+        "contentOverflow": [],
+        "palette": {
+          "accent": "#00ff7f",
+          "font": "\"Syne Variable\", Syne, sans-serif"
+        }
+      },
+      "contrast": []
+    },
+    {
+      "name": "peak-save",
+      "route": "/pricing-rules",
+      "theme": "light",
+      "width": 375,
+      "errors": [],
+      "pendingFeedback": {
+        "ms": 8.599999994039536,
+        "pending": true
+      },
+      "metrics": {
+        "applicationCrashed": false,
+        "overflow": 0,
+        "shortTargets": [],
+        "clipped": [],
+        "clippedControls": [],
+        "smallText": [],
+        "brokenImages": [],
+        "invalidCopy": [],
+        "unlabeledButtons": [],
+        "unlabeledInputs": [],
+        "collectionSizes": {
+          ".op2-customer-card": 0,
+          ".op2-table-booking-card": 0,
+          ".sales-table tbody tr": 0,
+          ".lf-table-card": 0
+        },
+        "contentOverflow": [],
+        "palette": {
+          "accent": "#006b3c",
+          "font": "\"Syne Variable\", Syne, sans-serif"
+        }
+      },
+      "contrast": []
+    },
+    {
+      "name": "peak-save",
+      "route": "/pricing-rules",
+      "theme": "light",
+      "width": 768,
+      "errors": [],
+      "pendingFeedback": {
+        "ms": 11.600000023841858,
+        "pending": true
+      },
+      "metrics": {
+        "applicationCrashed": false,
+        "overflow": 0,
+        "shortTargets": [],
+        "clipped": [],
+        "clippedControls": [],
+        "smallText": [],
+        "brokenImages": [],
+        "invalidCopy": [],
+        "unlabeledButtons": [],
+        "unlabeledInputs": [],
+        "collectionSizes": {
+          ".op2-customer-card": 0,
+          ".op2-table-booking-card": 0,
+          ".sales-table tbody tr": 0,
+          ".lf-table-card": 0
+        },
+        "contentOverflow": [],
+        "palette": {
+          "accent": "#006b3c",
+          "font": "\"Syne Variable\", Syne, sans-serif"
+        }
+      },
+      "contrast": []
+    },
+    {
+      "name": "peak-save",
+      "route": "/pricing-rules",
+      "theme": "light",
+      "width": 1024,
+      "errors": [],
+      "pendingFeedback": {
+        "ms": 8.399999976158142,
+        "pending": true
+      },
+      "metrics": {
+        "applicationCrashed": false,
+        "overflow": 0,
+        "shortTargets": [],
+        "clipped": [],
+        "clippedControls": [],
+        "smallText": [],
+        "brokenImages": [],
+        "invalidCopy": [],
+        "unlabeledButtons": [],
+        "unlabeledInputs": [],
+        "collectionSizes": {
+          ".op2-customer-card": 0,
+          ".op2-table-booking-card": 0,
+          ".sales-table tbody tr": 0,
+          ".lf-table-card": 0
+        },
+        "contentOverflow": [],
+        "palette": {
+          "accent": "#006b3c",
+          "font": "\"Syne Variable\", Syne, sans-serif"
+        }
+      },
+      "contrast": []
+    },
+    {
+      "name": "peak-save",
+      "route": "/pricing-rules",
+      "theme": "light",
+      "width": 1440,
+      "errors": [],
+      "pendingFeedback": {
+        "ms": 8.099999994039536,
+        "pending": true
+      },
+      "metrics": {
+        "applicationCrashed": false,
+        "overflow": 0,
+        "shortTargets": [],
+        "clipped": [],
+        "clippedControls": [],
+        "smallText": [],
+        "brokenImages": [],
+        "invalidCopy": [],
+        "unlabeledButtons": [],
+        "unlabeledInputs": [],
+        "collectionSizes": {
+          ".op2-customer-card": 0,
+          ".op2-table-booking-card": 0,
+          ".sales-table tbody tr": 0,
+          ".lf-table-card": 0
+        },
+        "contentOverflow": [],
+        "palette": {
+          "accent": "#006b3c",
+          "font": "\"Syne Variable\", Syne, sans-serif"
+        }
+      },
+      "contrast": [
+        {
+          "route": "/pricing-rules",
+          "theme": "light",
+          "state": "peak-save",
+          "selector": "button.ui-button.ui-button-native.ui-button-md.btn.btn-primary-sm",
+          "kind": "text",
+          "text": "Add Peak Rule",
+          "color": "rgb(250, 250, 250)",
+          "background": {
+            "r": 58,
+            "g": 140,
+            "b": 104,
+            "a": 1
+          },
+          "fontSize": "13px",
+          "fontWeight": "500",
+          "ratio": 3.92,
+          "required": 4.5,
+          "gradient": false
+        }
+      ],
+      "error": "Expected values to be strictly equal:\n\n1 !== 0\n"
+    },
+    {
+      "name": "peak-save",
+      "route": "/pricing-rules",
+      "theme": "dark",
+      "width": 375,
+      "errors": [],
+      "pendingFeedback": {
+        "ms": 6.4000000059604645,
+        "pending": true
+      },
+      "metrics": {
+        "applicationCrashed": false,
+        "overflow": 0,
+        "shortTargets": [],
+        "clipped": [],
+        "clippedControls": [],
+        "smallText": [],
+        "brokenImages": [],
+        "invalidCopy": [],
+        "unlabeledButtons": [],
+        "unlabeledInputs": [],
+        "collectionSizes": {
+          ".op2-customer-card": 0,
+          ".op2-table-booking-card": 0,
+          ".sales-table tbody tr": 0,
+          ".lf-table-card": 0
+        },
+        "contentOverflow": [],
+        "palette": {
+          "accent": "#00ff7f",
+          "font": "\"Syne Variable\", Syne, sans-serif"
+        }
+      },
+      "contrast": []
+    },
+    {
+      "name": "peak-save",
+      "route": "/pricing-rules",
+      "theme": "dark",
+      "width": 768,
+      "errors": [],
+      "pendingFeedback": {
+        "ms": 8.200000017881393,
+        "pending": true
+      },
+      "metrics": {
+        "applicationCrashed": false,
+        "overflow": 0,
+        "shortTargets": [],
+        "clipped": [],
+        "clippedControls": [],
+        "smallText": [],
+        "brokenImages": [],
+        "invalidCopy": [],
+        "unlabeledButtons": [],
+        "unlabeledInputs": [],
+        "collectionSizes": {
+          ".op2-customer-card": 0,
+          ".op2-table-booking-card": 0,
+          ".sales-table tbody tr": 0,
+          ".lf-table-card": 0
+        },
+        "contentOverflow": [],
+        "palette": {
+          "accent": "#00ff7f",
+          "font": "\"Syne Variable\", Syne, sans-serif"
+        }
+      },
+      "contrast": []
+    },
+    {
+      "name": "peak-save",
+      "route": "/pricing-rules",
+      "theme": "dark",
+      "width": 1024,
+      "errors": [],
+      "pendingFeedback": {
+        "ms": 5.899999976158142,
+        "pending": true
+      },
+      "metrics": {
+        "applicationCrashed": false,
+        "overflow": 0,
+        "shortTargets": [],
+        "clipped": [],
+        "clippedControls": [],
+        "smallText": [],
+        "brokenImages": [],
+        "invalidCopy": [],
+        "unlabeledButtons": [],
+        "unlabeledInputs": [],
+        "collectionSizes": {
+          ".op2-customer-card": 0,
+          ".op2-table-booking-card": 0,
+          ".sales-table tbody tr": 0,
+          ".lf-table-card": 0
+        },
+        "contentOverflow": [],
+        "palette": {
+          "accent": "#00ff7f",
+          "font": "\"Syne Variable\", Syne, sans-serif"
+        }
+      },
+      "contrast": []
+    },
+    {
+      "name": "peak-save",
+      "route": "/pricing-rules",
+      "theme": "dark",
+      "width": 1440,
+      "errors": [],
+      "pendingFeedback": {
+        "ms": 13.099999994039536,
+        "pending": true
+      },
+      "metrics": {
+        "applicationCrashed": false,
+        "overflow": 0,
+        "shortTargets": [],
+        "clipped": [],
+        "clippedControls": [],
+        "smallText": [],
+        "brokenImages": [],
+        "invalidCopy": [],
+        "unlabeledButtons": [],
+        "unlabeledInputs": [],
+        "collectionSizes": {
+          ".op2-customer-card": 0,
+          ".op2-table-booking-card": 0,
+          ".sales-table tbody tr": 0,
+          ".lf-table-card": 0
+        },
+        "contentOverflow": [],
+        "palette": {
+          "accent": "#00ff7f",
+          "font": "\"Syne Variable\", Syne, sans-serif"
+        }
+      },
+      "contrast": []
+    },
+    {
+      "name": "help-guide",
+      "route": "/help",
+      "theme": "light",
+      "width": 375,
+      "errors": [],
+      "pendingFeedback": {
+        "ms": 65.69999998807907,
+        "pending": true
+      },
+      "error": "Expected values to be strictly equal:\n\n0 !== 1\n"
+    },
+    {
+      "name": "help-guide",
+      "route": "/help",
+      "theme": "light",
+      "width": 768,
+      "errors": [],
+      "pendingFeedback": {
+        "ms": 62.70000001788139,
+        "pending": true
+      },
+      "error": "Expected values to be strictly equal:\n\n0 !== 1\n"
+    },
+    {
+      "name": "help-guide",
+      "route": "/help",
+      "theme": "light",
+      "width": 1024,
+      "errors": [],
+      "pendingFeedback": {
+        "ms": 59.900000005960464,
+        "pending": true
+      },
+      "error": "Expected values to be strictly equal:\n\n0 !== 1\n"
+    },
+    {
+      "name": "help-guide",
+      "route": "/help",
+      "theme": "light",
+      "width": 1440,
+      "errors": [],
+      "pendingFeedback": {
+        "ms": 48.29999998211861,
+        "pending": true
+      },
+      "error": "Expected values to be strictly equal:\n\n0 !== 1\n"
+    },
+    {
+      "name": "help-guide",
+      "route": "/help",
+      "theme": "dark",
+      "width": 375,
+      "errors": [],
+      "pendingFeedback": {
+        "ms": 49.19999998807907,
+        "pending": true
+      },
+      "error": "Expected values to be strictly equal:\n\n0 !== 1\n"
+    },
+    {
+      "name": "help-guide",
+      "route": "/help",
+      "theme": "dark",
+      "width": 768,
+      "errors": [],
+      "pendingFeedback": {
+        "ms": 50.400000005960464,
+        "pending": true
+      },
+      "error": "Expected values to be strictly equal:\n\n0 !== 1\n"
+    },
+    {
+      "name": "help-guide",
+      "route": "/help",
+      "theme": "dark",
+      "width": 1024,
+      "errors": [],
+      "pendingFeedback": {
+        "ms": 50.599999994039536,
+        "pending": true
+      },
+      "error": "Expected values to be strictly equal:\n\n0 !== 1\n"
+    },
+    {
+      "name": "help-guide",
+      "route": "/help",
+      "theme": "dark",
+      "width": 1440,
+      "errors": [],
+      "pendingFeedback": {
+        "ms": 51.70000001788139,
+        "pending": true
+      },
+      "error": "Expected values to be strictly equal:\n\n0 !== 1\n"
+    },
+    {
+      "name": "demo",
+      "route": "/demo",
+      "theme": "light",
+      "width": 375,
+      "errors": [],
+      "sampleLifecycle": true,
+      "metrics": {
+        "applicationCrashed": false,
+        "overflow": 0,
+        "shortTargets": [],
+        "clipped": [],
+        "clippedControls": [],
+        "smallText": [],
+        "brokenImages": [],
+        "invalidCopy": [],
+        "unlabeledButtons": [],
+        "unlabeledInputs": [],
+        "collectionSizes": {
+          ".op2-customer-card": 0,
+          ".op2-table-booking-card": 0,
+          ".sales-table tbody tr": 0,
+          ".lf-table-card": 0
+        },
+        "contentOverflow": [],
+        "palette": {
+          "accent": "#006b3c",
+          "font": "\"Syne Variable\", Syne, sans-serif"
+        }
+      },
+      "contrast": []
+    },
+    {
+      "name": "demo",
+      "route": "/demo",
+      "theme": "light",
+      "width": 768,
+      "errors": [],
+      "sampleLifecycle": true,
+      "metrics": {
+        "applicationCrashed": false,
+        "overflow": 0,
+        "shortTargets": [],
+        "clipped": [],
+        "clippedControls": [],
+        "smallText": [],
+        "brokenImages": [],
+        "invalidCopy": [],
+        "unlabeledButtons": [],
+        "unlabeledInputs": [],
+        "collectionSizes": {
+          ".op2-customer-card": 0,
+          ".op2-table-booking-card": 0,
+          ".sales-table tbody tr": 0,
+          ".lf-table-card": 0
+        },
+        "contentOverflow": [],
+        "palette": {
+          "accent": "#006b3c",
+          "font": "\"Syne Variable\", Syne, sans-serif"
+        }
+      },
+      "contrast": []
+    },
+    {
+      "name": "demo",
+      "route": "/demo",
+      "theme": "light",
+      "width": 1024,
+      "errors": [],
+      "sampleLifecycle": true,
+      "metrics": {
+        "applicationCrashed": false,
+        "overflow": 0,
+        "shortTargets": [],
+        "clipped": [],
+        "clippedControls": [],
+        "smallText": [],
+        "brokenImages": [],
+        "invalidCopy": [],
+        "unlabeledButtons": [],
+        "unlabeledInputs": [],
+        "collectionSizes": {
+          ".op2-customer-card": 0,
+          ".op2-table-booking-card": 0,
+          ".sales-table tbody tr": 0,
+          ".lf-table-card": 0
+        },
+        "contentOverflow": [],
+        "palette": {
+          "accent": "#006b3c",
+          "font": "\"Syne Variable\", Syne, sans-serif"
+        }
+      },
+      "contrast": []
+    },
+    {
+      "name": "demo",
+      "route": "/demo",
+      "theme": "light",
+      "width": 1440,
+      "errors": [],
+      "sampleLifecycle": true,
+      "metrics": {
+        "applicationCrashed": false,
+        "overflow": 0,
+        "shortTargets": [],
+        "clipped": [],
+        "clippedControls": [],
+        "smallText": [],
+        "brokenImages": [],
+        "invalidCopy": [],
+        "unlabeledButtons": [],
+        "unlabeledInputs": [],
+        "collectionSizes": {
+          ".op2-customer-card": 0,
+          ".op2-table-booking-card": 0,
+          ".sales-table tbody tr": 0,
+          ".lf-table-card": 0
+        },
+        "contentOverflow": [],
+        "palette": {
+          "accent": "#006b3c",
+          "font": "\"Syne Variable\", Syne, sans-serif"
+        }
+      },
+      "contrast": []
+    },
+    {
+      "name": "demo",
+      "route": "/demo",
+      "theme": "dark",
+      "width": 375,
+      "errors": [],
+      "sampleLifecycle": true,
+      "metrics": {
+        "applicationCrashed": false,
+        "overflow": 0,
+        "shortTargets": [],
+        "clipped": [],
+        "clippedControls": [],
+        "smallText": [],
+        "brokenImages": [],
+        "invalidCopy": [],
+        "unlabeledButtons": [],
+        "unlabeledInputs": [],
+        "collectionSizes": {
+          ".op2-customer-card": 0,
+          ".op2-table-booking-card": 0,
+          ".sales-table tbody tr": 0,
+          ".lf-table-card": 0
+        },
+        "contentOverflow": [],
+        "palette": {
+          "accent": "#00ff7f",
+          "font": "\"Syne Variable\", Syne, sans-serif"
+        }
+      },
+      "contrast": []
+    },
+    {
+      "name": "demo",
+      "route": "/demo",
+      "theme": "dark",
+      "width": 768,
+      "errors": [],
+      "sampleLifecycle": true,
+      "metrics": {
+        "applicationCrashed": false,
+        "overflow": 0,
+        "shortTargets": [],
+        "clipped": [],
+        "clippedControls": [],
+        "smallText": [],
+        "brokenImages": [],
+        "invalidCopy": [],
+        "unlabeledButtons": [],
+        "unlabeledInputs": [],
+        "collectionSizes": {
+          ".op2-customer-card": 0,
+          ".op2-table-booking-card": 0,
+          ".sales-table tbody tr": 0,
+          ".lf-table-card": 0
+        },
+        "contentOverflow": [],
+        "palette": {
+          "accent": "#00ff7f",
+          "font": "\"Syne Variable\", Syne, sans-serif"
+        }
+      },
+      "contrast": []
+    },
+    {
+      "name": "demo",
+      "route": "/demo",
+      "theme": "dark",
+      "width": 1024,
+      "errors": [],
+      "sampleLifecycle": true,
+      "metrics": {
+        "applicationCrashed": false,
+        "overflow": 0,
+        "shortTargets": [],
+        "clipped": [],
+        "clippedControls": [],
+        "smallText": [],
+        "brokenImages": [],
+        "invalidCopy": [],
+        "unlabeledButtons": [],
+        "unlabeledInputs": [],
+        "collectionSizes": {
+          ".op2-customer-card": 0,
+          ".op2-table-booking-card": 0,
+          ".sales-table tbody tr": 0,
+          ".lf-table-card": 0
+        },
+        "contentOverflow": [],
+        "palette": {
+          "accent": "#00ff7f",
+          "font": "\"Syne Variable\", Syne, sans-serif"
+        }
+      },
+      "contrast": []
+    },
+    {
+      "name": "demo",
+      "route": "/demo",
+      "theme": "dark",
+      "width": 1440,
+      "errors": [],
+      "sampleLifecycle": true,
+      "metrics": {
+        "applicationCrashed": false,
+        "overflow": 0,
+        "shortTargets": [],
+        "clipped": [],
+        "clippedControls": [],
+        "smallText": [],
+        "brokenImages": [],
+        "invalidCopy": [],
+        "unlabeledButtons": [],
+        "unlabeledInputs": [],
+        "collectionSizes": {
+          ".op2-customer-card": 0,
+          ".op2-table-booking-card": 0,
+          ".sales-table tbody tr": 0,
+          ".lf-table-card": 0
+        },
+        "contentOverflow": [],
+        "palette": {
+          "accent": "#00ff7f",
+          "font": "\"Syne Variable\", Syne, sans-serif"
+        }
+      },
+      "contrast": []
+    }
+  ],
+  "writes": [
+    {
+      "name": "gst-save",
+      "theme": "light",
+      "width": 375,
+      "path": "/operations/gst",
+      "payload": {
+        "gst_percent": 7.5
+      }
+    },
+    {
+      "name": "gst-save",
+      "theme": "light",
+      "width": 768,
+      "path": "/operations/gst",
+      "payload": {
+        "gst_percent": 7.5
+      }
+    },
+    {
+      "name": "gst-save",
+      "theme": "light",
+      "width": 1024,
+      "path": "/operations/gst",
+      "payload": {
+        "gst_percent": 7.5
+      }
+    },
+    {
+      "name": "gst-save",
+      "theme": "light",
+      "width": 1440,
+      "path": "/operations/gst",
+      "payload": {
+        "gst_percent": 7.5
+      }
+    },
+    {
+      "name": "gst-save",
+      "theme": "dark",
+      "width": 375,
+      "path": "/operations/gst",
+      "payload": {
+        "gst_percent": 7.5
+      }
+    },
+    {
+      "name": "gst-save",
+      "theme": "dark",
+      "width": 768,
+      "path": "/operations/gst",
+      "payload": {
+        "gst_percent": 7.5
+      }
+    },
+    {
+      "name": "gst-save",
+      "theme": "dark",
+      "width": 1024,
+      "path": "/operations/gst",
+      "payload": {
+        "gst_percent": 7.5
+      }
+    },
+    {
+      "name": "gst-save",
+      "theme": "dark",
+      "width": 1440,
+      "path": "/operations/gst",
+      "payload": {
+        "gst_percent": 7.5
+      }
+    },
+    {
+      "name": "peak-save",
+      "theme": "light",
+      "width": 375,
+      "path": "/operations/peak-hours",
+      "payload": {
+        "start_hour": 18,
+        "end_hour": 22,
+        "multiplier": 1.5,
+        "label": "Evening Peak"
+      }
+    },
+    {
+      "name": "peak-save",
+      "theme": "light",
+      "width": 768,
+      "path": "/operations/peak-hours",
+      "payload": {
+        "start_hour": 18,
+        "end_hour": 22,
+        "multiplier": 1.5,
+        "label": "Evening Peak"
+      }
+    },
+    {
+      "name": "peak-save",
+      "theme": "light",
+      "width": 1024,
+      "path": "/operations/peak-hours",
+      "payload": {
+        "start_hour": 18,
+        "end_hour": 22,
+        "multiplier": 1.5,
+        "label": "Evening Peak"
+      }
+    },
+    {
+      "name": "peak-save",
+      "theme": "light",
+      "width": 1440,
+      "path": "/operations/peak-hours",
+      "payload": {
+        "start_hour": 18,
+        "end_hour": 22,
+        "multiplier": 1.5,
+        "label": "Evening Peak"
+      }
+    },
+    {
+      "name": "peak-save",
+      "theme": "dark",
+      "width": 375,
+      "path": "/operations/peak-hours",
+      "payload": {
+        "start_hour": 18,
+        "end_hour": 22,
+        "multiplier": 1.5,
+        "label": "Evening Peak"
+      }
+    },
+    {
+      "name": "peak-save",
+      "theme": "dark",
+      "width": 768,
+      "path": "/operations/peak-hours",
+      "payload": {
+        "start_hour": 18,
+        "end_hour": 22,
+        "multiplier": 1.5,
+        "label": "Evening Peak"
+      }
+    },
+    {
+      "name": "peak-save",
+      "theme": "dark",
+      "width": 1024,
+      "path": "/operations/peak-hours",
+      "payload": {
+        "start_hour": 18,
+        "end_hour": 22,
+        "multiplier": 1.5,
+        "label": "Evening Peak"
+      }
+    },
+    {
+      "name": "peak-save",
+      "theme": "dark",
+      "width": 1440,
+      "path": "/operations/peak-hours",
+      "payload": {
+        "start_hour": 18,
+        "end_hour": 22,
+        "multiplier": 1.5,
+        "label": "Evening Peak"
+      }
+    }
+  ],
+  "blockedWrites": [
+    "/product/setup",
+    "/product/setup",
+    "/product/setup",
+    "/product/setup",
+    "/product/setup",
+    "/product/setup",
+    "/product/setup",
+    "/product/setup"
+  ]
+}

@@ -68,6 +68,12 @@ html { scroll-padding-bottom: var(--toast-page-clearance, 0px); }
 .tournament-layout > .retry-notice { grid-column: 1 / -1; }
 .tournament-layout .settings-panel-header { flex-wrap: wrap; }
 .tournament-layout .settings-panel-header > :first-child { flex: 1; min-width: 0; }
+.operations-page .settings-panel-header { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-2); }
+@media (max-width: 768px) {
+  .operations-rule-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; }
+  .operations-rule-actions { grid-column: 1 / -1; flex-wrap: wrap; }
+  .operations-rule-actions > button { flex: 1; }
+}
 @keyframes readiness-toast-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
 @keyframes readiness-toast-out { to { opacity: 0; transform: translateY(8px); } }
 .ui-drawer { animation: presentation-modal-in 150ms ease-out; }

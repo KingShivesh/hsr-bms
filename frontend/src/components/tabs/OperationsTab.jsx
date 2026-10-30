@@ -1,4 +1,4 @@
-import { Button as HsrButton, Input as HsrInput, SkeletonBlock } from "../ui/index.js";
+import { Button as HsrButton, Input as HsrInput, SkeletonBlock, Panel as SharedPanel, EmptyState } from "../ui/index.js";
 import { useState, useEffect } from "react";
 import {
   getPeakHours,
@@ -28,7 +28,7 @@ function TabBtn({ active, onClick, children }) {
 
 function Panel({ title, description, children }) {
   return (
-    <div className="settings-panel">
+    <SharedPanel as="div" className="settings-panel">
       <div className="settings-panel-header">
         <div className="settings-panel-title">{title}</div>
         {description && (
@@ -36,7 +36,7 @@ function Panel({ title, description, children }) {
         )}
       </div>
       {children}
-    </div>
+    </SharedPanel>
   );
 }
 
@@ -67,7 +67,8 @@ function PeakHoursView() {
         getPeakHours(),
         getCurrentRate(),
       ]);
-      setRules(Array.isArray(rRes.data) ? rRes.data.filter((rule) => rule && typeof rule === "object") : []);
+      if (!Array.isArray(rRes.data) || typeof cRes.data?.is_peak !== "boolean" || !Number.isFinite(cRes.data?.multiplier)) throw new Error("Peak-hour settings unavailable");
+      setRules(rRes.data.filter((rule) => rule && typeof rule === "object"));
       setCurrentRate(cRes.data);
     } catch (e) {
       console.error(e);
@@ -78,8 +79,9 @@ function PeakHoursView() {
   }
 
   async function handleSaveRule() {
-    if (Number(startHour) >= Number(endHour)) {
-      showToast("Start hour must be before end hour", "error");
+    const [start, end, rate] = [startHour, endHour, multiplier].map(Number);
+    if ([startHour, endHour, multiplier].some(value => !String(value).trim()) || !Number.isInteger(start) || !Number.isInteger(end) || start < 0 || start > 23 || end < 1 || end > 24 || start >= end || !Number.isFinite(rate) || rate <= 0 || rate > 5) {
+      showToast("Enter hours from 0–24, with start before end, and a multiplier above 0 up to 5.", "error");
       return;
     }
     const actionKey = editingId ? `peak-edit-${editingId}` : "peak-add";
@@ -178,7 +180,7 @@ function PeakHoursView() {
             style={{ color: currentRate.is_peak ? "var(--warning-foreground)" : "var(--success-foreground)", minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}
           >
             {currentRate.is_peak
-              ? `${currentRate.label} active — ${currentRate.multiplier}× rate`
+              ? `${currentRate.label || "Peak hours"} active — ${currentRate.multiplier}× rate`
               : "Standard rate currently active"}
           </div>
         </div>
@@ -276,9 +278,7 @@ function PeakHoursView() {
           <span>{rules.length} saved</span>
         </div>
         {rules.length === 0 ? (
-          <div className="operations-rule-empty">
-            No peak-hour rules saved yet.
-          </div>
+          <EmptyState icon="ti-clock" title="No peak-hour rules" description="No busy-hour rate windows are configured." action={<HsrButton icon="ti-plus" onClick={() => document.getElementById("peak-rule-label")?.focus()}>New rule</HsrButton>} />
         ) : (
           <div className="operations-rule-table">
             {rules.map((rule) => (
@@ -287,7 +287,7 @@ function PeakHoursView() {
                   <strong title={rule.label || "Peak Hours"} style={{ display: "block", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{rule.label || "Peak Hours"}</strong>
                   <span>{fmtHour(rule.start_hour)} - {fmtHour(rule.end_hour)}</span>
                 </div>
-                <em>{rule.multiplier}x</em>
+                <em>{Number.isFinite(rule.multiplier) ? `${rule.multiplier}×` : "—"}</em>
                 <div className="operations-rule-actions">
                   <HsrButton native
                     type="button"
@@ -346,14 +346,19 @@ function GSTView() {
 
   async function handleSave() {
     if (loading || loadError) return;
+    const value = Number(gst);
+    if (!String(gst).trim() || !Number.isFinite(value) || value < 0 || value > 28) {
+      showToast("Enter a GST percentage from 0 to 28.", "error");
+      return;
+    }
     setSaving(true);
     try {
-      await saveGST(parseFloat(gst) || 0);
+      await saveGST(value);
       setFlash("GST setting saved");
       showToast("GST setting saved", "success");
       setTimeout(() => setFlash(""), 2500);
-    } catch {
-      showToast("Failed to save GST", "error");
+    } catch (error) {
+      showToast(error.userMessage || "Failed to save GST", "error");
     } finally {
       setSaving(false);
     }
@@ -383,7 +388,7 @@ function GSTView() {
               id="gst-percentage"
               type="number"
               min="0"
-              max="100"
+              max="28"
               step="0.5"
               className="input-field polish-margin-0 polish-width-120px"
 
@@ -432,7 +437,7 @@ export default function OperationsTab() {
   ];
 
   return (
-    <div className="polish-max-width-780px" >
+    <div className="operations-page polish-max-width-780px" >
       <div className="polish-display-flex polish-gap-4px polish-margin-bottom-20px" >
         {TABS.map((t) => (
           <TabBtn

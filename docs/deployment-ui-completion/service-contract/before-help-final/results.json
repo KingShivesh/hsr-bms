@@ -1,0 +1,377 @@
+{
+  "stage": "before",
+  "scope": "Isolated local QA; read fixtures and browser-mocked held HTTP 500 saves; no backend business writes",
+  "cases": [
+    {
+      "name": "help-guide",
+      "route": "/help",
+      "theme": "light",
+      "width": 375,
+      "errors": [],
+      "pendingFeedback": {
+        "ms": 43.599999994039536,
+        "pending": true
+      },
+      "hoverContrast": [],
+      "shortcuts": true,
+      "metrics": {
+        "applicationCrashed": false,
+        "overflow": 0,
+        "shortTargets": [],
+        "clipped": [],
+        "clippedControls": [],
+        "smallText": [],
+        "brokenImages": [],
+        "invalidCopy": [],
+        "unlabeledButtons": [],
+        "unlabeledInputs": [],
+        "collectionSizes": {
+          ".op2-customer-card": 0,
+          ".op2-table-booking-card": 0,
+          ".sales-table tbody tr": 0,
+          ".lf-table-card": 0
+        },
+        "contentOverflow": [],
+        "palette": {
+          "accent": "#006b3c",
+          "font": "\"Syne Variable\", Syne, sans-serif"
+        }
+      },
+      "contrast": []
+    },
+    {
+      "name": "help-guide",
+      "route": "/help",
+      "theme": "light",
+      "width": 768,
+      "errors": [],
+      "pendingFeedback": {
+        "ms": 47.60000002384186,
+        "pending": true
+      },
+      "hoverContrast": [],
+      "shortcuts": true,
+      "metrics": {
+        "applicationCrashed": false,
+        "overflow": 0,
+        "shortTargets": [],
+        "clipped": [],
+        "clippedControls": [],
+        "smallText": [],
+        "brokenImages": [],
+        "invalidCopy": [],
+        "unlabeledButtons": [],
+        "unlabeledInputs": [],
+        "collectionSizes": {
+          ".op2-customer-card": 0,
+          ".op2-table-booking-card": 0,
+          ".sales-table tbody tr": 0,
+          ".lf-table-card": 0
+        },
+        "contentOverflow": [],
+        "palette": {
+          "accent": "#006b3c",
+          "font": "\"Syne Variable\", Syne, sans-serif"
+        }
+      },
+      "contrast": []
+    },
+    {
+      "name": "help-guide",
+      "route": "/help",
+      "theme": "light",
+      "width": 1024,
+      "errors": [],
+      "pendingFeedback": {
+        "ms": 45.400000005960464,
+        "pending": true
+      },
+      "hoverContrast": [],
+      "shortcuts": true,
+      "metrics": {
+        "applicationCrashed": false,
+        "overflow": 0,
+        "shortTargets": [],
+        "clipped": [],
+        "clippedControls": [],
+        "smallText": [],
+        "brokenImages": [],
+        "invalidCopy": [],
+        "unlabeledButtons": [],
+        "unlabeledInputs": [],
+        "collectionSizes": {
+          ".op2-customer-card": 0,
+          ".op2-table-booking-card": 0,
+          ".sales-table tbody tr": 0,
+          ".lf-table-card": 0
+        },
+        "contentOverflow": [],
+        "palette": {
+          "accent": "#006b3c",
+          "font": "\"Syne Variable\", Syne, sans-serif"
+        }
+      },
+      "contrast": []
+    },
+    {
+      "name": "help-guide",
+      "route": "/help",
+      "theme": "light",
+      "width": 1440,
+      "errors": [],
+      "pendingFeedback": {
+        "ms": 45.69999998807907,
+        "pending": true
+      },
+      "hoverContrast": [],
+      "shortcuts": true,
+      "metrics": {
+        "applicationCrashed": false,
+        "overflow": 0,
+        "shortTargets": [],
+        "clipped": [],
+        "clippedControls": [],
+        "smallText": [],
+        "brokenImages": [],
+        "invalidCopy": [],
+        "unlabeledButtons": [],
+        "unlabeledInputs": [],
+        "collectionSizes": {
+          ".op2-customer-card": 0,
+          ".op2-table-booking-card": 0,
+          ".sales-table tbody tr": 0,
+          ".lf-table-card": 0
+        },
+        "contentOverflow": [],
+        "palette": {
+          "accent": "#006b3c",
+          "font": "\"Syne Variable\", Syne, sans-serif"
+        }
+      },
+      "contrast": []
+    },
+    {
+      "name": "help-guide",
+      "route": "/help",
+      "theme": "dark",
+      "width": 375,
+      "errors": [],
+      "pendingFeedback": {
+        "ms": 46.099999994039536,
+        "pending": true
+      },
+      "hoverContrast": [],
+      "shortcuts": true,
+      "metrics": {
+        "applicationCrashed": false,
+        "overflow": 0,
+        "shortTargets": [],
+        "clipped": [],
+        "clippedControls": [],
+        "smallText": [],
+        "brokenImages": [],
+        "invalidCopy": [],
+        "unlabeledButtons": [],
+        "unlabeledInputs": [],
+        "collectionSizes": {
+          ".op2-customer-card": 0,
+          ".op2-table-booking-card": 0,
+          ".sales-table tbody tr": 0,
+          ".lf-table-card": 0
+        },
+        "contentOverflow": [],
+        "palette": {
+          "accent": "#00ff7f",
+          "font": "\"Syne Variable\", Syne, sans-serif"
+        }
+      },
+      "contrast": []
+    },
+    {
+      "name": "help-guide",
+      "route": "/help",
+      "theme": "dark",
+      "width": 768,
+      "errors": [],
+      "pendingFeedback": {
+        "ms": 46.30000001192093,
+        "pending": true
+      },
+      "hoverContrast": [],
+      "shortcuts": true,
+      "metrics": {
+        "applicationCrashed": false,
+        "overflow": 0,
+        "shortTargets": [],
+        "clipped": [],
+        "clippedControls": [],
+        "smallText": [],
+        "brokenImages": [],
+        "invalidCopy": [],
+        "unlabeledButtons": [],
+        "unlabeledInputs": [],
+        "collectionSizes": {
+          ".op2-customer-card": 0,
+          ".op2-table-booking-card": 0,
+          ".sales-table tbody tr": 0,
+          ".lf-table-card": 0
+        },
+        "contentOverflow": [],
+        "palette": {
+          "accent": "#00ff7f",
+          "font": "\"Syne Variable\", Syne, sans-serif"
+        }
+      },
+      "contrast": []
+    },
+    {
+      "name": "help-guide",
+      "route": "/help",
+      "theme": "dark",
+      "width": 1024,
+      "errors": [],
+      "pendingFeedback": {
+        "ms": 46.19999998807907,
+        "pending": true
+      },
+      "hoverContrast": [],
+      "shortcuts": true,
+      "metrics": {
+        "applicationCrashed": false,
+        "overflow": 0,
+        "shortTargets": [],
+        "clipped": [],
+        "clippedControls": [],
+        "smallText": [],
+        "brokenImages": [],
+        "invalidCopy": [],
+        "unlabeledButtons": [],
+        "unlabeledInputs": [],
+        "collectionSizes": {
+          ".op2-customer-card": 0,
+          ".op2-table-booking-card": 0,
+          ".sales-table tbody tr": 0,
+          ".lf-table-card": 0
+        },
+        "contentOverflow": [],
+        "palette": {
+          "accent": "#00ff7f",
+          "font": "\"Syne Variable\", Syne, sans-serif"
+        }
+      },
+      "contrast": []
+    },
+    {
+      "name": "help-guide",
+      "route": "/help",
+      "theme": "dark",
+      "width": 1440,
+      "errors": [],
+      "pendingFeedback": {
+        "ms": 50.79999998211861,
+        "pending": true
+      },
+      "hoverContrast": [],
+      "shortcuts": true,
+      "metrics": {
+        "applicationCrashed": false,
+        "overflow": 0,
+        "shortTargets": [],
+        "clipped": [],
+        "clippedControls": [],
+        "smallText": [],
+        "brokenImages": [],
+        "invalidCopy": [],
+        "unlabeledButtons": [],
+        "unlabeledInputs": [],
+        "collectionSizes": {
+          ".op2-customer-card": 0,
+          ".op2-table-booking-card": 0,
+          ".sales-table tbody tr": 0,
+          ".lf-table-card": 0
+        },
+        "contentOverflow": [],
+        "palette": {
+          "accent": "#00ff7f",
+          "font": "\"Syne Variable\", Syne, sans-serif"
+        }
+      },
+      "contrast": []
+    }
+  ],
+  "writes": [
+    {
+      "name": "help-guide",
+      "theme": "light",
+      "width": 375,
+      "path": "/product/setup",
+      "payload": {
+        "guide_reviewed": true
+      }
+    },
+    {
+      "name": "help-guide",
+      "theme": "light",
+      "width": 768,
+      "path": "/product/setup",
+      "payload": {
+        "guide_reviewed": true
+      }
+    },
+    {
+      "name": "help-guide",
+      "theme": "light",
+      "width": 1024,
+      "path": "/product/setup",
+      "payload": {
+        "guide_reviewed": true
+      }
+    },
+    {
+      "name": "help-guide",
+      "theme": "light",
+      "width": 1440,
+      "path": "/product/setup",
+      "payload": {
+        "guide_reviewed": true
+      }
+    },
+    {
+      "name": "help-guide",
+      "theme": "dark",
+      "width": 375,
+      "path": "/product/setup",
+      "payload": {
+        "guide_reviewed": true
+      }
+    },
+    {
+      "name": "help-guide",
+      "theme": "dark",
+      "width": 768,
+      "path": "/product/setup",
+      "payload": {
+        "guide_reviewed": true
+      }
+    },
+    {
+      "name": "help-guide",
+      "theme": "dark",
+      "width": 1024,
+      "path": "/product/setup",
+      "payload": {
+        "guide_reviewed": true
+      }
+    },
+    {
+      "name": "help-guide",
+      "theme": "dark",
+      "width": 1440,
+      "path": "/product/setup",
+      "payload": {
+        "guide_reviewed": true
+      }
+    }
+  ],
+  "blockedWrites": []
+}
