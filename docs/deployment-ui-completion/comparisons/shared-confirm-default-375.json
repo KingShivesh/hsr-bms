@@ -1,0 +1,41 @@
+{
+  "legend": "Before left, after right; light above dark. Original pixels, first 1000px of tall captures. Full source captures retained.",
+  "sources": [
+    {
+      "theme": "light",
+      "stage": "before",
+      "path": "shared-overlays/before-final/admin-light-375-confirm.png",
+      "sha256": "beddd4f2560d77a237da75a26528af540d22e2958370a47b14717d744162fb23",
+      "width": 375,
+      "height": 844,
+      "croppedHeight": 844
+    },
+    {
+      "theme": "light",
+      "stage": "after",
+      "path": "shared-overlays/after-release/admin-light-375-confirm.png",
+      "sha256": "f5c10f889e0b6266a4f73bb72ff9a2b724c619706a0609e80fa50b5880b72c47",
+      "width": 375,
+      "height": 844,
+      "croppedHeight": 844
+    },
+    {
+      "theme": "dark",
+      "stage": "before",
+      "path": "shared-overlays/before-final/admin-dark-375-confirm.png",
+      "sha256": "3745c25d1910fe09c1be8fcf42dbe25188b977aa7f1f87c9cb27a047a8001293",
+      "width": 375,
+      "height": 844,
+      "croppedHeight": 844
+    },
+    {
+      "theme": "dark",
+      "stage": "after",
+      "path": "shared-overlays/after-release/admin-dark-375-confirm.png",
+      "sha256": "cef4cc75de871dbf3692e47212584d14a68498dc4bb00a66cf97a67dfc3a25ae",
+      "width": 375,
+      "height": 844,
+      "croppedHeight": 844
+    }
+  ]
+}

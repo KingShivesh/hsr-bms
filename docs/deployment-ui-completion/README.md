@@ -18,7 +18,8 @@ server-authoritative payment/receipt confirmation. No feature or role expansion.
 | Inventory / Waitlist / Legacy / Tournaments | 192 final strict samples; 28 unknown-data cases; 24 Owner/Staff dialog cases and eight Booking regressions pass | `inventory/after-final/`, `waitlist/after/`, `legacy-table-controls/after/`, `tournaments/after-serial/`, `operations-read-contract/`, `operations-dialogs/` |
 | Auxiliary operations / error routes | Both Pricing tabs, Audit and Status: 48 samples each; Help, Changelog, Sample Workspace and 404: eight applicable samples each. 52 focused cases pass | `pricing-*/after-final/`, `audit-log/after/`, `status/after/`, static-route `after/`, `service-contract/after-final/` |
 | Shared notifications | Ten before/after cases, 16 real-Cafe contracts and both-theme lifecycle tests pass; 160 loaded-route checks pass; strict contrast scanner: 0 violations / 0 errors | `notification-clearance/`, `notification-cafe/`, `notification-lifecycle/`, `notification-regression/`, `notification-contrast.json` |
-| Remaining overlays / menus / action states | Pending consolidation and interaction rerun | Not a pass |
+| Shared confirmations / header menus | 16 Owner/Staff theme/width contracts and eight short-window long-message cases pass; release verification in progress | `shared-overlays/after-release/`, `confirmation-scroll/after/` |
+| Remaining overlays / action states | Five private dialog roots and broader action coverage remain open | Not a pass |
 | Local operational lifecycle | Pending 20-cycle role/theme/mobile exercise | Not a pass |
 | Production release | All completed clusters above, including pricing/audit/service-page fixes, are live-verified | `deployment-*.json`; a push alone is not proof |
 | Real devices / unfamiliar human | External acceptance remains unverified | Browser viewports are not physical-device testing |
@@ -74,6 +75,8 @@ transition and retains reduced-motion behavior.
 | Pricing | GST UI allowed 100 although the backend accepts at most 28; missing current-rate data claimed Standard active | Match existing server constraints; do not invent state | GST 0–28 and peak-hour validation before requests; missing rate/list data shows Retry | `service-contract/after-final/`, `service-contract/after-pricing-final/` |
 | Audit | Critical actions counted as zero risk; missing actor/severity looked known | Truthful operational state | Count danger and critical; warning cue for risk rows, dashes/Retry for missing details; reject malformed collections | `comparisons/audit-critical-default-375.png` |
 | Status | An empty HTTP 200 body claimed backend/database Ready | Readiness needs evidence | Require the existing readiness payload's status and database to both be ok | `comparisons/service-readiness-default-375.png` |
+| Header menus | ArrowDown/ArrowUp on closed triggers did nothing; positioning assumed a 310px popup | Keyboard access and bounded menus | Shared Dropdown opens first/last item from arrow keys, retains Home/End/wrap/Escape/Tab, and positions using actual popup dimensions | `comparisons/shared-menu-short-375.png`, `shared-overlays/after-release/` |
+| Confirmations | Long messages pushed desktop actions below a short viewport; mobile focus scrolled the title out of view | Visible heading and reachable actions | Shared Modal with independently scrolling message, fixed heading/footer, Cancel-first focus and explicit description association | `comparisons/confirmation-scroll-long-768.png`, `comparisons/shared-confirm-default-375.png` |
 
 The first shared-change regression is 20 main routes x four widths x both themes
 (160 loaded/default captures), all clean. It is not certification of all their
@@ -439,3 +442,59 @@ output, `sse_starlette.sse.SendTimeoutError` traces were present. The captured
 output does not establish timestamped attribution or production relevance. This
 UI pass does not certify SSE soak/memory behavior; retain this diagnostic for the
 paused real-time work rather than silently claiming a clean SSE soak.
+
+## Shared Confirmation And Menu Verification
+
+The matched baseline for this cluster is the current pre-change `dae2414`, not
+the older full-pass baseline. `shared-overlays/before-final` and
+`shared-overlays/after-release` contain 16 cases each: Owner/Staff, light/dark,
+375/768/1024/1440px. Each case exercises Help, User and Club menus, a confirmation
+above an edited checkout drawer, and the logout confirmation. The final 48 menu
+checks pass; click-to-expanded feedback is 19.4-139.8ms. Both arrow directions
+open the closed trigger correctly; Home/End, wrapping, Tab, Escape, outside-click
+and resize dismissal pass. Short-window menu bounds stay inside 320px height.
+Owner-only entries remain absent for Staff, and the existing support address
+is retained. Menu-to-shortcuts handoff and opener focus restoration pass.
+
+Confirmations now consume the shared Modal rather than a separate dialog frame.
+Cancel remains initially focused. Escape, Cancel, backdrop and close-icon dismissal
+send no logout; actual confirmation sends exactly one browser-mocked logout and
+returns to Login. The edited checkout remains intact after cancelling its nested
+confirmation; discarding returns focus to the table's End button. Confirmation
+resolution is performed once outside React's state updater. All business writes
+are blocked; no production account or business records are changed.
+
+`confirmation-scroll/before-final` and `after` have eight long-message cases,
+using browser-only duplicate-member read fixtures. At 320px viewport height,
+the old desktop dialog is 930-938px tall, with action bounds y=897-933/941.
+Afterward it is 272px tall, bounded by y=24-296, and its actions end at y=275.
+At 375px width the old dialog fits but focusing Cancel scrolls its heading out
+of view. Afterward heading and actions remain visible while only the message
+scrolls. All eight final cases have 4.5:1 text contrast, accessible descriptions
+and no application errors. Comparison images are original pixels: before left,
+after right, light above dark; full source captures are retained.
+
+Earlier `shared-overlays/before`, `after` and `after-final` are intermediate
+contracts/captures, not final acceptance of the final scrollable body. The first
+`after-verified` run has one timeout reopening the User menu after dismissal;
+its screenshot remains. That case passed the isolated `retry-diagnostic`, and
+the subsequent complete `after-release` run passes all 16. The initial
+`confirmation-scroll/before` contains a click timeout and unsettled animation
+measurements; the settled `before-final` rerun completes all eight. These probes
+are not silently counted as passes.
+
+The existing palette and Syne Variable / DM Mono remain unchanged. Menu spacing
+and item radius use existing tokens. `source-shared-overlays.json` still records
+four private session-money surface roots, five private dialog roots and 645
+literal spacing declarations; this cluster does not close global token cleanup,
+the broader button audit, the 20-cycle real UI lifecycle, physical-device testing
+or unfamiliar-user acceptance. SSE expansion remains paused.
+
+After the interrupted release checkpoint, verification resumed on November 4.
+The QA build reproduced the same asset names/bytes as the tested October 31
+version. A new disposable environment installed the declared requirements
+(one network-reset retry), then seeded and started the guarded local database.
+`overlay-contrast.json` is the completed strict 21-route rerun: zero violations,
+zero errors, both themes and safe dynamic overlays. Lint, theme guard, production
+build and all 47 backend Python syntax checks pass. This is a frontend release;
+the fresh SQLite QA startup is not represented as a Postgres integration test.

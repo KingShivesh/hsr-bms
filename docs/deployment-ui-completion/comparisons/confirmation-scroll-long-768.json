@@ -1,0 +1,41 @@
+{
+  "legend": "Before left, after right; light above dark. Original pixels, first 1000px of tall captures. Full source captures retained.",
+  "sources": [
+    {
+      "theme": "light",
+      "stage": "before",
+      "path": "confirmation-scroll/before-final/light-768.png",
+      "sha256": "cfeee9af8364c6e6f35ec77d52fd609688dcf39515c43bf9783b32268a32c310",
+      "width": 768,
+      "height": 320,
+      "croppedHeight": 320
+    },
+    {
+      "theme": "light",
+      "stage": "after",
+      "path": "confirmation-scroll/after/light-768.png",
+      "sha256": "e2a5a7da2a9b1498a99e896497f33a065134e8116c024744abf02fdcc22e298f",
+      "width": 768,
+      "height": 320,
+      "croppedHeight": 320
+    },
+    {
+      "theme": "dark",
+      "stage": "before",
+      "path": "confirmation-scroll/before-final/dark-768.png",
+      "sha256": "94e099a26f1257f6452be981d283a0135ba6974432abaea8a1d4eee8e959632e",
+      "width": 768,
+      "height": 320,
+      "croppedHeight": 320
+    },
+    {
+      "theme": "dark",
+      "stage": "after",
+      "path": "confirmation-scroll/after/dark-768.png",
+      "sha256": "3b4bc1903c929c89cdf54afc07af27b843adf3422028be1a5ecd259e09fbc654",
+      "width": 768,
+      "height": 320,
+      "croppedHeight": 320
+    }
+  ]
+}

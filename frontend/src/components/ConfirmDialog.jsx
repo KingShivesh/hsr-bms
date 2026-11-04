@@ -1,9 +1,7 @@
-import { Icon as HsrIcon } from "./ui/index.js";
-import { useCallback, useMemo, useRef, useState } from "react";
+import { Icon as HsrIcon, Modal } from "./ui/index.js";
+import { useCallback, useId, useMemo, useRef, useState } from "react";
 import { ConfirmContext } from "./confirmContext.js";
 import Button from "./ui/Button.jsx";
-import { useDialogFocus } from "./ui/useDialogFocus.js";
-import { useEscapeKey } from "./ui/useEscapeKey.js";
 
 const DEFAULT_CONFIRM = {
   title: "Review action",
@@ -15,59 +13,40 @@ const DEFAULT_CONFIRM = {
 
 export function ConfirmProvider({ children }) {
   const [dialog, setDialog] = useState(null);
-  const dialogRef = useRef(null);
   const cancelRef = useRef(null);
-  useDialogFocus(dialogRef, !!dialog, cancelRef);
+  const resolver = useRef(null);
+  const messageId = useId();
 
   const requestConfirm = useCallback((options = {}) => (
     new Promise((resolve) => {
+      resolver.current = resolve;
       setDialog({
         ...DEFAULT_CONFIRM,
         ...(typeof options === "string" ? { message: options } : options),
-        resolve,
       });
     })
   ), []);
 
   const closeDialog = useCallback((result) => {
-    setDialog((current) => {
-      current?.resolve?.(result);
-      return null;
-    });
+    const resolve = resolver.current;
+    resolver.current = null;
+    setDialog(null);
+    resolve?.(result);
   }, []);
 
   const value = useMemo(() => ({ requestConfirm }), [requestConfirm]);
-
-  useEscapeKey(() => closeDialog(false), !!dialog, dialogRef);
 
   return (
     <ConfirmContext.Provider value={value}>
       {children}
       {dialog && (
-        <div
-          className="app-confirm-backdrop"
-          role="presentation"
-          onMouseDown={(event) => {
-            if (event.target === event.currentTarget) closeDialog(false);
-          }}
-        >
-          <div
-            ref={dialogRef}
-            className={`app-confirm-dialog ${dialog.tone || "danger"}`}
-            role="dialog"
-            aria-modal="true"
-            tabIndex={-1}
-            aria-labelledby="app-confirm-title"
-            aria-describedby="app-confirm-message"
-          >
-            <div className="app-confirm-icon" aria-hidden="true">
-              <HsrIcon className={`ti ${dialog.tone === "warning" ? "ti-alert-triangle" : "ti-trash"}`} />
-            </div>
-            <div className="app-confirm-copy">
-              <h3 id="app-confirm-title">{dialog.title}</h3>
-              <p id="app-confirm-message">{dialog.message}</p>
-            </div>
-            <div className="app-confirm-actions">
+        <Modal open portal size="sm" title={dialog.title}
+          className={`ui-confirm ${dialog.tone || "danger"}`}
+          overlayClassName="ui-confirm-overlay"
+          initialFocusRef={cancelRef}
+          onClose={() => closeDialog(false)}
+          aria-describedby={messageId}
+          footer={<>
               <Button
                 ref={cancelRef}
                 variant="secondary"
@@ -81,9 +60,15 @@ export function ConfirmProvider({ children }) {
               >
                 {dialog.confirmLabel}
               </Button>
-            </div>
+          </>}
+        >
+          <div className="ui-confirm-message">
+            <span className="ui-confirm-icon" aria-hidden="true">
+              <HsrIcon className={`ti ${dialog.tone === "warning" ? "ti-alert-triangle" : "ti-trash"}`} />
+            </span>
+            <p id={messageId}>{dialog.message}</p>
           </div>
-        </div>
+        </Modal>
       )}
     </ConfirmContext.Provider>
   );

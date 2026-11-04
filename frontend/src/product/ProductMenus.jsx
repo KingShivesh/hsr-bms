@@ -1,38 +1,5 @@
-import { useEffect, useRef, useState } from "react";
-import { createPortal } from "react-dom";
-import { Button, Icon } from "../components/ui/index.js";
+import { Button, Dropdown as Menu, Icon } from "../components/ui/index.js";
 import { useProduct, APP_VERSION, supportLink } from "./context.js";
-
-function Menu({ label, children, trigger, className = "" }) {
-  const [open, setOpen] = useState(false);
-  const button = useRef(null);
-  const popup = useRef(null);
-  const [position, setPosition] = useState({});
-  useEffect(() => {
-    if (!open) return;
-    popup.current?.querySelector('[role="menuitem"]')?.focus();
-    const close = event => { if (!popup.current?.contains(event.target) && !button.current?.contains(event.target)) setOpen(false); };
-    const keydown = event => {
-      if (event.key === "Escape") { event.preventDefault(); setOpen(false); button.current?.focus(); }
-      if (event.key === "Tab") { setOpen(false); button.current?.focus(); }
-      const items = [...(popup.current?.querySelectorAll('[role="menuitem"]') || [])];
-      if (["ArrowDown", "ArrowUp", "Home", "End"].includes(event.key)) {
-        event.preventDefault();
-        const index = items.indexOf(document.activeElement);
-        const next = event.key === "Home" ? 0 : event.key === "End" ? items.length - 1 : (index + (event.key === "ArrowDown" ? 1 : -1) + items.length) % items.length;
-        items[next]?.focus();
-      }
-    };
-    const reposition = () => setOpen(false);
-    document.addEventListener("pointerdown", close); document.addEventListener("keydown", keydown);
-    window.addEventListener("resize", reposition);
-    return () => { document.removeEventListener("pointerdown", close); document.removeEventListener("keydown", keydown); window.removeEventListener("resize", reposition); };
-  }, [open]);
-  return <><Button native ref={button} className={className} aria-label={label} title={label} aria-haspopup="menu" aria-expanded={open} onClick={() => {
-    const rect = button.current.getBoundingClientRect();
-    setPosition({ top: Math.max(8, Math.min(rect.bottom + 4, window.innerHeight - 310)), left: Math.max(8, Math.min(rect.left, window.innerWidth - 280)) }); setOpen(!open);
-  }}>{trigger}</Button>{open && createPortal(<div className="product-menu" role="menu" aria-label={label} ref={popup} style={position} onClick={event => { if (event.target.closest('[role="menuitem"]')) { setOpen(false); button.current?.focus(); } }}>{children}</div>, document.body)}</>;
-}
 
 export function ClubMenu() {
   const p = useProduct();

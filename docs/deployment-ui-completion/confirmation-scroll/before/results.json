@@ -1,0 +1,132 @@
+{
+  "stage": "before",
+  "scope": "Local read-only duplicate-member fixtures; all writes blocked",
+  "cases": [
+    {
+      "theme": "light",
+      "width": 375,
+      "errors": [],
+      "measurements": {
+        "top": 8,
+        "bottom": 312,
+        "right": 367,
+        "actionTop": 247,
+        "actionBottom": 291,
+        "actionVisible": true,
+        "described": true,
+        "bodyScrolls": false,
+        "viewportHeight": 320
+      },
+      "contrast": []
+    },
+    {
+      "theme": "light",
+      "width": 768,
+      "errors": [],
+      "measurements": {
+        "top": 37.035003662109375,
+        "bottom": 960.9649353027344,
+        "right": 600.7000274658203,
+        "actionTop": 896.9400634765625,
+        "actionBottom": 940.280029296875,
+        "actionVisible": false,
+        "described": true,
+        "bodyScrolls": false,
+        "viewportHeight": 320
+      },
+      "contrast": []
+    },
+    {
+      "theme": "light",
+      "width": 1024,
+      "errors": [],
+      "measurements": {
+        "top": 36.975006103515625,
+        "bottom": 953.0250549316406,
+        "right": 728.699951171875,
+        "actionTop": 896.8800048828125,
+        "actionBottom": 932.3399658203125,
+        "actionVisible": false,
+        "described": true,
+        "bodyScrolls": false,
+        "viewportHeight": 320
+      },
+      "contrast": []
+    },
+    {
+      "theme": "light",
+      "width": 1440,
+      "errors": [],
+      "measurements": {
+        "top": 24,
+        "bottom": 954,
+        "right": 940,
+        "actionTop": 897,
+        "actionBottom": 933,
+        "actionVisible": false,
+        "described": true,
+        "bodyScrolls": false,
+        "viewportHeight": 320
+      },
+      "contrast": []
+    },
+    {
+      "theme": "dark",
+      "width": 375,
+      "errors": [],
+      "measurements": {
+        "top": 16.279998779296875,
+        "bottom": 315.7200012207031,
+        "right": 364.3074951171875,
+        "actionTop": 251.69500732421875,
+        "actionBottom": 295.0350036621094,
+        "actionVisible": true,
+        "described": true,
+        "bodyScrolls": false,
+        "viewportHeight": 320
+      },
+      "contrast": []
+    },
+    {
+      "theme": "dark",
+      "width": 768,
+      "errors": [],
+      "error": "locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Merge Profiles', exact: true }).first()\u001b[22m\n\u001b[2m    - locator resolved to <button type=\"button\" aria-label=\"Merge Profiles\" class=\"ui-button ui-button-native ui-button-md lf-secondary-button\">Merge Profiles</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m    - element is visible, enabled and stable\u001b[22m\n\u001b[2m    - scrolling into view if needed\u001b[22m\n\u001b[2m    - done scrolling\u001b[22m\n\u001b[2m    - performing click action\u001b[22m\n"
+    },
+    {
+      "theme": "dark",
+      "width": 1024,
+      "errors": [],
+      "measurements": {
+        "top": 24,
+        "bottom": 954,
+        "right": 732,
+        "actionTop": 897,
+        "actionBottom": 933,
+        "actionVisible": false,
+        "described": true,
+        "bodyScrolls": false,
+        "viewportHeight": 320
+      },
+      "contrast": []
+    },
+    {
+      "theme": "dark",
+      "width": 1440,
+      "errors": [],
+      "measurements": {
+        "top": 36.975006103515625,
+        "bottom": 953.0250549316406,
+        "right": 936.699951171875,
+        "actionTop": 896.8800048828125,
+        "actionBottom": 932.3399658203125,
+        "actionVisible": false,
+        "described": true,
+        "bodyScrolls": false,
+        "viewportHeight": 320
+      },
+      "contrast": []
+    }
+  ],
+  "blockedWrites": []
+}

@@ -6,6 +6,7 @@ export { default as DataTable, Table } from "./DataTable.jsx";
 export { default as Icon } from "./Icon.jsx";
 export { default as EmptyState } from "./EmptyState.jsx";
 export { default as Disclosure } from "./Disclosure.jsx";
+export { default as Dropdown } from "./Dropdown.jsx";
 export { default as Switch } from "./Switch.jsx";
 export { Alert, SkeletonBlock, SkeletonGrid } from "./Feedback.jsx";
 export { CurrencyAmount, MetricCard, MetricValue, Timer } from "./DataDisplay.jsx";

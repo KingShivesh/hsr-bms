@@ -18,11 +18,13 @@ export function Modal({
   open,
   title,
   description,
+  "aria-describedby": describedBy,
   children,
   footer,
   onClose,
   onEscape,
   className = "",
+  overlayClassName = "",
   size = "md",
   portal = false,
   dismissOnBackdrop = true,
@@ -30,6 +32,7 @@ export function Modal({
   initialFocusRef,
 }) {
   const titleId = useId();
+  const descriptionId = useId();
   const dialogRef = useRef(null);
   const present = usePresence(open);
   useDialogFocus(dialogRef, open, initialFocusRef);
@@ -39,7 +42,7 @@ export function Modal({
 
   const content = (
     <div
-      className="ui-overlay"
+      className={["ui-overlay", overlayClassName].filter(Boolean).join(" ")}
       data-exiting={!open || undefined}
       aria-hidden={!open || undefined}
       inert={!open ? true : undefined}
@@ -55,11 +58,12 @@ export function Modal({
         aria-modal="true"
         tabIndex={-1}
         aria-labelledby={title ? titleId : undefined}
+        aria-describedby={describedBy || (description ? descriptionId : undefined)}
       >
         <div className="ui-overlay-head">
           <div>
             {title && <h2 id={titleId} title={title}>{title}</h2>}
-            {description && <p>{description}</p>}
+            {description && <p id={descriptionId}>{description}</p>}
           </div>
           {onClose && <IconButton label="Close dialog" icon="ti-x" variant="ghost" disabled={closeDisabled} onClick={onClose} />}
         </div>

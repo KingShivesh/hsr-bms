@@ -1,0 +1,151 @@
+{
+  "stage": "after",
+  "scope": "Local read-only duplicate-member fixtures; all writes blocked",
+  "cases": [
+    {
+      "theme": "light",
+      "width": 375,
+      "errors": [],
+      "measurements": {
+        "top": 24,
+        "bottom": 296,
+        "right": 359,
+        "actionTop": 231,
+        "actionBottom": 275,
+        "actionVisible": true,
+        "titleVisible": true,
+        "described": true,
+        "bodyScrolls": true,
+        "viewportHeight": 320
+      },
+      "contrast": []
+    },
+    {
+      "theme": "light",
+      "width": 768,
+      "errors": [],
+      "measurements": {
+        "top": 24,
+        "bottom": 296,
+        "right": 604,
+        "actionTop": 231,
+        "actionBottom": 275,
+        "actionVisible": true,
+        "titleVisible": true,
+        "described": true,
+        "bodyScrolls": true,
+        "viewportHeight": 320
+      },
+      "contrast": []
+    },
+    {
+      "theme": "light",
+      "width": 1024,
+      "errors": [],
+      "measurements": {
+        "top": 24,
+        "bottom": 296,
+        "right": 732,
+        "actionTop": 239,
+        "actionBottom": 275,
+        "actionVisible": true,
+        "titleVisible": true,
+        "described": true,
+        "bodyScrolls": true,
+        "viewportHeight": 320
+      },
+      "contrast": []
+    },
+    {
+      "theme": "light",
+      "width": 1440,
+      "errors": [],
+      "measurements": {
+        "top": 24,
+        "bottom": 296,
+        "right": 940,
+        "actionTop": 239,
+        "actionBottom": 275,
+        "actionVisible": true,
+        "titleVisible": true,
+        "described": true,
+        "bodyScrolls": true,
+        "viewportHeight": 320
+      },
+      "contrast": []
+    },
+    {
+      "theme": "dark",
+      "width": 375,
+      "errors": [],
+      "measurements": {
+        "top": 24,
+        "bottom": 296,
+        "right": 359,
+        "actionTop": 231,
+        "actionBottom": 275,
+        "actionVisible": true,
+        "titleVisible": true,
+        "described": true,
+        "bodyScrolls": true,
+        "viewportHeight": 320
+      },
+      "contrast": []
+    },
+    {
+      "theme": "dark",
+      "width": 768,
+      "errors": [],
+      "measurements": {
+        "top": 24,
+        "bottom": 296,
+        "right": 604,
+        "actionTop": 231,
+        "actionBottom": 275,
+        "actionVisible": true,
+        "titleVisible": true,
+        "described": true,
+        "bodyScrolls": true,
+        "viewportHeight": 320
+      },
+      "contrast": []
+    },
+    {
+      "theme": "dark",
+      "width": 1024,
+      "errors": [],
+      "measurements": {
+        "top": 24,
+        "bottom": 296,
+        "right": 732,
+        "actionTop": 239,
+        "actionBottom": 275,
+        "actionVisible": true,
+        "titleVisible": true,
+        "described": true,
+        "bodyScrolls": true,
+        "viewportHeight": 320
+      },
+      "contrast": []
+    },
+    {
+      "theme": "dark",
+      "width": 1440,
+      "errors": [],
+      "measurements": {
+        "top": 24,
+        "bottom": 296,
+        "right": 940,
+        "actionTop": 239,
+        "actionBottom": 275,
+        "actionVisible": true,
+        "titleVisible": true,
+        "described": true,
+        "bodyScrolls": true,
+        "viewportHeight": 320
+      },
+      "contrast": []
+    }
+  ],
+  "blockedWrites": []
+}

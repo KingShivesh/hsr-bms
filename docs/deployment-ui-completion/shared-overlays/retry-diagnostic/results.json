@@ -1,0 +1,156 @@
+{
+  "stage": "after",
+  "scope": "Local QA only; every business write blocked; logout browser-mocked",
+  "cases": [
+    {
+      "role": "admin",
+      "theme": "light",
+      "width": 375,
+      "menus": [
+        {
+          "label": "Help",
+          "arrowOpens": true,
+          "items": [
+            "Documentation",
+            "Keyboard shortcuts",
+            "Contact support",
+            "What’s new"
+          ],
+          "initialFocus": true,
+          "end": true,
+          "wrap": true,
+          "home": true,
+          "contrast": [],
+          "bounds": {
+            "left": 95,
+            "right": 367,
+            "top": 148,
+            "bottom": 342,
+            "viewport": 844
+          },
+          "escapeFocus": true,
+          "feedback": {
+            "ms": 80.90000000596046,
+            "expanded": true
+          },
+          "tabLeaves": true,
+          "upOpensLast": true,
+          "outsideCloses": true,
+          "shortViewport": {
+            "top": 118,
+            "bottom": 312,
+            "height": 320
+          },
+          "resizeCloses": true,
+          "childDialogFocus": true,
+          "childRestoresFocus": true
+        },
+        {
+          "label": "User menu",
+          "arrowOpens": true,
+          "items": [
+            "My profile",
+            "Settings",
+            "Sign out"
+          ],
+          "initialFocus": true,
+          "end": true,
+          "wrap": true,
+          "home": true,
+          "contrast": [],
+          "bounds": {
+            "left": 95,
+            "right": 367,
+            "top": 148,
+            "bottom": 371,
+            "viewport": 844
+          },
+          "escapeFocus": true,
+          "feedback": {
+            "ms": 30,
+            "expanded": true
+          },
+          "tabLeaves": true,
+          "upOpensLast": true,
+          "outsideCloses": true,
+          "shortViewport": {
+            "top": 89,
+            "bottom": 312,
+            "height": 320
+          },
+          "resizeCloses": true
+        },
+        {
+          "label": "Club menu",
+          "arrowOpens": true,
+          "items": [
+            "Club settings",
+            "Team access",
+            "Help & documentation",
+            "Sign out"
+          ],
+          "initialFocus": true,
+          "end": true,
+          "wrap": true,
+          "home": true,
+          "contrast": [],
+          "bounds": {
+            "left": 12,
+            "right": 284,
+            "top": 116,
+            "bottom": 383,
+            "viewport": 844
+          },
+          "escapeFocus": true,
+          "feedback": {
+            "ms": 24.600000023841858,
+            "expanded": true
+          },
+          "tabLeaves": true,
+          "upOpensLast": true,
+          "outsideCloses": true,
+          "shortViewport": {
+            "top": 45,
+            "bottom": 312,
+            "height": 320
+          },
+          "resizeCloses": true
+        }
+      ],
+      "logoutRequests": 1,
+      "errors": [],
+      "nestedFocus": true,
+      "nestedIsTop": true,
+      "nestedRestoresFocus": true,
+      "discardRestoresFocus": true,
+      "confirmOpening": 5,
+      "cancelInitiallyFocused": true,
+      "dialogMetrics": {
+        "applicationCrashed": false,
+        "overflow": 0,
+        "shortTargets": [],
+        "clipped": [],
+        "clippedControls": [],
+        "smallText": [],
+        "brokenImages": [],
+        "invalidCopy": [],
+        "unlabeledButtons": [],
+        "unlabeledInputs": [],
+        "collectionSizes": {
+          ".op2-customer-card": 0,
+          ".op2-table-booking-card": 0,
+          ".sales-table tbody tr": 0,
+          ".lf-table-card": 0
+        },
+        "contentOverflow": [],
+        "palette": {
+          "accent": "#006b3c",
+          "font": "\"Syne Variable\", Syne, sans-serif"
+        }
+      },
+      "dialogContrast": [],
+      "cancelRestoresFocus": true
+    }
+  ],
+  "blockedWrites": []
+}
