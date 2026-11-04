@@ -1,0 +1,202 @@
+{
+  "verified": true,
+  "backendFixCommit": "e014ff4caf9182797dc4e341f6c491fad80bfafa",
+  "localHead": "5ba672865b67d92a7eefa6e72331faa3da34209f",
+  "observations": [
+    {
+      "at": "2026-11-04T09:01:57.915Z",
+      "frontendMatches": false,
+      "backendContainsFix": false,
+      "frontendStatus": 200,
+      "error": "The operation was aborted due to timeout"
+    },
+    {
+      "at": "2026-11-04T09:02:58.795Z",
+      "frontendMatches": true,
+      "backendContainsFix": true,
+      "frontendStatus": 200,
+      "assets": [
+        {
+          "name": "BookingsPage-BGvEoiSu.js",
+          "status": 200,
+          "sha256": "261ceb87efa6f649182ac957346894b40945b40f4363feb4bd684b2462c890e6",
+          "expectedSha256": "261ceb87efa6f649182ac957346894b40945b40f4363feb4bd684b2462c890e6",
+          "matches": true
+        },
+        {
+          "name": "ClosingTab-DMIHy76b.js",
+          "status": 200,
+          "sha256": "7e9b2758ae4151422f08811075fcbd2a4d949049d8e484aa70853fc2f9c5c90e",
+          "expectedSha256": "7e9b2758ae4151422f08811075fcbd2a4d949049d8e484aa70853fc2f9c5c90e",
+          "matches": true
+        },
+        {
+          "name": "ClubSuiteTab-B5YJd8TH.js",
+          "status": 200,
+          "sha256": "a01b8bfe65823015c710ff85b1ca74316c5ea8b562e483a4a4d8320ba86fdfd1",
+          "expectedSha256": "a01b8bfe65823015c710ff85b1ca74316c5ea8b562e483a4a4d8320ba86fdfd1",
+          "matches": true
+        },
+        {
+          "name": "ContextHelp-Bkl4Xcjn.js",
+          "status": 200,
+          "sha256": "ceb518768cc7a09de366683b2ece55f75ea630b7efa5d4fe0747b9a5c2ee9e74",
+          "expectedSha256": "ceb518768cc7a09de366683b2ece55f75ea630b7efa5d4fe0747b9a5c2ee9e74",
+          "matches": true
+        },
+        {
+          "name": "CustomersPage-DEqHyFrk.js",
+          "status": 200,
+          "sha256": "f2f0095891d6376cfd591dbb16d265e8e5a0bb4bfa825eac63de198677f4ea50",
+          "expectedSha256": "f2f0095891d6376cfd591dbb16d265e8e5a0bb4bfa825eac63de198677f4ea50",
+          "matches": true
+        },
+        {
+          "name": "Dashboard-rpTK9_b7.js",
+          "status": 200,
+          "sha256": "e52813086a35f6e9c8c0ffb74e34817e67a183206d893563ae625b3137dd5ade",
+          "expectedSha256": "e52813086a35f6e9c8c0ffb74e34817e67a183206d893563ae625b3137dd5ade",
+          "matches": true
+        },
+        {
+          "name": "FoodTab-Jfd_Tkm8.js",
+          "status": 200,
+          "sha256": "420c747cf5e681383582c28c2e56e15bd388063cba253c9ab67f7a90322a8f8c",
+          "expectedSha256": "420c747cf5e681383582c28c2e56e15bd388063cba253c9ab67f7a90322a8f8c",
+          "matches": true
+        },
+        {
+          "name": "FrameControls-BwxVV_pJ.js",
+          "status": 200,
+          "sha256": "30c234495278bb9e8f0096f4017a85a2d7d9d809e610c8a67f426c5d19ad4356",
+          "expectedSha256": "30c234495278bb9e8f0096f4017a85a2d7d9d809e610c8a67f426c5d19ad4356",
+          "matches": true
+        },
+        {
+          "name": "LiveFloor-C3_cSlvp.js",
+          "status": 200,
+          "sha256": "641f4b4a7450a0be102e9228d1db81def417060895984a0a849f8fc5934f17db",
+          "expectedSha256": "641f4b4a7450a0be102e9228d1db81def417060895984a0a849f8fc5934f17db",
+          "matches": true
+        },
+        {
+          "name": "LiveFloor-Dfxs2ws_.css",
+          "status": 200,
+          "sha256": "6ecd2f9141fdfba758d594b05980b4810336533b3f90e0b3e3bc5ab01446017d",
+          "expectedSha256": "6ecd2f9141fdfba758d594b05980b4810336533b3f90e0b3e3bc5ab01446017d",
+          "matches": true
+        },
+        {
+          "name": "OperationsTab-CvWnnTaq.js",
+          "status": 200,
+          "sha256": "47d43f0dd999b093c47f7396768ec0c4b36eccfec0ff74d2c893de297faaacea",
+          "expectedSha256": "47d43f0dd999b093c47f7396768ec0c4b36eccfec0ff74d2c893de297faaacea",
+          "matches": true
+        },
+        {
+          "name": "Pagination-BeZq7TVi.js",
+          "status": 200,
+          "sha256": "3a546fae5065ac96f1721669765918188aa402541b49408c797a8bfc4385e9f5",
+          "expectedSha256": "3a546fae5065ac96f1721669765918188aa402541b49408c797a8bfc4385e9f5",
+          "matches": true
+        },
+        {
+          "name": "ReportsTab-BwHRIXef.js",
+          "status": 200,
+          "sha256": "02f74a8821e447cb66d862adce42e432509f0a3d58ff97195891191adfbbcc8d",
+          "expectedSha256": "02f74a8821e447cb66d862adce42e432509f0a3d58ff97195891191adfbbcc8d",
+          "matches": true
+        },
+        {
+          "name": "SalesPage-CXAyTU3J.js",
+          "status": 200,
+          "sha256": "b99737f51df904f8f29a92c2e77d24355e277e4385d33fc4cd814dee796446d5",
+          "expectedSha256": "b99737f51df904f8f29a92c2e77d24355e277e4385d33fc4cd814dee796446d5",
+          "matches": true
+        },
+        {
+          "name": "SettingsTab-BDgw9Hbp.js",
+          "status": 200,
+          "sha256": "1ea5dde98c8a9317d70f06f2df22d6ff024095351ab0a4dab11cac8c16c19a87",
+          "expectedSha256": "1ea5dde98c8a9317d70f06f2df22d6ff024095351ab0a4dab11cac8c16c19a87",
+          "matches": true
+        },
+        {
+          "name": "TableStateUI-BHqq0s2W.js",
+          "status": 200,
+          "sha256": "20cc8b22c35bc8d24bfb60af1c2f624f4ed4e8df3f4d87f743fe9aa9ad20f644",
+          "expectedSha256": "20cc8b22c35bc8d24bfb60af1c2f624f4ed4e8df3f4d87f743fe9aa9ad20f644",
+          "matches": true
+        },
+        {
+          "name": "TablesTab-B6o-xN4C.js",
+          "status": 200,
+          "sha256": "08e6b3e9d2299cd6edbae264e839a32abd9a6dfa0a7bf016aec82dd15e2f3e1b",
+          "expectedSha256": "08e6b3e9d2299cd6edbae264e839a32abd9a6dfa0a7bf016aec82dd15e2f3e1b",
+          "matches": true
+        },
+        {
+          "name": "TournamentTab-D25T2wg6.js",
+          "status": 200,
+          "sha256": "91bfb25d8a57ebbe28f2a1e62bab975a5f3ec8d8ac7e4a2d41cdd15f4329f0aa",
+          "expectedSha256": "91bfb25d8a57ebbe28f2a1e62bab975a5f3ec8d8ac7e4a2d41cdd15f4329f0aa",
+          "matches": true
+        },
+        {
+          "name": "floorData-C1MFzQCY.js",
+          "status": 200,
+          "sha256": "8db201f0cd3db25aca49b961f6e3665f01a2c506c03bf3c930897815325b625d",
+          "expectedSha256": "8db201f0cd3db25aca49b961f6e3665f01a2c506c03bf3c930897815325b625d",
+          "matches": true
+        },
+        {
+          "name": "index-CY9hH1jX.css",
+          "status": 200,
+          "sha256": "ba89751af5de1982700f378cfcd191425f872a0215e3984d79a2d673551e9d68",
+          "expectedSha256": "ba89751af5de1982700f378cfcd191425f872a0215e3984d79a2d673551e9d68",
+          "matches": true
+        },
+        {
+          "name": "index-slI43tBt.js",
+          "status": 200,
+          "sha256": "862aebac28e2313994562d7dd9c807758011d4b3b5fdf73cfa8e09479a8fcf9e",
+          "expectedSha256": "862aebac28e2313994562d7dd9c807758011d4b3b5fdf73cfa8e09479a8fcf9e",
+          "matches": true
+        },
+        {
+          "name": "tableStatus-BXmwxmnR.js",
+          "status": 200,
+          "sha256": "3ed0dd634d346068aca1dd71fa01b3732f1d7a8c65561b81ea13c677814d4f06",
+          "expectedSha256": "3ed0dd634d346068aca1dd71fa01b3732f1d7a8c65561b81ea13c677814d4f06",
+          "matches": true
+        },
+        {
+          "name": "tariffs-B1h1B4KP.js",
+          "status": 200,
+          "sha256": "cf02ec91ca3923d7681375803adafc3dfb5310e0d766c0f87f1e93529cd3de97",
+          "expectedSha256": "cf02ec91ca3923d7681375803adafc3dfb5310e0d766c0f87f1e93529cd3de97",
+          "matches": true
+        },
+        {
+          "name": "useCachedState-D0P-p9Yb.js",
+          "status": 200,
+          "sha256": "58ac1328384d8d215480491f1495d80b0982f2dc590e8570a205352e8730dd2b",
+          "expectedSha256": "58ac1328384d8d215480491f1495d80b0982f2dc590e8570a205352e8730dd2b",
+          "matches": true
+        }
+      ],
+      "healthStatus": 200,
+      "health": {
+        "status": "ok",
+        "service": "HSR Snooker Cafe BMS",
+        "revision": "e014ff4caf9182797dc4e341f6c491fad80bfafa"
+      },
+      "readyStatus": 200,
+      "ready": {
+        "status": "ok",
+        "service": "HSR Snooker Cafe BMS",
+        "database": "ok"
+      }
+    }
+  ]
+}

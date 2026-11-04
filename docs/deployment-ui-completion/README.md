@@ -18,10 +18,10 @@ server-authoritative payment/receipt confirmation. No feature or role expansion.
 | Inventory / Waitlist / Legacy / Tournaments | 192 final strict samples; 28 unknown-data cases; 24 Owner/Staff dialog cases and eight Booking regressions pass | `inventory/after-final/`, `waitlist/after/`, `legacy-table-controls/after/`, `tournaments/after-serial/`, `operations-read-contract/`, `operations-dialogs/` |
 | Auxiliary operations / error routes | Both Pricing tabs, Audit and Status: 48 samples each; Help, Changelog, Sample Workspace and 404: eight applicable samples each. 52 focused cases pass | `pricing-*/after-final/`, `audit-log/after/`, `status/after/`, static-route `after/`, `service-contract/after-final/` |
 | Shared notifications | Ten before/after cases, 16 real-Cafe contracts and both-theme lifecycle tests pass; 160 loaded-route checks pass; strict contrast scanner: 0 violations / 0 errors | `notification-clearance/`, `notification-cafe/`, `notification-lifecycle/`, `notification-regression/`, `notification-contrast.json` |
-| Shared confirmations / header menus | 16 Owner/Staff theme/width contracts and eight short-window long-message cases pass; release verification in progress | `shared-overlays/after-release/`, `confirmation-scroll/after/` |
+| Shared confirmations / header menus | 16 Owner/Staff theme/width contracts and eight short-window long-message cases pass; merged, pushed and live-verified | `shared-overlays/after-release/`, `confirmation-scroll/after/`, `deployment-shared-overlays.json` |
 | Remaining overlays / action states | Five private dialog roots and broader action coverage remain open | Not a pass |
 | Local operational lifecycle | Pending 20-cycle role/theme/mobile exercise | Not a pass |
-| Production release | All completed clusters above, including pricing/audit/service-page fixes, are live-verified | `deployment-*.json`; a push alone is not proof |
+| Production release | All completed clusters above, including shared confirmations and header menus, are live-verified | `deployment-*.json`; a push alone is not proof |
 | Real devices / unfamiliar human | External acceptance remains unverified | Browser viewports are not physical-device testing |
 
 All current captures use a guarded disposable local database. No production
@@ -491,10 +491,20 @@ the broader button audit, the 20-cycle real UI lifecycle, physical-device testin
 or unfamiliar-user acceptance. SSE expansion remains paused.
 
 After the interrupted release checkpoint, verification resumed on November 4.
-The QA build reproduced the same asset names/bytes as the tested October 31
+The QA build reproduced the same content-hashed asset names as the tested October 31
 version. A new disposable environment installed the declared requirements
 (one network-reset retry), then seeded and started the guarded local database.
 `overlay-contrast.json` is the completed strict 21-route rerun: zero violations,
 zero errors, both themes and safe dynamic overlays. Lint, theme guard, production
 build and all 47 backend Python syntax checks pass. This is a frontend release;
 the fresh SQLite QA startup is not represented as a Postgres integration test.
+After the scanner completed, both temporary QA servers exited and the guarded
+cleanup confirmed zero rows in every disposable QA table. The original checkout
+and its local app were not changed.
+
+Shared-overlay source `27b4153` and evidence through `5ba6728` are fast-forward
+merged into main and pushed. `deployment-shared-overlays.json` verifies all 24
+live JS/CSS SHA256 hashes, health 200, database readiness 200 and the expected
+unchanged backend ancestry (`e014ff4caf9182797dc4e341f6c491fad80bfafa`). The first
+probe timed out and is not treated as a deployment pass; the following complete
+observation succeeds. No production business mutation was performed.
