@@ -1,0 +1,41 @@
+{
+  "legend": "Before left, after right; light above dark. Original pixels, first 1000px of tall captures. Full source captures retained.",
+  "sources": [
+    {
+      "theme": "light",
+      "stage": "before",
+      "path": "final-completion/dialogs/before-history-final/admin-light-375-reset.png",
+      "sha256": "a3f8385f993e6582af641b3e2fa0ffc5f5894026b594bd08a5b32a1e26643e48",
+      "width": 375,
+      "height": 844,
+      "croppedHeight": 844
+    },
+    {
+      "theme": "light",
+      "stage": "after",
+      "path": "final-completion/dialogs/after-shipping/admin-light-375-reset.png",
+      "sha256": "4da3c5a456ce22d1198e6f14666999673a97d3fff4a81bbe92dd725bbbae2b12",
+      "width": 375,
+      "height": 844,
+      "croppedHeight": 844
+    },
+    {
+      "theme": "dark",
+      "stage": "before",
+      "path": "final-completion/dialogs/before-history-final/admin-dark-375-reset.png",
+      "sha256": "0237247d894782b92daacdf8737fc69256eb99fced7e6b8e9eed441c947bc6b9",
+      "width": 375,
+      "height": 844,
+      "croppedHeight": 844
+    },
+    {
+      "theme": "dark",
+      "stage": "after",
+      "path": "final-completion/dialogs/after-shipping/admin-dark-375-reset.png",
+      "sha256": "df585b21b41bb01d63dfb9920f8c5cc57b488da263d57a50c48d10511b4669a8",
+      "width": 375,
+      "height": 844,
+      "croppedHeight": 844
+    }
+  ]
+}

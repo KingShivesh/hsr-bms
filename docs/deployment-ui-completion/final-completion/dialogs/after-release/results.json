@@ -1,0 +1,535 @@
+{
+  "stage": "after",
+  "scope": "Guarded local QA; reset is browser-mocked pending then 500; no business writes",
+  "cases": [
+    {
+      "role": "admin",
+      "theme": "light",
+      "width": 375,
+      "errors": [],
+      "samples": [
+        {
+          "name": "commands",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#006b3c",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "commands-empty",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#006b3c",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        }
+      ],
+      "resets": 0,
+      "repeatedShortcutKeepsLoaded": true,
+      "error": "locator.click: Timeout 12000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Open T1 history', exact: true })\u001b[22m\n"
+    },
+    {
+      "role": "admin",
+      "theme": "light",
+      "width": 768,
+      "errors": [],
+      "samples": [
+        {
+          "name": "commands",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#006b3c",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "commands-empty",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#006b3c",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        }
+      ],
+      "resets": 0,
+      "repeatedShortcutKeepsLoaded": true,
+      "error": "locator.click: Timeout 12000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Open T1 history', exact: true })\u001b[22m\n"
+    },
+    {
+      "role": "admin",
+      "theme": "light",
+      "width": 1024,
+      "errors": [],
+      "samples": [
+        {
+          "name": "commands",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#006b3c",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "commands-empty",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#006b3c",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        }
+      ],
+      "resets": 0,
+      "repeatedShortcutKeepsLoaded": true,
+      "error": "locator.click: Timeout 12000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Open T1 history', exact: true })\u001b[22m\n"
+    },
+    {
+      "role": "admin",
+      "theme": "light",
+      "width": 1440,
+      "errors": [],
+      "samples": [
+        {
+          "name": "commands",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#006b3c",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "commands-empty",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#006b3c",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        }
+      ],
+      "resets": 0,
+      "repeatedShortcutKeepsLoaded": true,
+      "error": "locator.click: Timeout 12000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Open T1 history', exact: true })\u001b[22m\n"
+    },
+    {
+      "role": "admin",
+      "theme": "dark",
+      "width": 375,
+      "errors": [],
+      "samples": [
+        {
+          "name": "commands",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#00ff7f",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "commands-empty",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#00ff7f",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        }
+      ],
+      "resets": 0,
+      "repeatedShortcutKeepsLoaded": true,
+      "error": "locator.click: Timeout 12000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Open T1 history', exact: true })\u001b[22m\n"
+    },
+    {
+      "role": "admin",
+      "theme": "dark",
+      "width": 768,
+      "errors": [],
+      "samples": [
+        {
+          "name": "commands",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#00ff7f",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "commands-empty",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#00ff7f",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        }
+      ],
+      "resets": 0,
+      "repeatedShortcutKeepsLoaded": true,
+      "error": "locator.click: Timeout 12000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Open T1 history', exact: true })\u001b[22m\n"
+    },
+    {
+      "role": "admin",
+      "theme": "dark",
+      "width": 1024,
+      "errors": [],
+      "samples": [
+        {
+          "name": "commands",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#00ff7f",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "commands-empty",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#00ff7f",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        }
+      ],
+      "resets": 0,
+      "repeatedShortcutKeepsLoaded": true,
+      "error": "locator.click: Timeout 12000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Open T1 history', exact: true })\u001b[22m\n"
+    },
+    {
+      "role": "admin",
+      "theme": "dark",
+      "width": 1440,
+      "errors": [],
+      "samples": [
+        {
+          "name": "commands",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#00ff7f",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "commands-empty",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#00ff7f",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        }
+      ],
+      "resets": 0,
+      "repeatedShortcutKeepsLoaded": true,
+      "error": "locator.click: Target page, context or browser has been closed\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Open T1 history', exact: true })\u001b[22m\n"
+    },
+    {
+      "role": "staff",
+      "theme": "light",
+      "width": 375,
+      "errors": [],
+      "samples": [],
+      "resets": 0
+    }
+  ],
+  "blockedWrites": []
+}

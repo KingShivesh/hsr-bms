@@ -1,5 +1,12 @@
 # Deployment UI Completion
 
+Current engineering closure: [final completion report](final-completion/README.md)
+and [short achievement report](../ACHIEVEMENTS.md). The fresh 18 November closure
+checks are green. The older OPEN notes below are historical and superseded for
+shared dialogs, token cleanup, button follow-ups and the real 20-session local
+lifecycle. Physical-device and unfamiliar-user acceptance remain external gates.
+Production verification is recorded separately after the final push.
+
 Scope: the user's October 22 "Fix Everything" brief. Preserve the approved
 Syne / DM Mono fonts, palette, table-state cues, trusted Staff access and
 server-authoritative payment/receipt confirmation. No feature or role expansion.

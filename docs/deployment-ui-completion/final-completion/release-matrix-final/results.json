@@ -1,0 +1,37 @@
+{
+  "scope": "Complete existing six-state read-fixture matrices, both themes and four widths; static pages retain applicable states only",
+  "steps": [
+    {
+      "name": "core",
+      "status": 0
+    },
+    {
+      "name": "operations",
+      "status": 0
+    },
+    {
+      "name": "service-pages",
+      "status": 0
+    },
+    {
+      "name": "settings",
+      "status": 0
+    },
+    {
+      "name": "report-tabs",
+      "status": 0
+    },
+    {
+      "name": "cafe-tabs",
+      "status": 0
+    },
+    {
+      "name": "dashboard",
+      "status": 0
+    },
+    {
+      "name": "daily-closing",
+      "status": 0
+    }
+  ]
+}

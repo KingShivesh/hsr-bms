@@ -1,0 +1,807 @@
+{
+  "stage": "after",
+  "scope": "Guarded local QA; reset is browser-mocked pending then 500; no business writes",
+  "cases": [
+    {
+      "role": "admin",
+      "theme": "light",
+      "width": 375,
+      "errors": [],
+      "samples": [
+        {
+          "name": "commands",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [
+              {
+                "text": "Command palette",
+                "width": 1,
+                "contentWidth": 188,
+                "className": "sr-only"
+              },
+              {
+                "text": "Search pages, live sessions, waitlist entries and actions. Use arrow keys to move and Ente",
+                "width": 1,
+                "contentWidth": 600,
+                "className": "sr-only"
+              }
+            ],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#006b3c",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        }
+      ],
+      "resets": 0,
+      "error": "commands: clipped\n\n2 !== 0\n"
+    },
+    {
+      "role": "admin",
+      "theme": "light",
+      "width": 768,
+      "errors": [],
+      "samples": [
+        {
+          "name": "commands",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [
+              {
+                "text": "Command palette",
+                "width": 1,
+                "contentWidth": 188,
+                "className": "sr-only"
+              },
+              {
+                "text": "Search pages, live sessions, waitlist entries and actions. Use arrow keys to move and Ente",
+                "width": 1,
+                "contentWidth": 600,
+                "className": "sr-only"
+              }
+            ],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#006b3c",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        }
+      ],
+      "resets": 0,
+      "error": "commands: clipped\n\n2 !== 0\n"
+    },
+    {
+      "role": "admin",
+      "theme": "light",
+      "width": 1024,
+      "errors": [],
+      "samples": [
+        {
+          "name": "commands",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [
+              {
+                "text": "Command palette",
+                "width": 1,
+                "contentWidth": 188,
+                "className": "sr-only"
+              },
+              {
+                "text": "Search pages, live sessions, waitlist entries and actions. Use arrow keys to move and Ente",
+                "width": 1,
+                "contentWidth": 600,
+                "className": "sr-only"
+              }
+            ],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#006b3c",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        }
+      ],
+      "resets": 0,
+      "error": "commands: clipped\n\n2 !== 0\n"
+    },
+    {
+      "role": "admin",
+      "theme": "light",
+      "width": 1440,
+      "errors": [],
+      "samples": [
+        {
+          "name": "commands",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [
+              {
+                "text": "Command palette",
+                "width": 1,
+                "contentWidth": 188,
+                "className": "sr-only"
+              },
+              {
+                "text": "Search pages, live sessions, waitlist entries and actions. Use arrow keys to move and Ente",
+                "width": 1,
+                "contentWidth": 600,
+                "className": "sr-only"
+              }
+            ],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#006b3c",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        }
+      ],
+      "resets": 0,
+      "error": "commands: clipped\n\n2 !== 0\n"
+    },
+    {
+      "role": "admin",
+      "theme": "dark",
+      "width": 375,
+      "errors": [],
+      "samples": [
+        {
+          "name": "commands",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [
+              {
+                "text": "Command palette",
+                "width": 1,
+                "contentWidth": 188,
+                "className": "sr-only"
+              },
+              {
+                "text": "Search pages, live sessions, waitlist entries and actions. Use arrow keys to move and Ente",
+                "width": 1,
+                "contentWidth": 600,
+                "className": "sr-only"
+              }
+            ],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#00ff7f",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        }
+      ],
+      "resets": 0,
+      "error": "commands: clipped\n\n2 !== 0\n"
+    },
+    {
+      "role": "admin",
+      "theme": "dark",
+      "width": 768,
+      "errors": [],
+      "samples": [
+        {
+          "name": "commands",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [
+              {
+                "text": "Command palette",
+                "width": 1,
+                "contentWidth": 188,
+                "className": "sr-only"
+              },
+              {
+                "text": "Search pages, live sessions, waitlist entries and actions. Use arrow keys to move and Ente",
+                "width": 1,
+                "contentWidth": 600,
+                "className": "sr-only"
+              }
+            ],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#00ff7f",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        }
+      ],
+      "resets": 0,
+      "error": "commands: clipped\n\n2 !== 0\n"
+    },
+    {
+      "role": "admin",
+      "theme": "dark",
+      "width": 1024,
+      "errors": [],
+      "samples": [
+        {
+          "name": "commands",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [
+              {
+                "text": "Command palette",
+                "width": 1,
+                "contentWidth": 188,
+                "className": "sr-only"
+              },
+              {
+                "text": "Search pages, live sessions, waitlist entries and actions. Use arrow keys to move and Ente",
+                "width": 1,
+                "contentWidth": 600,
+                "className": "sr-only"
+              }
+            ],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#00ff7f",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        }
+      ],
+      "resets": 0,
+      "error": "commands: clipped\n\n2 !== 0\n"
+    },
+    {
+      "role": "admin",
+      "theme": "dark",
+      "width": 1440,
+      "errors": [],
+      "samples": [
+        {
+          "name": "commands",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [
+              {
+                "text": "Command palette",
+                "width": 1,
+                "contentWidth": 188,
+                "className": "sr-only"
+              },
+              {
+                "text": "Search pages, live sessions, waitlist entries and actions. Use arrow keys to move and Ente",
+                "width": 1,
+                "contentWidth": 600,
+                "className": "sr-only"
+              }
+            ],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#00ff7f",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        }
+      ],
+      "resets": 0,
+      "error": "commands: clipped\n\n2 !== 0\n"
+    },
+    {
+      "role": "staff",
+      "theme": "light",
+      "width": 375,
+      "errors": [],
+      "samples": [
+        {
+          "name": "commands",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [
+              {
+                "text": "Command palette",
+                "width": 1,
+                "contentWidth": 188,
+                "className": "sr-only"
+              },
+              {
+                "text": "Search pages, live sessions, waitlist entries and actions. Use arrow keys to move and Ente",
+                "width": 1,
+                "contentWidth": 600,
+                "className": "sr-only"
+              }
+            ],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#006b3c",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        }
+      ],
+      "resets": 0,
+      "error": "commands: clipped\n\n2 !== 0\n"
+    },
+    {
+      "role": "staff",
+      "theme": "light",
+      "width": 768,
+      "errors": [],
+      "samples": [
+        {
+          "name": "commands",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [
+              {
+                "text": "Command palette",
+                "width": 1,
+                "contentWidth": 188,
+                "className": "sr-only"
+              },
+              {
+                "text": "Search pages, live sessions, waitlist entries and actions. Use arrow keys to move and Ente",
+                "width": 1,
+                "contentWidth": 600,
+                "className": "sr-only"
+              }
+            ],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#006b3c",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        }
+      ],
+      "resets": 0,
+      "error": "commands: clipped\n\n2 !== 0\n"
+    },
+    {
+      "role": "staff",
+      "theme": "light",
+      "width": 1024,
+      "errors": [],
+      "samples": [
+        {
+          "name": "commands",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [
+              {
+                "text": "Command palette",
+                "width": 1,
+                "contentWidth": 188,
+                "className": "sr-only"
+              },
+              {
+                "text": "Search pages, live sessions, waitlist entries and actions. Use arrow keys to move and Ente",
+                "width": 1,
+                "contentWidth": 600,
+                "className": "sr-only"
+              }
+            ],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#006b3c",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        }
+      ],
+      "resets": 0,
+      "error": "commands: clipped\n\n2 !== 0\n"
+    },
+    {
+      "role": "staff",
+      "theme": "light",
+      "width": 1440,
+      "errors": [],
+      "samples": [
+        {
+          "name": "commands",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [
+              {
+                "text": "Command palette",
+                "width": 1,
+                "contentWidth": 188,
+                "className": "sr-only"
+              },
+              {
+                "text": "Search pages, live sessions, waitlist entries and actions. Use arrow keys to move and Ente",
+                "width": 1,
+                "contentWidth": 600,
+                "className": "sr-only"
+              }
+            ],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#006b3c",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        }
+      ],
+      "resets": 0,
+      "error": "commands: clipped\n\n2 !== 0\n"
+    },
+    {
+      "role": "staff",
+      "theme": "dark",
+      "width": 375,
+      "errors": [],
+      "samples": [
+        {
+          "name": "commands",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [
+              {
+                "text": "Command palette",
+                "width": 1,
+                "contentWidth": 188,
+                "className": "sr-only"
+              },
+              {
+                "text": "Search pages, live sessions, waitlist entries and actions. Use arrow keys to move and Ente",
+                "width": 1,
+                "contentWidth": 600,
+                "className": "sr-only"
+              }
+            ],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#00ff7f",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        }
+      ],
+      "resets": 0,
+      "error": "commands: clipped\n\n2 !== 0\n"
+    },
+    {
+      "role": "staff",
+      "theme": "dark",
+      "width": 768,
+      "errors": [],
+      "samples": [
+        {
+          "name": "commands",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [
+              {
+                "text": "Command palette",
+                "width": 1,
+                "contentWidth": 188,
+                "className": "sr-only"
+              },
+              {
+                "text": "Search pages, live sessions, waitlist entries and actions. Use arrow keys to move and Ente",
+                "width": 1,
+                "contentWidth": 600,
+                "className": "sr-only"
+              }
+            ],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#00ff7f",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        }
+      ],
+      "resets": 0,
+      "error": "commands: clipped\n\n2 !== 0\n"
+    },
+    {
+      "role": "staff",
+      "theme": "dark",
+      "width": 1024,
+      "errors": [],
+      "samples": [
+        {
+          "name": "commands",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [
+              {
+                "text": "Command palette",
+                "width": 1,
+                "contentWidth": 188,
+                "className": "sr-only"
+              },
+              {
+                "text": "Search pages, live sessions, waitlist entries and actions. Use arrow keys to move and Ente",
+                "width": 1,
+                "contentWidth": 600,
+                "className": "sr-only"
+              }
+            ],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#00ff7f",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        }
+      ],
+      "resets": 0,
+      "error": "commands: clipped\n\n2 !== 0\n"
+    },
+    {
+      "role": "staff",
+      "theme": "dark",
+      "width": 1440,
+      "errors": [],
+      "samples": [
+        {
+          "name": "commands",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [
+              {
+                "text": "Command palette",
+                "width": 1,
+                "contentWidth": 188,
+                "className": "sr-only"
+              },
+              {
+                "text": "Search pages, live sessions, waitlist entries and actions. Use arrow keys to move and Ente",
+                "width": 1,
+                "contentWidth": 600,
+                "className": "sr-only"
+              }
+            ],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#00ff7f",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        }
+      ],
+      "resets": 0,
+      "error": "commands: clipped\n\n2 !== 0\n"
+    }
+  ],
+  "blockedWrites": []
+}

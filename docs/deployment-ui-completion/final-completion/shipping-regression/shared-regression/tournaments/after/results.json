@@ -1,0 +1,8 @@
+{
+  "route": "/tournaments",
+  "stage": "after",
+  "username": "admin",
+  "samples": [],
+  "errors": [],
+  "productionWrites": 0
+}

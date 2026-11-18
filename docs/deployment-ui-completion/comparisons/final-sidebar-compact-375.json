@@ -1,0 +1,41 @@
+{
+  "legend": "Before left, after right; light above dark. Original pixels, first 1000px of tall captures. Full source captures retained.",
+  "sources": [
+    {
+      "theme": "light",
+      "stage": "before",
+      "path": "final-completion/sidebar-footer/before/admin-light-375-compact.png",
+      "sha256": "0076491c9d7847473ce7941b33db418400afe403597ce31d74bb08c1d4702738",
+      "width": 375,
+      "height": 844,
+      "croppedHeight": 844
+    },
+    {
+      "theme": "light",
+      "stage": "after",
+      "path": "final-completion/sidebar-footer/after/admin-light-375-compact.png",
+      "sha256": "783ec05a3d4fec736e91315ac106df7a819a990880419a156de982f24cb2de74",
+      "width": 375,
+      "height": 844,
+      "croppedHeight": 844
+    },
+    {
+      "theme": "dark",
+      "stage": "before",
+      "path": "final-completion/sidebar-footer/before/admin-dark-375-compact.png",
+      "sha256": "61dd228d005077ce2982808e3b506379523cda909786111ac5456036f235c978",
+      "width": 375,
+      "height": 844,
+      "croppedHeight": 844
+    },
+    {
+      "theme": "dark",
+      "stage": "after",
+      "path": "final-completion/sidebar-footer/after/admin-dark-375-compact.png",
+      "sha256": "98c7e4121f62df03aa92f899ae6924a8647cf5647e0c9e7d3a945035f86d4afd",
+      "width": 375,
+      "height": 844,
+      "croppedHeight": 844
+    }
+  ]
+}

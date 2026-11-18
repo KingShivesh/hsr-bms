@@ -1,0 +1,4371 @@
+{
+  "stage": "after",
+  "scope": "Guarded local QA; reset is browser-mocked pending then 500; no business writes",
+  "cases": [
+    {
+      "role": "admin",
+      "theme": "light",
+      "width": 375,
+      "errors": [],
+      "samples": [
+        {
+          "name": "commands",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#006b3c",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "commands-empty",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#006b3c",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "history-empty",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#006b3c",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "history-loading",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#006b3c",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "history-populated",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [
+              {
+                "className": "ui-overlay-body",
+                "width": 341,
+                "contentWidth": 700
+              }
+            ],
+            "palette": {
+              "accent": "#006b3c",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        }
+      ],
+      "resets": 0,
+      "repeatedShortcutKeepsLoaded": true,
+      "error": "history-populated: contentOverflow\n\n1 !== 0\n"
+    },
+    {
+      "role": "admin",
+      "theme": "light",
+      "width": 768,
+      "errors": [],
+      "samples": [
+        {
+          "name": "commands",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#006b3c",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "commands-empty",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#006b3c",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "history-empty",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#006b3c",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "history-loading",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#006b3c",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "history-populated",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#006b3c",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "history-partial",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#006b3c",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "history-malformed",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#006b3c",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "history-error",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#006b3c",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "reset",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#006b3c",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "reset-pending",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#006b3c",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "reset-failed",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#006b3c",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        }
+      ],
+      "resets": 1,
+      "repeatedShortcutKeepsLoaded": true,
+      "historyPagination": true,
+      "missingValuesNotInvented": true,
+      "feedback": {
+        "ms": 21.599999994039536,
+        "disabled": true
+      }
+    },
+    {
+      "role": "admin",
+      "theme": "light",
+      "width": 1024,
+      "errors": [],
+      "samples": [
+        {
+          "name": "commands",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#006b3c",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "commands-empty",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#006b3c",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "history-empty",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#006b3c",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "history-loading",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#006b3c",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "history-populated",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#006b3c",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "history-partial",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#006b3c",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "history-malformed",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#006b3c",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "history-error",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#006b3c",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "reset",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#006b3c",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "reset-pending",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#006b3c",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "reset-failed",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#006b3c",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        }
+      ],
+      "resets": 1,
+      "repeatedShortcutKeepsLoaded": true,
+      "historyPagination": true,
+      "missingValuesNotInvented": true,
+      "feedback": {
+        "ms": 25.600000001490116,
+        "disabled": true
+      }
+    },
+    {
+      "role": "admin",
+      "theme": "light",
+      "width": 1440,
+      "errors": [],
+      "samples": [
+        {
+          "name": "commands",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#006b3c",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "commands-empty",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#006b3c",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "history-empty",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#006b3c",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "history-loading",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#006b3c",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "history-populated",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#006b3c",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "history-partial",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#006b3c",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "history-malformed",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#006b3c",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "history-error",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#006b3c",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "reset",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#006b3c",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "reset-pending",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#006b3c",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "reset-failed",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#006b3c",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        }
+      ],
+      "resets": 1,
+      "repeatedShortcutKeepsLoaded": true,
+      "historyPagination": true,
+      "missingValuesNotInvented": true,
+      "feedback": {
+        "ms": 21,
+        "disabled": true
+      }
+    },
+    {
+      "role": "admin",
+      "theme": "dark",
+      "width": 375,
+      "errors": [],
+      "samples": [
+        {
+          "name": "commands",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#00ff7f",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "commands-empty",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#00ff7f",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "history-empty",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#00ff7f",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "history-loading",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#00ff7f",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "history-populated",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [
+              {
+                "className": "ui-overlay-body",
+                "width": 341,
+                "contentWidth": 700
+              }
+            ],
+            "palette": {
+              "accent": "#00ff7f",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        }
+      ],
+      "resets": 0,
+      "repeatedShortcutKeepsLoaded": true,
+      "error": "history-populated: contentOverflow\n\n1 !== 0\n"
+    },
+    {
+      "role": "admin",
+      "theme": "dark",
+      "width": 768,
+      "errors": [],
+      "samples": [
+        {
+          "name": "commands",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#00ff7f",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "commands-empty",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#00ff7f",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "history-empty",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#00ff7f",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "history-loading",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#00ff7f",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "history-populated",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#00ff7f",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "history-partial",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#00ff7f",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "history-malformed",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#00ff7f",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "history-error",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#00ff7f",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "reset",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#00ff7f",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "reset-pending",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#00ff7f",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "reset-failed",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#00ff7f",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        }
+      ],
+      "resets": 1,
+      "repeatedShortcutKeepsLoaded": true,
+      "historyPagination": true,
+      "missingValuesNotInvented": true,
+      "feedback": {
+        "ms": 26.5,
+        "disabled": true
+      }
+    },
+    {
+      "role": "admin",
+      "theme": "dark",
+      "width": 1024,
+      "errors": [],
+      "samples": [
+        {
+          "name": "commands",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#00ff7f",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "commands-empty",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#00ff7f",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "history-empty",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#00ff7f",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "history-loading",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#00ff7f",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "history-populated",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#00ff7f",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "history-partial",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#00ff7f",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "history-malformed",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#00ff7f",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "history-error",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#00ff7f",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "reset",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#00ff7f",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "reset-pending",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#00ff7f",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "reset-failed",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#00ff7f",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        }
+      ],
+      "resets": 1,
+      "repeatedShortcutKeepsLoaded": true,
+      "historyPagination": true,
+      "missingValuesNotInvented": true,
+      "feedback": {
+        "ms": 23.30000000447035,
+        "disabled": true
+      }
+    },
+    {
+      "role": "admin",
+      "theme": "dark",
+      "width": 1440,
+      "errors": [],
+      "samples": [
+        {
+          "name": "commands",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#00ff7f",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "commands-empty",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#00ff7f",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "history-empty",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#00ff7f",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "history-loading",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#00ff7f",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "history-populated",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#00ff7f",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "history-partial",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#00ff7f",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "history-malformed",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#00ff7f",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "history-error",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#00ff7f",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "reset",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#00ff7f",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "reset-pending",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#00ff7f",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "reset-failed",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#00ff7f",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        }
+      ],
+      "resets": 1,
+      "repeatedShortcutKeepsLoaded": true,
+      "historyPagination": true,
+      "missingValuesNotInvented": true,
+      "feedback": {
+        "ms": 23.099999994039536,
+        "disabled": true
+      }
+    },
+    {
+      "role": "staff",
+      "theme": "light",
+      "width": 375,
+      "errors": [],
+      "samples": [
+        {
+          "name": "commands",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#006b3c",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "commands-empty",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#006b3c",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "history-empty",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#006b3c",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "history-loading",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#006b3c",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "history-populated",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [
+              {
+                "className": "ui-overlay-body",
+                "width": 341,
+                "contentWidth": 700
+              }
+            ],
+            "palette": {
+              "accent": "#006b3c",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        }
+      ],
+      "resets": 0,
+      "repeatedShortcutKeepsLoaded": true,
+      "error": "history-populated: contentOverflow\n\n1 !== 0\n"
+    },
+    {
+      "role": "staff",
+      "theme": "light",
+      "width": 768,
+      "errors": [],
+      "samples": [
+        {
+          "name": "commands",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#006b3c",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "commands-empty",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#006b3c",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "history-empty",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#006b3c",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "history-loading",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#006b3c",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "history-populated",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#006b3c",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "history-partial",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#006b3c",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "history-malformed",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#006b3c",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "history-error",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#006b3c",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "reset",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#006b3c",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "reset-pending",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#006b3c",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "reset-failed",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#006b3c",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        }
+      ],
+      "resets": 1,
+      "repeatedShortcutKeepsLoaded": true,
+      "historyPagination": true,
+      "missingValuesNotInvented": true,
+      "feedback": {
+        "ms": 17.600000001490116,
+        "disabled": true
+      }
+    },
+    {
+      "role": "staff",
+      "theme": "light",
+      "width": 1024,
+      "errors": [],
+      "samples": [
+        {
+          "name": "commands",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#006b3c",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "commands-empty",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#006b3c",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "history-empty",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#006b3c",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "history-loading",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#006b3c",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "history-populated",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#006b3c",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "history-partial",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#006b3c",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "history-malformed",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#006b3c",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "history-error",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#006b3c",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "reset",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#006b3c",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "reset-pending",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#006b3c",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "reset-failed",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#006b3c",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        }
+      ],
+      "resets": 1,
+      "repeatedShortcutKeepsLoaded": true,
+      "historyPagination": true,
+      "missingValuesNotInvented": true,
+      "feedback": {
+        "ms": 20.099999994039536,
+        "disabled": true
+      }
+    },
+    {
+      "role": "staff",
+      "theme": "light",
+      "width": 1440,
+      "errors": [],
+      "samples": [
+        {
+          "name": "commands",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#006b3c",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "commands-empty",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#006b3c",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "history-empty",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#006b3c",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "history-loading",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#006b3c",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "history-populated",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#006b3c",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "history-partial",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#006b3c",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "history-malformed",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#006b3c",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "history-error",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#006b3c",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "reset",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#006b3c",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "reset-pending",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#006b3c",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "reset-failed",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#006b3c",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        }
+      ],
+      "resets": 1,
+      "repeatedShortcutKeepsLoaded": true,
+      "historyPagination": true,
+      "missingValuesNotInvented": true,
+      "feedback": {
+        "ms": 26.399999998509884,
+        "disabled": true
+      }
+    },
+    {
+      "role": "staff",
+      "theme": "dark",
+      "width": 375,
+      "errors": [],
+      "samples": [
+        {
+          "name": "commands",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#00ff7f",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "commands-empty",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#00ff7f",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "history-empty",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#00ff7f",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "history-loading",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#00ff7f",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "history-populated",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [
+              {
+                "className": "ui-overlay-body",
+                "width": 341,
+                "contentWidth": 700
+              }
+            ],
+            "palette": {
+              "accent": "#00ff7f",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        }
+      ],
+      "resets": 0,
+      "repeatedShortcutKeepsLoaded": true,
+      "error": "history-populated: contentOverflow\n\n1 !== 0\n"
+    },
+    {
+      "role": "staff",
+      "theme": "dark",
+      "width": 768,
+      "errors": [],
+      "samples": [
+        {
+          "name": "commands",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#00ff7f",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "commands-empty",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#00ff7f",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "history-empty",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#00ff7f",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "history-loading",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#00ff7f",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "history-populated",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#00ff7f",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "history-partial",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#00ff7f",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "history-malformed",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#00ff7f",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "history-error",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#00ff7f",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "reset",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#00ff7f",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "reset-pending",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#00ff7f",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "reset-failed",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#00ff7f",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        }
+      ],
+      "resets": 1,
+      "repeatedShortcutKeepsLoaded": true,
+      "historyPagination": true,
+      "missingValuesNotInvented": true,
+      "feedback": {
+        "ms": 21.799999997019768,
+        "disabled": true
+      }
+    },
+    {
+      "role": "staff",
+      "theme": "dark",
+      "width": 1024,
+      "errors": [],
+      "samples": [
+        {
+          "name": "commands",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#00ff7f",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "commands-empty",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#00ff7f",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "history-empty",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#00ff7f",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "history-loading",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#00ff7f",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "history-populated",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#00ff7f",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "history-partial",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#00ff7f",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "history-malformed",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#00ff7f",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "history-error",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#00ff7f",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "reset",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#00ff7f",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "reset-pending",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#00ff7f",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "reset-failed",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#00ff7f",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        }
+      ],
+      "resets": 1,
+      "repeatedShortcutKeepsLoaded": true,
+      "historyPagination": true,
+      "missingValuesNotInvented": true,
+      "feedback": {
+        "ms": 16.19999999552965,
+        "disabled": true
+      }
+    },
+    {
+      "role": "staff",
+      "theme": "dark",
+      "width": 1440,
+      "errors": [],
+      "samples": [
+        {
+          "name": "commands",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#00ff7f",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "commands-empty",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#00ff7f",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "history-empty",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#00ff7f",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "history-loading",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#00ff7f",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "history-populated",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#00ff7f",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "history-partial",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#00ff7f",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "history-malformed",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#00ff7f",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "history-error",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#00ff7f",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "reset",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#00ff7f",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "reset-pending",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#00ff7f",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "reset-failed",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 0
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#00ff7f",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        }
+      ],
+      "resets": 1,
+      "repeatedShortcutKeepsLoaded": true,
+      "historyPagination": true,
+      "missingValuesNotInvented": true,
+      "feedback": {
+        "ms": 26.099999994039536,
+        "disabled": true
+      }
+    }
+  ],
+  "blockedWrites": []
+}

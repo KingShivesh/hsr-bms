@@ -1,0 +1,182 @@
+{
+  "scope": "Local-only checkout member-search feedback; no business write forwarded; no settlement-success claim",
+  "cases": [
+    {
+      "role": "admin",
+      "theme": "light",
+      "width": 375,
+      "route": "/",
+      "feedback": {
+        "ms": 28.200000017881393,
+        "pressed": true,
+        "inputVisible": true
+      }
+    },
+    {
+      "role": "admin",
+      "theme": "light",
+      "width": 375,
+      "route": "/live-floor",
+      "feedback": {
+        "ms": 30,
+        "pressed": true,
+        "inputVisible": true
+      }
+    },
+    {
+      "role": "admin",
+      "theme": "light",
+      "width": 1440,
+      "route": "/",
+      "feedback": {
+        "ms": 29.400000005960464,
+        "pressed": true,
+        "inputVisible": true
+      }
+    },
+    {
+      "role": "admin",
+      "theme": "light",
+      "width": 1440,
+      "route": "/live-floor",
+      "feedback": {
+        "ms": 28.700000017881393,
+        "pressed": true,
+        "inputVisible": true
+      }
+    },
+    {
+      "role": "admin",
+      "theme": "dark",
+      "width": 375,
+      "route": "/",
+      "feedback": {
+        "ms": 30.299999982118607,
+        "pressed": true,
+        "inputVisible": true
+      }
+    },
+    {
+      "role": "admin",
+      "theme": "dark",
+      "width": 375,
+      "route": "/live-floor",
+      "feedback": {
+        "ms": 29.400000005960464,
+        "pressed": true,
+        "inputVisible": true
+      }
+    },
+    {
+      "role": "admin",
+      "theme": "dark",
+      "width": 1440,
+      "route": "/",
+      "feedback": {
+        "ms": 29.400000005960464,
+        "pressed": true,
+        "inputVisible": true
+      }
+    },
+    {
+      "role": "admin",
+      "theme": "dark",
+      "width": 1440,
+      "route": "/live-floor",
+      "feedback": {
+        "ms": 29,
+        "pressed": true,
+        "inputVisible": true
+      }
+    },
+    {
+      "role": "staff",
+      "theme": "light",
+      "width": 375,
+      "route": "/",
+      "feedback": {
+        "ms": 29.30000001192093,
+        "pressed": true,
+        "inputVisible": true
+      }
+    },
+    {
+      "role": "staff",
+      "theme": "light",
+      "width": 375,
+      "route": "/live-floor",
+      "feedback": {
+        "ms": 29.599999994039536,
+        "pressed": true,
+        "inputVisible": true
+      }
+    },
+    {
+      "role": "staff",
+      "theme": "light",
+      "width": 1440,
+      "route": "/",
+      "feedback": {
+        "ms": 27.19999998807907,
+        "pressed": true,
+        "inputVisible": true
+      }
+    },
+    {
+      "role": "staff",
+      "theme": "light",
+      "width": 1440,
+      "route": "/live-floor",
+      "feedback": {
+        "ms": 29.700000017881393,
+        "pressed": true,
+        "inputVisible": true
+      }
+    },
+    {
+      "role": "staff",
+      "theme": "dark",
+      "width": 375,
+      "route": "/",
+      "feedback": {
+        "ms": 29.400000005960464,
+        "pressed": true,
+        "inputVisible": true
+      }
+    },
+    {
+      "role": "staff",
+      "theme": "dark",
+      "width": 375,
+      "route": "/live-floor",
+      "feedback": {
+        "ms": 28.69999998807907,
+        "pressed": true,
+        "inputVisible": true
+      }
+    },
+    {
+      "role": "staff",
+      "theme": "dark",
+      "width": 1440,
+      "route": "/",
+      "feedback": {
+        "ms": 29.400000005960464,
+        "pressed": true,
+        "inputVisible": true
+      }
+    },
+    {
+      "role": "staff",
+      "theme": "dark",
+      "width": 1440,
+      "route": "/live-floor",
+      "feedback": {
+        "ms": 29.400000005960464,
+        "pressed": true,
+        "inputVisible": true
+      }
+    }
+  ],
+  "blockedWrites": []
+}

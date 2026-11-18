@@ -1,0 +1,17 @@
+# Retain raw local captures, publish the matched evidence and final contracts.
+**/*.png
+!baseline/shared-regression/**/*.png
+!baseline/pricing-retry/**/*.png
+!closure-20261118/**/*.png
+!dialogs/before-history-final/*.png
+!dialogs/after-shipping/*.png
+!session-food/before/*.png
+!session-food/after-final/*.png
+!session-widget/before-final/*.png
+!session-widget/after-final/*.png
+!lifecycle-final/*.png
+!sidebar-footer/before/*.png
+!sidebar-footer/after/*.png
+!release-matrix-final/**/after/*-375-*.png
+# This duplicates the original button report with a documented role-name mapping.
+buttons/retry-input.json

@@ -1,0 +1,41 @@
+{
+  "legend": "Before left, after right; light above dark. Original pixels, first 1000px of tall captures. Full source captures retained.",
+  "sources": [
+    {
+      "theme": "light",
+      "stage": "before",
+      "path": "final-completion/baseline/shared-regression/tournaments/before/light-375-default.png",
+      "sha256": "99e9cef847e5147986f4c43a9809efeb630589bbfcacd186d88a80be1260529f",
+      "width": 375,
+      "height": 2866,
+      "croppedHeight": 1000
+    },
+    {
+      "theme": "light",
+      "stage": "after",
+      "path": "final-completion/closure-20261118/main-pages/shared-regression/tournaments/after/light-375-default.png",
+      "sha256": "eebe41a174ca55c9bae1406c70257fbefba0fa2225654562c8f26135123c8bde",
+      "width": 375,
+      "height": 2866,
+      "croppedHeight": 1000
+    },
+    {
+      "theme": "dark",
+      "stage": "before",
+      "path": "final-completion/baseline/shared-regression/tournaments/before/dark-375-default.png",
+      "sha256": "69730c07f469ad8629a203653f910715e583230b9d0d6d559c638d0a021b62ae",
+      "width": 375,
+      "height": 2866,
+      "croppedHeight": 1000
+    },
+    {
+      "theme": "dark",
+      "stage": "after",
+      "path": "final-completion/closure-20261118/main-pages/shared-regression/tournaments/after/dark-375-default.png",
+      "sha256": "84f597d25abe2d678f9d2a3e0694ceb350347c36f5c95efbc85277c1e9de44d8",
+      "width": 375,
+      "height": 2866,
+      "croppedHeight": 1000
+    }
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "legend": "Before left, after right; light above dark. Original pixels, first 1000px of tall captures. Full source captures retained.",
+  "sources": [
+    {
+      "theme": "light",
+      "stage": "before",
+      "path": "final-completion/baseline/shared-regression/cafe-pos/before/light-375-default.png",
+      "sha256": "09b672537c008c6d132fd2c3abfe75bd67c01af5a7d85d1942419983683f26a2",
+      "width": 375,
+      "height": 1856,
+      "croppedHeight": 1000
+    },
+    {
+      "theme": "light",
+      "stage": "after",
+      "path": "final-completion/closure-20261118/main-pages/shared-regression/cafe-pos/after/light-375-default.png",
+      "sha256": "a7a01611412aa170697331902018e3501ab4716fd6e7ba1b9156cd38291aea72",
+      "width": 375,
+      "height": 1856,
+      "croppedHeight": 1000
+    },
+    {
+      "theme": "dark",
+      "stage": "before",
+      "path": "final-completion/baseline/shared-regression/cafe-pos/before/dark-375-default.png",
+      "sha256": "7381b35b71a09776d3e51245b225f1e938e1d4f329c2fa8f5098f3dd7cefa07a",
+      "width": 375,
+      "height": 1856,
+      "croppedHeight": 1000
+    },
+    {
+      "theme": "dark",
+      "stage": "after",
+      "path": "final-completion/closure-20261118/main-pages/shared-regression/cafe-pos/after/dark-375-default.png",
+      "sha256": "bc6931b38b4fae5b158f2c3348bb289ea462bbf20c41b361c34bf3f5f6e7a519",
+      "width": 375,
+      "height": 1856,
+      "croppedHeight": 1000
+    }
+  ]
+}

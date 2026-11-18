@@ -1,0 +1,479 @@
+{
+  "stage": "after",
+  "cases": [
+    {
+      "role": "admin",
+      "theme": "light",
+      "width": 375,
+      "initialVisible": false,
+      "initialBounds": [],
+      "expandedBounds": [
+        {
+          "label": "Status",
+          "right": 146.421875,
+          "sidebarRight": 288,
+          "excess": 0
+        },
+        {
+          "label": "Changelog",
+          "right": 224.265625,
+          "sidebarRight": 288,
+          "excess": 0
+        }
+      ],
+      "clubNavigationClosesMobile": true,
+      "navigation": true
+    },
+    {
+      "role": "admin",
+      "theme": "light",
+      "width": 768,
+      "initialVisible": false,
+      "initialBounds": [],
+      "expandedBounds": [
+        {
+          "label": "Status",
+          "right": 83.703125,
+          "sidebarRight": 288,
+          "excess": 0
+        },
+        {
+          "label": "Changelog",
+          "right": 161.546875,
+          "sidebarRight": 288,
+          "excess": 0
+        }
+      ],
+      "clubNavigationClosesMobile": true,
+      "navigation": true
+    },
+    {
+      "role": "admin",
+      "theme": "light",
+      "width": 1024,
+      "initialVisible": true,
+      "initialBounds": [
+        {
+          "label": "Status",
+          "right": 83.703125,
+          "sidebarRight": 288,
+          "excess": 0
+        },
+        {
+          "label": "Changelog",
+          "right": 161.546875,
+          "sidebarRight": 288,
+          "excess": 0
+        }
+      ],
+      "expandedBounds": [
+        {
+          "label": "Status",
+          "right": 83.703125,
+          "sidebarRight": 288,
+          "excess": 0
+        },
+        {
+          "label": "Changelog",
+          "right": 161.546875,
+          "sidebarRight": 288,
+          "excess": 0
+        }
+      ],
+      "clubNavigationClosesMobile": true,
+      "navigation": true
+    },
+    {
+      "role": "admin",
+      "theme": "light",
+      "width": 1440,
+      "initialVisible": true,
+      "initialBounds": [
+        {
+          "label": "Status",
+          "right": 83.703125,
+          "sidebarRight": 288,
+          "excess": 0
+        },
+        {
+          "label": "Changelog",
+          "right": 161.546875,
+          "sidebarRight": 288,
+          "excess": 0
+        }
+      ],
+      "expandedBounds": [
+        {
+          "label": "Status",
+          "right": 83.703125,
+          "sidebarRight": 288,
+          "excess": 0
+        },
+        {
+          "label": "Changelog",
+          "right": 161.546875,
+          "sidebarRight": 288,
+          "excess": 0
+        }
+      ],
+      "clubNavigationClosesMobile": true,
+      "navigation": true
+    },
+    {
+      "role": "admin",
+      "theme": "dark",
+      "width": 375,
+      "initialVisible": false,
+      "initialBounds": [],
+      "expandedBounds": [
+        {
+          "label": "Status",
+          "right": 146.421875,
+          "sidebarRight": 288,
+          "excess": 0
+        },
+        {
+          "label": "Changelog",
+          "right": 224.265625,
+          "sidebarRight": 288,
+          "excess": 0
+        }
+      ],
+      "clubNavigationClosesMobile": true,
+      "navigation": true
+    },
+    {
+      "role": "admin",
+      "theme": "dark",
+      "width": 768,
+      "initialVisible": false,
+      "initialBounds": [],
+      "expandedBounds": [
+        {
+          "label": "Status",
+          "right": 83.703125,
+          "sidebarRight": 288,
+          "excess": 0
+        },
+        {
+          "label": "Changelog",
+          "right": 161.546875,
+          "sidebarRight": 288,
+          "excess": 0
+        }
+      ],
+      "clubNavigationClosesMobile": true,
+      "navigation": true
+    },
+    {
+      "role": "admin",
+      "theme": "dark",
+      "width": 1024,
+      "initialVisible": true,
+      "initialBounds": [
+        {
+          "label": "Status",
+          "right": 83.703125,
+          "sidebarRight": 288,
+          "excess": 0
+        },
+        {
+          "label": "Changelog",
+          "right": 161.546875,
+          "sidebarRight": 288,
+          "excess": 0
+        }
+      ],
+      "expandedBounds": [
+        {
+          "label": "Status",
+          "right": 83.703125,
+          "sidebarRight": 288,
+          "excess": 0
+        },
+        {
+          "label": "Changelog",
+          "right": 161.546875,
+          "sidebarRight": 288,
+          "excess": 0
+        }
+      ],
+      "clubNavigationClosesMobile": true,
+      "navigation": true
+    },
+    {
+      "role": "admin",
+      "theme": "dark",
+      "width": 1440,
+      "initialVisible": true,
+      "initialBounds": [
+        {
+          "label": "Status",
+          "right": 83.703125,
+          "sidebarRight": 288,
+          "excess": 0
+        },
+        {
+          "label": "Changelog",
+          "right": 161.546875,
+          "sidebarRight": 288,
+          "excess": 0
+        }
+      ],
+      "expandedBounds": [
+        {
+          "label": "Status",
+          "right": 83.703125,
+          "sidebarRight": 288,
+          "excess": 0
+        },
+        {
+          "label": "Changelog",
+          "right": 161.546875,
+          "sidebarRight": 288,
+          "excess": 0
+        }
+      ],
+      "clubNavigationClosesMobile": true,
+      "navigation": true
+    },
+    {
+      "role": "staff",
+      "theme": "light",
+      "width": 375,
+      "initialVisible": false,
+      "initialBounds": [],
+      "expandedBounds": [
+        {
+          "label": "Status",
+          "right": 146.421875,
+          "sidebarRight": 288,
+          "excess": 0
+        },
+        {
+          "label": "Changelog",
+          "right": 224.265625,
+          "sidebarRight": 288,
+          "excess": 0
+        }
+      ],
+      "clubNavigationClosesMobile": true,
+      "navigation": true
+    },
+    {
+      "role": "staff",
+      "theme": "light",
+      "width": 768,
+      "initialVisible": false,
+      "initialBounds": [],
+      "expandedBounds": [
+        {
+          "label": "Status",
+          "right": 83.703125,
+          "sidebarRight": 288,
+          "excess": 0
+        },
+        {
+          "label": "Changelog",
+          "right": 161.546875,
+          "sidebarRight": 288,
+          "excess": 0
+        }
+      ],
+      "clubNavigationClosesMobile": true,
+      "navigation": true
+    },
+    {
+      "role": "staff",
+      "theme": "light",
+      "width": 1024,
+      "initialVisible": true,
+      "initialBounds": [
+        {
+          "label": "Status",
+          "right": 83.703125,
+          "sidebarRight": 288,
+          "excess": 0
+        },
+        {
+          "label": "Changelog",
+          "right": 161.546875,
+          "sidebarRight": 288,
+          "excess": 0
+        }
+      ],
+      "expandedBounds": [
+        {
+          "label": "Status",
+          "right": 83.703125,
+          "sidebarRight": 288,
+          "excess": 0
+        },
+        {
+          "label": "Changelog",
+          "right": 161.546875,
+          "sidebarRight": 288,
+          "excess": 0
+        }
+      ],
+      "clubNavigationClosesMobile": true,
+      "navigation": true
+    },
+    {
+      "role": "staff",
+      "theme": "light",
+      "width": 1440,
+      "initialVisible": true,
+      "initialBounds": [
+        {
+          "label": "Status",
+          "right": 83.703125,
+          "sidebarRight": 288,
+          "excess": 0
+        },
+        {
+          "label": "Changelog",
+          "right": 161.546875,
+          "sidebarRight": 288,
+          "excess": 0
+        }
+      ],
+      "expandedBounds": [
+        {
+          "label": "Status",
+          "right": 83.703125,
+          "sidebarRight": 288,
+          "excess": 0
+        },
+        {
+          "label": "Changelog",
+          "right": 161.546875,
+          "sidebarRight": 288,
+          "excess": 0
+        }
+      ],
+      "clubNavigationClosesMobile": true,
+      "navigation": true
+    },
+    {
+      "role": "staff",
+      "theme": "dark",
+      "width": 375,
+      "initialVisible": false,
+      "initialBounds": [],
+      "expandedBounds": [
+        {
+          "label": "Status",
+          "right": 146.421875,
+          "sidebarRight": 288,
+          "excess": 0
+        },
+        {
+          "label": "Changelog",
+          "right": 224.265625,
+          "sidebarRight": 288,
+          "excess": 0
+        }
+      ],
+      "clubNavigationClosesMobile": true,
+      "navigation": true
+    },
+    {
+      "role": "staff",
+      "theme": "dark",
+      "width": 768,
+      "initialVisible": false,
+      "initialBounds": [],
+      "expandedBounds": [
+        {
+          "label": "Status",
+          "right": 83.703125,
+          "sidebarRight": 288,
+          "excess": 0
+        },
+        {
+          "label": "Changelog",
+          "right": 161.546875,
+          "sidebarRight": 288,
+          "excess": 0
+        }
+      ],
+      "clubNavigationClosesMobile": true,
+      "navigation": true
+    },
+    {
+      "role": "staff",
+      "theme": "dark",
+      "width": 1024,
+      "initialVisible": true,
+      "initialBounds": [
+        {
+          "label": "Status",
+          "right": 83.703125,
+          "sidebarRight": 288,
+          "excess": 0
+        },
+        {
+          "label": "Changelog",
+          "right": 161.546875,
+          "sidebarRight": 288,
+          "excess": 0
+        }
+      ],
+      "expandedBounds": [
+        {
+          "label": "Status",
+          "right": 83.703125,
+          "sidebarRight": 288,
+          "excess": 0
+        },
+        {
+          "label": "Changelog",
+          "right": 161.546875,
+          "sidebarRight": 288,
+          "excess": 0
+        }
+      ],
+      "clubNavigationClosesMobile": true,
+      "navigation": true
+    },
+    {
+      "role": "staff",
+      "theme": "dark",
+      "width": 1440,
+      "initialVisible": true,
+      "initialBounds": [
+        {
+          "label": "Status",
+          "right": 83.703125,
+          "sidebarRight": 288,
+          "excess": 0
+        },
+        {
+          "label": "Changelog",
+          "right": 161.546875,
+          "sidebarRight": 288,
+          "excess": 0
+        }
+      ],
+      "expandedBounds": [
+        {
+          "label": "Status",
+          "right": 83.703125,
+          "sidebarRight": 288,
+          "excess": 0
+        },
+        {
+          "label": "Changelog",
+          "right": 161.546875,
+          "sidebarRight": 288,
+          "excess": 0
+        }
+      ],
+      "clubNavigationClosesMobile": true,
+      "navigation": true
+    }
+  ],
+  "blockedWrites": [],
+  "scope": "Local read-only navigation, no business writes"
+}

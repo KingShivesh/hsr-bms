@@ -1,0 +1,58 @@
+{
+  "scope": "Fresh local-only completion rerun; business writes blocked by browser contracts",
+  "steps": [
+    {
+      "name": "overlays",
+      "status": 0
+    },
+    {
+      "name": "main-pages",
+      "status": 0,
+      "start": "2026-11-18T14:07:34.747Z",
+      "finished": "2026-11-18T14:09:53.657Z"
+    },
+    {
+      "name": "navigation-retry",
+      "status": 0,
+      "start": "2026-11-18T14:09:53.660Z",
+      "finished": "2026-11-18T14:10:19.742Z"
+    },
+    {
+      "name": "contrast",
+      "status": 0,
+      "start": "2026-11-18T14:10:19.742Z",
+      "finished": "2026-11-18T14:13:14.607Z"
+    },
+    {
+      "name": "dialogs",
+      "status": 0,
+      "start": "2026-11-18T14:13:14.607Z",
+      "finished": "2026-11-18T14:15:13.399Z"
+    },
+    {
+      "name": "source-contract",
+      "status": 0,
+      "start": "2026-11-18T14:15:13.400Z",
+      "finished": "2026-11-18T14:15:14.197Z"
+    },
+    {
+      "name": "lint",
+      "status": 0,
+      "start": "2026-11-18T14:15:14.197Z",
+      "finished": "2026-11-18T14:15:21.055Z"
+    },
+    {
+      "name": "theme",
+      "status": 0,
+      "start": "2026-11-18T14:15:21.056Z",
+      "finished": "2026-11-18T14:15:21.287Z"
+    },
+    {
+      "name": "token-preservation",
+      "status": 0,
+      "start": "2026-11-18T14:15:21.287Z",
+      "finished": "2026-11-18T14:15:21.402Z"
+    }
+  ],
+  "complete": true
+}

@@ -1,0 +1,200 @@
+{
+  "cases": [
+    {
+      "username": "staff",
+      "theme": "light",
+      "width": 375,
+      "equalPaymentWidths": [
+        82.22735595703125,
+        82.22735595703125,
+        82.24278259277344
+      ],
+      "chevron": {
+        "transform": "matrix(-1, 0, 0, -1, 0, 0)",
+        "duration": "0.15s",
+        "coefficients": [
+          -1,
+          0,
+          0,
+          -1
+        ]
+      },
+      "keyboardSelectAndReadOnlyApply": true,
+      "keyboardSelectionMethod": "Native select type-ahead + Enter; native popup arrow automation also fails on a bare select in this Chrome build and is not certified by this test",
+      "resetFocusTrapEscape": true,
+      "focusRestored": true
+    },
+    {
+      "username": "staff",
+      "theme": "light",
+      "width": 1440,
+      "equalPaymentWidths": [
+        138.22509765625,
+        138.2406005859375,
+        138.2406005859375
+      ],
+      "chevron": {
+        "transform": "matrix(-1, 0, 0, -1, 0, 0)",
+        "duration": "0.15s",
+        "coefficients": [
+          -1,
+          0,
+          0,
+          -1
+        ]
+      },
+      "keyboardSelectAndReadOnlyApply": true,
+      "keyboardSelectionMethod": "Native select type-ahead + Enter; native popup arrow automation also fails on a bare select in this Chrome build and is not certified by this test",
+      "resetFocusTrapEscape": true,
+      "focusRestored": true
+    },
+    {
+      "username": "staff",
+      "theme": "dark",
+      "width": 375,
+      "equalPaymentWidths": [
+        82.47615814208984,
+        82.47616577148438,
+        82.49162292480469
+      ],
+      "chevron": {
+        "transform": "matrix(-1, 0, 0, -1, 0, 0)",
+        "duration": "0.15s",
+        "coefficients": [
+          -1,
+          0,
+          0,
+          -1
+        ]
+      },
+      "keyboardSelectAndReadOnlyApply": true,
+      "keyboardSelectionMethod": "Native select type-ahead + Enter; native popup arrow automation also fails on a bare select in this Chrome build and is not certified by this test",
+      "resetFocusTrapEscape": true,
+      "focusRestored": true
+    },
+    {
+      "username": "staff",
+      "theme": "dark",
+      "width": 1440,
+      "equalPaymentWidths": [
+        138.228759765625,
+        138.244384765625,
+        138.2442626953125
+      ],
+      "chevron": {
+        "transform": "matrix(-1, 0, 0, -1, 0, 0)",
+        "duration": "0.15s",
+        "coefficients": [
+          -1,
+          0,
+          0,
+          -1
+        ]
+      },
+      "keyboardSelectAndReadOnlyApply": true,
+      "keyboardSelectionMethod": "Native select type-ahead + Enter; native popup arrow automation also fails on a bare select in this Chrome build and is not certified by this test",
+      "resetFocusTrapEscape": true,
+      "focusRestored": true
+    },
+    {
+      "username": "admin",
+      "theme": "light",
+      "width": 375,
+      "equalPaymentWidths": [
+        82.22822570800781,
+        82.22822570800781,
+        82.24366760253906
+      ],
+      "chevron": {
+        "transform": "matrix(-1, 0, 0, -1, 0, 0)",
+        "duration": "0.15s",
+        "coefficients": [
+          -1,
+          0,
+          0,
+          -1
+        ]
+      },
+      "keyboardSelectAndReadOnlyApply": true,
+      "keyboardSelectionMethod": "Native select type-ahead + Enter; native popup arrow automation also fails on a bare select in this Chrome build and is not certified by this test",
+      "resetFocusTrapEscape": true,
+      "focusRestored": true
+    },
+    {
+      "username": "admin",
+      "theme": "light",
+      "width": 1440,
+      "equalPaymentWidths": [
+        137.81304931640625,
+        137.828369140625,
+        137.828369140625
+      ],
+      "chevron": {
+        "transform": "matrix(-1, 0, 0, -1, 0, 0)",
+        "duration": "0.15s",
+        "coefficients": [
+          -1,
+          0,
+          0,
+          -1
+        ]
+      },
+      "keyboardSelectAndReadOnlyApply": true,
+      "keyboardSelectionMethod": "Native select type-ahead + Enter; native popup arrow automation also fails on a bare select in this Chrome build and is not certified by this test",
+      "resetFocusTrapEscape": true,
+      "focusRestored": true
+    },
+    {
+      "username": "admin",
+      "theme": "dark",
+      "width": 375,
+      "equalPaymentWidths": [
+        82.47615051269531,
+        82.47615051269531,
+        82.49163818359375
+      ],
+      "chevron": {
+        "transform": "matrix(-1, 0, 0, -1, 0, 0)",
+        "duration": "0.15s",
+        "coefficients": [
+          -1,
+          0,
+          0,
+          -1
+        ]
+      },
+      "keyboardSelectAndReadOnlyApply": true,
+      "keyboardSelectionMethod": "Native select type-ahead + Enter; native popup arrow automation also fails on a bare select in this Chrome build and is not certified by this test",
+      "resetFocusTrapEscape": true,
+      "focusRestored": true
+    },
+    {
+      "username": "admin",
+      "theme": "dark",
+      "width": 1440,
+      "equalPaymentWidths": [
+        138.93658447265625,
+        138.9521484375,
+        138.9521484375
+      ],
+      "chevron": {
+        "transform": "matrix(-1, 0, 0, -1, 0, 0)",
+        "duration": "0.15s",
+        "coefficients": [
+          -1,
+          0,
+          0,
+          -1
+        ]
+      },
+      "keyboardSelectAndReadOnlyApply": true,
+      "keyboardSelectionMethod": "Native select type-ahead + Enter; native popup arrow automation also fails on a bare select in this Chrome build and is not certified by this test",
+      "resetFocusTrapEscape": true,
+      "focusRestored": true
+    }
+  ],
+  "errors": [],
+  "blockedBusinessWrites": [],
+  "readOnlyPreviews": 16,
+  "scope": "Disposable local QA only; POST checkout-preview is read-only; settlement and every other write blocked"
+}

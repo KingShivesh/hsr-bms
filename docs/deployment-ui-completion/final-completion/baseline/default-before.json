@@ -1,0 +1,133 @@
+{
+  "group": "default",
+  "stage": "before",
+  "widths": [
+    375,
+    768,
+    1024,
+    1440
+  ],
+  "strictPilot": true,
+  "results": [
+    {
+      "route": "/dashboard",
+      "states": "default",
+      "status": 0,
+      "output": "../docs/deployment-ui-completion/final-completion/baseline/shared-regression/dashboard/before"
+    },
+    {
+      "route": "/live-floor",
+      "states": "default",
+      "status": 0,
+      "output": "../docs/deployment-ui-completion/final-completion/baseline/shared-regression/live-floor/before"
+    },
+    {
+      "route": "/customers",
+      "states": "default",
+      "status": 0,
+      "output": "../docs/deployment-ui-completion/final-completion/baseline/shared-regression/customers/before"
+    },
+    {
+      "route": "/bookings",
+      "states": "default",
+      "status": 0,
+      "output": "../docs/deployment-ui-completion/final-completion/baseline/shared-regression/bookings/before"
+    },
+    {
+      "route": "/cafe-pos",
+      "states": "default",
+      "status": 0,
+      "output": "../docs/deployment-ui-completion/final-completion/baseline/shared-regression/cafe-pos/before"
+    },
+    {
+      "route": "/sales",
+      "states": "default",
+      "status": 0,
+      "output": "../docs/deployment-ui-completion/final-completion/baseline/shared-regression/sales/before"
+    },
+    {
+      "route": "/analytics",
+      "states": "default",
+      "status": 0,
+      "output": "../docs/deployment-ui-completion/final-completion/baseline/shared-regression/analytics/before"
+    },
+    {
+      "route": "/settings",
+      "states": "default",
+      "status": 0,
+      "output": "../docs/deployment-ui-completion/final-completion/baseline/shared-regression/settings/before"
+    },
+    {
+      "route": "/inventory",
+      "states": "default",
+      "status": 0,
+      "output": "../docs/deployment-ui-completion/final-completion/baseline/shared-regression/inventory/before"
+    },
+    {
+      "route": "/waitlist",
+      "states": "default",
+      "status": 0,
+      "output": "../docs/deployment-ui-completion/final-completion/baseline/shared-regression/waitlist/before"
+    },
+    {
+      "route": "/legacy-table-controls",
+      "states": "default",
+      "status": 0,
+      "output": "../docs/deployment-ui-completion/final-completion/baseline/shared-regression/legacy-table-controls/before"
+    },
+    {
+      "route": "/tournaments",
+      "states": "default",
+      "status": 0,
+      "output": "../docs/deployment-ui-completion/final-completion/baseline/shared-regression/tournaments/before"
+    },
+    {
+      "route": "/daily-closing",
+      "states": "default",
+      "status": 0,
+      "output": "../docs/deployment-ui-completion/final-completion/baseline/shared-regression/daily-closing/before"
+    },
+    {
+      "route": "/pricing-rules",
+      "states": "default",
+      "status": 1,
+      "output": "../docs/deployment-ui-completion/final-completion/baseline/shared-regression/pricing-rules/before"
+    },
+    {
+      "route": "/audit-log",
+      "states": "default",
+      "status": 0,
+      "output": "../docs/deployment-ui-completion/final-completion/baseline/shared-regression/audit-log/before"
+    },
+    {
+      "route": "/status",
+      "states": "default",
+      "status": 0,
+      "output": "../docs/deployment-ui-completion/final-completion/baseline/shared-regression/status/before"
+    },
+    {
+      "route": "/help",
+      "states": "default",
+      "status": 0,
+      "output": "../docs/deployment-ui-completion/final-completion/baseline/shared-regression/help/before"
+    },
+    {
+      "route": "/changelog",
+      "states": "default",
+      "status": 0,
+      "output": "../docs/deployment-ui-completion/final-completion/baseline/shared-regression/changelog/before"
+    },
+    {
+      "route": "/demo",
+      "states": "default",
+      "status": 0,
+      "output": "../docs/deployment-ui-completion/final-completion/baseline/shared-regression/demo/before"
+    },
+    {
+      "route": "/missing-page",
+      "states": "default",
+      "status": 0,
+      "output": "../docs/deployment-ui-completion/final-completion/baseline/shared-regression/missing-page/before"
+    }
+  ]
+}

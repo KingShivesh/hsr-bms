@@ -1,0 +1,41 @@
+{
+  "legend": "Before left, after right; light above dark. Original pixels, first 1000px of tall captures. Full source captures retained.",
+  "sources": [
+    {
+      "theme": "light",
+      "stage": "before",
+      "path": "final-completion/full-regression/cafe-stats/after/light-375-extreme.png",
+      "sha256": "13b8eafad4946330b73c35b82c313875464f59838d65f8871b06331b5e982cf5",
+      "width": 375,
+      "height": 3540,
+      "croppedHeight": 1000
+    },
+    {
+      "theme": "light",
+      "stage": "after",
+      "path": "final-completion/release-matrix-final/cafe-stats/after/light-375-extreme.png",
+      "sha256": "757b42f967f7ade1f5c93705cfffd4f862120e41cc7c1ac8ff9d6f3568bd7f77",
+      "width": 375,
+      "height": 3588,
+      "croppedHeight": 1000
+    },
+    {
+      "theme": "dark",
+      "stage": "before",
+      "path": "final-completion/full-regression/cafe-stats/after/dark-375-extreme.png",
+      "sha256": "f03998956f57744a633e8eaace4c4dcff6f8097b1e9685ef8fb07c14d261480f",
+      "width": 375,
+      "height": 3540,
+      "croppedHeight": 1000
+    },
+    {
+      "theme": "dark",
+      "stage": "after",
+      "path": "final-completion/release-matrix-final/cafe-stats/after/dark-375-extreme.png",
+      "sha256": "94dd532a6d739c087516cec6c1e5f478b1f9f01ada54905eeb246b42e2ac432e",
+      "width": 375,
+      "height": 3588,
+      "croppedHeight": 1000
+    }
+  ]
+}

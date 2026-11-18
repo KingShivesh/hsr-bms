@@ -1,0 +1,41 @@
+{
+  "legend": "Before left, after right; light above dark. Original pixels, first 1000px of tall captures. Full source captures retained.",
+  "sources": [
+    {
+      "theme": "light",
+      "stage": "before",
+      "path": "final-completion/baseline/shared-regression/audit-log/before/light-375-default.png",
+      "sha256": "f5ca53c2d30d3d96903b15dc5a1db427fa0fc52b7fef34a5a5dec413cde981f0",
+      "width": 375,
+      "height": 1130,
+      "croppedHeight": 1000
+    },
+    {
+      "theme": "light",
+      "stage": "after",
+      "path": "final-completion/closure-20261118/main-pages/shared-regression/audit-log/after/light-375-default.png",
+      "sha256": "b8f5478e2683a02d319f33ff70c20d00ca8070fa89a7c328678a35f7aec9e342",
+      "width": 375,
+      "height": 1114,
+      "croppedHeight": 1000
+    },
+    {
+      "theme": "dark",
+      "stage": "before",
+      "path": "final-completion/baseline/shared-regression/audit-log/before/dark-375-default.png",
+      "sha256": "b47b8bffa15c8f4b7082ff6c059077624f574731ea1b26af483ce2a57cfd9a86",
+      "width": 375,
+      "height": 1130,
+      "croppedHeight": 1000
+    },
+    {
+      "theme": "dark",
+      "stage": "after",
+      "path": "final-completion/closure-20261118/main-pages/shared-regression/audit-log/after/dark-375-default.png",
+      "sha256": "c70327d99763d675f697cf82022c8d6bfe6643f07c4053e7d150d8b82928b845",
+      "width": 375,
+      "height": 1114,
+      "croppedHeight": 1000
+    }
+  ]
+}

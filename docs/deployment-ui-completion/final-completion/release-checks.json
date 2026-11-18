@@ -1,0 +1,82 @@
+{
+  "steps": [
+    {
+      "name": "lint-final",
+      "start": "2026-11-06T07:44:10.346Z",
+      "finished": "2026-11-06T07:44:22.442Z",
+      "status": 0
+    },
+    {
+      "name": "theme-final",
+      "start": "2026-11-06T07:44:22.445Z",
+      "finished": "2026-11-06T07:44:22.781Z",
+      "status": 0
+    },
+    {
+      "name": "source-contract-final",
+      "start": "2026-11-06T07:44:22.782Z",
+      "finished": "2026-11-06T07:44:23.658Z",
+      "status": 0
+    },
+    {
+      "name": "token-proof-final",
+      "start": "2026-11-06T07:44:23.659Z",
+      "finished": "2026-11-06T07:44:23.992Z",
+      "status": 0
+    },
+    {
+      "name": "qa-build-final",
+      "start": "2026-11-06T07:44:23.993Z",
+      "finished": "2026-11-06T07:44:26.203Z",
+      "status": 0
+    },
+    {
+      "name": "dialogs-final",
+      "start": "2026-11-06T07:44:26.203Z",
+      "finished": "2026-11-06T07:46:38.704Z",
+      "status": 0
+    },
+    {
+      "name": "pilot-final",
+      "start": "2026-11-06T07:46:38.705Z",
+      "finished": "2026-11-06T07:47:43.574Z",
+      "status": 0
+    },
+    {
+      "name": "checkout-final",
+      "start": "2026-11-06T07:47:43.575Z",
+      "finished": "2026-11-06T07:48:09.764Z",
+      "status": 0
+    },
+    {
+      "name": "overlays-final",
+      "start": "2026-11-06T07:48:09.765Z",
+      "finished": "2026-11-06T08:20:26.801Z",
+      "status": 1
+    },
+    {
+      "name": "default-matrix-final",
+      "start": "2026-11-06T08:20:26.802Z",
+      "finished": "2026-11-06T10:45:52.774Z",
+      "status": 1
+    },
+    {
+      "name": "contrast-final",
+      "start": "2026-11-06T10:45:52.774Z",
+      "finished": "2026-11-06T13:48:56.351Z",
+      "status": 0
+    },
+    {
+      "name": "buttons-retry-final",
+      "start": "2026-11-06T20:55:59.705Z",
+      "finished": "2026-11-06T21:57:08.708Z",
+      "status": 0
+    },
+    {
+      "name": "buttons-shell-final",
+      "start": "2026-11-06T21:57:08.709Z",
+      "finished": "2026-11-07T08:45:10.582Z",
+      "status": 1
+    }
+  ]
+}

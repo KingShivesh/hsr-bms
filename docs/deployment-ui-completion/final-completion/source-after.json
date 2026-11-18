@@ -1,0 +1,2872 @@
+{
+  "method": "PostCSS declarations and Babel JSX AST; source inventory, not a computed visual pass",
+  "colors": [
+    {
+      "file": "src/design-tokens.css",
+      "line": 52,
+      "selector": ":root, body",
+      "property": "--accent-bg",
+      "value": "#e0f3e8",
+      "literals": [
+        "#e0f3e8"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 53,
+      "selector": ":root, body",
+      "property": "--accent-soft",
+      "value": "#eaf6ef",
+      "literals": [
+        "#eaf6ef"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 54,
+      "selector": ":root, body",
+      "property": "--accent-border",
+      "value": "#91c9aa",
+      "literals": [
+        "#91c9aa"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 61,
+      "selector": ":root, body",
+      "property": "--border-strong",
+      "value": "#bcbcc6",
+      "literals": [
+        "#bcbcc6"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 77,
+      "selector": ":root, body",
+      "property": "--warning",
+      "value": "#936000",
+      "literals": [
+        "#936000"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 78,
+      "selector": ":root, body",
+      "property": "--warning-bg",
+      "value": "#fff3d4",
+      "literals": [
+        "#fff3d4"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 79,
+      "selector": ":root, body",
+      "property": "--warning-text",
+      "value": "#704600",
+      "literals": [
+        "#704600"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 81,
+      "selector": ":root, body",
+      "property": "--danger",
+      "value": "#b42318",
+      "literals": [
+        "#b42318"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 82,
+      "selector": ":root, body",
+      "property": "--danger-bg",
+      "value": "#fff1ef",
+      "literals": [
+        "#fff1ef"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 83,
+      "selector": ":root, body",
+      "property": "--danger-text",
+      "value": "#8f1f17",
+      "literals": [
+        "#8f1f17"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 135,
+      "selector": ":root, body",
+      "property": "--overlay",
+      "value": "rgba(15, 23, 42, 0.48)",
+      "literals": [
+        "rgba(15, 23, 42, 0.48)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 224,
+      "selector": ":root, body",
+      "property": "--neutral-white",
+      "value": "#fafafa",
+      "literals": [
+        "#fafafa"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 225,
+      "selector": ":root, body",
+      "property": "--neutral-100",
+      "value": "#f4f4f4",
+      "literals": [
+        "#f4f4f4"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 226,
+      "selector": ":root, body",
+      "property": "--neutral-200",
+      "value": "#dedee4",
+      "literals": [
+        "#dedee4"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 227,
+      "selector": ":root, body",
+      "property": "--neutral-500",
+      "value": "#62626c",
+      "literals": [
+        "#62626c"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 228,
+      "selector": ":root, body",
+      "property": "--neutral-600",
+      "value": "#52525b",
+      "literals": [
+        "#52525b"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 229,
+      "selector": ":root, body",
+      "property": "--neutral-900",
+      "value": "#18181b",
+      "literals": [
+        "#18181b"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 230,
+      "selector": ":root, body",
+      "property": "--snook-canvas",
+      "value": "#0b0b0f",
+      "literals": [
+        "#0b0b0f"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 231,
+      "selector": ":root, body",
+      "property": "--snook-card",
+      "value": "#111116",
+      "literals": [
+        "#111116"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 232,
+      "selector": ":root, body",
+      "property": "--snook-overlay",
+      "value": "#1a1a22",
+      "literals": [
+        "#1a1a22"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 233,
+      "selector": ":root, body",
+      "property": "--snook-border",
+      "value": "#25252c",
+      "literals": [
+        "#25252c"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 234,
+      "selector": ":root, body",
+      "property": "--snook-green",
+      "value": "#00ff7f",
+      "literals": [
+        "#00ff7f"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 235,
+      "selector": ":root, body",
+      "property": "--snook-green-hover",
+      "value": "#42ff9c",
+      "literals": [
+        "#42ff9c"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 236,
+      "selector": ":root, body",
+      "property": "--snook-green-active",
+      "value": "#00db6d",
+      "literals": [
+        "#00db6d"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 237,
+      "selector": ":root, body",
+      "property": "--brand-ink",
+      "value": "#07120d",
+      "literals": [
+        "#07120d"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 238,
+      "selector": ":root, body",
+      "property": "--brand-light",
+      "value": "#006b3c",
+      "literals": [
+        "#006b3c"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 239,
+      "selector": ":root, body",
+      "property": "--brand-light-hover",
+      "value": "#00532e",
+      "literals": [
+        "#00532e"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 240,
+      "selector": ":root, body",
+      "property": "--brand-light-active",
+      "value": "#003d22",
+      "literals": [
+        "#003d22"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 255,
+      "selector": ":root, body",
+      "property": "--border-control",
+      "value": "#858590",
+      "literals": [
+        "#858590"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 285,
+      "selector": ":root.dark, :root.dark body",
+      "property": "--accent-bg",
+      "value": "#0c2519",
+      "literals": [
+        "#0c2519"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 286,
+      "selector": ":root.dark, :root.dark body",
+      "property": "--accent-soft",
+      "value": "#0e1c15",
+      "literals": [
+        "#0e1c15"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 287,
+      "selector": ":root.dark, :root.dark body",
+      "property": "--accent-border",
+      "value": "#276b47",
+      "literals": [
+        "#276b47"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 293,
+      "selector": ":root.dark, :root.dark body",
+      "property": "--border-muted",
+      "value": "#202027",
+      "literals": [
+        "#202027"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 294,
+      "selector": ":root.dark, :root.dark body",
+      "property": "--border-strong",
+      "value": "#454550",
+      "literals": [
+        "#454550"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 296,
+      "selector": ":root.dark, :root.dark body",
+      "property": "--text-secondary",
+      "value": "#b4b4bd",
+      "literals": [
+        "#b4b4bd"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 297,
+      "selector": ":root.dark, :root.dark body",
+      "property": "--text-muted",
+      "value": "#92929f",
+      "literals": [
+        "#92929f"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 310,
+      "selector": ":root.dark, :root.dark body",
+      "property": "--warning",
+      "value": "#f2bd58",
+      "literals": [
+        "#f2bd58"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 311,
+      "selector": ":root.dark, :root.dark body",
+      "property": "--warning-bg",
+      "value": "#2b2112",
+      "literals": [
+        "#2b2112"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 312,
+      "selector": ":root.dark, :root.dark body",
+      "property": "--warning-text",
+      "value": "#f2ce82",
+      "literals": [
+        "#f2ce82"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 314,
+      "selector": ":root.dark, :root.dark body",
+      "property": "--danger",
+      "value": "#f08077",
+      "literals": [
+        "#f08077"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 315,
+      "selector": ":root.dark, :root.dark body",
+      "property": "--danger-bg",
+      "value": "#2a181b",
+      "literals": [
+        "#2a181b"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 316,
+      "selector": ":root.dark, :root.dark body",
+      "property": "--danger-text",
+      "value": "#ffb2aa",
+      "literals": [
+        "#ffb2aa"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 357,
+      "selector": ":root.dark, :root.dark body",
+      "property": "--overlay",
+      "value": "rgba(3, 7, 5, 0.72)",
+      "literals": [
+        "rgba(3, 7, 5, 0.72)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 427,
+      "selector": ":root.dark, :root.dark body",
+      "property": "--border-control",
+      "value": "#6c6c78",
+      "literals": [
+        "#6c6c78"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 580,
+      "selector": ":root",
+      "property": "--legacy-ink-13fb8735d2",
+      "value": "#733c00",
+      "literals": [
+        "#733c00"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 581,
+      "selector": ":root",
+      "property": "--legacy-ink-2985c77905",
+      "value": "rgba(0, 0, 0, 0.65)",
+      "literals": [
+        "rgba(0, 0, 0, 0.65)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 582,
+      "selector": ":root",
+      "property": "--legacy-ink-31245fd8e1",
+      "value": "rgba(248, 250, 252, 0.58)",
+      "literals": [
+        "rgba(248, 250, 252, 0.58)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 583,
+      "selector": ":root",
+      "property": "--legacy-ink-4b46d2885c",
+      "value": "rgba(248, 250, 252, 0.66)",
+      "literals": [
+        "rgba(248, 250, 252, 0.66)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 584,
+      "selector": ":root",
+      "property": "--legacy-ink-de71b9cd78",
+      "value": "rgba(248, 250, 252, 0.62)",
+      "literals": [
+        "rgba(248, 250, 252, 0.62)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 585,
+      "selector": ":root",
+      "property": "--legacy-ink-f2074b6cef",
+      "value": "#ffffff",
+      "literals": [
+        "#ffffff"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 586,
+      "selector": ":root",
+      "property": "--legacy-ink-ff34edd940",
+      "value": "rgba(255, 255, 255, 0.18)",
+      "literals": [
+        "rgba(255, 255, 255, 0.18)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 587,
+      "selector": ":root",
+      "property": "--legacy-line-059736adb0",
+      "value": "rgba(15, 23, 42, 0.12)",
+      "literals": [
+        "rgba(15, 23, 42, 0.12)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 588,
+      "selector": ":root",
+      "property": "--legacy-line-09ad1c52c1",
+      "value": "rgba(251, 191, 36, 0.45)",
+      "literals": [
+        "rgba(251, 191, 36, 0.45)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 589,
+      "selector": ":root",
+      "property": "--legacy-line-0ad1f28d9d",
+      "value": "rgba(191, 208, 189, 0.9)",
+      "literals": [
+        "rgba(191, 208, 189, 0.9)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 590,
+      "selector": ":root",
+      "property": "--legacy-line-118e56cc27",
+      "value": "rgba(203, 216, 204, 0.76)",
+      "literals": [
+        "rgba(203, 216, 204, 0.76)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 591,
+      "selector": ":root",
+      "property": "--legacy-line-15794bba6f",
+      "value": "rgba(22, 163, 74, 0.28)",
+      "literals": [
+        "rgba(22, 163, 74, 0.28)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 592,
+      "selector": ":root",
+      "property": "--legacy-line-2673973442",
+      "value": "rgba(245, 158, 11, 0.36)",
+      "literals": [
+        "rgba(245, 158, 11, 0.36)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 593,
+      "selector": ":root",
+      "property": "--legacy-line-2f2cec819d",
+      "value": "rgba(140, 240, 178, 0.24)",
+      "literals": [
+        "rgba(140, 240, 178, 0.24)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 594,
+      "selector": ":root",
+      "property": "--legacy-line-350ef69dbf",
+      "value": "rgba(255, 255, 255, 0.08)",
+      "literals": [
+        "rgba(255, 255, 255, 0.08)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 595,
+      "selector": ":root",
+      "property": "--legacy-line-42dbbe4cfb",
+      "value": "rgba(140, 240, 178, 0.18)",
+      "literals": [
+        "rgba(140, 240, 178, 0.18)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 596,
+      "selector": ":root",
+      "property": "--legacy-line-44ad1d8af4",
+      "value": "rgba(148, 163, 184, 0.22)",
+      "literals": [
+        "rgba(148, 163, 184, 0.22)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 597,
+      "selector": ":root",
+      "property": "--legacy-line-471719ca01",
+      "value": "rgba(140, 240, 178, 0.28)",
+      "literals": [
+        "rgba(140, 240, 178, 0.28)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 598,
+      "selector": ":root",
+      "property": "--legacy-line-47259dd81e",
+      "value": "rgba(140, 240, 178, 0.35)",
+      "literals": [
+        "rgba(140, 240, 178, 0.35)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 599,
+      "selector": ":root",
+      "property": "--legacy-line-4ada6d64dc",
+      "value": "rgba(191, 208, 189, 0.84)",
+      "literals": [
+        "rgba(191, 208, 189, 0.84)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 600,
+      "selector": ":root",
+      "property": "--legacy-line-4b6aebcef3",
+      "value": "rgba(245, 158, 11, 0.3)",
+      "literals": [
+        "rgba(245, 158, 11, 0.3)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 601,
+      "selector": ":root",
+      "property": "--legacy-line-4e575da4aa",
+      "value": "rgba(220, 38, 38, 0.24)",
+      "literals": [
+        "rgba(220, 38, 38, 0.24)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 602,
+      "selector": ":root",
+      "property": "--legacy-line-50bec1437a",
+      "value": "rgba(32, 128, 79, 0.45)",
+      "literals": [
+        "rgba(32, 128, 79, 0.45)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 603,
+      "selector": ":root",
+      "property": "--legacy-line-56bc1457aa",
+      "value": "rgba(44, 168, 132, 0.34)",
+      "literals": [
+        "rgba(44, 168, 132, 0.34)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 604,
+      "selector": ":root",
+      "property": "--legacy-line-57950f5ec9",
+      "value": "rgb(255 255 255 / 70%)",
+      "literals": [
+        "rgb(255 255 255 / 70%)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 605,
+      "selector": ":root",
+      "property": "--legacy-line-5a720afeee",
+      "value": "rgba(140, 240, 178, 0.16)",
+      "literals": [
+        "rgba(140, 240, 178, 0.16)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 606,
+      "selector": ":root",
+      "property": "--legacy-line-5d342fdf24",
+      "value": "rgba(22, 163, 74, 0.36)",
+      "literals": [
+        "rgba(22, 163, 74, 0.36)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 607,
+      "selector": ":root",
+      "property": "--legacy-line-64647426ca",
+      "value": "rgba(217, 119, 6, 0.3)",
+      "literals": [
+        "rgba(217, 119, 6, 0.3)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 608,
+      "selector": ":root",
+      "property": "--legacy-line-65f356668c",
+      "value": "rgba(239, 68, 68, 0.28)",
+      "literals": [
+        "rgba(239, 68, 68, 0.28)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 609,
+      "selector": ":root",
+      "property": "--legacy-line-6ceb0eb574",
+      "value": "rgba(217, 164, 65, 0.34)",
+      "literals": [
+        "rgba(217, 164, 65, 0.34)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 610,
+      "selector": ":root",
+      "property": "--legacy-line-70e7b83dd8",
+      "value": "rgba(255, 255, 255, 0.16)",
+      "literals": [
+        "rgba(255, 255, 255, 0.16)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 611,
+      "selector": ":root",
+      "property": "--legacy-line-7884dc2713",
+      "value": "rgba(34, 197, 94, 0.22)",
+      "literals": [
+        "rgba(34, 197, 94, 0.22)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 612,
+      "selector": ":root",
+      "property": "--legacy-line-836e4bda3b",
+      "value": "rgba(15, 107, 79, 0.38)",
+      "literals": [
+        "rgba(15, 107, 79, 0.38)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 613,
+      "selector": ":root",
+      "property": "--legacy-line-8463f3d3c2",
+      "value": "rgba(217, 164, 65, 0.38)",
+      "literals": [
+        "rgba(217, 164, 65, 0.38)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 614,
+      "selector": ":root",
+      "property": "--legacy-line-8f790b1052",
+      "value": "rgba(72, 192, 148, 0.24)",
+      "literals": [
+        "rgba(72, 192, 148, 0.24)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 615,
+      "selector": ":root",
+      "property": "--legacy-line-94920a400b",
+      "value": "rgba(217, 164, 65, 0.22)",
+      "literals": [
+        "rgba(217, 164, 65, 0.22)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 616,
+      "selector": ":root",
+      "property": "--legacy-line-a5ee6684e3",
+      "value": "rgba(217, 119, 6, 0.38)",
+      "literals": [
+        "rgba(217, 119, 6, 0.38)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 617,
+      "selector": ":root",
+      "property": "--legacy-line-a624360c0f",
+      "value": "rgba(148, 163, 184, 0.14)",
+      "literals": [
+        "rgba(148, 163, 184, 0.14)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 618,
+      "selector": ":root",
+      "property": "--legacy-line-ad74e94301",
+      "value": "rgba(219, 230, 215, 0.68)",
+      "literals": [
+        "rgba(219, 230, 215, 0.68)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 619,
+      "selector": ":root",
+      "property": "--legacy-line-b3de59a77b",
+      "value": "rgba(191, 208, 189, 0.78)",
+      "literals": [
+        "rgba(191, 208, 189, 0.78)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 620,
+      "selector": ":root",
+      "property": "--legacy-line-b838149493",
+      "value": "rgba(140, 240, 178, 0.22)",
+      "literals": [
+        "rgba(140, 240, 178, 0.22)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 621,
+      "selector": ":root",
+      "property": "--legacy-line-c56573bafe",
+      "value": "rgba(217, 119, 6, 0.24)",
+      "literals": [
+        "rgba(217, 119, 6, 0.24)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 622,
+      "selector": ":root",
+      "property": "--legacy-line-cd57c62bd8",
+      "value": "rgba(148, 163, 184, 0.28)",
+      "literals": [
+        "rgba(148, 163, 184, 0.28)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 623,
+      "selector": ":root",
+      "property": "--legacy-line-cffc2b6633",
+      "value": "rgba(15, 23, 42, 0.1)",
+      "literals": [
+        "rgba(15, 23, 42, 0.1)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 624,
+      "selector": ":root",
+      "property": "--legacy-line-d5484aeff9",
+      "value": "rgba(31, 122, 79, 0.42)",
+      "literals": [
+        "rgba(31, 122, 79, 0.42)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 625,
+      "selector": ":root",
+      "property": "--legacy-line-dedf03150f",
+      "value": "rgba(251, 191, 36, 0.28)",
+      "literals": [
+        "rgba(251, 191, 36, 0.28)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 626,
+      "selector": ":root",
+      "property": "--legacy-line-e0a1390c45",
+      "value": "rgba(74, 222, 128, 0.38)",
+      "literals": [
+        "rgba(74, 222, 128, 0.38)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 627,
+      "selector": ":root",
+      "property": "--legacy-line-e4fad94696",
+      "value": "rgba(239, 68, 68, 0.34)",
+      "literals": [
+        "rgba(239, 68, 68, 0.34)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 628,
+      "selector": ":root",
+      "property": "--legacy-line-e7bebca3d4",
+      "value": "rgb(255 255 255 / 65%)",
+      "literals": [
+        "rgb(255 255 255 / 65%)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 629,
+      "selector": ":root",
+      "property": "--legacy-line-e7fb305704",
+      "value": "rgba(251, 191, 36, 0.24)",
+      "literals": [
+        "rgba(251, 191, 36, 0.24)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 630,
+      "selector": ":root",
+      "property": "--legacy-line-eea871a3f7",
+      "value": "rgba(217, 119, 6, 0.28)",
+      "literals": [
+        "rgba(217, 119, 6, 0.28)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 631,
+      "selector": ":root",
+      "property": "--legacy-line-f0e028b927",
+      "value": "rgba(255, 255, 255, 0.09)",
+      "literals": [
+        "rgba(255, 255, 255, 0.09)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 632,
+      "selector": ":root",
+      "property": "--legacy-line-f2074b6cef",
+      "value": "#ffffff",
+      "literals": [
+        "#ffffff"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 633,
+      "selector": ":root",
+      "property": "--legacy-line-f66b2c0c69",
+      "value": "rgba(148, 163, 184, 0.16)",
+      "literals": [
+        "rgba(148, 163, 184, 0.16)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 634,
+      "selector": ":root",
+      "property": "--legacy-shadow-02e6d15b98",
+      "value": "rgb(0 0 0 / 8%)",
+      "literals": [
+        "rgb(0 0 0 / 8%)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 635,
+      "selector": ":root",
+      "property": "--legacy-shadow-059736adb0",
+      "value": "rgba(15, 23, 42, 0.12)",
+      "literals": [
+        "rgba(15, 23, 42, 0.12)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 636,
+      "selector": ":root",
+      "property": "--legacy-shadow-0e65164816",
+      "value": "rgba(255, 255, 255, 0.42)",
+      "literals": [
+        "rgba(255, 255, 255, 0.42)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 637,
+      "selector": ":root",
+      "property": "--legacy-shadow-16cf596261",
+      "value": "rgba(15, 23, 42, 0.08)",
+      "literals": [
+        "rgba(15, 23, 42, 0.08)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 638,
+      "selector": ":root",
+      "property": "--legacy-shadow-18fb18d41e",
+      "value": "rgba(0, 0, 0, 0.12)",
+      "literals": [
+        "rgba(0, 0, 0, 0.12)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 639,
+      "selector": ":root",
+      "property": "--legacy-shadow-1a92ac57f6",
+      "value": "rgba(15, 23, 42, 0.03)",
+      "literals": [
+        "rgba(15, 23, 42, 0.03)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 640,
+      "selector": ":root",
+      "property": "--legacy-shadow-22a58ba720",
+      "value": "rgba(16, 32, 23, 0.12)",
+      "literals": [
+        "rgba(16, 32, 23, 0.12)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 641,
+      "selector": ":root",
+      "property": "--legacy-shadow-25bb38a0cb",
+      "value": "rgb(0 0 0 / 10%)",
+      "literals": [
+        "rgb(0 0 0 / 10%)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 642,
+      "selector": ":root",
+      "property": "--legacy-shadow-2721e71bd2",
+      "value": "rgba(22, 163, 74, 0.16)",
+      "literals": [
+        "rgba(22, 163, 74, 0.16)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 643,
+      "selector": ":root",
+      "property": "--legacy-shadow-2c87418c7d",
+      "value": "rgba(20, 98, 61, 0.16)",
+      "literals": [
+        "rgba(20, 98, 61, 0.16)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 644,
+      "selector": ":root",
+      "property": "--legacy-shadow-37f420c8ff",
+      "value": "rgb(255 255 255 / 15%)",
+      "literals": [
+        "rgb(255 255 255 / 15%)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 645,
+      "selector": ":root",
+      "property": "--legacy-shadow-38c3806130",
+      "value": "rgba(16, 32, 23, 0.06)",
+      "literals": [
+        "rgba(16, 32, 23, 0.06)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 646,
+      "selector": ":root",
+      "property": "--legacy-shadow-3f461693ba",
+      "value": "rgba(15, 23, 42, 0.16)",
+      "literals": [
+        "rgba(15, 23, 42, 0.16)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 647,
+      "selector": ":root",
+      "property": "--legacy-shadow-3f907c98fc",
+      "value": "rgba(16, 24, 40, 0.12)",
+      "literals": [
+        "rgba(16, 24, 40, 0.12)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 648,
+      "selector": ":root",
+      "property": "--legacy-shadow-46a4b2327f",
+      "value": "rgba(16, 21, 19, 0.12)",
+      "literals": [
+        "rgba(16, 21, 19, 0.12)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 649,
+      "selector": ":root",
+      "property": "--legacy-shadow-52297fad9e",
+      "value": "rgba(15, 23, 42, 0.18)",
+      "literals": [
+        "rgba(15, 23, 42, 0.18)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 650,
+      "selector": ":root",
+      "property": "--legacy-shadow-5e43abcd9c",
+      "value": "rgba(31, 122, 79, 0.15)",
+      "literals": [
+        "rgba(31, 122, 79, 0.15)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 651,
+      "selector": ":root",
+      "property": "--legacy-shadow-635c59be60",
+      "value": "rgb(255 255 255 / 3%)",
+      "literals": [
+        "rgb(255 255 255 / 3%)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 652,
+      "selector": ":root",
+      "property": "--legacy-shadow-6476ac0fb6",
+      "value": "rgba(10, 39, 25, 0.82)",
+      "literals": [
+        "rgba(10, 39, 25, 0.82)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 653,
+      "selector": ":root",
+      "property": "--legacy-shadow-68340242a8",
+      "value": "rgba(31, 122, 79, 0.16)",
+      "literals": [
+        "rgba(31, 122, 79, 0.16)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 654,
+      "selector": ":root",
+      "property": "--legacy-shadow-697591f956",
+      "value": "rgba(88, 214, 141, 0.12)",
+      "literals": [
+        "rgba(88, 214, 141, 0.12)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 655,
+      "selector": ":root",
+      "property": "--legacy-shadow-6b7396a665",
+      "value": "rgba(16, 21, 19, 0.28)",
+      "literals": [
+        "rgba(16, 21, 19, 0.28)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 656,
+      "selector": ":root",
+      "property": "--legacy-shadow-6bb84dfdf4",
+      "value": "rgba(32, 128, 79, 0.12)",
+      "literals": [
+        "rgba(32, 128, 79, 0.12)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 657,
+      "selector": ":root",
+      "property": "--legacy-shadow-7fc4ceeabb",
+      "value": "rgba(15, 23, 42, 0.2)",
+      "literals": [
+        "rgba(15, 23, 42, 0.2)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 658,
+      "selector": ":root",
+      "property": "--legacy-shadow-83ffc2bc2b",
+      "value": "rgba(15, 23, 42, 0.05)",
+      "literals": [
+        "rgba(15, 23, 42, 0.05)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 659,
+      "selector": ":root",
+      "property": "--legacy-shadow-84a835d776",
+      "value": "rgba(31, 122, 79, 0.18)",
+      "literals": [
+        "rgba(31, 122, 79, 0.18)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 660,
+      "selector": ":root",
+      "property": "--legacy-shadow-898052daf3",
+      "value": "rgba(0, 0, 0, 0.3)",
+      "literals": [
+        "rgba(0, 0, 0, 0.3)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 661,
+      "selector": ":root",
+      "property": "--legacy-shadow-9388c2c46f",
+      "value": "rgba(220, 38, 38, 0.18)",
+      "literals": [
+        "rgba(220, 38, 38, 0.18)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 662,
+      "selector": ":root",
+      "property": "--legacy-shadow-99037a4cdb",
+      "value": "rgba(0, 0, 0, 0.16)",
+      "literals": [
+        "rgba(0, 0, 0, 0.16)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 663,
+      "selector": ":root",
+      "property": "--legacy-shadow-9dbc49e3d2",
+      "value": "rgba(0, 0, 0, 0.28)",
+      "literals": [
+        "rgba(0, 0, 0, 0.28)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 664,
+      "selector": ":root",
+      "property": "--legacy-shadow-9ecb532b6e",
+      "value": "rgba(255, 255, 255, 0.05)",
+      "literals": [
+        "rgba(255, 255, 255, 0.05)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 665,
+      "selector": ":root",
+      "property": "--legacy-shadow-a4dffe4009",
+      "value": "rgba(245, 158, 11, 0.18)",
+      "literals": [
+        "rgba(245, 158, 11, 0.18)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 666,
+      "selector": ":root",
+      "property": "--legacy-shadow-a5abedce33",
+      "value": "rgba(9, 15, 22, 0.1)",
+      "literals": [
+        "rgba(9, 15, 22, 0.1)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 667,
+      "selector": ":root",
+      "property": "--legacy-shadow-a93e464993",
+      "value": "rgba(16, 24, 40, 0.04)",
+      "literals": [
+        "rgba(16, 24, 40, 0.04)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 668,
+      "selector": ":root",
+      "property": "--legacy-shadow-ac46624811",
+      "value": "rgba(15, 23, 42, 0.04)",
+      "literals": [
+        "rgba(15, 23, 42, 0.04)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 669,
+      "selector": ":root",
+      "property": "--legacy-shadow-ac527bd293",
+      "value": "rgba(31, 122, 79, 0.13)",
+      "literals": [
+        "rgba(31, 122, 79, 0.13)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 670,
+      "selector": ":root",
+      "property": "--legacy-shadow-ae4eb82daa",
+      "value": "rgba(16, 24, 40, 0.05)",
+      "literals": [
+        "rgba(16, 24, 40, 0.05)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 671,
+      "selector": ":root",
+      "property": "--legacy-shadow-afc7a160d9",
+      "value": "rgba(20, 98, 61, 0.14)",
+      "literals": [
+        "rgba(20, 98, 61, 0.14)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 672,
+      "selector": ":root",
+      "property": "--legacy-shadow-b1c8f573f8",
+      "value": "rgba(0, 0, 0, 0.26)",
+      "literals": [
+        "rgba(0, 0, 0, 0.26)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 673,
+      "selector": ":root",
+      "property": "--legacy-shadow-bf15974be8",
+      "value": "rgba(31, 122, 79, 0.12)",
+      "literals": [
+        "rgba(31, 122, 79, 0.12)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 674,
+      "selector": ":root",
+      "property": "--legacy-shadow-c5e4717f17",
+      "value": "rgba(220, 38, 38, 0.16)",
+      "literals": [
+        "rgba(220, 38, 38, 0.16)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 675,
+      "selector": ":root",
+      "property": "--legacy-shadow-c6476159e0",
+      "value": "rgba(23, 101, 62, 0.18)",
+      "literals": [
+        "rgba(23, 101, 62, 0.18)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 676,
+      "selector": ":root",
+      "property": "--legacy-shadow-cffc2b6633",
+      "value": "rgba(15, 23, 42, 0.1)",
+      "literals": [
+        "rgba(15, 23, 42, 0.1)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 677,
+      "selector": ":root",
+      "property": "--legacy-shadow-db072d51a0",
+      "value": "rgba(16, 24, 40, 0.1)",
+      "literals": [
+        "rgba(16, 24, 40, 0.1)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 678,
+      "selector": ":root",
+      "property": "--legacy-shadow-ddb39608a2",
+      "value": "rgba(255, 255, 255, 0.045)",
+      "literals": [
+        "rgba(255, 255, 255, 0.045)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 679,
+      "selector": ":root",
+      "property": "--legacy-shadow-e1963a9073",
+      "value": "rgba(0, 0, 0, 0.2)",
+      "literals": [
+        "rgba(0, 0, 0, 0.2)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 680,
+      "selector": ":root",
+      "property": "--legacy-shadow-e19a38f714",
+      "value": "rgba(15, 23, 42, 0.06)",
+      "literals": [
+        "rgba(15, 23, 42, 0.06)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 681,
+      "selector": ":root",
+      "property": "--legacy-shadow-e62cf6dec0",
+      "value": "rgba(16, 24, 40, 0.08)",
+      "literals": [
+        "rgba(16, 24, 40, 0.08)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 682,
+      "selector": ":root",
+      "property": "--legacy-shadow-e713fac9f1",
+      "value": "rgba(17, 24, 39, 0.02)",
+      "literals": [
+        "rgba(17, 24, 39, 0.02)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 683,
+      "selector": ":root",
+      "property": "--legacy-shadow-f37ae3f6c4",
+      "value": "rgba(17, 17, 17, 0.16)",
+      "literals": [
+        "rgba(17, 17, 17, 0.16)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 684,
+      "selector": ":root",
+      "property": "--legacy-shadow-f67917da77",
+      "value": "rgba(217, 119, 6, 0.22)",
+      "literals": [
+        "rgba(217, 119, 6, 0.22)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 685,
+      "selector": ":root",
+      "property": "--legacy-shadow-f826f455ad",
+      "value": "rgba(0, 0, 0, 0.22)",
+      "literals": [
+        "rgba(0, 0, 0, 0.22)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 686,
+      "selector": ":root",
+      "property": "--legacy-surface-02516df923",
+      "value": "rgba(255, 255, 255, 0.68)",
+      "literals": [
+        "rgba(255, 255, 255, 0.68)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 687,
+      "selector": ":root",
+      "property": "--legacy-surface-04949272dc",
+      "value": "rgba(231, 244, 237, 0.64)",
+      "literals": [
+        "rgba(231, 244, 237, 0.64)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 688,
+      "selector": ":root",
+      "property": "--legacy-surface-04f48426bb",
+      "value": "rgba(217, 119, 6, 0.14)",
+      "literals": [
+        "rgba(217, 119, 6, 0.14)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 689,
+      "selector": ":root",
+      "property": "--legacy-surface-05a3b325cc",
+      "value": "rgba(217, 164, 65, 0.13)",
+      "literals": [
+        "rgba(217, 164, 65, 0.13)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 690,
+      "selector": ":root",
+      "property": "--legacy-surface-05fe8c6001",
+      "value": "rgba(140, 240, 178, 0.12)",
+      "literals": [
+        "rgba(140, 240, 178, 0.12)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 691,
+      "selector": ":root",
+      "property": "--legacy-surface-08e0eb2f84",
+      "value": "rgba(251, 191, 36, 0.12)",
+      "literals": [
+        "rgba(251, 191, 36, 0.12)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 692,
+      "selector": ":root",
+      "property": "--legacy-surface-0e8825e7fc",
+      "value": "rgba(255, 255, 255, 0.9)",
+      "literals": [
+        "rgba(255, 255, 255, 0.9)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 693,
+      "selector": ":root",
+      "property": "--legacy-surface-12e6b8da4c",
+      "value": "rgba(34, 197, 94, 0.16)",
+      "literals": [
+        "rgba(34, 197, 94, 0.16)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 694,
+      "selector": ":root",
+      "property": "--legacy-surface-14d38a2844",
+      "value": "rgba(255, 255, 255, 0.92)",
+      "literals": [
+        "rgba(255, 255, 255, 0.92)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 695,
+      "selector": ":root",
+      "property": "--legacy-surface-1a92ac57f6",
+      "value": "rgba(15, 23, 42, 0.03)",
+      "literals": [
+        "rgba(15, 23, 42, 0.03)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 696,
+      "selector": ":root",
+      "property": "--legacy-surface-1ece983181",
+      "value": "rgb(0 0 0 / 35%)",
+      "literals": [
+        "rgb(0 0 0 / 35%)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 697,
+      "selector": ":root",
+      "property": "--legacy-surface-1f1c50865c",
+      "value": "rgba(248, 250, 252, 0.72)",
+      "literals": [
+        "rgba(248, 250, 252, 0.72)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 698,
+      "selector": ":root",
+      "property": "--legacy-surface-20ae0c6442",
+      "value": "rgba(16, 185, 129, 0.14)",
+      "literals": [
+        "rgba(16, 185, 129, 0.14)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 699,
+      "selector": ":root",
+      "property": "--legacy-surface-22279ab3e3",
+      "value": "rgba(255, 255, 255, 0.64)",
+      "literals": [
+        "rgba(255, 255, 255, 0.64)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 700,
+      "selector": ":root",
+      "property": "--legacy-surface-24e83a16b7",
+      "value": "rgba(248, 250, 252, 0.9)",
+      "literals": [
+        "rgba(248, 250, 252, 0.9)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 701,
+      "selector": ":root",
+      "property": "--legacy-surface-2dce320219",
+      "value": "rgba(31, 122, 79, 0.1)",
+      "literals": [
+        "rgba(31, 122, 79, 0.1)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 702,
+      "selector": ":root",
+      "property": "--legacy-surface-2e948f210f",
+      "value": "rgba(15, 20, 18, 0.9)",
+      "literals": [
+        "rgba(15, 20, 18, 0.9)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 703,
+      "selector": ":root",
+      "property": "--legacy-surface-2fb7b9a637",
+      "value": "rgba(34, 197, 94, 0.1)",
+      "literals": [
+        "rgba(34, 197, 94, 0.1)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 704,
+      "selector": ":root",
+      "property": "--legacy-surface-301052e462",
+      "value": "rgba(17, 17, 17, 0.9)",
+      "literals": [
+        "rgba(17, 17, 17, 0.9)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 705,
+      "selector": ":root",
+      "property": "--legacy-surface-315e351b1a",
+      "value": "rgba(231, 244, 236, 0.9)",
+      "literals": [
+        "rgba(231, 244, 236, 0.9)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 706,
+      "selector": ":root",
+      "property": "--legacy-surface-350ef69dbf",
+      "value": "rgba(255, 255, 255, 0.08)",
+      "literals": [
+        "rgba(255, 255, 255, 0.08)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 707,
+      "selector": ":root",
+      "property": "--legacy-surface-3d235a6385",
+      "value": "rgba(255, 247, 237, 0.88)",
+      "literals": [
+        "rgba(255, 247, 237, 0.88)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 708,
+      "selector": ":root",
+      "property": "--legacy-surface-3d8f70c886",
+      "value": "rgba(255, 255, 255, 0.055)",
+      "literals": [
+        "rgba(255, 255, 255, 0.055)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 709,
+      "selector": ":root",
+      "property": "--legacy-surface-3e7eb93d48",
+      "value": "rgba(255, 255, 255, 0.6)",
+      "literals": [
+        "rgba(255, 255, 255, 0.6)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 710,
+      "selector": ":root",
+      "property": "--legacy-surface-3e9866df02",
+      "value": "rgba(32, 128, 79, 0.09)",
+      "literals": [
+        "rgba(32, 128, 79, 0.09)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 711,
+      "selector": ":root",
+      "property": "--legacy-surface-3fd4e68097",
+      "value": "rgba(15, 23, 42, 0.28)",
+      "literals": [
+        "rgba(15, 23, 42, 0.28)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 712,
+      "selector": ":root",
+      "property": "--legacy-surface-4071ed11ba",
+      "value": "rgba(217, 164, 65, 0.08)",
+      "literals": [
+        "rgba(217, 164, 65, 0.08)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 713,
+      "selector": ":root",
+      "property": "--legacy-surface-410254e231",
+      "value": "rgba(0, 0, 0, 0.58)",
+      "literals": [
+        "rgba(0, 0, 0, 0.58)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 714,
+      "selector": ":root",
+      "property": "--legacy-surface-448949abec",
+      "value": "rgba(245, 158, 11, 0.08)",
+      "literals": [
+        "rgba(245, 158, 11, 0.08)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 715,
+      "selector": ":root",
+      "property": "--legacy-surface-4c194e5be1",
+      "value": "rgba(217, 119, 6, 0.12)",
+      "literals": [
+        "rgba(217, 119, 6, 0.12)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 716,
+      "selector": ":root",
+      "property": "--legacy-surface-4cfc250e68",
+      "value": "rgba(69, 46, 8, 0.42)",
+      "literals": [
+        "rgba(69, 46, 8, 0.42)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 717,
+      "selector": ":root",
+      "property": "--legacy-surface-5d246bdf95",
+      "value": "rgba(251, 191, 36, 0.11)",
+      "literals": [
+        "rgba(251, 191, 36, 0.11)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 718,
+      "selector": ":root",
+      "property": "--legacy-surface-5e01dabd04",
+      "value": "rgba(32, 128, 79, 0)",
+      "literals": [
+        "rgba(32, 128, 79, 0)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 719,
+      "selector": ":root",
+      "property": "--legacy-surface-604b18e053",
+      "value": "rgba(255, 255, 255, 0.95)",
+      "literals": [
+        "rgba(255, 255, 255, 0.95)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 720,
+      "selector": ":root",
+      "property": "--legacy-surface-609d3d3dc3",
+      "value": "rgba(220, 38, 38, 0.12)",
+      "literals": [
+        "rgba(220, 38, 38, 0.12)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 721,
+      "selector": ":root",
+      "property": "--legacy-surface-62137e6fda",
+      "value": "rgba(16, 24, 40, 0.22)",
+      "literals": [
+        "rgba(16, 24, 40, 0.22)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 722,
+      "selector": ":root",
+      "property": "--legacy-surface-64a9eb812a",
+      "value": "rgba(228, 170, 72, 0.08)",
+      "literals": [
+        "rgba(228, 170, 72, 0.08)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 723,
+      "selector": ":root",
+      "property": "--legacy-surface-65215e22e7",
+      "value": "rgba(239, 68, 68, 0.15)",
+      "literals": [
+        "rgba(239, 68, 68, 0.15)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 724,
+      "selector": ":root",
+      "property": "--legacy-surface-6ccfe5de88",
+      "value": "rgba(23, 28, 25, 0.88)",
+      "literals": [
+        "rgba(23, 28, 25, 0.88)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 725,
+      "selector": ":root",
+      "property": "--legacy-surface-6d4058fff9",
+      "value": "rgba(255, 255, 255, 0.96)",
+      "literals": [
+        "rgba(255, 255, 255, 0.96)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 726,
+      "selector": ":root",
+      "property": "--legacy-surface-6e5983a127",
+      "value": "rgba(15, 127, 100, 0.18)",
+      "literals": [
+        "rgba(15, 127, 100, 0.18)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 727,
+      "selector": ":root",
+      "property": "--legacy-surface-77fae589c7",
+      "value": "rgba(140, 240, 178, 0.1)",
+      "literals": [
+        "rgba(140, 240, 178, 0.1)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 728,
+      "selector": ":root",
+      "property": "--legacy-surface-79e14fa136",
+      "value": "rgba(148, 163, 184, 0.18)",
+      "literals": [
+        "rgba(148, 163, 184, 0.18)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 729,
+      "selector": ":root",
+      "property": "--legacy-surface-7ab491a37e",
+      "value": "rgba(217, 164, 65, 0.12)",
+      "literals": [
+        "rgba(217, 164, 65, 0.12)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 730,
+      "selector": ":root",
+      "property": "--legacy-surface-7e1f77a873",
+      "value": "rgba(255, 251, 235, 0.96)",
+      "literals": [
+        "rgba(255, 251, 235, 0.96)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 731,
+      "selector": ":root",
+      "property": "--legacy-surface-820f2ff038",
+      "value": "rgba(31, 122, 79, 0)",
+      "literals": [
+        "rgba(31, 122, 79, 0)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 732,
+      "selector": ":root",
+      "property": "--legacy-surface-82820f28a6",
+      "value": "rgba(140, 240, 178, 0.08)",
+      "literals": [
+        "rgba(140, 240, 178, 0.08)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 733,
+      "selector": ":root",
+      "property": "--legacy-surface-8511e74918",
+      "value": "rgba(255, 250, 240, 0.08)",
+      "literals": [
+        "rgba(255, 250, 240, 0.08)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 734,
+      "selector": ":root",
+      "property": "--legacy-surface-8655190b0a",
+      "value": "rgba(217, 164, 65, 0)",
+      "literals": [
+        "rgba(217, 164, 65, 0)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 735,
+      "selector": ":root",
+      "property": "--legacy-surface-86ed489a81",
+      "value": "rgba(252, 254, 251, 0.92)",
+      "literals": [
+        "rgba(252, 254, 251, 0.92)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 736,
+      "selector": ":root",
+      "property": "--legacy-surface-88bf600799",
+      "value": "rgba(255, 255, 255, 0.06)",
+      "literals": [
+        "rgba(255, 255, 255, 0.06)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 737,
+      "selector": ":root",
+      "property": "--legacy-surface-8c857e7d93",
+      "value": "#f3f4f6",
+      "literals": [
+        "#f3f4f6"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 738,
+      "selector": ":root",
+      "property": "--legacy-surface-8d58d2f735",
+      "value": "rgb(0 0 0 / 25%)",
+      "literals": [
+        "rgb(0 0 0 / 25%)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 739,
+      "selector": ":root",
+      "property": "--legacy-surface-925781a063",
+      "value": "rgba(3, 7, 5, 0.72)",
+      "literals": [
+        "rgba(3, 7, 5, 0.72)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 740,
+      "selector": ":root",
+      "property": "--legacy-surface-9388c2c46f",
+      "value": "rgba(220, 38, 38, 0.18)",
+      "literals": [
+        "rgba(220, 38, 38, 0.18)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 741,
+      "selector": ":root",
+      "property": "--legacy-surface-9a588cc257",
+      "value": "rgba(217, 164, 65, 0.16)",
+      "literals": [
+        "rgba(217, 164, 65, 0.16)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 742,
+      "selector": ":root",
+      "property": "--legacy-surface-9ce501c228",
+      "value": "rgba(243, 246, 241, 0.9)",
+      "literals": [
+        "rgba(243, 246, 241, 0.9)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 743,
+      "selector": ":root",
+      "property": "--legacy-surface-a01a5543ae",
+      "value": "rgb(0 0 0 / 15%)",
+      "literals": [
+        "rgb(0 0 0 / 15%)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 744,
+      "selector": ":root",
+      "property": "--legacy-surface-a16321a596",
+      "value": "rgb(0 0 0 / 14%)",
+      "literals": [
+        "rgb(0 0 0 / 14%)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 745,
+      "selector": ":root",
+      "property": "--legacy-surface-a395f653e6",
+      "value": "rgba(231, 244, 237, 0.7)",
+      "literals": [
+        "rgba(231, 244, 237, 0.7)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 746,
+      "selector": ":root",
+      "property": "--legacy-surface-aa7b31a926",
+      "value": "rgba(9, 17, 13, 0.88)",
+      "literals": [
+        "rgba(9, 17, 13, 0.88)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 747,
+      "selector": ":root",
+      "property": "--legacy-surface-af8c47ff26",
+      "value": "rgba(243, 246, 241, 0)",
+      "literals": [
+        "rgba(243, 246, 241, 0)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 748,
+      "selector": ":root",
+      "property": "--legacy-surface-afb49c0042",
+      "value": "rgba(31, 122, 79, 0.08)",
+      "literals": [
+        "rgba(31, 122, 79, 0.08)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 749,
+      "selector": ":root",
+      "property": "--legacy-surface-b3ac50546b",
+      "value": "rgba(244, 246, 243, 0)",
+      "literals": [
+        "rgba(244, 246, 243, 0)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 750,
+      "selector": ":root",
+      "property": "--legacy-surface-b70e536572",
+      "value": "rgba(244, 63, 94, 0.1)",
+      "literals": [
+        "rgba(244, 63, 94, 0.1)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 751,
+      "selector": ":root",
+      "property": "--legacy-surface-ba9867591f",
+      "value": "rgba(255, 255, 255, 0)",
+      "literals": [
+        "rgba(255, 255, 255, 0)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 752,
+      "selector": ":root",
+      "property": "--legacy-surface-bc34b408ea",
+      "value": "rgba(255, 255, 255, 0.88)",
+      "literals": [
+        "rgba(255, 255, 255, 0.88)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 753,
+      "selector": ":root",
+      "property": "--legacy-surface-bf15974be8",
+      "value": "rgba(31, 122, 79, 0.12)",
+      "literals": [
+        "rgba(31, 122, 79, 0.12)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 754,
+      "selector": ":root",
+      "property": "--legacy-surface-cc3daad3b0",
+      "value": "rgba(72, 192, 148, 0.12)",
+      "literals": [
+        "rgba(72, 192, 148, 0.12)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 755,
+      "selector": ":root",
+      "property": "--legacy-surface-cd8f35f1dd",
+      "value": "rgba(31, 24, 14, 0.88)",
+      "literals": [
+        "rgba(31, 24, 14, 0.88)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 756,
+      "selector": ":root",
+      "property": "--legacy-surface-d056133563",
+      "value": "rgba(244, 246, 243, 0.88)",
+      "literals": [
+        "rgba(244, 246, 243, 0.88)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 757,
+      "selector": ":root",
+      "property": "--legacy-surface-d0c9f70500",
+      "value": "rgba(220, 38, 38, 0.95)",
+      "literals": [
+        "rgba(220, 38, 38, 0.95)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 758,
+      "selector": ":root",
+      "property": "--legacy-surface-d2ec039670",
+      "value": "rgba(15, 23, 42, 0.56)",
+      "literals": [
+        "rgba(15, 23, 42, 0.56)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 759,
+      "selector": ":root",
+      "property": "--legacy-surface-d3150a45c0",
+      "value": "rgba(15, 23, 42, 0.9)",
+      "literals": [
+        "rgba(15, 23, 42, 0.9)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 760,
+      "selector": ":root",
+      "property": "--legacy-surface-d35fba533b",
+      "value": "rgba(15, 23, 42, 0.92)",
+      "literals": [
+        "rgba(15, 23, 42, 0.92)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 761,
+      "selector": ":root",
+      "property": "--legacy-surface-d371ff6396",
+      "value": "rgba(255, 255, 255, 0.1)",
+      "literals": [
+        "rgba(255, 255, 255, 0.1)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 762,
+      "selector": ":root",
+      "property": "--legacy-surface-d551abcf65",
+      "value": "rgba(15, 23, 42, 0.68)",
+      "literals": [
+        "rgba(15, 23, 42, 0.68)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 763,
+      "selector": ":root",
+      "property": "--legacy-surface-d9d018cf53",
+      "value": "rgba(248, 250, 252, 0.96)",
+      "literals": [
+        "rgba(248, 250, 252, 0.96)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 764,
+      "selector": ":root",
+      "property": "--legacy-surface-dde75cd4aa",
+      "value": "rgb(0 0 0 / 50%)",
+      "literals": [
+        "rgb(0 0 0 / 50%)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 765,
+      "selector": ":root",
+      "property": "--legacy-surface-e005942888",
+      "value": "rgba(16, 24, 40, 0.24)",
+      "literals": [
+        "rgba(16, 24, 40, 0.24)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 766,
+      "selector": ":root",
+      "property": "--legacy-surface-e1e2a58da4",
+      "value": "rgba(11, 17, 14, 0.62)",
+      "literals": [
+        "rgba(11, 17, 14, 0.62)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 767,
+      "selector": ":root",
+      "property": "--legacy-surface-e29c2d879d",
+      "value": "rgba(255, 255, 255, 0.72)",
+      "literals": [
+        "rgba(255, 255, 255, 0.72)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 768,
+      "selector": ":root",
+      "property": "--legacy-surface-e2deed33f4",
+      "value": "rgba(15, 23, 42, 0.5)",
+      "literals": [
+        "rgba(15, 23, 42, 0.5)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 769,
+      "selector": ":root",
+      "property": "--legacy-surface-e7ed41a924",
+      "value": "rgba(245, 158, 11, 0.16)",
+      "literals": [
+        "rgba(245, 158, 11, 0.16)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 770,
+      "selector": ":root",
+      "property": "--legacy-surface-e986f9b473",
+      "value": "rgba(250, 252, 250, 0.9)",
+      "literals": [
+        "rgba(250, 252, 250, 0.9)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 771,
+      "selector": ":root",
+      "property": "--legacy-surface-ee65ab75ff",
+      "value": "rgba(217, 164, 65, 0.09)",
+      "literals": [
+        "rgba(217, 164, 65, 0.09)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 772,
+      "selector": ":root",
+      "property": "--legacy-surface-f0e028b927",
+      "value": "rgba(255, 255, 255, 0.09)",
+      "literals": [
+        "rgba(255, 255, 255, 0.09)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 773,
+      "selector": ":root",
+      "property": "--legacy-surface-f2074b6cef",
+      "value": "#ffffff",
+      "literals": [
+        "#ffffff"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 774,
+      "selector": ":root",
+      "property": "--legacy-surface-f23d974911",
+      "value": "rgba(22, 163, 74, 0.18)",
+      "literals": [
+        "rgba(22, 163, 74, 0.18)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 775,
+      "selector": ":root",
+      "property": "--legacy-surface-f6093b2329",
+      "value": "rgba(15, 23, 42, 0.42)",
+      "literals": [
+        "rgba(15, 23, 42, 0.42)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 776,
+      "selector": ":root",
+      "property": "--legacy-surface-f947609495",
+      "value": "rgba(183, 121, 31, 0.05)",
+      "literals": [
+        "rgba(183, 121, 31, 0.05)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 777,
+      "selector": ":root",
+      "property": "--legacy-surface-fafef82e19",
+      "value": "rgba(21, 48, 35, 0.94)",
+      "literals": [
+        "rgba(21, 48, 35, 0.94)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 778,
+      "selector": ":root",
+      "property": "--legacy-surface-fe015c3879",
+      "value": "rgba(12, 18, 15, 0.72)",
+      "literals": [
+        "rgba(12, 18, 15, 0.72)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/design-tokens.css",
+      "line": 779,
+      "selector": ":root",
+      "property": "--legacy-surface-ff82842266",
+      "value": "rgba(239, 68, 68, 0.12)",
+      "literals": [
+        "rgba(239, 68, 68, 0.12)"
+      ],
+      "status": "canonical token contract"
+    },
+    {
+      "file": "src/table-states.css",
+      "line": 460,
+      "selector": ":root",
+      "property": "--table-available-bg",
+      "value": "#15803d",
+      "literals": [
+        "#15803d"
+      ],
+      "status": "approved saturated table palette"
+    },
+    {
+      "file": "src/table-states.css",
+      "line": 461,
+      "selector": ":root",
+      "property": "--table-available-bg-hover",
+      "value": "#166534",
+      "literals": [
+        "#166534"
+      ],
+      "status": "approved saturated table palette"
+    },
+    {
+      "file": "src/table-states.css",
+      "line": 462,
+      "selector": ":root",
+      "property": "--table-available-border",
+      "value": "#22c55e",
+      "literals": [
+        "#22c55e"
+      ],
+      "status": "approved saturated table palette"
+    },
+    {
+      "file": "src/table-states.css",
+      "line": 463,
+      "selector": ":root",
+      "property": "--table-available-text",
+      "value": "#ffffff",
+      "literals": [
+        "#ffffff"
+      ],
+      "status": "approved saturated table palette"
+    },
+    {
+      "file": "src/table-states.css",
+      "line": 464,
+      "selector": ":root",
+      "property": "--table-occupied-bg",
+      "value": "#dc2626",
+      "literals": [
+        "#dc2626"
+      ],
+      "status": "approved saturated table palette"
+    },
+    {
+      "file": "src/table-states.css",
+      "line": 465,
+      "selector": ":root",
+      "property": "--table-occupied-bg-hover",
+      "value": "#b91c1c",
+      "literals": [
+        "#b91c1c"
+      ],
+      "status": "approved saturated table palette"
+    },
+    {
+      "file": "src/table-states.css",
+      "line": 466,
+      "selector": ":root",
+      "property": "--table-occupied-border",
+      "value": "#ef4444",
+      "literals": [
+        "#ef4444"
+      ],
+      "status": "approved saturated table palette"
+    },
+    {
+      "file": "src/table-states.css",
+      "line": 467,
+      "selector": ":root",
+      "property": "--table-occupied-text",
+      "value": "#ffffff",
+      "literals": [
+        "#ffffff"
+      ],
+      "status": "approved saturated table palette"
+    },
+    {
+      "file": "src/table-states.css",
+      "line": 468,
+      "selector": ":root",
+      "property": "--table-paused-bg",
+      "value": "#b45309",
+      "literals": [
+        "#b45309"
+      ],
+      "status": "approved saturated table palette"
+    },
+    {
+      "file": "src/table-states.css",
+      "line": 469,
+      "selector": ":root",
+      "property": "--table-paused-bg-hover",
+      "value": "#92400e",
+      "literals": [
+        "#92400e"
+      ],
+      "status": "approved saturated table palette"
+    },
+    {
+      "file": "src/table-states.css",
+      "line": 470,
+      "selector": ":root",
+      "property": "--table-paused-border",
+      "value": "#f59e0b",
+      "literals": [
+        "#f59e0b"
+      ],
+      "status": "approved saturated table palette"
+    },
+    {
+      "file": "src/table-states.css",
+      "line": 471,
+      "selector": ":root",
+      "property": "--table-paused-text",
+      "value": "#ffffff",
+      "literals": [
+        "#ffffff"
+      ],
+      "status": "approved saturated table palette"
+    },
+    {
+      "file": "src/table-states.css",
+      "line": 472,
+      "selector": ":root",
+      "property": "--table-reserved-bg",
+      "value": "#2563eb",
+      "literals": [
+        "#2563eb"
+      ],
+      "status": "approved saturated table palette"
+    },
+    {
+      "file": "src/table-states.css",
+      "line": 473,
+      "selector": ":root",
+      "property": "--table-reserved-bg-hover",
+      "value": "#1d4ed8",
+      "literals": [
+        "#1d4ed8"
+      ],
+      "status": "approved saturated table palette"
+    },
+    {
+      "file": "src/table-states.css",
+      "line": 474,
+      "selector": ":root",
+      "property": "--table-reserved-border",
+      "value": "#3b82f6",
+      "literals": [
+        "#3b82f6"
+      ],
+      "status": "approved saturated table palette"
+    },
+    {
+      "file": "src/table-states.css",
+      "line": 475,
+      "selector": ":root",
+      "property": "--table-reserved-text",
+      "value": "#ffffff",
+      "literals": [
+        "#ffffff"
+      ],
+      "status": "approved saturated table palette"
+    }
+  ],
+  "componentColors": [],
+  "rawControls": [],
+  "surfaceRoots": [],
+  "dialogRoots": [],
+  "typeLiterals": [],
+  "spacingLiterals": [],
+  "transitions": []
+}

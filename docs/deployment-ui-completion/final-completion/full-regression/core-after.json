@@ -1,0 +1,48 @@
+{
+  "group": "core",
+  "stage": "after",
+  "widths": [
+    375,
+    768,
+    1024,
+    1440
+  ],
+  "strictPilot": true,
+  "results": [
+    {
+      "route": "/live-floor",
+      "status": 1,
+      "output": "../docs/deployment-ui-completion/final-completion/full-regression/live-floor/after"
+    },
+    {
+      "route": "/customers",
+      "status": 0,
+      "output": "../docs/deployment-ui-completion/final-completion/full-regression/customers/after"
+    },
+    {
+      "route": "/bookings",
+      "status": 0,
+      "output": "../docs/deployment-ui-completion/final-completion/full-regression/bookings/after"
+    },
+    {
+      "route": "/cafe-pos",
+      "status": 0,
+      "output": "../docs/deployment-ui-completion/final-completion/full-regression/cafe-pos/after"
+    },
+    {
+      "route": "/sales",
+      "status": 0,
+      "output": "../docs/deployment-ui-completion/final-completion/full-regression/sales/after"
+    },
+    {
+      "route": "/analytics",
+      "status": 0,
+      "output": "../docs/deployment-ui-completion/final-completion/full-regression/analytics/after"
+    },
+    {
+      "route": "/settings",
+      "status": 0,
+      "output": "../docs/deployment-ui-completion/final-completion/full-regression/settings/after"
+    }
+  ]
+}

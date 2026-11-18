@@ -1,0 +1,183 @@
+{
+  "scope": "Local-only checkout member-search feedback; no business write forwarded; no settlement-success claim",
+  "cases": [
+    {
+      "role": "admin",
+      "theme": "light",
+      "width": 375,
+      "route": "/",
+      "feedback": {
+        "ms": 25.900000005960464,
+        "pressed": true,
+        "inputVisible": true
+      }
+    },
+    {
+      "role": "admin",
+      "theme": "light",
+      "width": 375,
+      "route": "/live-floor",
+      "feedback": {
+        "ms": 28,
+        "pressed": true,
+        "inputVisible": true
+      }
+    },
+    {
+      "role": "admin",
+      "theme": "light",
+      "width": 1440,
+      "route": "/",
+      "feedback": {
+        "ms": 28.200000017881393,
+        "pressed": true,
+        "inputVisible": true
+      }
+    },
+    {
+      "role": "admin",
+      "theme": "light",
+      "width": 1440,
+      "route": "/live-floor",
+      "feedback": {
+        "ms": 28.799999982118607,
+        "pressed": true,
+        "inputVisible": true
+      }
+    },
+    {
+      "role": "admin",
+      "theme": "dark",
+      "width": 375,
+      "route": "/",
+      "feedback": {
+        "ms": 28.900000005960464,
+        "pressed": true,
+        "inputVisible": true
+      }
+    },
+    {
+      "role": "admin",
+      "theme": "dark",
+      "width": 375,
+      "route": "/live-floor",
+      "feedback": {
+        "ms": 29.19999998807907,
+        "pressed": true,
+        "inputVisible": true
+      }
+    },
+    {
+      "role": "admin",
+      "theme": "dark",
+      "width": 1440,
+      "route": "/",
+      "feedback": {
+        "ms": 25.80000001192093,
+        "pressed": true,
+        "inputVisible": true
+      }
+    },
+    {
+      "role": "admin",
+      "theme": "dark",
+      "width": 1440,
+      "route": "/live-floor",
+      "feedback": {
+        "ms": 25.400000005960464,
+        "pressed": true,
+        "inputVisible": true
+      }
+    },
+    {
+      "role": "staff",
+      "theme": "light",
+      "width": 375,
+      "route": "/",
+      "feedback": {
+        "ms": 29,
+        "pressed": true,
+        "inputVisible": true
+      }
+    },
+    {
+      "role": "staff",
+      "theme": "light",
+      "width": 375,
+      "route": "/live-floor",
+      "feedback": {
+        "ms": 13.300000011920929,
+        "pressed": true,
+        "inputVisible": true
+      }
+    },
+    {
+      "role": "staff",
+      "theme": "light",
+      "width": 1440,
+      "route": "/",
+      "feedback": {
+        "ms": 380.80000001192093,
+        "pressed": true,
+        "inputVisible": true
+      },
+      "error": "The expression evaluated to a falsy value:\n\n  assert.ok(row.feedback.ms <= 200 && row.feedback.pressed && row.feedback.inputVisible)\n"
+    },
+    {
+      "role": "staff",
+      "theme": "light",
+      "width": 1440,
+      "route": "/live-floor",
+      "feedback": {
+        "ms": 29.200000017881393,
+        "pressed": true,
+        "inputVisible": true
+      }
+    },
+    {
+      "role": "staff",
+      "theme": "dark",
+      "width": 375,
+      "route": "/",
+      "feedback": {
+        "ms": 28.899999976158142,
+        "pressed": true,
+        "inputVisible": true
+      }
+    },
+    {
+      "role": "staff",
+      "theme": "dark",
+      "width": 375,
+      "route": "/live-floor",
+      "feedback": {
+        "ms": 29.099999994039536,
+        "pressed": true,
+        "inputVisible": true
+      }
+    },
+    {
+      "role": "staff",
+      "theme": "dark",
+      "width": 1440,
+      "route": "/",
+      "feedback": {
+        "ms": 28.5,
+        "pressed": true,
+        "inputVisible": true
+      }
+    },
+    {
+      "role": "staff",
+      "theme": "dark",
+      "width": 1440,
+      "route": "/live-floor",
+      "feedback": {
+        "ms": 26.200000017881393,
+        "pressed": true,
+        "inputVisible": true
+      }
+    }
+  ],
+  "blockedWrites": []
+}

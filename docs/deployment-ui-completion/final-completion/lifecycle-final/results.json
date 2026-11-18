@@ -1,0 +1,2507 @@
+{
+  "scope": "20 real browser-driven local QA sessions, not API-only repetitions; API8007 exclusively uses sqlite:////tmp/hsr-lifecycle-ui.db; business requests restricted to table t3",
+  "cases": [
+    {
+      "index": 1,
+      "role": "admin",
+      "theme": "light",
+      "width": 375,
+      "method": "Cash",
+      "requests": [
+        {
+          "method": "POST",
+          "path": "/sessions/start"
+        },
+        {
+          "method": "POST",
+          "path": "/sessions/pause/t3"
+        },
+        {
+          "method": "POST",
+          "path": "/sessions/pause/t3"
+        },
+        {
+          "method": "POST",
+          "path": "/sessions/t3/food"
+        },
+        {
+          "method": "POST",
+          "path": "/sessions/checkout-preview/t3"
+        },
+        {
+          "method": "POST",
+          "path": "/sessions/stop/t3"
+        }
+      ],
+      "samples": [
+        {
+          "name": "session-details",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 5
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#006b3c",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "checkout",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 5
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#006b3c",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "receipt",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 5
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#006b3c",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        }
+      ],
+      "receipt": {
+        "sessionKey": "t3:394744d8878a4e6b9a7bf9b6c069385a",
+        "total": 24,
+        "food": 20,
+        "method": "Cash",
+        "status": "paid"
+      },
+      "completed": true
+    },
+    {
+      "index": 2,
+      "role": "admin",
+      "theme": "light",
+      "width": 414,
+      "method": "UPI",
+      "requests": [
+        {
+          "method": "POST",
+          "path": "/sessions/start"
+        },
+        {
+          "method": "POST",
+          "path": "/sessions/pause/t3"
+        },
+        {
+          "method": "POST",
+          "path": "/sessions/pause/t3"
+        },
+        {
+          "method": "POST",
+          "path": "/sessions/t3/food"
+        },
+        {
+          "method": "POST",
+          "path": "/sessions/checkout-preview/t3"
+        },
+        {
+          "method": "POST",
+          "path": "/sessions/stop/t3"
+        }
+      ],
+      "samples": [
+        {
+          "name": "session-details",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 5
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#006b3c",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "checkout",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 5
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#006b3c",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "receipt",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 5
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#006b3c",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        }
+      ],
+      "receipt": {
+        "sessionKey": "t3:164b8b44f3214b558fafc345b56e49e1",
+        "total": 24,
+        "food": 20,
+        "method": "UPI",
+        "status": "paid"
+      },
+      "completed": true
+    },
+    {
+      "index": 3,
+      "role": "admin",
+      "theme": "light",
+      "width": 768,
+      "method": "Credit",
+      "requests": [
+        {
+          "method": "POST",
+          "path": "/sessions/start"
+        },
+        {
+          "method": "POST",
+          "path": "/sessions/pause/t3"
+        },
+        {
+          "method": "POST",
+          "path": "/sessions/pause/t3"
+        },
+        {
+          "method": "POST",
+          "path": "/sessions/t3/food"
+        },
+        {
+          "method": "POST",
+          "path": "/sessions/checkout-preview/t3"
+        },
+        {
+          "method": "POST",
+          "path": "/sessions/checkout-preview/t3"
+        },
+        {
+          "method": "POST",
+          "path": "/sessions/stop/t3"
+        }
+      ],
+      "samples": [
+        {
+          "name": "session-details",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 5
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#006b3c",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "checkout",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 5
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#006b3c",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "receipt",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 5
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#006b3c",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        }
+      ],
+      "receipt": {
+        "sessionKey": "t3:a8f063d8d2214e3b817b8fbc3ce8a8af",
+        "total": 24,
+        "food": 20,
+        "method": "Credit",
+        "status": "credit"
+      },
+      "completed": true
+    },
+    {
+      "index": 4,
+      "role": "admin",
+      "theme": "light",
+      "width": 1024,
+      "method": "Cash",
+      "requests": [
+        {
+          "method": "POST",
+          "path": "/sessions/start"
+        },
+        {
+          "method": "POST",
+          "path": "/sessions/pause/t3"
+        },
+        {
+          "method": "POST",
+          "path": "/sessions/pause/t3"
+        },
+        {
+          "method": "POST",
+          "path": "/sessions/t3/food"
+        },
+        {
+          "method": "POST",
+          "path": "/sessions/checkout-preview/t3"
+        },
+        {
+          "method": "POST",
+          "path": "/sessions/stop/t3"
+        }
+      ],
+      "samples": [
+        {
+          "name": "session-details",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 5
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#006b3c",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "checkout",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 5
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#006b3c",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "receipt",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 5
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#006b3c",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        }
+      ],
+      "receipt": {
+        "sessionKey": "t3:d30f69bb2b024c1494f592191a957a9d",
+        "total": 24,
+        "food": 20,
+        "method": "Cash",
+        "status": "paid"
+      },
+      "completed": true
+    },
+    {
+      "index": 5,
+      "role": "admin",
+      "theme": "light",
+      "width": 1440,
+      "method": "UPI",
+      "requests": [
+        {
+          "method": "POST",
+          "path": "/sessions/start"
+        },
+        {
+          "method": "POST",
+          "path": "/sessions/pause/t3"
+        },
+        {
+          "method": "POST",
+          "path": "/sessions/pause/t3"
+        },
+        {
+          "method": "POST",
+          "path": "/sessions/t3/food"
+        },
+        {
+          "method": "POST",
+          "path": "/sessions/checkout-preview/t3"
+        },
+        {
+          "method": "POST",
+          "path": "/sessions/stop/t3"
+        }
+      ],
+      "samples": [
+        {
+          "name": "session-details",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 5
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#006b3c",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "checkout",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 5
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#006b3c",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "receipt",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 5
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#006b3c",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        }
+      ],
+      "receipt": {
+        "sessionKey": "t3:92d26265ec644f268382cae9fd9f12e3",
+        "total": 24,
+        "food": 20,
+        "method": "UPI",
+        "status": "paid"
+      },
+      "completed": true
+    },
+    {
+      "index": 6,
+      "role": "admin",
+      "theme": "dark",
+      "width": 375,
+      "method": "Cash",
+      "requests": [
+        {
+          "method": "POST",
+          "path": "/sessions/start"
+        },
+        {
+          "method": "POST",
+          "path": "/sessions/pause/t3"
+        },
+        {
+          "method": "POST",
+          "path": "/sessions/pause/t3"
+        },
+        {
+          "method": "POST",
+          "path": "/sessions/t3/food"
+        },
+        {
+          "method": "POST",
+          "path": "/sessions/checkout-preview/t3"
+        },
+        {
+          "method": "POST",
+          "path": "/sessions/stop/t3"
+        }
+      ],
+      "samples": [
+        {
+          "name": "session-details",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 5
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#00ff7f",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "checkout",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 5
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#00ff7f",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "receipt",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 5
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#00ff7f",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        }
+      ],
+      "receipt": {
+        "sessionKey": "t3:c570f5d5c8854869baed8bfea07b9895",
+        "total": 24,
+        "food": 20,
+        "method": "Cash",
+        "status": "paid"
+      },
+      "completed": true
+    },
+    {
+      "index": 7,
+      "role": "admin",
+      "theme": "dark",
+      "width": 414,
+      "method": "UPI",
+      "requests": [
+        {
+          "method": "POST",
+          "path": "/sessions/start"
+        },
+        {
+          "method": "POST",
+          "path": "/sessions/pause/t3"
+        },
+        {
+          "method": "POST",
+          "path": "/sessions/pause/t3"
+        },
+        {
+          "method": "POST",
+          "path": "/sessions/t3/food"
+        },
+        {
+          "method": "POST",
+          "path": "/sessions/checkout-preview/t3"
+        },
+        {
+          "method": "POST",
+          "path": "/sessions/stop/t3"
+        }
+      ],
+      "samples": [
+        {
+          "name": "session-details",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 5
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#00ff7f",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "checkout",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 5
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#00ff7f",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "receipt",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 5
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#00ff7f",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        }
+      ],
+      "receipt": {
+        "sessionKey": "t3:cfc9015a65d1473d9c09b2e83431354e",
+        "total": 24,
+        "food": 20,
+        "method": "UPI",
+        "status": "paid"
+      },
+      "completed": true
+    },
+    {
+      "index": 8,
+      "role": "admin",
+      "theme": "dark",
+      "width": 768,
+      "method": "Credit",
+      "requests": [
+        {
+          "method": "POST",
+          "path": "/sessions/start"
+        },
+        {
+          "method": "POST",
+          "path": "/sessions/pause/t3"
+        },
+        {
+          "method": "POST",
+          "path": "/sessions/pause/t3"
+        },
+        {
+          "method": "POST",
+          "path": "/sessions/t3/food"
+        },
+        {
+          "method": "POST",
+          "path": "/sessions/checkout-preview/t3"
+        },
+        {
+          "method": "POST",
+          "path": "/sessions/checkout-preview/t3"
+        },
+        {
+          "method": "POST",
+          "path": "/sessions/stop/t3"
+        }
+      ],
+      "samples": [
+        {
+          "name": "session-details",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 5
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#00ff7f",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "checkout",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 5
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#00ff7f",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "receipt",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 5
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#00ff7f",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        }
+      ],
+      "receipt": {
+        "sessionKey": "t3:b9d54fa6ec4a47a19cd0c34b8180818f",
+        "total": 24,
+        "food": 20,
+        "method": "Credit",
+        "status": "credit"
+      },
+      "completed": true
+    },
+    {
+      "index": 9,
+      "role": "admin",
+      "theme": "dark",
+      "width": 1024,
+      "method": "Cash",
+      "requests": [
+        {
+          "method": "POST",
+          "path": "/sessions/start"
+        },
+        {
+          "method": "POST",
+          "path": "/sessions/pause/t3"
+        },
+        {
+          "method": "POST",
+          "path": "/sessions/pause/t3"
+        },
+        {
+          "method": "POST",
+          "path": "/sessions/t3/food"
+        },
+        {
+          "method": "POST",
+          "path": "/sessions/checkout-preview/t3"
+        },
+        {
+          "method": "POST",
+          "path": "/sessions/stop/t3"
+        }
+      ],
+      "samples": [
+        {
+          "name": "session-details",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 5
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#00ff7f",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "checkout",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 5
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#00ff7f",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "receipt",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 5
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#00ff7f",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        }
+      ],
+      "receipt": {
+        "sessionKey": "t3:0c73539083ea486baba3d0e766929189",
+        "total": 24,
+        "food": 20,
+        "method": "Cash",
+        "status": "paid"
+      },
+      "completed": true
+    },
+    {
+      "index": 10,
+      "role": "admin",
+      "theme": "dark",
+      "width": 1440,
+      "method": "UPI",
+      "requests": [
+        {
+          "method": "POST",
+          "path": "/sessions/start"
+        },
+        {
+          "method": "POST",
+          "path": "/sessions/pause/t3"
+        },
+        {
+          "method": "POST",
+          "path": "/sessions/pause/t3"
+        },
+        {
+          "method": "POST",
+          "path": "/sessions/t3/food"
+        },
+        {
+          "method": "POST",
+          "path": "/sessions/checkout-preview/t3"
+        },
+        {
+          "method": "POST",
+          "path": "/sessions/stop/t3"
+        }
+      ],
+      "samples": [
+        {
+          "name": "session-details",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 5
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#00ff7f",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "checkout",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 5
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#00ff7f",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "receipt",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 5
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#00ff7f",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        }
+      ],
+      "receipt": {
+        "sessionKey": "t3:7121637ae3384eb699136df3d8c45973",
+        "total": 24,
+        "food": 20,
+        "method": "UPI",
+        "status": "paid"
+      },
+      "completed": true
+    },
+    {
+      "index": 11,
+      "role": "staff",
+      "theme": "light",
+      "width": 375,
+      "method": "Cash",
+      "requests": [
+        {
+          "method": "POST",
+          "path": "/sessions/start"
+        },
+        {
+          "method": "POST",
+          "path": "/sessions/pause/t3"
+        },
+        {
+          "method": "POST",
+          "path": "/sessions/pause/t3"
+        },
+        {
+          "method": "POST",
+          "path": "/sessions/t3/food"
+        },
+        {
+          "method": "POST",
+          "path": "/sessions/checkout-preview/t3"
+        },
+        {
+          "method": "POST",
+          "path": "/sessions/stop/t3"
+        }
+      ],
+      "samples": [
+        {
+          "name": "session-details",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 5
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#006b3c",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "checkout",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 5
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#006b3c",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "receipt",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 5
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#006b3c",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        }
+      ],
+      "receipt": {
+        "sessionKey": "t3:2bb4a87a33f94d5091d77ae89d427cd8",
+        "total": 24,
+        "food": 20,
+        "method": "Cash",
+        "status": "paid"
+      },
+      "completed": true
+    },
+    {
+      "index": 12,
+      "role": "staff",
+      "theme": "light",
+      "width": 414,
+      "method": "UPI",
+      "requests": [
+        {
+          "method": "POST",
+          "path": "/sessions/start"
+        },
+        {
+          "method": "POST",
+          "path": "/sessions/pause/t3"
+        },
+        {
+          "method": "POST",
+          "path": "/sessions/pause/t3"
+        },
+        {
+          "method": "POST",
+          "path": "/sessions/t3/food"
+        },
+        {
+          "method": "POST",
+          "path": "/sessions/checkout-preview/t3"
+        },
+        {
+          "method": "POST",
+          "path": "/sessions/stop/t3"
+        }
+      ],
+      "samples": [
+        {
+          "name": "session-details",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 5
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#006b3c",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "checkout",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 5
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#006b3c",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "receipt",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 5
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#006b3c",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        }
+      ],
+      "receipt": {
+        "sessionKey": "t3:8822f3ca4b5248b0813097dc6eb1c753",
+        "total": 24,
+        "food": 20,
+        "method": "UPI",
+        "status": "paid"
+      },
+      "completed": true
+    },
+    {
+      "index": 13,
+      "role": "staff",
+      "theme": "light",
+      "width": 768,
+      "method": "Credit",
+      "requests": [
+        {
+          "method": "POST",
+          "path": "/sessions/start"
+        },
+        {
+          "method": "POST",
+          "path": "/sessions/pause/t3"
+        },
+        {
+          "method": "POST",
+          "path": "/sessions/pause/t3"
+        },
+        {
+          "method": "POST",
+          "path": "/sessions/t3/food"
+        },
+        {
+          "method": "POST",
+          "path": "/sessions/checkout-preview/t3"
+        },
+        {
+          "method": "POST",
+          "path": "/sessions/checkout-preview/t3"
+        },
+        {
+          "method": "POST",
+          "path": "/sessions/stop/t3"
+        }
+      ],
+      "samples": [
+        {
+          "name": "session-details",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 5
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#006b3c",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "checkout",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 5
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#006b3c",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "receipt",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 5
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#006b3c",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        }
+      ],
+      "receipt": {
+        "sessionKey": "t3:900a3753272f45998cc3b62efcb7cf23",
+        "total": 24,
+        "food": 20,
+        "method": "Credit",
+        "status": "credit"
+      },
+      "completed": true
+    },
+    {
+      "index": 14,
+      "role": "staff",
+      "theme": "light",
+      "width": 1024,
+      "method": "Cash",
+      "requests": [
+        {
+          "method": "POST",
+          "path": "/sessions/start"
+        },
+        {
+          "method": "POST",
+          "path": "/sessions/pause/t3"
+        },
+        {
+          "method": "POST",
+          "path": "/sessions/pause/t3"
+        },
+        {
+          "method": "POST",
+          "path": "/sessions/t3/food"
+        },
+        {
+          "method": "POST",
+          "path": "/sessions/checkout-preview/t3"
+        },
+        {
+          "method": "POST",
+          "path": "/sessions/stop/t3"
+        }
+      ],
+      "samples": [
+        {
+          "name": "session-details",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 5
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#006b3c",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "checkout",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 5
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#006b3c",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "receipt",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 5
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#006b3c",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        }
+      ],
+      "receipt": {
+        "sessionKey": "t3:d3b732de6a424bf28f8f39ac86e1c0cf",
+        "total": 24,
+        "food": 20,
+        "method": "Cash",
+        "status": "paid"
+      },
+      "completed": true
+    },
+    {
+      "index": 15,
+      "role": "staff",
+      "theme": "light",
+      "width": 1440,
+      "method": "UPI",
+      "requests": [
+        {
+          "method": "POST",
+          "path": "/sessions/start"
+        },
+        {
+          "method": "POST",
+          "path": "/sessions/pause/t3"
+        },
+        {
+          "method": "POST",
+          "path": "/sessions/pause/t3"
+        },
+        {
+          "method": "POST",
+          "path": "/sessions/t3/food"
+        },
+        {
+          "method": "POST",
+          "path": "/sessions/checkout-preview/t3"
+        },
+        {
+          "method": "POST",
+          "path": "/sessions/stop/t3"
+        }
+      ],
+      "samples": [
+        {
+          "name": "session-details",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 5
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#006b3c",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "checkout",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 5
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#006b3c",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "receipt",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 5
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#006b3c",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        }
+      ],
+      "receipt": {
+        "sessionKey": "t3:71d579ddf82544dbbee9089344f6c615",
+        "total": 24,
+        "food": 20,
+        "method": "UPI",
+        "status": "paid"
+      },
+      "completed": true
+    },
+    {
+      "index": 16,
+      "role": "staff",
+      "theme": "dark",
+      "width": 375,
+      "method": "Cash",
+      "requests": [
+        {
+          "method": "POST",
+          "path": "/sessions/start"
+        },
+        {
+          "method": "POST",
+          "path": "/sessions/pause/t3"
+        },
+        {
+          "method": "POST",
+          "path": "/sessions/pause/t3"
+        },
+        {
+          "method": "POST",
+          "path": "/sessions/t3/food"
+        },
+        {
+          "method": "POST",
+          "path": "/sessions/checkout-preview/t3"
+        },
+        {
+          "method": "POST",
+          "path": "/sessions/stop/t3"
+        }
+      ],
+      "samples": [
+        {
+          "name": "session-details",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 5
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#00ff7f",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "checkout",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 5
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#00ff7f",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "receipt",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 5
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#00ff7f",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        }
+      ],
+      "receipt": {
+        "sessionKey": "t3:d505eeda460d4d55906d4d0719a65ad7",
+        "total": 24,
+        "food": 20,
+        "method": "Cash",
+        "status": "paid"
+      },
+      "completed": true
+    },
+    {
+      "index": 17,
+      "role": "staff",
+      "theme": "dark",
+      "width": 414,
+      "method": "UPI",
+      "requests": [
+        {
+          "method": "POST",
+          "path": "/sessions/start"
+        },
+        {
+          "method": "POST",
+          "path": "/sessions/pause/t3"
+        },
+        {
+          "method": "POST",
+          "path": "/sessions/pause/t3"
+        },
+        {
+          "method": "POST",
+          "path": "/sessions/t3/food"
+        },
+        {
+          "method": "POST",
+          "path": "/sessions/checkout-preview/t3"
+        },
+        {
+          "method": "POST",
+          "path": "/sessions/stop/t3"
+        }
+      ],
+      "samples": [
+        {
+          "name": "session-details",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 5
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#00ff7f",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "checkout",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 5
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#00ff7f",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "receipt",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 5
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#00ff7f",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        }
+      ],
+      "receipt": {
+        "sessionKey": "t3:81bc8a58b25a49f3a9de531fc1d3280f",
+        "total": 24,
+        "food": 20,
+        "method": "UPI",
+        "status": "paid"
+      },
+      "completed": true
+    },
+    {
+      "index": 18,
+      "role": "staff",
+      "theme": "dark",
+      "width": 768,
+      "method": "Credit",
+      "requests": [
+        {
+          "method": "POST",
+          "path": "/sessions/start"
+        },
+        {
+          "method": "POST",
+          "path": "/sessions/pause/t3"
+        },
+        {
+          "method": "POST",
+          "path": "/sessions/pause/t3"
+        },
+        {
+          "method": "POST",
+          "path": "/sessions/t3/food"
+        },
+        {
+          "method": "POST",
+          "path": "/sessions/checkout-preview/t3"
+        },
+        {
+          "method": "POST",
+          "path": "/sessions/checkout-preview/t3"
+        },
+        {
+          "method": "POST",
+          "path": "/sessions/stop/t3"
+        }
+      ],
+      "samples": [
+        {
+          "name": "session-details",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 5
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#00ff7f",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "checkout",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 5
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#00ff7f",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "receipt",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 5
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#00ff7f",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        }
+      ],
+      "receipt": {
+        "sessionKey": "t3:10492ff1ac5e4a9e9f47fe9e358263fa",
+        "total": 24,
+        "food": 20,
+        "method": "Credit",
+        "status": "credit"
+      },
+      "completed": true
+    },
+    {
+      "index": 19,
+      "role": "staff",
+      "theme": "dark",
+      "width": 1024,
+      "method": "Cash",
+      "requests": [
+        {
+          "method": "POST",
+          "path": "/sessions/start"
+        },
+        {
+          "method": "POST",
+          "path": "/sessions/pause/t3"
+        },
+        {
+          "method": "POST",
+          "path": "/sessions/pause/t3"
+        },
+        {
+          "method": "POST",
+          "path": "/sessions/t3/food"
+        },
+        {
+          "method": "POST",
+          "path": "/sessions/checkout-preview/t3"
+        },
+        {
+          "method": "POST",
+          "path": "/sessions/stop/t3"
+        }
+      ],
+      "samples": [
+        {
+          "name": "session-details",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 5
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#00ff7f",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "checkout",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 5
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#00ff7f",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "receipt",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 5
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#00ff7f",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        }
+      ],
+      "receipt": {
+        "sessionKey": "t3:0ce4b36a64c246308813bc7c04e0714a",
+        "total": 24,
+        "food": 20,
+        "method": "Cash",
+        "status": "paid"
+      },
+      "completed": true
+    },
+    {
+      "index": 20,
+      "role": "staff",
+      "theme": "dark",
+      "width": 1440,
+      "method": "UPI",
+      "requests": [
+        {
+          "method": "POST",
+          "path": "/sessions/start"
+        },
+        {
+          "method": "POST",
+          "path": "/sessions/pause/t3"
+        },
+        {
+          "method": "POST",
+          "path": "/sessions/pause/t3"
+        },
+        {
+          "method": "POST",
+          "path": "/sessions/t3/food"
+        },
+        {
+          "method": "POST",
+          "path": "/sessions/checkout-preview/t3"
+        },
+        {
+          "method": "POST",
+          "path": "/sessions/stop/t3"
+        }
+      ],
+      "samples": [
+        {
+          "name": "session-details",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 5
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#00ff7f",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "checkout",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 5
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#00ff7f",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        },
+        {
+          "name": "receipt",
+          "metrics": {
+            "applicationCrashed": false,
+            "overflow": 0,
+            "shortTargets": [],
+            "clipped": [],
+            "clippedControls": [],
+            "smallText": [],
+            "brokenImages": [],
+            "invalidCopy": [],
+            "unlabeledButtons": [],
+            "unlabeledInputs": [],
+            "collectionSizes": {
+              ".op2-customer-card": 0,
+              ".op2-table-booking-card": 0,
+              ".sales-table tbody tr": 0,
+              ".lf-table-card": 5
+            },
+            "contentOverflow": [],
+            "palette": {
+              "accent": "#00ff7f",
+              "font": "\"Syne Variable\", Syne, sans-serif"
+            }
+          },
+          "contrast": []
+        }
+      ],
+      "receipt": {
+        "sessionKey": "t3:a9240c2cfc134ed595c0c5f2e409f80f",
+        "total": 24,
+        "food": 20,
+        "method": "UPI",
+        "status": "paid"
+      },
+      "completed": true
+    }
+  ],
+  "blockedWrites": [],
+  "errors": [],
+  "beforeTransactions": 20,
+  "beforeMembers": 1,
+  "afterTransactions": 40,
+  "afterMembers": 1
+}

@@ -1,0 +1,242 @@
+[
+  {
+    "key": "final-dashboard",
+    "state": "default",
+    "before": "final-completion/baseline/shared-regression/dashboard/before/{theme}-{width}-default.png",
+    "after": "final-completion/closure-20261118/main-pages/shared-regression/dashboard/after/{theme}-{width}-default.png",
+    "image": "comparisons/final-dashboard-default-375.png",
+    "legend": "Before left, after right; light above dark; original screenshot pixels, first 1000px of tall captures"
+  },
+  {
+    "key": "final-live-floor",
+    "state": "default",
+    "before": "final-completion/baseline/shared-regression/live-floor/before/{theme}-{width}-default.png",
+    "after": "final-completion/closure-20261118/main-pages/shared-regression/live-floor/after/{theme}-{width}-default.png",
+    "image": "comparisons/final-live-floor-default-375.png",
+    "legend": "Before left, after right; light above dark; original screenshot pixels, first 1000px of tall captures"
+  },
+  {
+    "key": "final-customers",
+    "state": "default",
+    "before": "final-completion/baseline/shared-regression/customers/before/{theme}-{width}-default.png",
+    "after": "final-completion/closure-20261118/main-pages/shared-regression/customers/after/{theme}-{width}-default.png",
+    "image": "comparisons/final-customers-default-375.png",
+    "legend": "Before left, after right; light above dark; original screenshot pixels, first 1000px of tall captures"
+  },
+  {
+    "key": "final-bookings",
+    "state": "default",
+    "before": "final-completion/baseline/shared-regression/bookings/before/{theme}-{width}-default.png",
+    "after": "final-completion/closure-20261118/main-pages/shared-regression/bookings/after/{theme}-{width}-default.png",
+    "image": "comparisons/final-bookings-default-375.png",
+    "legend": "Before left, after right; light above dark; original screenshot pixels, first 1000px of tall captures"
+  },
+  {
+    "key": "final-cafe-pos",
+    "state": "default",
+    "before": "final-completion/baseline/shared-regression/cafe-pos/before/{theme}-{width}-default.png",
+    "after": "final-completion/closure-20261118/main-pages/shared-regression/cafe-pos/after/{theme}-{width}-default.png",
+    "image": "comparisons/final-cafe-pos-default-375.png",
+    "legend": "Before left, after right; light above dark; original screenshot pixels, first 1000px of tall captures"
+  },
+  {
+    "key": "final-sales",
+    "state": "default",
+    "before": "final-completion/baseline/shared-regression/sales/before/{theme}-{width}-default.png",
+    "after": "final-completion/closure-20261118/main-pages/shared-regression/sales/after/{theme}-{width}-default.png",
+    "image": "comparisons/final-sales-default-375.png",
+    "legend": "Before left, after right; light above dark; original screenshot pixels, first 1000px of tall captures"
+  },
+  {
+    "key": "final-analytics",
+    "state": "default",
+    "before": "final-completion/baseline/shared-regression/analytics/before/{theme}-{width}-default.png",
+    "after": "final-completion/closure-20261118/main-pages/shared-regression/analytics/after/{theme}-{width}-default.png",
+    "image": "comparisons/final-analytics-default-375.png",
+    "legend": "Before left, after right; light above dark; original screenshot pixels, first 1000px of tall captures"
+  },
+  {
+    "key": "final-settings",
+    "state": "default",
+    "before": "final-completion/baseline/shared-regression/settings/before/{theme}-{width}-default.png",
+    "after": "final-completion/closure-20261118/main-pages/shared-regression/settings/after/{theme}-{width}-default.png",
+    "image": "comparisons/final-settings-default-375.png",
+    "legend": "Before left, after right; light above dark; original screenshot pixels, first 1000px of tall captures"
+  },
+  {
+    "key": "final-inventory",
+    "state": "default",
+    "before": "final-completion/baseline/shared-regression/inventory/before/{theme}-{width}-default.png",
+    "after": "final-completion/closure-20261118/main-pages/shared-regression/inventory/after/{theme}-{width}-default.png",
+    "image": "comparisons/final-inventory-default-375.png",
+    "legend": "Before left, after right; light above dark; original screenshot pixels, first 1000px of tall captures"
+  },
+  {
+    "key": "final-waitlist",
+    "state": "default",
+    "before": "final-completion/baseline/shared-regression/waitlist/before/{theme}-{width}-default.png",
+    "after": "final-completion/closure-20261118/main-pages/shared-regression/waitlist/after/{theme}-{width}-default.png",
+    "image": "comparisons/final-waitlist-default-375.png",
+    "legend": "Before left, after right; light above dark; original screenshot pixels, first 1000px of tall captures"
+  },
+  {
+    "key": "final-legacy-table-controls",
+    "state": "default",
+    "before": "final-completion/baseline/shared-regression/legacy-table-controls/before/{theme}-{width}-default.png",
+    "after": "final-completion/closure-20261118/main-pages/shared-regression/legacy-table-controls/after/{theme}-{width}-default.png",
+    "image": "comparisons/final-legacy-table-controls-default-375.png",
+    "legend": "Before left, after right; light above dark; original screenshot pixels, first 1000px of tall captures"
+  },
+  {
+    "key": "final-tournaments",
+    "state": "default",
+    "before": "final-completion/baseline/shared-regression/tournaments/before/{theme}-{width}-default.png",
+    "after": "final-completion/closure-20261118/main-pages/shared-regression/tournaments/after/{theme}-{width}-default.png",
+    "image": "comparisons/final-tournaments-default-375.png",
+    "legend": "Before left, after right; light above dark; original screenshot pixels, first 1000px of tall captures"
+  },
+  {
+    "key": "final-daily-closing",
+    "state": "default",
+    "before": "final-completion/baseline/shared-regression/daily-closing/before/{theme}-{width}-default.png",
+    "after": "final-completion/closure-20261118/main-pages/shared-regression/daily-closing/after/{theme}-{width}-default.png",
+    "image": "comparisons/final-daily-closing-default-375.png",
+    "legend": "Before left, after right; light above dark; original screenshot pixels, first 1000px of tall captures"
+  },
+  {
+    "key": "final-pricing-rules",
+    "state": "default",
+    "before": "final-completion/baseline/pricing-retry/before/{theme}-{width}-default.png",
+    "after": "final-completion/closure-20261118/main-pages/shared-regression/pricing-rules/after/{theme}-{width}-default.png",
+    "image": "comparisons/final-pricing-rules-default-375.png",
+    "legend": "Before left, after right; light above dark; original screenshot pixels, first 1000px of tall captures"
+  },
+  {
+    "key": "final-audit-log",
+    "state": "default",
+    "before": "final-completion/baseline/shared-regression/audit-log/before/{theme}-{width}-default.png",
+    "after": "final-completion/closure-20261118/main-pages/shared-regression/audit-log/after/{theme}-{width}-default.png",
+    "image": "comparisons/final-audit-log-default-375.png",
+    "legend": "Before left, after right; light above dark; original screenshot pixels, first 1000px of tall captures"
+  },
+  {
+    "key": "final-status",
+    "state": "default",
+    "before": "final-completion/baseline/shared-regression/status/before/{theme}-{width}-default.png",
+    "after": "final-completion/closure-20261118/main-pages/shared-regression/status/after/{theme}-{width}-default.png",
+    "image": "comparisons/final-status-default-375.png",
+    "legend": "Before left, after right; light above dark; original screenshot pixels, first 1000px of tall captures"
+  },
+  {
+    "key": "final-help",
+    "state": "default",
+    "before": "final-completion/baseline/shared-regression/help/before/{theme}-{width}-default.png",
+    "after": "final-completion/closure-20261118/main-pages/shared-regression/help/after/{theme}-{width}-default.png",
+    "image": "comparisons/final-help-default-375.png",
+    "legend": "Before left, after right; light above dark; original screenshot pixels, first 1000px of tall captures"
+  },
+  {
+    "key": "final-changelog",
+    "state": "default",
+    "before": "final-completion/baseline/shared-regression/changelog/before/{theme}-{width}-default.png",
+    "after": "final-completion/closure-20261118/main-pages/shared-regression/changelog/after/{theme}-{width}-default.png",
+    "image": "comparisons/final-changelog-default-375.png",
+    "legend": "Before left, after right; light above dark; original screenshot pixels, first 1000px of tall captures"
+  },
+  {
+    "key": "final-demo",
+    "state": "default",
+    "before": "final-completion/baseline/shared-regression/demo/before/{theme}-{width}-default.png",
+    "after": "final-completion/closure-20261118/main-pages/shared-regression/demo/after/{theme}-{width}-default.png",
+    "image": "comparisons/final-demo-default-375.png",
+    "legend": "Before left, after right; light above dark; original screenshot pixels, first 1000px of tall captures"
+  },
+  {
+    "key": "final-missing-page",
+    "state": "default",
+    "before": "final-completion/baseline/shared-regression/missing-page/before/{theme}-{width}-default.png",
+    "after": "final-completion/closure-20261118/main-pages/shared-regression/missing-page/after/{theme}-{width}-default.png",
+    "image": "comparisons/final-missing-page-default-375.png",
+    "legend": "Before left, after right; light above dark; original screenshot pixels, first 1000px of tall captures"
+  },
+  {
+    "key": "final-command",
+    "state": "commands",
+    "before": "final-completion/dialogs/before-history-final/admin-{theme}-{width}-commands.png",
+    "after": "final-completion/dialogs/after-shipping/admin-{theme}-{width}-commands.png",
+    "image": "comparisons/final-command-commands-375.png",
+    "legend": "Before left, after right; light above dark; original screenshot pixels, first 1000px of tall captures"
+  },
+  {
+    "key": "final-history",
+    "state": "history-error",
+    "before": "final-completion/dialogs/before-history-final/admin-{theme}-{width}-history-error.png",
+    "after": "final-completion/dialogs/after-shipping/admin-{theme}-{width}-history-error.png",
+    "image": "comparisons/final-history-history-error-375.png",
+    "legend": "Before left, after right; light above dark; original screenshot pixels, first 1000px of tall captures"
+  },
+  {
+    "key": "final-history",
+    "state": "history-populated",
+    "before": "final-completion/dialogs/before-history-final/admin-{theme}-{width}-history-populated.png",
+    "after": "final-completion/dialogs/after-shipping/admin-{theme}-{width}-history-populated.png",
+    "image": "comparisons/final-history-history-populated-375.png",
+    "legend": "Before left, after right; light above dark; original screenshot pixels, first 1000px of tall captures"
+  },
+  {
+    "key": "final-reset",
+    "state": "reset",
+    "before": "final-completion/dialogs/before-history-final/admin-{theme}-{width}-reset.png",
+    "after": "final-completion/dialogs/after-shipping/admin-{theme}-{width}-reset.png",
+    "image": "comparisons/final-reset-reset-375.png",
+    "legend": "Before left, after right; light above dark; original screenshot pixels, first 1000px of tall captures"
+  },
+  {
+    "key": "final-food",
+    "state": "partial",
+    "before": "final-completion/session-food/before/admin-{theme}-{width}-partial-failure.png",
+    "after": "final-completion/session-food/after-final/admin-{theme}-{width}-partial.png",
+    "image": "comparisons/final-food-partial-375.png",
+    "legend": "Before left, after right; light above dark; original screenshot pixels, first 1000px of tall captures"
+  },
+  {
+    "key": "final-food",
+    "state": "empty",
+    "before": "final-completion/session-food/before/admin-{theme}-{width}-empty.png",
+    "after": "final-completion/session-food/after-final/admin-{theme}-{width}-empty.png",
+    "image": "comparisons/final-food-empty-375.png",
+    "legend": "Before left, after right; light above dark; original screenshot pixels, first 1000px of tall captures"
+  },
+  {
+    "key": "final-sidebar",
+    "state": "compact",
+    "before": "final-completion/sidebar-footer/before/admin-{theme}-{width}-compact.png",
+    "after": "final-completion/sidebar-footer/after/admin-{theme}-{width}-compact.png",
+    "image": "comparisons/final-sidebar-compact-375.png",
+    "legend": "Before left, after right; light above dark; original screenshot pixels, first 1000px of tall captures"
+  },
+  {
+    "key": "final-report-filters",
+    "state": "default",
+    "before": "final-completion/full-regression/reports-customers/after/{theme}-{width}-default.png",
+    "after": "final-completion/release-matrix-final/reports-customers/after/{theme}-{width}-default.png",
+    "image": "comparisons/final-report-filters-default-375.png",
+    "legend": "Before left, after right; light above dark; original screenshot pixels, first 1000px of tall captures"
+  },
+  {
+    "key": "final-cafe-stats",
+    "state": "extreme",
+    "before": "final-completion/full-regression/cafe-stats/after/{theme}-{width}-extreme.png",
+    "after": "final-completion/release-matrix-final/cafe-stats/after/{theme}-{width}-extreme.png",
+    "image": "comparisons/final-cafe-stats-extreme-375.png",
+    "legend": "Before left, after right; light above dark; original screenshot pixels, first 1000px of tall captures"
+  },
+  {
+    "key": "final-cafe-history",
+    "state": "partial",
+    "before": "final-completion/full-regression/cafe-history/after/{theme}-{width}-partial.png",
+    "after": "final-completion/release-matrix-final/cafe-history/after/{theme}-{width}-partial.png",
+    "image": "comparisons/final-cafe-history-partial-375.png",
+    "legend": "Before left, after right; light above dark; original screenshot pixels, first 1000px of tall captures"
+  }
+]

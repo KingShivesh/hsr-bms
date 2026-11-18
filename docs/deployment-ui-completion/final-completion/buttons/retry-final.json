@@ -1,0 +1,3897 @@
+{
+  "schemaVersion": 1,
+  "startedAt": "2026-11-06T20:56:00.281Z",
+  "app": "http://127.0.0.1:5182",
+  "api": "http://127.0.0.1:8006",
+  "configuration": {
+    "widths": [
+      1440,
+      375
+    ],
+    "themes": [
+      "light",
+      "dark"
+    ],
+    "scope": "page",
+    "isolateReminders": true,
+    "retryPath": "docs/deployment-ui-completion/final-completion/buttons/retry-input.json",
+    "deadlineMs": 200,
+    "outcomeMs": 250,
+    "blockedDelayMs": 700,
+    "maxDepth": 1,
+    "maxStates": 100,
+    "maxButtons": 0,
+    "settleMs": 100,
+    "routes": [
+      "/",
+      "/login",
+      "/dashboard",
+      "/live-floor",
+      "/inventory",
+      "/bookings",
+      "/customers",
+      "/sales",
+      "/analytics",
+      "/cafe-pos",
+      "/waitlist",
+      "/legacy-table-controls",
+      "/tournaments",
+      "/daily-closing",
+      "/pricing-rules",
+      "/audit-log",
+      "/settings",
+      "/help",
+      "/status",
+      "/changelog",
+      "/demo"
+    ],
+    "discoveredRoutes": [
+      "/",
+      "/login",
+      "/dashboard",
+      "/live-floor",
+      "/inventory",
+      "/bookings",
+      "/customers",
+      "/sales",
+      "/analytics",
+      "/cafe-pos",
+      "/waitlist",
+      "/legacy-table-controls",
+      "/tournaments",
+      "/daily-closing",
+      "/pricing-rules",
+      "/audit-log",
+      "/settings",
+      "/help",
+      "/status",
+      "/changelog",
+      "/demo"
+    ]
+  },
+  "safety": {
+    "localLoginExceptions": 2,
+    "forwardedBusinessWriteMethods": 0,
+    "expectedQaDatabase": "sqlite:////tmp/hsr-session-close-ui.db",
+    "databaseVerification": "Operator-provided isolation guarantee; not independently verified by this browser audit",
+    "localDatabaseSideEffects": "Approved QA GETs may reconcile state; DB side effects are not measured or claimed absent",
+    "policy": "Exact API8006 QA origin; allowlisted GET/HEAD only, including approved reconciling GETs; all business POST/PUT/PATCH/DELETE blocked; same-origin reviewed read redirects only; no service workers, WebSockets or event streams"
+  },
+  "routes": [
+    {
+      "route": "/",
+      "theme": "light",
+      "width": 375,
+      "status": "reachable",
+      "screenState": "default",
+      "url": "http://127.0.0.1:5182/",
+      "visibleButtons": 45,
+      "hiddenButtons": [
+        {
+          "index": 1,
+          "key": "[\"BUTTON\",\"\",\"\",null,\"Collapse sidebar\"]",
+          "occurrence": 0,
+          "label": "Collapse sidebar",
+          "variant": "native",
+          "classes": [
+            "ui-button",
+            "ui-button-native",
+            "ui-button-md",
+            "cf-collapse-btn"
+          ],
+          "visible": false,
+          "blockedByModal": false,
+          "inPage": false,
+          "disabled": false,
+          "loading": false,
+          "surface": false,
+          "status": "excluded-hidden"
+        },
+        {
+          "index": 18,
+          "key": "[\"BUTTON\",\"\",\"\",null,\"Status\"]",
+          "occurrence": 0,
+          "label": "Status",
+          "variant": "native",
+          "classes": [
+            "ui-button",
+            "ui-button-native",
+            "ui-button-md"
+          ],
+          "visible": false,
+          "blockedByModal": false,
+          "inPage": false,
+          "disabled": false,
+          "loading": false,
+          "surface": false,
+          "status": "excluded-hidden"
+        },
+        {
+          "index": 19,
+          "key": "[\"BUTTON\",\"\",\"\",null,\"Changelog\"]",
+          "occurrence": 0,
+          "label": "Changelog",
+          "variant": "native",
+          "classes": [
+            "ui-button",
+            "ui-button-native",
+            "ui-button-md"
+          ],
+          "visible": false,
+          "blockedByModal": false,
+          "inPage": false,
+          "disabled": false,
+          "loading": false,
+          "surface": false,
+          "status": "excluded-hidden"
+        },
+        {
+          "index": 23,
+          "key": "[\"BUTTON\",\"\",\"\",null,\"Search Actions ⌘K\"]",
+          "occurrence": 0,
+          "label": "Search Actions ⌘K",
+          "variant": "native",
+          "classes": [
+            "ui-button",
+            "ui-button-native",
+            "ui-button-md",
+            "cf-command-pill"
+          ],
+          "visible": false,
+          "blockedByModal": false,
+          "inPage": false,
+          "disabled": false,
+          "loading": false,
+          "surface": false,
+          "status": "excluded-hidden"
+        }
+      ],
+      "setupNetwork": [
+        {
+          "phase": "setup",
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/events/stream",
+          "at": 1793998566798,
+          "kind": "realtime-unavailable-fixture",
+          "status": 503
+        },
+        {
+          "phase": "setup",
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/events/stream",
+          "at": 1793998566826,
+          "kind": "realtime-unavailable-fixture",
+          "status": 503
+        },
+        {
+          "phase": "setup",
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/sessions/alerts",
+          "at": 1793998566803,
+          "kind": "reminder-isolation-fixture"
+        }
+      ],
+      "pageErrors": []
+    },
+    {
+      "route": "/live-floor",
+      "theme": "dark",
+      "width": 1440,
+      "status": "reachable",
+      "screenState": "default",
+      "url": "http://127.0.0.1:5182/live-floor",
+      "visibleButtons": 48,
+      "hiddenButtons": [
+        {
+          "index": 2,
+          "key": "[\"BUTTON\",\"\",\"\",null,\"Expand navigation\"]",
+          "occurrence": 0,
+          "label": "Expand navigation",
+          "variant": "native",
+          "classes": [
+            "ui-button",
+            "ui-button-native",
+            "ui-button-md",
+            "sb-mobile-toggle"
+          ],
+          "visible": false,
+          "blockedByModal": false,
+          "inPage": false,
+          "disabled": false,
+          "loading": false,
+          "surface": false,
+          "status": "excluded-hidden"
+        }
+      ],
+      "setupNetwork": [
+        {
+          "phase": "setup",
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/events/stream",
+          "at": 1794002198140,
+          "kind": "realtime-unavailable-fixture",
+          "status": 503
+        },
+        {
+          "phase": "setup",
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/events/stream",
+          "at": 1794002198198,
+          "kind": "realtime-unavailable-fixture",
+          "status": 503
+        },
+        {
+          "phase": "setup",
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/sessions/alerts",
+          "at": 1794002198145,
+          "kind": "reminder-isolation-fixture"
+        }
+      ],
+      "pageErrors": []
+    },
+    {
+      "route": "/legacy-table-controls",
+      "theme": "dark",
+      "width": 375,
+      "status": "reachable",
+      "screenState": "default",
+      "url": "http://127.0.0.1:5182/legacy-table-controls",
+      "visibleButtons": 51,
+      "hiddenButtons": [
+        {
+          "index": 1,
+          "key": "[\"BUTTON\",\"\",\"\",null,\"Collapse sidebar\"]",
+          "occurrence": 0,
+          "label": "Collapse sidebar",
+          "variant": "native",
+          "classes": [
+            "ui-button",
+            "ui-button-native",
+            "ui-button-md",
+            "cf-collapse-btn"
+          ],
+          "visible": false,
+          "blockedByModal": false,
+          "inPage": false,
+          "disabled": false,
+          "loading": false,
+          "surface": false,
+          "status": "excluded-hidden"
+        },
+        {
+          "index": 18,
+          "key": "[\"BUTTON\",\"\",\"\",null,\"Status\"]",
+          "occurrence": 0,
+          "label": "Status",
+          "variant": "native",
+          "classes": [
+            "ui-button",
+            "ui-button-native",
+            "ui-button-md"
+          ],
+          "visible": false,
+          "blockedByModal": false,
+          "inPage": false,
+          "disabled": false,
+          "loading": false,
+          "surface": false,
+          "status": "excluded-hidden"
+        },
+        {
+          "index": 19,
+          "key": "[\"BUTTON\",\"\",\"\",null,\"Changelog\"]",
+          "occurrence": 0,
+          "label": "Changelog",
+          "variant": "native",
+          "classes": [
+            "ui-button",
+            "ui-button-native",
+            "ui-button-md"
+          ],
+          "visible": false,
+          "blockedByModal": false,
+          "inPage": false,
+          "disabled": false,
+          "loading": false,
+          "surface": false,
+          "status": "excluded-hidden"
+        },
+        {
+          "index": 22,
+          "key": "[\"BUTTON\",\"\",\"\",null,\"Search Actions ⌘K\"]",
+          "occurrence": 0,
+          "label": "Search Actions ⌘K",
+          "variant": "native",
+          "classes": [
+            "ui-button",
+            "ui-button-native",
+            "ui-button-md",
+            "cf-command-pill"
+          ],
+          "visible": false,
+          "blockedByModal": false,
+          "inPage": false,
+          "disabled": false,
+          "loading": false,
+          "surface": false,
+          "status": "excluded-hidden"
+        }
+      ],
+      "setupNetwork": [
+        {
+          "phase": "setup",
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/events/stream",
+          "at": 1794002213629,
+          "kind": "realtime-unavailable-fixture",
+          "status": 503
+        },
+        {
+          "phase": "setup",
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/bookings",
+          "at": 1794002213655,
+          "kind": "qa-reconciling-get-attempt",
+          "database": "sqlite:////tmp/hsr-session-close-ui.db",
+          "sideEffects": "Permitted local QA reconciliation; not measured"
+        },
+        {
+          "phase": "setup",
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/sessions/alerts",
+          "at": 1794002213631,
+          "kind": "reminder-isolation-fixture"
+        }
+      ],
+      "pageErrors": []
+    }
+  ],
+  "buttons": [
+    {
+      "route": "/legacy-table-controls",
+      "theme": "light",
+      "width": 1440,
+      "steps": [
+        {
+          "index": 35,
+          "key": "[\"ARTICLE\",\"button\",\"\",null,\"T2 Running\"]",
+          "occurrence": 0,
+          "label": "T2 Running",
+          "variant": "unshared",
+          "classes": [
+            "table-floor-tile",
+            "table-state-card"
+          ],
+          "visible": true,
+          "blockedByModal": false,
+          "inPage": true,
+          "disabled": false,
+          "loading": false,
+          "surface": false
+        }
+      ],
+      "button": {
+        "index": 49,
+        "key": "[\"BUTTON\",\"\",\"\",\"reset-t2\",\"Reset Table\"]",
+        "occurrence": 0,
+        "label": "Reset Table",
+        "variant": "native",
+        "classes": [
+          "ui-button",
+          "ui-button-native",
+          "ui-button-md",
+          "table-control-btn",
+          "reset"
+        ],
+        "visible": true,
+        "blockedByModal": false,
+        "inPage": true,
+        "disabled": false,
+        "loading": false,
+        "surface": false
+      },
+      "feedback": {
+        "status": "pass",
+        "deadlineMs": 200,
+        "pressedWithin200ms": true,
+        "clickResponseWithin200ms": false,
+        "pressed": {
+          "ms": 17.399999998509884,
+          "before": [
+            [
+              [
+                "rgb(244, 244, 244)",
+                "none",
+                "rgb(0, 107, 60)",
+                "rgb(222, 222, 228)",
+                "rgb(222, 222, 228)",
+                "rgb(222, 222, 228)",
+                "rgb(222, 222, 228)",
+                "none",
+                "none",
+                "matrix(1, 0, 0, 1, 0, -1)",
+                "1",
+                "rgb(0, 107, 60)",
+                "none",
+                "3px",
+                "500",
+                "none",
+                ""
+              ],
+              null,
+              null
+            ],
+            [
+              [
+                "rgba(0, 0, 0, 0)",
+                "none",
+                "rgb(0, 107, 60)",
+                "rgb(0, 107, 60)",
+                "rgb(0, 107, 60)",
+                "rgb(0, 107, 60)",
+                "rgb(0, 107, 60)",
+                "none",
+                "none",
+                "none",
+                "1",
+                "rgb(0, 107, 60)",
+                "none",
+                "3px",
+                "500",
+                "none",
+                ""
+              ],
+              null,
+              null
+            ],
+            [
+              [
+                "rgba(0, 0, 0, 0)",
+                "none",
+                "rgb(0, 107, 60)",
+                "rgb(0, 107, 60)",
+                "rgb(0, 107, 60)",
+                "rgb(0, 107, 60)",
+                "rgb(0, 107, 60)",
+                "none",
+                "none",
+                "none",
+                "1",
+                "rgb(0, 107, 60)",
+                "none",
+                "3px",
+                "500",
+                "none",
+                ""
+              ],
+              null,
+              null
+            ]
+          ],
+          "after": [
+            [
+              [
+                "rgb(244, 244, 244)",
+                "none",
+                "rgb(0, 107, 60)",
+                "rgb(222, 222, 228)",
+                "rgb(222, 222, 228)",
+                "rgb(222, 222, 228)",
+                "rgb(222, 222, 228)",
+                "none",
+                "brightness(0.94)",
+                "matrix(1, 0, 0, 1, 0, -1)",
+                "1",
+                "rgb(0, 107, 60)",
+                "none",
+                "0px",
+                "500",
+                "none",
+                ""
+              ],
+              null,
+              null
+            ],
+            [
+              [
+                "rgba(0, 0, 0, 0)",
+                "none",
+                "rgb(0, 107, 60)",
+                "rgb(0, 107, 60)",
+                "rgb(0, 107, 60)",
+                "rgb(0, 107, 60)",
+                "rgb(0, 107, 60)",
+                "none",
+                "none",
+                "none",
+                "1",
+                "rgb(0, 107, 60)",
+                "none",
+                "3px",
+                "500",
+                "none",
+                ""
+              ],
+              null,
+              null
+            ],
+            [
+              [
+                "rgba(0, 0, 0, 0)",
+                "none",
+                "rgb(0, 107, 60)",
+                "rgb(0, 107, 60)",
+                "rgb(0, 107, 60)",
+                "rgb(0, 107, 60)",
+                "rgb(0, 107, 60)",
+                "none",
+                "none",
+                "none",
+                "1",
+                "rgb(0, 107, 60)",
+                "none",
+                "3px",
+                "500",
+                "none",
+                ""
+              ],
+              null,
+              null
+            ]
+          ]
+        },
+        "clickResponse": null,
+        "loadingObserved": false
+      },
+      "actionOutcome": {
+        "status": "no-action-outcome-observed",
+        "businessSuccess": "not-asserted",
+        "urlAfter": "http://127.0.0.1:5182/legacy-table-controls",
+        "network": [],
+        "presentation": [],
+        "actionFailures": [],
+        "pageErrors": []
+      },
+      "setupNetwork": [
+        {
+          "phase": "setup",
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/events/stream",
+          "at": 1793998563499,
+          "kind": "realtime-unavailable-fixture",
+          "status": 503
+        },
+        {
+          "phase": "setup",
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/sessions/alerts",
+          "at": 1793998563502,
+          "kind": "reminder-isolation-fixture"
+        },
+        {
+          "phase": "setup",
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/bookings",
+          "at": 1793998563544,
+          "kind": "qa-reconciling-get-attempt",
+          "database": "sqlite:////tmp/hsr-session-close-ui.db",
+          "sideEffects": "Permitted local QA reconciliation; not measured"
+        },
+        {
+          "phase": "replay",
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/events/stream",
+          "at": 1793998564516,
+          "kind": "realtime-unavailable-fixture",
+          "status": 503
+        }
+      ]
+    },
+    {
+      "route": "/",
+      "theme": "light",
+      "width": 375,
+      "steps": [],
+      "button": {
+        "index": 48,
+        "key": "[\"BUTTON\",\"\",\"\",null,\"Start Session\"]",
+        "occurrence": 2,
+        "label": "Start Session",
+        "variant": "native",
+        "classes": [
+          "ui-button",
+          "ui-button-native",
+          "ui-button-md"
+        ],
+        "visible": true,
+        "blockedByModal": false,
+        "inPage": true,
+        "disabled": false,
+        "loading": false,
+        "surface": false
+      },
+      "feedback": {
+        "status": "pass",
+        "deadlineMs": 200,
+        "pressedWithin200ms": true,
+        "clickResponseWithin200ms": true,
+        "pressed": {
+          "ms": 15.900000005960464,
+          "before": [
+            [
+              [
+                "rgb(243, 244, 246)",
+                "none",
+                "rgb(22, 101, 52)",
+                "rgb(255, 255, 255)",
+                "rgb(255, 255, 255)",
+                "rgb(255, 255, 255)",
+                "rgb(255, 255, 255)",
+                "none",
+                "none",
+                "none",
+                "1",
+                "rgb(22, 101, 52)",
+                "none",
+                "3px",
+                "600",
+                "none",
+                ""
+              ],
+              null,
+              null
+            ],
+            [
+              [
+                "rgba(0, 0, 0, 0)",
+                "none",
+                "rgb(22, 101, 52)",
+                "rgb(22, 101, 52)",
+                "rgb(22, 101, 52)",
+                "rgb(22, 101, 52)",
+                "rgb(22, 101, 52)",
+                "none",
+                "none",
+                "none",
+                "1",
+                "rgb(22, 101, 52)",
+                "none",
+                "3px",
+                "600",
+                "none",
+                ""
+              ],
+              null,
+              null
+            ]
+          ],
+          "after": [
+            [
+              [
+                "rgb(243, 244, 246)",
+                "none",
+                "rgb(22, 101, 52)",
+                "rgb(255, 255, 255)",
+                "rgb(255, 255, 255)",
+                "rgb(255, 255, 255)",
+                "rgb(255, 255, 255)",
+                "none",
+                "brightness(0.94)",
+                "matrix(1, 0, 0, 1, 0, 0)",
+                "1",
+                "rgb(22, 101, 52)",
+                "none",
+                "0px",
+                "600",
+                "none",
+                ""
+              ],
+              null,
+              null
+            ],
+            [
+              [
+                "rgba(0, 0, 0, 0)",
+                "none",
+                "rgb(22, 101, 52)",
+                "rgb(22, 101, 52)",
+                "rgb(22, 101, 52)",
+                "rgb(22, 101, 52)",
+                "rgb(22, 101, 52)",
+                "none",
+                "none",
+                "none",
+                "1",
+                "rgb(22, 101, 52)",
+                "none",
+                "3px",
+                "600",
+                "none",
+                ""
+              ],
+              null,
+              null
+            ]
+          ]
+        },
+        "clickResponse": {
+          "kind": "visible-dom-added",
+          "ms": 6.799999997019768
+        },
+        "loadingObserved": true
+      },
+      "actionOutcome": {
+        "status": "mutation-blocked",
+        "businessSuccess": "not-asserted",
+        "urlAfter": "http://127.0.0.1:5182/",
+        "network": [
+          {
+            "phase": "action",
+            "method": "POST",
+            "url": "http://127.0.0.1:8006/sessions/start",
+            "at": 1793998568947,
+            "kind": "blocked-mutation"
+          }
+        ],
+        "presentation": [],
+        "actionFailures": [],
+        "pageErrors": []
+      },
+      "setupNetwork": [
+        {
+          "phase": "setup",
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/events/stream",
+          "at": 1793998567490,
+          "kind": "realtime-unavailable-fixture",
+          "status": 503
+        },
+        {
+          "phase": "setup",
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/events/stream",
+          "at": 1793998567519,
+          "kind": "realtime-unavailable-fixture",
+          "status": 503
+        },
+        {
+          "phase": "setup",
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/sessions/alerts",
+          "at": 1793998567492,
+          "kind": "reminder-isolation-fixture"
+        },
+        {
+          "phase": "replay",
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/events/stream",
+          "at": 1793998568525,
+          "kind": "realtime-unavailable-fixture",
+          "status": 503
+        }
+      ]
+    },
+    {
+      "route": "/",
+      "theme": "light",
+      "width": 375,
+      "steps": [
+        {
+          "index": 31,
+          "key": "[\"BUTTON\",\"\",\"\",null,\"Start Table\"]",
+          "occurrence": 1,
+          "label": "Start Table",
+          "variant": "native",
+          "classes": [
+            "ui-button",
+            "ui-button-native",
+            "ui-button-md",
+            "lf-primary-button"
+          ],
+          "visible": true,
+          "blockedByModal": false,
+          "inPage": true,
+          "disabled": false,
+          "loading": false,
+          "surface": false
+        }
+      ],
+      "button": {
+        "index": 49,
+        "key": "[\"BUTTON\",\"\",\"\",null,\"Close dialog\"]",
+        "occurrence": 0,
+        "label": "Close dialog",
+        "variant": "icon",
+        "classes": [
+          "ui-button",
+          "ui-button-icon",
+          "ui-button-ghost",
+          "ui-button-md"
+        ],
+        "visible": true,
+        "blockedByModal": false,
+        "inPage": false,
+        "disabled": false,
+        "loading": false,
+        "surface": true
+      },
+      "feedback": {
+        "status": "pass",
+        "deadlineMs": 200,
+        "pressedWithin200ms": true,
+        "clickResponseWithin200ms": true,
+        "pressed": {
+          "ms": 16,
+          "before": [
+            [
+              [
+                "rgb(250, 250, 250)",
+                "none",
+                "rgb(24, 24, 27)",
+                "rgb(188, 188, 198)",
+                "rgb(188, 188, 198)",
+                "rgb(188, 188, 198)",
+                "rgb(188, 188, 198)",
+                "none",
+                "none",
+                "none",
+                "1",
+                "rgb(24, 24, 27)",
+                "none",
+                "3px",
+                "500",
+                "none",
+                ""
+              ],
+              null,
+              null
+            ],
+            [
+              [
+                "rgba(0, 0, 0, 0)",
+                "none",
+                "rgb(24, 24, 27)",
+                "rgb(24, 24, 27)",
+                "rgb(24, 24, 27)",
+                "rgb(24, 24, 27)",
+                "rgb(24, 24, 27)",
+                "none",
+                "none",
+                "none",
+                "1",
+                "rgb(24, 24, 27)",
+                "none",
+                "3px",
+                "500",
+                "none",
+                ""
+              ],
+              null,
+              null
+            ]
+          ],
+          "after": [
+            [
+              [
+                "rgb(250, 250, 250)",
+                "none",
+                "rgb(24, 24, 27)",
+                "rgb(188, 188, 198)",
+                "rgb(188, 188, 198)",
+                "rgb(188, 188, 198)",
+                "rgb(188, 188, 198)",
+                "none",
+                "brightness(0.94)",
+                "matrix(1, 0, 0, 1, 0, 0)",
+                "1",
+                "rgb(24, 24, 27)",
+                "none",
+                "0px",
+                "500",
+                "none",
+                ""
+              ],
+              null,
+              null
+            ],
+            [
+              [
+                "rgba(0, 0, 0, 0)",
+                "none",
+                "rgb(24, 24, 27)",
+                "rgb(24, 24, 27)",
+                "rgb(24, 24, 27)",
+                "rgb(24, 24, 27)",
+                "rgb(24, 24, 27)",
+                "none",
+                "none",
+                "none",
+                "1",
+                "rgb(24, 24, 27)",
+                "none",
+                "3px",
+                "500",
+                "none",
+                ""
+              ],
+              null,
+              null
+            ]
+          ]
+        },
+        "clickResponse": {
+          "kind": "target-removed",
+          "ms": 4.899999998509884
+        },
+        "loadingObserved": false
+      },
+      "actionOutcome": {
+        "status": "local-dom-response-observed",
+        "businessSuccess": "not-asserted",
+        "urlAfter": "http://127.0.0.1:5182/",
+        "network": [
+          {
+            "phase": "action",
+            "method": "GET",
+            "url": "http://127.0.0.1:8006/events/stream",
+            "at": 1793998573737,
+            "kind": "realtime-unavailable-fixture",
+            "status": 503
+          }
+        ],
+        "presentation": [],
+        "actionFailures": [],
+        "pageErrors": []
+      },
+      "setupNetwork": [
+        {
+          "phase": "setup",
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/events/stream",
+          "at": 1793998570701,
+          "kind": "realtime-unavailable-fixture",
+          "status": 503
+        },
+        {
+          "phase": "setup",
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/events/stream",
+          "at": 1793998570726,
+          "kind": "realtime-unavailable-fixture",
+          "status": 503
+        },
+        {
+          "phase": "setup",
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/sessions/alerts",
+          "at": 1793998570703,
+          "kind": "reminder-isolation-fixture"
+        },
+        {
+          "phase": "replay",
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/events/stream",
+          "at": 1793998571731,
+          "kind": "realtime-unavailable-fixture",
+          "status": 503
+        }
+      ]
+    },
+    {
+      "route": "/",
+      "theme": "light",
+      "width": 375,
+      "steps": [
+        {
+          "index": 32,
+          "key": "[\"BUTTON\",\"\",\"\",null,\"T1 needs billing review\"]",
+          "occurrence": 0,
+          "label": "T1 needs billing review",
+          "variant": "native",
+          "classes": [
+            "ui-button",
+            "ui-button-native",
+            "ui-button-md"
+          ],
+          "visible": true,
+          "blockedByModal": false,
+          "inPage": true,
+          "disabled": false,
+          "loading": false,
+          "surface": false
+        }
+      ],
+      "button": {
+        "index": 53,
+        "key": "[\"BUTTON\",\"tab\",\"\",null,\"activity\"]",
+        "occurrence": 0,
+        "label": "activity",
+        "variant": "native",
+        "classes": [
+          "ui-button",
+          "ui-button-native",
+          "ui-button-md"
+        ],
+        "visible": true,
+        "blockedByModal": false,
+        "inPage": false,
+        "disabled": false,
+        "loading": false,
+        "surface": true
+      },
+      "feedback": {
+        "status": "pass",
+        "deadlineMs": 200,
+        "pressedWithin200ms": true,
+        "clickResponseWithin200ms": true,
+        "pressed": {
+          "ms": 16,
+          "before": [
+            [
+              [
+                "rgb(250, 250, 250)",
+                "none",
+                "rgb(24, 24, 27)",
+                "rgb(24, 24, 27)",
+                "rgb(24, 24, 27)",
+                "rgb(24, 24, 27)",
+                "rgb(24, 24, 27)",
+                "none",
+                "none",
+                "none",
+                "1",
+                "rgb(24, 24, 27)",
+                "none",
+                "3px",
+                "600",
+                "none",
+                ""
+              ],
+              null,
+              null
+            ],
+            [
+              [
+                "rgba(0, 0, 0, 0)",
+                "none",
+                "rgb(24, 24, 27)",
+                "rgb(24, 24, 27)",
+                "rgb(24, 24, 27)",
+                "rgb(24, 24, 27)",
+                "rgb(24, 24, 27)",
+                "none",
+                "none",
+                "none",
+                "1",
+                "rgb(24, 24, 27)",
+                "none",
+                "3px",
+                "600",
+                "none",
+                ""
+              ],
+              null,
+              null
+            ]
+          ],
+          "after": [
+            [
+              [
+                "rgb(250, 250, 250)",
+                "none",
+                "rgb(24, 24, 27)",
+                "rgb(24, 24, 27)",
+                "rgb(24, 24, 27)",
+                "rgb(24, 24, 27)",
+                "rgb(24, 24, 27)",
+                "none",
+                "brightness(0.94)",
+                "matrix(1, 0, 0, 1, 0, 0)",
+                "1",
+                "rgb(24, 24, 27)",
+                "none",
+                "0px",
+                "600",
+                "none",
+                ""
+              ],
+              null,
+              null
+            ],
+            [
+              [
+                "rgba(0, 0, 0, 0)",
+                "none",
+                "rgb(24, 24, 27)",
+                "rgb(24, 24, 27)",
+                "rgb(24, 24, 27)",
+                "rgb(24, 24, 27)",
+                "rgb(24, 24, 27)",
+                "none",
+                "none",
+                "none",
+                "1",
+                "rgb(24, 24, 27)",
+                "none",
+                "3px",
+                "600",
+                "none",
+                ""
+              ],
+              null,
+              null
+            ]
+          ]
+        },
+        "clickResponse": {
+          "kind": "visible-dom-added",
+          "ms": 4.5
+        },
+        "loadingObserved": false
+      },
+      "actionOutcome": {
+        "status": "local-dom-response-observed",
+        "businessSuccess": "not-asserted",
+        "urlAfter": "http://127.0.0.1:5182/",
+        "network": [],
+        "presentation": [],
+        "actionFailures": [],
+        "pageErrors": []
+      },
+      "setupNetwork": [
+        {
+          "phase": "setup",
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/events/stream",
+          "at": 1793998576663,
+          "kind": "realtime-unavailable-fixture",
+          "status": 503
+        },
+        {
+          "phase": "setup",
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/events/stream",
+          "at": 1793998576687,
+          "kind": "realtime-unavailable-fixture",
+          "status": 503
+        },
+        {
+          "phase": "setup",
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/sessions/alerts",
+          "at": 1793998576665,
+          "kind": "reminder-isolation-fixture"
+        },
+        {
+          "phase": "replay",
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/events/stream",
+          "at": 1793998577696,
+          "kind": "realtime-unavailable-fixture",
+          "status": 503
+        }
+      ]
+    },
+    {
+      "route": "/",
+      "theme": "light",
+      "width": 375,
+      "steps": [
+        {
+          "index": 37,
+          "key": "[\"BUTTON\",\"\",\"\",null,\"Food\"]",
+          "occurrence": 0,
+          "label": "Food",
+          "variant": "native",
+          "classes": [
+            "ui-button",
+            "ui-button-native",
+            "ui-button-md"
+          ],
+          "visible": true,
+          "blockedByModal": false,
+          "inPage": true,
+          "disabled": false,
+          "loading": false,
+          "surface": false
+        }
+      ],
+      "button": {
+        "index": 53,
+        "key": "[\"BUTTON\",\"\",\"\",null,\"QA Coffee ₹ 40 · Snacks\"]",
+        "occurrence": 0,
+        "label": "QA Coffee ₹ 40 · Snacks",
+        "variant": "native",
+        "classes": [
+          "ui-button",
+          "ui-button-native",
+          "ui-button-md",
+          "order-item"
+        ],
+        "visible": true,
+        "blockedByModal": false,
+        "inPage": false,
+        "disabled": false,
+        "loading": false,
+        "surface": true
+      },
+      "feedback": {
+        "status": "pass",
+        "deadlineMs": 200,
+        "pressedWithin200ms": true,
+        "clickResponseWithin200ms": false,
+        "pressed": {
+          "ms": 16.299999997019768,
+          "before": [
+            [
+              [
+                "rgb(244, 244, 244)",
+                "none",
+                "rgb(24, 24, 27)",
+                "rgb(222, 222, 228)",
+                "rgb(222, 222, 228)",
+                "rgb(222, 222, 228)",
+                "rgb(222, 222, 228)",
+                "none",
+                "none",
+                "none",
+                "1",
+                "rgb(24, 24, 27)",
+                "none",
+                "3px",
+                "500",
+                "none",
+                ""
+              ],
+              null,
+              null
+            ],
+            [
+              [
+                "rgba(0, 0, 0, 0)",
+                "none",
+                "rgb(82, 82, 91)",
+                "rgb(82, 82, 91)",
+                "rgb(82, 82, 91)",
+                "rgb(82, 82, 91)",
+                "rgb(82, 82, 91)",
+                "none",
+                "none",
+                "none",
+                "1",
+                "rgb(82, 82, 91)",
+                "none",
+                "3px",
+                "600",
+                "none",
+                ""
+              ],
+              null,
+              null
+            ]
+          ],
+          "after": [
+            [
+              [
+                "rgb(244, 244, 244)",
+                "none",
+                "rgb(24, 24, 27)",
+                "rgb(222, 222, 228)",
+                "rgb(222, 222, 228)",
+                "rgb(222, 222, 228)",
+                "rgb(222, 222, 228)",
+                "none",
+                "brightness(0.94)",
+                "matrix(1, 0, 0, 1, 0, 0)",
+                "1",
+                "rgb(24, 24, 27)",
+                "none",
+                "0px",
+                "500",
+                "none",
+                ""
+              ],
+              null,
+              null
+            ],
+            [
+              [
+                "rgba(0, 0, 0, 0)",
+                "none",
+                "rgb(82, 82, 91)",
+                "rgb(82, 82, 91)",
+                "rgb(82, 82, 91)",
+                "rgb(82, 82, 91)",
+                "rgb(82, 82, 91)",
+                "none",
+                "none",
+                "none",
+                "1",
+                "rgb(82, 82, 91)",
+                "none",
+                "3px",
+                "600",
+                "none",
+                ""
+              ],
+              null,
+              null
+            ]
+          ]
+        },
+        "clickResponse": null,
+        "loadingObserved": false
+      },
+      "actionOutcome": {
+        "status": "no-action-outcome-observed",
+        "businessSuccess": "not-asserted",
+        "urlAfter": "http://127.0.0.1:5182/",
+        "network": [],
+        "presentation": [],
+        "actionFailures": [],
+        "pageErrors": []
+      },
+      "setupNetwork": [
+        {
+          "phase": "setup",
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/events/stream",
+          "at": 1793998579976,
+          "kind": "realtime-unavailable-fixture",
+          "status": 503
+        },
+        {
+          "phase": "setup",
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/events/stream",
+          "at": 1793998580000,
+          "kind": "realtime-unavailable-fixture",
+          "status": 503
+        },
+        {
+          "phase": "setup",
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/sessions/alerts",
+          "at": 1793998579977,
+          "kind": "reminder-isolation-fixture"
+        },
+        {
+          "phase": "replay",
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/events/stream",
+          "at": 1793998581011,
+          "kind": "realtime-unavailable-fixture",
+          "status": 503
+        }
+      ]
+    },
+    {
+      "route": "/",
+      "theme": "light",
+      "width": 375,
+      "steps": [
+        {
+          "index": 37,
+          "key": "[\"BUTTON\",\"\",\"\",null,\"Food\"]",
+          "occurrence": 0,
+          "label": "Food",
+          "variant": "native",
+          "classes": [
+            "ui-button",
+            "ui-button-native",
+            "ui-button-md"
+          ],
+          "visible": true,
+          "blockedByModal": false,
+          "inPage": true,
+          "disabled": false,
+          "loading": false,
+          "surface": false
+        }
+      ],
+      "button": {
+        "index": 54,
+        "key": "[\"BUTTON\",\"\",\"\",null,\"Add Food to Session\"]",
+        "occurrence": 0,
+        "label": "Add Food to Session",
+        "variant": "native",
+        "classes": [
+          "ui-button",
+          "ui-button-native",
+          "ui-button-md",
+          "lf-primary-button"
+        ],
+        "visible": true,
+        "blockedByModal": false,
+        "inPage": false,
+        "disabled": true,
+        "loading": false,
+        "surface": true
+      },
+      "feedback": {
+        "status": "disabled",
+        "pressedWithin200ms": false,
+        "clickResponseWithin200ms": false
+      },
+      "actionOutcome": {
+        "status": "disabled-not-invoked",
+        "businessSuccess": "not-asserted"
+      },
+      "setupNetwork": [
+        {
+          "phase": "setup",
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/events/stream",
+          "at": 1793998582312,
+          "kind": "realtime-unavailable-fixture",
+          "status": 503
+        },
+        {
+          "phase": "setup",
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/events/stream",
+          "at": 1793998582343,
+          "kind": "realtime-unavailable-fixture",
+          "status": 503
+        },
+        {
+          "phase": "setup",
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/sessions/alerts",
+          "at": 1793998582314,
+          "kind": "reminder-isolation-fixture"
+        }
+      ]
+    },
+    {
+      "route": "/live-floor",
+      "theme": "dark",
+      "width": 1440,
+      "steps": [],
+      "button": {
+        "index": 41,
+        "key": "[\"BUTTON\",\"\",\"\",null,\"Food\"]",
+        "occurrence": 1,
+        "label": "Food",
+        "variant": "native",
+        "classes": [
+          "ui-button",
+          "ui-button-native",
+          "ui-button-md"
+        ],
+        "visible": true,
+        "blockedByModal": false,
+        "inPage": true,
+        "disabled": false,
+        "loading": false,
+        "surface": false
+      },
+      "feedback": {
+        "status": "pass",
+        "deadlineMs": 200,
+        "pressedWithin200ms": true,
+        "clickResponseWithin200ms": true,
+        "pressed": {
+          "ms": 15.800000004470348,
+          "before": [
+            [
+              [
+                "rgba(0, 0, 0, 0.25)",
+                "none",
+                "rgb(255, 255, 255)",
+                "rgba(255, 255, 255, 0.7)",
+                "rgba(255, 255, 255, 0.7)",
+                "rgba(255, 255, 255, 0.7)",
+                "rgba(255, 255, 255, 0.7)",
+                "none",
+                "none",
+                "none",
+                "1",
+                "rgb(255, 255, 255)",
+                "none",
+                "3px",
+                "600",
+                "none",
+                ""
+              ],
+              null,
+              null
+            ],
+            [
+              [
+                "rgba(0, 0, 0, 0)",
+                "none",
+                "rgb(255, 255, 255)",
+                "rgb(255, 255, 255)",
+                "rgb(255, 255, 255)",
+                "rgb(255, 255, 255)",
+                "rgb(255, 255, 255)",
+                "none",
+                "none",
+                "none",
+                "1",
+                "rgb(255, 255, 255)",
+                "none",
+                "3px",
+                "600",
+                "none",
+                ""
+              ],
+              null,
+              null
+            ]
+          ],
+          "after": [
+            [
+              [
+                "rgba(0, 0, 0, 0.35)",
+                "none",
+                "rgb(255, 255, 255)",
+                "rgba(255, 255, 255, 0.7)",
+                "rgba(255, 255, 255, 0.7)",
+                "rgba(255, 255, 255, 0.7)",
+                "rgba(255, 255, 255, 0.7)",
+                "none",
+                "brightness(0.94)",
+                "matrix(1, 0, 0, 1, 0, 0)",
+                "1",
+                "rgb(255, 255, 255)",
+                "none",
+                "0px",
+                "600",
+                "none",
+                ""
+              ],
+              null,
+              null
+            ],
+            [
+              [
+                "rgba(0, 0, 0, 0)",
+                "none",
+                "rgb(255, 255, 255)",
+                "rgb(255, 255, 255)",
+                "rgb(255, 255, 255)",
+                "rgb(255, 255, 255)",
+                "rgb(255, 255, 255)",
+                "none",
+                "none",
+                "none",
+                "1",
+                "rgb(255, 255, 255)",
+                "none",
+                "3px",
+                "600",
+                "none",
+                ""
+              ],
+              null,
+              null
+            ]
+          ]
+        },
+        "clickResponse": {
+          "kind": "visible-dom-added",
+          "ms": 24.799999997019768
+        },
+        "loadingObserved": false
+      },
+      "actionOutcome": {
+        "status": "local-dom-response-observed",
+        "businessSuccess": "not-asserted",
+        "urlAfter": "http://127.0.0.1:5182/live-floor",
+        "network": [],
+        "presentation": [],
+        "actionFailures": [],
+        "pageErrors": []
+      },
+      "setupNetwork": [
+        {
+          "phase": "setup",
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/events/stream",
+          "at": 1794002199272,
+          "kind": "realtime-unavailable-fixture",
+          "status": 503
+        },
+        {
+          "phase": "setup",
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/sessions/alerts",
+          "at": 1794002199276,
+          "kind": "reminder-isolation-fixture"
+        },
+        {
+          "phase": "setup",
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/events/stream",
+          "at": 1794002199327,
+          "kind": "realtime-unavailable-fixture",
+          "status": 503
+        },
+        {
+          "phase": "setup",
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/sessions/alerts",
+          "at": 1794002199334,
+          "kind": "reminder-isolation-fixture"
+        },
+        {
+          "phase": "replay",
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/events/stream",
+          "at": 1794002200334,
+          "kind": "realtime-unavailable-fixture",
+          "status": 503
+        }
+      ]
+    },
+    {
+      "route": "/live-floor",
+      "theme": "dark",
+      "width": 1440,
+      "steps": [
+        {
+          "kind": "safe-opener",
+          "selector": ".lf-table-card[role=\"group\"]",
+          "label": "Pool Available",
+          "key": "Pool Available",
+          "occurrence": 0
+        }
+      ],
+      "button": {
+        "index": 49,
+        "key": "[\"BUTTON\",\"\",\"\",null,\"Close panel\"]",
+        "occurrence": 0,
+        "label": "Close panel",
+        "variant": "icon",
+        "classes": [
+          "ui-button",
+          "ui-button-icon",
+          "ui-button-ghost",
+          "ui-button-md"
+        ],
+        "visible": true,
+        "blockedByModal": false,
+        "inPage": false,
+        "disabled": false,
+        "loading": false,
+        "surface": true
+      },
+      "feedback": {
+        "status": "pass",
+        "deadlineMs": 200,
+        "pressedWithin200ms": true,
+        "clickResponseWithin200ms": true,
+        "pressed": {
+          "ms": 17.69999999552965,
+          "before": [
+            [
+              [
+                "rgb(26, 26, 34)",
+                "none",
+                "rgb(250, 250, 250)",
+                "rgb(69, 69, 80)",
+                "rgb(69, 69, 80)",
+                "rgb(69, 69, 80)",
+                "rgb(69, 69, 80)",
+                "none",
+                "none",
+                "none",
+                "1",
+                "rgb(250, 250, 250)",
+                "none",
+                "3px",
+                "500",
+                "none",
+                ""
+              ],
+              null,
+              null
+            ],
+            [
+              [
+                "rgba(0, 0, 0, 0)",
+                "none",
+                "rgb(250, 250, 250)",
+                "rgb(250, 250, 250)",
+                "rgb(250, 250, 250)",
+                "rgb(250, 250, 250)",
+                "rgb(250, 250, 250)",
+                "none",
+                "none",
+                "none",
+                "1",
+                "rgb(250, 250, 250)",
+                "none",
+                "3px",
+                "500",
+                "none",
+                ""
+              ],
+              null,
+              null
+            ]
+          ],
+          "after": [
+            [
+              [
+                "rgb(11, 11, 15)",
+                "none",
+                "rgb(250, 250, 250)",
+                "rgb(69, 69, 80)",
+                "rgb(69, 69, 80)",
+                "rgb(69, 69, 80)",
+                "rgb(69, 69, 80)",
+                "none",
+                "brightness(0.94)",
+                "matrix(1, 0, 0, 1, 0, 0)",
+                "1",
+                "rgb(250, 250, 250)",
+                "none",
+                "0px",
+                "500",
+                "none",
+                ""
+              ],
+              null,
+              null
+            ],
+            [
+              [
+                "rgba(0, 0, 0, 0)",
+                "none",
+                "rgb(250, 250, 250)",
+                "rgb(250, 250, 250)",
+                "rgb(250, 250, 250)",
+                "rgb(250, 250, 250)",
+                "rgb(250, 250, 250)",
+                "none",
+                "none",
+                "none",
+                "1",
+                "rgb(250, 250, 250)",
+                "none",
+                "3px",
+                "500",
+                "none",
+                ""
+              ],
+              null,
+              null
+            ]
+          ]
+        },
+        "clickResponse": {
+          "kind": "target-removed",
+          "ms": 124.5
+        },
+        "loadingObserved": false
+      },
+      "actionOutcome": {
+        "status": "local-dom-response-observed",
+        "businessSuccess": "not-asserted",
+        "urlAfter": "http://127.0.0.1:5182/live-floor",
+        "network": [],
+        "presentation": [],
+        "actionFailures": [],
+        "pageErrors": []
+      },
+      "setupNetwork": [
+        {
+          "phase": "setup",
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/events/stream",
+          "at": 1794002206647,
+          "kind": "realtime-unavailable-fixture",
+          "status": 503
+        },
+        {
+          "phase": "setup",
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/sessions/alerts",
+          "at": 1794002206649,
+          "kind": "reminder-isolation-fixture"
+        },
+        {
+          "phase": "setup",
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/events/stream",
+          "at": 1794002206686,
+          "kind": "realtime-unavailable-fixture",
+          "status": 503
+        },
+        {
+          "phase": "setup",
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/sessions/alerts",
+          "at": 1794002206690,
+          "kind": "reminder-isolation-fixture"
+        },
+        {
+          "phase": "replay",
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/events/stream",
+          "at": 1794002207690,
+          "kind": "realtime-unavailable-fixture",
+          "status": 503
+        }
+      ]
+    },
+    {
+      "route": "/live-floor",
+      "theme": "dark",
+      "width": 1440,
+      "steps": [
+        {
+          "kind": "safe-opener",
+          "selector": ".lf-table-card[role=\"group\"]",
+          "label": "Pool Available",
+          "key": "Pool Available",
+          "occurrence": 0
+        }
+      ],
+      "button": {
+        "index": 50,
+        "key": "[\"BUTTON\",\"\",\"\",null,\"Learn more\"]",
+        "occurrence": 0,
+        "label": "Learn more",
+        "variant": "ghost",
+        "classes": [
+          "ui-button",
+          "ui-button-ghost",
+          "ui-button-md"
+        ],
+        "visible": true,
+        "blockedByModal": false,
+        "inPage": false,
+        "disabled": false,
+        "loading": false,
+        "surface": true
+      },
+      "feedback": {
+        "status": "pass",
+        "deadlineMs": 200,
+        "pressedWithin200ms": true,
+        "clickResponseWithin200ms": true,
+        "pressed": {
+          "ms": 16.099999994039536,
+          "before": [
+            [
+              [
+                "rgb(26, 26, 34)",
+                "none",
+                "rgb(250, 250, 250)",
+                "rgb(69, 69, 80)",
+                "rgb(69, 69, 80)",
+                "rgb(69, 69, 80)",
+                "rgb(69, 69, 80)",
+                "none",
+                "none",
+                "none",
+                "1",
+                "rgb(250, 250, 250)",
+                "none",
+                "3px",
+                "500",
+                "none",
+                ""
+              ],
+              null,
+              null
+            ],
+            [
+              [
+                "rgba(0, 0, 0, 0)",
+                "none",
+                "rgb(250, 250, 250)",
+                "rgb(250, 250, 250)",
+                "rgb(250, 250, 250)",
+                "rgb(250, 250, 250)",
+                "rgb(250, 250, 250)",
+                "none",
+                "none",
+                "none",
+                "1",
+                "rgb(250, 250, 250)",
+                "none",
+                "3px",
+                "500",
+                "none",
+                ""
+              ],
+              null,
+              null
+            ],
+            [
+              [
+                "rgba(0, 0, 0, 0)",
+                "none",
+                "rgb(250, 250, 250)",
+                "rgb(250, 250, 250)",
+                "rgb(250, 250, 250)",
+                "rgb(250, 250, 250)",
+                "rgb(250, 250, 250)",
+                "none",
+                "none",
+                "none",
+                "1",
+                "rgb(250, 250, 250)",
+                "none",
+                "3px",
+                "500",
+                "none",
+                ""
+              ],
+              null,
+              null
+            ],
+            [
+              [
+                "rgba(0, 0, 0, 0)",
+                "none",
+                "rgb(250, 250, 250)",
+                "rgb(250, 250, 250)",
+                "rgb(250, 250, 250)",
+                "rgb(250, 250, 250)",
+                "rgb(250, 250, 250)",
+                "none",
+                "none",
+                "none",
+                "1",
+                "rgb(250, 250, 250)",
+                "none",
+                "3px",
+                "500",
+                "none",
+                ""
+              ],
+              null,
+              null
+            ]
+          ],
+          "after": [
+            [
+              [
+                "rgb(11, 11, 15)",
+                "none",
+                "rgb(250, 250, 250)",
+                "rgb(69, 69, 80)",
+                "rgb(69, 69, 80)",
+                "rgb(69, 69, 80)",
+                "rgb(69, 69, 80)",
+                "none",
+                "brightness(0.94)",
+                "matrix(1, 0, 0, 1, 0, 0)",
+                "1",
+                "rgb(250, 250, 250)",
+                "none",
+                "0px",
+                "500",
+                "none",
+                ""
+              ],
+              null,
+              null
+            ],
+            [
+              [
+                "rgba(0, 0, 0, 0)",
+                "none",
+                "rgb(250, 250, 250)",
+                "rgb(250, 250, 250)",
+                "rgb(250, 250, 250)",
+                "rgb(250, 250, 250)",
+                "rgb(250, 250, 250)",
+                "none",
+                "none",
+                "none",
+                "1",
+                "rgb(250, 250, 250)",
+                "none",
+                "3px",
+                "500",
+                "none",
+                ""
+              ],
+              null,
+              null
+            ],
+            [
+              [
+                "rgba(0, 0, 0, 0)",
+                "none",
+                "rgb(250, 250, 250)",
+                "rgb(250, 250, 250)",
+                "rgb(250, 250, 250)",
+                "rgb(250, 250, 250)",
+                "rgb(250, 250, 250)",
+                "none",
+                "none",
+                "none",
+                "1",
+                "rgb(250, 250, 250)",
+                "none",
+                "3px",
+                "500",
+                "none",
+                ""
+              ],
+              null,
+              null
+            ],
+            [
+              [
+                "rgba(0, 0, 0, 0)",
+                "none",
+                "rgb(250, 250, 250)",
+                "rgb(250, 250, 250)",
+                "rgb(250, 250, 250)",
+                "rgb(250, 250, 250)",
+                "rgb(250, 250, 250)",
+                "none",
+                "none",
+                "none",
+                "1",
+                "rgb(250, 250, 250)",
+                "none",
+                "3px",
+                "500",
+                "none",
+                ""
+              ],
+              null,
+              null
+            ]
+          ]
+        },
+        "clickResponse": {
+          "kind": "visible-dom-added",
+          "ms": 15.100000001490116
+        },
+        "loadingObserved": false
+      },
+      "actionOutcome": {
+        "status": "local-dom-response-observed",
+        "businessSuccess": "not-asserted",
+        "urlAfter": "http://127.0.0.1:5182/live-floor",
+        "network": [],
+        "presentation": [],
+        "actionFailures": [],
+        "pageErrors": []
+      },
+      "setupNetwork": [
+        {
+          "phase": "setup",
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/events/stream",
+          "at": 1794002209105,
+          "kind": "realtime-unavailable-fixture",
+          "status": 503
+        },
+        {
+          "phase": "setup",
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/sessions/alerts",
+          "at": 1794002209108,
+          "kind": "reminder-isolation-fixture"
+        },
+        {
+          "phase": "setup",
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/events/stream",
+          "at": 1794002209152,
+          "kind": "realtime-unavailable-fixture",
+          "status": 503
+        },
+        {
+          "phase": "setup",
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/sessions/alerts",
+          "at": 1794002209153,
+          "kind": "reminder-isolation-fixture"
+        },
+        {
+          "phase": "replay",
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/events/stream",
+          "at": 1794002210155,
+          "kind": "realtime-unavailable-fixture",
+          "status": 503
+        }
+      ]
+    },
+    {
+      "route": "/live-floor",
+      "theme": "dark",
+      "width": 375,
+      "steps": [
+        {
+          "index": 33,
+          "key": "[\"BUTTON\",\"\",\"\",null,\"T2 needs billing review\"]",
+          "occurrence": 0,
+          "label": "T2 needs billing review",
+          "variant": "native",
+          "classes": [
+            "ui-button",
+            "ui-button-native",
+            "ui-button-md"
+          ],
+          "visible": true,
+          "blockedByModal": false,
+          "inPage": true,
+          "disabled": false,
+          "loading": false,
+          "surface": false
+        }
+      ],
+      "button": {
+        "index": 54,
+        "key": "[\"BUTTON\",\"\",\"\",null,\"Move Session\"]",
+        "occurrence": 0,
+        "label": "Move Session",
+        "variant": "native",
+        "classes": [
+          "ui-button",
+          "ui-button-native",
+          "ui-button-md"
+        ],
+        "visible": true,
+        "blockedByModal": false,
+        "inPage": false,
+        "disabled": true,
+        "loading": false,
+        "surface": true
+      },
+      "feedback": {
+        "status": "disabled",
+        "pressedWithin200ms": false,
+        "clickResponseWithin200ms": false
+      },
+      "actionOutcome": {
+        "status": "disabled-not-invoked",
+        "businessSuccess": "not-asserted"
+      },
+      "setupNetwork": [
+        {
+          "phase": "setup",
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/events/stream",
+          "at": 1794002212550,
+          "kind": "realtime-unavailable-fixture",
+          "status": 503
+        },
+        {
+          "phase": "setup",
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/events/stream",
+          "at": 1794002212575,
+          "kind": "realtime-unavailable-fixture",
+          "status": 503
+        },
+        {
+          "phase": "setup",
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/sessions/alerts",
+          "at": 1794002212553,
+          "kind": "reminder-isolation-fixture"
+        }
+      ]
+    },
+    {
+      "route": "/legacy-table-controls",
+      "theme": "dark",
+      "width": 375,
+      "steps": [],
+      "button": {
+        "index": 53,
+        "key": "[\"BUTTON\",\"\",\"\",null,\"Add Walk-in\"]",
+        "occurrence": 0,
+        "label": "Add Walk-in",
+        "variant": "native",
+        "classes": [
+          "ui-button",
+          "ui-button-native",
+          "ui-button-md",
+          "primary-action-btn"
+        ],
+        "visible": true,
+        "blockedByModal": false,
+        "inPage": true,
+        "disabled": false,
+        "loading": false,
+        "surface": false
+      },
+      "feedback": {
+        "status": "pass",
+        "deadlineMs": 200,
+        "pressedWithin200ms": true,
+        "clickResponseWithin200ms": false,
+        "pressed": {
+          "ms": 16,
+          "before": [
+            [
+              [
+                "rgb(12, 37, 25)",
+                "none",
+                "rgb(0, 255, 127)",
+                "color(srgb 0.0928627 0.452863 0.289726)",
+                "color(srgb 0.0928627 0.452863 0.289726)",
+                "color(srgb 0.0928627 0.452863 0.289726)",
+                "color(srgb 0.0928627 0.452863 0.289726)",
+                "none",
+                "none",
+                "matrix(1, 0, 0, 1, 0, -1)",
+                "1",
+                "rgb(0, 255, 127)",
+                "none",
+                "3px",
+                "500",
+                "none",
+                ""
+              ],
+              null,
+              null
+            ]
+          ],
+          "after": [
+            [
+              [
+                "rgb(12, 37, 25)",
+                "none",
+                "rgb(0, 255, 127)",
+                "color(srgb 0.0928627 0.452863 0.289726)",
+                "color(srgb 0.0928627 0.452863 0.289726)",
+                "color(srgb 0.0928627 0.452863 0.289726)",
+                "color(srgb 0.0928627 0.452863 0.289726)",
+                "none",
+                "brightness(0.94)",
+                "matrix(1, 0, 0, 1, 0, -1)",
+                "1",
+                "rgb(0, 255, 127)",
+                "none",
+                "0px",
+                "500",
+                "none",
+                ""
+              ],
+              null,
+              null
+            ]
+          ]
+        },
+        "clickResponse": null,
+        "loadingObserved": false
+      },
+      "actionOutcome": {
+        "status": "no-action-outcome-observed",
+        "businessSuccess": "not-asserted",
+        "urlAfter": "http://127.0.0.1:5182/legacy-table-controls",
+        "network": [],
+        "presentation": [],
+        "actionFailures": [],
+        "pageErrors": []
+      },
+      "setupNetwork": [
+        {
+          "phase": "setup",
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/events/stream",
+          "at": 1794002214318,
+          "kind": "realtime-unavailable-fixture",
+          "status": 503
+        },
+        {
+          "phase": "setup",
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/bookings",
+          "at": 1794002214351,
+          "kind": "qa-reconciling-get-attempt",
+          "database": "sqlite:////tmp/hsr-session-close-ui.db",
+          "sideEffects": "Permitted local QA reconciliation; not measured"
+        },
+        {
+          "phase": "setup",
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/sessions/alerts",
+          "at": 1794002214321,
+          "kind": "reminder-isolation-fixture"
+        },
+        {
+          "phase": "replay",
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/events/stream",
+          "at": 1794002215332,
+          "kind": "realtime-unavailable-fixture",
+          "status": 503
+        }
+      ]
+    },
+    {
+      "route": "/legacy-table-controls",
+      "theme": "dark",
+      "width": 375,
+      "steps": [
+        {
+          "index": 35,
+          "key": "[\"ARTICLE\",\"button\",\"\",null,\"T2 Running\"]",
+          "occurrence": 0,
+          "label": "T2 Running",
+          "variant": "unshared",
+          "classes": [
+            "table-floor-tile",
+            "table-state-card"
+          ],
+          "visible": true,
+          "blockedByModal": false,
+          "inPage": true,
+          "disabled": false,
+          "loading": false,
+          "surface": false
+        }
+      ],
+      "button": {
+        "index": 49,
+        "key": "[\"BUTTON\",\"\",\"\",\"reset-t2\",\"Reset Table\"]",
+        "occurrence": 0,
+        "label": "Reset Table",
+        "variant": "native",
+        "classes": [
+          "ui-button",
+          "ui-button-native",
+          "ui-button-md",
+          "table-control-btn",
+          "reset"
+        ],
+        "visible": true,
+        "blockedByModal": false,
+        "inPage": true,
+        "disabled": false,
+        "loading": false,
+        "surface": false
+      },
+      "feedback": {
+        "status": "pass",
+        "deadlineMs": 200,
+        "pressedWithin200ms": true,
+        "clickResponseWithin200ms": false,
+        "pressed": {
+          "ms": 15.5,
+          "before": [
+            [
+              [
+                "rgb(17, 17, 22)",
+                "none",
+                "rgb(0, 255, 127)",
+                "rgb(37, 37, 44)",
+                "rgb(37, 37, 44)",
+                "rgb(37, 37, 44)",
+                "rgb(37, 37, 44)",
+                "none",
+                "none",
+                "matrix(1, 0, 0, 1, 0, -1)",
+                "1",
+                "rgb(0, 255, 127)",
+                "none",
+                "3px",
+                "500",
+                "none",
+                ""
+              ],
+              null,
+              null
+            ],
+            [
+              [
+                "rgba(0, 0, 0, 0)",
+                "none",
+                "rgb(0, 255, 127)",
+                "rgb(0, 255, 127)",
+                "rgb(0, 255, 127)",
+                "rgb(0, 255, 127)",
+                "rgb(0, 255, 127)",
+                "none",
+                "none",
+                "none",
+                "1",
+                "rgb(0, 255, 127)",
+                "none",
+                "3px",
+                "500",
+                "none",
+                ""
+              ],
+              null,
+              null
+            ],
+            [
+              [
+                "rgba(0, 0, 0, 0)",
+                "none",
+                "rgb(0, 255, 127)",
+                "rgb(0, 255, 127)",
+                "rgb(0, 255, 127)",
+                "rgb(0, 255, 127)",
+                "rgb(0, 255, 127)",
+                "none",
+                "none",
+                "none",
+                "1",
+                "rgb(0, 255, 127)",
+                "none",
+                "3px",
+                "500",
+                "none",
+                ""
+              ],
+              null,
+              null
+            ]
+          ],
+          "after": [
+            [
+              [
+                "rgb(17, 17, 22)",
+                "none",
+                "rgb(0, 255, 127)",
+                "rgb(37, 37, 44)",
+                "rgb(37, 37, 44)",
+                "rgb(37, 37, 44)",
+                "rgb(37, 37, 44)",
+                "none",
+                "brightness(0.94)",
+                "matrix(1, 0, 0, 1, 0, -1)",
+                "1",
+                "rgb(0, 255, 127)",
+                "none",
+                "0px",
+                "500",
+                "none",
+                ""
+              ],
+              null,
+              null
+            ],
+            [
+              [
+                "rgba(0, 0, 0, 0)",
+                "none",
+                "rgb(0, 255, 127)",
+                "rgb(0, 255, 127)",
+                "rgb(0, 255, 127)",
+                "rgb(0, 255, 127)",
+                "rgb(0, 255, 127)",
+                "none",
+                "none",
+                "none",
+                "1",
+                "rgb(0, 255, 127)",
+                "none",
+                "3px",
+                "500",
+                "none",
+                ""
+              ],
+              null,
+              null
+            ],
+            [
+              [
+                "rgba(0, 0, 0, 0)",
+                "none",
+                "rgb(0, 255, 127)",
+                "rgb(0, 255, 127)",
+                "rgb(0, 255, 127)",
+                "rgb(0, 255, 127)",
+                "rgb(0, 255, 127)",
+                "none",
+                "none",
+                "none",
+                "1",
+                "rgb(0, 255, 127)",
+                "none",
+                "3px",
+                "500",
+                "none",
+                ""
+              ],
+              null,
+              null
+            ]
+          ]
+        },
+        "clickResponse": null,
+        "loadingObserved": false
+      },
+      "actionOutcome": {
+        "status": "no-action-outcome-observed",
+        "businessSuccess": "not-asserted",
+        "urlAfter": "http://127.0.0.1:5182/legacy-table-controls",
+        "network": [
+          {
+            "phase": "action",
+            "method": "GET",
+            "url": "http://127.0.0.1:8006/events/stream",
+            "at": 1794002220465,
+            "kind": "realtime-unavailable-fixture",
+            "status": 503
+          }
+        ],
+        "presentation": [],
+        "actionFailures": [],
+        "pageErrors": []
+      },
+      "setupNetwork": [
+        {
+          "phase": "setup",
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/events/stream",
+          "at": 1794002217446,
+          "kind": "realtime-unavailable-fixture",
+          "status": 503
+        },
+        {
+          "phase": "setup",
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/bookings",
+          "at": 1794002217470,
+          "kind": "qa-reconciling-get-attempt",
+          "database": "sqlite:////tmp/hsr-session-close-ui.db",
+          "sideEffects": "Permitted local QA reconciliation; not measured"
+        },
+        {
+          "phase": "setup",
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/sessions/alerts",
+          "at": 1794002217448,
+          "kind": "reminder-isolation-fixture"
+        },
+        {
+          "phase": "replay",
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/events/stream",
+          "at": 1794002218458,
+          "kind": "realtime-unavailable-fixture",
+          "status": 503
+        }
+      ]
+    },
+    {
+      "route": "/legacy-table-controls",
+      "theme": "dark",
+      "width": 375,
+      "steps": [
+        {
+          "index": 40,
+          "key": "[\"BUTTON\",\"\",\"\",null,\"Start Table\"]",
+          "occurrence": 2,
+          "label": "Start Table",
+          "variant": "native",
+          "classes": [
+            "ui-button",
+            "ui-button-native",
+            "ui-button-md",
+            "table-state-primary"
+          ],
+          "visible": true,
+          "blockedByModal": false,
+          "inPage": true,
+          "disabled": false,
+          "loading": false,
+          "surface": false
+        }
+      ],
+      "button": {
+        "index": 51,
+        "key": "[\"BUTTON\",\"\",\"\",null,\"T4 · SNOOKER · ₹ 270 /hr\"]",
+        "occurrence": 0,
+        "label": "T4 · SNOOKER · ₹ 270 /hr",
+        "variant": "secondary",
+        "classes": [
+          "ui-button",
+          "ui-button-secondary",
+          "ui-button-md"
+        ],
+        "visible": true,
+        "blockedByModal": false,
+        "inPage": false,
+        "disabled": false,
+        "loading": false,
+        "surface": true
+      },
+      "feedback": {
+        "status": "pass",
+        "deadlineMs": 200,
+        "pressedWithin200ms": true,
+        "clickResponseWithin200ms": true,
+        "pressed": {
+          "ms": 14.899999998509884,
+          "before": [
+            [
+              [
+                "rgb(26, 26, 34)",
+                "none",
+                "rgb(250, 250, 250)",
+                "rgb(69, 69, 80)",
+                "rgb(69, 69, 80)",
+                "rgb(69, 69, 80)",
+                "rgb(69, 69, 80)",
+                "none",
+                "none",
+                "none",
+                "1",
+                "rgb(250, 250, 250)",
+                "none",
+                "3px",
+                "500",
+                "none",
+                ""
+              ],
+              null,
+              null
+            ],
+            [
+              [
+                "rgba(0, 0, 0, 0)",
+                "none",
+                "rgb(250, 250, 250)",
+                "rgb(250, 250, 250)",
+                "rgb(250, 250, 250)",
+                "rgb(250, 250, 250)",
+                "rgb(250, 250, 250)",
+                "none",
+                "none",
+                "none",
+                "1",
+                "rgb(250, 250, 250)",
+                "none",
+                "3px",
+                "500",
+                "none",
+                ""
+              ],
+              null,
+              null
+            ],
+            [
+              [
+                "rgba(0, 0, 0, 0)",
+                "none",
+                "rgb(250, 250, 250)",
+                "rgb(250, 250, 250)",
+                "rgb(250, 250, 250)",
+                "rgb(250, 250, 250)",
+                "rgb(250, 250, 250)",
+                "none",
+                "none",
+                "none",
+                "1",
+                "rgb(250, 250, 250)",
+                "none",
+                "3px",
+                "500",
+                "none",
+                ""
+              ],
+              null,
+              null
+            ]
+          ],
+          "after": [
+            [
+              [
+                "rgb(11, 11, 15)",
+                "none",
+                "rgb(250, 250, 250)",
+                "rgb(69, 69, 80)",
+                "rgb(69, 69, 80)",
+                "rgb(69, 69, 80)",
+                "rgb(69, 69, 80)",
+                "none",
+                "brightness(0.94)",
+                "matrix(1, 0, 0, 1, 0, 0)",
+                "1",
+                "rgb(250, 250, 250)",
+                "none",
+                "0px",
+                "500",
+                "none",
+                ""
+              ],
+              null,
+              null
+            ],
+            [
+              [
+                "rgba(0, 0, 0, 0)",
+                "none",
+                "rgb(250, 250, 250)",
+                "rgb(250, 250, 250)",
+                "rgb(250, 250, 250)",
+                "rgb(250, 250, 250)",
+                "rgb(250, 250, 250)",
+                "none",
+                "none",
+                "none",
+                "1",
+                "rgb(250, 250, 250)",
+                "none",
+                "3px",
+                "500",
+                "none",
+                ""
+              ],
+              null,
+              null
+            ],
+            [
+              [
+                "rgba(0, 0, 0, 0)",
+                "none",
+                "rgb(250, 250, 250)",
+                "rgb(250, 250, 250)",
+                "rgb(250, 250, 250)",
+                "rgb(250, 250, 250)",
+                "rgb(250, 250, 250)",
+                "none",
+                "none",
+                "none",
+                "1",
+                "rgb(250, 250, 250)",
+                "none",
+                "3px",
+                "500",
+                "none",
+                ""
+              ],
+              null,
+              null
+            ]
+          ]
+        },
+        "clickResponse": {
+          "kind": "visible-dom-added",
+          "ms": 2.7999999970197678
+        },
+        "loadingObserved": true
+      },
+      "actionOutcome": {
+        "status": "mutation-blocked",
+        "businessSuccess": "not-asserted",
+        "urlAfter": "http://127.0.0.1:5182/legacy-table-controls",
+        "network": [
+          {
+            "phase": "action",
+            "method": "POST",
+            "url": "http://127.0.0.1:8006/sessions/start",
+            "at": 1794002223704,
+            "kind": "blocked-mutation"
+          }
+        ],
+        "presentation": [],
+        "actionFailures": [],
+        "pageErrors": []
+      },
+      "setupNetwork": [
+        {
+          "phase": "setup",
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/events/stream",
+          "at": 1794002221963,
+          "kind": "realtime-unavailable-fixture",
+          "status": 503
+        },
+        {
+          "phase": "setup",
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/bookings",
+          "at": 1794002221989,
+          "kind": "qa-reconciling-get-attempt",
+          "database": "sqlite:////tmp/hsr-session-close-ui.db",
+          "sideEffects": "Permitted local QA reconciliation; not measured"
+        },
+        {
+          "phase": "setup",
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/sessions/alerts",
+          "at": 1794002221966,
+          "kind": "reminder-isolation-fixture"
+        },
+        {
+          "phase": "replay",
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/events/stream",
+          "at": 1794002222973,
+          "kind": "realtime-unavailable-fixture",
+          "status": 503
+        }
+      ]
+    },
+    {
+      "route": "/demo",
+      "theme": "dark",
+      "width": 375,
+      "steps": [
+        {
+          "index": 28,
+          "key": "[\"BUTTON\",\"\",\"\",null,\"Load sample data\"]",
+          "occurrence": 0,
+          "label": "Load sample data",
+          "variant": "primary",
+          "classes": [
+            "ui-button",
+            "ui-button-primary",
+            "ui-button-md"
+          ],
+          "visible": true,
+          "blockedByModal": false,
+          "inPage": true,
+          "disabled": false,
+          "loading": false,
+          "surface": false
+        }
+      ],
+      "button": {
+        "index": 32,
+        "key": "[\"BUTTON\",\"tab\",\"\",null,\"Bookings\"]",
+        "occurrence": 0,
+        "label": "Bookings",
+        "variant": "native",
+        "classes": [
+          "ui-button",
+          "ui-button-native",
+          "ui-button-md"
+        ],
+        "visible": true,
+        "blockedByModal": false,
+        "inPage": true,
+        "disabled": false,
+        "loading": false,
+        "surface": false
+      },
+      "feedback": {
+        "status": "pass",
+        "deadlineMs": 200,
+        "pressedWithin200ms": true,
+        "clickResponseWithin200ms": true,
+        "pressed": {
+          "ms": 16.30000000447035,
+          "before": [
+            [
+              [
+                "rgb(26, 26, 34)",
+                "none",
+                "rgb(250, 250, 250)",
+                "rgba(0, 0, 0, 0)",
+                "rgba(0, 0, 0, 0)",
+                "rgba(0, 0, 0, 0)",
+                "rgba(0, 0, 0, 0)",
+                "none",
+                "none",
+                "none",
+                "1",
+                "rgb(250, 250, 250)",
+                "none",
+                "3px",
+                "600",
+                "none",
+                ""
+              ],
+              null,
+              null
+            ],
+            [
+              [
+                "rgba(0, 0, 0, 0)",
+                "none",
+                "rgb(250, 250, 250)",
+                "rgb(250, 250, 250)",
+                "rgb(250, 250, 250)",
+                "rgb(250, 250, 250)",
+                "rgb(250, 250, 250)",
+                "none",
+                "none",
+                "none",
+                "1",
+                "rgb(250, 250, 250)",
+                "none",
+                "3px",
+                "600",
+                "none",
+                ""
+              ],
+              null,
+              null
+            ]
+          ],
+          "after": [
+            [
+              [
+                "rgb(26, 26, 34)",
+                "none",
+                "rgb(250, 250, 250)",
+                "rgba(0, 0, 0, 0)",
+                "rgba(0, 0, 0, 0)",
+                "rgba(0, 0, 0, 0)",
+                "rgba(0, 0, 0, 0)",
+                "none",
+                "brightness(0.94)",
+                "matrix(1, 0, 0, 1, 0, 0)",
+                "1",
+                "rgb(250, 250, 250)",
+                "none",
+                "0px",
+                "600",
+                "none",
+                ""
+              ],
+              null,
+              null
+            ],
+            [
+              [
+                "rgba(0, 0, 0, 0)",
+                "none",
+                "rgb(250, 250, 250)",
+                "rgb(250, 250, 250)",
+                "rgb(250, 250, 250)",
+                "rgb(250, 250, 250)",
+                "rgb(250, 250, 250)",
+                "none",
+                "none",
+                "none",
+                "1",
+                "rgb(250, 250, 250)",
+                "none",
+                "3px",
+                "600",
+                "none",
+                ""
+              ],
+              null,
+              null
+            ]
+          ]
+        },
+        "clickResponse": {
+          "kind": "visible-dom-added",
+          "ms": 5.600000001490116
+        },
+        "loadingObserved": false
+      },
+      "actionOutcome": {
+        "status": "local-dom-response-observed",
+        "businessSuccess": "not-asserted",
+        "urlAfter": "http://127.0.0.1:5182/demo",
+        "network": [],
+        "presentation": [],
+        "actionFailures": [],
+        "pageErrors": []
+      },
+      "setupNetwork": [
+        {
+          "phase": "setup",
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/events/stream",
+          "at": 1794002225284,
+          "kind": "realtime-unavailable-fixture",
+          "status": 503
+        },
+        {
+          "phase": "setup",
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/sessions/alerts",
+          "at": 1794002225287,
+          "kind": "reminder-isolation-fixture"
+        },
+        {
+          "phase": "replay",
+          "method": "GET",
+          "url": "http://127.0.0.1:8006/events/stream",
+          "at": 1794002226296,
+          "kind": "realtime-unavailable-fixture",
+          "status": 503
+        }
+      ]
+    }
+  ],
+  "exclusions": [
+    {
+      "route": "/",
+      "theme": "light",
+      "width": 375,
+      "steps": [
+        {
+          "index": 38,
+          "key": "[\"BUTTON\",\"\",\"\",null,\"End\"]",
+          "occurrence": 0,
+          "label": "End",
+          "variant": "native",
+          "classes": [
+            "ui-button",
+            "ui-button-native",
+            "ui-button-md"
+          ],
+          "visible": true,
+          "blockedByModal": false,
+          "inPage": true,
+          "disabled": false,
+          "loading": false,
+          "surface": false
+        }
+      ],
+      "reason": "locator.click: Timeout 2500ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('button,[role=\"button\"],input[type=\"button\"],input[type=\"submit\"],input[type=\"reset\"]').nth(38)\u001b[22m\n\u001b[2m    - locator resolved to <button type=\"button\" aria-label=\"End\" data-variant=\"danger\" data-session-shortcut=\"end\" class=\"ui-button ui-button-native ui-button-md\">…</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m    - element is visible, enabled and stable\u001b[22m\n\u001b[2m    - scrolling into view if needed\u001b[22m\n\u001b[2m    - done scrolling\u001b[22m\n\u001b[2m    - performing click action\u001b[22m\n",
+      "status": "unreachable-state"
+    },
+    {
+      "route": "/live-floor",
+      "theme": "dark",
+      "width": 1440,
+      "steps": [
+        {
+          "kind": "safe-opener",
+          "selector": ".lf-table-card[role=\"group\"]",
+          "label": "Wiraka Running",
+          "key": "Wiraka Running",
+          "occurrence": 0
+        }
+      ],
+      "reason": "Read-only row/card opener is missing or ambiguous",
+      "status": "unreachable-state"
+    },
+    {
+      "route": "/live-floor",
+      "theme": "dark",
+      "width": 1440,
+      "steps": [
+        {
+          "kind": "safe-opener",
+          "selector": ".lf-table-card[role=\"group\"]",
+          "label": "Wiraka Running",
+          "key": "Wiraka Running",
+          "occurrence": 0
+        }
+      ],
+      "reason": "Read-only row/card opener is missing or ambiguous",
+      "status": "unreachable-state"
+    },
+    {
+      "route": "/live-floor",
+      "theme": "dark",
+      "width": 1440,
+      "steps": [
+        {
+          "kind": "safe-opener",
+          "selector": ".lf-table-card[role=\"group\"]",
+          "label": "English Available",
+          "key": "English Available",
+          "occurrence": 0
+        }
+      ],
+      "reason": "Read-only row/card opener is missing or ambiguous",
+      "status": "unreachable-state"
+    },
+    {
+      "route": "/live-floor",
+      "theme": "dark",
+      "width": 1440,
+      "steps": [
+        {
+          "kind": "safe-opener",
+          "selector": ".lf-table-card[role=\"group\"]",
+          "label": "English Available",
+          "key": "English Available",
+          "occurrence": 0
+        }
+      ],
+      "reason": "Read-only row/card opener is missing or ambiguous",
+      "status": "unreachable-state"
+    }
+  ],
+  "screenshots": [
+    {
+      "theme": "light",
+      "width": 1440,
+      "path": "/Users/shivanshgupta/.codex/worktrees/player-start-flow/billiards-bms:HSR/docs/deployment-ui-completion/final-completion/buttons/button-states-light-1440.png",
+      "samples": [
+        {
+          "theme": "light",
+          "width": 1440,
+          "route": "/legacy-table-controls",
+          "steps": [
+            {
+              "index": 35,
+              "key": "[\"ARTICLE\",\"button\",\"\",null,\"T2 Running\"]",
+              "occurrence": 0,
+              "label": "T2 Running",
+              "variant": "unshared",
+              "classes": [
+                "table-floor-tile",
+                "table-state-card"
+              ],
+              "visible": true,
+              "blockedByModal": false,
+              "inPage": true,
+              "disabled": false,
+              "loading": false,
+              "surface": false
+            }
+          ],
+          "button": "Reset Table",
+          "variant": "native",
+          "state": "default"
+        },
+        {
+          "theme": "light",
+          "width": 1440,
+          "route": "/legacy-table-controls",
+          "steps": [
+            {
+              "index": 35,
+              "key": "[\"ARTICLE\",\"button\",\"\",null,\"T2 Running\"]",
+              "occurrence": 0,
+              "label": "T2 Running",
+              "variant": "unshared",
+              "classes": [
+                "table-floor-tile",
+                "table-state-card"
+              ],
+              "visible": true,
+              "blockedByModal": false,
+              "inPage": true,
+              "disabled": false,
+              "loading": false,
+              "surface": false
+            }
+          ],
+          "button": "Reset Table",
+          "variant": "native",
+          "state": "focus"
+        },
+        {
+          "theme": "light",
+          "width": 1440,
+          "route": "/legacy-table-controls",
+          "steps": [
+            {
+              "index": 35,
+              "key": "[\"ARTICLE\",\"button\",\"\",null,\"T2 Running\"]",
+              "occurrence": 0,
+              "label": "T2 Running",
+              "variant": "unshared",
+              "classes": [
+                "table-floor-tile",
+                "table-state-card"
+              ],
+              "visible": true,
+              "blockedByModal": false,
+              "inPage": true,
+              "disabled": false,
+              "loading": false,
+              "surface": false
+            }
+          ],
+          "button": "Reset Table",
+          "variant": "native",
+          "state": "hover"
+        },
+        {
+          "theme": "light",
+          "width": 1440,
+          "route": "/legacy-table-controls",
+          "steps": [
+            {
+              "index": 35,
+              "key": "[\"ARTICLE\",\"button\",\"\",null,\"T2 Running\"]",
+              "occurrence": 0,
+              "label": "T2 Running",
+              "variant": "unshared",
+              "classes": [
+                "table-floor-tile",
+                "table-state-card"
+              ],
+              "visible": true,
+              "blockedByModal": false,
+              "inPage": true,
+              "disabled": false,
+              "loading": false,
+              "surface": false
+            }
+          ],
+          "button": "Reset Table",
+          "variant": "native",
+          "state": "pressed"
+        }
+      ],
+      "missing": [
+        {
+          "variant": "native",
+          "state": "loading",
+          "status": "not-naturally-observed"
+        },
+        {
+          "variant": "native",
+          "state": "disabled",
+          "status": "not-naturally-observed"
+        }
+      ]
+    },
+    {
+      "theme": "light",
+      "width": 375,
+      "path": "/Users/shivanshgupta/.codex/worktrees/player-start-flow/billiards-bms:HSR/docs/deployment-ui-completion/final-completion/buttons/button-states-light-375.png",
+      "samples": [
+        {
+          "theme": "light",
+          "width": 375,
+          "route": "/",
+          "steps": [],
+          "button": "Start Session",
+          "variant": "native",
+          "state": "default"
+        },
+        {
+          "theme": "light",
+          "width": 375,
+          "route": "/",
+          "steps": [],
+          "button": "Start Session",
+          "variant": "native",
+          "state": "focus"
+        },
+        {
+          "theme": "light",
+          "width": 375,
+          "route": "/",
+          "steps": [],
+          "button": "Start Session",
+          "variant": "native",
+          "state": "hover"
+        },
+        {
+          "theme": "light",
+          "width": 375,
+          "route": "/",
+          "steps": [],
+          "button": "Start Session",
+          "variant": "native",
+          "state": "pressed"
+        },
+        {
+          "theme": "light",
+          "width": 375,
+          "route": "/",
+          "steps": [],
+          "button": "Start Session",
+          "variant": "native",
+          "state": "loading"
+        },
+        {
+          "theme": "light",
+          "width": 375,
+          "route": "/",
+          "steps": [
+            {
+              "index": 31,
+              "key": "[\"BUTTON\",\"\",\"\",null,\"Start Table\"]",
+              "occurrence": 1,
+              "label": "Start Table",
+              "variant": "native",
+              "classes": [
+                "ui-button",
+                "ui-button-native",
+                "ui-button-md",
+                "lf-primary-button"
+              ],
+              "visible": true,
+              "blockedByModal": false,
+              "inPage": true,
+              "disabled": false,
+              "loading": false,
+              "surface": false
+            }
+          ],
+          "button": "Close dialog",
+          "variant": "icon",
+          "state": "default"
+        },
+        {
+          "theme": "light",
+          "width": 375,
+          "route": "/",
+          "steps": [
+            {
+              "index": 31,
+              "key": "[\"BUTTON\",\"\",\"\",null,\"Start Table\"]",
+              "occurrence": 1,
+              "label": "Start Table",
+              "variant": "native",
+              "classes": [
+                "ui-button",
+                "ui-button-native",
+                "ui-button-md",
+                "lf-primary-button"
+              ],
+              "visible": true,
+              "blockedByModal": false,
+              "inPage": true,
+              "disabled": false,
+              "loading": false,
+              "surface": false
+            }
+          ],
+          "button": "Close dialog",
+          "variant": "icon",
+          "state": "focus"
+        },
+        {
+          "theme": "light",
+          "width": 375,
+          "route": "/",
+          "steps": [
+            {
+              "index": 31,
+              "key": "[\"BUTTON\",\"\",\"\",null,\"Start Table\"]",
+              "occurrence": 1,
+              "label": "Start Table",
+              "variant": "native",
+              "classes": [
+                "ui-button",
+                "ui-button-native",
+                "ui-button-md",
+                "lf-primary-button"
+              ],
+              "visible": true,
+              "blockedByModal": false,
+              "inPage": true,
+              "disabled": false,
+              "loading": false,
+              "surface": false
+            }
+          ],
+          "button": "Close dialog",
+          "variant": "icon",
+          "state": "hover"
+        },
+        {
+          "theme": "light",
+          "width": 375,
+          "route": "/",
+          "steps": [
+            {
+              "index": 31,
+              "key": "[\"BUTTON\",\"\",\"\",null,\"Start Table\"]",
+              "occurrence": 1,
+              "label": "Start Table",
+              "variant": "native",
+              "classes": [
+                "ui-button",
+                "ui-button-native",
+                "ui-button-md",
+                "lf-primary-button"
+              ],
+              "visible": true,
+              "blockedByModal": false,
+              "inPage": true,
+              "disabled": false,
+              "loading": false,
+              "surface": false
+            }
+          ],
+          "button": "Close dialog",
+          "variant": "icon",
+          "state": "pressed"
+        },
+        {
+          "theme": "light",
+          "width": 375,
+          "route": "/",
+          "steps": [
+            {
+              "index": 37,
+              "key": "[\"BUTTON\",\"\",\"\",null,\"Food\"]",
+              "occurrence": 0,
+              "label": "Food",
+              "variant": "native",
+              "classes": [
+                "ui-button",
+                "ui-button-native",
+                "ui-button-md"
+              ],
+              "visible": true,
+              "blockedByModal": false,
+              "inPage": true,
+              "disabled": false,
+              "loading": false,
+              "surface": false
+            }
+          ],
+          "button": "Add Food to Session",
+          "variant": "native",
+          "state": "disabled"
+        }
+      ],
+      "missing": [
+        {
+          "variant": "icon",
+          "state": "loading",
+          "status": "not-naturally-observed"
+        },
+        {
+          "variant": "icon",
+          "state": "disabled",
+          "status": "not-naturally-observed"
+        }
+      ]
+    },
+    {
+      "theme": "dark",
+      "width": 1440,
+      "path": "/Users/shivanshgupta/.codex/worktrees/player-start-flow/billiards-bms:HSR/docs/deployment-ui-completion/final-completion/buttons/button-states-dark-1440.png",
+      "samples": [
+        {
+          "theme": "dark",
+          "width": 1440,
+          "route": "/live-floor",
+          "steps": [],
+          "button": "Food",
+          "variant": "native",
+          "state": "default"
+        },
+        {
+          "theme": "dark",
+          "width": 1440,
+          "route": "/live-floor",
+          "steps": [],
+          "button": "Food",
+          "variant": "native",
+          "state": "focus"
+        },
+        {
+          "theme": "dark",
+          "width": 1440,
+          "route": "/live-floor",
+          "steps": [],
+          "button": "Food",
+          "variant": "native",
+          "state": "hover"
+        },
+        {
+          "theme": "dark",
+          "width": 1440,
+          "route": "/live-floor",
+          "steps": [],
+          "button": "Food",
+          "variant": "native",
+          "state": "pressed"
+        },
+        {
+          "theme": "dark",
+          "width": 1440,
+          "route": "/live-floor",
+          "steps": [
+            {
+              "kind": "safe-opener",
+              "selector": ".lf-table-card[role=\"group\"]",
+              "label": "Pool Available",
+              "key": "Pool Available",
+              "occurrence": 0
+            }
+          ],
+          "button": "Close panel",
+          "variant": "icon",
+          "state": "default"
+        },
+        {
+          "theme": "dark",
+          "width": 1440,
+          "route": "/live-floor",
+          "steps": [
+            {
+              "kind": "safe-opener",
+              "selector": ".lf-table-card[role=\"group\"]",
+              "label": "Pool Available",
+              "key": "Pool Available",
+              "occurrence": 0
+            }
+          ],
+          "button": "Close panel",
+          "variant": "icon",
+          "state": "focus"
+        },
+        {
+          "theme": "dark",
+          "width": 1440,
+          "route": "/live-floor",
+          "steps": [
+            {
+              "kind": "safe-opener",
+              "selector": ".lf-table-card[role=\"group\"]",
+              "label": "Pool Available",
+              "key": "Pool Available",
+              "occurrence": 0
+            }
+          ],
+          "button": "Close panel",
+          "variant": "icon",
+          "state": "hover"
+        },
+        {
+          "theme": "dark",
+          "width": 1440,
+          "route": "/live-floor",
+          "steps": [
+            {
+              "kind": "safe-opener",
+              "selector": ".lf-table-card[role=\"group\"]",
+              "label": "Pool Available",
+              "key": "Pool Available",
+              "occurrence": 0
+            }
+          ],
+          "button": "Close panel",
+          "variant": "icon",
+          "state": "pressed"
+        },
+        {
+          "theme": "dark",
+          "width": 1440,
+          "route": "/live-floor",
+          "steps": [
+            {
+              "kind": "safe-opener",
+              "selector": ".lf-table-card[role=\"group\"]",
+              "label": "Pool Available",
+              "key": "Pool Available",
+              "occurrence": 0
+            }
+          ],
+          "button": "Learn more",
+          "variant": "ghost",
+          "state": "default"
+        },
+        {
+          "theme": "dark",
+          "width": 1440,
+          "route": "/live-floor",
+          "steps": [
+            {
+              "kind": "safe-opener",
+              "selector": ".lf-table-card[role=\"group\"]",
+              "label": "Pool Available",
+              "key": "Pool Available",
+              "occurrence": 0
+            }
+          ],
+          "button": "Learn more",
+          "variant": "ghost",
+          "state": "focus"
+        },
+        {
+          "theme": "dark",
+          "width": 1440,
+          "route": "/live-floor",
+          "steps": [
+            {
+              "kind": "safe-opener",
+              "selector": ".lf-table-card[role=\"group\"]",
+              "label": "Pool Available",
+              "key": "Pool Available",
+              "occurrence": 0
+            }
+          ],
+          "button": "Learn more",
+          "variant": "ghost",
+          "state": "hover"
+        },
+        {
+          "theme": "dark",
+          "width": 1440,
+          "route": "/live-floor",
+          "steps": [
+            {
+              "kind": "safe-opener",
+              "selector": ".lf-table-card[role=\"group\"]",
+              "label": "Pool Available",
+              "key": "Pool Available",
+              "occurrence": 0
+            }
+          ],
+          "button": "Learn more",
+          "variant": "ghost",
+          "state": "pressed"
+        }
+      ],
+      "missing": [
+        {
+          "variant": "native",
+          "state": "loading",
+          "status": "not-naturally-observed"
+        },
+        {
+          "variant": "native",
+          "state": "disabled",
+          "status": "not-naturally-observed"
+        },
+        {
+          "variant": "icon",
+          "state": "loading",
+          "status": "not-naturally-observed"
+        },
+        {
+          "variant": "icon",
+          "state": "disabled",
+          "status": "not-naturally-observed"
+        },
+        {
+          "variant": "ghost",
+          "state": "loading",
+          "status": "not-naturally-observed"
+        },
+        {
+          "variant": "ghost",
+          "state": "disabled",
+          "status": "not-naturally-observed"
+        }
+      ]
+    },
+    {
+      "theme": "dark",
+      "width": 375,
+      "path": "/Users/shivanshgupta/.codex/worktrees/player-start-flow/billiards-bms:HSR/docs/deployment-ui-completion/final-completion/buttons/button-states-dark-375.png",
+      "samples": [
+        {
+          "theme": "dark",
+          "width": 375,
+          "route": "/live-floor",
+          "steps": [
+            {
+              "index": 33,
+              "key": "[\"BUTTON\",\"\",\"\",null,\"T2 needs billing review\"]",
+              "occurrence": 0,
+              "label": "T2 needs billing review",
+              "variant": "native",
+              "classes": [
+                "ui-button",
+                "ui-button-native",
+                "ui-button-md"
+              ],
+              "visible": true,
+              "blockedByModal": false,
+              "inPage": true,
+              "disabled": false,
+              "loading": false,
+              "surface": false
+            }
+          ],
+          "button": "Move Session",
+          "variant": "native",
+          "state": "disabled"
+        },
+        {
+          "theme": "dark",
+          "width": 375,
+          "route": "/legacy-table-controls",
+          "steps": [],
+          "button": "Add Walk-in",
+          "variant": "native",
+          "state": "default"
+        },
+        {
+          "theme": "dark",
+          "width": 375,
+          "route": "/legacy-table-controls",
+          "steps": [],
+          "button": "Add Walk-in",
+          "variant": "native",
+          "state": "focus"
+        },
+        {
+          "theme": "dark",
+          "width": 375,
+          "route": "/legacy-table-controls",
+          "steps": [],
+          "button": "Add Walk-in",
+          "variant": "native",
+          "state": "hover"
+        },
+        {
+          "theme": "dark",
+          "width": 375,
+          "route": "/legacy-table-controls",
+          "steps": [],
+          "button": "Add Walk-in",
+          "variant": "native",
+          "state": "pressed"
+        },
+        {
+          "theme": "dark",
+          "width": 375,
+          "route": "/legacy-table-controls",
+          "steps": [
+            {
+              "index": 40,
+              "key": "[\"BUTTON\",\"\",\"\",null,\"Start Table\"]",
+              "occurrence": 2,
+              "label": "Start Table",
+              "variant": "native",
+              "classes": [
+                "ui-button",
+                "ui-button-native",
+                "ui-button-md",
+                "table-state-primary"
+              ],
+              "visible": true,
+              "blockedByModal": false,
+              "inPage": true,
+              "disabled": false,
+              "loading": false,
+              "surface": false
+            }
+          ],
+          "button": "T4 · SNOOKER · ₹ 270 /hr",
+          "variant": "secondary",
+          "state": "default"
+        },
+        {
+          "theme": "dark",
+          "width": 375,
+          "route": "/legacy-table-controls",
+          "steps": [
+            {
+              "index": 40,
+              "key": "[\"BUTTON\",\"\",\"\",null,\"Start Table\"]",
+              "occurrence": 2,
+              "label": "Start Table",
+              "variant": "native",
+              "classes": [
+                "ui-button",
+                "ui-button-native",
+                "ui-button-md",
+                "table-state-primary"
+              ],
+              "visible": true,
+              "blockedByModal": false,
+              "inPage": true,
+              "disabled": false,
+              "loading": false,
+              "surface": false
+            }
+          ],
+          "button": "T4 · SNOOKER · ₹ 270 /hr",
+          "variant": "secondary",
+          "state": "focus"
+        },
+        {
+          "theme": "dark",
+          "width": 375,
+          "route": "/legacy-table-controls",
+          "steps": [
+            {
+              "index": 40,
+              "key": "[\"BUTTON\",\"\",\"\",null,\"Start Table\"]",
+              "occurrence": 2,
+              "label": "Start Table",
+              "variant": "native",
+              "classes": [
+                "ui-button",
+                "ui-button-native",
+                "ui-button-md",
+                "table-state-primary"
+              ],
+              "visible": true,
+              "blockedByModal": false,
+              "inPage": true,
+              "disabled": false,
+              "loading": false,
+              "surface": false
+            }
+          ],
+          "button": "T4 · SNOOKER · ₹ 270 /hr",
+          "variant": "secondary",
+          "state": "hover"
+        },
+        {
+          "theme": "dark",
+          "width": 375,
+          "route": "/legacy-table-controls",
+          "steps": [
+            {
+              "index": 40,
+              "key": "[\"BUTTON\",\"\",\"\",null,\"Start Table\"]",
+              "occurrence": 2,
+              "label": "Start Table",
+              "variant": "native",
+              "classes": [
+                "ui-button",
+                "ui-button-native",
+                "ui-button-md",
+                "table-state-primary"
+              ],
+              "visible": true,
+              "blockedByModal": false,
+              "inPage": true,
+              "disabled": false,
+              "loading": false,
+              "surface": false
+            }
+          ],
+          "button": "T4 · SNOOKER · ₹ 270 /hr",
+          "variant": "secondary",
+          "state": "pressed"
+        }
+      ],
+      "missing": [
+        {
+          "variant": "native",
+          "state": "loading",
+          "status": "not-naturally-observed"
+        },
+        {
+          "variant": "secondary",
+          "state": "loading",
+          "status": "not-naturally-observed"
+        },
+        {
+          "variant": "secondary",
+          "state": "disabled",
+          "status": "not-naturally-observed"
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "limitations": [
+    "Feedback is not business success. Writes receive a deliberate HTTP 409 after 700ms; transient loading can pass feedback while action remains blocked.",
+    "Action-outcome observations stop at the configured outcomeMs window; an incomplete request is not called successful. The in-page feedback deadline remains 200ms regardless of that window.",
+    "GET /bookings and GET /sessions/quote/<id> are allowed only on API8006 against the operator-isolated sqlite:////tmp/hsr-session-close-ui.db. These GETs may reconcile QA state, including booking expiry and session-key initialization; zero local DB side effects are not asserted.",
+    "All browser POST/PUT/PATCH/DELETE requests, including checkout preview and all settlement/business writes, are blocked. Local QA login via Node fetch is the sole POST exception.",
+    "Only rendered buttons are inventoried; offscreen buttons are scrolled into view. Hidden controls, unavailable records, disabled controls and bounded exploration are reported, not passed.",
+    "No form filling, business fixtures, synthetic component states or seeded records. Overlay/menu exploration defaults to depth 1 and six states per route/configuration (including default); limit exclusions are explicit. Replay blocks business write methods but permits approved QA GET reconciliation.",
+    "The optional page/shell scopes partition initial controls: shared navigation must be tested separately, not inferred as a per-page click. Page scope includes each route-specific topbar action. Revealed dialogs and menus remain included.",
+    "Optional reminder isolation replaces only the local alerts read with an empty browser response, preserving its config. Reminder behavior/layering is verified separately; obscured controls are not called unresponsive. Retry runs cover only the prior report's failed/unmeasured controls.",
+    "Press feedback compares painted computed properties against settled hover, not :active membership. Click DOM feedback ignores arbitrary clock text and unrelated attribute changes.",
+    "Focus images use keyboard modality plus direct focus, not a complete keyboard-navigation audit. Screenshot sheets contain actual button crops, not whole-page evidence.",
+    "Service workers, WebSockets, SSE and external assets are blocked; live-sync fallback may differ from an unrestricted browser."
+  ],
+  "finishedAt": "2026-11-06T21:57:08.680Z",
+  "summary": {
+    "routes": 3,
+    "degradedScreens": 0,
+    "buttons": 14,
+    "feedback": {
+      "pass": 12,
+      "disabled": 2
+    },
+    "actionOutcomes": {
+      "no-action-outcome-observed": 4,
+      "mutation-blocked": 2,
+      "local-dom-response-observed": 6,
+      "disabled-not-invoked": 2
+    },
+    "exclusions": 5,
+    "screenshots": 4,
+    "businessSuccessClaims": 0
+  }
+}

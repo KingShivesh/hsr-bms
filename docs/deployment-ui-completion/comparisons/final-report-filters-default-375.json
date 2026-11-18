@@ -1,0 +1,41 @@
+{
+  "legend": "Before left, after right; light above dark. Original pixels, first 1000px of tall captures. Full source captures retained.",
+  "sources": [
+    {
+      "theme": "light",
+      "stage": "before",
+      "path": "final-completion/full-regression/reports-customers/after/light-375-default.png",
+      "sha256": "d05b3777727e308cfc8e772335fdc42a5a0bbe6fb8f80227e931535c452978cb",
+      "width": 375,
+      "height": 1280,
+      "croppedHeight": 1000
+    },
+    {
+      "theme": "light",
+      "stage": "after",
+      "path": "final-completion/release-matrix-final/reports-customers/after/light-375-default.png",
+      "sha256": "d8b4c0ad133c42fa45bcacae07345bb1da00de996df497af9d973cc8ed3df618",
+      "width": 375,
+      "height": 1318,
+      "croppedHeight": 1000
+    },
+    {
+      "theme": "dark",
+      "stage": "before",
+      "path": "final-completion/full-regression/reports-customers/after/dark-375-default.png",
+      "sha256": "b614c37ee8349a795be7c136124105cfac703ba1915fe19b819a68b4797a1e73",
+      "width": 375,
+      "height": 1280,
+      "croppedHeight": 1000
+    },
+    {
+      "theme": "dark",
+      "stage": "after",
+      "path": "final-completion/release-matrix-final/reports-customers/after/dark-375-default.png",
+      "sha256": "02e6c7f460bcfc54e806c5a5548a2930e72cedf62c3e7620b028576257adeeb5",
+      "width": 375,
+      "height": 1318,
+      "croppedHeight": 1000
+    }
+  ]
+}

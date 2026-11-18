@@ -1,0 +1,567 @@
+{
+  "stage": "before",
+  "cases": [
+    {
+      "role": "admin",
+      "theme": "light",
+      "width": 375,
+      "initialVisible": true,
+      "initialBounds": [
+        {
+          "label": "Status",
+          "right": 53.671875,
+          "sidebarRight": 64,
+          "excess": 0
+        },
+        {
+          "label": "Changelog",
+          "right": 66.421875,
+          "sidebarRight": 64,
+          "excess": 2.421875
+        }
+      ],
+      "expandedBounds": [
+        {
+          "label": "Status",
+          "right": 146.421875,
+          "sidebarRight": 288,
+          "excess": 0
+        },
+        {
+          "label": "Changelog",
+          "right": 224.265625,
+          "sidebarRight": 288,
+          "excess": 0
+        }
+      ],
+      "error": "locator.click: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Expand navigation', exact: true })\u001b[22m\n"
+    },
+    {
+      "role": "admin",
+      "theme": "light",
+      "width": 768,
+      "initialVisible": true,
+      "initialBounds": [
+        {
+          "label": "Status",
+          "right": 44.34375,
+          "sidebarRight": 64,
+          "excess": 0
+        },
+        {
+          "label": "Changelog",
+          "right": 69.84375,
+          "sidebarRight": 64,
+          "excess": 5.84375
+        }
+      ],
+      "expandedBounds": [
+        {
+          "label": "Status",
+          "right": 43.34375,
+          "sidebarRight": 82.9375,
+          "excess": 0
+        },
+        {
+          "label": "Changelog",
+          "right": 68.84375,
+          "sidebarRight": 82.9375,
+          "excess": 0
+        }
+      ],
+      "error": "locator.click: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Expand navigation', exact: true })\u001b[22m\n"
+    },
+    {
+      "role": "admin",
+      "theme": "light",
+      "width": 1024,
+      "initialVisible": true,
+      "initialBounds": [
+        {
+          "label": "Status",
+          "right": 83.703125,
+          "sidebarRight": 288,
+          "excess": 0
+        },
+        {
+          "label": "Changelog",
+          "right": 161.546875,
+          "sidebarRight": 288,
+          "excess": 0
+        }
+      ],
+      "expandedBounds": [
+        {
+          "label": "Status",
+          "right": 83.703125,
+          "sidebarRight": 288,
+          "excess": 0
+        },
+        {
+          "label": "Changelog",
+          "right": 161.546875,
+          "sidebarRight": 288,
+          "excess": 0
+        }
+      ],
+      "navigation": true
+    },
+    {
+      "role": "admin",
+      "theme": "light",
+      "width": 1440,
+      "initialVisible": true,
+      "initialBounds": [
+        {
+          "label": "Status",
+          "right": 83.703125,
+          "sidebarRight": 288,
+          "excess": 0
+        },
+        {
+          "label": "Changelog",
+          "right": 161.546875,
+          "sidebarRight": 288,
+          "excess": 0
+        }
+      ],
+      "expandedBounds": [
+        {
+          "label": "Status",
+          "right": 83.703125,
+          "sidebarRight": 288,
+          "excess": 0
+        },
+        {
+          "label": "Changelog",
+          "right": 161.546875,
+          "sidebarRight": 288,
+          "excess": 0
+        }
+      ],
+      "navigation": true
+    },
+    {
+      "role": "admin",
+      "theme": "dark",
+      "width": 375,
+      "initialVisible": true,
+      "initialBounds": [
+        {
+          "label": "Status",
+          "right": 53.671875,
+          "sidebarRight": 64,
+          "excess": 0
+        },
+        {
+          "label": "Changelog",
+          "right": 66.421875,
+          "sidebarRight": 64,
+          "excess": 2.421875
+        }
+      ],
+      "expandedBounds": [
+        {
+          "label": "Status",
+          "right": 63.078125,
+          "sidebarRight": 82.8125,
+          "excess": 0
+        },
+        {
+          "label": "Changelog",
+          "right": 75.828125,
+          "sidebarRight": 82.8125,
+          "excess": 0
+        }
+      ],
+      "error": "locator.click: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Expand navigation', exact: true })\u001b[22m\n"
+    },
+    {
+      "role": "admin",
+      "theme": "dark",
+      "width": 768,
+      "initialVisible": true,
+      "initialBounds": [
+        {
+          "label": "Status",
+          "right": 44.34375,
+          "sidebarRight": 64,
+          "excess": 0
+        },
+        {
+          "label": "Changelog",
+          "right": 69.84375,
+          "sidebarRight": 64,
+          "excess": 5.84375
+        }
+      ],
+      "expandedBounds": [
+        {
+          "label": "Status",
+          "right": 43.34375,
+          "sidebarRight": 82.8125,
+          "excess": 0
+        },
+        {
+          "label": "Changelog",
+          "right": 68.84375,
+          "sidebarRight": 82.8125,
+          "excess": 0
+        }
+      ],
+      "error": "locator.click: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Expand navigation', exact: true })\u001b[22m\n"
+    },
+    {
+      "role": "admin",
+      "theme": "dark",
+      "width": 1024,
+      "initialVisible": true,
+      "initialBounds": [
+        {
+          "label": "Status",
+          "right": 83.703125,
+          "sidebarRight": 288,
+          "excess": 0
+        },
+        {
+          "label": "Changelog",
+          "right": 161.546875,
+          "sidebarRight": 288,
+          "excess": 0
+        }
+      ],
+      "expandedBounds": [
+        {
+          "label": "Status",
+          "right": 83.703125,
+          "sidebarRight": 288,
+          "excess": 0
+        },
+        {
+          "label": "Changelog",
+          "right": 161.546875,
+          "sidebarRight": 288,
+          "excess": 0
+        }
+      ],
+      "navigation": true
+    },
+    {
+      "role": "admin",
+      "theme": "dark",
+      "width": 1440,
+      "initialVisible": true,
+      "initialBounds": [
+        {
+          "label": "Status",
+          "right": 83.703125,
+          "sidebarRight": 288,
+          "excess": 0
+        },
+        {
+          "label": "Changelog",
+          "right": 161.546875,
+          "sidebarRight": 288,
+          "excess": 0
+        }
+      ],
+      "expandedBounds": [
+        {
+          "label": "Status",
+          "right": 83.703125,
+          "sidebarRight": 288,
+          "excess": 0
+        },
+        {
+          "label": "Changelog",
+          "right": 161.546875,
+          "sidebarRight": 288,
+          "excess": 0
+        }
+      ],
+      "navigation": true
+    },
+    {
+      "role": "staff",
+      "theme": "light",
+      "width": 375,
+      "initialVisible": true,
+      "initialBounds": [
+        {
+          "label": "Status",
+          "right": 53.671875,
+          "sidebarRight": 64,
+          "excess": 0
+        },
+        {
+          "label": "Changelog",
+          "right": 66.421875,
+          "sidebarRight": 64,
+          "excess": 2.421875
+        }
+      ],
+      "expandedBounds": [
+        {
+          "label": "Status",
+          "right": 53.671875,
+          "sidebarRight": 64,
+          "excess": 0
+        },
+        {
+          "label": "Changelog",
+          "right": 66.421875,
+          "sidebarRight": 64,
+          "excess": 2.421875
+        }
+      ],
+      "error": "locator.click: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Expand navigation', exact: true })\u001b[22m\n"
+    },
+    {
+      "role": "staff",
+      "theme": "light",
+      "width": 768,
+      "initialVisible": true,
+      "initialBounds": [
+        {
+          "label": "Status",
+          "right": 44.34375,
+          "sidebarRight": 64,
+          "excess": 0
+        },
+        {
+          "label": "Changelog",
+          "right": 69.84375,
+          "sidebarRight": 64,
+          "excess": 5.84375
+        }
+      ],
+      "expandedBounds": [
+        {
+          "label": "Status",
+          "right": 43.34375,
+          "sidebarRight": 82.8125,
+          "excess": 0
+        },
+        {
+          "label": "Changelog",
+          "right": 68.84375,
+          "sidebarRight": 82.8125,
+          "excess": 0
+        }
+      ],
+      "error": "locator.click: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Expand navigation', exact: true })\u001b[22m\n"
+    },
+    {
+      "role": "staff",
+      "theme": "light",
+      "width": 1024,
+      "initialVisible": true,
+      "initialBounds": [
+        {
+          "label": "Status",
+          "right": 83.703125,
+          "sidebarRight": 288,
+          "excess": 0
+        },
+        {
+          "label": "Changelog",
+          "right": 161.546875,
+          "sidebarRight": 288,
+          "excess": 0
+        }
+      ],
+      "expandedBounds": [
+        {
+          "label": "Status",
+          "right": 83.703125,
+          "sidebarRight": 288,
+          "excess": 0
+        },
+        {
+          "label": "Changelog",
+          "right": 161.546875,
+          "sidebarRight": 288,
+          "excess": 0
+        }
+      ],
+      "navigation": true
+    },
+    {
+      "role": "staff",
+      "theme": "light",
+      "width": 1440,
+      "initialVisible": true,
+      "initialBounds": [
+        {
+          "label": "Status",
+          "right": 83.703125,
+          "sidebarRight": 288,
+          "excess": 0
+        },
+        {
+          "label": "Changelog",
+          "right": 161.546875,
+          "sidebarRight": 288,
+          "excess": 0
+        }
+      ],
+      "expandedBounds": [
+        {
+          "label": "Status",
+          "right": 83.703125,
+          "sidebarRight": 288,
+          "excess": 0
+        },
+        {
+          "label": "Changelog",
+          "right": 161.546875,
+          "sidebarRight": 288,
+          "excess": 0
+        }
+      ],
+      "navigation": true
+    },
+    {
+      "role": "staff",
+      "theme": "dark",
+      "width": 375,
+      "initialVisible": true,
+      "initialBounds": [
+        {
+          "label": "Status",
+          "right": 53.671875,
+          "sidebarRight": 64,
+          "excess": 0
+        },
+        {
+          "label": "Changelog",
+          "right": 66.421875,
+          "sidebarRight": 64,
+          "excess": 2.421875
+        }
+      ],
+      "expandedBounds": [
+        {
+          "label": "Status",
+          "right": 63.046875,
+          "sidebarRight": 82.75,
+          "excess": 0
+        },
+        {
+          "label": "Changelog",
+          "right": 75.796875,
+          "sidebarRight": 82.75,
+          "excess": 0
+        }
+      ],
+      "error": "locator.click: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Expand navigation', exact: true })\u001b[22m\n"
+    },
+    {
+      "role": "staff",
+      "theme": "dark",
+      "width": 768,
+      "initialVisible": true,
+      "initialBounds": [
+        {
+          "label": "Status",
+          "right": 44.34375,
+          "sidebarRight": 64,
+          "excess": 0
+        },
+        {
+          "label": "Changelog",
+          "right": 69.84375,
+          "sidebarRight": 64,
+          "excess": 5.84375
+        }
+      ],
+      "expandedBounds": [
+        {
+          "label": "Status",
+          "right": 43.34375,
+          "sidebarRight": 82.75,
+          "excess": 0
+        },
+        {
+          "label": "Changelog",
+          "right": 68.84375,
+          "sidebarRight": 82.75,
+          "excess": 0
+        }
+      ],
+      "error": "locator.click: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Expand navigation', exact: true })\u001b[22m\n"
+    },
+    {
+      "role": "staff",
+      "theme": "dark",
+      "width": 1024,
+      "initialVisible": true,
+      "initialBounds": [
+        {
+          "label": "Status",
+          "right": 83.703125,
+          "sidebarRight": 288,
+          "excess": 0
+        },
+        {
+          "label": "Changelog",
+          "right": 161.546875,
+          "sidebarRight": 288,
+          "excess": 0
+        }
+      ],
+      "expandedBounds": [
+        {
+          "label": "Status",
+          "right": 83.703125,
+          "sidebarRight": 288,
+          "excess": 0
+        },
+        {
+          "label": "Changelog",
+          "right": 161.546875,
+          "sidebarRight": 288,
+          "excess": 0
+        }
+      ],
+      "navigation": true
+    },
+    {
+      "role": "staff",
+      "theme": "dark",
+      "width": 1440,
+      "initialVisible": true,
+      "initialBounds": [
+        {
+          "label": "Status",
+          "right": 83.703125,
+          "sidebarRight": 288,
+          "excess": 0
+        },
+        {
+          "label": "Changelog",
+          "right": 161.546875,
+          "sidebarRight": 288,
+          "excess": 0
+        }
+      ],
+      "expandedBounds": [
+        {
+          "label": "Status",
+          "right": 83.703125,
+          "sidebarRight": 288,
+          "excess": 0
+        },
+        {
+          "label": "Changelog",
+          "right": 161.546875,
+          "sidebarRight": 288,
+          "excess": 0
+        }
+      ],
+      "navigation": true
+    }
+  ],
+  "blockedWrites": [],
+  "scope": "Local read-only navigation, no business writes"
+}

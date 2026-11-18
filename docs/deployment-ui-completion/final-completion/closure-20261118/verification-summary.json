@@ -1,0 +1,678 @@
+{
+  "verifiedAt": "2026-11-18T15:15:54.535Z",
+  "closureSteps": [
+    {
+      "name": "overlays",
+      "status": 0
+    },
+    {
+      "name": "main-pages",
+      "status": 0,
+      "start": "2026-11-18T14:07:34.747Z",
+      "finished": "2026-11-18T14:09:53.657Z"
+    },
+    {
+      "name": "navigation-retry",
+      "status": 0,
+      "start": "2026-11-18T14:09:53.660Z",
+      "finished": "2026-11-18T14:10:19.742Z"
+    },
+    {
+      "name": "contrast",
+      "status": 0,
+      "start": "2026-11-18T14:10:19.742Z",
+      "finished": "2026-11-18T14:13:14.607Z"
+    },
+    {
+      "name": "dialogs",
+      "status": 0,
+      "start": "2026-11-18T14:13:14.607Z",
+      "finished": "2026-11-18T14:15:13.399Z"
+    },
+    {
+      "name": "source-contract",
+      "status": 0,
+      "start": "2026-11-18T14:15:13.400Z",
+      "finished": "2026-11-18T14:15:14.197Z"
+    },
+    {
+      "name": "lint",
+      "status": 0,
+      "start": "2026-11-18T14:15:14.197Z",
+      "finished": "2026-11-18T14:15:21.055Z"
+    },
+    {
+      "name": "theme",
+      "status": 0,
+      "start": "2026-11-18T14:15:21.056Z",
+      "finished": "2026-11-18T14:15:21.287Z"
+    },
+    {
+      "name": "token-preservation",
+      "status": 0,
+      "start": "2026-11-18T14:15:21.287Z",
+      "finished": "2026-11-18T14:15:21.402Z"
+    }
+  ],
+  "memberFeedback": {
+    "cases": 16,
+    "minMs": 27.19999998807907,
+    "maxMs": 30.299999982118607
+  },
+  "strictContrast": {
+    "routes": 21,
+    "violations": 0,
+    "errors": 0
+  },
+  "sourceFingerprint": "d785465bd460dcbc834b3879af9525103bbfa7b89db142b4cbdc55923fe72fed",
+  "sources": [
+    {
+      "path": "frontend/index.html",
+      "sha256": "cfb6b716d2d3edecf0617fc9b2bdb200052c1272095cc1d38f5b1472da149b78"
+    },
+    {
+      "path": "frontend/package-lock.json",
+      "sha256": "3d6a4c7aedc49568498946a8d813236e90c42e61acc07f8465fe162654e93fd4"
+    },
+    {
+      "path": "frontend/package.json",
+      "sha256": "bf1b849ce611a7bcda85745054464503fc0afdef5713b5a489f61804d2c0c50c"
+    },
+    {
+      "path": "frontend/src/App.jsx",
+      "sha256": "dc25eb56285905f64209af8a2469f83263f79fa1158f5ed9521e951620acbf44"
+    },
+    {
+      "path": "frontend/src/api/index.js",
+      "sha256": "2002322ab4a214ccba8ebe0f8b28681fdc8380cbd2ee4991e38ae168946b3e7c"
+    },
+    {
+      "path": "frontend/src/api/readEpoch.js",
+      "sha256": "ace3f1722148a80119e0eec546f097a8f30c45c357622becaf81ff8e3190513b"
+    },
+    {
+      "path": "frontend/src/assets/hero.png",
+      "sha256": "72a860570eddf1dd9988f26c7106c67be286bc9f2fd3303c465ce87edb1ae6cd"
+    },
+    {
+      "path": "frontend/src/components/CommandBar.jsx",
+      "sha256": "b4b38894a769bc77c17a5dc4d02776ec73e17bb513bd84a03bd50a29b719839d"
+    },
+    {
+      "path": "frontend/src/components/ConfirmDialog.jsx",
+      "sha256": "e9bba4d7ea3899d0961046c9c55a7cf26c92bb92b0c802e5e999ec8c5bf35077"
+    },
+    {
+      "path": "frontend/src/components/Dashboard.jsx",
+      "sha256": "b9720747ea35d288957c56fb9a17680d4dd479b714fa11ccfa25a01a5b66e65a"
+    },
+    {
+      "path": "frontend/src/components/Login.jsx",
+      "sha256": "e7dddf52eca9cb4ef742c85e6a9c223c45ec531504ec32b08d8508fe5d4dc7dd"
+    },
+    {
+      "path": "frontend/src/components/RetryNotice.jsx",
+      "sha256": "d0ae587ff56d252ebdcce1943ca0f1e1c604fd6375350bb21e3295afcf5dc41d"
+    },
+    {
+      "path": "frontend/src/components/RouteErrorBoundary.jsx",
+      "sha256": "d21924fd41ccd36b28663043bdecf5095e6fb6735c44977b12f1bcd973144ab6"
+    },
+    {
+      "path": "frontend/src/components/Sidebar.jsx",
+      "sha256": "36562223ee3fc696685e7780c9be3da3111e20f48fe4a9a8934dc045b69fee6d"
+    },
+    {
+      "path": "frontend/src/components/TableStateUI.jsx",
+      "sha256": "7990c1de9c7310e422782e3cce08fc7ab86c9a1e55f44fe3b8a53c8c432949d8"
+    },
+    {
+      "path": "frontend/src/components/TableStatusCard.jsx",
+      "sha256": "0c88a83ed39ea15de16339a5ec84c6ec31d281bf7ee8e55c5b2ecb7a71346ce1"
+    },
+    {
+      "path": "frontend/src/components/Toast.jsx",
+      "sha256": "a703c9c7ec1fa15855f236ee12cc941434496306101979de5028cbe9ff53b7a2"
+    },
+    {
+      "path": "frontend/src/components/Topbar.jsx",
+      "sha256": "2ceb5a80c86a5f47665d055dd44b91d9162515c80fdb25b6f0dd68b641eb1c23"
+    },
+    {
+      "path": "frontend/src/components/confirmContext.js",
+      "sha256": "9a493a894eee73f1f3cdf7f727cbe3c4ce67dbccdb9c9f810632b83f5e94a170"
+    },
+    {
+      "path": "frontend/src/components/tabs/ClosingTab.jsx",
+      "sha256": "be70a09d35853a8688851ecb57c744edcb6294da4c3c4b77c32c378830013803"
+    },
+    {
+      "path": "frontend/src/components/tabs/ClubSuiteTab.jsx",
+      "sha256": "2074e26bbe4743269ee74355ca40d8468586c4cb20d716400d346538a70ef0bd"
+    },
+    {
+      "path": "frontend/src/components/tabs/FoodTab.jsx",
+      "sha256": "d8a881482b3d8711a0cf667fb9a72718ac18b7fef7b9ddaf967b67e49cdf1dc4"
+    },
+    {
+      "path": "frontend/src/components/tabs/OperationsTab.jsx",
+      "sha256": "6ed99e5c0c615b237d9d65b61d079045b6f3ed138e8eef51eb4b89d4044d4688"
+    },
+    {
+      "path": "frontend/src/components/tabs/ReportsTab.jsx",
+      "sha256": "f421559404d776c7119e33f77f7a61ea6cbb8af6446db1f359d40fd96180b1bb"
+    },
+    {
+      "path": "frontend/src/components/tabs/SettingsTab.jsx",
+      "sha256": "c62be910a100e0a005914ec3b854f241df1c3d4752becd656c36fe6efb8fc81c"
+    },
+    {
+      "path": "frontend/src/components/tabs/TableDialogs.jsx",
+      "sha256": "e32c9854479ccf3f701e6c97200decb5a0516eec4fec80224a97d7b1c00b81d2"
+    },
+    {
+      "path": "frontend/src/components/tabs/TablesTab.jsx",
+      "sha256": "a07b8cf942d50ef2ec3e820aa512c231b83cb207dee2e1f37707648332781c72"
+    },
+    {
+      "path": "frontend/src/components/tabs/TournamentTab.jsx",
+      "sha256": "3be09d98cecc7e82cfef5ff6322924df6104af1b5730ff867feb294e77669a59"
+    },
+    {
+      "path": "frontend/src/components/toastContext.js",
+      "sha256": "436b289e543392cb729be5745de641a894a2943a6d84b0825e421bac496a0442"
+    },
+    {
+      "path": "frontend/src/components/ui/Badge.jsx",
+      "sha256": "db343546478e05a0363782af772bdbcc673719ff4a8aab1c8226fc5f19c4e62d"
+    },
+    {
+      "path": "frontend/src/components/ui/Button.jsx",
+      "sha256": "9c93028b1fe40acd565a1401228517f5ed8613470f936771db82a0898d79a551"
+    },
+    {
+      "path": "frontend/src/components/ui/Card.jsx",
+      "sha256": "0d0878134c3bd5d1ff38b37bbbde84afb1bca4bf78976d30b3813094ee06cbbc"
+    },
+    {
+      "path": "frontend/src/components/ui/Checkbox.jsx",
+      "sha256": "969115ab13dba0c2c2b13dbdc668df38a4dba1ea5df7fabf588f36c037c920a0"
+    },
+    {
+      "path": "frontend/src/components/ui/DataDisplay.jsx",
+      "sha256": "a18a34a4e0318748c785e00bb7e53e138362c33f9b0e2b2635e60f32163da0eb"
+    },
+    {
+      "path": "frontend/src/components/ui/DataTable.jsx",
+      "sha256": "892dc9e14491d866c467a4b3498f9e61064e5aeaffb81664055dea93a57cbc01"
+    },
+    {
+      "path": "frontend/src/components/ui/Disclosure.jsx",
+      "sha256": "7f6f9771fb2adbaee34750c01cc98559b05a08d484e77913c6f3f31b5b54d8e8"
+    },
+    {
+      "path": "frontend/src/components/ui/Dropdown.jsx",
+      "sha256": "97df4653dcc1598ca682ca7b91ab4e895cf1f9c15e3cd98eb2ea6368566f9eee"
+    },
+    {
+      "path": "frontend/src/components/ui/EmptyState.jsx",
+      "sha256": "916d608618da189cb4d7ca56d5fe0e9ddf42beb412f829a242cbf299a4c858c3"
+    },
+    {
+      "path": "frontend/src/components/ui/Feedback.jsx",
+      "sha256": "56e02dab66f25cdb4ad5b0202911439b21f5a47c427c8ea20c535c9f40e9ef22"
+    },
+    {
+      "path": "frontend/src/components/ui/Field.jsx",
+      "sha256": "f44ac5410086e982fb7b9a27c85b048cb25d7e48d5e0e71864280b18b23084f1"
+    },
+    {
+      "path": "frontend/src/components/ui/Icon.jsx",
+      "sha256": "1e73be4853bafdda3adf40339101f5f66909cf7a2caf09d48b35b47ecdd8f659"
+    },
+    {
+      "path": "frontend/src/components/ui/Layout.jsx",
+      "sha256": "6c0c038cbc2ce6d31ff5d3c96d6d73014dee88252413c93e8c5c20fde5e4cf96"
+    },
+    {
+      "path": "frontend/src/components/ui/Overlay.jsx",
+      "sha256": "72f44957adc9aaa23dec189f0f8e8686211e4b01157ade9691056725cc9ac1b6"
+    },
+    {
+      "path": "frontend/src/components/ui/Pagination.jsx",
+      "sha256": "61277b574e4194d37a0628553f2fee77db4990193a1bdc37ac9af203efd54977"
+    },
+    {
+      "path": "frontend/src/components/ui/Switch.jsx",
+      "sha256": "1fc92aa21b2febc0b55057099550900c26bf709a0544fdd7c77c0c8c642d643a"
+    },
+    {
+      "path": "frontend/src/components/ui/Tabs.jsx",
+      "sha256": "913a14380e4b53c8ddf8901289128611fa33a194af465bffaf4f3100e7df98e7"
+    },
+    {
+      "path": "frontend/src/components/ui/TooltipHost.jsx",
+      "sha256": "d15bce7538e0c15f67e53c7a2d50a2246939e11aa2557ed52c5bb77848a20a65"
+    },
+    {
+      "path": "frontend/src/components/ui/index.js",
+      "sha256": "9436a2cbbba1b64d4ea5b72d06bf2d50c79d37fb32c6d1fbee3260f6d9c07cff"
+    },
+    {
+      "path": "frontend/src/components/ui/useDialogFocus.js",
+      "sha256": "cf91745fc66f537e41d391c617f9442cf22c99bdb23167a046a0b9eb7a6ffadb"
+    },
+    {
+      "path": "frontend/src/components/ui/useEscapeKey.js",
+      "sha256": "a35e30a004c9aea0abee8392393d8b3fb5eebe3a0a90df7714fe16400ba9f7ee"
+    },
+    {
+      "path": "frontend/src/config/hsrTables.js",
+      "sha256": "3947bd0e99caed06cf2c007fe3be5229948112b55749995e1146fde2d2148067"
+    },
+    {
+      "path": "frontend/src/config/tableStatus.js",
+      "sha256": "1deb3a06695a78bb3eaa82c691f3de45aae95a5186a4517cb83c9644e9d13b9a"
+    },
+    {
+      "path": "frontend/src/design-tokens.css",
+      "sha256": "562f12e897f13864e8df81f6e7b79b580cf04d5cbdb977fc0a5a406eafd8aa59"
+    },
+    {
+      "path": "frontend/src/features/bookings/BookingsPage.jsx",
+      "sha256": "670bd7ebb948ae8890e19bc3c0373c4f40db75b8e5b97d745768b78f75c85cac"
+    },
+    {
+      "path": "frontend/src/features/checkout/CheckoutControls.jsx",
+      "sha256": "21f369ae344c8da9c3865e9c71f7a7b1fad6756e5e792329f813908ce92968f7"
+    },
+    {
+      "path": "frontend/src/features/checkout/CheckoutPanel.jsx",
+      "sha256": "7fc843a60a83dd7de509543c50043b867f3fa6f8bd541167010d635f9675f565"
+    },
+    {
+      "path": "frontend/src/features/customers/CustomersPage.jsx",
+      "sha256": "879691d7a282521cf761b673783e42bce8ab92b06ef468457299ee59e95a4288"
+    },
+    {
+      "path": "frontend/src/features/live-floor/LiveFloor.jsx",
+      "sha256": "1469c58970f165f536fb067164e921917c1c796ee734db4cf66adf6f5e071073"
+    },
+    {
+      "path": "frontend/src/features/live-floor/TableCard.jsx",
+      "sha256": "706aa939a371b8c929bbbd7589fcde8a58868226cc76e3eb6ba95217255363dc"
+    },
+    {
+      "path": "frontend/src/features/live-floor/TableGrid.jsx",
+      "sha256": "7d5ec36c1560dd486ec54239738476735fcef36be401aed149b12bb2dfc95964"
+    },
+    {
+      "path": "frontend/src/features/live-floor/TableStatusBadge.jsx",
+      "sha256": "197c6a48192fad65bfea7d0dfbaebc0a1b1ecd8467312fbfc48a9b1d80e0a2f9"
+    },
+    {
+      "path": "frontend/src/features/live-floor/floorData.js",
+      "sha256": "b2fe39467bf1d23c6fb0f7989234eaf84c707eb2f6d910aebf4192b5d55a2f57"
+    },
+    {
+      "path": "frontend/src/features/live-floor/optimistic.js",
+      "sha256": "54784cfd72675dd44bd1353c465b6f9ca7ccbcf651f6ecd79d15a928432712a5"
+    },
+    {
+      "path": "frontend/src/features/orders/ProductSelector.jsx",
+      "sha256": "533f4ece2d8408525c2b599a88e8257ef33505379a953df2dbbc872a567f8960"
+    },
+    {
+      "path": "frontend/src/features/orders/SessionOrders.jsx",
+      "sha256": "84467218fe10c8f2367ad06eeda195385880508b1df94f03aa361507472baa07"
+    },
+    {
+      "path": "frontend/src/features/orders/session-orders.css",
+      "sha256": "fe5e0d728f27eead00d89bab34347d59d1bb1a8da707f29dd1a3a2acce6e273d"
+    },
+    {
+      "path": "frontend/src/features/sales/SalesPage.jsx",
+      "sha256": "2481a682413b297e9b88acebb9fd31ab79e9d7b26f7c2db07377a93b7a6f83e5"
+    },
+    {
+      "path": "frontend/src/features/sessions/FrameControls.jsx",
+      "sha256": "b9701161b9a5dc588a8e9b63490a9095e86b6f545560e3a113cc4cc73a3fe5c6"
+    },
+    {
+      "path": "frontend/src/features/sessions/SessionAlertsProvider.jsx",
+      "sha256": "84b31ab38e61e4a6a17951352a6f6604b027ce689cc1897e4b8bcd49e45d6823"
+    },
+    {
+      "path": "frontend/src/features/sessions/SessionControlsSettings.jsx",
+      "sha256": "4ac49b0260071ead2ea712dfcf66498ca0a06bba81f48e9759fd50c545b2f349"
+    },
+    {
+      "path": "frontend/src/features/sessions/SessionEditsReport.jsx",
+      "sha256": "9e09ecb008e625d990ea0f27ed96c08cbccf0e62fa5c16d6a28ab0dfb4b5efc9"
+    },
+    {
+      "path": "frontend/src/features/sessions/SessionIdentity.jsx",
+      "sha256": "71a69971e8fba17c95032ea922f0ebac9b5846687db654cb3c46b15e82f3dc42"
+    },
+    {
+      "path": "frontend/src/features/sessions/SessionWorkspace.jsx",
+      "sha256": "a385a60b44b19d19d84958193deec03367e5f3f06457d3861223bb110c06aba9"
+    },
+    {
+      "path": "frontend/src/features/sessions/StartSessionModal.jsx",
+      "sha256": "db99aebc8fb3596a0df1ccb170e953ede99096b5797ee75e650a32241ab864ce"
+    },
+    {
+      "path": "frontend/src/features/sessions/TariffSelector.jsx",
+      "sha256": "b70ab5f59751b69f7955dee6e59edac0a7a2d90cfe94ebf556803b0b7e120928"
+    },
+    {
+      "path": "frontend/src/features/sessions/TariffSettings.jsx",
+      "sha256": "737d0d28477839570131ffa20956e4d8ed1e9719d649788ddc1fc8ec6db762a6"
+    },
+    {
+      "path": "frontend/src/features/sessions/alertsContext.js",
+      "sha256": "05e35be6babd51ae316f764480edc8494f2507cf205dd99442df9c2af35ff2ec"
+    },
+    {
+      "path": "frontend/src/features/sessions/start-session.css",
+      "sha256": "41c182dc50ecc86c5da543df46e9a38588315d3b1d9552d14bfae086dd2b36e2"
+    },
+    {
+      "path": "frontend/src/features/sessions/tariffs.js",
+      "sha256": "28167aeadd9156b0b6f873db15c04ff3f0bb74ac39a0147e539099710d672a6a"
+    },
+    {
+      "path": "frontend/src/hooks/useCachedState.js",
+      "sha256": "8aecd028c97a2aea3519f9325f5b87cb6c4425af1078a1e29184a195de2b89d1"
+    },
+    {
+      "path": "frontend/src/hooks/useTheme.js",
+      "sha256": "cdb7b8eb2668a4477eb4ed535defd281ae455d15b72275efeca0cfc8fdb76471"
+    },
+    {
+      "path": "frontend/src/index.css",
+      "sha256": "6215bd8307ddf7c22fdb9fca97ffc20ab780b2d58cf3cd9d8a511e46e3d08caf"
+    },
+    {
+      "path": "frontend/src/interaction-polish.css",
+      "sha256": "fc1a8a76fa6187317935397079b896f17911b590971ff55e954975d56dd6d814"
+    },
+    {
+      "path": "frontend/src/legacy-presentation.css",
+      "sha256": "1a40e21f99abfb0a08b286a6f65422bed47ba9b20547e3e7a05b0ad795176625"
+    },
+    {
+      "path": "frontend/src/main.jsx",
+      "sha256": "55b96eb4a9ec843ce05a4569008fd485b2860338cbc4add2e93635bde955a7fd"
+    },
+    {
+      "path": "frontend/src/perceived-speed.css",
+      "sha256": "1428b959108f2d212c9821c9cc7df64187e15381dfeedd63b22f69a1f3994f06"
+    },
+    {
+      "path": "frontend/src/presentation.css",
+      "sha256": "e04bfc9703ab89e44b99e8bcde954286ae50bafe3ac6544fcbe7c2e7d2ee6cc7"
+    },
+    {
+      "path": "frontend/src/product/ContextHelp.jsx",
+      "sha256": "3b1aaa8736a046e275fca289bf47e0ea3a62caa325f3dcf48ab03c0f629bf0c2"
+    },
+    {
+      "path": "frontend/src/product/DataFreshness.jsx",
+      "sha256": "cd8159d99cad3209f5f385a97f94df6ebc5d1e6b100b4b09afdd530774a806fd"
+    },
+    {
+      "path": "frontend/src/product/ProductMenus.jsx",
+      "sha256": "d7704e1e747bead011923ea4d409b9700ed80ee8810dfa9db11d19b5b0abf01c"
+    },
+    {
+      "path": "frontend/src/product/ProductPages.jsx",
+      "sha256": "29ba2fda6e023041e7485bec3d179dba1c08610ca51551117b4c52147cbe2672"
+    },
+    {
+      "path": "frontend/src/product/ProductProvider.jsx",
+      "sha256": "d26b993e304e33abc5d4b98c678ad4cac2a7f96f7e9a389f23937dd6032ce570"
+    },
+    {
+      "path": "frontend/src/product/ProductSettings.jsx",
+      "sha256": "55b306ae10bf3fb60f98b51716615d591261e677be5ed3b26857a3e322a32a80"
+    },
+    {
+      "path": "frontend/src/product/TrustSignals.jsx",
+      "sha256": "be81a13ceb17024eab490268cfc78c4ff0dff1a0466d398ebca2a77fa74304f0"
+    },
+    {
+      "path": "frontend/src/product/context.js",
+      "sha256": "7efae2677424a08eab505022b1988d2f3c587d9524e075dd0d087f64109e2b1d"
+    },
+    {
+      "path": "frontend/src/product/product-shell.css",
+      "sha256": "c1d6e7b3ddafea03937bb431e72d60d5f53f976aa542cf6248049c697641706b"
+    },
+    {
+      "path": "frontend/src/realtime/connectionManager.js",
+      "sha256": "887c5a7cac0ebc9c69256a185b92882fbd061154018fb607e90c773445214a60"
+    },
+    {
+      "path": "frontend/src/realtime/useRealtimeSubscription.js",
+      "sha256": "73d317fb36097eeeac18c6e96695d4363ec291811b85237bec8943b8fa0a2aa0"
+    },
+    {
+      "path": "frontend/src/routes.js",
+      "sha256": "26d98a71b8135eb56949ac6b5528c6d9619873e8b046ed8bbc5b1b01849eeb38"
+    },
+    {
+      "path": "frontend/src/style.css",
+      "sha256": "725ec8a1d305b7def6e1b27108d9b66e9cf13f3d13138dd1fe573bdb9324cdaa"
+    },
+    {
+      "path": "frontend/src/table-states.css",
+      "sha256": "85edbbd6c47162d8308fddb21cc5a78d89f6a950903f2ef40b048fff3432eb24"
+    },
+    {
+      "path": "frontend/src/utils/format.js",
+      "sha256": "a573e8b5334bc27c846a237c6e52034c53c802f034762ac1506ee84718dc66c1"
+    },
+    {
+      "path": "frontend/src/utils/profile.js",
+      "sha256": "2e2dfe8d3ea294005ae609171e0e051413cf71e8933ad03a04c6a06c1acf02c2"
+    }
+  ],
+  "qaAssets": [
+    {
+      "name": "BookingsPage-CUwo_EEY.js",
+      "sha256": "3899dfa10f04c715c9fb60180c84aa92df058491f401551e80b6e460451c13c2"
+    },
+    {
+      "name": "ClosingTab-Bv-p88uE.js",
+      "sha256": "841a850e0de08637ab829db6fada2e8d207afc9e01b993d01116f93fd3f91855"
+    },
+    {
+      "name": "ClubSuiteTab-DwQRbGxg.js",
+      "sha256": "74d3d5ade2b8da99fc3112e6f3dba6aaeda0b14692d5c6903d3e40c2dd4e314f"
+    },
+    {
+      "name": "ContextHelp-BC6io2Ll.js",
+      "sha256": "a0e5a0a1bb054da9a7eb2c1395bdc81e8c871baa1c65b1c8ce8a6524c4225de3"
+    },
+    {
+      "name": "CustomersPage-B1HMQrfR.js",
+      "sha256": "ba8b5ef4b66efc35a86bf29e3dbc3a03e6ca5cd6101416a2c99be596657b2bf1"
+    },
+    {
+      "name": "Dashboard-CDBNAOOO.js",
+      "sha256": "323c8a118a3b9f17ebb5d2a0fe85ea1c840e8e02d063fae5aae9e949c1af2d58"
+    },
+    {
+      "name": "FoodTab-DKwatfim.js",
+      "sha256": "2ba3fc54b450aa4062a8955bab74da5f02c47485a1a3aba912d978cde609def1"
+    },
+    {
+      "name": "FrameControls-BKMbfPtH.js",
+      "sha256": "4c7b6cf50bcee0c67463b01b08cdf268cc457fd4de338d1de00271c4f24fb293"
+    },
+    {
+      "name": "LiveFloor-CTZlCipG.js",
+      "sha256": "f13642f5a2505aee2115632e7b45f22a6c98d7fcf75c5923545bbde5eb7643df"
+    },
+    {
+      "name": "LiveFloor-wlGi4y7t.css",
+      "sha256": "319e3474d28ddddf0d6f66f5a366f77fa46e85599e7e75a76195329b63df1856"
+    },
+    {
+      "name": "OperationsTab-CJ2krrA8.js",
+      "sha256": "37781aea9fda41b20d8614924153e015f07560f8d7e7759029442b7b9b5f22c8"
+    },
+    {
+      "name": "Pagination-BQaU_7pu.js",
+      "sha256": "7186d6be83333c5cbacd969c856ae9fa078a9492187b3dde7510199056984b5f"
+    },
+    {
+      "name": "ReportsTab-Br4zrc3I.js",
+      "sha256": "f3365ae0dc70b7ab3e90392e53f4b871ace2d8f6b1e1359937c064da1024e86d"
+    },
+    {
+      "name": "SalesPage-CTFrKdG1.js",
+      "sha256": "f1558dd6819bd2ed885e965a0ded391cee9ca820ab2af5448500765efe6a4e36"
+    },
+    {
+      "name": "SettingsTab-C3PyM8TM.js",
+      "sha256": "27f533f49c08d33eafb2efb527221366031595e1a00c4c244d1d7ce2e9734b18"
+    },
+    {
+      "name": "TableStateUI-Qik_ebN4.js",
+      "sha256": "ce1cd47f37c89b46540cc95900a612246f09642bc269da5e34d70a2fc26727c0"
+    },
+    {
+      "name": "TablesTab-CbiAWDxl.js",
+      "sha256": "99be447cb07e47bbf84a421b8f59d4deea58637d19867a5a5306c89d506bb336"
+    },
+    {
+      "name": "TournamentTab-DokY6BK5.js",
+      "sha256": "d8272af3bac74e77f084a0ae39ba92c88e6126580d89610709ae1efbd54ede00"
+    },
+    {
+      "name": "floorData-C1MFzQCY.js",
+      "sha256": "8db201f0cd3db25aca49b961f6e3665f01a2c506c03bf3c930897815325b625d"
+    },
+    {
+      "name": "index-Dsi2DgNR.js",
+      "sha256": "5cfe2f9eaac355f8b3380ec225dcb2e9316aef9ec97c1719050fbc911f1fbee5"
+    },
+    {
+      "name": "index-PvCJVgwh.css",
+      "sha256": "c549ecd3e4c5cf49e6c3c53cb310f170f9c913bb68f359f96c57194dd7ce22d9"
+    },
+    {
+      "name": "tableStatus-BXmwxmnR.js",
+      "sha256": "3ed0dd634d346068aca1dd71fa01b3732f1d7a8c65561b81ea13c677814d4f06"
+    },
+    {
+      "name": "tariffs-B1h1B4KP.js",
+      "sha256": "cf02ec91ca3923d7681375803adafc3dfb5310e0d766c0f87f1e93529cd3de97"
+    },
+    {
+      "name": "useCachedState-D9QaMtMu.js",
+      "sha256": "cc3f13985e2d5ae5c0e4f9453f4f4348ce66e45ff3671420cef361dbfb6c0f13"
+    }
+  ],
+  "productionAssets": [
+    {
+      "name": "BookingsPage-C3lab8Qf.js",
+      "sha256": "45a4a69e64d1b7c275414fa4a1a1f83e63d5de5919b024810dc2a5152d2f5094"
+    },
+    {
+      "name": "ClosingTab-DeEFjG6n.js",
+      "sha256": "e3247f917eae3508db620f6caab22bbe8686c862ca7acb8133f9ace3c8715857"
+    },
+    {
+      "name": "ClubSuiteTab-C7F8GLJ9.js",
+      "sha256": "333e50b005559ba1efd20808d70555a1feefc3fc26f709de9b666009055ac1e2"
+    },
+    {
+      "name": "ContextHelp-CSMLzt8n.js",
+      "sha256": "606fd5f95dd6b70eddefd277556d70d52e7a48ba61dc5a784eac22508bba2da2"
+    },
+    {
+      "name": "CustomersPage-CUaUrPml.js",
+      "sha256": "644fbbed3f7e557c10f7068f77a7e4566271e31d01499029a664f07c4ce73530"
+    },
+    {
+      "name": "Dashboard-B5c6flLk.js",
+      "sha256": "14c35fc64ce6bcd5713edb89cdac78ed08f7c088d3e5799b540e5b82c21bd413"
+    },
+    {
+      "name": "FoodTab-BiQglcYf.js",
+      "sha256": "154459681da28ad0b2b85667c11b4a5c9bfadabf269a0e086da50b191d10acbf"
+    },
+    {
+      "name": "FrameControls-FRIT_h33.js",
+      "sha256": "99c69fffa17b458eb53f4f20f210c93ef91aea372abfddbc66588fb9b3675d01"
+    },
+    {
+      "name": "LiveFloor-BIPgLovp.js",
+      "sha256": "a07976a82b1b0f44ee9d2d096608081803c1584035352422565b1055bda21842"
+    },
+    {
+      "name": "LiveFloor-wlGi4y7t.css",
+      "sha256": "319e3474d28ddddf0d6f66f5a366f77fa46e85599e7e75a76195329b63df1856"
+    },
+    {
+      "name": "OperationsTab-CTWVwXQk.js",
+      "sha256": "1fc9b3d2e8f06c3eb0957e85656702098a0b415ffa0172740f4cfef676b23fc9"
+    },
+    {
+      "name": "Pagination-BOdyETX-.js",
+      "sha256": "830b922e7b5d2c81bc73426e4d2e165b2e245bc25936732003f481252a24cd58"
+    },
+    {
+      "name": "ReportsTab-BB7SZdZC.js",
+      "sha256": "3685243a9def93d2a38451cca0b8c69f9119e0fc75604d0e5776f7afa610964b"
+    },
+    {
+      "name": "SalesPage-DUIKsxHb.js",
+      "sha256": "1a8adaa868713f139c6dadcf40cce89e6e19162cec1a2fc842fab8aa879fbcc3"
+    },
+    {
+      "name": "SettingsTab-C0r4tDz0.js",
+      "sha256": "cf57dc0e8137de698bfd48a04aa55832c052736f262450c5cc6ff882ea61c7f6"
+    },
+    {
+      "name": "TableStateUI-Bc6U5iuA.js",
+      "sha256": "ba6cfb0907c9597058283ce682d62971911226ab2765f0ee8a7d3ca3d7f07bf8"
+    },
+    {
+      "name": "TablesTab-BxnPUzmh.js",
+      "sha256": "695695a92117d5480975b92655593025e57fcaaca06aece49d62087a11d1d5a8"
+    },
+    {
+      "name": "TournamentTab-BicPgWi8.js",
+      "sha256": "eb5145e0b8e1c8dde4fb7847e2cf6938ba52f5ba43346cf61fad6528f5294467"
+    },
+    {
+      "name": "floorData-C1MFzQCY.js",
+      "sha256": "8db201f0cd3db25aca49b961f6e3665f01a2c506c03bf3c930897815325b625d"
+    },
+    {
+      "name": "index-Ctvt-ln5.js",
+      "sha256": "d66e5ca9c8b0acc6a59cd93a812ae100aa62bca127aa624e34e8130d7245fdac"
+    },
+    {
+      "name": "index-PvCJVgwh.css",
+      "sha256": "c549ecd3e4c5cf49e6c3c53cb310f170f9c913bb68f359f96c57194dd7ce22d9"
+    },
+    {
+      "name": "tableStatus-BXmwxmnR.js",
+      "sha256": "3ed0dd634d346068aca1dd71fa01b3732f1d7a8c65561b81ea13c677814d4f06"
+    },
+    {
+      "name": "tariffs-B1h1B4KP.js",
+      "sha256": "cf02ec91ca3923d7681375803adafc3dfb5310e0d766c0f87f1e93529cd3de97"
+    },
+    {
+      "name": "useCachedState-DqFcpcE-.js",
+      "sha256": "3b30ce680e1e9c8fefc3e742f433ac60ab907a0cbd736f5c399f20e1efea7c42"
+    }
+  ]
+}
