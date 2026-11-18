@@ -5,7 +5,9 @@ import { scanRenderedContrast } from "./rendered-contrast.mjs";
 import { measureUi } from "./ui-readiness-metrics.mjs";
 
 const route = process.argv[2] || "/dashboard", stage = process.argv[3] || "after";
-const origin = `http://127.0.0.1:${stage === "before" ? 5180 : 5181}`, api = "http://127.0.0.1:8006";
+if (route === "/login") throw new Error("Use test-pilot-ui-gate.mjs for unauthenticated Login states; this harness initializes an authenticated app.");
+const origin = process.env.UI_APP_URL || `http://127.0.0.1:${stage === "before" ? 5180 : 5181}`, api = "http://127.0.0.1:8006";
+assert.equal(new URL(origin).hostname, "127.0.0.1");
 const key = route.replaceAll(/[/?=]/g, "-").replace(/^-/, "");
 const output = process.env.UI_OUTPUT_DIR || `../docs/ui-readiness/${key}/${stage}`;
 const strict = process.env.UI_STRICT_PILOT === "true";

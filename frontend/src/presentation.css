@@ -42,14 +42,14 @@ h3 { font-size: var(--text-lg); line-height: var(--leading-lg); font-weight: 500
 .ui-icon svg { width: 100%; height: 100%; display: block; stroke-width: 1.5; }
 .ui-button .ui-icon { --icon-size: 16px; }
 .sidebar .ui-icon, .cf-sidebar .ui-icon { --icon-size: 20px; }
-.ui-empty-icon .ui-icon, .op2-empty > .ui-icon, .cf-empty > .ui-icon { --icon-size: 24px; }
+.ui-empty-icon .ui-icon, .op2-empty > .ui-icon, .cf-empty > .ui-icon { --icon-size: var(--icon-empty); }
 .ui-badge .ui-icon, .table-state-badge .ui-icon { --icon-size: 14px; }
 .lucide { stroke-width: 1.5; }
 .login-greeting { font-size: var(--text-sm); line-height: var(--leading-sm); color: var(--text-secondary); margin-top: var(--space-1); }
 .settings-panel, .ops-panel, .op2-panel, .cf-panel, .lf-panel { border-radius: var(--radius-md); border-width: 1px; }
 .settings-page-shell > .settings-panel { height: auto; }
-:root.dark :is(.ui-card, .ui-metric-card, .ops-kpi, .settings-panel, .ops-panel, .cf-panel) { box-shadow: inset 0 1px 0 rgb(255 255 255 / 3%) !important; }
-.ui-button-primary, .cf-page-primary-action { box-shadow: inset 0 1px 0 rgb(255 255 255 / 15%), inset 0 -1px 0 rgb(0 0 0 / 10%) !important; }
+:root.dark :is(.ui-card, .ui-metric-card, .ops-kpi, .settings-panel, .ops-panel, .cf-panel) { box-shadow: inset 0 1px 0 var(--legacy-shadow-635c59be60) !important; }
+.ui-button-primary, .cf-page-primary-action { box-shadow: inset 0 1px 0 var(--legacy-shadow-37f420c8ff), inset 0 -1px 0 var(--legacy-shadow-25bb38a0cb) !important; }
 .ops-dashboard { gap: var(--space-10); }
 .ops-reference-grid { gap: var(--space-6); }
 .ui-field, .lf-field { gap: var(--space-2); }
@@ -114,7 +114,7 @@ h3 { font-size: var(--text-lg); line-height: var(--leading-lg); font-weight: 500
 .app-toast, .app-toast.is-exiting { animation-duration: 200ms; }
 .ui-overlay-head, .ui-overlay-body, .ui-overlay-footer { padding: var(--space-5); }
 .ui-overlay-footer { justify-content: flex-end; gap: var(--space-3); }
-.ui-modal { box-shadow: 0 4px 12px rgb(0 0 0 / 8%); }
+.ui-modal { box-shadow: 0 4px 12px var(--legacy-shadow-02e6d15b98); }
 :root.dark :is(.ui-modal, .ui-drawer, .modal-content, .cf-modal, .command-palette, .cf-notification-panel) { box-shadow: none !important; }
 .cf-notification-panel { animation: presentation-popover-in 120ms ease-out; }
 .page-skeleton-status { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }

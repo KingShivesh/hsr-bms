@@ -4,7 +4,7 @@ import { parse } from "@babel/parser";
 import traverseModule from "@babel/traverse";
 
 const traverse = traverseModule.default;
-const panelClasses = new Set(["ops-panel", "op2-panel", "settings-panel", "cf-panel", "lf-panel", "food-cart-panel", "session-list-panel"]);
+const panelClasses = new Set(["ops-panel", "op2-panel", "settings-panel", "cf-panel", "lf-panel", "food-cart-panel", "session-list-panel", "queue-panel", "booking-panel"]);
 const cardClasses = new Set(["ops-kpi", "op2-customer-card", "op2-table-booking-card", "food-menu-card", "table-status-card", "session-money-card", "lf-table-card", "table-floor-tile", "table-control-card", "table-state-card", "checkout-total-card", "checkout-split-card"]);
 for (const file of process.argv.slice(2)) {
   if (!file.startsWith("src/") || !file.endsWith(".jsx") || file.includes("..")) throw new Error("Explicit src JSX paths required");

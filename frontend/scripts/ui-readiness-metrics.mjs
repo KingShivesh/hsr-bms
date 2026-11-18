@@ -1,7 +1,7 @@
 export function measureUi({ minimumTextSize = 0 } = {}) {
   const scope = [...document.querySelectorAll('[role="dialog"][aria-modal="true"]')].filter(node => node.getClientRects().length).at(-1) || document;
   const visible = node => {
-    if (!node.getClientRects().length || node.closest('[hidden],[inert],[aria-hidden="true"]')) return false;
+    if (!node.getClientRects().length || node.closest('[hidden],[inert],[aria-hidden="true"],.sr-only,.visually-hidden')) return false;
     for (let p = node; p; p = p.parentElement) { const s = getComputedStyle(p); if (s.display === "none" || s.visibility === "hidden" || Number(s.opacity) === 0) return false; }
     return true;
   };

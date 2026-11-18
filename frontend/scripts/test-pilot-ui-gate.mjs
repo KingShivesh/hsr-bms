@@ -9,7 +9,7 @@ const stage = process.argv[2] || "after";
 assert.ok(["before", "after"].includes(stage));
 const app = process.env.PILOT_APP_URL || "http://127.0.0.1:5181", api = "http://127.0.0.1:8006";
 assert.equal(new URL(app).hostname, "127.0.0.1");
-const output = `../docs/pilot-ui-gate/${stage}`;
+const output = process.env.PILOT_OUTPUT || `../docs/pilot-ui-gate/${stage}`;
 await fs.mkdir(output, { recursive: true });
 const auth = await fetch(`${api}/auth/login`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ username: "admin", password: "admin123" }) }).then(async response => { assert.equal(response.status, 200); return response.json(); });
 const report = { stage, minimumContrast: 4.5, includeDisabled: true, cases: [], violations: [], errors: [], businessWrites: [], scope: "Local seeded database; browser member reads are controlled fixtures; credential submission intercepted; no business writes forwarded" };
@@ -23,7 +23,7 @@ try {
   assert.equal(standard.length, 0);
   assert.equal(strict.length, 2);
   await guard.close();
-  for (const theme of ["light", "dark"]) for (const width of [375, 1440]) {
+  for (const theme of ["light", "dark"]) for (const width of (process.env.PILOT_WIDTHS || "375,1440").split(",").map(Number)) {
     const test = { theme, width, checks: {}, captures: [] };
     report.cases.push(test);
     const context = await browser.newContext({ viewport: { width, height: width === 375 ? 844 : 1000 }, reducedMotion: "reduce", serviceWorkers: "block" });

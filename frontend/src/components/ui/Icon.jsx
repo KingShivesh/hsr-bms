@@ -1,5 +1,5 @@
 import {
-  Activity, SlidersHorizontal, CircleAlert, TriangleAlert, Armchair, ArrowDown,
+  Activity, SlidersHorizontal, CircleAlert, TriangleAlert, Armchair, ArrowDown, FilterX, Building2,
   ArrowDownRight, ArrowLeft, ArrowRight, ArrowUp, ArrowUpRight, ArrowLeftRight,
   Merge, Split, Bell, CircleDot, Lightbulb, Calendar, CalendarCheck, CalendarPlus,
   CalendarX, Banknote, ChartColumn, ChartScatter, Check, ChevronDown, ChevronLeft,
@@ -26,7 +26,7 @@ const icons = {
   check: Check, "chevron-down": ChevronDown, "chevron-left": ChevronLeft,
   "chevron-right": ChevronRight, "chevron-up": ChevronUp, circle: Circle,
   "circle-check": CircleCheck, "circle-check-filled": CircleCheck, "circle-dot": CircleDot,
-  "circle-dotted": Circle, "clipboard-check": ClipboardCheck, "clipboard-text": ClipboardList,
+  "circle-dotted": Circle, "clipboard-check": ClipboardCheck, "clipboard-text": ClipboardList, "clipboard-list": ClipboardList, club: Building2, "filter-off": FilterX,
   clock: Clock, "clock-exclamation": ClockAlert, "clock-hour-4": Clock, command: Command,
   "credit-card": CreditCard, "device-floppy": Save, download: Download, flag: Flag,
   history: History, "info-circle": Info, "info-circle-filled": Info, key: KeyRound,

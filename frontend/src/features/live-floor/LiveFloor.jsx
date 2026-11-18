@@ -68,6 +68,7 @@ export default function LiveFloor({ role = "admin", onNavigate, newSessionReques
   const [newSessionTableId, setNewSessionTableId] = useState(requestedTable);
   const [checkoutTableId, setCheckoutTableId] = useState(requestedAction === "checkout" ? requestedTable : "");
   const [foodTableId, setFoodTableId] = useState("");
+  const [foodSaving, setFoodSaving] = useState(false);
   const [ordersTableId, setOrdersTableId] = useState("");
   const [busyTables, setBusyTables] = useState({});
   const pendingTablesRef = useRef(new Set());
@@ -369,8 +370,8 @@ export default function LiveFloor({ role = "admin", onNavigate, newSessionReques
           setSelectedTableId("");
         }}
       />}
-      <Modal open={!!foodTable?.session} portal title={`Session food · ${String(foodTableId).toUpperCase()}`} onClose={() => setFoodTableId("")} className="lf-food-modal" size="lg">
-        <ProductSelector tableId={foodTableId} sessionKey={foodTable?.session?.session_key} players={foodTable?.session?.players || []} onOptimistic={beginFoodChange} onClose={() => setFoodTableId("")} onAdded={data => {
+      <Modal open={!!foodTable?.session} portal title={`Session food · ${String(foodTableId).toUpperCase()}`} onClose={() => setFoodTableId("")} closeDisabled={foodSaving} className="lf-food-modal" size="lg">
+        <ProductSelector tableId={foodTableId} sessionKey={foodTable?.session?.session_key} players={foodTable?.session?.players || []} onOptimistic={beginFoodChange} onSavingChange={setFoodSaving} onAdded={data => {
           if (data?.item) setFloor(current => ({ ...current, tables: current.tables.map(row => row.id !== foodTableId || row.session?.session_key !== foodTable?.session?.session_key ? row : ({ ...row, session: { ...row.session, food_items: [...(row.session.food_items || []).filter(item => item.id !== data.item.id), data.item], food_total: data.food_total } })) }));
           setFoodTableId(""); scheduleFloorRefresh();
         }} />

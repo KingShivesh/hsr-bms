@@ -19,6 +19,7 @@ export function Modal({
   title,
   description,
   "aria-describedby": describedBy,
+  "aria-label": label,
   children,
   footer,
   onClose,
@@ -30,12 +31,14 @@ export function Modal({
   dismissOnBackdrop = true,
   closeDisabled = false,
   initialFocusRef,
+  restoreFocusRef,
+  showHeader = true,
 }) {
   const titleId = useId();
   const descriptionId = useId();
   const dialogRef = useRef(null);
   const present = usePresence(open);
-  useDialogFocus(dialogRef, open, initialFocusRef);
+  useDialogFocus(dialogRef, open, initialFocusRef, restoreFocusRef);
   useEscapeKey(closeDisabled ? undefined : onEscape || onClose, open, dialogRef);
 
   if (!present) return null;
@@ -57,16 +60,17 @@ export function Modal({
         role="dialog"
         aria-modal="true"
         tabIndex={-1}
-        aria-labelledby={title ? titleId : undefined}
+        aria-label={label || (!showHeader ? title : undefined)}
+        aria-labelledby={showHeader && title ? titleId : undefined}
         aria-describedby={describedBy || (description ? descriptionId : undefined)}
       >
-        <div className="ui-overlay-head">
+        {showHeader && <div className="ui-overlay-head">
           <div>
             {title && <h2 id={titleId} title={title}>{title}</h2>}
             {description && <p id={descriptionId}>{description}</p>}
           </div>
           {onClose && <IconButton label="Close dialog" icon="ti-x" variant="ghost" disabled={closeDisabled} onClick={onClose} />}
-        </div>
+        </div>}
         <div className="ui-overlay-body">{children}</div>
         {footer && <div className="ui-overlay-footer">{footer}</div>}
       </section>

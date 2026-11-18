@@ -1,12 +1,13 @@
 import { Button, Dropdown as Menu, Icon } from "../components/ui/index.js";
 import { useProduct, APP_VERSION, supportLink } from "./context.js";
 
-export function ClubMenu() {
+export function ClubMenu({ onNavigate } = {}) {
   const p = useProduct();
+  const navigate = onNavigate || p?.onNavigate;
   return <Menu label="Club menu" className="product-club-trigger sb-logo" trigger={<><span className="sb-logo-mark">{p?.profile?.logo ? <img src={p.profile.logo} alt="" /> : "HSR"}</span><span className="product-club-copy"><strong className="sb-logo-name">{p?.profile?.name || "HSR Snooker Cafe"}</strong><small>Single-club workspace</small></span></>}>
     <div className="product-menu-heading">{p?.profile?.name || "HSR Snooker Cafe"}<small>One configured club</small></div>
-    {p?.role === "admin" && <><Button native role="menuitem" onClick={() => p.onNavigate("settings", { section: "club" })}><Icon name="settings" />Club settings</Button><Button native role="menuitem" onClick={() => p.onNavigate("settings", { section: "team" })}><Icon name="users" />Team access</Button></>}
-    <Button native role="menuitem" onClick={() => p?.onNavigate("help")}><Icon name="info-circle" />Help & documentation</Button>
+    {p?.role === "admin" && <><Button native role="menuitem" onClick={() => navigate("settings", { section: "club" })}><Icon name="settings" />Club settings</Button><Button native role="menuitem" onClick={() => navigate("settings", { section: "team" })}><Icon name="users" />Team access</Button></>}
+    <Button native role="menuitem" onClick={() => navigate?.("help")}><Icon name="info-circle" />Help & documentation</Button>
     <Button native role="menuitem" onClick={p?.onLogout}><Icon name="logout" />Sign out</Button>
   </Menu>;
 }
@@ -31,7 +32,8 @@ export function UserMenu() {
   </Menu>;
 }
 
-export function ProductFooter() {
+export function ProductFooter({ onNavigate } = {}) {
   const p = useProduct();
-  return <div className="product-footer"><span>v{APP_VERSION}</span><Button native onClick={() => p.onNavigate("status")}>Status</Button><Button native onClick={() => p.onNavigate("changelog")}>Changelog</Button></div>;
+  const navigate = onNavigate || p?.onNavigate;
+  return <div className="product-footer"><span>v{APP_VERSION}</span><Button native onClick={() => navigate("status")}>Status</Button><Button native onClick={() => navigate("changelog")}>Changelog</Button></div>;
 }

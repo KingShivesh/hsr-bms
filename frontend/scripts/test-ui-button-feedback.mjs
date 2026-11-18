@@ -646,13 +646,14 @@ try {
   report.finishedAt = new Date().toISOString();
   report.configuration.discoveredRoutes = routes;
   report.summary = {
+    unreachableStates: report.exclusions.filter(entry => entry.status === "unreachable-state").length,
     routes: report.routes.length, degradedScreens: report.routes.filter(route => route.screenState && route.screenState !== "default").length, buttons: report.buttons.length,
     feedback: report.buttons.reduce((counts, result) => ({ ...counts, [result.feedback.status]: (counts[result.feedback.status] || 0) + 1 }), {}),
     actionOutcomes: report.buttons.reduce((counts, result) => ({ ...counts, [result.actionOutcome.status]: (counts[result.actionOutcome.status] || 0) + 1 }), {}),
     exclusions: report.exclusions.length, screenshots: report.screenshots.length,
     businessSuccessClaims: 0,
   };
-  if (!process.exitCode && (report.buttons.some(result => ["fail", "unreachable", "unmeasured-navigation"].includes(result.feedback.status)) || report.routes.some(route => route.status === "unreachable") || !report.buttons.length)) process.exitCode = 1;
+  if (!process.exitCode && (report.buttons.some(result => ["fail", "unreachable", "unmeasured-navigation"].includes(result.feedback.status)) || report.routes.some(route => route.status === "unreachable") || report.summary.unreachableStates || !report.buttons.length)) process.exitCode = 1;
   await fs.writeFile(reportPath, `${JSON.stringify(report, null, 2)}\n`);
   console.log(JSON.stringify({ report: reportPath, ...report.summary }, null, 2));
 }

@@ -1,20 +1,17 @@
+import { Panel as HsrPanel, Card as HsrCard } from "../ui/index.js";
 import { formatCurrency as polishCurrency, formatDuration as polishDuration, formatDateTime as polishDateTime } from "../../utils/format.js";
 import { SkeletonBlock, EmptyState } from "../ui/index.js";
 import RetryNotice from "../RetryNotice.jsx";
-import { Icon as HsrIcon, Input as HsrInput, Select as HsrSelect, Button as HsrButton, Table as HsrTable, Textarea as HsrTextarea } from "../ui/index.js";
+import { Icon as HsrIcon, Input as HsrInput, Select as HsrSelect, Button as HsrButton, Textarea as HsrTextarea } from "../ui/index.js";
 import { useState, useEffect, useRef, useMemo } from "react";
 import {
   startSession,
   startGuestSession,
   pauseSession,
-  stopSession,
-  quoteSession,
   resetSession,
   getLiveFloor,
   getRates,
   updateNotes,
-  getTableHistory,
-  getTableAudit,
   getMaintenance,
   setMaintenance as saveMaintenance,
   clearMaintenance,
@@ -31,8 +28,7 @@ import {
 } from "../../api/index.js";
 import { searchMembers } from "../../api/index.js";
 import { useToast } from "../toastContext.js";
-import { useEscapeKey } from "../ui/index.js";
-import { useDialogFocus } from "../ui/useDialogFocus.js";
+import { HistoryModal, ResetConfirmModal } from "./TableDialogs.jsx";
 import { TableAttentionBadge, TablePrimaryAction, TableStateBadge } from "../TableStateUI.jsx";
 import { HSR_TABLES, getTableLabel, getTableRate } from "../../config/hsrTables.js";
 import { tableStateAttributes, getTableAttention, getTableStatus } from "../../config/tableStatus.js";
@@ -54,26 +50,9 @@ function fmtClock(ms) {
   });
 }
 
-function fmtDateTime(ms) { return polishDateTime(ms); }
-
 function isFullName(name) {
   return name.trim().length > 0;
 }
-
-const PAYMENT_METHODS = ["UPI", "Cash", "Credit"];
-const DISCOUNT_OPTIONS = [
-  { id: "none", label: "No discount" },
-  { id: "percent_5", label: "5%" },
-  { id: "percent_10", label: "10%" },
-  { id: "rupee", label: "₹ off" },
-];
-
-function sanitizeRupeeDiscount(value) {
-  const digits = String(value ?? "").replace(/\D/g, "");
-  if (!digits) return "";
-  return String(Math.min(parseInt(digits, 10), 50));
-}
-
 
 function splitPlayerNames(value) {
   return (value || "")
@@ -242,7 +221,7 @@ function QueuePanel({
   }
 
   return (
-    <div className="queue-panel">
+    <HsrPanel as="div" className="queue-panel">
       <div className="queue-head">
         <div>
           <div className="queue-title">Smart table queue</div>
@@ -347,7 +326,7 @@ function QueuePanel({
           })
         )}
       </div>
-    </div>
+    </HsrPanel>
   );
 }
 
@@ -397,7 +376,7 @@ function BookingPanel({ bookings, onCreate, onCancel, busyActions = {}, showToas
   }
 
   return (
-    <div className="booking-panel">
+    <HsrPanel as="div" className="booking-panel">
       <div className="queue-head">
         <div>
           <div className="queue-title">Booking calendar</div>
@@ -522,550 +501,22 @@ function BookingPanel({ bookings, onCreate, onCancel, busyActions = {}, showToas
           })
         )}
       </div>
-    </div>
+    </HsrPanel>
   );
 }
 
 
-function HistoryModal({ tableId, tableNum, onClose }) {
-  const dialogRef = useRef(null);
-  useDialogFocus(dialogRef, true);
-  const [history, setHistory] = useState([]);
-  const [audit, setAudit] = useState([]);
-  const [loading, setLoading] = useState(true);
-  useEscapeKey(onClose, true, dialogRef);
 
-  useEffect(() => {
-    Promise.allSettled([getTableHistory(tableId), getTableAudit(tableId)])
-      .then(([historyRes, auditRes]) => {
-        if (historyRes.status === "fulfilled") setHistory(historyRes.value.data);
-        if (auditRes.status === "fulfilled") setAudit(auditRes.value.data);
-        setLoading(false);
-      })
-      .catch(() => setLoading(false));
-  }, [tableId]);
 
-  return (
-    <div className="modal-backdrop plain" onClick={onClose}>
-      <div ref={dialogRef} tabIndex={-1} role="dialog" aria-modal="true" aria-label={`Table ${tableNum} history`} className="table-history-modal" onClick={(event) => event.stopPropagation()}>
-        <div className="table-history-head">
-          <div>
-            <strong>Table {tableNum}</strong>
-            <span>Sessions and audit trail</span>
-          </div>
-          <HsrButton native type="button" onClick={onClose} aria-label="Close history">
-            ×
-          </HsrButton>
-        </div>
-        {loading ? (
-          <SkeletonBlock rows={8} label="Fetching table history" />
-        ) : (
-          <>
-            <div className="table-history-title">Last sessions</div>
-            {history.length === 0 ? (
-              <div className="table-history-empty">No sessions yet</div>
-            ) : (
-              <HsrTable className="data-table table-history-table">
-                <thead>
-                  <tr>
-                    <th>Date</th>
-                    <th>Customer</th>
-                    <th>Duration</th>
-                    <th data-type="number">Total</th>
-                    <th>Payment</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {history.map((row, index) => (
-                    <tr key={`${row.date}-${index}`}>
-                      <td>{row.date?.split(",")[0]}</td>
-                      <td>{row.nm}</td>
-                      <td>{row.dur}m</td>
-                      <td data-type="number">{polishCurrency(row.tot)}</td>
-                      <td>{row.payment_method || "Cash"}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </HsrTable>
-            )}
-            <div className="table-history-title">Audit trail</div>
-            {audit.length === 0 ? (
-              <div className="table-history-empty">No table audit yet</div>
-            ) : (
-              <HsrTable className="data-table table-history-table">
-                <thead>
-                  <tr>
-                    <th>Time</th>
-                    <th>Action</th>
-                    <th>Detail</th>
-                    <th data-type="number">Amount</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {audit.map((row, index) => (
-                    <tr key={`${row.ts}-${index}`}>
-                      <td>{row.date}</td>
-                      <td>{String(row.action || "").replaceAll("_", " ")}</td>
-                      <td>{row.detail}</td>
-                      <td data-type="number">{row.amount == null ? "-" : polishCurrency(row.amount)}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </HsrTable>
-            )}
-          </>
-        )}
-      </div>
-    </div>
-  );
-}
 
-function ResetConfirmModal({ tableId, loading, onClose, onConfirm }) {
-  const [pin, setPin] = useState("");
-  const dialogRef = useRef(null);
-  useDialogFocus(dialogRef, true);
-  useEscapeKey(loading ? undefined : onClose, true, dialogRef);
 
-  return (
-    <div ref={dialogRef} tabIndex={-1} className="frame-loser-backdrop" role="dialog" aria-modal="true" aria-label={`Reset ${tableId.toUpperCase()}`}>
-      <form
-        className="frame-loser-modal"
-        onSubmit={async (event) => {
-          event.preventDefault();
-          const success = await onConfirm(pin.trim());
-          if (success) onClose();
-        }}
-      >
-        <div className="frame-loser-head">
-          <div>
-            <div className="quick-session-eyebrow">Reset table</div>
-            <div className="frame-loser-title">{tableId.toUpperCase()}</div>
-            <p className="frame-loser-copy">
-              This clears the running session without creating a bill.
-            </p>
-          </div>
-          <HsrButton native
-            type="button"
-            className="quick-session-close"
-            onClick={onClose}
-            aria-label="Close reset confirmation"
-            disabled={loading}
-          >
-            <HsrIcon className="ti ti-x" aria-hidden="true" />
-          </HsrButton>
-        </div>
-        <div className="frame-loser-form">
-          <label className="form-label" htmlFor={`reset-pin-${tableId}`}>
-            Manager PIN, if required
-          </label>
-          <HsrInput
-            id={`reset-pin-${tableId}`}
-            className="frame-loser-input"
-            value={pin}
-            onChange={(event) => setPin(event.target.value)}
-            autoFocus
-          />
-          <HsrButton native
-            type="submit"
-            className="frame-loser-submit"
-            disabled={loading}
-          >
-            {loading ? "Resetting..." : "Reset Table"}
-          </HsrButton>
-        </div>
-      </form>
-    </div>
-  );
-}
 
-function CheckoutStepRail({ quote }) {
-  const steps = [
-    ["Review", "Bill frozen"],
-    ["Discount", quote.discountType === "none" ? "Optional" : "Applied"],
-    ["Payment", quote.paymentMethod || "Cash"],
-    ["Collect", quote.finalizing ? "Closing" : "Ready"],
-  ];
 
-  return (
-    <div className="checkout-step-rail" aria-label="Checkout progress">
-      {steps.map(([label, meta], index) => {
-        const complete =
-          index === 0 ||
-          (index === 1 && quote.discountType !== "none") ||
-          (index === 2 && quote.paymentMethod);
-        const active = quote.finalizing && index === 3;
 
-        return (
-          <div
-            key={label}
-            className={`checkout-step ${complete ? "complete" : ""} ${active ? "active" : ""}`}
-          >
-            <span>{index + 1}</span>
-            <div>
-              <strong>{label}</strong>
-              <em>{meta}</em>
-            </div>
-          </div>
-        );
-      })}
-    </div>
-  );
-}
 
-function checkoutSplitMeta(rec, item) {
-  if (rec.billing_mode === "sharing") return "Shared session split";
-  if (rec.billing_mode === "lp") return "LP session settlement";
-  if (item.food) return "Food assigned to player";
-  return "Session payment";
-}
 
-function CheckoutQuoteScreen({
-  quote,
-  onClose,
-  onPaymentChange,
-  onDiscountChange,
-  onFinalize,
-}) {
-  const dialogRef = useRef(null);
-  useDialogFocus(dialogRef, !!quote);
-  useEscapeKey(quote?.finalizing ? undefined : onClose, !!quote, dialogRef);
 
-  if (!quote) return null;
-  const rec = quote.rec || {};
-  const settlement = Array.isArray(rec.player_breakdown)
-    ? rec.player_breakdown.filter((item) => item && item.name)
-    : [];
-  const total = rec.tot ?? rec.total ?? 0;
-  const rawTotal = rec.raw_total ?? total;
-  const discountAmount = rec.discount_amount || 0;
-  const frozenAt = rec.session_ended_at || quote.closedAtMs || "";
 
-  return (
-    <div ref={dialogRef} tabIndex={-1} className="checkout-bill-screen" role="dialog" aria-modal="true" aria-label="Review checkout">
-      <div className="checkout-bill-shell checkout-quote-shell">
-        <div className="checkout-bill-head">
-          <div>
-            <div className="quick-session-eyebrow">Review bill</div>
-            <div className="checkout-bill-title">
-              {quote.tableId?.toUpperCase()} · {polishCurrency(total)}
-            </div>
-            <div className="checkout-bill-sub">
-              {quote.paymentMethod || rec.payment_method || "Cash"} · {rec.dur || 0} min · {tariffDescription(rec)}
-            </div>
-            <div className="checkout-session-time">
-              <span>Session started {fmtDateTime(rec.session_started_at)}</span>
-              <span>Bill frozen {fmtDateTime(frozenAt)}</span>
-              {quote.sessionKey && <span>Session {quote.sessionKey}</span>}
-            </div>
-            <div className="checkout-freeze-note" role="status">
-              Timer stopped for checkout. Payment and discount changes will not add more table time.
-            </div>
-            {rec.checkout_blocked && <div className="checkout-cap-warning" role="alert">Close the open frame before checkout.</div>}
-            {rec.duration_capped && (
-              <div className="checkout-cap-warning">
-                Long session capped at {rec.dur} min from {rec.actual_dur} min.
-              </div>
-            )}
-          </div>
-          <HsrButton native type="button" className="checkout-bill-close secondary" onClick={onClose}>
-            Back to Checkout
-          </HsrButton>
-        </div>
-
-        <CheckoutStepRail quote={quote} />
-
-        <section className="checkout-flow-section">
-          <div className="checkout-flow-heading">
-            <span>1</span>
-            <div>
-              <strong>Review frozen bill</strong>
-              <em>Time is locked at checkout open, so the bill will not keep increasing.</em>
-            </div>
-          </div>
-          <div className="checkout-bill-summary">
-            <div>
-              <span>Table</span>
-              <strong>{polishCurrency(rec.ply)}</strong>
-            </div>
-            <div>
-              <span>Food</span>
-              <strong>{polishCurrency(rec.famt)}</strong>
-            </div>
-            <div>
-              <span>Before discount</span>
-              <strong>{polishCurrency(rawTotal)}</strong>
-            </div>
-            <div>
-              <span>Discount</span>
-              <strong>{polishCurrency(discountAmount)}</strong>
-            </div>
-            <div className="checkout-final-total">
-              <span>Final bill</span>
-              <strong>{polishCurrency(total)}</strong>
-            </div>
-          </div>
-        </section>
-
-        {settlement.length > 0 && (
-          <>
-            <div className="checkout-bill-section-title">Payment Split</div>
-            <div className="checkout-split-list">
-              {settlement.map((item) => (
-                <div key={item.name} className="checkout-split-card">
-                  <div className="checkout-split-main">
-                    <div>
-                      <div className="checkout-split-name">{item.name}</div>
-                      <div className="checkout-split-meta">
-                        {checkoutSplitMeta(rec, item)}
-                      </div>
-                    </div>
-                    <strong>{polishCurrency(item.total)}</strong>
-                  </div>
-                  <div className="checkout-split-parts">
-                    <span>Table {polishCurrency(item.table ?? item.play)}</span>
-                    <span>Food {polishCurrency(item.food)}</span>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </>
-        )}
-
-        <section className="checkout-flow-section">
-          <div className="checkout-flow-heading">
-            <span>2</span>
-            <div>
-              <strong>Apply discount</strong>
-              <em>Optional. Discounts need a reason before closing.</em>
-            </div>
-          </div>
-          <div className="checkout-discount-box">
-            <div className="table-discount-options">
-              {DISCOUNT_OPTIONS.map((option) => (
-                <HsrButton native
-                  key={option.id}
-                  type="button"
-                  className={quote.discountType === option.id ? "active" : ""}
-                  onClick={() =>
-                    onDiscountChange(
-                      option.id,
-                      option.id === "rupee" ? quote.discountValue : "",
-                      true,
-                    )
-                  }
-                >
-                  {option.label}
-                </HsrButton>
-              ))}
-            </div>
-            {quote.discountType === "rupee" && (
-              <div className="checkout-rupee-discount">
-                <div className="checkout-rupee-discount-row">
-                  <HsrInput
-                    className="table-mini-input"
-                    type="text"
-                    inputMode="numeric"
-                    pattern="[0-9]*"
-                    value={quote.discountValue}
-                    onChange={(event) =>
-                      onDiscountChange("rupee", sanitizeRupeeDiscount(event.target.value), false)
-                    }
-                    placeholder="Max ₹50"
-                    aria-label="Rupee discount amount"
-                  />
-                  <HsrButton native
-                    type="button"
-                    className="checkout-rupee-apply-btn"
-                    disabled={quote.loading || !quote.discountValue}
-                    onClick={() => onDiscountChange("rupee", quote.discountValue, true)}
-                  >
-                    Apply Discount
-                  </HsrButton>
-                </div>
-                <span className="checkout-rupee-hint">Enter the rupee amount, then apply.</span>
-              </div>
-            )}
-            {quote.discountType !== "none" && (
-              <label className="table-field-stack checkout-discount-reason">
-                <span>Discount reason</span>
-                <HsrInput
-                  className="table-mini-input"
-                  type="text"
-                  value={quote.discountReason || ""}
-                  onChange={(event) =>
-                    onDiscountChange(quote.discountType, quote.discountValue, false, event.target.value)
-                  }
-                  placeholder="Owner approved / service issue"
-                />
-              </label>
-            )}
-            {quote.loading && <span className="checkout-quote-status">Updating bill...</span>}
-            {quote.error && <span className="checkout-quote-error">{quote.error}</span>}
-          </div>
-        </section>
-
-        <section className="checkout-flow-section">
-          <div className="checkout-flow-heading">
-            <span>3</span>
-            <div>
-              <strong>Select payment method</strong>
-              <em>Choose how the final bill is received.</em>
-            </div>
-          </div>
-          <div className="table-payment-grid checkout-payment-grid">
-            {PAYMENT_METHODS.map((method) => (
-              <HsrButton native
-                key={method}
-                type="button"
-                className={`table-payment-btn ${quote.paymentMethod === method ? "active" : ""}`}
-                onClick={() => onPaymentChange(method)}
-                disabled={method === "Credit" && !rec.member_id}
-                title={method === "Credit" && !rec.member_id ? "Link a member to charge to credit." : method}
-              >
-                <HsrIcon
-                  className={`ti ${
-                    method === "Cash"
-                      ? "ti-cash"
-                      : method === "UPI"
-                        ? "ti-qrcode"
-                        : "ti-credit-card"
-                  }`}
-                  aria-hidden="true"
-                />
-                <span>{method}</span>
-              </HsrButton>
-            ))}
-          </div>
-        </section>
-
-        <div className="checkout-final-actions">
-          <div className="checkout-final-review">
-            <span>Final settlement</span>
-            <strong>{polishCurrency(total)}</strong>
-            <em>{quote.paymentMethod || "Cash"} · {discountAmount ? `${polishCurrency(discountAmount)} discount` : "No discount"}</em>
-          </div>
-          <HsrButton native type="button" className="btn checkout-cancel-btn" disabled={quote.finalizing} onClick={onClose}>
-            Cancel
-          </HsrButton>
-          <HsrButton native
-            type="button"
-            className="checkout-bill-close"
-            onClick={onFinalize}
-            loading={quote.finalizing}
-            disabled={quote.loading || quote.finalizing || rec.checkout_blocked}
-          >
-            {`Confirm & Close · ${polishCurrency(total)}`}
-          </HsrButton>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function CheckoutBillScreen({ bill, onClose }) {
-  const dialogRef = useRef(null);
-  useDialogFocus(dialogRef, !!bill);
-  useEscapeKey(onClose, !!bill, dialogRef);
-
-  if (!bill) return null;
-  const rec = bill.rec || {};
-  const settlement = Array.isArray(rec.player_breakdown)
-    ? rec.player_breakdown.filter((item) => item && item.name)
-    : [];
-  const total = rec.tot ?? rec.total ?? 0;
-  const sessionStartedAt = rec.session_started_at || null;
-  const sessionEndedAt = rec.session_ended_at || rec.ts || null;
-  const paymentSplit = Array.isArray(rec.payment_split) ? rec.payment_split : [];
-
-  return (
-    <div ref={dialogRef} tabIndex={-1} className="checkout-bill-screen" role="dialog" aria-modal="true" aria-label="Checkout receipt">
-      <div className="checkout-bill-shell">
-        <div className="checkout-bill-head">
-          <div>
-            <div className="quick-session-eyebrow">Table closed</div>
-            <div className="checkout-bill-title">
-              {bill.tableId?.toUpperCase()} · {polishCurrency(total)}
-            </div>
-            <div className="checkout-bill-sub">
-              {rec.payment_method || bill.paymentMethod || "Cash"} · {rec.dur || 0} min · {tariffDescription(rec)}
-            </div>
-            <div className="checkout-session-time">
-              <span>Session started {fmtDateTime(sessionStartedAt)}</span>
-              <span>Session ended {fmtDateTime(sessionEndedAt)}</span>
-            </div>
-            {rec.duration_capped && (
-              <div className="checkout-cap-warning">
-                Long session capped at {rec.dur} min from {rec.actual_dur} min.
-              </div>
-            )}
-          </div>
-          <HsrButton native type="button" className="checkout-bill-close" onClick={onClose}>
-            Close Receipt
-          </HsrButton>
-        </div>
-
-        <div className="checkout-bill-summary">
-          <div>
-            <span>Table</span>
-            <strong>{polishCurrency(rec.ply)}</strong>
-          </div>
-          <div>
-            <span>Food</span>
-            <strong>{polishCurrency(rec.famt)}</strong>
-          </div>
-          <div>
-            <span>Total</span>
-            <strong>{polishCurrency(total)}</strong>
-          </div>
-          {rec.discount_amount > 0 && (
-            <div>
-              <span>Discount</span>
-              <strong>{polishCurrency(rec.discount_amount)}</strong>
-            </div>
-          )}
-        </div>
-        {rec.discount_amount > 0 && rec.discount_reason && (
-          <div className="checkout-applied-note">
-            Discount reason: {rec.discount_reason}
-          </div>
-        )}
-        {paymentSplit.length > 0 && (
-          <>
-            <div className="checkout-bill-section-title">Payment Received</div>
-            <div className="checkout-payment-received">
-              {paymentSplit.map((row) => (
-                <span key={row.method}>
-                  {row.method} {polishCurrency(row.amount)}
-                </span>
-              ))}
-            </div>
-          </>
-        )}
-
-        <div className="checkout-bill-section-title">Payment Split</div>
-        <div className="checkout-split-list">
-          {settlement.map((item) => (
-            <div key={item.name} className="checkout-split-card">
-              <div className="checkout-split-main">
-                <div>
-                  <div className="checkout-split-name">{item.name}</div>
-                  <div className="checkout-split-meta">
-                    {checkoutSplitMeta(rec, item)}
-                  </div>
-                </div>
-                <strong>{polishCurrency(item.total)}</strong>
-              </div>
-              <div className="checkout-split-parts">
-                <span>Table {polishCurrency(item.table ?? item.play)}</span>
-                <span>Food {polishCurrency(item.food)}</span>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-}
 
 function TableFloorTile({
   table,
@@ -1105,7 +556,7 @@ function TableFloorTile({
   }
 
   return (
-    <article
+    <HsrCard as="article"
       className={`table-floor-tile table-state-card ${selected ? "selected" : ""}`}
       {...tableStateAttributes(statusKey)}
       data-attention={attention ? "true" : "false"}
@@ -1164,7 +615,7 @@ function TableFloorTile({
         </div>
       </div>
       <TablePrimaryAction statusKey={statusKey} onClick={handlePrimary} disabled={checkoutBusy} loading={checkoutBusy} />
-    </article>
+    </HsrCard>
   );
 }
 
@@ -1471,7 +922,7 @@ function TableCard({
 
   if (maintenance) {
     return (
-      <div
+      <HsrCard as="div"
         className={[`table-maintenance-card table-state-card ${compact ? "compact" : ""}`, "polish-background-surface polish-border-radius-radius-md polish-padding-12px polish-border-2px-solid-warning"].filter(Boolean).join(" ")}
         {...tableStateAttributes(status.key)}
 
@@ -1499,7 +950,7 @@ function TableCard({
             {clearMaintenanceBusy ? "Saving..." : "Mark Available"}
           </HsrButton>
         </div>
-      </div>
+      </HsrCard>
     );
   }
 
@@ -1522,7 +973,7 @@ function TableCard({
         />
       )}
 
-      <div
+      <HsrCard as="div"
         className={`table-session-card table-state-card ${compact ? "compact" : ""} ${occupied ? "occupied" : ""}`}
         {...tableStateAttributes(status.key)}
       >
@@ -1792,7 +1243,7 @@ function TableCard({
             }}
           />
         </div>
-      </div>
+      </HsrCard>
     </>
   );
 }
@@ -1821,14 +1272,11 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0, onOpenF
   const [queue, setQueue] = useState([]);
   const [bookings, setBookings] = useState([]);
   const [quickSessionOpen, setQuickSessionOpen] = useState(false);
-  const [checkoutQuote, setCheckoutQuote] = useState(null);
-  const [checkoutBill, setCheckoutBill] = useState(null);
   const [selectedTableId, setSelectedTableId] = useState(TABLES[0]?.id || "t1");
   const [busyActions, setBusyActions] = useState({});
   const busyActionsRef = useRef({});
   const detailPanelRef = useRef(null);
   const tableGridRef = useRef(null);
-  const checkoutQuoteSeqRef = useRef(0);
 
   async function runBusyAction(key, action) {
     if (busyActionsRef.current[key]) return false;
@@ -2186,39 +1634,9 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0, onOpenF
     });
   }
 
-  async function handleStop(id, paymentMethod = "Cash") {
-    if (onNavigate) {
-      onNavigate("live-floor", { tableId: id, tableAction: "checkout" });
-      return true;
-    }
-    if (!sessions[id]) {
-      showToast("No active session", "error");
-      return false;
-    }
-    return runBusyAction(`quote:${id}`, async () => {
-      try {
-        checkoutQuoteSeqRef.current += 1;
-        const res = await quoteSession(id, paymentMethod, "none", 0);
-        setCheckoutQuote({
-          tableId: id,
-          paymentMethod,
-          paymentSplit: { Cash: "", UPI: "", Card: "" },
-          discountType: "none",
-          discountValue: "",
-          discountReason: "",
-          closedAtMs: res.data.session_ended_at,
-          sessionKey: res.data.session_key || "",
-          rec: res.data,
-          loading: false,
-          finalizing: false,
-          error: "",
-        });
-        return true;
-      } catch (e) {
-        showToast(e.response?.data?.detail || "Failed to show bill", "error");
-        return false;
-      }
-    });
+  function handleStop(id) {
+    onNavigate("live-floor", { tableId: id, tableAction: "checkout" });
+    return true;
   }
 
   async function handleTransfer(fromTableId, toTableId) {
@@ -2235,177 +1653,6 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0, onOpenF
         return false;
       }
     });
-  }
-
-  async function handleCheckoutDiscountChange(
-    discountType,
-    discountValue = "",
-    shouldQuote = true,
-    discountReason = checkoutQuote?.discountReason || "",
-  ) {
-    if (!checkoutQuote) return;
-    const nextValue = discountType === "rupee" ? sanitizeRupeeDiscount(discountValue) : "";
-    const nextQuote = {
-      ...checkoutQuote,
-      discountType,
-      discountValue: nextValue,
-      discountReason: discountType === "none" ? "" : discountReason,
-      loading: shouldQuote,
-      error: "",
-    };
-    setCheckoutQuote(nextQuote);
-    const requestSeq = checkoutQuoteSeqRef.current + 1;
-    checkoutQuoteSeqRef.current = requestSeq;
-    if (!shouldQuote) return;
-    try {
-      const res = await quoteSession(
-        checkoutQuote.tableId,
-        checkoutQuote.paymentMethod,
-        discountType,
-        parseInt(nextValue, 10) || 0,
-        checkoutQuote.closedAtMs,
-        checkoutQuote.rec?.checkout_token,
-      );
-      if (checkoutQuoteSeqRef.current !== requestSeq) return;
-      setCheckoutQuote((prev) => ({
-        ...(prev || nextQuote),
-        rec: {
-          ...res.data,
-          session_ended_at: checkoutQuote.closedAtMs,
-          session_key: checkoutQuote.sessionKey || res.data.session_key || "",
-        },
-        discountType,
-        discountValue: nextValue,
-        discountReason: discountType === "none" ? "" : discountReason,
-        closedAtMs: checkoutQuote.closedAtMs,
-        sessionKey: checkoutQuote.sessionKey || res.data.session_key || "",
-        loading: false,
-        error: "",
-      }));
-    } catch (e) {
-      if (checkoutQuoteSeqRef.current !== requestSeq) return;
-      setCheckoutQuote((prev) => ({
-        ...(prev || nextQuote),
-        loading: false,
-        error: e.response?.data?.detail || "Failed to update bill",
-      }));
-    }
-  }
-
-  async function handleCheckoutPaymentChange(paymentMethod, paymentSplit = null) {
-    if (!checkoutQuote) return;
-    const nextQuote = {
-      ...checkoutQuote,
-      paymentMethod,
-      paymentSplit: paymentSplit || checkoutQuote.paymentSplit || { Cash: "", UPI: "", Card: "" },
-      loading: true,
-      error: "",
-    };
-    setCheckoutQuote(nextQuote);
-    const requestSeq = checkoutQuoteSeqRef.current + 1;
-    checkoutQuoteSeqRef.current = requestSeq;
-    try {
-      const res = await quoteSession(
-        checkoutQuote.tableId,
-        paymentMethod,
-        checkoutQuote.discountType,
-        parseInt(checkoutQuote.discountValue, 10) || 0,
-        checkoutQuote.closedAtMs,
-        checkoutQuote.rec?.checkout_token,
-      );
-      if (checkoutQuoteSeqRef.current !== requestSeq) return;
-      setCheckoutQuote((prev) => ({
-        ...(prev || nextQuote),
-        rec: {
-          ...res.data,
-          session_ended_at: checkoutQuote.closedAtMs,
-          session_key: checkoutQuote.sessionKey || res.data.session_key || "",
-        },
-        paymentMethod,
-        paymentSplit: paymentSplit || prev?.paymentSplit || nextQuote.paymentSplit,
-        closedAtMs: checkoutQuote.closedAtMs,
-        sessionKey: checkoutQuote.sessionKey || res.data.session_key || "",
-        loading: false,
-        error: "",
-      }));
-    } catch (e) {
-      if (checkoutQuoteSeqRef.current !== requestSeq) return;
-      setCheckoutQuote((prev) => ({
-        ...(prev || nextQuote),
-        loading: false,
-        error: e.response?.data?.detail || "Failed to update payment method",
-      }));
-    }
-  }
-
-  async function handleFinalizeCheckout() {
-    if (!checkoutQuote) return;
-    const {
-      tableId,
-      paymentMethod = "Cash",
-      paymentSplit = { Cash: "", UPI: "", Card: "" },
-      discountType = "none",
-      discountValue = "",
-      discountReason = "",
-      closedAtMs = "",
-    } = checkoutQuote;
-    const total = checkoutQuote.rec?.tot ?? checkoutQuote.rec?.total ?? 0;
-    const splitPayload = paymentMethod === "Split"
-      ? ["Cash", "UPI", "Card"]
-          .map((method) => ({ method, amount: parseInt(paymentSplit[method], 10) || 0 }))
-          .filter((row) => row.amount > 0)
-      : [];
-    if (paymentMethod === "Split") {
-      const splitTotal = splitPayload.reduce((sum, row) => sum + row.amount, 0);
-      if (splitTotal !== total) {
-        showToast(`Split payments must total ${polishCurrency(total)}`, "error");
-        return;
-      }
-    }
-    const hasDiscount =
-      discountType !== "none" &&
-      (checkoutQuote.rec?.discount_amount || discountType !== "rupee" || parseInt(discountValue, 10) > 0);
-    if (hasDiscount && !discountReason.trim()) {
-      showToast("Enter a reason for the discount", "error");
-      return;
-    }
-    setCheckoutQuote((prev) => (prev ? { ...prev, finalizing: true } : prev));
-    try {
-      const res = await stopSession(
-        tableId,
-        paymentMethod,
-        "",
-        discountType,
-        parseInt(sanitizeRupeeDiscount(discountValue), 10) || 0,
-        closedAtMs,
-        discountReason.trim(),
-        splitPayload,
-        checkoutQuote.sessionKey || checkoutQuote.rec?.session_key || "",
-        checkoutQuote.rec?.checkout_token,
-      );
-      const rec = { ...res.data };
-      setSessions((prev) => {
-        const n = { ...prev };
-        delete n[tableId];
-        return n;
-      });
-      setNames((prev) => {
-        const n = { ...prev };
-        delete n[tableId];
-        return n;
-      });
-      onSessionEnd();
-      await fetchQueue();
-      await fetchBookings();
-      await fetchActive();
-      setCheckoutQuote(null);
-      showToast(`Table closed (${rec.payment_method || paymentMethod})`, "success");
-
-      setCheckoutBill({ tableId, rec, paymentMethod });
-    } catch (e) {
-      showToast(e.response?.data?.detail || "Failed to close table", "error");
-      setCheckoutQuote((prev) => (prev ? { ...prev, finalizing: false } : prev));
-    }
   }
 
   async function handleReserve(id, name, time) {
@@ -2592,19 +1839,6 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0, onOpenF
 
   return (
     <>
-      <CheckoutQuoteScreen
-        quote={checkoutQuote}
-        onClose={() => setCheckoutQuote(null)}
-        onPaymentChange={handleCheckoutPaymentChange}
-        onDiscountChange={handleCheckoutDiscountChange}
-        onFinalize={handleFinalizeCheckout}
-      />
-
-      <CheckoutBillScreen
-        bill={checkoutBill}
-        onClose={() => setCheckoutBill(null)}
-      />
-
       {quickSessionOpen && <StartSessionModal
         onClose={() => setQuickSessionOpen(false)}
         tables={TABLES.map(table => ({ ...table, rate: getTableRate(table, rates), status_key: maintenance[table.id] ? "maintenance" : sessions[table.id] ? "running" : "available" }))}

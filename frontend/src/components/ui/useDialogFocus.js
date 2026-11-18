@@ -31,12 +31,13 @@ export function topDialog() {
     .sort((a, b) => depth(a) - depth(b)).at(-1);
 }
 
-export function useDialogFocus(ref, open, initialFocusRef) {
+export function useDialogFocus(ref, open, initialFocusRef, restoreFocusRef) {
   useEffect(() => {
     if (!open || !ref.current) return;
     const dialog = ref.current;
     const unlock = lockPageScroll();
     const opener = document.activeElement;
+    const allowReturn = () => restoreFocusRef?.current !== false;
     const controls = () => [...dialog.querySelectorAll('button:not(:disabled),a[href],input:not(:disabled),select:not(:disabled),textarea:not(:disabled),[tabindex]:not([tabindex="-1"]),summary')]
       .filter(node => node.tabIndex >= 0 && node.getClientRects().length && getComputedStyle(node).visibility !== "hidden");
     const frame = requestAnimationFrame(() => { if (topDialog() === dialog) (initialFocusRef?.current || controls()[0] || dialog).focus(); });
@@ -52,7 +53,7 @@ export function useDialogFocus(ref, open, initialFocusRef) {
     return () => {
       cancelAnimationFrame(frame); document.removeEventListener("keydown", trap);
       unlock();
-      requestAnimationFrame(() => { const top = topDialog(); if (opener?.isConnected && (!top || top.contains(opener))) opener.focus(); });
+      requestAnimationFrame(() => { const top = topDialog(); if (allowReturn() && opener?.isConnected && (!top || top.contains(opener))) opener.focus(); });
     };
-  }, [ref, open, initialFocusRef]);
+  }, [ref, open, initialFocusRef, restoreFocusRef]);
 }

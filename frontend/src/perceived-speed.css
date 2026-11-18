@@ -19,7 +19,7 @@ button, a, input, select, textarea, [role="button"] {
 [role="tab"] { transition-duration: 120ms; }
 .route-page { animation: none; }
 .session-pending-note { grid-column: 1 / -1; color: inherit; font-size: var(--text-sm); }
-.session-pending-note::before { content: ""; display: inline-block; width: 7px; height: 7px; margin-right: 6px; border-radius: 50%; background: var(--warning); }
+.session-pending-note::before { content: ""; display: inline-block; width: 7px; height: 7px; margin-right: var(--space-2); border-radius: 50%; background: var(--warning); }
 @media (prefers-reduced-motion: reduce) {
   button:active:not(:disabled), [role="button"]:active { transform: none; }
 }

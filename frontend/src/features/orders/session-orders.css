@@ -1,7 +1,7 @@
 .lf-table-card .session-charge-lines { display: grid; gap: var(--space-1); margin-block: var(--space-2); color: inherit; }
 .lf-table-card .session-charge-lines > div { display: flex; justify-content: space-between; gap: var(--space-2); }
 .lf-table-card .session-charge-lines b { font-family: var(--font-mono); font-size: var(--text-sm); }
-.lf-table-card .session-canteen-summary { display: grid; gap: var(--space-1); width: 100%; min-height: 44px; padding: var(--space-2); margin-top: var(--space-2); color: #ffffff; background: transparent; border: 1px solid currentColor; border-radius: 4px; text-align: left; font-size: var(--text-sm); line-height: var(--leading-sm); white-space: normal; overflow-wrap: anywhere; }
+.lf-table-card .session-canteen-summary { display: grid; gap: var(--space-1); width: 100%; min-height: 44px; padding: var(--space-2); margin-top: var(--space-2); color: var(--legacy-ink-f2074b6cef); background: transparent; border: 1px solid currentColor; border-radius: 4px; text-align: left; font-size: var(--text-sm); line-height: var(--leading-sm); white-space: normal; overflow-wrap: anywhere; }
 .lf-table-card .session-canteen-summary > span { display: block; font-size: var(--text-sm); line-height: var(--leading-sm); }
 .lf-table-card .session-canteen-summary .session-order-dot { display: inline-block; width: 8px; height: 8px; margin-right: var(--space-1); border: 1px solid currentColor; border-radius: 50%; background: var(--warning); }
 .session-orders { display: grid; gap: var(--space-4); }

@@ -27,7 +27,7 @@ b, strong { font-weight: 500; }
 .ui-button:not(.table-state-card):disabled:not([data-loading="true"]) { color: var(--text-secondary) !important; background: var(--bg-inset) !important; border-color: var(--border-strong) !important; border-style: dashed; box-shadow: none !important; }
 .ui-switch { display: flex; align-items: center; gap: var(--space-3); min-height: 44px; position: relative; cursor: pointer; font-size: var(--text-sm); font-weight: 500; }
 .ui-switch input { position: absolute; width: 40px; height: 24px; opacity: 0; margin: 0; }
-.ui-switch-track { width: 40px; height: 24px; flex: 0 0 40px; padding: 3px; border: 1px solid var(--border-strong); border-radius: 999px; background: var(--bg-inset); transition: background-color 120ms ease-out; }
+.ui-switch-track { width: 40px; height: 24px; flex: 0 0 40px; padding: var(--space-1); border: 1px solid var(--border-strong); border-radius: 999px; background: var(--bg-inset); transition: background-color 120ms ease-out; }
 .ui-switch-track > span { display: block; width: 16px; height: 16px; border-radius: 50%; background: var(--text-secondary); transition: transform 120ms ease-out, background-color 120ms ease-out; }
 .ui-switch input:checked + .ui-switch-track { background: var(--accent); border-color: var(--accent); }
 .ui-switch input:checked + .ui-switch-track > span { transform: translateX(16px); background: var(--on-accent); }
@@ -42,12 +42,27 @@ b, strong { font-weight: 500; }
 .ui-disclosure[data-open="true"] > .ui-disclosure-trigger .ui-disclosure-chevron { transform: rotate(180deg); }
 .ui-disclosure-body { display: grid; gap: var(--space-4); padding: var(--space-5); border-top: 1px solid var(--border-default); }
 .ui-disclosure-body[hidden] { display: none; }
-.ui-overlay { background: rgb(0 0 0 / 50%); }
+.ui-overlay { background: var(--legacy-surface-dde75cd4aa); }
 .ui-overlay[data-exiting="true"] { animation: readiness-overlay-out 120ms ease-out both; pointer-events: none; }
 .ui-overlay[data-exiting="true"] > :is(.ui-modal, .ui-drawer) { animation: readiness-dialog-out 120ms ease-out both; }
 @keyframes readiness-overlay-out { to { opacity: 0; } }
 @keyframes readiness-dialog-out { to { opacity: 0; transform: scale(.98); } }
 .ui-overlay-body { overscroll-behavior: contain; }
+.ui-modal.command-palette { width: min(620px, calc(100vw - var(--space-8))); max-height: calc(100dvh - var(--space-12)); margin: auto; }
+.ui-modal.command-palette > .ui-overlay-body { padding: 0; }
+.ui-overlay.command-overlay { padding: var(--space-6) var(--space-4); }
+.command-palette .command-input-wrap { position: sticky; top: 0; z-index: 1; background: var(--surface); }
+.table-history-section + .table-history-section { margin-top: var(--space-6); }
+.table-history-section h3 { margin-bottom: var(--space-3); font-size: var(--text-base); }
+.table-history-section .ui-table-wrap { max-height: 50dvh; }
+.table-history-section .ui-table-wrap:focus-visible { outline: 2px solid var(--border-focus); outline-offset: -2px; }
+.table-reset-dialog .ui-input { width: 100%; }
+.cafe-pos-page { grid-template-columns: minmax(0, 1fr); min-width: 0; }
+.cafe-pos-page > * { min-width: 0; }
+.cafe-pos-tabs { flex-wrap: wrap; }
+.report-customer-heading { flex-wrap: wrap; gap: var(--space-3); }
+.report-customer-heading > :first-child { min-width: 0; flex: 1 1 12rem; }
+.report-customer-periods { flex-wrap: wrap; max-width: 100%; }
 html { scroll-padding-bottom: var(--toast-page-clearance, 0px); }
 .main-content::after { content: ""; display: block; height: var(--toast-page-clearance, 0px); flex: 0 0 auto; grid-column: 1 / -1; pointer-events: none; }
 .app-toast-container { transition-property: none; }
@@ -70,6 +85,8 @@ html { scroll-padding-bottom: var(--toast-page-clearance, 0px); }
 .tournament-layout .settings-panel-header > :first-child { flex: 1; min-width: 0; }
 .operations-page .settings-panel-header { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-2); }
 @media (max-width: 768px) {
+  .ops-floor-panel .ops-section-head { flex-direction: column; }
+  .ops-floor-actions { flex-wrap: wrap; max-width: 100%; align-self: flex-end; }
   .operations-rule-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; }
   .operations-rule-actions { grid-column: 1 / -1; flex-wrap: wrap; }
   .operations-rule-actions > button { flex: 1; }

@@ -6,7 +6,8 @@ import { measureUi } from "./ui-readiness-metrics.mjs";
 
 const stage = process.argv[2] || "after";
 assert.ok(["before", "after"].includes(stage));
-const app = `http://127.0.0.1:${stage === "before" ? 5180 : 5181}`;
+const app = process.env.UI_OVERLAY_APP_URL || `http://127.0.0.1:${stage === "before" ? 5180 : 5181}`;
+assert.equal(new URL(app).hostname, "127.0.0.1");
 const api = "http://127.0.0.1:8006";
 const output = process.env.UI_OVERLAY_OUTPUT || `../docs/deployment-ui-completion/shared-overlays/${stage}`;
 await fs.mkdir(output, { recursive: true });

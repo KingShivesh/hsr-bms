@@ -1,7 +1,6 @@
-import { Icon as HsrIcon, Input as HsrInput, Button as HsrButton, SkeletonBlock, EmptyState } from "./ui/index.js";
+import { Icon as HsrIcon, Input as HsrInput, Button as HsrButton, SkeletonBlock, EmptyState, Modal } from "./ui/index.js";
 import { useEffect, useMemo, useRef, useState } from "react";
 import RetryNotice from "./RetryNotice.jsx";
-import { useDialogScrollLock } from "./ui/useDialogFocus.js";
 import {
   getAuditLogs,
   getBookings,
@@ -12,14 +11,17 @@ import {
   getWaitlist,
 } from "../api/index.js";
 import { HSR_TABLES, getTableLabel } from "../config/hsrTables.js";
+import { formatCurrency } from "../utils/format.js";
+
+const numberText = value => value != null && value !== "" && Number.isFinite(Number(value)) ? Number(value).toLocaleString("en-IN") : "-";
+const moneyText = value => numberText(value) === "-" ? "-" : formatCurrency(value);
 
 export default function CommandBar({ page, setPage, onNewSession, role = "admin" }) {
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
   const [activeIndex, setActiveIndex] = useState(0);
   const inputRef = useRef(null);
-  const paletteRef = useRef(null);
-  const openerRef = useRef(null);
+  const restoreFocusRef = useRef(true);
   const [searchData, setSearchData] = useState({
     sessions: [],
     tables: [],
@@ -33,7 +35,6 @@ export default function CommandBar({ page, setPage, onNewSession, role = "admin"
   const [loadingData, setLoadingData] = useState(false);
   const [searchError, setSearchError] = useState("");
   const [retry, setRetry] = useState(0);
-  useDialogScrollLock(open);
 
   useEffect(() => {
     if (!open) return;
@@ -53,7 +54,7 @@ export default function CommandBar({ page, setPage, onNewSession, role = "admin"
       if (!alive) return;
       const menuData = results[6].status === "fulfilled" ? results[6].value.data || {} : {};
       const tableData = results[0].status === "fulfilled" ? results[0].value.data || {} : {};
-      const rows = value => Array.isArray(value) ? value.filter(Boolean) : [];
+      const rows = value => Array.isArray(value) ? value.filter(row => row && typeof row === "object") : [];
       const responseRows = index => results[index].status === "fulfilled" ? rows(results[index].value.data) : [];
       setSearchData({
         sessions: rows(tableData.active_sessions),
@@ -65,14 +66,14 @@ export default function CommandBar({ page, setPage, onNewSession, role = "admin"
         members: responseRows(5),
         menuItems: Array.isArray(menuData)
           ? rows(menuData)
-          : Object.entries(menuData).map(([name, item]) => ({
+          : Object.entries(menuData).filter(([, item]) => item && typeof item === "object").map(([name, item]) => ({
             name,
-            price: item?.price || 0,
+            price: item.price,
             category: item?.category || "Menu",
-            available: item?.available !== false,
+            available: typeof item.available === "boolean" ? item.available : null,
           })),
       });
-      if (results.some(result => result.status === "rejected")) setSearchError("Some live results could not load.");
+      if (results.some(result => result.status === "rejected") || results.slice(1, 6).some(result => result.status === "fulfilled" && !Array.isArray(result.value.data)) || !Array.isArray(tableData.tables) || !Array.isArray(tableData.active_sessions)) setSearchError("Some live results could not load.");
       setLoadingData(false);
     }
     loadSearchData();
@@ -233,7 +234,7 @@ export default function CommandBar({ page, setPage, onNewSession, role = "admin"
     const tableCommands = searchData.tables.map((table) => ({
       id: `table-${table.id}`,
       label: `${String(table.id || "").toUpperCase()} · ${table.label || "Table"}`,
-      hint: `${table.status_label || "Available"} · ₹${Number(table.rate || 0).toLocaleString("en-IN")}/hr · Live Floor`,
+      hint: `${table.status_label || "Status unavailable"} · ${moneyText(table.rate)}/hr · Live Floor`,
       icon: table.status_key === "running" ? "ti-player-play" : "ti-layout-board",
       action: () => setPage("live-floor"),
     }));
@@ -254,22 +255,22 @@ export default function CommandBar({ page, setPage, onNewSession, role = "admin"
     const foodCommands = searchData.foodOrders.slice(0, 6).map((order) => ({
       id: `food-${order.id}`,
       label: `${order.customer_name || "Counter"} food order`,
-      hint: `₹${Number(order.total || 0).toLocaleString("en-IN")} · ${order.payment_method || "Cash"}`,
+      hint: `${moneyText(order.total)} · ${order.payment_method || "Payment method unavailable"}`,
       icon: "ti-tools-kitchen-2",
       action: () => setPage("food"),
     }));
     const auditCommands = searchData.auditLogs.slice(0, 6).map((log) => ({
       id: `audit-${log.id}`,
       label: log.action?.replaceAll("_", " ") || "Audit event",
-      hint: `${log.staff || "system"} · ${log.detail || log.date || ""}`,
+      hint: `${log.staff || "Unknown actor"} · ${log.detail || log.date || ""}`,
       icon: log.severity === "danger" ? "ti-alert-triangle" : "ti-activity",
       action: () => setPage("reports"),
       adminOnly: true,
     }));
     const memberCommands = searchData.members.slice(0, 10).map((member) => ({
       id: `member-${member.id}`,
-      label: member.nm || "Customer",
-      hint: `${member.id || "Customer"} · ${member.typ || "Regular"} · ${Number(member.vis || 0).toLocaleString("en-IN")} visits · ₹${Number(member.spt || 0).toLocaleString("en-IN")} spent`,
+      label: member.name || member.nm || "Unknown customer",
+      hint: `${member.customer_id || member.id || "Customer"} · ${numberText(member.visits ?? member.vis)} visits · ${moneyText(member.spent ?? member.spt)} spent`,
       icon: "ti-user-circle",
       action: () => setPage("members"),
       adminOnly: true,
@@ -277,7 +278,7 @@ export default function CommandBar({ page, setPage, onNewSession, role = "admin"
     const menuCommands = searchData.menuItems.slice(0, 24).map((item) => ({
       id: `menu-${item.name}`,
       label: item.name || "Menu item",
-      hint: `${item.category || "Menu"} · ₹${Number(item.price || 0).toLocaleString("en-IN")} · ${item.available === false ? "Out of stock" : "In stock"} · Inventory`,
+      hint: `${item.category || "Menu"} · ${moneyText(item.price)} · ${item.available === false ? "Out of stock" : item.available === true ? "In stock" : "Stock unavailable"} · Inventory`,
       icon: "ti-tools-kitchen-2",
       action: () => setPage("inventory"),
       adminOnly: true,
@@ -291,18 +292,21 @@ export default function CommandBar({ page, setPage, onNewSession, role = "admin"
     if (!q) return true;
     return `${cmd.label} ${cmd.hint} ${cmd.aliases || ""}`.toLowerCase().includes(q);
   });
+  const activeCommandId = filtered[activeIndex]?.id;
+  useEffect(() => {
+    if (open && activeCommandId) document.getElementById(`command-result-${activeCommandId}`)?.scrollIntoView({ block: "nearest" });
+  }, [open, activeCommandId]);
 
   function openCommandPalette() {
-    openerRef.current = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+    if (inputRef.current) { inputRef.current.focus(); return; }
+    restoreFocusRef.current = true;
     setLoadingData(true);
     setOpen(true);
   }
 
   function closeCommandPalette({ restoreFocus = true } = {}) {
+    restoreFocusRef.current = restoreFocus;
     setOpen(false);
-    if (restoreFocus) {
-      window.setTimeout(() => openerRef.current?.focus?.(), 0);
-    }
   }
 
   useEffect(() => {
@@ -314,14 +318,13 @@ export default function CommandBar({ page, setPage, onNewSession, role = "admin"
         target instanceof HTMLSelectElement ||
         target?.isContentEditable;
       if ((e.key === "k" && (e.metaKey || e.ctrlKey)) || (e.key === "/" && !typing)) {
-        if (document.querySelector('[aria-modal="true"]:not(.cf-command-dialog)')) return;
+        if (document.querySelector('[aria-modal="true"]:not(.command-palette)')) return;
         e.preventDefault();
         openCommandPalette();
       }
-      if (e.key === "Escape") closeCommandPalette();
     }
     function onOpenCommand() {
-      if (document.querySelector('[aria-modal="true"]:not(.cf-command-dialog)')) return;
+      if (document.querySelector('[aria-modal="true"]:not(.command-palette)')) return;
       openCommandPalette();
     }
     window.addEventListener("keydown", onKeyDown);
@@ -336,37 +339,7 @@ export default function CommandBar({ page, setPage, onNewSession, role = "admin"
     if (open) {
       setQuery("");
       setActiveIndex(0);
-      window.requestAnimationFrame(() => inputRef.current?.focus());
     }
-  }, [open]);
-
-  useEffect(() => {
-    if (!open) return;
-    function onKeyDown(event) {
-      if (event.key === "Escape") {
-        event.preventDefault();
-        closeCommandPalette();
-        return;
-      }
-      if (event.key !== "Tab") return;
-      const focusable = Array.from(
-        paletteRef.current?.querySelectorAll(
-          'button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])',
-        ) || [],
-      ).filter((node) => node.offsetParent !== null);
-      if (!focusable.length) return;
-      const first = focusable[0];
-      const last = focusable[focusable.length - 1];
-      if (event.shiftKey && document.activeElement === first) {
-        event.preventDefault();
-        last.focus();
-      } else if (!event.shiftKey && document.activeElement === last) {
-        event.preventDefault();
-        first.focus();
-      }
-    }
-    window.addEventListener("keydown", onKeyDown);
-    return () => window.removeEventListener("keydown", onKeyDown);
   }, [open]);
 
   useEffect(() => {
@@ -383,15 +356,12 @@ export default function CommandBar({ page, setPage, onNewSession, role = "admin"
   }
 
   return (
-    <div className="command-overlay" role="presentation" onMouseDown={() => closeCommandPalette()}>
-      <div
-        ref={paletteRef}
+    <Modal open portal showHeader={false} title="Command palette"
+        onClose={() => closeCommandPalette()}
+        initialFocusRef={inputRef} restoreFocusRef={restoreFocusRef}
+        overlayClassName="command-overlay"
         className="command-palette"
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="command-palette-title"
         aria-describedby="command-palette-help"
-        onMouseDown={(e) => e.stopPropagation()}
       >
         <h2 id="command-palette-title" className="sr-only">Command palette</h2>
         <p id="command-palette-help" className="sr-only">
@@ -404,13 +374,12 @@ export default function CommandBar({ page, setPage, onNewSession, role = "admin"
             aria-label="Search commands"
             aria-controls="command-results"
             aria-activedescendant={filtered[activeIndex] ? `command-result-${filtered[activeIndex].id}` : undefined}
-            autoFocus
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             onKeyDown={(e) => {
               if (e.key === "ArrowDown") {
                 e.preventDefault();
-                setActiveIndex((i) => Math.min(i + 1, filtered.length - 1));
+                setActiveIndex((i) => Math.max(0, Math.min(i + 1, filtered.length - 1)));
               }
               if (e.key === "ArrowUp") {
                 e.preventDefault();
@@ -449,7 +418,6 @@ export default function CommandBar({ page, setPage, onNewSession, role = "admin"
           )}
           {loadingData && <SkeletonBlock rows={3} label="Loading live command results" />}
         </div>
-      </div>
-    </div>
+    </Modal>
   );
 }

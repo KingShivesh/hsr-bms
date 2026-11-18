@@ -1,5 +1,6 @@
+import { Card as HsrCard, Panel as HsrPanel } from "../../components/ui/index.js";
 import { formatDuration as polishDuration } from "../../utils/format.js";
-import { Icon as HsrIcon, Button as HsrButton, Select as HsrSelect } from "../../components/ui/index.js";
+import { Icon as HsrIcon, Button as HsrButton, Select as HsrSelect, Tabs, EmptyState } from "../../components/ui/index.js";
 import { useMemo, useState } from "react";
 import { transferSession } from "../../api/index.js";
 import { useToast } from "../../components/toastContext.js";
@@ -69,48 +70,33 @@ export default function SessionWorkspace({
       </div>
 
       {!session && (
-        <div className="session-empty-panel">
-          <HsrIcon className="ti ti-player-play" aria-hidden="true" />
-          <h3>{table.status_key === "maintenance" ? "Table unavailable" : "No active session"}</h3>
-          <p>{table.maintenance?.reason || table.booking?.customer_name || `Rate: ₹${table.rate}/hr`}</p>
-        </div>
+        <EmptyState icon="ti-player-play" title={table.status_key === "maintenance" ? "Table unavailable" : "No active session"} description={table.maintenance?.reason || table.booking?.customer_name || `Rate: ₹${table.rate}/hr`} />
       )}
 
       {session && (
         <>
-          <div className="session-tabs" role="tablist" aria-label="Session sections">
-            {tabs.map((tab) => (
-              <HsrButton native
-                type="button"
-                key={tab}
-                className={activeTab === tab ? "is-active" : ""}
-                onClick={() => setActiveTab(tab)}
-              >
-                {tab}
-              </HsrButton>
-            ))}
-          </div>
+          <Tabs className="session-tabs" label="Session sections" tabs={tabs.map(tab => ({ value: tab, label: tab }))} value={activeTab} onChange={setActiveTab} />
 
           <div className="session-workspace-content">
           {activeTab === "overview" && (
             <div className="session-panel-grid">
               <FrameControls tableId={table.id} session={session} onRefresh={onRefresh} />
-              <div className="session-money-card">
+              <HsrCard as="div" className="session-money-card">
                 <span>Table charges</span>
                 <strong>₹{Number(session.play_estimate || 0).toLocaleString("en-IN")}</strong>
-              </div>
-              <div className="session-money-card">
+              </HsrCard>
+              <HsrCard as="div" className="session-money-card">
                 <span>Food charges</span>
                 <strong>₹{Number(session.food_total || 0).toLocaleString("en-IN")}</strong>
-              </div>
-              <div className="session-money-card">
+              </HsrCard>
+              <HsrCard as="div" className="session-money-card">
                 <span>Discount</span>
                 <strong>₹0</strong>
-              </div>
-              <div className="session-money-card is-total">
+              </HsrCard>
+              <HsrCard as="div" className="session-money-card is-total">
                 <span>Current total</span>
                 <strong>₹{Number(session.running_total || 0).toLocaleString("en-IN")}</strong>
-              </div>
+              </HsrCard>
               <dl className="session-facts">
                 <div><dt>Started</dt><dd>{formatClock(session.session_started_at || session.start_time)}</dd></div>
                 <div><dt>Elapsed</dt><dd>{formatTimer(elapsed)}</dd></div>
@@ -121,7 +107,7 @@ export default function SessionWorkspace({
           )}
 
           {activeTab === "orders" && (
-            <div className="session-list-panel">
+            <HsrPanel as="div" className="session-list-panel">
               <div className="session-list-head">
                 <h3>Session orders</h3>
               </div>
@@ -137,22 +123,22 @@ export default function SessionWorkspace({
               ) : (
                 <p className="lf-muted-copy">No food attached to this session yet.</p>
               )}
-            </div>
+            </HsrPanel>
           )}
 
           {activeTab === "customer" && (
-            <div className="session-list-panel">
+            <HsrPanel as="div" className="session-list-panel">
               <h3>Customer</h3>
               <dl className="session-facts">
                 <div><dt>Name</dt><dd><SessionIdentity session={session} /></dd></div>
                 <div><dt>Players</dt><dd>{players.length ? players.join(", ") : "Not recorded"}</dd></div>
                 <div><dt>Split</dt><dd>{session.split ? session.split_name || "Sharing" : "Single payer"}</dd></div>
               </dl>
-            </div>
+            </HsrPanel>
           )}
 
           {activeTab === "activity" && (
-            <div className="session-list-panel">
+            <HsrPanel as="div" className="session-list-panel">
               <h3>Activity</h3>
               <div className="session-activity-list">
                 <div><HsrIcon className="ti ti-player-play" aria-hidden="true" /><span>Session started at {formatClock(session.start_time)}</span></div>
@@ -161,7 +147,7 @@ export default function SessionWorkspace({
                   <div key={`${item.item}-activity-${index}`}><HsrIcon className="ti ti-tools-kitchen-2" aria-hidden="true" /><span>{item.item} added · Qty {item.qty}</span></div>
                 ))}
               </div>
-            </div>
+            </HsrPanel>
           )}
 
           </div>

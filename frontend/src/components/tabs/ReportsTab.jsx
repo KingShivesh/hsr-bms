@@ -316,7 +316,7 @@ function TopCustomersView() {
   return (
     <div className="reports-page-shell">
       <div
-        className="polish-display-flex polish-justify-content-space-between polish-align-items-center polish-margin-bottom-16px"
+        className="report-customer-heading polish-display-flex polish-justify-content-space-between polish-align-items-center polish-margin-bottom-16px"
       >
         <div className="type-base polish-font-weight-weight-semibold polish-color-var---venue-text-text" >
           Regular Customers{" "}
@@ -326,7 +326,7 @@ function TopCustomersView() {
             </span>
           )}
         </div>
-        <div className="polish-display-flex polish-gap-4px" >
+        <div className="report-customer-periods polish-display-flex polish-gap-4px" >
           {[
             ["month", "This Month"],
             ["week", "This Week"],

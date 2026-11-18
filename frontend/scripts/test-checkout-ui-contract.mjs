@@ -2,8 +2,9 @@ import assert from "node:assert/strict";
 import fs from "node:fs/promises";
 import { chromium } from "playwright";
 
-const app = "http://127.0.0.1:5181", api = "http://127.0.0.1:8006";
-const output = "../docs/deployment-ui-completion/checkout/contract";
+const app = process.env.UI_CHECKOUT_APP_URL || "http://127.0.0.1:5181", api = "http://127.0.0.1:8006";
+assert.equal(new URL(app).hostname, "127.0.0.1");
+const output = process.env.UI_CHECKOUT_OUTPUT || "../docs/deployment-ui-completion/checkout/contract";
 await fs.mkdir(output, { recursive: true });
 const report = { cases: [], errors: [], blockedBusinessWrites: [], readOnlyPreviews: 0, scope: "Disposable local QA only; POST checkout-preview is read-only; settlement and every other write blocked" };
 const browser = await chromium.launch({ executablePath: "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome", headless: true });

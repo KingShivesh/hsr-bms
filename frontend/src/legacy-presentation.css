@@ -50,13 +50,13 @@
 .polish-justify-content-space-between { justify-content: space-between !important; }
 .polish-left-0 { left: 0 !important; }
 .polish-margin-0 { margin: 0 !important; }
-.polish-margin-bottom-0px { margin-bottom: 0px !important; }
+.polish-margin-bottom-0px { margin-bottom: 0 !important; }
 .polish-margin-bottom-12px { margin-bottom: var(--space-3) !important; }
 .polish-margin-bottom-16px { margin-bottom: var(--space-4) !important; }
 .polish-margin-bottom-20px { margin-bottom: var(--space-5) !important; }
 .polish-margin-bottom-4px { margin-bottom: var(--space-1) !important; }
 .polish-margin-bottom-8px { margin-bottom: var(--space-2) !important; }
-.polish-margin-top-0px { margin-top: 0px !important; }
+.polish-margin-top-0px { margin-top: 0 !important; }
 .polish-margin-top-12px { margin-top: var(--space-3) !important; }
 .polish-margin-top-4px { margin-top: var(--space-1) !important; }
 .polish-margin-top-8px { margin-top: var(--space-2) !important; }
@@ -66,14 +66,14 @@
 .polish-min-width-260px { min-width: 260px !important; }
 .polish-overflow-hidden { overflow: hidden !important; }
 .polish-overflow-x-auto { overflow-x: auto !important; }
-.polish-padding-0px-4px { padding: 0px var(--space-1) !important; }
-.polish-padding-0px-8px { padding: 0px var(--space-2) !important; }
+.polish-padding-0px-4px { padding: 0 var(--space-1) !important; }
+.polish-padding-0px-8px { padding: 0 var(--space-2) !important; }
 .polish-padding-12px { padding: var(--space-3) !important; }
 .polish-padding-12px-12px { padding: var(--space-3) var(--space-3) !important; }
 .polish-padding-16px { padding: var(--space-4) !important; }
 .polish-padding-16px-0 { padding: var(--space-4) 0 !important; }
 .polish-padding-32px { padding: var(--space-8) !important; }
-.polish-padding-4px-0px { padding: var(--space-1) 0px !important; }
+.polish-padding-4px-0px { padding: var(--space-1) 0 !important; }
 .polish-padding-4px-12px { padding: var(--space-1) var(--space-3) !important; }
 .polish-padding-8px { padding: var(--space-2) !important; }
 .polish-padding-8px-0 { padding: var(--space-2) 0 !important; }

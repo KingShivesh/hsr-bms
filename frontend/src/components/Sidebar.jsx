@@ -63,8 +63,8 @@ export default function Sidebar({ page, setPage, onLogout, activeTables, role = 
     items: group.items.filter((item) => role === "admin" || (!item.adminOnly && !item.staffHidden)),
   }));
 
-  function navigate(nextPage) {
-    setPage(nextPage);
+  function navigate(nextPage, options) {
+    setPage(nextPage, options);
     setMobileOpen(false);
   }
 
@@ -75,7 +75,7 @@ export default function Sidebar({ page, setPage, onLogout, activeTables, role = 
       className={`sidebar cf-sidebar ${compact ? "collapsed" : ""} ${mobileOpen ? "mobile-open" : ""}`}
     >
       <div className="cf-sidebar-head">
-        <ClubMenu />
+        <ClubMenu onNavigate={navigate} />
         <HsrButton native
           type="button"
           className="cf-collapse-btn"
@@ -126,7 +126,7 @@ export default function Sidebar({ page, setPage, onLogout, activeTables, role = 
       </nav>
 
       <div className="sb-bottom">
-        <ProductFooter />
+        <ProductFooter onNavigate={navigate} />
         <div className="cf-user-mini">
           <div>{role === "staff" ? "ST" : "AD"}</div>
           <span>
