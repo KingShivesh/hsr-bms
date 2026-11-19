@@ -21,7 +21,8 @@ permissions:
 
 jobs:
   postgres-parity:
-    runs-on: ubuntu-latest
+    # Python 3.11.9 has official builds for 24.04, not the moving latest image.
+    runs-on: ubuntu-24.04
     timeout-minutes: 15
     services:
       postgres:
@@ -91,7 +92,11 @@ jobs:
           {
             echo '### PostgreSQL soak output'
             echo '```text'
-            tail -n 160 /tmp/postgres-soak.log
+            if [ -f /tmp/postgres-soak.log ]; then
+              tail -n 160 /tmp/postgres-soak.log
+            else
+              echo 'Soak did not run. Check the earlier failed step.'
+            fi
             echo '```'
           } >> "$GITHUB_STEP_SUMMARY"
           if [ "${{ steps.postgres-soak.outcome }}" = "failure" ]; then

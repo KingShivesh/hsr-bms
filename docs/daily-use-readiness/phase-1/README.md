@@ -102,6 +102,13 @@ Live Floor race, light and dark: [before light](loading-race/before/light.png),
 
 ## Rollout and approval
 
+The first branch CI run [44609913673](https://github.com/KingShivesh/hsr-bms/actions/runs/44609913673)
+failed at Python setup, before application tests: `ubuntu-latest` selected Ubuntu
+26.04, which has no official Python 3.11.9 build. GitHub's official
+[version manifest](https://github.com/actions/python-versions/blob/main/versions-manifest.json)
+lists Ubuntu 24.04 support for that exact version. CI now pins 24.04; missing soak
+logs after an earlier setup failure are handled without masking that first error.
+
 No production merge or deployment is included without owner approval. The workflow
 change does not run on its new business-hours schedule until merged to main.
 After approval, deploy and verify frontend asset hashes/backend revision plus

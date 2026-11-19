@@ -192,6 +192,9 @@ dead/reachable component findings, and the full routing migration.
   timeouts (10s/5s/15s), including with transaction-mode poolers. Prepared statements
   are disabled for psycopg pooler compatibility. Verify real deployed pooler/TLS
   settings separately: a local Postgres pass is not proof of account configuration.
+- Backend parity CI pins Ubuntu 24.04 with production Python 3.11.9. Do not return
+  it to ubuntu-latest without checking actions/python-versions: Ubuntu 26.04 lacks
+  that exact build. A skipped soak must not produce a misleading missing-log error.
 - `main` contains the interaction-design, routing, post-deploy UX,
   operational UX, and identity/polish passes through `212400d`.
 - `frontend/vercel.json` defines SPA rewrites to `index.html`; after pushing

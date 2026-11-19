@@ -1,0 +1,11 @@
+{
+  "runId": 44609913673,
+  "sha": "05dc04df8f09b2d79464f438017062fbe4d4ba04",
+  "failedStep": "Run actions/setup-python@v5",
+  "annotation": "The version '3.11.9' with architecture 'x64' was not found for Ubuntu 26.04.",
+  "applicationTestsRan": false,
+  "officialManifestCompatibleUbuntuVersions": ["20.04", "22.04", "24.04"],
+  "chosenRunner": "ubuntu-24.04",
+  "secondaryFailure": "Publishing a nonexistent soak log after setup failed",
+  "fix": "Pin the supported runner; publish a clear skipped-soak note if its log does not exist"
+}
