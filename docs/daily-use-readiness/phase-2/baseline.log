@@ -1,0 +1,74 @@
+/private/tmp/hsr-release-20261118-venv/lib/python3.13/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+  from starlette.testclient import TestClient as TestClient  # noqa
+test_counter_duplicate_intent_is_one_order (test_money_integrity.MoneyIntegrityTests.test_counter_duplicate_intent_is_one_order) ... INFO:hsr-bms:request_id=fdacb30c-6844-49ef-9500-e466c49e35dc method=POST path=/food/order status=200 duration_ms=85
+INFO:httpx:HTTP Request: POST http://testserver/food/order "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=aebf1bee-8e0e-4886-9e23-6af2579fd3c0 method=POST path=/food/order status=200 duration_ms=11
+INFO:httpx:HTTP Request: POST http://testserver/food/order "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=e78c9642-ab8d-48f0-87d7-e0ed6b63832c method=POST path=/food/order status=200 duration_ms=11
+INFO:httpx:HTTP Request: POST http://testserver/food/order "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=946b0faf-a057-41ae-ab22-10f47226fd97 method=POST path=/food/order status=200 duration_ms=10
+INFO:httpx:HTTP Request: POST http://testserver/food/order "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=c8f22dd5-f776-483b-b827-3e86c678921f method=POST path=/food/order status=200 duration_ms=10
+INFO:httpx:HTTP Request: POST http://testserver/food/order "HTTP/1.1 200 OK"
+FAIL
+test_same_key_changed_payload_is_rejected (test_money_integrity.MoneyIntegrityTests.test_same_key_changed_payload_is_rejected) ... INFO:hsr-bms:request_id=9b40784d-71af-41a3-bbb2-b02954698b94 method=POST path=/food/order status=200 duration_ms=11
+INFO:httpx:HTTP Request: POST http://testserver/food/order "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=68dba474-ec71-4dce-888d-33b0e78c86af method=POST path=/food/order status=200 duration_ms=9
+INFO:httpx:HTTP Request: POST http://testserver/food/order "HTTP/1.1 200 OK"
+FAIL
+test_pause_retry_keeps_the_requested_state (test_money_integrity.MoneyIntegrityTests.test_pause_retry_keeps_the_requested_state) ... INFO:hsr-bms:request_id=84334064-0fdc-4726-b3ca-6c92c71eb19e method=POST path=/sessions/start status=200 duration_ms=32
+INFO:httpx:HTTP Request: POST http://testserver/sessions/start "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=ebc99272-b273-4269-b3e6-aa97dac7feba method=POST path=/sessions/pause/t1 status=200 duration_ms=16
+INFO:httpx:HTTP Request: POST http://testserver/sessions/pause/t1 "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=2e54c1aa-4369-48a9-a054-e9d6f0e11991 method=POST path=/sessions/pause/t1 status=200 duration_ms=17
+INFO:httpx:HTTP Request: POST http://testserver/sessions/pause/t1 "HTTP/1.1 200 OK"
+FAIL
+test_two_am_closing_uses_previous_business_date (test_money_integrity.MoneyIntegrityTests.test_two_am_closing_uses_previous_business_date) ... INFO:hsr-bms:request_id=57b31122-f4c5-4626-a81b-eb0c70b905ad method=GET path=/reports/closing-report status=200 duration_ms=21
+INFO:httpx:HTTP Request: GET http://testserver/reports/closing-report "HTTP/1.1 200 OK"
+FAIL
+
+======================================================================
+FAIL: test_counter_duplicate_intent_is_one_order (test_money_integrity.MoneyIntegrityTests.test_counter_duplicate_intent_is_one_order)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/shivanshgupta/.codex/worktrees/player-start-flow/billiards-bms:HSR/backend/test_money_integrity.py", line 30, in test_counter_duplicate_intent_is_one_order
+    self.assertEqual(db.query(models.FoodOnlyOrder).count(), 1)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 5 != 1
+
+======================================================================
+FAIL: test_same_key_changed_payload_is_rejected (test_money_integrity.MoneyIntegrityTests.test_same_key_changed_payload_is_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/shivanshgupta/.codex/worktrees/player-start-flow/billiards-bms:HSR/backend/test_money_integrity.py", line 35, in test_same_key_changed_payload_is_rejected
+    self.assertEqual(second.status_code, 409, second.text)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 200 != 409 : {"ok":true,"total":20,"items":[{"item":"QA Engine Tea","qty":1,"price":20}],"payment_method":"UPI"}
+
+======================================================================
+FAIL: test_pause_retry_keeps_the_requested_state (test_money_integrity.MoneyIntegrityTests.test_pause_retry_keeps_the_requested_state)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/shivanshgupta/.codex/worktrees/player-start-flow/billiards-bms:HSR/backend/test_money_integrity.py", line 47, in test_pause_retry_keeps_the_requested_state
+    self.assertTrue(response.json()["paused"])
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_two_am_closing_uses_previous_business_date (test_money_integrity.MoneyIntegrityTests.test_two_am_closing_uses_previous_business_date)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/shivanshgupta/.codex/worktrees/player-start-flow/billiards-bms:HSR/backend/test_money_integrity.py", line 52, in test_two_am_closing_uses_previous_business_date
+    self.assertEqual(report["date"], "19/11/2026")
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: '20/11/2026' != '19/11/2026'
+- 20/11/2026
+? ^^
++ 19/11/2026
+? ^^
+
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.495s
+
+FAILED (failures=4)

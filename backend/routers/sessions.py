@@ -1,4 +1,4 @@
-from fastapi import APIRouter, BackgroundTasks, HTTPException, Depends
+from fastapi import APIRouter, BackgroundTasks, HTTPException, Depends, Request
 from pydantic import BaseModel, Field, field_validator, model_validator
 from sqlalchemy import func, or_
 from sqlalchemy.exc import IntegrityError
@@ -19,6 +19,7 @@ from session_identity import is_active_session
 from routers.bookings import eligible_booking, booking_prices
 from session_controls import CheckoutProposal, checkout_context, controls
 from session_food import session_food_lines, store_session_food
+from money import MoneyRequest, assert_day_open
 
 router = APIRouter()
 MAX_SESSION_DURATION_MINUTES = 12 * 60
@@ -88,11 +89,22 @@ class StartSession(BaseModel):
         return self
 
 class FoodItem(BaseModel):
-    item: str
+    item: str = Field(min_length=1, max_length=80)
     qty:  int = Field(ge=1, le=100)
     mrp:  int | None = Field(default=None, ge=1, le=100000)
     session_key: str | None = None
     player_name: str = ""
+
+
+class FoodCart(BaseModel):
+    session_key: str = Field(min_length=1)
+    player_name: str = Field(default="", max_length=80)
+    items: list[FoodItem] = Field(min_length=1, max_length=100)
+
+
+class PauseState(BaseModel):
+    session_key: str = Field(min_length=1)
+    paused: bool
 
 class SessionFoodUpdate(BaseModel):
     session_key: str = Field(min_length=1)
@@ -622,9 +634,14 @@ def archive_closed_frames(
 def start_session(
     body: StartSession,
     background_tasks: BackgroundTasks,
+    request: Request,
     db: Session = Depends(get_mutation_db),
     user: dict = Depends(get_current_claims),
 ):
+    intent = MoneyRequest(db, request, user, body.model_dump())
+    if intent.replay is not None:
+        return intent.replay
+    assert_day_open(db)
     table_id = require_known_table_id(body.table_id)
     billing_mode = normalize_billing_mode(body.billing_mode, body.split)
     fallback_players = default_players_for_mode(billing_mode)
@@ -731,6 +748,9 @@ def start_session(
         table_id=table_id,
         staff=user["username"],
     )
+    db.flush()
+    response = intent.remember({"ok": True, "session_key": sess.session_key, "player_type": sess.player_type,
+        "frames": [serialize_frame(first_frame)] if first_frame else []}, kind="session", resource_id=sess.session_key)
     try:
         db.commit()
     except IntegrityError:
@@ -739,17 +759,30 @@ def start_session(
     queue_realtime_event(background_tasks, "table.updated", "floor", "live-floor")
     if booking:
         queue_realtime_event(background_tasks, "reservation.changed", "reservations", "bookings")
-    return {"ok": True, "session_key": sess.session_key, "player_type": sess.player_type, "frames": [serialize_frame(first_frame)] if first_frame else []}
+    return response
 
 @router.post("/pause/{table_id}")
 def pause_session(
     table_id: str,
     background_tasks: BackgroundTasks,
+    request: Request,
+    body: PauseState | None = None,
     db: Session = Depends(get_mutation_db),
+    user: dict = Depends(get_current_claims),
 ):
+    intent = MoneyRequest(db, request, user, body.model_dump() if body else None)
+    if intent.replay is not None:
+        return intent.replay
+    assert_day_open(db)
     sess = active_session_for_table(db, table_id, lock=True)
     if not sess:
         raise HTTPException(status_code=404, detail="No active session")
+    if body and body.session_key != sess.session_key:
+        raise HTTPException(409, "This pause request is for an earlier session. Refresh the table.")
+    if body and body.paused == bool(sess.paused):
+        response = intent.remember({"ok": True, "paused": bool(sess.paused)})
+        db.commit()
+        return response
     initialize_session_timing(db, sess)
     now_ms = time.time() * 1000
     if not sess.paused:
@@ -781,9 +814,10 @@ def pause_session(
         },
     )
     log_action(db, action, f"{normalize_table_id(table_id).upper()} {action.replace('session_', '')}", table_id=table_id)
+    response = intent.remember({"ok": True, "paused": sess.paused})
     db.commit()
     queue_realtime_event(background_tasks, "table.updated", "floor", "live-floor")
-    return {"ok": True, "paused": sess.paused}
+    return response
 
 @router.get("/quote/{table_id}")
 def quote_session(
@@ -938,6 +972,7 @@ def preview_checkout(table_id: str, body: CheckoutProposal, db: Session = Depend
 def stop_session(
     table_id:       str,
     background_tasks: BackgroundTasks,
+    request: Request,
     payment_method: str = "Cash",   # Cash / UPI
     payer_name:     str = "",
     discount_type:  str = "none",
@@ -951,6 +986,9 @@ def stop_session(
     db: Session = Depends(get_mutation_db),
     user: dict = Depends(get_current_claims),
 ):
+    intent = MoneyRequest(db, request, user, proposal.model_dump() if proposal else None)
+    if intent.replay is not None:
+        return intent.replay
     table_id = require_known_table_id(table_id)
     expected_session_key = proposal.session_key if proposal else (session_key or "").strip()
     sess = active_session_for_table(db, table_id, lock=True)
@@ -980,6 +1018,7 @@ def stop_session(
         queue_realtime_event(background_tasks, "table.updated", "floor", "live-floor")
         return transaction_checkout_response(db, existing_transaction, idempotent=True)
 
+    assert_day_open(db)
     # Minimum session check
     settings   = db.query(models.Settings).first()
     min_mins   = settings.min_session if settings else 0
@@ -1229,6 +1268,14 @@ def stop_session(
         amount=total,
         table_id=table_id,
     )
+    db.flush()
+    response = intent.remember(transaction_checkout_response(
+        db, t, idempotent=False, raw_total=raw_total, discount_amount=discount_amount,
+        discount_type=discount_type, checkout=checkout, actual_minutes=actual_minutes,
+        duration_capped=duration_capped, payment_split=payment_split,
+        player_breakdown=player_breakdown, frames=serialized_frames,
+        split_per_head=split_per_head, share_count=share_count,
+    ), kind="transaction", resource_id=t.id)
     try:
         db.commit()
     except IntegrityError:
@@ -1243,22 +1290,7 @@ def stop_session(
     if context["time_edit"]:
         queue_realtime_event(background_tasks, "session.time_edited", "floor", "live-floor")
 
-    return transaction_checkout_response(
-        db,
-        t,
-        idempotent=False,
-        raw_total=raw_total,
-        discount_amount=discount_amount,
-        discount_type=discount_type,
-        checkout=checkout,
-        actual_minutes=actual_minutes,
-        duration_capped=duration_capped,
-        payment_split=payment_split,
-        player_breakdown=player_breakdown,
-        frames=serialized_frames,
-        split_per_head=split_per_head,
-        share_count=share_count,
-    )
+    return response
 
 @router.post("/transfer/{table_id}")
 def transfer_session(
@@ -1478,12 +1510,51 @@ def add_food(
     table_id: str,
     body: FoodItem,
     background_tasks: BackgroundTasks,
+    request: Request,
     db: Session = Depends(get_mutation_db),
+    user: dict = Depends(get_current_claims),
 ):
+    intent = MoneyRequest(db, request, user, body.model_dump())
+    if intent.replay is not None:
+        return intent.replay
     table_id = require_known_table_id(table_id)
     sess = active_session_for_table(db, table_id, lock=True)
     if not sess:
         raise HTTPException(status_code=404, detail="No active session")
+    assert_day_open(db)
+    line = append_food_line(db, sess, body, user["username"])
+    response = intent.remember({"ok": True, "food_total": sess.food_total, "item": line},
+        kind="session_food", resource_id=sess.session_key)
+    db.commit()
+    queue_realtime_event(background_tasks, "session.orders.updated", "floor", "live-floor", "session-orders")
+    queue_realtime_event(background_tasks, "table.updated", "floor", "live-floor")
+    return response
+
+
+@router.post("/{table_id}/food-order")
+def add_food_cart(table_id: str, body: FoodCart, background_tasks: BackgroundTasks, request: Request,
+    db: Session = Depends(get_mutation_db), user: dict = Depends(get_current_claims)):
+    intent = MoneyRequest(db, request, user, body.model_dump())
+    if intent.replay is not None:
+        return intent.replay
+    table_id = require_known_table_id(table_id)
+    sess = active_session_for_table(db, table_id, lock=True)
+    if not sess or sess.session_key != body.session_key:
+        raise HTTPException(409, "This cart is for an earlier session. Refresh the table.")
+    assert_day_open(db)
+    lines = [append_food_line(db, sess, FoodItem(**{
+        **item.model_dump(), "session_key": body.session_key, "player_name": body.player_name,
+    }), user["username"]) for item in body.items]
+    response = intent.remember({"ok": True, "food_total": sess.food_total, "items": lines},
+        kind="session_food", resource_id=sess.session_key)
+    db.commit()
+    queue_realtime_event(background_tasks, "session.orders.updated", "floor", "live-floor", "session-orders")
+    queue_realtime_event(background_tasks, "table.updated", "floor", "live-floor")
+    return response
+
+
+def append_food_line(db, sess, body, actor):
+    table_id = sess.table_id
     if body.session_key and body.session_key != sess.session_key:
         raise HTTPException(409, "This order is for an earlier session. Refresh the table.")
     menu_item = db.query(models.MenuItem).filter(
@@ -1501,6 +1572,8 @@ def add_food(
         item_name = f"{body.item} (MRP ₹{body.mrp} + ₹3)"
     else:
         unit_price = menu_item.price
+    if not isinstance(unit_price, int) or unit_price < 0:
+        raise HTTPException(409, "This menu price needs owner review before ordering")
     price           = unit_price * body.qty
     items = session_food_lines(sess, include_cancelled=True)
     player_name = " ".join((body.player_name or "").strip().split())
@@ -1531,6 +1604,7 @@ def add_food(
             "player_name": player_name,
             "food_total": sess.food_total,
         },
+        actor=actor,
     )
     log_action(
         db,
@@ -1538,17 +1612,16 @@ def add_food(
         f"{table_id.upper()} added {line['item']} x{body.qty}",
         amount=price,
         table_id=table_id,
+        staff=actor,
     )
-    db.commit()
-    queue_realtime_event(background_tasks, "session.orders.updated", "floor", "live-floor", "session-orders")
-    queue_realtime_event(background_tasks, "table.updated", "floor", "live-floor")
-    return {"ok": True, "food_total": sess.food_total, "item": line}
+    return line
 
 def change_session_food(db, table_id, order_id, session_key, *, quantity=None, served=None, cancel=False, actor):
     table_id = require_known_table_id(table_id)
     sess = active_session_for_table(db, table_id, lock=True)
     if not sess or sess.session_key != session_key:
         raise HTTPException(409, "This order is for an earlier session. Refresh the table.")
+    assert_day_open(db)
     rows = session_food_lines(sess, include_cancelled=True)
     line = next((row for row in rows if row["id"] == order_id), None)
     if not line:

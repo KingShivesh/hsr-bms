@@ -1583,7 +1583,7 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0, onOpenF
     if (!sessions[id]) return false;
     return runBusyAction(`pause:${id}`, async () => {
       try {
-        const res = await pauseSession(id);
+        const res = await pauseSession(id, !sessions[id].paused, sessions[id].session_key);
         setSessions((prev) => {
           const sess = prev[id];
           const nowPaused = res.data.paused;

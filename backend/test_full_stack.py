@@ -23,7 +23,7 @@ else:
 os.environ["DATABASE_URL"] = test_url
 os.environ.setdefault("SECRET_KEY", "full-stack-audit-test-secret-with-at-least-32-characters")
 
-from fastapi.testclient import TestClient  # noqa: E402
+from test_support import TestClient  # noqa: E402
 from database import Base, SessionLocal, engine  # noqa: E402
 from deps import hash_password  # noqa: E402
 from hsr_config import get_ist_now  # noqa: E402

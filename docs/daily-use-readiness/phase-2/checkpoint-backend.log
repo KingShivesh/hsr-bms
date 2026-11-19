@@ -1,0 +1,62 @@
+/private/tmp/hsr-release-20261118-venv/lib/python3.13/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+  from starlette.testclient import TestClient as TestClient  # noqa
+test_counter_duplicate_intent_is_one_order (__main__.MoneyIntegrityTests.test_counter_duplicate_intent_is_one_order) ... INFO:hsr-bms:request_id=9327ada2-d8c4-4758-8fec-e29f1e0c2d11 method=POST path=/food/order status=200 duration_ms=65
+INFO:httpx:HTTP Request: POST http://testserver/food/order "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=0ddb52f3-04dd-4983-ba1e-9649dbb2993c method=POST path=/food/order status=200 duration_ms=13
+INFO:httpx:HTTP Request: POST http://testserver/food/order "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=a2c90d5f-8abb-4c88-b43e-1eafd1b4f7bd method=POST path=/food/order status=200 duration_ms=11
+INFO:httpx:HTTP Request: POST http://testserver/food/order "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=d1facd02-e243-4b77-914a-e9c59c075f56 method=POST path=/food/order status=200 duration_ms=10
+INFO:httpx:HTTP Request: POST http://testserver/food/order "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=bdd8cb60-3b6b-4719-98c0-1730d72ffa65 method=POST path=/food/order status=200 duration_ms=10
+INFO:httpx:HTTP Request: POST http://testserver/food/order "HTTP/1.1 200 OK"
+ok
+test_pause_retry_keeps_the_requested_state (__main__.MoneyIntegrityTests.test_pause_retry_keeps_the_requested_state) ... INFO:hsr-bms:request_id=59e2ef99-b5d3-4370-b9af-6206b7f6dbcd method=POST path=/sessions/start status=200 duration_ms=31
+INFO:httpx:HTTP Request: POST http://testserver/sessions/start "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=6f5a7956-ee84-4255-ad43-274045bb9842 method=POST path=/sessions/pause/t1 status=200 duration_ms=22
+INFO:httpx:HTTP Request: POST http://testserver/sessions/pause/t1 "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=3005c2f4-06fa-4aa5-ae37-81a372bfb3a1 method=POST path=/sessions/pause/t1 status=200 duration_ms=11
+INFO:httpx:HTTP Request: POST http://testserver/sessions/pause/t1 "HTTP/1.1 200 OK"
+ok
+test_same_key_changed_payload_is_rejected (__main__.MoneyIntegrityTests.test_same_key_changed_payload_is_rejected) ... INFO:hsr-bms:request_id=0147759f-afa0-4962-87fa-c00c32961440 method=POST path=/food/order status=200 duration_ms=221
+INFO:httpx:HTTP Request: POST http://testserver/food/order "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=2ce0c6eb-32e9-4ac9-8972-cc96112b490c method=POST path=/food/order status=409 duration_ms=22
+INFO:httpx:HTTP Request: POST http://testserver/food/order "HTTP/1.1 409 Conflict"
+ok
+test_table_cart_is_atomic_on_invalid_second_item (__main__.MoneyIntegrityTests.test_table_cart_is_atomic_on_invalid_second_item) ... INFO:hsr-bms:request_id=45964101-b638-4981-99f6-17ca7a0d8f13 method=POST path=/sessions/start status=200 duration_ms=37
+INFO:httpx:HTTP Request: POST http://testserver/sessions/start "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=9149d5bb-5834-41d8-bfee-9e96966dd665 method=POST path=/sessions/t1/food-order status=404 duration_ms=27
+INFO:httpx:HTTP Request: POST http://testserver/sessions/t1/food-order "HTTP/1.1 404 Not Found"
+ok
+test_table_cart_replay_does_not_add_lines_twice (__main__.MoneyIntegrityTests.test_table_cart_replay_does_not_add_lines_twice) ... INFO:hsr-bms:request_id=606936dd-1984-460d-99f4-84a7db59511b method=POST path=/sessions/start status=200 duration_ms=20
+INFO:httpx:HTTP Request: POST http://testserver/sessions/start "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=4c87db0a-f977-4718-be39-4fb060556bd5 method=POST path=/sessions/t1/food-order status=200 duration_ms=20
+INFO:httpx:HTTP Request: POST http://testserver/sessions/t1/food-order "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=f9dc7f36-ce90-4a4e-b925-5bae5f4524e7 method=POST path=/sessions/t1/food-order status=200 duration_ms=13
+INFO:httpx:HTTP Request: POST http://testserver/sessions/t1/food-order "HTTP/1.1 200 OK"
+ok
+test_two_am_closing_uses_previous_business_date (__main__.MoneyIntegrityTests.test_two_am_closing_uses_previous_business_date) ... INFO:hsr-bms:request_id=608d148d-7059-4c7e-b3d2-237528962e85 method=GET path=/reports/closing-report status=200 duration_ms=23
+INFO:httpx:HTTP Request: GET http://testserver/reports/closing-report "HTTP/1.1 200 OK"
+FAIL
+test_unknown_payment_is_not_silently_cash (__main__.MoneyIntegrityTests.test_unknown_payment_is_not_silently_cash) ... INFO:hsr-bms:request_id=96ce3706-4107-464f-ac67-764f2e037e92 method=POST path=/food/order status=422 duration_ms=13
+INFO:httpx:HTTP Request: POST http://testserver/food/order "HTTP/1.1 422 Unprocessable Entity"
+ok
+
+======================================================================
+FAIL: test_two_am_closing_uses_previous_business_date (__main__.MoneyIntegrityTests.test_two_am_closing_uses_previous_business_date)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/shivanshgupta/.codex/worktrees/player-start-flow/billiards-bms:HSR/backend/test_money_integrity.py", line 52, in test_two_am_closing_uses_previous_business_date
+    self.assertEqual(report["date"], "19/11/2026")
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: '20/11/2026' != '19/11/2026'
+- 20/11/2026
+? ^^
++ 19/11/2026
+? ^^
+
+
+----------------------------------------------------------------------
+Ran 7 tests in 1.170s
+
+FAILED (failures=1)

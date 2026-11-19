@@ -1,6 +1,7 @@
 import axios from "axios";
 import { readEpoch, invalidateReads } from "./readEpoch.js";
 import { installRequestRecovery } from "./requestRecovery.js";
+import { createFinancialIntents, isFinancialRequest } from "./financialIntents.js";
 
 const configuredTimeout = Number(import.meta.env.VITE_API_TIMEOUT_MS || 15000);
 const API_TIMEOUT_MS = Number.isFinite(configuredTimeout) && configuredTimeout > 0 ? Math.min(configuredTimeout, 30000) : 15000;
@@ -11,6 +12,12 @@ const SAFE_RETRY_METHODS = new Set(["get", "head", "options"]);
 let lastBackendEventAt = 0;
 let lastDataChangeAt = 0;
 const inFlight = new Map();
+let financialProtocol = 0;
+const financialIntents = createFinancialIntents({
+  storage: () => sessionStorage,
+  crypto: globalThis.crypto,
+  identity: () => [localStorage.getItem("username"), localStorage.getItem("role")],
+});
 
 const api = axios.create({
   baseURL: import.meta.env.VITE_API_URL || "http://localhost:8000",
@@ -90,17 +97,34 @@ function notifyDataChanged(res) {
   }
 }
 
-api.interceptors.request.use((cfg) => {
+api.interceptors.request.use(async (cfg) => {
   cfg.headers = cfg.headers || {};
   const token = localStorage.getItem("token");
   if (token) cfg.headers.Authorization = `Bearer ${token}`;
   cfg.headers["X-Client-Request-Id"] = cfg.headers["X-Client-Request-Id"] || requestId();
   cfg.metadata = { startedAt: Date.now() };
+  if (isFinancialRequest(cfg)) {
+    if (financialProtocol !== 2) await getBackendHealth();
+    if (financialProtocol !== 2) {
+      const error = new Error("The server's order-safety update is not ready. Please try again shortly.");
+      error.userMessage = error.message;
+      error.safeMutationBlocked = true;
+      throw error;
+    }
+    try { await financialIntents.prepare(cfg); }
+    catch {
+      const error = new Error("A safe request ID could not be saved. Check the previous order before retrying; browser storage must be available.");
+      error.userMessage = error.message;
+      error.safeMutationBlocked = true;
+      throw error;
+    }
+  }
   return cfg;
 });
 
 api.interceptors.response.use(
   (res) => {
+    financialIntents.settle(res.config, res.status);
     const method = String(res.config?.method || "get").toLowerCase();
     const path = res.config?.url || "";
     if (!SAFE_RETRY_METHODS.has(method) && !/checkout-preview|\/auth\/(login|logout)$/.test(path)) {
@@ -112,6 +136,8 @@ api.interceptors.response.use(
   },
   (err) => {
     if (axios.isCancel(err)) return Promise.reject(err);
+    if (err.safeMutationBlocked) return Promise.reject(err);
+    financialIntents.settle(err.config, err.response?.status || 0);
     err.userMessage = backendErrorMessage(err);
     if (!err.response || err.response.status >= 500 || err.code === "ECONNABORTED") {
       notifyBackendFailure(err);
@@ -142,7 +168,9 @@ export const getBackendHealth = () => {
       if (DEV_BACKEND_WAKE_DELAY_MS > 0) {
         await new Promise(resolve => setTimeout(resolve, Math.min(DEV_BACKEND_WAKE_DELAY_MS, 75000)));
       }
-      return api.get("/ready", { timeout: 10000, retryBudgetMs: 75000, retryLimit: 25 });
+      const response = await api.get("/ready", { timeout: 10000, retryBudgetMs: 75000, retryLimit: 25 });
+      financialProtocol = response.data.financial_integrity_version || 0;
+      return response;
     })().finally(() => { readinessRequest = null; });
   }
   return readinessRequest;
@@ -193,8 +221,8 @@ export const startSession = (
 
 export const getSessionBookings = (table_id) => api.get(`/bookings/start-options/${tableKey(table_id)}`);
 
-export const pauseSession = (table_id) =>
-  api.post(`/sessions/pause/${tableKey(table_id)}`);
+export const pauseSession = (table_id, paused, session_key) =>
+  api.post(`/sessions/pause/${tableKey(table_id)}`, { paused, session_key });
 
 export const startGuestSession = (table_id) => api.post("/sessions/start", { table_id: tableKey(table_id) });
 export const previewCheckout = (table_id, body) => api.post(`/sessions/checkout-preview/${tableKey(table_id)}`, body);
@@ -288,6 +316,10 @@ export const resetSession = (table_id, manager_pin = "") =>
   );
 export const addFood = (table_id, item, qty, mrp = null, player_name = "", session_key = null) =>
   api.post(`/sessions/${tableKey(table_id)}/food`, { item, qty, mrp, player_name, session_key });
+export const addSessionFoodOrder = (table_id, items, player_name, session_key) =>
+  api.post(`/sessions/${tableKey(table_id)}/food-order`, {
+    items: items.map(({ item, qty, mrp }) => ({ item, qty, mrp: mrp ?? null })), player_name, session_key,
+  });
 export const updateSessionFood = (table_id, order_id, session_key, changes) =>
   api.patch(`/sessions/${tableKey(table_id)}/food/${encodeURIComponent(order_id)}`, { session_key, ...changes });
 export const cancelSessionFood = (table_id, order_id, session_key) =>

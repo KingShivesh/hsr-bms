@@ -172,4 +172,4 @@ def ready():
             status_code=503,
             content={"status": "degraded", "service": APP_NAME, "database": "error"},
         )
-    return {"status": "ok", "service": APP_NAME, "database": "ok"}
+    return {"status": "ok", "service": APP_NAME, "database": "ok", "financial_integrity_version": 2}

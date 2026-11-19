@@ -5,7 +5,7 @@ import { useCachedState, hasCachedState } from "../../hooks/useCachedState.js";
 import {
   getMenu,
   getLiveFloor,
-  addFood,
+  addSessionFoodOrder,
   placeFoodOrder,
   getFoodOrders,
   cancelFoodOrder,
@@ -328,23 +328,8 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
     setPlacing(true);
     try {
       if (orderTarget === "table") {
-        const placedItems = [];
-        for (const item of cart) {
-          const res = await addFood(
-            selectedTable,
-            item.item,
-            item.qty,
-            item.mrp,
-            selectedPlayer,
-            selectedSession.session_key,
-          );
-          placedItems.push({
-            item: item.mrp ? `${item.item} (MRP ₹${item.mrp} + ₹3)` : item.item,
-            qty: item.qty,
-            price: getCartUnitPrice(item) * item.qty,
-            foodTotal: res.data.food_total,
-          });
-        }
+        const res = await addSessionFoodOrder(selectedTable, cart, selectedPlayer, selectedSession.session_key);
+        const placedItems = res.data.items;
         setLastOrder({
           customer: `${selectedPlayer || "Guest"} · ${selectedTable.toUpperCase()}`,
           items: placedItems,
@@ -365,7 +350,7 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
       fetchAll();
       showToast("Food order placed", "success");
     } catch (e) {
-      showToast(e.response?.data?.detail || "Failed to place order", "error");
+      showToast(e.userMessage || e.response?.data?.detail || "Failed to place order", "error");
     } finally {
       setPlacing(false);
     }
