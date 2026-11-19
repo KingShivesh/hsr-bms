@@ -102,6 +102,16 @@ Live Floor race, light and dark: [before light](loading-race/before/light.png),
 
 ## Rollout and approval
 
+Owner-approved and deployed: source `5f23897` is on main. The deployment receipt
+in `deployment.json` matches all 24 JS/CSS hashes and confirms backend revision
+`5f23897`, commit ancestry, and HTTP 200 health/readiness. No business mutations
+were made. The merged keep-alive passed on
+[run 44618758574](https://github.com/KingShivesh/hsr-bms/actions/runs/44618758574).
+Backend parity passed on
+[run 44610455479](https://github.com/KingShivesh/hsr-bms/actions/runs/44610455479).
+Actual Supavisor pooler/TLS configuration remains an account-inspection gap;
+successful readiness and local pooler-compatible behavior do not certify it.
+
 The first branch CI run [44609913673](https://github.com/KingShivesh/hsr-bms/actions/runs/44609913673)
 failed at Python setup, before application tests: `ubuntu-latest` selected Ubuntu
 26.04, which has no official Python 3.11.9 build. GitHub's official
