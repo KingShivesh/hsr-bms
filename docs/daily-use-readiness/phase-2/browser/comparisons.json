@@ -53,9 +53,9 @@
           "path": "after-light-1440.png",
           "theme": "light",
           "stage": "after",
-          "sha256": "89a8d434769da0f9f21911a5ba6d792d90a4696149995663a2f2ce492b261dcf",
+          "sha256": "b4d3e3ee80762f307c20857d7810c26d576d518603f81fa9d1f36b6983eb8e22",
           "width": 1440,
-          "height": 1932
+          "height": 1950
         },
         {
           "path": "before-dark-1440.png",
@@ -69,9 +69,9 @@
           "path": "after-dark-1440.png",
           "theme": "dark",
           "stage": "after",
-          "sha256": "2c4f421bbc42cf861d109036b5af7e96d89a6edf818c9b5438d3d8e821a1bdb4",
+          "sha256": "ea3ca3cb296bbcfe43611b87542000a1f56d69d5cb4c925ec2d6d32da95b9b41",
           "width": 1440,
-          "height": 1932
+          "height": 1950
         }
       ]
     }

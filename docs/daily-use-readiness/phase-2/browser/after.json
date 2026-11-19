@@ -17,7 +17,7 @@
       "file": "after-light-1440.png",
       "overflow": false,
       "violations": [],
-      "cashColumnWidth": 79,
+      "cashColumnWidth": 210,
       "legacyReviewAndMismatchBlocked": true
     },
     {
@@ -35,7 +35,7 @@
       "file": "after-dark-1440.png",
       "overflow": false,
       "violations": [],
-      "cashColumnWidth": 79,
+      "cashColumnWidth": 210,
       "legacyReviewAndMismatchBlocked": true
     }
   ],

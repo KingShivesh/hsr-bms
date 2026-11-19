@@ -39,7 +39,7 @@ try {
       await page.getByLabel("Business date").fill("2026-01-01");
       await page.getByRole("button", { name: "Load date", exact: true }).click();
       await page.getByText("01/01/2026", { exact: true }).waitFor();
-      if (width === 375) assert.ok(cashColumnWidth >= 140);
+      assert.ok(cashColumnWidth >= 140);
       const fixture = await fetch(`${api}/reports/closing-report`, { headers: { Authorization: `Bearer ${auth.token}` } }).then(r => r.json());
       fixture.date = "01/01/2026";
       fixture.day_close = { closed: false };

@@ -26,7 +26,8 @@ and CreditLedger foreign keys/unique receipt links are tested on PostgreSQL;
 SQLite now explicitly enforces its declared foreign keys too.
 
 The reusable money suite is part of both the parity workflow and local readiness
-runner. The original checkpoint/baseline logs remain historical evidence, not the
+runner. The workflow also gates frontend financial-intent/recovery tests, lint
+and build on frontend changes. The original checkpoint/baseline logs remain historical evidence, not the
 final result. See final evidence below.
 
 ## Scope and decisions
