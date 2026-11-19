@@ -76,6 +76,9 @@ jobs:
       - name: Verify product-shell permissions and profile integrity on Postgres
         working-directory: backend
         run: HSR_TEST_DATABASE_URL="$DATABASE_URL" python test_product_shell.py
+      - name: Verify idempotency, 3 AM business days and closing reconciliation
+        working-directory: backend
+        run: HSR_TEST_DATABASE_URL="$DATABASE_URL" python test_money_integrity.py
       - name: Run one full Postgres soak cycle
         id: postgres-soak
         continue-on-error: true

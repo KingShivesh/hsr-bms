@@ -1,0 +1,73 @@
+/private/tmp/hsr-release-20261118-venv/lib/python3.13/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+  from starlette.testclient import TestClient as TestClient  # noqa
+INFO:hsr-bms:request_id=06bfb3c2-447d-48bc-8bd4-429062863eb8 method=PATCH path=/product/setup status=200 duration_ms=681
+INFO:httpx:HTTP Request: PATCH http://testserver/product/setup "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=2aab2345-30bb-4890-abb6-3840d680d9e0 method=GET path=/product/context status=200 duration_ms=45
+INFO:httpx:HTTP Request: GET http://testserver/product/context "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=084bc1d8-0c4c-4d4e-8a91-523df9905f01 method=PUT path=/product/profile status=200 duration_ms=130
+INFO:httpx:HTTP Request: PUT http://testserver/product/profile "HTTP/1.1 200 OK"
+.INFO:hsr-bms:request_id=76983e09-923e-45c2-9cb2-d522a62549a5 method=GET path=/product/account status=200 duration_ms=134
+INFO:httpx:HTTP Request: GET http://testserver/product/account "HTTP/1.1 200 OK"
+.INFO:hsr-bms:request_id=82be341d-cb77-4aa7-9420-9064e4162efc method=PUT path=/product/profile status=409 duration_ms=66
+INFO:httpx:HTTP Request: PUT http://testserver/product/profile "HTTP/1.1 409 Conflict"
+INFO:hsr-bms:request_id=712c743c-bf00-4a32-83ea-35cb6892f018 method=GET path=/product/context status=200 duration_ms=39
+INFO:httpx:HTTP Request: GET http://testserver/product/context "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=de918ce1-7c09-4470-ae35-1ee5be38c01b method=PUT path=/product/profile status=200 duration_ms=74
+INFO:httpx:HTTP Request: PUT http://testserver/product/profile "HTTP/1.1 200 OK"
+.INFO:hsr-bms:request_id=00d417b4-e0b5-4535-9cd6-be470be3897f method=GET path=/product/context status=200 duration_ms=62
+INFO:httpx:HTTP Request: GET http://testserver/product/context "HTTP/1.1 200 OK"
+.INFO:hsr-bms:request_id=0b204782-5696-40f1-98f5-8ed1ea59153a method=PUT path=/product/profile status=422 duration_ms=29
+INFO:httpx:HTTP Request: PUT http://testserver/product/profile "HTTP/1.1 422 Unprocessable Entity"
+INFO:hsr-bms:request_id=5851efd4-7228-4a28-88b6-acef67da9185 method=PUT path=/product/profile status=422 duration_ms=28
+INFO:httpx:HTTP Request: PUT http://testserver/product/profile "HTTP/1.1 422 Unprocessable Entity"
+INFO:hsr-bms:request_id=7c57116d-11dd-4c26-8db0-2e7d7091707f method=PUT path=/product/profile status=422 duration_ms=36
+INFO:httpx:HTTP Request: PUT http://testserver/product/profile "HTTP/1.1 422 Unprocessable Entity"
+INFO:hsr-bms:request_id=4a3fede7-d773-46a0-ab52-f5fea983f40d method=PUT path=/product/profile status=422 duration_ms=36
+INFO:httpx:HTTP Request: PUT http://testserver/product/profile "HTTP/1.1 422 Unprocessable Entity"
+INFO:hsr-bms:request_id=706a536f-6df2-4aad-bcc0-e5c006492fd0 method=PUT path=/product/profile status=422 duration_ms=55
+INFO:httpx:HTTP Request: PUT http://testserver/product/profile "HTTP/1.1 422 Unprocessable Entity"
+INFO:hsr-bms:request_id=70eee037-782f-4c74-b04b-5f6051111c20 method=PUT path=/product/profile status=422 duration_ms=83
+INFO:httpx:HTTP Request: PUT http://testserver/product/profile "HTTP/1.1 422 Unprocessable Entity"
+.INFO:hsr-bms:request_id=fae3b78e-049f-4280-a76f-46c016d6df2b method=PUT path=/product/profile status=200 duration_ms=63
+INFO:httpx:HTTP Request: PUT http://testserver/product/profile "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=f840dea7-b626-400e-ba13-ccd3bd3ce9b2 method=PUT path=/product/profile status=409 duration_ms=30
+INFO:httpx:HTTP Request: PUT http://testserver/product/profile "HTTP/1.1 409 Conflict"
+.INFO:hsr-bms:request_id=5f5671ca-3235-4bf8-9094-89851ff45586 method=GET path=/product/setup status=200 duration_ms=39
+INFO:httpx:HTTP Request: GET http://testserver/product/setup "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=289aa3d7-cc63-4ecd-af85-df2d11c9a6b9 method=PUT path=/product/profile status=200 duration_ms=76
+INFO:httpx:HTTP Request: PUT http://testserver/product/profile "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=5ea41ce0-5c2a-406c-a42a-40702a821990 method=PATCH path=/product/setup status=200 duration_ms=106
+INFO:httpx:HTTP Request: PATCH http://testserver/product/setup "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=07ccf2f0-cfb0-438d-9552-e66f90f0e24c method=PATCH path=/product/setup status=200 duration_ms=48
+INFO:httpx:HTTP Request: PATCH http://testserver/product/setup "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=08efa099-1a8d-4687-bcf2-a75dc48f9c5a method=GET path=/product/setup status=200 duration_ms=26
+INFO:httpx:HTTP Request: GET http://testserver/product/setup "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=29ed70c7-6f28-401c-90d9-3dc7d2a63fee method=GET path=/product/context status=200 duration_ms=27
+INFO:httpx:HTTP Request: GET http://testserver/product/context "HTTP/1.1 200 OK"
+.INFO:hsr-bms:request_id=0a952ec2-01f3-4088-899f-330d6d8c39d5 method=PUT path=/product/profile status=409 duration_ms=157
+INFO:httpx:HTTP Request: PUT http://testserver/product/profile "HTTP/1.1 409 Conflict"
+INFO:hsr-bms:request_id=e408d17a-0691-4a60-a7a7-1cce30269f06 method=PUT path=/product/profile status=200 duration_ms=168
+INFO:httpx:HTTP Request: PUT http://testserver/product/profile "HTTP/1.1 200 OK"
+.INFO:hsr-bms:request_id=d9f367d6-bb80-4482-a37c-947bd03bd586 method=GET path=/product/context status=200 duration_ms=22
+INFO:httpx:HTTP Request: GET http://testserver/product/context "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=f8e16d91-3202-4384-b476-c026325e8af9 method=GET path=/product/account status=403 duration_ms=13
+INFO:httpx:HTTP Request: GET http://testserver/product/account "HTTP/1.1 403 Forbidden"
+INFO:hsr-bms:request_id=07e04ff1-6d11-47f9-8401-5c9ece0465c3 method=GET path=/product/setup status=403 duration_ms=13
+INFO:httpx:HTTP Request: GET http://testserver/product/setup "HTTP/1.1 403 Forbidden"
+INFO:hsr-bms:request_id=1a053908-eee2-4cec-aeb2-fd84037c349a method=PUT path=/product/profile status=403 duration_ms=22
+INFO:httpx:HTTP Request: PUT http://testserver/product/profile "HTTP/1.1 403 Forbidden"
+INFO:hsr-bms:request_id=456a4f34-12a6-4ad4-a636-90f22fab4e26 method=PATCH path=/product/setup status=403 duration_ms=25
+INFO:httpx:HTTP Request: PATCH http://testserver/product/setup "HTTP/1.1 403 Forbidden"
+INFO:hsr-bms:request_id=60bf69ca-8958-4d04-bcdd-8e2892539b24 method=GET path=/product/context status=401 duration_ms=2
+INFO:httpx:HTTP Request: GET http://testserver/product/context "HTTP/1.1 401 Unauthorized"
+.INFO:hsr-bms:request_id=0c505f6a-dbe3-4777-a20f-159f06095137 method=PUT path=/product/profile status=200 duration_ms=48
+INFO:httpx:HTTP Request: PUT http://testserver/product/profile "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=607e7143-fa08-472d-9888-8aee44eeb593 method=GET path=/product/context status=200 duration_ms=21
+INFO:httpx:HTTP Request: GET http://testserver/product/context "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=91064d36-43ff-4ffe-bf94-2c77af2d23e9 method=PUT path=/product/profile status=422 duration_ms=21
+INFO:httpx:HTTP Request: PUT http://testserver/product/profile "HTTP/1.1 422 Unprocessable Entity"
+.
+----------------------------------------------------------------------
+Ran 10 tests in 6.076s
+
+OK

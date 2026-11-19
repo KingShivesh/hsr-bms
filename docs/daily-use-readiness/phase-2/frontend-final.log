@@ -1,0 +1,98 @@
+
+> frontend@0.1.0 lint
+> node ./node_modules/eslint/bin/eslint.js .
+
+
+> frontend@0.1.0 test:financial-intents
+> node --test ./scripts/test-financial-intents.mjs
+
+✔ uncertain request survives a full client recreation/reload (4.615667ms)
+✔ a confirmed order permits a new identical but distinct sale (0.621208ms)
+✔ payload changes and account changes do not share identities (0.783875ms)
+✔ conflicts and server errors retain the original intent (0.973375ms)
+✔ definitive validation rejection releases the intent (0.395875ms)
+✔ concurrent preparations collapse to the same pending intent (0.349458ms)
+✔ unavailable persistence fails before a financial POST (0.513333ms)
+✔ only financial writes get the safety contract (0.322209ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 71.0775
+
+> frontend@0.1.0 test:request-recovery
+> node --test ./scripts/test-request-recovery.mjs
+
+✔ read timeouts share a 30s deadline, not three fresh timeouts (3.8325ms)
+✔ readiness has a bounded 75s wake budget (1.767667ms)
+✔ fast 503 reads retry twice then fail, and healthy retry returns data (2.122625ms)
+✔ post is never replayed (0.425084ms)
+✔ put is never replayed (0.290416ms)
+✔ patch is never replayed (0.252542ms)
+✔ delete is never replayed (0.207708ms)
+✔ 400 is not retried (0.253583ms)
+✔ 401 is not retried (0.261208ms)
+✔ 403 is not retried (0.289833ms)
+✔ 404 is not retried (0.205333ms)
+✔ 409 is not retried (0.217666ms)
+✔ 422 is not retried (0.205583ms)
+✔ 429 is not retried (0.210417ms)
+✔ cancellation and explicit noRetry never retry (0.607083ms)
+✔ abort while backing off cancels without another request (11.430708ms)
+ℹ tests 16
+ℹ suites 0
+ℹ pass 16
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 183.506083
+
+> frontend@0.1.0 build
+> node ./node_modules/vite/bin/vite.js build
+
+vite v8.0.16 building client environment for production...
+[2Ktransforming...✓ 2573 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                                            2.66 kB │ gzip:   1.01 kB
+dist/assets/dm-mono-latin-ext-500-normal-Dw3M13d8.woff     7.48 kB
+dist/assets/dm-mono-latin-ext-400-normal-1aZr6b2b.woff     7.50 kB
+dist/assets/dm-mono-latin-ext-400-normal-C2zvOubV.woff2    9.55 kB
+dist/assets/dm-mono-latin-ext-500-normal-BtRyHRi6.woff2    9.61 kB
+dist/assets/syne-greek-wght-normal-5tOOQDeJ.woff2         11.20 kB
+dist/assets/dm-mono-latin-400-normal--0xN8mdc.woff        11.21 kB
+dist/assets/dm-mono-latin-500-normal-CN8Miw6E.woff        11.24 kB
+dist/assets/syne-latin-ext-wght-normal-JjI8ZrW1.woff2     14.72 kB
+dist/assets/dm-mono-latin-400-normal-4GdczIuU.woff2       14.82 kB
+dist/assets/dm-mono-latin-500-normal-DRMDZjhP.woff2       14.98 kB
+dist/assets/syne-latin-wght-normal-BVsvWWA4.woff2         34.60 kB
+dist/assets/LiveFloor-wlGi4y7t.css                         2.11 kB │ gzip:   0.69 kB
+dist/assets/index-Cfdrdpjk.css                           715.60 kB │ gzip: 101.18 kB
+dist/assets/tariffs-B1h1B4KP.js                            0.21 kB │ gzip:   0.16 kB
+dist/assets/ContextHelp-DrLmCCgl.js                        0.30 kB │ gzip:   0.22 kB
+dist/assets/floorData-C1MFzQCY.js                          0.50 kB │ gzip:   0.29 kB
+dist/assets/Pagination-BWSU4KzU.js                         0.68 kB │ gzip:   0.41 kB
+dist/assets/useCachedState-B1keZUkR.js                     0.83 kB │ gzip:   0.42 kB
+dist/assets/TableStateUI-BpJtb4cF.js                       0.99 kB │ gzip:   0.44 kB
+dist/assets/tableStatus-BXmwxmnR.js                        2.25 kB │ gzip:   0.87 kB
+dist/assets/FrameControls-CnX8u-iQ.js                      2.58 kB │ gzip:   1.22 kB
+dist/assets/SalesPage-D6AiD7zQ.js                          8.77 kB │ gzip:   2.93 kB
+dist/assets/OperationsTab-pVSNOo5U.js                     10.34 kB │ gzip:   3.29 kB
+dist/assets/CustomersPage-CgbBkou3.js                     11.49 kB │ gzip:   3.87 kB
+dist/assets/BookingsPage-BZ1s_DFZ.js                      14.04 kB │ gzip:   4.76 kB
+dist/assets/TournamentTab-Bdw5bMXJ.js                     14.19 kB │ gzip:   4.66 kB
+dist/assets/Dashboard-Bxf8a6my.js                         14.28 kB │ gzip:   4.96 kB
+dist/assets/ClosingTab-ZboC62QR.js                        14.87 kB │ gzip:   4.35 kB
+dist/assets/SettingsTab-CWndLl7T.js                       18.09 kB │ gzip:   5.05 kB
+dist/assets/FoodTab-CkWKbW4S.js                           24.03 kB │ gzip:   6.95 kB
+dist/assets/ReportsTab-Bc6x3my6.js                        32.68 kB │ gzip:   7.93 kB
+dist/assets/ClubSuiteTab-Du8lCnN4.js                      35.20 kB │ gzip:   9.64 kB
+dist/assets/TablesTab-BZoSnKo_.js                         42.86 kB │ gzip:  12.12 kB
+dist/assets/LiveFloor-DZJ6zg9Y.js                         54.31 kB │ gzip:  15.95 kB
+dist/assets/index-BJYVdB5K.js                            474.60 kB │ gzip: 152.43 kB
+
+✓ built in 648ms

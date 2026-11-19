@@ -1,0 +1,53 @@
+{
+  "stage": "after",
+  "scope": "Disposable local database only",
+  "captures": [
+    {
+      "theme": "light",
+      "width": 375,
+      "file": "after-light-375.png",
+      "overflow": false,
+      "violations": [],
+      "cashColumnWidth": 253,
+      "legacyReviewAndMismatchBlocked": true
+    },
+    {
+      "theme": "light",
+      "width": 1440,
+      "file": "after-light-1440.png",
+      "overflow": false,
+      "violations": [],
+      "cashColumnWidth": 79,
+      "legacyReviewAndMismatchBlocked": true
+    },
+    {
+      "theme": "dark",
+      "width": 375,
+      "file": "after-dark-375.png",
+      "overflow": false,
+      "violations": [],
+      "cashColumnWidth": 253,
+      "legacyReviewAndMismatchBlocked": true
+    },
+    {
+      "theme": "dark",
+      "width": 1440,
+      "file": "after-dark-1440.png",
+      "overflow": false,
+      "violations": [],
+      "cashColumnWidth": 79,
+      "legacyReviewAndMismatchBlocked": true
+    }
+  ],
+  "errors": [],
+  "lostResponseReload": {
+    "committedOrders": 1,
+    "sameRequestKey": true,
+    "replayed": true
+  },
+  "realClose": {
+    "dateBound": true,
+    "persistedAfterReload": true,
+    "countedCash": 20
+  }
+}

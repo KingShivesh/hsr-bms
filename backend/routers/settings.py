@@ -9,7 +9,7 @@ from typing import Optional
 import models
 from audit import log_action, require_manager_pin
 from deps import require_admin
-from hsr_config import get_ist_today_str
+from money import business_date, day_rows, assert_day_open
 from realtime import queue_realtime_event
 from session_controls import controls, DEFAULTS
 
@@ -277,13 +277,19 @@ def reset_daily(
     _: dict = Depends(require_admin),
 ):
     require_manager_pin(db, manager_pin)
-    today = get_ist_today_str()
-    ids = db.query(models.Transaction.id).filter(models.Transaction.date.like(f"{today}%")).subquery()
-    if db.query(models.CreditLedger).filter(models.CreditLedger.transaction_id.in_(db.query(ids.c.id))).first():
+    today = business_date()
+    assert_day_open(db, day=today)
+    ids = [row.id for row in day_rows(db, models.Transaction, today)]
+    protected = db.query(models.MutationReceipt).filter(
+        models.MutationReceipt.resource_kind == "transaction",
+        models.MutationReceipt.resource_id.in_([str(value) for value in ids])).first()
+    if protected or db.query(models.ClosedSessionFrame).filter(models.ClosedSessionFrame.transaction_id.in_(ids)).first():
+        raise HTTPException(409, "Audited receipts and frame history cannot be erased by a daily reset")
+    if db.query(models.CreditLedger).filter(models.CreditLedger.transaction_id.in_(ids)).first():
         raise HTTPException(409, "Credit history cannot be erased by a daily reset")
-    db.query(models.Payment).filter(models.Payment.transaction_id.in_(db.query(ids.c.id))).delete(synchronize_session=False)
+    db.query(models.Payment).filter(models.Payment.transaction_id.in_(ids)).delete(synchronize_session=False)
     deleted = db.query(models.Transaction).filter(
-        models.Transaction.date.like(f"{today}%")
+        models.Transaction.id.in_(ids)
     ).delete(synchronize_session=False)
     log_action(
         db,
@@ -302,6 +308,11 @@ def clear_all(
     _: dict = Depends(require_admin),
 ):
     require_manager_pin(db, manager_pin)
+    if db.query(models.DayClose).first():
+        raise HTTPException(409, "Closed financial history cannot be erased by Clear All")
+    if db.query(models.ClosedSessionFrame).first() or db.query(models.MutationReceipt).filter(
+        models.MutationReceipt.resource_kind.in_(["transaction", "food_order"])).first():
+        raise HTTPException(409, "Audited financial history cannot be erased by Clear All")
     if db.query(models.CreditLedger).first():
         raise HTTPException(409, "Credit history cannot be erased by Clear All")
     tx_count = db.query(models.Transaction).count()

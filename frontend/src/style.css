@@ -13462,6 +13462,18 @@ body.dark .backend-status-banner.is-connecting {
   color: var(--text-muted);
 }
 
+@media (max-width: 900px) {
+  .closing-payment-audit {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 140px), 1fr));
+  }
+}
+
+.closing-payment-audit > div,
+.closing-check-row strong {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
 .checkout-split-payment-box .table-field-stack,
 .closing-cash-grid .table-field-stack {
   flex: 1 1 130px;

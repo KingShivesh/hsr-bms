@@ -1,0 +1,35 @@
+{
+  "stage": "before",
+  "scope": "Disposable local database only",
+  "captures": [
+    {
+      "theme": "light",
+      "width": 375,
+      "file": "before-light-375.png",
+      "overflow": false,
+      "violations": []
+    },
+    {
+      "theme": "light",
+      "width": 1440,
+      "file": "before-light-1440.png",
+      "overflow": false,
+      "violations": []
+    },
+    {
+      "theme": "dark",
+      "width": 375,
+      "file": "before-dark-375.png",
+      "overflow": false,
+      "violations": []
+    },
+    {
+      "theme": "dark",
+      "width": 1440,
+      "file": "before-dark-1440.png",
+      "overflow": false,
+      "violations": []
+    }
+  ],
+  "errors": []
+}

@@ -424,9 +424,9 @@ export const clearMaintenance = (table_id) =>
 export const getTopCustomers = (period) =>
   api.get(`/reports/top-customers?period=${period}`);
 export const getTableUtilization = () => api.get("/reports/table-utilization");
-export const getClosingReport = () => api.get("/reports/closing-report");
-export const closeDay = (opened_float, counted_cash, notes = "") =>
-  api.post("/reports/day-close", { opened_float, counted_cash, notes });
+export const getClosingReport = (day = "") => api.get("/reports/closing-report", { params: { day } });
+export const closeDay = (opened_float, counted_cash, notes = "", business_date = "", acknowledge_legacy = false) =>
+  api.post("/reports/day-close", { opened_float, counted_cash, notes, business_date, acknowledge_legacy });
 export const getClosingInsights = () => api.get("/reports/closing-insights");
 export const getAdvancedAnalytics = () => api.get("/reports/advanced-analytics");
 

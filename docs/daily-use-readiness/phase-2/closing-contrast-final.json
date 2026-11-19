@@ -1,0 +1,19 @@
+{
+  "generatedAt": "2026-11-19T22:32:58.257Z",
+  "appUrl": "http://127.0.0.1:5189",
+  "apiUrl": "http://127.0.0.1:8006",
+  "routes": [
+    "/daily-closing"
+  ],
+  "dynamicStatesIncluded": [
+    "default (including login)",
+    "login error and filled fields",
+    "notification popover",
+    "command palette",
+    "first safe action"
+  ],
+  "method": "Pilot minimum 4.5:1 for every rendered text sample, including large text and disabled controls; composited opacity and rendered gradient backgrounds",
+  "violations": [],
+  "errors": [],
+  "strictPilot": true
+}

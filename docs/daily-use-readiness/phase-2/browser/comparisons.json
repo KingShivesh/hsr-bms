@@ -1,0 +1,79 @@
+{
+  "legend": "Before left, after right. Light above, dark below. Unretouched full-page screenshots.",
+  "images": [
+    {
+      "file": "comparison-375.png",
+      "sources": [
+        {
+          "path": "before-light-375.png",
+          "theme": "light",
+          "stage": "before",
+          "sha256": "42f84ac025624a09e08c8f8da59a7205ce979d33fbab9d64102266482f1e6fde",
+          "width": 375,
+          "height": 3123
+        },
+        {
+          "path": "after-light-375.png",
+          "theme": "light",
+          "stage": "after",
+          "sha256": "d9f98421e3b090fe7a4525bea339d09d61f0d72197ca1d9395437713e1a9ecd6",
+          "width": 375,
+          "height": 3896
+        },
+        {
+          "path": "before-dark-375.png",
+          "theme": "dark",
+          "stage": "before",
+          "sha256": "3358d6f4b79248bf97f877109b167f8e464a6345833155780b046024aeef48fb",
+          "width": 375,
+          "height": 3123
+        },
+        {
+          "path": "after-dark-375.png",
+          "theme": "dark",
+          "stage": "after",
+          "sha256": "a00f61583d68b284fd0ba345825abc6ac18e8dc6a48ec1ad612cac829dcc207c",
+          "width": 375,
+          "height": 3896
+        }
+      ]
+    },
+    {
+      "file": "comparison-1440.png",
+      "sources": [
+        {
+          "path": "before-light-1440.png",
+          "theme": "light",
+          "stage": "before",
+          "sha256": "5209c7a42403f9d50e67720c0e894a815cea8c012afa06c31657216a97ce69d0",
+          "width": 1440,
+          "height": 1828
+        },
+        {
+          "path": "after-light-1440.png",
+          "theme": "light",
+          "stage": "after",
+          "sha256": "89a8d434769da0f9f21911a5ba6d792d90a4696149995663a2f2ce492b261dcf",
+          "width": 1440,
+          "height": 1932
+        },
+        {
+          "path": "before-dark-1440.png",
+          "theme": "dark",
+          "stage": "before",
+          "sha256": "ac0f673fde42743d03cd425269626f6ec02bae7382dcacc20bc848c99a697583",
+          "width": 1440,
+          "height": 1828
+        },
+        {
+          "path": "after-dark-1440.png",
+          "theme": "dark",
+          "stage": "after",
+          "sha256": "2c4f421bbc42cf861d109036b5af7e96d89a6edf818c9b5438d3d8e821a1bdb4",
+          "width": 1440,
+          "height": 1932
+        }
+      ]
+    }
+  ]
+}

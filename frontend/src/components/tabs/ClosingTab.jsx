@@ -1,6 +1,6 @@
 import { formatCurrency as polishCurrency } from "../../utils/format.js";
-import { Icon as HsrIcon, Input as HsrInput, Textarea as HsrTextarea, Table as HsrTable } from "../ui/index.js";
-import { useEffect, useState } from "react";
+import { Checkbox, Icon as HsrIcon, Input as HsrInput, Textarea as HsrTextarea, Table as HsrTable } from "../ui/index.js";
+import { useEffect, useRef, useState } from "react";
 import { closeDay, getClosingInsights, getClosingReport } from "../../api/index.js";
 import { useToast } from "../toastContext.js";
 import { useConfirm } from "../confirmContext.js";
@@ -20,7 +20,7 @@ function ChecklistRow({ ok, label, detail }) {
       <HsrIcon className={`ti ${ok ? "ti-circle-check" : "ti-alert-circle"}`} aria-hidden="true" />
       <div style={{ minWidth: 0 }}>
         <strong>{label}</strong>
-        {detail && <span title={detail} style={{ ...clippedText, display: "block" }}>{detail}</span>}
+        {detail && <span style={{ display: "block", whiteSpace: "normal", overflowWrap: "anywhere" }}>{detail}</span>}
       </div>
     </div>
   );
@@ -73,6 +73,9 @@ export default function ClosingTab() {
   const [closingBusy, setClosingBusy] = useState(false);
   const [loadError, setLoadError] = useState("");
   const [insightsError, setInsightsError] = useState("");
+  const [selectedDate, setSelectedDate] = useState("");
+  const reportDate = useRef("");
+  const [legacyReviewed, setLegacyReviewed] = useState(false);
 
   async function fetchClosing() {
     setLoading(true);
@@ -80,18 +83,20 @@ export default function ClosingTab() {
     setInsightsError("");
     try {
       const [reportResult, insightsResult] = await Promise.allSettled([
-        getClosingReport(),
+        getClosingReport(reportDate.current),
         getClosingInsights(),
       ]);
       if (reportResult.status === "rejected") throw reportResult.reason;
       const reportRes = reportResult.value;
       if (!reportRes.data || typeof reportRes.data !== "object" || Array.isArray(reportRes.data)) throw new Error("Invalid closing report");
       setData(reportRes.data);
-      if (insightsResult.status === "fulfilled" && Array.isArray(insightsResult.value.data?.insights)) {
+      setSelectedDate(reportRes.data.date.split("/").reverse().join("-"));
+      setLegacyReviewed(false);
+      if (insightsResult.status === "fulfilled" && insightsResult.value.data?.date === reportRes.data.date && Array.isArray(insightsResult.value.data?.insights)) {
         setInsights(insightsResult.value.data);
       } else {
         setInsights(null);
-        setInsightsError("Closing insights could not load.");
+        setInsightsError(reportDate.current ? "Insights are available for the current business day only." : "Closing insights could not load.");
       }
       const closeRecord = reportRes.data.day_close || {};
       setClosedDay(!!closeRecord.closed);
@@ -111,13 +116,13 @@ export default function ClosingTab() {
   }, []);
 
   async function markDayClosed() {
-    if (!data?.can_close_day || loadError || reportIncomplete) {
-      showToast(loadError || reportIncomplete ? "Reload the complete closing report before closing the day." : "Close all running tables before closing the day.", "error");
+    if (!data?.can_close_day || loadError || reportIncomplete || (data.reconciliation?.legacy_review_required && !legacyReviewed)) {
+      showToast(loadError || reportIncomplete ? "Reload the complete closing report before closing the day." : data.close_block_reason || "Review the ledger warnings before closing.", "error");
       return;
     }
     const confirmed = await requestConfirm({
-      title: "Close today?",
-      message: "Mark today as closed after verifying Cash, UPI, and Card totals?",
+      title: `Close ${data.date}?`,
+      message: "Lock this 3 AM-to-3 AM IST business day after verifying collected payments and member credit?",
       confirmLabel: "Close Day",
       tone: "warning",
     });
@@ -128,6 +133,8 @@ export default function ClosingTab() {
         parseInt(openingFloat, 10) || 0,
         parseInt(countedCash, 10) || 0,
         closingNotes,
+        data.date,
+        legacyReviewed,
       );
       setClosedDay(true);
       setData((prev) => ({
@@ -186,7 +193,7 @@ export default function ClosingTab() {
   const tableBreakdown = Object.entries(data.table_breakdown || {}).filter(([, stats]) => stats && typeof stats === "object");
   const foodBreakdown = Object.entries(data.food_breakdown || {});
   const insightRows = Array.isArray(insights?.insights) ? insights.insights.filter(Boolean) : [];
-  const reportIncomplete = !Array.isArray(data.open_tables) || !Array.isArray(data.idle_tables) || !Array.isArray(data.corrections_today) || !data.table_breakdown || !data.food_breakdown || data.active_tables == null;
+  const reportIncomplete = !Array.isArray(data.open_tables) || !Array.isArray(data.idle_tables) || !Array.isArray(data.corrections_today) || !data.table_breakdown || !data.food_breakdown || data.active_tables == null || (!closedDay && !data.reconciliation);
   const expectedCash = (Number(data.cash_total) || 0) + (parseInt(openingFloat, 10) || 0);
   const countedValue = parseInt(countedCash, 10) || 0;
   const variancePreview = countedCash === "" && !closedDay ? null : countedValue - expectedCash;
@@ -205,21 +212,29 @@ export default function ClosingTab() {
         <div>
           <div className="closing-eyebrow">Shift end</div>
           <strong className="closing-date" title={data.date || undefined} style={{ ...clippedText, display: "block" }}>{data.date || "Date unavailable"}</strong>
-          <p>Verify cash, active tables and exceptions before locking the day.</p>
+          <p>Business day: 3 AM to 3 AM IST. Verify collected payments and unpaid member credit before locking.</p>
         </div>
         <div className="closing-actions">
+          <label className="table-field-stack">
+            <span>Business date</span>
+            <HsrInput aria-label="Business date" type="date" value={selectedDate} onChange={event => setSelectedDate(event.target.value)} />
+          </label>
+          <Button variant="secondary" icon="ti-calendar" disabled={!selectedDate || closingBusy} onClick={() => {
+            reportDate.current = selectedDate.split("-").reverse().join("/");
+            fetchClosing();
+          }}>Load date</Button>
           <Button variant="secondary" icon="ti-printer" onClick={() => window.print()}>
             Print
           </Button>
           <Button
             variant={closedDay ? "secondary" : "primary"}
             icon={closedDay ? "ti-circle-check" : "ti-lock-check"}
-            disabled={closedDay || closingBusy || !data.can_close_day || !!loadError || reportIncomplete}
+            disabled={closedDay || closingBusy || !data.can_close_day || !!loadError || reportIncomplete || (data.reconciliation?.legacy_review_required && !legacyReviewed)}
             loading={closingBusy}
             onClick={markDayClosed}
-            title={!data.can_close_day ? "Close all running tables first" : undefined}
+            title={data.close_block_reason || undefined}
           >
-            {closedDay ? "Day Closed" : !data.can_close_day ? "Close Tables First" : "Close Day"}
+            {closedDay ? "Day Closed" : !data.can_close_day ? data.active_tables ? "Close Tables First" : "Review Ledger" : "Close Day"}
           </Button>
         </div>
       </div>
@@ -229,6 +244,7 @@ export default function ClosingTab() {
         <ClosingMetric label="Cash" value={money(data.cash_total)} icon="ti-cash" tone="cash" />
         <ClosingMetric label="UPI" value={money(data.upi_total)} icon="ti-qrcode" tone="upi" />
         <ClosingMetric label="Card" value={money(data.card_total || 0)} icon="ti-credit-card" tone="upi" />
+        <ClosingMetric label="Member credit (unpaid)" value={money(data.credit_total || 0)} icon="ti-user" />
         <ClosingMetric label="Table sales" value={money(data.total_revenue)} icon="ti-billiard" />
         <ClosingMetric label="Food sales" value={money(totalFoodSales)} icon="ti-tools-kitchen-2" />
         <ClosingMetric label="Sessions" value={data.total_sessions ?? "—"} icon="ti-receipt" />
@@ -237,6 +253,12 @@ export default function ClosingTab() {
       <div className="closing-layout">
         <div className="history-section closing-checklist">
           <div className="section-heading">Close Checklist</div>
+          {data.reconciliation && <ChecklistRow ok={data.reconciliation.ok} label={data.reconciliation.ok ? "Ledger reconciled" : "Ledger discrepancies"}
+            detail={`${data.reconciliation.transactions_checked} table receipts, ${data.reconciliation.counter_orders_checked} counter orders checked. Unpaid credit: ${money(data.reconciliation.credit_total)}.`} />}
+          {[...(data.reconciliation?.errors || []), ...(data.reconciliation?.warnings || [])].map((issue, index) =>
+            <ChecklistRow key={`${issue.code}-${issue.id}-${index}`} ok={false} label={`${issue.code} · ${issue.resource} ${issue.id ?? ""}`} detail={issue.message} />)}
+          {!closedDay && data.reconciliation?.legacy_review_required && <Checkbox checked={legacyReviewed} onChange={setLegacyReviewed} label="I reviewed the legacy payment-ledger warnings" />}
+          {data.legacy_close && <ChecklistRow ok={false} label="Legacy closing snapshot" detail="Saved under the earlier date policy; preserved without recalculation." />}
           <ChecklistRow
             ok={data.active_tables === 0}
             label="All tables closed"
