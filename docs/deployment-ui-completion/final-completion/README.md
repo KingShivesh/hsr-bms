@@ -84,13 +84,32 @@ Production mutations are not performed. Desktop Chrome viewport emulation does
 not certify physical iOS/Android devices, OS-native select behavior or an
 unfamiliar person's full-day operation. Those remain external pilot acceptance.
 Free-tier first-load delays and paused SSE soak work are not declared solved by
-this UI release. Deployment and disposable-data cleanup evidence is recorded
-after the final merge and push.
+this UI release. Deployment and disposable-data cleanup evidence is recorded below.
 
 `closure-20261118/cleanup.json` independently verifies zero business rows in the
 disposable QA database. Four schema-migration markers were not business data;
 the entire disposable database was then discarded. Both owned QA servers exited.
 The user's original checkout/server and production business records were untouched.
+
+## Deployment
+
+Source `38d30f5` and evidence through `9f3af6b` are fast-forward merged into main
+and acknowledged by GitHub. The [refreshed production proof](../deployment-final-completion.json)
+matches all 24 JS/CSS SHA256 hashes and verifies health 200, database readiness
+200 and backend-fix ancestry. The backend remains at `e014ff4`, as expected for
+this frontend-only release. The [initial proof](../deployment-final-completion-initial.json)
+is retained, including the first timeout followed by a complete successful check.
+The refreshed observation also records an initial timeout before success; no
+timeout is treated as readiness evidence.
+
+`closure-20261118/production-login/results.json` also passes both live Login
+themes: visible form controls, zero JavaScript errors, no broken images and no
+horizontal overflow. No credentials were entered/submitted; all write methods
+were blocked. Production business workflows were not mutated by this smoke check.
+
+An upload connection stalled after GitHub had accepted its commit. Delivery
+resumed from the directly observed remote revision with bounded network waits,
+without force-pushing, dropping accepted commits or rewriting published history.
 
 ## Matched Screenshots
 

@@ -5,7 +5,8 @@ and [short achievement report](../ACHIEVEMENTS.md). The fresh 18 November closur
 checks are green. The older OPEN notes below are historical and superseded for
 shared dialogs, token cleanup, button follow-ups and the real 20-session local
 lifecycle. Physical-device and unfamiliar-user acceptance remain external gates.
-Production verification is recorded separately after the final push.
+The release is merged, pushed and [verified live](deployment-final-completion.json):
+all 24 production JS/CSS hashes match, with backend health/database readiness 200.
 
 Scope: the user's October 22 "Fix Everything" brief. Preserve the approved
 Syne / DM Mono fonts, palette, table-state cues, trusted Staff access and

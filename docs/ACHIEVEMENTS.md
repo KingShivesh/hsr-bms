@@ -1,6 +1,6 @@
 # HSR BMS Progress Report
 
-Updated 18 November 2026.
+Updated 19 November 2026.
 
 ## What We Have Achieved
 
@@ -10,8 +10,8 @@ Updated 18 November 2026.
   readable light/dark themes; responsive layouts; and clearer table states.
   The approved colors and Syne Variable / DM Mono fonts are unchanged.
 - **Safer session interactions:** pending actions show feedback and resist
-  accidental dismissal. Failed requests retain entered details. Missing data
-  no longer silently becomes a free item, an in-stock item, or a Cash payment.
+  accidental dismissal. Failed requests retain entered details. Repaired
+  menu/history reads no longer interpret missing details as free, in stock or Cash.
 - **Completed cleanup:** repaired mobile Dashboard/report/Cafe overflow,
   improved history scrolling and pagination, unified remaining dialogs, fixed
   repeated command-palette shortcuts, and corrected compact-sidebar navigation.
@@ -36,8 +36,12 @@ These are automated desktop-browser checks, not physical-device certification.
 
 ## Release And Remaining Limits
 
-This release is being published; production asset verification will be recorded
-after deployment. No production business records are used for mutation tests.
+**Merged into main, pushed to GitHub and confirmed live.** The production check
+matched all 24 JavaScript/CSS file hashes and verified backend ancestry, health
+and database readiness (HTTP 200). See the
+[deployment proof](deployment-ui-completion/deployment-final-completion.json).
+No production business records were used for mutation tests; disposable local
+QA data was cleared and the test servers stopped.
 
 Real phone/tablet acceptance and a first-time user's operating trial remain
 external acceptance steps. Render first-load delays remain an operational risk.

@@ -1,0 +1,23 @@
+{
+  "at": "2026-11-19T17:14:09.982Z",
+  "scope": "Public production Login only; no credential entry or submission; all write methods blocked",
+  "cases": [
+    {
+      "theme": "light",
+      "errors": [],
+      "themeApplied": "light",
+      "brokenImages": [],
+      "overflow": 0,
+      "pass": true
+    },
+    {
+      "theme": "dark",
+      "errors": [],
+      "themeApplied": "dark",
+      "brokenImages": [],
+      "overflow": 0,
+      "pass": true
+    }
+  ],
+  "blockedWrites": []
+}
