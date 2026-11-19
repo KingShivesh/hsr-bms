@@ -1,0 +1,23 @@
+
+> frontend@0.1.0 test:realtime-manager
+> node ./scripts/test-realtime-manager.mjs
+
+{
+  "maxConcurrentStreams": 1,
+  "topicUnion": [
+    "floor",
+    "inventory"
+  ],
+  "routedEvents": {
+    "floor": 1,
+    "inventory": 1
+  },
+  "fallback503": true,
+  "retryAttemptsObserved": 2,
+  "finalSubscriberCount": 0,
+  "stalledStreamReconnect": true,
+  "heartbeatCausedRefetch": 0,
+  "chromeObserverExtraStreams": 0,
+  "manualRetryBurstMaxStreams": 1,
+  "observerCleanup": true
+}

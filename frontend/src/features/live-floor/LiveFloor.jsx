@@ -110,7 +110,7 @@ export default function LiveFloor({ role = "admin", onNavigate, newSessionReques
       if (version !== loadVersion.current) return;
       setError(err.userMessage || "Unable to load table status.");
     } finally {
-      if (showLoading && version === loadVersion.current) setLoading(false);
+      if (version === loadVersion.current) setLoading(false);
     }
   }, [setFloor]);
 

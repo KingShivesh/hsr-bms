@@ -1,0 +1,9 @@
+test_development_retains_disposable_sqlite (test_database_reliability.ConfigurationTests.test_development_retains_disposable_sqlite) ... ok
+test_production_never_falls_back_to_sqlite (test_database_reliability.ConfigurationTests.test_production_never_falls_back_to_sqlite) ... ok
+test_supported_url_dialects_and_pooler_safe_settings (test_database_reliability.ConfigurationTests.test_supported_url_dialects_and_pooler_safe_settings) ... ok
+test_url_normalization_preserves_password (test_database_reliability.ConfigurationTests.test_url_normalization_preserves_password) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.001s
+
+OK

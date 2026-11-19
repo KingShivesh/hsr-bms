@@ -1,0 +1,12 @@
+after /legacy-table-controls dark loading
+after /legacy-table-controls dark error
+after /legacy-table-controls dark empty
+after /legacy-table-controls light loading
+after /legacy-table-controls light error
+after /legacy-table-controls light empty
+{
+  "route": "/legacy-table-controls",
+  "stage": "after",
+  "samples": 12,
+  "faults": []
+}

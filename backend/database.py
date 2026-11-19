@@ -1,30 +1,17 @@
 import os
 
 from dotenv import load_dotenv
-from sqlalchemy import create_engine, inspect, text
+from sqlalchemy import create_engine, event, inspect, text
 from sqlalchemy.orm import declarative_base, sessionmaker
 from fastapi import Depends
+from database_config import database_config, set_transaction_timeouts
 
 load_dotenv()
 
-DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./hsr_billiards.db")
-
-if DATABASE_URL.startswith("postgres://"):
-    DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql://", 1)
-
-is_sqlite = DATABASE_URL.startswith("sqlite")
-connect_args = {"check_same_thread": False} if is_sqlite else {}
-engine_options = {
-    "connect_args": connect_args,
-    "pool_pre_ping": True,
-}
-if not is_sqlite:
-    engine_options.update({
-        "pool_size": 10,
-        "max_overflow": 20,
-    })
-
+DATABASE_URL, is_sqlite, engine_options = database_config(os.environ)
 engine = create_engine(DATABASE_URL, **engine_options)
+if not is_sqlite:
+    event.listen(engine, "begin", set_transaction_timeouts)
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()

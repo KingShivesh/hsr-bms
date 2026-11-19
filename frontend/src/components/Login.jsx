@@ -1,6 +1,6 @@
 import { Icon as HsrIcon, Input as HsrInput, Button as HsrButton } from "./ui/index.js";
 import { useEffect, useRef, useState } from "react";
-import { login } from "../api/index.js";
+import { getBackendHealth, login } from "../api/index.js";
 import { APP_NAME, TABLE_RANGE, TOTAL_TABLES } from "../config/hsrTables.js";
 
 export default function Login({ onLogin }) {
@@ -8,6 +8,7 @@ export default function Login({ onLogin }) {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [connecting, setConnecting] = useState(false);
   const [credentialsInvalid, setCredentialsInvalid] = useState(false);
   const [sessionExpired] = useState(() => {
     try { return sessionStorage.getItem("hsr:auth-expired") === "1"; }
@@ -29,6 +30,9 @@ export default function Login({ onLogin }) {
     setError("");
     setCredentialsInvalid(false);
     try {
+      setConnecting(true);
+      await getBackendHealth();
+      setConnecting(false);
       const res = await login(username, password);
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("role", res.data.role || "admin");
@@ -44,6 +48,7 @@ export default function Login({ onLogin }) {
     } finally {
       pending.current = false;
       setLoading(false);
+      setConnecting(false);
     }
   }
 
@@ -168,7 +173,7 @@ export default function Login({ onLogin }) {
               loading={loading}
               data-testid="login-button"
             >
-              <span>Sign in</span>
+              <span>{loading ? connecting ? "Connecting to server..." : "Signing in..." : "Sign in"}</span>
               <HsrIcon className="ti ti-arrow-right" aria-hidden="true" />
             </HsrButton>
           </form>

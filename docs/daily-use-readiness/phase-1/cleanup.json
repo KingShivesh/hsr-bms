@@ -1,0 +1,7 @@
+{
+  "productionBusinessMutations": 0,
+  "localUiDatabaseRemainingRows": 0,
+  "disposablePostgresContainerAndVolumesRemoved": true,
+  "remainingReliabilityContainers": 0,
+  "ownedFrontendAndBackendServersStopped": true
+}

@@ -1,0 +1,12 @@
+after /pricing-rules dark loading
+after /pricing-rules dark error
+after /pricing-rules dark empty
+after /pricing-rules light loading
+after /pricing-rules light error
+after /pricing-rules light empty
+{
+  "route": "/pricing-rules",
+  "stage": "after",
+  "samples": 12,
+  "faults": []
+}

@@ -1,0 +1,12 @@
+after /dashboard dark loading
+after /dashboard dark error
+after /dashboard dark empty
+after /dashboard light loading
+after /dashboard light error
+after /dashboard light empty
+{
+  "route": "/dashboard",
+  "stage": "after",
+  "samples": 12,
+  "faults": []
+}

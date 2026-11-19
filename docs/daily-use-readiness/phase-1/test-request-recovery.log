@@ -1,0 +1,28 @@
+
+> frontend@0.1.0 test:request-recovery
+> node --test ./scripts/test-request-recovery.mjs
+
+✔ read timeouts share a 30s deadline, not three fresh timeouts (4.657791ms)
+✔ readiness has a bounded 75s wake budget (2.301667ms)
+✔ fast 503 reads retry twice then fail, and healthy retry returns data (2.649333ms)
+✔ post is never replayed (0.441167ms)
+✔ put is never replayed (0.328459ms)
+✔ patch is never replayed (0.274375ms)
+✔ delete is never replayed (0.248583ms)
+✔ 400 is not retried (0.276375ms)
+✔ 401 is not retried (0.289416ms)
+✔ 403 is not retried (0.39975ms)
+✔ 404 is not retried (0.263167ms)
+✔ 409 is not retried (0.236ms)
+✔ 422 is not retried (0.211583ms)
+✔ 429 is not retried (0.284458ms)
+✔ cancellation and explicit noRetry never retry (0.765791ms)
+✔ abort while backing off cancels without another request (11.375ms)
+ℹ tests 16
+ℹ suites 0
+ℹ pass 16
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 211.351167

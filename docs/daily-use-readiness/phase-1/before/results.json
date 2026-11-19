@@ -1,0 +1,36 @@
+{
+  "stage": "before",
+  "scope": "Local browser with intercepted API; no production requests or database writes",
+  "cases": [
+    {
+      "theme": "light",
+      "wakeMs": 60000,
+      "healthRequests": 6,
+      "loginRequests": 1,
+      "errors": [],
+      "loginAtMs": 966,
+      "feedbackMs": 73,
+      "wakeVisible": false,
+      "pendingDuringWake": false,
+      "resultAtMs": 3684,
+      "error": "The club server could not complete the request. Try again in a moment.",
+      "credentialsRetained": true,
+      "horizontalOverflow": false
+    },
+    {
+      "theme": "dark",
+      "wakeMs": 60000,
+      "healthRequests": 4,
+      "loginRequests": 1,
+      "errors": [],
+      "loginAtMs": 1991,
+      "feedbackMs": 70,
+      "wakeVisible": false,
+      "pendingDuringWake": false,
+      "resultAtMs": 3803,
+      "error": "The club server could not complete the request. Try again in a moment.",
+      "credentialsRetained": true,
+      "horizontalOverflow": false
+    }
+  ]
+}

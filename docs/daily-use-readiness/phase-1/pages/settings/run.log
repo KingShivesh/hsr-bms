@@ -1,0 +1,12 @@
+after /settings dark loading
+after /settings dark error
+after /settings dark empty
+after /settings light loading
+after /settings light error
+after /settings light empty
+{
+  "route": "/settings",
+  "stage": "after",
+  "samples": 12,
+  "faults": []
+}

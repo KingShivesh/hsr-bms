@@ -1,0 +1,21 @@
+{
+  "stage": "after",
+  "scope": "Local browser with intercepted API; no production requests or database writes",
+  "cases": [],
+  "outages": [
+    {
+      "theme": "light",
+      "failureAtMs": 73976,
+      "loginRequestsBeforeRecovery": 0,
+      "recoveryMs": 59,
+      "loginRequestsAfterRecovery": 1
+    },
+    {
+      "theme": "dark",
+      "failureAtMs": 73974,
+      "loginRequestsBeforeRecovery": 0,
+      "recoveryMs": 55,
+      "loginRequestsAfterRecovery": 1
+    }
+  ]
+}

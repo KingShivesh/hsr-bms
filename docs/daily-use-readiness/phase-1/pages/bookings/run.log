@@ -1,0 +1,12 @@
+after /bookings dark loading
+after /bookings dark error
+after /bookings dark empty
+after /bookings light loading
+after /bookings light error
+after /bookings light empty
+{
+  "route": "/bookings",
+  "stage": "after",
+  "samples": 12,
+  "faults": []
+}

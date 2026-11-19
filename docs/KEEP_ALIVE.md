@@ -1,7 +1,10 @@
 # Render Free-Tier Keep-Alive
 
 HSR uses `.github/workflows/keep-alive.yml` to request the backend health
-endpoint every 10 minutes. Render documents that Free web services spin down
+endpoint every 10 minutes around the owner-confirmed 11 AM-2 AM IST shift.
+The UTC schedules cover 10:57 AM-2:07 AM IST, including a small opening/closing
+margin; outside that window the service may sleep. Manual dispatch remains
+available. Render documents that Free web services spin down
 after 15 minutes without inbound traffic, and that incoming HTTP requests keep
 the service active or wake it after a spin-down. The workflow is therefore a
 best-effort way to reduce cold starts, not an availability guarantee.

@@ -10,7 +10,7 @@ button, a, input, select, textarea, [role="button"] {
 }
 .ui-button-native[data-loading="true"] { position: relative; -webkit-text-fill-color: transparent; }
 .ui-button-native[data-loading="true"] > :not(.ui-button-spinner) { visibility: hidden; }
-.ui-button-native[data-loading="true"] > .ui-button-spinner { visibility: visible; -webkit-text-fill-color: initial; color: var(--button-busy-ink, var(--text-primary)); position: absolute; inset: 0; margin: auto; width: 16px; height: 16px; }
+.ui-button-native[data-loading="true"] > .ui-button-spinner { visibility: visible; -webkit-text-fill-color: initial; color: var(--button-busy-ink, var(--text-primary)) !important; position: absolute; inset: 0; margin: auto; width: 16px; height: 16px; }
 .ui-button-native.lf-primary-button[data-loading="true"] > .ui-button-spinner { color: var(--text-on-accent); }
 .app-toast { animation-duration: 150ms; }
 .app-toast.is-exiting { animation-duration: 120ms; animation-timing-function: var(--ease-in, ease-in); }

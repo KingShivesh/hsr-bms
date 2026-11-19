@@ -153,6 +153,8 @@ function AppInner() {
   const location = useLocation();
   const navigate = useNavigate();
   const backendWakeTimerRef = useRef(null);
+  const backendCheckGeneration = useRef(0);
+  const backendNeedsRefresh = useRef(false);
   const [loggedIn, setLoggedIn] = useState(!!localStorage.getItem("token"));
   const [role, setRole] = useState(localStorage.getItem("role") || "admin");
   const [username, setUsername] = useState(localStorage.getItem("username") || "");
@@ -179,16 +181,18 @@ function AppInner() {
     checkBackend({ showWakeDelay: true });
     const healthIv = setInterval(checkBackend, 60000);
     const handleBackendFailure = (event) => {
-      setBackendStatus({
+      backendNeedsRefresh.current = true;
+      setBackendStatus(current => current.state === "checking" ? current : ({
         state: "offline",
         message: event.detail?.message || "Backend is unreachable.",
         requestId: event.detail?.requestId || "",
         showWakeMessage: false,
-      });
+      }));
     };
     window.addEventListener("backend:request-failed", handleBackendFailure);
     return () => {
       clearInterval(healthIv);
+      invalidateBackendCheck();
       if (backendWakeTimerRef.current) {
         clearTimeout(backendWakeTimerRef.current);
       }
@@ -270,7 +274,13 @@ function AppInner() {
     }
   }
 
-  async function checkBackend({ showWakeDelay = false } = {}) {
+  function invalidateBackendCheck() {
+    backendCheckGeneration.current++;
+  }
+
+  async function checkBackend({ showWakeDelay = true } = {}) {
+    const generation = ++backendCheckGeneration.current;
+    const started = performance.now();
     if (backendWakeTimerRef.current) {
       clearTimeout(backendWakeTimerRef.current);
       backendWakeTimerRef.current = null;
@@ -296,13 +306,20 @@ function AppInner() {
     }
     try {
       await getBackendHealth();
+      if (generation !== backendCheckGeneration.current) return;
       setBackendStatus({
         state: "online",
         message: "",
         requestId: "",
         showWakeMessage: false,
       });
+      if (backendNeedsRefresh.current || performance.now() - started >= 1400) {
+        backendNeedsRefresh.current = false;
+        window.dispatchEvent(new CustomEvent("hsr:data-changed", { detail: { reason: "backend-recovered" } }));
+      }
     } catch (e) {
+      if (generation !== backendCheckGeneration.current) return;
+      backendNeedsRefresh.current = true;
       setBackendStatus({
         state: "offline",
         message: e.userMessage || "Backend is unreachable.",
@@ -314,7 +331,7 @@ function AppInner() {
         showWakeMessage: false,
       });
     } finally {
-      if (backendWakeTimerRef.current) {
+      if (generation === backendCheckGeneration.current && backendWakeTimerRef.current) {
         clearTimeout(backendWakeTimerRef.current);
         backendWakeTimerRef.current = null;
       }

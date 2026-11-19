@@ -21,9 +21,10 @@ def format_ist_now(fmt: str = "%d/%m/%Y, %H:%M:%S") -> str:
     return get_ist_now().strftime(fmt)
 
 
-def is_production_env() -> bool:
-    env = (os.getenv("APP_ENV") or os.getenv("ENVIRONMENT") or "").strip().lower()
-    return env in {"prod", "production"} or bool(os.getenv("RENDER"))
+def is_production_env(environ=None) -> bool:
+    environ = os.environ if environ is None else environ
+    env = (environ.get("APP_ENV") or environ.get("ENVIRONMENT") or "").strip().lower()
+    return env in {"prod", "production"} or bool(environ.get("RENDER"))
 
 
 def validate_runtime_config() -> None:

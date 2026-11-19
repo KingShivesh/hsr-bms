@@ -7,8 +7,11 @@ on:
     paths:
       - ".github/workflows/keep-alive.yml"
   schedule:
-    # Offset from the top of the hour to reduce GitHub Actions peak-load delays.
-    - cron: "7,17,27,37,47,57 * * * *"
+    # UTC: 10:57 AM through 2:07 AM IST, around the approved 11 AM-2 AM shift.
+    # Offset from the top of the hour to reduce peak-load delays.
+    - cron: "27,37,47,57 5 * * *"
+    - cron: "7,17,27,37,47,57 6-19 * * *"
+    - cron: "7,17,27,37 20 * * *"
   workflow_dispatch:
 
 permissions:

@@ -1,0 +1,45 @@
+{
+  "scope": "Disposable loopback QA backend; 35s intercepted unavailability; no production access",
+  "cases": [
+    {
+      "theme": "light",
+      "route": "dashboard",
+      "failedReads": 16,
+      "healthyReads": 1,
+      "errors": [],
+      "errorAtMs": 7466,
+      "recoveredAtMs": 36152,
+      "horizontalOverflow": false
+    },
+    {
+      "theme": "light",
+      "route": "live-floor",
+      "failedReads": 7,
+      "healthyReads": 1,
+      "errors": [],
+      "errorAtMs": 8563,
+      "recoveredAtMs": 36140,
+      "horizontalOverflow": false
+    },
+    {
+      "theme": "dark",
+      "route": "dashboard",
+      "failedReads": 16,
+      "healthyReads": 1,
+      "errors": [],
+      "errorAtMs": 7669,
+      "recoveredAtMs": 36117,
+      "horizontalOverflow": false
+    },
+    {
+      "theme": "dark",
+      "route": "live-floor",
+      "failedReads": 7,
+      "healthyReads": 1,
+      "errors": [],
+      "errorAtMs": 8347,
+      "recoveredAtMs": 36110,
+      "horizontalOverflow": false
+    }
+  ]
+}

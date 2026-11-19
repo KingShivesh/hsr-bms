@@ -1,0 +1,12 @@
+after /analytics dark loading
+after /analytics dark error
+after /analytics dark empty
+after /analytics light loading
+after /analytics light error
+after /analytics light empty
+{
+  "route": "/analytics",
+  "stage": "after",
+  "samples": 12,
+  "faults": []
+}

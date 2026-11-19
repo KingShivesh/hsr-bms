@@ -1,0 +1,12 @@
+after /inventory dark loading
+after /inventory dark error
+after /inventory dark empty
+after /inventory light loading
+after /inventory light error
+after /inventory light empty
+{
+  "route": "/inventory",
+  "stage": "after",
+  "samples": 12,
+  "faults": []
+}

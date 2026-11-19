@@ -18231,10 +18231,10 @@ body.dark .metric-card {
   color: var(--text-primary) !important;
 }
 
-button:disabled,
-.btn:disabled,
-.primary-action-btn:disabled,
-.cf-action-btn:disabled {
+button:disabled:not([data-loading="true"]),
+.btn:disabled:not([data-loading="true"]),
+.primary-action-btn:disabled:not([data-loading="true"]),
+.cf-action-btn:disabled:not([data-loading="true"]) {
   filter: grayscale(0.2);
   opacity: 0.46 !important;
   cursor: not-allowed !important;
@@ -19419,15 +19419,15 @@ body.dark .cf-inventory-row.has-bulk-error {
   color: var(--warning-text) !important;
 }
 
-button:disabled,
-.btn:disabled,
-.primary-action-btn:disabled,
-.cf-action-btn:disabled,
-.table-control-btn:disabled,
-.table-payment-btn:disabled,
-.table-secondary-btn:disabled,
-.food-action-neutral:disabled,
-.food-action-stock:disabled {
+button:disabled:not([data-loading="true"]),
+.btn:disabled:not([data-loading="true"]),
+.primary-action-btn:disabled:not([data-loading="true"]),
+.cf-action-btn:disabled:not([data-loading="true"]),
+.table-control-btn:disabled:not([data-loading="true"]),
+.table-payment-btn:disabled:not([data-loading="true"]),
+.table-secondary-btn:disabled:not([data-loading="true"]),
+.food-action-neutral:disabled:not([data-loading="true"]),
+.food-action-stock:disabled:not([data-loading="true"]) {
   background: var(--bg-surface-hover) !important;
   border-color: var(--border-subtle) !important;
   color: var(--text-disabled) !important;

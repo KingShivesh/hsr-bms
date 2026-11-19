@@ -1,0 +1,12 @@
+after /waitlist dark loading
+after /waitlist dark error
+after /waitlist dark empty
+after /waitlist light loading
+after /waitlist light error
+after /waitlist light empty
+{
+  "route": "/waitlist",
+  "stage": "after",
+  "samples": 12,
+  "faults": []
+}

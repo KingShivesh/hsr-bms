@@ -1,0 +1,12 @@
+after /audit-log dark loading
+after /audit-log dark error
+after /audit-log dark empty
+after /audit-log light loading
+after /audit-log light error
+after /audit-log light empty
+{
+  "route": "/audit-log",
+  "stage": "after",
+  "samples": 12,
+  "faults": []
+}

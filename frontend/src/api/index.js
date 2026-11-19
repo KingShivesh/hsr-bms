@@ -1,12 +1,13 @@
 import axios from "axios";
 import { readEpoch, invalidateReads } from "./readEpoch.js";
+import { installRequestRecovery } from "./requestRecovery.js";
 
-const API_TIMEOUT_MS = Number(import.meta.env.VITE_API_TIMEOUT_MS || 45000);
+const configuredTimeout = Number(import.meta.env.VITE_API_TIMEOUT_MS || 15000);
+const API_TIMEOUT_MS = Number.isFinite(configuredTimeout) && configuredTimeout > 0 ? Math.min(configuredTimeout, 30000) : 15000;
 const DEV_BACKEND_WAKE_DELAY_MS = import.meta.env.DEV
   ? Number(import.meta.env.VITE_SIMULATE_BACKEND_WAKE_MS || 0)
   : 0;
 const SAFE_RETRY_METHODS = new Set(["get", "head", "options"]);
-const RETRY_DELAYS_MS = [800, 1800];
 let lastBackendEventAt = 0;
 let lastDataChangeAt = 0;
 const inFlight = new Map();
@@ -15,6 +16,7 @@ const api = axios.create({
   baseURL: import.meta.env.VITE_API_URL || "http://localhost:8000",
   timeout: API_TIMEOUT_MS,
 });
+installRequestRecovery(api);
 
 // Collapse concurrent reads, not sequential refreshes. Never share auth or bill requests.
 function getResource(url, config = {}) {
@@ -27,21 +29,10 @@ function getResource(url, config = {}) {
 }
 
 const tableKey = (table_id) => String(table_id || "").trim().toLowerCase();
-const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 function requestId() {
   if (globalThis.crypto?.randomUUID) return globalThis.crypto.randomUUID();
   return `${Date.now()}-${Math.random().toString(16).slice(2)}`;
-}
-
-function shouldRetryRequest(err) {
-  const cfg = err.config || {};
-  const method = String(cfg.method || "get").toLowerCase();
-  if (!SAFE_RETRY_METHODS.has(method)) return false;
-  if (cfg.__retryCount >= RETRY_DELAYS_MS.length) return false;
-  if (cfg.noRetry) return false;
-  if (!err.response) return true;
-  return err.response.status >= 500;
 }
 
 function backendErrorMessage(err) {
@@ -119,12 +110,8 @@ api.interceptors.response.use(
     notifyDataChanged(res);
     return res;
   },
-  async (err) => {
-    if (shouldRetryRequest(err)) {
-      err.config.__retryCount = (err.config.__retryCount || 0) + 1;
-      await sleep(RETRY_DELAYS_MS[err.config.__retryCount - 1]);
-      return api(err.config);
-    }
+  (err) => {
+    if (axios.isCancel(err)) return Promise.reject(err);
     err.userMessage = backendErrorMessage(err);
     if (!err.response || err.response.status >= 500 || err.code === "ECONNABORTED") {
       notifyBackendFailure(err);
@@ -148,11 +135,17 @@ api.interceptors.response.use(
   },
 );
 
-export const getBackendHealth = async () => {
-  if (DEV_BACKEND_WAKE_DELAY_MS > 0) {
-    await sleep(DEV_BACKEND_WAKE_DELAY_MS);
+let readinessRequest;
+export const getBackendHealth = () => {
+  if (!readinessRequest) {
+    readinessRequest = (async () => {
+      if (DEV_BACKEND_WAKE_DELAY_MS > 0) {
+        await new Promise(resolve => setTimeout(resolve, Math.min(DEV_BACKEND_WAKE_DELAY_MS, 75000)));
+      }
+      return api.get("/ready", { timeout: 10000, retryBudgetMs: 75000, retryLimit: 25 });
+    })().finally(() => { readinessRequest = null; });
   }
-  return api.get("/ready", { noRetry: false });
+  return readinessRequest;
 };
 
 // Auth

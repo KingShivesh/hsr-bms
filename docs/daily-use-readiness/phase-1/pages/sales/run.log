@@ -1,0 +1,12 @@
+after /sales dark loading
+after /sales dark error
+after /sales dark empty
+after /sales light loading
+after /sales light error
+after /sales light empty
+{
+  "route": "/sales",
+  "stage": "after",
+  "samples": 12,
+  "faults": []
+}

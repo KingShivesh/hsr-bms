@@ -1,0 +1,12 @@
+after /tournaments dark loading
+after /tournaments dark error
+after /tournaments dark empty
+after /tournaments light loading
+after /tournaments light error
+after /tournaments light empty
+{
+  "route": "/tournaments",
+  "stage": "after",
+  "samples": 12,
+  "faults": []
+}

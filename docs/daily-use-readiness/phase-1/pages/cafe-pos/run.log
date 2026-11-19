@@ -1,0 +1,12 @@
+after /cafe-pos dark loading
+after /cafe-pos dark error
+after /cafe-pos dark empty
+after /cafe-pos light loading
+after /cafe-pos light error
+after /cafe-pos light empty
+{
+  "route": "/cafe-pos",
+  "stage": "after",
+  "samples": 12,
+  "faults": []
+}

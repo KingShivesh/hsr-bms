@@ -1,0 +1,16 @@
+{
+  "stage": "after",
+  "scope": "Disposable loopback QA backend; held read plus concurrent refresh",
+  "cases": [
+    {
+      "theme": "light",
+      "skeletons": 0,
+      "cards": 5
+    },
+    {
+      "theme": "dark",
+      "skeletons": 0,
+      "cards": 5
+    }
+  ]
+}

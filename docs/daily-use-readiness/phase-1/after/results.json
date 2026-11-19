@@ -1,0 +1,66 @@
+{
+  "stage": "after",
+  "scope": "Local browser with intercepted API; no production requests or database writes",
+  "cases": [
+    {
+      "theme": "light",
+      "wakeMs": 60000,
+      "healthRequests": 23,
+      "loginRequests": 1,
+      "errors": [],
+      "feedbackMs": 44,
+      "wakeVisible": true,
+      "pendingDuringWake": true,
+      "buttonAppearance": {
+        "background": "rgb(0, 107, 60)",
+        "spinner": "rgb(250, 250, 250)",
+        "visibility": "visible",
+        "opacity": "1"
+      },
+      "contrast": [],
+      "loginAtMs": 62971,
+      "resultAtMs": 63704,
+      "error": "Invalid username or password\nCheck both fields, then try again.",
+      "credentialsRetained": true,
+      "horizontalOverflow": false
+    },
+    {
+      "theme": "dark",
+      "wakeMs": 60000,
+      "healthRequests": 23,
+      "loginRequests": 1,
+      "errors": [],
+      "feedbackMs": 33,
+      "wakeVisible": true,
+      "pendingDuringWake": true,
+      "buttonAppearance": {
+        "background": "rgb(0, 255, 127)",
+        "spinner": "rgb(7, 18, 13)",
+        "visibility": "visible",
+        "opacity": "1"
+      },
+      "contrast": [],
+      "loginAtMs": 62946,
+      "resultAtMs": 63452,
+      "error": "Invalid username or password\nCheck both fields, then try again.",
+      "credentialsRetained": true,
+      "horizontalOverflow": false
+    }
+  ],
+  "outages": [
+    {
+      "theme": "dark",
+      "failureAtMs": 72442,
+      "loginRequestsBeforeRecovery": 0,
+      "recoveryMs": 54,
+      "loginRequestsAfterRecovery": 1
+    },
+    {
+      "theme": "light",
+      "failureAtMs": 72457,
+      "loginRequestsBeforeRecovery": 0,
+      "recoveryMs": 51,
+      "loginRequestsAfterRecovery": 1
+    }
+  ]
+}

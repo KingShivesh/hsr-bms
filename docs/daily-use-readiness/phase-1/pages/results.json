@@ -1,0 +1,78 @@
+{
+  "scope": "Disposable local UI database; production not accessed",
+  "states": [
+    "loading",
+    "error",
+    "empty"
+  ],
+  "themes": [
+    "light",
+    "dark"
+  ],
+  "widths": [
+    375,
+    1440
+  ],
+  "routes": [
+    {
+      "route": "dashboard",
+      "status": 0
+    },
+    {
+      "route": "live-floor",
+      "status": 0
+    },
+    {
+      "route": "customers",
+      "status": 0
+    },
+    {
+      "route": "bookings",
+      "status": 0
+    },
+    {
+      "route": "cafe-pos",
+      "status": 0
+    },
+    {
+      "route": "sales",
+      "status": 0
+    },
+    {
+      "route": "analytics",
+      "status": 0
+    },
+    {
+      "route": "settings",
+      "status": 0
+    },
+    {
+      "route": "inventory",
+      "status": 0
+    },
+    {
+      "route": "waitlist",
+      "status": 0
+    },
+    {
+      "route": "legacy-table-controls",
+      "status": 0
+    },
+    {
+      "route": "tournaments",
+      "status": 0
+    },
+    {
+      "route": "daily-closing",
+      "status": 0
+    },
+    {
+      "route": "pricing-rules",
+      "status": 0
+    },
+    {
+      "route": "audit-log",
+      "status": 0
+    }
+  ]
+}

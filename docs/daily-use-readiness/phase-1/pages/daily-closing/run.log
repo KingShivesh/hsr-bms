@@ -1,0 +1,12 @@
+after /daily-closing dark loading
+after /daily-closing dark error
+after /daily-closing dark empty
+after /daily-closing light loading
+after /daily-closing light error
+after /daily-closing light empty
+{
+  "route": "/daily-closing",
+  "stage": "after",
+  "samples": 12,
+  "faults": []
+}

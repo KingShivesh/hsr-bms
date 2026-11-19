@@ -11,6 +11,8 @@
     "check:ui-contract": "node ./scripts/audit-deployment-source.mjs --check",
     "scan:contrast": "node ./scripts/scan-contrast.mjs",
     "test:realtime-manager": "node ./scripts/test-realtime-manager.mjs",
+    "test:request-recovery": "node --test ./scripts/test-request-recovery.mjs",
+    "test:readiness-pages": "node ./scripts/test-readiness-pages.mjs",
     "test:table-states": "node ./scripts/audit-table-state-clarity.mjs",
     "test:reference-theme": "node ./scripts/verify-reference-theme.mjs",
     "test:theme-runtime": "node ./scripts/test-theme-runtime.mjs",

@@ -180,6 +180,18 @@ Analytics dark-mode stat-card bug, migration to shared metric cards,
 dead/reachable component findings, and the full routing migration.
 
 ## Deployment / branch state
+- Daily-use readiness phases require owner approval before merging each phase;
+  this overrides the older automatic merge-on-completion rule below.
+- Phase 1 reliability contract: ordinary reads share a 30-second total deadline;
+  readiness shares one in-flight 75-second wake budget per tab, with 10-second
+  attempts. Login waits for readiness and submits once. Never replay financial
+  writes automatically. The confirmed club hours are 11 AM-2 AM IST; keep-alive
+  scheduling includes opening/closing margins and remains best-effort.
+- Production must have an explicit PostgreSQL DATABASE_URL, never SQLite fallback.
+  Pool/connect waits are 5 seconds; transactions use SET LOCAL statement/lock/idle
+  timeouts (10s/5s/15s), including with transaction-mode poolers. Prepared statements
+  are disabled for psycopg pooler compatibility. Verify real deployed pooler/TLS
+  settings separately: a local Postgres pass is not proof of account configuration.
 - `main` contains the interaction-design, routing, post-deploy UX,
   operational UX, and identity/polish passes through `212400d`.
 - `frontend/vercel.json` defines SPA rewrites to `index.html`; after pushing

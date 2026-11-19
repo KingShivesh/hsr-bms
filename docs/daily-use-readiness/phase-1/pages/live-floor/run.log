@@ -1,0 +1,12 @@
+after /live-floor dark loading
+after /live-floor dark error
+after /live-floor dark empty
+after /live-floor light loading
+after /live-floor light error
+after /live-floor light empty
+{
+  "route": "/live-floor",
+  "stage": "after",
+  "samples": 12,
+  "faults": []
+}
