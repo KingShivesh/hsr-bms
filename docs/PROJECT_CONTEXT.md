@@ -42,6 +42,20 @@ speed of new features.
 - Backend merge gate remains fresh-requirements install + production-shaped
   Postgres import + disposable Postgres regressions, including `test_product_shell.py`.
 
+## Phase 2 Money Safety (Pending Merge Approval)
+Phase 2 money safety uses a 3 AM IST business-date cutoff (owner approved), not
+calendar midnight. Preserve actual IST receipt timestamps. Shared helpers live in
+`backend/money.py`; never reintroduce `date LIKE today%` for daily financial totals.
+Close under `get_mutation_db` so sales and closing use the same venue lock. Saved
+DayClose snapshots are immutable; legacy midnight snapshots are marked, not rebuilt.
+Financial retries require a persisted `Idempotency-Key`; mutation receipts commit
+atomically with their money record and must survive rollback/release reversal.
+The reconciliation endpoint is read-only, Owner-only, and never fabricates ledger
+entries. Legacy coverage requires explicit review; discrepancies block closing.
+Include `test_money_integrity.py` in the fresh-Postgres backend merge gate.
+Phase 2 remains on `codex/money-data-integrity` pending owner merge approval;
+see `docs/daily-use-readiness/phase-2/README.md` for rollout and rollback.
+
 ## Design system (established, do not redefine ad hoc)
 CSS custom properties are centralized in `frontend/src/design-tokens.css`.
 The parser-time bootstrap in `frontend/index.html` owns theme resolution before

@@ -1,0 +1,253 @@
+/usr/local/lib/python3.11/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+  from starlette.testclient import TestClient as TestClient  # noqa
+test_all_table_tiers_ceil_partial_minutes_and_apply_minimum (__main__.MoneyIntegrityTests.test_all_table_tiers_ceil_partial_minutes_and_apply_minimum) ... INFO:hsr-bms:request_id=9102ce6c-7b36-4d8c-8057-7bb4d7d385b0 method=POST path=/sessions/start status=200 duration_ms=44
+INFO:httpx:HTTP Request: POST http://testserver/sessions/start "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=f7272442-35aa-4ea2-8dd6-8b91590d483c method=GET path=/sessions/quote/t1 status=200 duration_ms=14
+INFO:httpx:HTTP Request: GET http://testserver/sessions/quote/t1 "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=809e1b88-72f2-4eef-80c1-63a9e663e0ae method=POST path=/sessions/stop/t1 status=200 duration_ms=27
+INFO:httpx:HTTP Request: POST http://testserver/sessions/stop/t1 "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=f9be8fee-a336-405a-baf7-f244e7982d50 method=POST path=/sessions/start status=200 duration_ms=10
+INFO:httpx:HTTP Request: POST http://testserver/sessions/start "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=c907ac38-6339-447a-b144-537c40c71fda method=GET path=/sessions/quote/t3 status=200 duration_ms=7
+INFO:httpx:HTTP Request: GET http://testserver/sessions/quote/t3 "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=c0d13ce8-2396-4038-b996-db8e2bda841b method=POST path=/sessions/stop/t3 status=200 duration_ms=14
+INFO:httpx:HTTP Request: POST http://testserver/sessions/stop/t3 "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=6d1927c5-5696-4c16-a6b7-7366fc0e775e method=POST path=/sessions/start status=200 duration_ms=10
+INFO:httpx:HTTP Request: POST http://testserver/sessions/start "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=a46b6f3a-41d9-4fd0-bb01-55b92e6e0a08 method=GET path=/sessions/quote/t5 status=200 duration_ms=7
+INFO:httpx:HTTP Request: GET http://testserver/sessions/quote/t5 "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=eb08b532-bca2-4973-bc85-e708387d4e64 method=POST path=/sessions/stop/t5 status=200 duration_ms=13
+INFO:httpx:HTTP Request: POST http://testserver/sessions/stop/t5 "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=a94efed2-fb81-481e-ba1d-dd4b60b52cd6 method=POST path=/sessions/start status=200 duration_ms=8
+INFO:httpx:HTTP Request: POST http://testserver/sessions/start "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=c862dccc-4c80-430b-b308-ee5d48985e6f method=GET path=/sessions/quote/t1 status=200 duration_ms=6
+INFO:httpx:HTTP Request: GET http://testserver/sessions/quote/t1 "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=19f8f6cf-0a0b-4762-a39d-67c76cb80c62 method=GET path=/sessions/quote/t1 status=200 duration_ms=7
+INFO:httpx:HTTP Request: GET http://testserver/sessions/quote/t1 "HTTP/1.1 200 OK"
+ok
+test_close_and_sale_share_one_serialized_snapshot (__main__.MoneyIntegrityTests.test_close_and_sale_share_one_serialized_snapshot) ... INFO:hsr-bms:request_id=58cff41f-42c2-431a-8461-518fd7dc9131 method=POST path=/food/order status=200 duration_ms=35
+INFO:httpx:HTTP Request: POST http://testserver/food/order "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=3a1adff9-665c-467e-9ee7-16e1330d56d4 method=POST path=/reports/day-close status=200 duration_ms=48
+INFO:httpx:HTTP Request: POST http://testserver/reports/day-close "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=eafd114a-5623-4323-90c6-3b2c15c30525 method=GET path=/reports/closing-report status=200 duration_ms=7
+INFO:httpx:HTTP Request: GET http://testserver/reports/closing-report "HTTP/1.1 200 OK"
+ok
+test_close_is_immutable_and_blocks_new_money_and_historical_cancel (__main__.MoneyIntegrityTests.test_close_is_immutable_and_blocks_new_money_and_historical_cancel) ... INFO:hsr-bms:request_id=015f2aa3-3ddc-49aa-bd20-04f7fdf684dc method=POST path=/food/order status=200 duration_ms=7
+INFO:httpx:HTTP Request: POST http://testserver/food/order "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=66f187a8-074b-42e5-9bc6-84fad0863d5c method=GET path=/reports/closing-report status=200 duration_ms=13
+INFO:httpx:HTTP Request: GET http://testserver/reports/closing-report "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=0d1b8126-50b0-4720-864e-f446812712b5 method=POST path=/reports/day-close status=200 duration_ms=18
+INFO:httpx:HTTP Request: POST http://testserver/reports/day-close "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=2a0dc3bb-1af4-4a33-af15-c819f6b3d7e1 method=POST path=/food/order status=409 duration_ms=5
+INFO:httpx:HTTP Request: POST http://testserver/food/order "HTTP/1.1 409 Conflict"
+INFO:hsr-bms:request_id=fc015731-b8e3-43a5-90eb-512400ab1e5e method=POST path=/food/order status=200 duration_ms=5
+INFO:httpx:HTTP Request: POST http://testserver/food/order "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=15c96442-7c5a-4850-8d63-66d823659864 method=POST path=/sessions/start status=409 duration_ms=6
+INFO:httpx:HTTP Request: POST http://testserver/sessions/start "HTTP/1.1 409 Conflict"
+INFO:hsr-bms:request_id=0f53cb00-f201-423c-aecf-57bd5a97e20d method=POST path=/reports/day-close status=409 duration_ms=5
+INFO:httpx:HTTP Request: POST http://testserver/reports/day-close "HTTP/1.1 409 Conflict"
+INFO:hsr-bms:request_id=b4d34752-525e-46da-9dad-cfe80a54dbb6 method=DELETE path=/food/orders/21 status=409 duration_ms=6
+INFO:httpx:HTTP Request: DELETE http://testserver/food/orders/21 "HTTP/1.1 409 Conflict"
+INFO:hsr-bms:request_id=93b24adc-0887-4127-9133-01e09116a885 method=GET path=/reports/closing-report status=200 duration_ms=5
+INFO:httpx:HTTP Request: GET http://testserver/reports/closing-report?day=20/11/2026 "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=ee2c324e-6873-4f1f-b384-5988398029a9 method=GET path=/reports/reconciliation status=200 duration_ms=11
+INFO:httpx:HTTP Request: GET http://testserver/reports/reconciliation?day=20/11/2026 "HTTP/1.1 200 OK"
+ok
+test_close_viewed_previous_day_after_boundary_and_reject_future (__main__.MoneyIntegrityTests.test_close_viewed_previous_day_after_boundary_and_reject_future) ... INFO:hsr-bms:request_id=69d8e0e0-50fa-4f1b-a2b0-1685e0be5b5a method=POST path=/reports/day-close status=200 duration_ms=15
+INFO:httpx:HTTP Request: POST http://testserver/reports/day-close "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=89007271-a53e-4a12-88f5-7887f7976af4 method=POST path=/reports/day-close status=422 duration_ms=4
+INFO:httpx:HTTP Request: POST http://testserver/reports/day-close "HTTP/1.1 422 Unprocessable Entity"
+INFO:hsr-bms:request_id=0a750936-f87c-4214-b477-8e77bf7eaf7b method=POST path=/food/order status=200 duration_ms=7
+INFO:httpx:HTTP Request: POST http://testserver/food/order "HTTP/1.1 200 OK"
+ok
+test_commit_failure_rolls_back_order_and_durable_intent (__main__.MoneyIntegrityTests.test_commit_failure_rolls_back_order_and_durable_intent) ... ERROR:hsr-bms:request_id=a7995a6f-b22c-4e2d-ad69-9425e93133c6 method=POST path=/food/order status=500 duration_ms=6
+Traceback (most recent call last):
+  File "/workspace/backend/main.py", line 93, in add_security_headers
+    response = await call_next(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/starlette/middleware/base.py", line 179, in call_next
+    raise app_exc from app_exc.__cause__ or app_exc.__context__
+  File "/usr/local/lib/python3.11/site-packages/starlette/middleware/base.py", line 149, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "/usr/local/lib/python3.11/site-packages/starlette/middleware/cors.py", line 91, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "/usr/local/lib/python3.11/site-packages/starlette/middleware/cors.py", line 149, in simple_response
+    await self.app(scope, receive, send)
+  File "/usr/local/lib/python3.11/site-packages/starlette/middleware/exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/usr/local/lib/python3.11/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/usr/local/lib/python3.11/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/usr/local/lib/python3.11/site-packages/fastapi/middleware/asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "/usr/local/lib/python3.11/site-packages/starlette/routing.py", line 683, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/usr/local/lib/python3.11/site-packages/fastapi/routing.py", line 2929, in app
+    await route.handle(scope, receive, send)
+  File "/usr/local/lib/python3.11/site-packages/fastapi/routing.py", line 1916, in handle
+    await self.original_router.handle(scope, receive, send)
+  File "/usr/local/lib/python3.11/site-packages/fastapi/routing.py", line 3015, in handle
+    await included_router._handle_selected(scope, receive, send)
+  File "/usr/local/lib/python3.11/site-packages/fastapi/routing.py", line 1945, in _handle_selected
+    await original_route.handle(scope, receive, send)
+  File "/usr/local/lib/python3.11/site-packages/fastapi/routing.py", line 1373, in handle
+    await effective_context.app(scope, receive, send)
+  File "/usr/local/lib/python3.11/site-packages/fastapi/routing.py", line 175, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/usr/local/lib/python3.11/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/usr/local/lib/python3.11/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/usr/local/lib/python3.11/site-packages/fastapi/routing.py", line 161, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/fastapi/routing.py", line 762, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/fastapi/routing.py", line 383, in run_endpoint_function
+    return await run_in_threadpool(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/starlette/concurrency.py", line 34, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/anyio/to_thread.py", line 65, in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/anyio/_backends/_asyncio.py", line 2779, in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/anyio/_backends/_asyncio.py", line 1124, in run
+    result = context.run(func, *args)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/fastapi/telemetry/_api.py", line 244, in _run_sync_endpoint
+    return function(**arguments)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/backend/routers/food.py", line 99, in place_food_order
+    db.commit()
+  File "/usr/local/lib/python3.11/unittest/mock.py", line 1124, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/unittest/mock.py", line 1128, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/unittest/mock.py", line 1183, in _execute_mock_call
+    raise effect
+RuntimeError: QA forced commit failure
+INFO:hsr-bms:request_id=a7995a6f-b22c-4e2d-ad69-9425e93133c6 method=POST path=/food/order status=500 duration_ms=10
+INFO:httpx:HTTP Request: POST http://testserver/food/order "HTTP/1.1 500 Internal Server Error"
+INFO:hsr-bms:request_id=1728f49e-6e0d-452e-a95a-e4c3b2b6aa23 method=POST path=/food/order status=200 duration_ms=45
+INFO:httpx:HTTP Request: POST http://testserver/food/order "HTTP/1.1 200 OK"
+ok
+test_concurrent_same_intent_only_commits_once (__main__.MoneyIntegrityTests.test_concurrent_same_intent_only_commits_once) ... INFO:hsr-bms:request_id=83b07ab9-9810-4d20-b243-ec9a7cedfe34 method=POST path=/food/order status=200 duration_ms=24
+INFO:httpx:HTTP Request: POST http://testserver/food/order "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=75602bf3-8998-475d-bd56-e5d155f66787 method=POST path=/food/order status=200 duration_ms=27
+INFO:httpx:HTTP Request: POST http://testserver/food/order "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=d5bcac10-1cf9-4228-aaed-0ae96899fe02 method=POST path=/food/order status=200 duration_ms=28
+INFO:httpx:HTTP Request: POST http://testserver/food/order "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=808d747a-e113-4e9c-8737-185d89d9771f method=POST path=/food/order status=200 duration_ms=31
+INFO:httpx:HTTP Request: POST http://testserver/food/order "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=615c2b54-7453-46ac-92cb-edba3ec7bb68 method=POST path=/food/order status=200 duration_ms=32
+INFO:httpx:HTTP Request: POST http://testserver/food/order "HTTP/1.1 200 OK"
+ok
+test_counter_duplicate_intent_is_one_order (__main__.MoneyIntegrityTests.test_counter_duplicate_intent_is_one_order) ... INFO:hsr-bms:request_id=3c1cfc92-c769-4fbd-81c2-cf5025270799 method=POST path=/food/order status=200 duration_ms=7
+INFO:httpx:HTTP Request: POST http://testserver/food/order "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=0cad052e-b3eb-4171-8bb2-77f5f8cb39d7 method=POST path=/food/order status=200 duration_ms=5
+INFO:httpx:HTTP Request: POST http://testserver/food/order "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=bbfa6e0c-e9b4-45be-a1b0-dd7c790a0937 method=POST path=/food/order status=200 duration_ms=5
+INFO:httpx:HTTP Request: POST http://testserver/food/order "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=591ee5ba-2777-4254-a4ba-e81b1dcb2699 method=POST path=/food/order status=200 duration_ms=5
+INFO:httpx:HTTP Request: POST http://testserver/food/order "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=fa1630d0-f246-478c-9cab-f5d64a4742e4 method=POST path=/food/order status=200 duration_ms=5
+INFO:httpx:HTTP Request: POST http://testserver/food/order "HTTP/1.1 200 OK"
+ok
+test_credit_running_balance_and_member_balance_are_checked (__main__.MoneyIntegrityTests.test_credit_running_balance_and_member_balance_are_checked) ... ok
+test_dashboard_summary_analytics_and_closing_share_business_day (__main__.MoneyIntegrityTests.test_dashboard_summary_analytics_and_closing_share_business_day) ... INFO:hsr-bms:request_id=92064ffc-44c5-4e74-a3b4-7248e5f64c8a method=GET path=/reports/closing-report status=200 duration_ms=15
+INFO:httpx:HTTP Request: GET http://testserver/reports/closing-report "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=701acced-c61b-431e-ae10-130d8d8a3c5c method=GET path=/reports/summary status=200 duration_ms=19
+INFO:httpx:HTTP Request: GET http://testserver/reports/summary "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=0368750d-cebf-4fca-ad35-c07fb7af17fd method=GET path=/reports/analytics status=200 duration_ms=6
+INFO:httpx:HTTP Request: GET http://testserver/reports/analytics "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=ef74232e-5e28-4f17-9c99-1a77810abcbe method=GET path=/reports/top-customers status=200 duration_ms=6
+INFO:httpx:HTTP Request: GET http://testserver/reports/top-customers?period=month "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=30cb4458-c35d-4940-91cc-bd97e82ce739 method=GET path=/reports/top-customers status=200 duration_ms=4
+INFO:httpx:HTTP Request: GET http://testserver/reports/top-customers?period=week "HTTP/1.1 200 OK"
+ok
+test_epoch_and_legacy_receipts_use_same_half_open_window (__main__.MoneyIntegrityTests.test_epoch_and_legacy_receipts_use_same_half_open_window) ... ok
+test_foreign_keys_and_unique_payment_are_enforced (__main__.MoneyIntegrityTests.test_foreign_keys_and_unique_payment_are_enforced) ... ok
+test_fresh_checkout_requires_matching_payment_and_blocks_close (__main__.MoneyIntegrityTests.test_fresh_checkout_requires_matching_payment_and_blocks_close) ... INFO:hsr-bms:request_id=734815bb-2d19-4c33-a4f1-1c4fe93081d1 method=POST path=/sessions/start status=200 duration_ms=9
+INFO:httpx:HTTP Request: POST http://testserver/sessions/start "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=3fb71603-ecf7-417b-a5b2-b7b4281db1ec method=POST path=/sessions/stop/t1 status=200 duration_ms=17
+INFO:httpx:HTTP Request: POST http://testserver/sessions/stop/t1 "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=29acd476-6387-4dc0-ac53-89b969f7450d method=GET path=/reports/reconciliation status=200 duration_ms=12
+INFO:httpx:HTTP Request: GET http://testserver/reports/reconciliation "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=92ff30c8-5df7-41e3-ae9d-1e3b03ed4386 method=GET path=/reports/reconciliation status=200 duration_ms=11
+INFO:httpx:HTTP Request: GET http://testserver/reports/reconciliation "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=7e668806-0049-45ef-adce-393bb1b8675f method=POST path=/reports/day-close status=409 duration_ms=17
+INFO:httpx:HTTP Request: POST http://testserver/reports/day-close "HTTP/1.1 409 Conflict"
+ok
+test_historical_split_reconciles_but_bad_split_never_defaults_to_cash (__main__.MoneyIntegrityTests.test_historical_split_reconciles_but_bad_split_never_defaults_to_cash) ... ok
+test_incomplete_receipt_is_visible_as_a_blocker_not_a_server_error (__main__.MoneyIntegrityTests.test_incomplete_receipt_is_visible_as_a_blocker_not_a_server_error) ... INFO:hsr-bms:request_id=c49df0ac-1cd0-409a-8542-38421d878eb4 method=GET path=/reports/closing-report status=200 duration_ms=14
+INFO:httpx:HTTP Request: GET http://testserver/reports/closing-report "HTTP/1.1 200 OK"
+ok
+test_legacy_payment_gap_needs_explicit_review_never_fabricates_ledger (__main__.MoneyIntegrityTests.test_legacy_payment_gap_needs_explicit_review_never_fabricates_ledger) ... INFO:hsr-bms:request_id=02767fc9-f11e-4594-b992-28e8a078b7c6 method=GET path=/reports/closing-report status=200 duration_ms=21
+INFO:httpx:HTTP Request: GET http://testserver/reports/closing-report "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=ead24ead-7e53-4f89-807c-f8aab8fcccea method=POST path=/reports/day-close status=409 duration_ms=24
+INFO:httpx:HTTP Request: POST http://testserver/reports/day-close "HTTP/1.1 409 Conflict"
+INFO:hsr-bms:request_id=2603c91f-cf74-474c-9c5e-c383d4c65add method=POST path=/reports/day-close status=200 duration_ms=29
+INFO:httpx:HTTP Request: POST http://testserver/reports/day-close "HTTP/1.1 200 OK"
+ok
+test_missing_request_key_fails_closed_without_an_order (__main__.MoneyIntegrityTests.test_missing_request_key_fails_closed_without_an_order) ... INFO:hsr-bms:request_id=0ffd567f-40cb-448b-b6ed-4a7cc5921072 method=POST path=/food/order status=428 duration_ms=7
+INFO:httpx:HTTP Request: POST http://testserver/food/order "HTTP/1.1 428 Precondition Required"
+ok
+test_pause_retry_keeps_the_requested_state (__main__.MoneyIntegrityTests.test_pause_retry_keeps_the_requested_state) ... INFO:hsr-bms:request_id=2bdb1f9b-d91b-4334-a766-70f0c62a482c method=POST path=/sessions/start status=200 duration_ms=10
+INFO:httpx:HTTP Request: POST http://testserver/sessions/start "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=7ff8cbfb-14bc-4c3d-a32f-db25a6636a31 method=POST path=/sessions/pause/t1 status=200 duration_ms=15
+INFO:httpx:HTTP Request: POST http://testserver/sessions/pause/t1 "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=29b21ffb-4728-451c-885d-a50e5aa4e8de method=POST path=/sessions/pause/t1 status=200 duration_ms=7
+INFO:httpx:HTTP Request: POST http://testserver/sessions/pause/t1 "HTTP/1.1 200 OK"
+ok
+test_reset_cannot_erase_new_audited_receipts (__main__.MoneyIntegrityTests.test_reset_cannot_erase_new_audited_receipts) ... INFO:hsr-bms:request_id=b355bdc5-e85f-4ebf-9d78-980418b758b8 method=POST path=/sessions/start status=200 duration_ms=12
+INFO:httpx:HTTP Request: POST http://testserver/sessions/start "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=86779f73-041f-4799-bbc6-b34893d0c429 method=POST path=/sessions/stop/t1 status=200 duration_ms=17
+INFO:httpx:HTTP Request: POST http://testserver/sessions/stop/t1 "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=c128e135-37c4-468e-91f5-c4ff8dc94f10 method=POST path=/settings/reset-daily status=409 duration_ms=13
+INFO:httpx:HTTP Request: POST http://testserver/settings/reset-daily "HTTP/1.1 409 Conflict"
+INFO:hsr-bms:request_id=b490af3c-2613-4ae3-8878-66ed92b5be7f method=POST path=/settings/clear-all status=409 duration_ms=34
+INFO:httpx:HTTP Request: POST http://testserver/settings/clear-all "HTTP/1.1 409 Conflict"
+ok
+test_same_key_changed_payload_is_rejected (__main__.MoneyIntegrityTests.test_same_key_changed_payload_is_rejected) ... INFO:hsr-bms:request_id=e79e39f0-03dc-480e-a084-c647803da639 method=POST path=/food/order status=200 duration_ms=9
+INFO:httpx:HTTP Request: POST http://testserver/food/order "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=00775027-fd95-4e58-8939-5edc1039e6a3 method=POST path=/food/order status=409 duration_ms=8
+INFO:httpx:HTTP Request: POST http://testserver/food/order "HTTP/1.1 409 Conflict"
+ok
+test_staff_cannot_access_reconciliation_or_close (__main__.MoneyIntegrityTests.test_staff_cannot_access_reconciliation_or_close) ... INFO:hsr-bms:request_id=dc480489-c316-41c0-b38a-24dfd964db02 method=GET path=/reports/reconciliation status=403 duration_ms=5
+INFO:httpx:HTTP Request: GET http://testserver/reports/reconciliation "HTTP/1.1 403 Forbidden"
+INFO:hsr-bms:request_id=12e0eadf-9c37-4cdf-bdaa-80ce4dcf2a5a method=POST path=/reports/day-close status=403 duration_ms=5
+INFO:httpx:HTTP Request: POST http://testserver/reports/day-close "HTTP/1.1 403 Forbidden"
+ok
+test_table_cart_is_atomic_on_invalid_second_item (__main__.MoneyIntegrityTests.test_table_cart_is_atomic_on_invalid_second_item) ... INFO:hsr-bms:request_id=9b9fe46d-c988-4b74-a63b-3cea08f1d8f4 method=POST path=/sessions/start status=200 duration_ms=12
+INFO:httpx:HTTP Request: POST http://testserver/sessions/start "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=6b1cd2e6-24b2-445d-be92-f5a5e1f95e46 method=POST path=/sessions/t1/food-order status=404 duration_ms=9
+INFO:httpx:HTTP Request: POST http://testserver/sessions/t1/food-order "HTTP/1.1 404 Not Found"
+ok
+test_table_cart_replay_does_not_add_lines_twice (__main__.MoneyIntegrityTests.test_table_cart_replay_does_not_add_lines_twice) ... INFO:hsr-bms:request_id=0a8c2705-538d-4f85-a442-1ae74f428cd8 method=POST path=/sessions/start status=200 duration_ms=10
+INFO:httpx:HTTP Request: POST http://testserver/sessions/start "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=d506755e-42f8-48f3-9c93-d92e83032402 method=POST path=/sessions/t1/food-order status=200 duration_ms=10
+INFO:httpx:HTTP Request: POST http://testserver/sessions/t1/food-order "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=3b979c9d-bae0-4ca5-b8e3-b7bbe1b95c81 method=POST path=/sessions/t1/food-order status=200 duration_ms=13
+INFO:httpx:HTTP Request: POST http://testserver/sessions/t1/food-order "HTTP/1.1 200 OK"
+ok
+test_three_am_exact_boundary_month_year_and_utc (__main__.MoneyIntegrityTests.test_three_am_exact_boundary_month_year_and_utc) ... ok
+test_two_am_closing_uses_previous_business_date (__main__.MoneyIntegrityTests.test_two_am_closing_uses_previous_business_date) ... INFO:hsr-bms:request_id=07be02ca-8663-4276-b66b-5ae700917705 method=GET path=/reports/closing-report status=200 duration_ms=13
+INFO:httpx:HTTP Request: GET http://testserver/reports/closing-report "HTTP/1.1 200 OK"
+ok
+test_unknown_payment_is_not_silently_cash (__main__.MoneyIntegrityTests.test_unknown_payment_is_not_silently_cash) ... INFO:hsr-bms:request_id=b8c83ec7-decf-4439-97d4-98c0dad23f69 method=POST path=/food/order status=422 duration_ms=4
+INFO:httpx:HTTP Request: POST http://testserver/food/order "HTTP/1.1 422 Unprocessable Entity"
+ok
+test_whole_rupee_half_even_policy_and_tax_are_explicit (__main__.MoneyIntegrityTests.test_whole_rupee_half_even_policy_and_tax_are_explicit) ... ok
+
+----------------------------------------------------------------------
+Ran 26 tests in 1.620s
+
+OK

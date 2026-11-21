@@ -218,7 +218,7 @@ export default function LiveFloor({ role = "admin", onNavigate, newSessionReques
     const elapsed = table.session?.paused ? table.elapsed_seconds || 0 : (table.session?.elapsed_seconds || 0) + tick;
     const undo = beginChange(`pause:${table.id}`, table.id, table.session?.session_key, row => pauseTable(row, !table.session?.paused, elapsed, tick));
     try {
-      await pauseSession(table.id);
+      await pauseSession(table.id, !table.session?.paused, table.session?.session_key);
       showToast(table.session?.paused ? "Session resumed" : "Session paused", "success");
       await loadFloor();
     } catch (err) {

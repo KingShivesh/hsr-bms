@@ -1,0 +1,16 @@
+✔ uncertain request survives a full client recreation/reload (5.271625ms)
+✔ a confirmed order permits a new identical but distinct sale (0.758416ms)
+✔ payload changes and account changes do not share identities (2.408583ms)
+✔ conflicts and server errors retain the original intent (1.160916ms)
+✔ definitive validation rejection releases the intent (0.484333ms)
+✔ concurrent preparations collapse to the same pending intent (0.411916ms)
+✔ unavailable persistence fails before a financial POST (0.595792ms)
+✔ only financial writes get the safety contract (0.372667ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 82.071708
