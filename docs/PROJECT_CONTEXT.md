@@ -42,7 +42,7 @@ speed of new features.
 - Backend merge gate remains fresh-requirements install + production-shaped
   Postgres import + disposable Postgres regressions, including `test_product_shell.py`.
 
-## Phase 2 Money Safety (Pending Merge Approval)
+## Phase 2 Money Safety (Deployed)
 Phase 2 money safety uses a 3 AM IST business-date cutoff (owner approved), not
 calendar midnight. Preserve actual IST receipt timestamps. Shared helpers live in
 `backend/money.py`; never reintroduce `date LIKE today%` for daily financial totals.
@@ -53,8 +53,10 @@ atomically with their money record and must survive rollback/release reversal.
 The reconciliation endpoint is read-only, Owner-only, and never fabricates ledger
 entries. Legacy coverage requires explicit review; discrepancies block closing.
 Include `test_money_integrity.py` in the fresh-Postgres backend merge gate.
-Phase 2 remains on `codex/money-data-integrity` pending owner merge approval;
-see `docs/daily-use-readiness/phase-2/README.md` for rollout and rollback.
+Phase 2 was owner-approved and deployed on 21 November 2026: merge `248390b`,
+backend stage `5e57d8c`, protocol 2. All 35 frontend JS/CSS/font hashes matched.
+See `docs/daily-use-readiness/phase-2/README.md` for evidence and rollback.
+Phase 3 security work stays separate and requires its own approval before merge.
 
 ## Design system (established, do not redefine ad hoc)
 CSS custom properties are centralized in `frontend/src/design-tokens.css`.
