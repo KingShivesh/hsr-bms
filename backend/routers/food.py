@@ -1,14 +1,15 @@
-from fastapi import APIRouter, BackgroundTasks, HTTPException, Depends
+from fastapi import APIRouter, BackgroundTasks, HTTPException, Depends, Request
 from pydantic import BaseModel, Field
 from sqlalchemy.orm import Session
-from database import get_db
-from typing import List
+from database import get_db, get_mutation_db
+from typing import List, Literal
 import models, json, time
 from collections import Counter, defaultdict
 from hsr_config import format_ist_now
 from realtime import queue_realtime_event
 from audit import log_action
 from deps import get_current_claims
+from money import MoneyRequest, assert_day_open
 
 router = APIRouter()
 PAYMENT_METHODS = {"Cash", "UPI", "Card"}
@@ -21,7 +22,7 @@ class FoodOrderItem(BaseModel):
 class FoodOnlyOrderBody(BaseModel):
     customer_name: str = Field(default="", max_length=80)
     items:         List[FoodOrderItem]
-    payment_method: str = "Cash"
+    payment_method: Literal["Cash", "UPI", "Card"] = "Cash"
 
 class RestoreFoodOrderBody(BaseModel):
     date: str = Field(default="", max_length=80)
@@ -49,11 +50,17 @@ def _food_order_payload(order: models.FoodOnlyOrder):
 def place_food_order(
     body: FoodOnlyOrderBody,
     background_tasks: BackgroundTasks,
-    db: Session = Depends(get_db),
+    request: Request,
+    db: Session = Depends(get_mutation_db),
+    user: dict = Depends(get_current_claims),
 ):
+    intent = MoneyRequest(db, request, user, body.model_dump())
+    if intent.replay is not None:
+        return intent.replay
+    assert_day_open(db)
     if not body.items:
         raise HTTPException(status_code=400, detail="No items in order")
-    payment_method = body.payment_method if body.payment_method in PAYMENT_METHODS else "Cash"
+    payment_method = body.payment_method
 
     total    = 0
     order    = []
@@ -71,21 +78,27 @@ def place_food_order(
             item_name = f"{fi.item} (MRP ₹{fi.mrp} + ₹3)"
         else:
             unit_price = menu_item.price
+        if not isinstance(unit_price, int) or unit_price < 0:
+            raise HTTPException(409, "This menu price needs owner review before ordering")
         price = unit_price * fi.qty
         total += price
         order.append({"item": item_name, "qty": fi.qty, "price": price})
 
-    db.add(models.FoodOnlyOrder(
+    saved = models.FoodOnlyOrder(
         date          = format_ist_now(),
         ts            = time.time() * 1000,
         customer_name = body.customer_name,
         items         = json.dumps(order),
         total         = total,
         payment_method = payment_method,
-    ))
+    )
+    db.add(saved)
+    db.flush()
+    response = intent.remember({"ok": True, "id": saved.id, "total": total, "items": order,
+        "payment_method": payment_method}, kind="food_order", resource_id=saved.id)
     db.commit()
     queue_realtime_event(background_tasks, "order.placed", "orders", "orders", "food-stats")
-    return {"ok": True, "total": total, "items": order, "payment_method": payment_method}
+    return response
 
 @router.get("/orders")
 def get_food_orders(db: Session = Depends(get_db)):
@@ -96,7 +109,7 @@ def get_food_orders(db: Session = Depends(get_db)):
 def cancel_food_order(
     order_id: int,
     background_tasks: BackgroundTasks,
-    db: Session = Depends(get_db),
+    db: Session = Depends(get_mutation_db),
     claims: dict = Depends(get_current_claims),
 ):
     order = db.query(models.FoodOnlyOrder).filter(models.FoodOnlyOrder.id == order_id).with_for_update().first()
@@ -104,6 +117,7 @@ def cancel_food_order(
         raise HTTPException(status_code=404, detail="Food order not found")
     if order.cancelled_at:
         return {"ok": True}
+    assert_day_open(db, row=order)
     order.cancelled_at = time.time() * 1000
     log_action(db, "order_cancel", f"Cafe order {order.id} cancelled", staff=claims["username"], amount=order.total)
     db.commit()
@@ -115,7 +129,7 @@ def restore_food_order(
     order_id: int,
     body: RestoreFoodOrderBody,
     background_tasks: BackgroundTasks,
-    db: Session = Depends(get_db),
+    db: Session = Depends(get_mutation_db),
     claims: dict = Depends(get_current_claims),
 ):
     order = db.query(models.FoodOnlyOrder).filter(models.FoodOnlyOrder.id == order_id).with_for_update().first()
@@ -123,6 +137,7 @@ def restore_food_order(
         raise HTTPException(status_code=404, detail="Original food order not found")
     if not order.cancelled_at:
         return _food_order_payload(order)
+    assert_day_open(db, row=order)
     # Undo restores only the persisted receipt, never client-supplied financial data.
     order.cancelled_at = 0
     log_action(db, "order_restore", f"Cafe order {order.id} restored", staff=claims["username"], amount=order.total)

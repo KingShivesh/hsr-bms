@@ -48,6 +48,17 @@ class RevokedToken(Base):
     token_digest = Column(String(64), primary_key=True)
     expires_at = Column(Float, nullable=False, index=True)
 
+
+class MutationReceipt(Base):
+    __tablename__ = "mutation_receipts"
+    scope = Column(String(255), primary_key=True)
+    request_key = Column(String(128), primary_key=True)
+    payload_hash = Column(String(64), nullable=False)
+    response_json = Column(Text, nullable=False)
+    resource_kind = Column(String(30), default="")
+    resource_id = Column(String(128), default="", index=True)
+    created_at = Column(Float, nullable=False)
+
 class Transaction(Base):
     __tablename__ = "transactions"
     id             = Column(Integer, primary_key=True, index=True)

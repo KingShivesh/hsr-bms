@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException, Query
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel, Field
 from sqlalchemy.orm import Session
-from database import get_db
+from database import get_db, get_mutation_db
 from deps import require_admin
 from datetime import datetime, timedelta
 from collections import defaultdict
@@ -10,6 +10,8 @@ import models, io, json, time, csv
 from audit import get_controls
 from live_state import dashboard_payload
 from session_identity import active_session_filter
+from money import business_date, business_bounds, day_rows, record_business_date
+from reconciliation import reconcile_day, tender_parts
 from hsr_config import (
     CSV_PREFIX,
     POOL_TABLES,
@@ -17,7 +19,6 @@ from hsr_config import (
     TABLE_LABELS,
     TABLE_RATES,
     get_ist_now,
-    get_ist_today_str,
 )
 
 router = APIRouter()
@@ -30,7 +31,7 @@ def session_edits(from_date: str = "", to_date: str = "", staff: str = "", reaso
         if not value:
             continue
         try:
-            date = datetime.strptime(value, "%Y-%m-%d").replace(tzinfo=IST_TZ)
+            date = datetime.strptime(value, "%Y-%m-%d").replace(hour=3, tzinfo=IST_TZ)
         except ValueError:
             raise HTTPException(422, "Use YYYY-MM-DD for report dates")
         if is_end:
@@ -62,6 +63,8 @@ class DayCloseBody(BaseModel):
     opened_float: int = Field(0, ge=0, le=10000000)
     counted_cash: int = Field(0, ge=0, le=10000000)
     notes: str = ""
+    business_date: str = ""
+    acknowledge_legacy: bool = False
 
 # ── helpers ──
 def parse_date(t: models.Transaction):
@@ -93,15 +96,10 @@ def report_transactions_from(query):
     ]
 
 def today_transactions(db: Session, today: str | None = None):
-    today = today or get_ist_today_str()
-    return report_transactions_from(
-        db.query(models.Transaction).filter(models.Transaction.date.like(f"{today}%"))
-    )
+    return [row for row in day_rows(db, models.Transaction, today) if valid_report_transaction(row)]
 
 def dated_transactions(db: Session, day: datetime):
-    return report_transactions_from(
-        db.query(models.Transaction).filter(models.Transaction.date.like(f"{day.strftime('%d/%m/%Y')}%"))
-    )
+    return today_transactions(db, day.strftime("%d/%m/%Y"))
 
 def daily_summary_payload(transactions: list[models.Transaction]) -> dict:
     total_sale = sum(t.total for t in transactions)
@@ -125,8 +123,8 @@ def recent_transactions(db: Session, days: int):
 def filter_transactions(transactions, period: str):
     now = get_ist_now()
     if period == "today":
-        today = get_ist_today_str()
-        return [t for t in transactions if t.date.startswith(today)]
+        today = business_date()
+        return [t for t in transactions if record_business_date(t) == today]
     if period == "week":
         week_ago = now - timedelta(days=7)
         return [t for t in transactions if (lambda d: d and d >= week_ago)(parse_date(t))]
@@ -221,22 +219,12 @@ def transaction_report_row(t: models.Transaction, frames_by_txn: dict[int, list[
     }
 
 def add_payment_breakdown(payment_breakdown: dict[str, int], method: str, total: int, split_json: str | None = ""):
-    if split_json:
-        try:
-            split_rows = json.loads(split_json or "[]")
-        except json.JSONDecodeError:
-            split_rows = []
-        if isinstance(split_rows, list) and split_rows:
-            for row in split_rows:
-                if not isinstance(row, dict):
-                    continue
-                split_method = row.get("method")
-                amount = int(row.get("amount") or 0)
-                if split_method in payment_breakdown and amount > 0:
-                    payment_breakdown[split_method] += amount
-            return
-    safe_method = method if method in payment_breakdown else "Cash"
-    payment_breakdown[safe_method] += total or 0
+    from types import SimpleNamespace
+    parts = tender_parts(SimpleNamespace(total=total, payment_method=method, payment_split_json=split_json))
+    if parts:
+        for key, value in parts.items():
+            if key in payment_breakdown:
+                payment_breakdown[key] += value
 
 # ── Summary ──
 @router.get("/summary")
@@ -309,15 +297,13 @@ def top_customers(
 ):
     all_txns = report_transactions(db)
 
-    now = get_ist_now()
+    now = business_bounds()[0].replace(tzinfo=None)
     if period == "month":
         txns = [t for t in all_txns
-                if len(t.date) >= 10
-                and t.date[3:5] == now.strftime("%m")
-                and t.date[6:10] == now.strftime("%Y")]
+                if (record_business_date(t) or "")[3:] == now.strftime("%m/%Y")]
         label = now.strftime("%B %Y")
     elif period == "week":
-        week_ago = now - timedelta(days=7)
+        week_ago = get_ist_now() - timedelta(days=7)
         txns  = [t for t in all_txns if (lambda d: d and d >= week_ago)(parse_date(t))]
         label = "Last 7 days"
     else:
@@ -372,46 +358,49 @@ def table_utilization(db: Session = Depends(get_db), _: dict = Depends(require_a
     return sorted(result, key=lambda x: x["revenue"], reverse=True)
 
 # ── Daily closing report ──
+@router.get("/reconciliation")
+def reconciliation_report(day: str = "", db: Session = Depends(get_mutation_db), _: dict = Depends(require_admin)):
+    business_bounds(day or None)
+    return reconcile_day(db, day or None)
+
 @router.get("/closing-report")
-def closing_report(db: Session = Depends(get_db)):
-    today = get_ist_today_str()
-    txns  = today_transactions(db, today)
+def closing_report(db: Session = Depends(get_mutation_db), day: str = ""):
+    today = day or business_date()
+    business_bounds(today)
+    day_close = db.query(models.DayClose).filter_by(business_date=today).first()
+    if day_close:
+        try:
+            snapshot = json.loads(day_close.snapshot_json)
+            if not isinstance(snapshot, dict) or snapshot.get("date") != today or "payment_breakdown" not in snapshot:
+                raise ValueError("Incomplete snapshot")
+        except (ValueError, TypeError):
+            raise HTTPException(409, "Saved closing snapshot needs owner review; it will not be recalculated or overwritten.")
+        snapshot["day_close"] = {"closed": True, "closed_at": day_close.closed_at,
+            "closed_by": day_close.closed_by, "opened_float": day_close.opened_float,
+            "counted_cash": day_close.counted_cash, "expected_cash": day_close.expected_cash,
+            "variance": day_close.variance, "notes": day_close.notes}
+        snapshot["can_close_day"] = False
+        snapshot["legacy_close"] = "business_day_cutoff_hour" not in snapshot
+        return snapshot
+    # EOD must not silently omit a malformed financial row through report filters.
+    txns = day_rows(db, models.Transaction, today)
+    reconciliation = reconcile_day(db, today)
 
-    total_revenue  = sum(t.total       for t in txns)
-    play_revenue   = sum(t.play_charge for t in txns)
-    food_revenue   = sum(t.food_charge for t in txns)
+    total_revenue  = sum(t.total or 0 for t in txns)
+    play_revenue   = sum(t.play_charge or 0 for t in txns)
+    food_revenue   = sum(t.food_charge or 0 for t in txns)
     total_sessions = len(txns)
-    avg_duration   = round(sum(t.duration for t in txns) / total_sessions) if total_sessions else 0
-    payment_breakdown = {"Cash": 0, "UPI": 0, "Card": 0, "Credit": 0}
-    for t in txns:
-        add_payment_breakdown(
-            payment_breakdown,
-            t.payment_method,
-            t.total,
-            getattr(t, "payment_split_json", "[]"),
-        )
-
-    food_only_orders = db.query(models.FoodOnlyOrder).filter(
-        models.FoodOnlyOrder.cancelled_at == 0,
-        models.FoodOnlyOrder.date.like(f"{today}%")
-    ).all()
-    food_only_revenue = sum(o.total for o in food_only_orders)
-    food_only_payment_breakdown = {"Cash": 0, "UPI": 0, "Card": 0}
-    for o in food_only_orders:
-        method = o.payment_method if o.payment_method in food_only_payment_breakdown else "Cash"
-        food_only_payment_breakdown[method] += o.total or 0
-        payment_breakdown[method] += o.total or 0
-    corrections_today = db.query(models.AuditLog).filter(
-        models.AuditLog.date.like(f"{today}%"),
-        models.AuditLog.action.in_(["session_reset", "daily_reset", "clear_all"]),
-    ).order_by(models.AuditLog.ts.desc()).all()
+    avg_duration   = round(sum(t.duration or 0 for t in txns) / total_sessions) if total_sessions else 0
+    payment_breakdown = reconciliation["payment_breakdown"]
+    food_only_orders = [row for row in day_rows(db, models.FoodOnlyOrder, today) if not row.cancelled_at]
+    food_only_revenue = sum(o.total or 0 for o in food_only_orders)
+    food_only_payment_breakdown = reconciliation["counter_payment_breakdown"]
+    corrections_today = sorted([row for row in day_rows(db, models.AuditLog, today)
+        if row.action in {"session_reset", "daily_reset", "clear_all"}], key=lambda row: row.ts or 0, reverse=True)
     active_sessions = db.query(models.ActiveSession).filter(
         active_session_filter()
     ).all()
     active_table_ids = {s.table_id.lower() for s in active_sessions}
-    day_close = db.query(models.DayClose).filter(
-        models.DayClose.business_date == today
-    ).first()
     open_tables = [
         {
             "table_id": s.table_id.upper(),
@@ -432,7 +421,7 @@ def closing_report(db: Session = Depends(get_db)):
     table_breakdown = defaultdict(lambda: {"sessions": 0, "revenue": 0})
     for t in txns:
         table_breakdown[t.table_id]["sessions"] += 1
-        table_breakdown[t.table_id]["revenue"]  += t.total
+        table_breakdown[t.table_id]["revenue"]  += t.total or 0
     frames_by_txn = closed_frames_by_transaction(db, [t.id for t in txns])
 
     # Food breakdown
@@ -456,6 +445,9 @@ def closing_report(db: Session = Depends(get_db)):
 
     return {
         "date":           today,
+        "business_day_cutoff_hour": 3,
+        "reconciliation": reconciliation,
+        "combined_revenue": total_revenue + food_only_revenue,
         "total_revenue":  total_revenue,
         "play_revenue":   play_revenue,
         "food_revenue":   food_revenue,
@@ -481,7 +473,9 @@ def closing_report(db: Session = Depends(get_db)):
         "active_tables": len(open_tables),
         "open_tables": open_tables,
         "idle_tables": idle_tables,
-        "can_close_day": len(open_tables) == 0,
+        "can_close_day": len(open_tables) == 0 and reconciliation["ok"],
+        "close_block_reason": "Close all running tables before closing the day." if open_tables else
+            "Resolve the ledger discrepancies before closing the day." if not reconciliation["ok"] else "",
         "peak_hour":      f"{peak_hour}:00 – {peak_hour+1}:00" if peak_hour is not None else "—",
         "table_breakdown": dict(table_breakdown),
         "food_breakdown":  dict(food_counter),
@@ -513,12 +507,19 @@ def closing_report(db: Session = Depends(get_db)):
 @router.post("/day-close")
 def close_day(
     body: DayCloseBody,
-    db: Session = Depends(get_db),
+    db: Session = Depends(get_mutation_db),
     user: dict = Depends(require_admin),
 ):
-    report = closing_report(db)
+    day = body.business_date or business_date()
+    if business_bounds(day)[0] > business_bounds()[0]:
+        raise HTTPException(422, "A future business day cannot be closed")
+    if db.query(models.DayClose).filter_by(business_date=day).first():
+        raise HTTPException(409, "This day is already closed.")
+    report = closing_report(db, day)
     if not report["can_close_day"]:
-        raise HTTPException(status_code=400, detail="Close all running tables before closing the day.")
+        raise HTTPException(status_code=400 if report["active_tables"] else 409, detail=report["close_block_reason"])
+    if report["reconciliation"]["legacy_review_required"] and not body.acknowledge_legacy:
+        raise HTTPException(409, "Review the legacy ledger warnings and confirm that review before closing.")
 
     expected_cash = report["payment_breakdown"]["Cash"]
     counted_cash = max(0, int(body.counted_cash or 0))
@@ -554,18 +555,18 @@ def close_day(
 
 @router.get("/closing-insights")
 def closing_insights(db: Session = Depends(get_db)):
-    today = get_ist_today_str()
+    today = business_date()
     now = get_ist_now()
     now_ms = time.time() * 1000
     controls = get_controls(db)
 
     all_txns = recent_transactions(db, 8)
-    today_txns = [t for t in all_txns if t.date and t.date.startswith(today)]
+    today_txns = [t for t in all_txns if record_business_date(t) == today]
     prior_txns = []
     week_ago = now - timedelta(days=7)
     for t in all_txns:
         dt = parse_date(t)
-        if dt and dt.date() != now.date() and dt >= week_ago:
+        if dt and record_business_date(t) != today and dt >= week_ago:
             prior_txns.append(t)
 
     today_revenue = sum(t.total for t in today_txns)
@@ -606,10 +607,8 @@ def closing_insights(db: Session = Depends(get_db)):
                 "detail": f"Food contributed {food_share}% of today’s revenue.",
             })
 
-    resets_today = db.query(models.AuditLog).filter(
-        models.AuditLog.date.like(f"{today}%"),
-        models.AuditLog.action.in_(["session_reset", "daily_reset", "clear_all"]),
-    ).all()
+    resets_today = [row for row in day_rows(db, models.AuditLog, today)
+        if row.action in {"session_reset", "daily_reset", "clear_all"}]
     if resets_today:
         insights.append({
             "type": "critical",
@@ -659,14 +658,14 @@ def get_analytics(db: Session = Depends(get_db), _: dict = Depends(require_admin
 
     # Weekly revenue
     weekly = {}
-    now = get_ist_now()
+    now = business_bounds()[0].replace(tzinfo=None)
     for i in range(6, -1, -1):
         d   = now - timedelta(days=i)
         key = d.strftime("%d/%m")
         weekly[key] = 0
     for t in transactions:
         try:
-            dt  = datetime.strptime(t.date, "%d/%m/%Y, %H:%M:%S")
+            dt  = datetime.strptime(record_business_date(t), "%d/%m/%Y")
             key = dt.strftime("%d/%m")
             if key in weekly:
                 weekly[key] += t.total
@@ -686,16 +685,12 @@ def get_analytics(db: Session = Depends(get_db), _: dict = Depends(require_admin
     food_rev    = sum(t.food_charge for t in transactions)
 
     # Month over month
-    now      = get_ist_now()
+    now      = business_bounds()[0].replace(tzinfo=None)
     last_m   = (now.replace(day=1) - timedelta(days=1))
     this_total = sum(t.total for t in transactions
-        if len(t.date) >= 10
-        and t.date[3:5] == now.strftime("%m")
-        and t.date[6:10] == now.strftime("%Y"))
+        if (record_business_date(t) or "")[3:] == now.strftime("%m/%Y"))
     last_total = sum(t.total for t in transactions
-        if len(t.date) >= 10
-        and t.date[3:5] == last_m.strftime("%m")
-        and t.date[6:10] == last_m.strftime("%Y"))
+        if (record_business_date(t) or "")[3:] == last_m.strftime("%m/%Y"))
 
     return {
         "weekly":    [{"date": k, "revenue": v} for k, v in weekly.items()],

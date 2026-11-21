@@ -13,7 +13,8 @@ import models
 from session_identity import is_active_session
 from session_food import session_food_lines
 from audit import get_controls
-from hsr_config import TABLES, TABLE_RATES, get_ist_now, get_ist_today_str, rate_for_table
+from hsr_config import TABLES, TABLE_RATES, get_ist_now, rate_for_table
+from money import business_date, business_bounds, day_rows, record_business_date
 from pricing import calc_checkout, session_tariff, tariff_catalog
 
 
@@ -43,20 +44,14 @@ def valid_duration(duration: int | None) -> bool:
 
 
 def valid_transaction(t: models.Transaction) -> bool:
-    if not valid_duration(t.duration):
+    if not valid_duration(t.duration) and not (t.tariff_mode in {"frame", "package"}
+            and isinstance(t.duration, int) and t.duration > 0):
         return False
     return bool((t.customer_name or "").strip() or (t.total or 0) > 0 or t.session_key)
 
 
 def today_transactions(db: Session, day: str | None = None) -> list[models.Transaction]:
-    day = day or get_ist_today_str()
-    return [
-        txn
-        for txn in db.query(models.Transaction)
-        .filter(models.Transaction.date.like(f"{day}%"))
-        .all()
-        if valid_transaction(txn)
-    ]
+    return [txn for txn in day_rows(db, models.Transaction, day) if valid_transaction(txn)]
 
 
 def dated_transactions(db: Session, day: datetime) -> list[models.Transaction]:
@@ -75,8 +70,7 @@ def recent_transactions(db: Session, days: int) -> list[models.Transaction]:
 
 
 def food_only_for_day(db: Session, day: str | None = None) -> list[models.FoodOnlyOrder]:
-    day = day or get_ist_today_str()
-    return db.query(models.FoodOnlyOrder).filter(models.FoodOnlyOrder.cancelled_at == 0, models.FoodOnlyOrder.date.like(f"{day}%")).all()
+    return [row for row in day_rows(db, models.FoodOnlyOrder, day) if not row.cancelled_at]
 
 
 def food_only_recent(db: Session, days: int) -> list[models.FoodOnlyOrder]:
@@ -454,8 +448,8 @@ def delta(current: int | float, previous: int | float, noun: str = "usual") -> d
 def dashboard_payload(db: Session, period: str = "today") -> dict:
     period = period if period in {"today", "week", "all"} else "today"
     table_state = build_table_state(db)
-    today = get_ist_today_str()
-    yesterday_dt = get_ist_now() - timedelta(days=1)
+    today = business_date()
+    yesterday_dt = business_bounds(today)[0] - timedelta(days=1)
     today_txns = today_transactions(db, today)
     yesterday_txns = dated_transactions(db, yesterday_dt)
     today_food_orders = food_only_for_day(db, today)
@@ -481,7 +475,7 @@ def dashboard_payload(db: Session, period: str = "today") -> dict:
     recent = recent_transactions(db, 7)
     by_day = defaultdict(lambda: {"revenue": 0, "sessions": 0})
     for txn in recent:
-        day_key = (txn.date or "")[:10]
+        day_key = record_business_date(txn)
         if not day_key or day_key == today:
             continue
         by_day[day_key]["revenue"] += txn.total or 0

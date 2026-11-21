@@ -42,7 +42,7 @@ os.environ.setdefault(
 os.environ["ALLOWED_ORIGINS"] = "http://localhost:5173"
 
 import seed  # noqa: E402,F401 - intentionally seeds the temp database
-from fastapi.testclient import TestClient  # noqa: E402
+from test_support import TestClient  # noqa: E402
 from hsr_config import get_ist_now  # noqa: E402
 from main import app  # noqa: E402
 from database import SessionLocal  # noqa: E402

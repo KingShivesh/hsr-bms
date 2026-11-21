@@ -24,7 +24,7 @@ else:
 os.environ["DATABASE_URL"] = test_url
 os.environ.setdefault("SECRET_KEY", "session-engine-test-secret-at-least-32-characters")
 
-from fastapi.testclient import TestClient  # noqa: E402
+from test_support import TestClient  # noqa: E402
 from sqlalchemy import inspect, text  # noqa: E402
 from database import Base, SessionLocal, engine, ensure_runtime_columns  # noqa: E402
 from deps import create_token  # noqa: E402

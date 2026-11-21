@@ -10,6 +10,10 @@ load_dotenv()
 
 DATABASE_URL, is_sqlite, engine_options = database_config(os.environ)
 engine = create_engine(DATABASE_URL, **engine_options)
+if is_sqlite:
+    @event.listens_for(engine, "connect")
+    def enable_foreign_keys(connection, _):
+        connection.execute("PRAGMA foreign_keys=ON")
 if not is_sqlite:
     event.listen(engine, "begin", set_transaction_timeouts)
 

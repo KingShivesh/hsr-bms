@@ -45,7 +45,7 @@ if args.install:
     run("installer", [sys.executable, "-m", "pip", "install", "--disable-pip-version-check", "--upgrade", "pip>=26.2"])
     run("requirements", [sys.executable, "-m", "pip", "install", "--disable-pip-version-check", "-r", "requirements.txt"])
 run("production-import", [sys.executable, "-c", "from main import app; print(app.title)"])
-for name in ["database_reliability", "session_engine", "full_stack", "session_controls", "session_food_credit", "identity_migrations", "product_shell"]:
+for name in ["database_reliability", "session_engine", "full_stack", "session_controls", "session_food_credit", "identity_migrations", "product_shell", "money_integrity"]:
     run(name, [sys.executable, f"test_{name}.py"])
 run("soak", [sys.executable, "soak_test.py", "--database-url", url, "--duration-seconds", "1", "--interval-seconds", "0"])
 report["passed"] = True
