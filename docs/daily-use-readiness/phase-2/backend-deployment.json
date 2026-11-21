@@ -1,0 +1,388 @@
+{
+  "target": "5e57d8c5ce2b09aef523baa74f69fb5659fd5988",
+  "verified": true,
+  "observations": [
+    {
+      "at": "2026-11-21T17:26:29.090Z",
+      "target": "5e57d8c5ce2b09aef523baa74f69fb5659fd5988",
+      "health": {
+        "status": 200,
+        "body": {
+          "status": "ok",
+          "service": "HSR Snooker Cafe BMS",
+          "revision": "5f23897a68c6a878b9099d5f5bb25a4b0b9bc25f"
+        }
+      },
+      "ready": {
+        "status": 200,
+        "body": {
+          "status": "ok",
+          "service": "HSR Snooker Cafe BMS",
+          "database": "ok"
+        }
+      }
+    },
+    {
+      "at": "2026-11-21T17:26:44.868Z",
+      "target": "5e57d8c5ce2b09aef523baa74f69fb5659fd5988",
+      "health": {
+        "status": 200,
+        "body": {
+          "status": "ok",
+          "service": "HSR Snooker Cafe BMS",
+          "revision": "5f23897a68c6a878b9099d5f5bb25a4b0b9bc25f"
+        }
+      },
+      "ready": {
+        "status": 200,
+        "body": {
+          "status": "ok",
+          "service": "HSR Snooker Cafe BMS",
+          "database": "ok"
+        }
+      }
+    },
+    {
+      "at": "2026-11-21T17:27:00.540Z",
+      "target": "5e57d8c5ce2b09aef523baa74f69fb5659fd5988",
+      "health": {
+        "status": 200,
+        "body": {
+          "status": "ok",
+          "service": "HSR Snooker Cafe BMS",
+          "revision": "5f23897a68c6a878b9099d5f5bb25a4b0b9bc25f"
+        }
+      },
+      "ready": {
+        "status": 200,
+        "body": {
+          "status": "ok",
+          "service": "HSR Snooker Cafe BMS",
+          "database": "ok"
+        }
+      }
+    },
+    {
+      "at": "2026-11-21T17:27:16.097Z",
+      "target": "5e57d8c5ce2b09aef523baa74f69fb5659fd5988",
+      "health": {
+        "status": 200,
+        "body": {
+          "status": "ok",
+          "service": "HSR Snooker Cafe BMS",
+          "revision": "5f23897a68c6a878b9099d5f5bb25a4b0b9bc25f"
+        }
+      },
+      "ready": {
+        "status": 200,
+        "body": {
+          "status": "ok",
+          "service": "HSR Snooker Cafe BMS",
+          "database": "ok"
+        }
+      }
+    },
+    {
+      "at": "2026-11-21T17:27:31.592Z",
+      "target": "5e57d8c5ce2b09aef523baa74f69fb5659fd5988",
+      "health": {
+        "status": 200,
+        "body": {
+          "status": "ok",
+          "service": "HSR Snooker Cafe BMS",
+          "revision": "5f23897a68c6a878b9099d5f5bb25a4b0b9bc25f"
+        }
+      },
+      "ready": {
+        "status": 200,
+        "body": {
+          "status": "ok",
+          "service": "HSR Snooker Cafe BMS",
+          "database": "ok"
+        }
+      }
+    },
+    {
+      "at": "2026-11-21T17:27:47.071Z",
+      "target": "5e57d8c5ce2b09aef523baa74f69fb5659fd5988",
+      "health": {
+        "status": 200,
+        "body": {
+          "status": "ok",
+          "service": "HSR Snooker Cafe BMS",
+          "revision": "5f23897a68c6a878b9099d5f5bb25a4b0b9bc25f"
+        }
+      },
+      "ready": {
+        "status": 200,
+        "body": {
+          "status": "ok",
+          "service": "HSR Snooker Cafe BMS",
+          "database": "ok"
+        }
+      }
+    },
+    {
+      "at": "2026-11-21T17:28:02.526Z",
+      "target": "5e57d8c5ce2b09aef523baa74f69fb5659fd5988",
+      "health": {
+        "status": 200,
+        "body": {
+          "status": "ok",
+          "service": "HSR Snooker Cafe BMS",
+          "revision": "5f23897a68c6a878b9099d5f5bb25a4b0b9bc25f"
+        }
+      },
+      "ready": {
+        "status": 200,
+        "body": {
+          "status": "ok",
+          "service": "HSR Snooker Cafe BMS",
+          "database": "ok"
+        }
+      }
+    },
+    {
+      "at": "2026-11-21T17:28:17.988Z",
+      "target": "5e57d8c5ce2b09aef523baa74f69fb5659fd5988",
+      "health": {
+        "status": 200,
+        "body": {
+          "status": "ok",
+          "service": "HSR Snooker Cafe BMS",
+          "revision": "5f23897a68c6a878b9099d5f5bb25a4b0b9bc25f"
+        }
+      },
+      "ready": {
+        "status": 200,
+        "body": {
+          "status": "ok",
+          "service": "HSR Snooker Cafe BMS",
+          "database": "ok"
+        }
+      }
+    },
+    {
+      "at": "2026-11-21T17:28:33.451Z",
+      "target": "5e57d8c5ce2b09aef523baa74f69fb5659fd5988",
+      "health": {
+        "status": 200,
+        "body": {
+          "status": "ok",
+          "service": "HSR Snooker Cafe BMS",
+          "revision": "5f23897a68c6a878b9099d5f5bb25a4b0b9bc25f"
+        }
+      },
+      "ready": {
+        "status": 200,
+        "body": {
+          "status": "ok",
+          "service": "HSR Snooker Cafe BMS",
+          "database": "ok"
+        }
+      }
+    },
+    {
+      "at": "2026-11-21T17:28:48.943Z",
+      "target": "5e57d8c5ce2b09aef523baa74f69fb5659fd5988",
+      "health": {
+        "status": 200,
+        "body": {
+          "status": "ok",
+          "service": "HSR Snooker Cafe BMS",
+          "revision": "5f23897a68c6a878b9099d5f5bb25a4b0b9bc25f"
+        }
+      },
+      "ready": {
+        "status": 200,
+        "body": {
+          "status": "ok",
+          "service": "HSR Snooker Cafe BMS",
+          "database": "ok"
+        }
+      }
+    },
+    {
+      "at": "2026-11-21T17:29:04.415Z",
+      "target": "5e57d8c5ce2b09aef523baa74f69fb5659fd5988",
+      "health": {
+        "status": 200,
+        "body": {
+          "status": "ok",
+          "service": "HSR Snooker Cafe BMS",
+          "revision": "5f23897a68c6a878b9099d5f5bb25a4b0b9bc25f"
+        }
+      },
+      "ready": {
+        "status": 200,
+        "body": {
+          "status": "ok",
+          "service": "HSR Snooker Cafe BMS",
+          "database": "ok"
+        }
+      }
+    },
+    {
+      "at": "2026-11-21T17:29:19.877Z",
+      "target": "5e57d8c5ce2b09aef523baa74f69fb5659fd5988",
+      "health": {
+        "status": 200,
+        "body": {
+          "status": "ok",
+          "service": "HSR Snooker Cafe BMS",
+          "revision": "5f23897a68c6a878b9099d5f5bb25a4b0b9bc25f"
+        }
+      },
+      "ready": {
+        "status": 200,
+        "body": {
+          "status": "ok",
+          "service": "HSR Snooker Cafe BMS",
+          "database": "ok"
+        }
+      }
+    },
+    {
+      "at": "2026-11-21T17:29:35.351Z",
+      "target": "5e57d8c5ce2b09aef523baa74f69fb5659fd5988",
+      "health": {
+        "status": 200,
+        "body": {
+          "status": "ok",
+          "service": "HSR Snooker Cafe BMS",
+          "revision": "5f23897a68c6a878b9099d5f5bb25a4b0b9bc25f"
+        }
+      },
+      "ready": {
+        "status": 200,
+        "body": {
+          "status": "ok",
+          "service": "HSR Snooker Cafe BMS",
+          "database": "ok"
+        }
+      }
+    },
+    {
+      "at": "2026-11-21T17:29:50.840Z",
+      "target": "5e57d8c5ce2b09aef523baa74f69fb5659fd5988",
+      "health": {
+        "status": 200,
+        "body": {
+          "status": "ok",
+          "service": "HSR Snooker Cafe BMS",
+          "revision": "5f23897a68c6a878b9099d5f5bb25a4b0b9bc25f"
+        }
+      },
+      "ready": {
+        "status": 200,
+        "body": {
+          "status": "ok",
+          "service": "HSR Snooker Cafe BMS",
+          "database": "ok"
+        }
+      }
+    },
+    {
+      "at": "2026-11-21T17:30:06.331Z",
+      "target": "5e57d8c5ce2b09aef523baa74f69fb5659fd5988",
+      "health": {
+        "status": 200,
+        "body": {
+          "status": "ok",
+          "service": "HSR Snooker Cafe BMS",
+          "revision": "5f23897a68c6a878b9099d5f5bb25a4b0b9bc25f"
+        }
+      },
+      "ready": {
+        "status": 200,
+        "body": {
+          "status": "ok",
+          "service": "HSR Snooker Cafe BMS",
+          "database": "ok"
+        }
+      }
+    },
+    {
+      "at": "2026-11-21T17:30:21.849Z",
+      "target": "5e57d8c5ce2b09aef523baa74f69fb5659fd5988",
+      "health": {
+        "status": 200,
+        "body": {
+          "status": "ok",
+          "service": "HSR Snooker Cafe BMS",
+          "revision": "5f23897a68c6a878b9099d5f5bb25a4b0b9bc25f"
+        }
+      },
+      "ready": {
+        "status": 200,
+        "body": {
+          "status": "ok",
+          "service": "HSR Snooker Cafe BMS",
+          "database": "ok"
+        }
+      }
+    },
+    {
+      "at": "2026-11-21T17:30:37.319Z",
+      "target": "5e57d8c5ce2b09aef523baa74f69fb5659fd5988",
+      "health": {
+        "status": 200,
+        "body": {
+          "status": "ok",
+          "service": "HSR Snooker Cafe BMS",
+          "revision": "5f23897a68c6a878b9099d5f5bb25a4b0b9bc25f"
+        }
+      },
+      "ready": {
+        "status": 200,
+        "body": {
+          "status": "ok",
+          "service": "HSR Snooker Cafe BMS",
+          "database": "ok"
+        }
+      }
+    },
+    {
+      "at": "2026-11-21T17:30:52.812Z",
+      "target": "5e57d8c5ce2b09aef523baa74f69fb5659fd5988",
+      "health": {
+        "status": 200,
+        "body": {
+          "status": "ok",
+          "service": "HSR Snooker Cafe BMS",
+          "revision": "5e57d8c5ce2b09aef523baa74f69fb5659fd5988"
+        }
+      },
+      "ready": {
+        "status": 200,
+        "body": {
+          "status": "ok",
+          "service": "HSR Snooker Cafe BMS",
+          "database": "ok",
+          "financial_integrity_version": 2
+        }
+      }
+    },
+    {
+      "at": "2026-11-21T17:31:08.288Z",
+      "target": "5e57d8c5ce2b09aef523baa74f69fb5659fd5988",
+      "health": {
+        "status": 200,
+        "body": {
+          "status": "ok",
+          "service": "HSR Snooker Cafe BMS",
+          "revision": "5e57d8c5ce2b09aef523baa74f69fb5659fd5988"
+        }
+      },
+      "ready": {
+        "status": 200,
+        "body": {
+          "status": "ok",
+          "service": "HSR Snooker Cafe BMS",
+          "database": "ok",
+          "financial_integrity_version": 2
+        }
+      }
+    }
+  ]
+}

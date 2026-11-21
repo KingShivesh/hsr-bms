@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import fs from "node:fs/promises";
 import { createHash } from "node:crypto";
 import { spawnSync } from "node:child_process";
+import path from "node:path";
 
 const site = "https://hsr-bms.vercel.app";
 const backend = "https://hsr-bms-backend.onrender.com";
@@ -25,9 +26,11 @@ assert.equal(spawnSync("git", ["merge-base", "--is-ancestor", release, "origin/m
 const health = await (await fetch(backend + "/health")).json();
 const ready = await (await fetch(backend + "/ready")).json();
 assert.equal(health.status, "ok"); assert.equal(ready.database, "ok");
+if (process.env.VERIFY_FINANCIAL_PROTOCOL) assert.equal(ready.financial_integrity_version, Number(process.env.VERIFY_FINANCIAL_PROTOCOL));
 assert.equal(spawnSync("git", ["merge-base", "--is-ancestor", health.revision, release]).status, 0);
 assert.equal(spawnSync("git", ["diff", "--quiet", health.revision, release, "--", "backend"]).status, 0);
 const report = { verifiedAt: new Date().toISOString(), release, site, entry, allAssetsMatch: true, assetCount: assets.length, earlyThemeBootstrapPresent: true, releaseOnOriginMain: true, health, ready, backendRevisionIsAncestor: true, backendCodeUnchanged: true, productionMutations: 0, assets };
-await fs.mkdir("../docs/theme-contrast-audit", { recursive: true });
-await fs.writeFile("../docs/theme-contrast-audit/production.json", JSON.stringify(report, null, 2));
+const output = process.env.PRODUCTION_REPORT_PATH || "../docs/theme-contrast-audit/production.json";
+await fs.mkdir(path.dirname(output), { recursive: true });
+await fs.writeFile(output, JSON.stringify(report, null, 2));
 console.log(JSON.stringify({ ...report, assets: undefined }, null, 2));

@@ -1,13 +1,34 @@
 # Phase 2: money and data integrity
 
-Branch: `codex/money-data-integrity`, from deployed main `6471be2` (application
-source `5f23897`). This phase is not approved for production merge yet.
+Developed on `codex/money-data-integrity` from main `6471be2` (application source
+`5f23897`). Owner-approved and deployed on 21 November 2026: source merge
+`248390b`, backend stage `5e57d8c`. The approved source `2307dac` is an ancestor
+of main and its backend/frontend application trees match the final merged code.
 
-## Completed for pre-merge review
+## Shipped and Verified
+
+The owner confirmed the club was idle and a backup was ready, explicitly
+approving an immediate rollout outside the suggested quiet window. Backend
+`5e57d8c` was verified healthy twice with protocol 2 before frontend publication.
+The complete Phase 2 source was then merged with no conflicts and pushed as
+`248390b`. Production serves all 35 JS/CSS/font files byte-identical to the tested
+build; backend ancestry and unchanged backend code were also verified.
+`deployment.json` is the strict receipt; `backend-deployment.json` and
+`deployment-timeline.json` preserve the staged observations. Do not confuse the
+earlier checkpoint logs below with the shipped result.
+
+The read-only production login smoke check passed 10 cases: both themes at 375,
+768, 1024, 1440 and 1920 pixels, with zero layout/contrast/page errors and no
+credential submissions or business writes. Evidence: `production-login/`.
+Authenticated production financial mutations were not tested or performed.
+Legacy production ledger coverage remains unverified; no historical money was
+silently repaired. Security Phase 3 is separate and has not been deployed.
+
+## Original Pre-Merge Review
 
 The earlier `009657d` checkpoint was intentionally incomplete. This continuation
 finishes Phase 2 on its branch; pushing it is NOT approval to merge or deploy.
-Main remains `6471be2`. No production database writes or destructive migrations
+At that review point main remained `6471be2`. No production business-record writes or destructive migrations
 were performed. Colors, fonts, Staff time-edit access and SSE scope are unchanged.
 
 Implemented: durable request receipts and conflict/replay checks; client intent
