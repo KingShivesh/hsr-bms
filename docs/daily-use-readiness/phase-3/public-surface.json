@@ -1,0 +1,72 @@
+{
+  "at": "2026-11-21T17:24:09.005Z",
+  "scope": "Unauthenticated read-only production probes; zero business mutations",
+  "observations": [
+    {
+      "url": "https://hsr-bms-backend.onrender.com/reports/summary",
+      "method": "OPTIONS",
+      "status": 200,
+      "headers": {
+        "access-control-allow-origin": "https://audit-untrusted.vercel.app",
+        "access-control-allow-credentials": "true",
+        "content-security-policy": null,
+        "x-frame-options": "DENY",
+        "x-content-type-options": "nosniff",
+        "referrer-policy": "no-referrer",
+        "strict-transport-security": "max-age=31536000; includeSubDomains"
+      }
+    },
+    {
+      "url": "https://hsr-bms.vercel.app/login",
+      "method": "GET",
+      "status": 200,
+      "headers": {
+        "access-control-allow-origin": "*",
+        "access-control-allow-credentials": null,
+        "content-security-policy": null,
+        "x-frame-options": null,
+        "x-content-type-options": null,
+        "referrer-policy": null,
+        "strict-transport-security": "max-age=63072000; includeSubDomains; preload"
+      }
+    },
+    {
+      "url": "https://hsr-bms-backend.onrender.com/health",
+      "method": "GET",
+      "status": 200,
+      "headers": {
+        "access-control-allow-origin": null,
+        "access-control-allow-credentials": null,
+        "content-security-policy": null,
+        "x-frame-options": "DENY",
+        "x-content-type-options": "nosniff",
+        "referrer-policy": "no-referrer",
+        "strict-transport-security": "max-age=31536000; includeSubDomains"
+      },
+      "body": {
+        "status": "ok",
+        "service": "HSR Snooker Cafe BMS",
+        "revision": "5f23897a68c6a878b9099d5f5bb25a4b0b9bc25f"
+      }
+    },
+    {
+      "url": "https://hsr-bms-backend.onrender.com/ready",
+      "method": "GET",
+      "status": 200,
+      "headers": {
+        "access-control-allow-origin": null,
+        "access-control-allow-credentials": null,
+        "content-security-policy": null,
+        "x-frame-options": "DENY",
+        "x-content-type-options": "nosniff",
+        "referrer-policy": "no-referrer",
+        "strict-transport-security": "max-age=31536000; includeSubDomains"
+      },
+      "body": {
+        "status": "ok",
+        "service": "HSR Snooker Cafe BMS",
+        "database": "ok"
+      }
+    }
+  ]
+}
