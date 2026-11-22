@@ -5,6 +5,7 @@ Status on 23 November 2026: local hardening verified on
 inspection still needs the owner's specific project URL and read-only approval.
 This is a review checkpoint, not a claim that every production security boundary
 has been verified. No production business records or credentials were changed.
+Verified hardening source: `1de9ca6`.
 
 ## Phase 2 Is Already Live
 
@@ -73,7 +74,8 @@ content and fonts, rather than comparing a skeleton with a settled screen.
   errors**, including large text and disabled controls at the 4.5:1 minimum.
   The actual arrays are retained in `contrast.json`.
 - Official checksum-verified Gitleaks 8.30.1 scans all history reachable from valid
-  local refs. Only location metadata is saved. Existing malformed refs are skipped
+  local refs: **378 commits, zero unreviewed findings**, including `1de9ca6`.
+  Only location metadata is saved. Existing malformed refs are skipped
   and left untouched; unreachable/reflog-only objects and absent remote refs are
   outside that scope. A scan is not proof that credentials were never exposed.
 - `secret-scan.yml` adds the same history guard to pull requests and main/codex
