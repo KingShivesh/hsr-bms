@@ -1,0 +1,39 @@
+{
+  "scope": "Disposable local lifecycle browser database only",
+  "rows": {
+    "active_sessions": 0,
+    "audit_logs": 0,
+    "bookings": 0,
+    "challenges": 0,
+    "closed_session_frames": 0,
+    "club_profile": 0,
+    "day_closes": 0,
+    "food_only_orders": 0,
+    "members": 0,
+    "menu_items": 0,
+    "mutation_receipts": 0,
+    "peak_hour_rates": 0,
+    "revoked_tokens": 0,
+    "security_controls": 0,
+    "session_alerts": 0,
+    "session_events": 0,
+    "session_frames": 0,
+    "session_weekly_summaries": 0,
+    "settings": 0,
+    "staff_role_settings": 0,
+    "table_maintenance": 0,
+    "tournament_matches": 0,
+    "tournament_players": 0,
+    "tournaments": 0,
+    "transactions": 0,
+    "waitlist_entries": 0,
+    "credit_ledger": 0,
+    "payments": 0
+  },
+  "totalRows": 0,
+  "testContainersRemoved": [
+    "hsr-security-python",
+    "hsr-security-python-final",
+    "hsr-security-pg"
+  ]
+}

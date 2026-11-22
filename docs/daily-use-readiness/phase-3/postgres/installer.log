@@ -1,0 +1,23 @@
+Requirement already satisfied: pip>=26.2 in /usr/local/lib/python3.11/site-packages (26.3)
+Collecting setuptools>=84.1.0
+  Downloading setuptools-84.2.1-py3-none-any.whl.metadata (6.6 kB)
+Collecting wheel>=0.46.2
+  Downloading wheel-0.48.0-py3-none-any.whl.metadata (2.3 kB)
+Collecting packaging>=24.0 (from wheel>=0.46.2)
+  Downloading packaging-26.3-py3-none-any.whl.metadata (3.5 kB)
+Downloading setuptools-84.2.1-py3-none-any.whl (876 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 876.3/876.3 kB 6.7 MB/s  0:00:00
+Downloading wheel-0.48.0-py3-none-any.whl (33 kB)
+Downloading packaging-26.3-py3-none-any.whl (129 kB)
+Installing collected packages: setuptools, packaging, wheel
+  Attempting uninstall: setuptools
+    Found existing installation: setuptools 65.5.1
+    Uninstalling setuptools-65.5.1:
+      Successfully uninstalled setuptools-65.5.1
+  Attempting uninstall: wheel
+    Found existing installation: wheel 0.44.0
+    Uninstalling wheel-0.44.0:
+      Successfully uninstalled wheel-0.44.0
+
+Successfully installed packaging-26.3 setuptools-84.2.1 wheel-0.48.0
+WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.

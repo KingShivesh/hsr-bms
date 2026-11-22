@@ -6,7 +6,7 @@ from datetime import datetime
 import test_session_engine as fixture
 from deps import create_token, hash_password
 from deps import SECRET_KEY, ALGORITHM
-from jose import jwt
+import jwt
 from session_alerts import collect_alerts, collect_weekly_summary
 from hsr_config import IST_TZ
 

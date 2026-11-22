@@ -143,7 +143,7 @@ class FullStackTests(unittest.TestCase):
         self.assertTrue(self.client.post("/sessions/stop/t1", params=params).json()["idempotent"])
 
     def test_legacy_token_requires_reauthentication(self):
-        from jose import jwt
+        import jwt
         from deps import SECRET_KEY, ALGORITHM
         token = jwt.encode({"sub": "admin", "role": "admin", "exp": int(time.time() + 1000)}, SECRET_KEY, algorithm=ALGORITHM)
         self.assertEqual(self.client.get("/auth/me", headers={"Authorization": f"Bearer {token}"}).status_code, 401)

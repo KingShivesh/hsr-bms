@@ -1,0 +1,227 @@
+{
+  "legend": "Before left, after right; light above, dark below. Original local QA screenshots, without retouching.",
+  "images": [
+    {
+      "file": "comparison-closing-375.png",
+      "sources": [
+        {
+          "path": "before-staff-light-375.png",
+          "theme": "light",
+          "stage": "before",
+          "sha256": "710938aee9393132f6dc6894149ebe040532230c543ce523764c6db3bd0fa622",
+          "width": 375,
+          "height": 1000
+        },
+        {
+          "path": "after-staff-light-375.png",
+          "theme": "light",
+          "stage": "after",
+          "sha256": "650e944129b58c7f4111c34b37b6aa99e9394c9c2f82c7d3b35314ed00316270",
+          "width": 375,
+          "height": 1000
+        },
+        {
+          "path": "before-staff-dark-375.png",
+          "theme": "dark",
+          "stage": "before",
+          "sha256": "a39d4b84991e87072925dc20dcef2bc29d05aae215ae39c97cf7701dc3762381",
+          "width": 375,
+          "height": 1000
+        },
+        {
+          "path": "after-staff-dark-375.png",
+          "theme": "dark",
+          "stage": "after",
+          "sha256": "90ab2c597af05736b73834c301f2f501293f9929030b48078444e524d27e3903",
+          "width": 375,
+          "height": 1000
+        }
+      ]
+    },
+    {
+      "file": "comparison-closing-1440.png",
+      "sources": [
+        {
+          "path": "before-staff-light-1440.png",
+          "theme": "light",
+          "stage": "before",
+          "sha256": "8db2b6fa1346f79dcafc9ab94fda78b6359a01e123d817552b43024014742f52",
+          "width": 1440,
+          "height": 1000
+        },
+        {
+          "path": "after-staff-light-1440.png",
+          "theme": "light",
+          "stage": "after",
+          "sha256": "110d7faf1890c180b1a977dc287f3e07b0c8d4d28db916765c5d5e0a2aedd639",
+          "width": 1440,
+          "height": 1000
+        },
+        {
+          "path": "before-staff-dark-1440.png",
+          "theme": "dark",
+          "stage": "before",
+          "sha256": "a391444fdcd7ff8c0a0fd63ea694ef7ea91b806d05433ad8921a850e7d5a7221",
+          "width": 1440,
+          "height": 1000
+        },
+        {
+          "path": "after-staff-dark-1440.png",
+          "theme": "dark",
+          "stage": "after",
+          "sha256": "936d0d494fbfae10de258f1e788674a17b3ba446c6efe28405e1da67beffa629",
+          "width": 1440,
+          "height": 1000
+        }
+      ]
+    },
+    {
+      "file": "comparison-cafe-375.png",
+      "sources": [
+        {
+          "path": "before-cafe-staff-light-375.png",
+          "theme": "light",
+          "stage": "before",
+          "sha256": "c92b85fcfc587a9aee65caed71be60788b82c1f6fe9225a2a3e7f6199b6ba6df",
+          "width": 375,
+          "height": 1000
+        },
+        {
+          "path": "after-cafe-staff-light-375.png",
+          "theme": "light",
+          "stage": "after",
+          "sha256": "223d6a1ccf2933f379bff15cd36ac3091e84ed3336b76ab0291bfa7a6c13271e",
+          "width": 375,
+          "height": 1000
+        },
+        {
+          "path": "before-cafe-staff-dark-375.png",
+          "theme": "dark",
+          "stage": "before",
+          "sha256": "e8ad1e4a12dedb670f5c3ff085f8f48a0ddd5e74e6760362836c0d396f784866",
+          "width": 375,
+          "height": 1000
+        },
+        {
+          "path": "after-cafe-staff-dark-375.png",
+          "theme": "dark",
+          "stage": "after",
+          "sha256": "be36776c98f64612694ebe78f6762a1555f758f2297ac4ac8a8162a2063d50cb",
+          "width": 375,
+          "height": 1000
+        }
+      ]
+    },
+    {
+      "file": "comparison-cafe-1440.png",
+      "sources": [
+        {
+          "path": "before-cafe-staff-light-1440.png",
+          "theme": "light",
+          "stage": "before",
+          "sha256": "b18c6068b117089411c6ed07691aa09b55dd695fb09a2ffd1b39111aac770df1",
+          "width": 1440,
+          "height": 1000
+        },
+        {
+          "path": "after-cafe-staff-light-1440.png",
+          "theme": "light",
+          "stage": "after",
+          "sha256": "943e3e620994b021ac732c1fa266c279fe9880061fa70262615a43a0b14acae4",
+          "width": 1440,
+          "height": 1000
+        },
+        {
+          "path": "before-cafe-staff-dark-1440.png",
+          "theme": "dark",
+          "stage": "before",
+          "sha256": "b8dec6bdcef215428c632fcb025b4e1da8366facdd5b465cc9d7cc20f66a9bf6",
+          "width": 1440,
+          "height": 1000
+        },
+        {
+          "path": "after-cafe-staff-dark-1440.png",
+          "theme": "dark",
+          "stage": "after",
+          "sha256": "c50d65992b53ce691b0ecc77ec95fcfdbea32a0f8bb61bd26502d805b4144d80",
+          "width": 1440,
+          "height": 1000
+        }
+      ]
+    },
+    {
+      "file": "comparison-tables-375.png",
+      "sources": [
+        {
+          "path": "before-tables-staff-light-375.png",
+          "theme": "light",
+          "stage": "before",
+          "sha256": "69ba155d727ab46ec978e207fc389c28bdbe604573f5527c879e791c320ba4c6",
+          "width": 375,
+          "height": 1000
+        },
+        {
+          "path": "after-tables-staff-light-375.png",
+          "theme": "light",
+          "stage": "after",
+          "sha256": "cc8b0da66520577821c7a302ba709bedacf89468fd2033e4ee134a75f11b8278",
+          "width": 375,
+          "height": 1000
+        },
+        {
+          "path": "before-tables-staff-dark-375.png",
+          "theme": "dark",
+          "stage": "before",
+          "sha256": "b00162172926538ce8f4043109bb0439fd89c0d35e4b5bdd1b6ceced45ccebd4",
+          "width": 375,
+          "height": 1000
+        },
+        {
+          "path": "after-tables-staff-dark-375.png",
+          "theme": "dark",
+          "stage": "after",
+          "sha256": "fcb15e783496ceafd51f89462f68569e404779aff598f838a2d58f8e1fe705af",
+          "width": 375,
+          "height": 1000
+        }
+      ]
+    },
+    {
+      "file": "comparison-tables-1440.png",
+      "sources": [
+        {
+          "path": "before-tables-staff-light-1440.png",
+          "theme": "light",
+          "stage": "before",
+          "sha256": "8dec857b369d48bc9dcacad648c9841b5d6b4231be11c3920e279df4ba810ed1",
+          "width": 1440,
+          "height": 1000
+        },
+        {
+          "path": "after-tables-staff-light-1440.png",
+          "theme": "light",
+          "stage": "after",
+          "sha256": "cbfe97a021d833ebd0ca8670895d44fa8c0eb9e70e57fed2d1fb083fac6b3d45",
+          "width": 1440,
+          "height": 1000
+        },
+        {
+          "path": "before-tables-staff-dark-1440.png",
+          "theme": "dark",
+          "stage": "before",
+          "sha256": "d7be05ca7d6d6928cd16d9f53096f07dc9b97c1b114768fd6b5b4fa9f2f14adb",
+          "width": 1440,
+          "height": 1000
+        },
+        {
+          "path": "after-tables-staff-dark-1440.png",
+          "theme": "dark",
+          "stage": "after",
+          "sha256": "4012868068f34e2ce4ccf7afe095a09d7a4004a756891a0931b9d05b7374f754",
+          "width": 1440,
+          "height": 1000
+        }
+      ]
+    }
+  ]
+}

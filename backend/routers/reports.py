@@ -3,12 +3,12 @@ from fastapi.responses import StreamingResponse
 from pydantic import BaseModel, Field
 from sqlalchemy.orm import Session
 from database import get_db, get_mutation_db
-from deps import require_admin
+from deps import get_current_claims, require_admin
 from datetime import datetime, timedelta
 from collections import defaultdict
 import models, io, json, time, csv
 from audit import get_controls
-from live_state import dashboard_payload
+from live_state import build_table_state, dashboard_payload
 from session_identity import active_session_filter
 from money import business_date, business_bounds, day_rows, record_business_date
 from reconciliation import reconcile_day, tender_parts
@@ -228,7 +228,12 @@ def add_payment_breakdown(payment_breakdown: dict[str, int], method: str, total:
 
 # ── Summary ──
 @router.get("/summary")
-def get_summary(db: Session = Depends(get_db)):
+def get_summary(db: Session = Depends(get_db), user: dict = Depends(get_current_claims)):
+    if user["role"] == "staff":
+        state = build_table_state(db)
+        active, total = state["active_tables"], len(TABLE_RATES)
+        return {"active_tables": active, "total_tables": total, "idle_tables": state["idle_tables"],
+                "occupancy": round(active / total * 100) if total else 0}
     payload = dashboard_payload(db)
     return {
         **payload["metrics"],
@@ -364,7 +369,7 @@ def reconciliation_report(day: str = "", db: Session = Depends(get_mutation_db),
     return reconcile_day(db, day or None)
 
 @router.get("/closing-report")
-def closing_report(db: Session = Depends(get_mutation_db), day: str = ""):
+def closing_report(db: Session = Depends(get_mutation_db), day: str = "", _: dict = Depends(require_admin)):
     today = day or business_date()
     business_bounds(today)
     day_close = db.query(models.DayClose).filter_by(business_date=today).first()
@@ -554,7 +559,7 @@ def close_day(
     }
 
 @router.get("/closing-insights")
-def closing_insights(db: Session = Depends(get_db)):
+def closing_insights(db: Session = Depends(get_db), _: dict = Depends(require_admin)):
     today = business_date()
     now = get_ist_now()
     now_ms = time.time() * 1000

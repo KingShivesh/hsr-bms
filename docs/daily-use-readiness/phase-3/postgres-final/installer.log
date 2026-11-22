@@ -1,0 +1,27 @@
+Collecting pip>=26.2
+  Using cached pip-26.3-py3-none-any.whl.metadata (4.6 kB)
+Collecting setuptools>=84.1.0
+  Using cached setuptools-84.2.1-py3-none-any.whl.metadata (6.6 kB)
+Collecting wheel>=0.46.2
+  Using cached wheel-0.48.0-py3-none-any.whl.metadata (2.3 kB)
+Collecting packaging>=24.0 (from wheel>=0.46.2)
+  Using cached packaging-26.3-py3-none-any.whl.metadata (3.5 kB)
+Using cached pip-26.3-py3-none-any.whl (2.0 MB)
+Using cached setuptools-84.2.1-py3-none-any.whl (876 kB)
+Using cached wheel-0.48.0-py3-none-any.whl (33 kB)
+Using cached packaging-26.3-py3-none-any.whl (129 kB)
+Installing collected packages: setuptools, pip, packaging, wheel
+  Attempting uninstall: setuptools
+    Found existing installation: setuptools 65.5.1
+    Uninstalling setuptools-65.5.1:
+      Successfully uninstalled setuptools-65.5.1
+  Attempting uninstall: pip
+    Found existing installation: pip 24.0
+    Uninstalling pip-24.0:
+      Successfully uninstalled pip-24.0
+  Attempting uninstall: wheel
+    Found existing installation: wheel 0.44.0
+    Uninstalling wheel-0.44.0:
+      Successfully uninstalled wheel-0.44.0
+Successfully installed packaging-26.3 pip-26.3 setuptools-84.2.1 wheel-0.48.0
+WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv

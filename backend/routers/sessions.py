@@ -11,7 +11,8 @@ from typing import Optional, Literal
 from audit import log_action, require_manager_pin
 from pricing import calc_checkout, get_peak_multiplier, snapshot_tariff, session_tariff
 from deps import ALGORITHM, SECRET_KEY, get_current_claims, require_admin
-from jose import JWTError, jwt
+import jwt
+from jwt import InvalidTokenError as JWTError
 from hsr_config import TABLE_RATES, format_ist_now, get_ist_now, rate_for_table
 from live_state import build_live_floor_state, build_table_state, serialize_session as serialize_live_session, session_elapsed_ms, session_started_at
 from realtime import queue_realtime_event
@@ -545,7 +546,7 @@ def checkout_clock_ms(sess: models.ActiveSession, requested_ms: float | None = N
             raise HTTPException(400, "Invalid checkout time.")
         if token:
             try:
-                payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM], options={"require_exp": True})
+                payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM], options={"require": ["exp"]})
                 valid = (payload.get("purpose") == "checkout" and payload.get("session_key") == sess.session_key
                          and payload.get("closed_at_ms") == requested_ms and 0 <= now_ms - requested_ms <= 600_000)
                 if valid:
@@ -1776,7 +1777,7 @@ def get_live_floor_state(db: Session = Depends(get_db)):
     return build_live_floor_state(db)
 
 @router.get("/history/{table_id}")
-def table_history(table_id: str, db: Session = Depends(get_db)):
+def table_history(table_id: str, db: Session = Depends(get_db), _: dict = Depends(require_admin)):
     table_id = require_known_table_id(table_id)
     txns = db.query(models.Transaction).filter(
         models.Transaction.table_id == normalize_table_id(table_id).upper()
@@ -1814,7 +1815,7 @@ def table_history(table_id: str, db: Session = Depends(get_db)):
     ]
 
 @router.get("/audit/{table_id}")
-def table_audit(table_id: str, limit: int = 30, db: Session = Depends(get_db)):
+def table_audit(table_id: str, limit: int = 30, db: Session = Depends(get_db), _: dict = Depends(require_admin)):
     table_id = require_known_table_id(table_id)
     table_code = normalize_table_id(table_id).upper()
     rows = db.query(models.AuditLog).filter(
@@ -1834,12 +1835,18 @@ def table_audit(table_id: str, limit: int = 30, db: Session = Depends(get_db)):
     ]
 
 @router.get("/events/{table_id}")
-def table_events(table_id: str, limit: int = 50, db: Session = Depends(get_db)):
+def table_events(table_id: str, limit: int = 50, db: Session = Depends(get_db), user: dict = Depends(get_current_claims)):
     table_id = require_known_table_id(table_id)
     table_code = normalize_table_id(table_id).upper()
-    rows = db.query(models.SessionEvent).filter(
+    query = db.query(models.SessionEvent).filter(
         func.upper(models.SessionEvent.table_id) == table_code
-    ).order_by(models.SessionEvent.ts.desc()).limit(max(1, min(limit, 100))).all()
+    )
+    if user["role"] == "staff":
+        session = active_session_for_table(db, table_id)
+        if not session or not is_active_session(session):
+            return []
+        query = query.filter(models.SessionEvent.session_key == session.session_key)
+    rows = query.order_by(models.SessionEvent.ts.desc()).limit(max(1, min(limit, 100))).all()
     return [serialize_session_event(row) for row in rows]
 
 @router.post("/maintenance/{table_id}")

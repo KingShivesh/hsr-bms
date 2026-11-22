@@ -1,0 +1,1233 @@
+{
+  "scope": "Disposable local database only; no production business requests",
+  "cases": [
+    {
+      "role": "anonymous",
+      "path": "/reports/summary",
+      "expected": 401,
+      "status": 401,
+      "pass": true,
+      "fields": [
+        "detail"
+      ],
+      "unexpected_fields": [],
+      "unexpected_rows": 0
+    },
+    {
+      "role": "anonymous",
+      "path": "/reports/dashboard",
+      "expected": 401,
+      "status": 401,
+      "pass": true,
+      "fields": [
+        "detail"
+      ],
+      "unexpected_fields": [],
+      "unexpected_rows": 0
+    },
+    {
+      "role": "anonymous",
+      "path": "/reports/history",
+      "expected": 401,
+      "status": 401,
+      "pass": true,
+      "fields": [
+        "detail"
+      ],
+      "unexpected_fields": [],
+      "unexpected_rows": 0
+    },
+    {
+      "role": "anonymous",
+      "path": "/reports/export",
+      "expected": 401,
+      "status": 401,
+      "pass": true,
+      "fields": [
+        "detail"
+      ],
+      "unexpected_fields": [],
+      "unexpected_rows": 0
+    },
+    {
+      "role": "anonymous",
+      "path": "/reports/top-customers",
+      "expected": 401,
+      "status": 401,
+      "pass": true,
+      "fields": [
+        "detail"
+      ],
+      "unexpected_fields": [],
+      "unexpected_rows": 0
+    },
+    {
+      "role": "anonymous",
+      "path": "/reports/table-utilization",
+      "expected": 401,
+      "status": 401,
+      "pass": true,
+      "fields": [
+        "detail"
+      ],
+      "unexpected_fields": [],
+      "unexpected_rows": 0
+    },
+    {
+      "role": "anonymous",
+      "path": "/reports/reconciliation",
+      "expected": 401,
+      "status": 401,
+      "pass": true,
+      "fields": [
+        "detail"
+      ],
+      "unexpected_fields": [],
+      "unexpected_rows": 0
+    },
+    {
+      "role": "anonymous",
+      "path": "/reports/closing-report",
+      "expected": 401,
+      "status": 401,
+      "pass": true,
+      "fields": [
+        "detail"
+      ],
+      "unexpected_fields": [],
+      "unexpected_rows": 0
+    },
+    {
+      "role": "anonymous",
+      "path": "/reports/closing-insights",
+      "expected": 401,
+      "status": 401,
+      "pass": true,
+      "fields": [
+        "detail"
+      ],
+      "unexpected_fields": [],
+      "unexpected_rows": 0
+    },
+    {
+      "role": "anonymous",
+      "path": "/reports/analytics",
+      "expected": 401,
+      "status": 401,
+      "pass": true,
+      "fields": [
+        "detail"
+      ],
+      "unexpected_fields": [],
+      "unexpected_rows": 0
+    },
+    {
+      "role": "anonymous",
+      "path": "/reports/advanced-analytics",
+      "expected": 401,
+      "status": 401,
+      "pass": true,
+      "fields": [
+        "detail"
+      ],
+      "unexpected_fields": [],
+      "unexpected_rows": 0
+    },
+    {
+      "role": "anonymous",
+      "path": "/reports/session-edits",
+      "expected": 401,
+      "status": 401,
+      "pass": true,
+      "fields": [
+        "detail"
+      ],
+      "unexpected_fields": [],
+      "unexpected_rows": 0
+    },
+    {
+      "role": "anonymous",
+      "path": "/food/stats",
+      "expected": 401,
+      "status": 401,
+      "pass": true,
+      "fields": [
+        "detail"
+      ],
+      "unexpected_fields": [],
+      "unexpected_rows": 0
+    },
+    {
+      "role": "anonymous",
+      "path": "/sessions/history/t1",
+      "expected": 401,
+      "status": 401,
+      "pass": true,
+      "fields": [
+        "detail"
+      ],
+      "unexpected_fields": [],
+      "unexpected_rows": 0
+    },
+    {
+      "role": "anonymous",
+      "path": "/sessions/audit/t1",
+      "expected": 401,
+      "status": 401,
+      "pass": true,
+      "fields": [
+        "detail"
+      ],
+      "unexpected_fields": [],
+      "unexpected_rows": 0
+    },
+    {
+      "role": "anonymous",
+      "path": "/sessions/events/t1",
+      "expected": 401,
+      "status": 401,
+      "pass": true,
+      "fields": [
+        "detail"
+      ],
+      "unexpected_fields": [],
+      "unexpected_rows": 0
+    },
+    {
+      "role": "anonymous",
+      "path": "/members/",
+      "expected": 401,
+      "status": 401,
+      "pass": true,
+      "fields": [
+        "detail"
+      ],
+      "unexpected_fields": [],
+      "unexpected_rows": 0
+    },
+    {
+      "role": "anonymous",
+      "path": "/members/duplicates",
+      "expected": 401,
+      "status": 401,
+      "pass": true,
+      "fields": [
+        "detail"
+      ],
+      "unexpected_fields": [],
+      "unexpected_rows": 0
+    },
+    {
+      "role": "anonymous",
+      "path": "/operations/security-controls",
+      "expected": 401,
+      "status": 401,
+      "pass": true,
+      "fields": [
+        "detail"
+      ],
+      "unexpected_fields": [],
+      "unexpected_rows": 0
+    },
+    {
+      "role": "anonymous",
+      "path": "/operations/audit-logs",
+      "expected": 401,
+      "status": 401,
+      "pass": true,
+      "fields": [
+        "detail"
+      ],
+      "unexpected_fields": [],
+      "unexpected_rows": 0
+    },
+    {
+      "role": "anonymous",
+      "path": "/staff/roles",
+      "expected": 401,
+      "status": 401,
+      "pass": true,
+      "fields": [
+        "detail"
+      ],
+      "unexpected_fields": [],
+      "unexpected_rows": 0
+    },
+    {
+      "role": "anonymous",
+      "path": "/product/account",
+      "expected": 401,
+      "status": 401,
+      "pass": true,
+      "fields": [
+        "detail"
+      ],
+      "unexpected_fields": [],
+      "unexpected_rows": 0
+    },
+    {
+      "role": "anonymous",
+      "path": "/product/setup",
+      "expected": 401,
+      "status": 401,
+      "pass": true,
+      "fields": [
+        "detail"
+      ],
+      "unexpected_fields": [],
+      "unexpected_rows": 0
+    },
+    {
+      "role": "anonymous",
+      "path": "/sessions/live-floor",
+      "expected": 401,
+      "status": 401,
+      "pass": true,
+      "fields": [
+        "detail"
+      ],
+      "unexpected_fields": [],
+      "unexpected_rows": 0
+    },
+    {
+      "role": "anonymous",
+      "path": "/sessions/active",
+      "expected": 401,
+      "status": 401,
+      "pass": true,
+      "fields": [
+        "detail"
+      ],
+      "unexpected_fields": [],
+      "unexpected_rows": 0
+    },
+    {
+      "role": "anonymous",
+      "path": "/settings/menu",
+      "expected": 401,
+      "status": 401,
+      "pass": true,
+      "fields": [
+        "detail"
+      ],
+      "unexpected_fields": [],
+      "unexpected_rows": 0
+    },
+    {
+      "role": "anonymous",
+      "path": "/settings/rates",
+      "expected": 401,
+      "status": 401,
+      "pass": true,
+      "fields": [
+        "detail"
+      ],
+      "unexpected_fields": [],
+      "unexpected_rows": 0
+    },
+    {
+      "role": "anonymous",
+      "path": "/bookings",
+      "expected": 401,
+      "status": 401,
+      "pass": true,
+      "fields": [
+        "detail"
+      ],
+      "unexpected_fields": [],
+      "unexpected_rows": 0
+    },
+    {
+      "role": "anonymous",
+      "path": "/waitlist",
+      "expected": 401,
+      "status": 401,
+      "pass": true,
+      "fields": [
+        "detail"
+      ],
+      "unexpected_fields": [],
+      "unexpected_rows": 0
+    },
+    {
+      "role": "anonymous",
+      "path": "/members/search?q=QA",
+      "expected": 401,
+      "status": 401,
+      "pass": true,
+      "fields": [
+        "detail"
+      ],
+      "unexpected_fields": [],
+      "unexpected_rows": 0
+    },
+    {
+      "role": "anonymous",
+      "path": "/members/recent",
+      "expected": 401,
+      "status": 401,
+      "pass": true,
+      "fields": [
+        "detail"
+      ],
+      "unexpected_fields": [],
+      "unexpected_rows": 0
+    },
+    {
+      "role": "anonymous",
+      "path": "/product/context",
+      "expected": 401,
+      "status": 401,
+      "pass": true,
+      "fields": [
+        "detail"
+      ],
+      "unexpected_fields": [],
+      "unexpected_rows": 0
+    },
+    {
+      "role": "staff",
+      "path": "/reports/summary",
+      "expected": 200,
+      "status": 200,
+      "pass": true,
+      "fields": [
+        "active_tables",
+        "idle_tables",
+        "occupancy",
+        "total_tables"
+      ],
+      "unexpected_fields": [],
+      "unexpected_rows": 0
+    },
+    {
+      "role": "staff",
+      "path": "/reports/dashboard",
+      "expected": 403,
+      "status": 403,
+      "pass": true,
+      "fields": [
+        "detail"
+      ],
+      "unexpected_fields": [],
+      "unexpected_rows": 0
+    },
+    {
+      "role": "staff",
+      "path": "/reports/history",
+      "expected": 403,
+      "status": 403,
+      "pass": true,
+      "fields": [
+        "detail"
+      ],
+      "unexpected_fields": [],
+      "unexpected_rows": 0
+    },
+    {
+      "role": "staff",
+      "path": "/reports/export",
+      "expected": 403,
+      "status": 403,
+      "pass": true,
+      "fields": [
+        "detail"
+      ],
+      "unexpected_fields": [],
+      "unexpected_rows": 0
+    },
+    {
+      "role": "staff",
+      "path": "/reports/top-customers",
+      "expected": 403,
+      "status": 403,
+      "pass": true,
+      "fields": [
+        "detail"
+      ],
+      "unexpected_fields": [],
+      "unexpected_rows": 0
+    },
+    {
+      "role": "staff",
+      "path": "/reports/table-utilization",
+      "expected": 403,
+      "status": 403,
+      "pass": true,
+      "fields": [
+        "detail"
+      ],
+      "unexpected_fields": [],
+      "unexpected_rows": 0
+    },
+    {
+      "role": "staff",
+      "path": "/reports/reconciliation",
+      "expected": 403,
+      "status": 403,
+      "pass": true,
+      "fields": [
+        "detail"
+      ],
+      "unexpected_fields": [],
+      "unexpected_rows": 0
+    },
+    {
+      "role": "staff",
+      "path": "/reports/closing-report",
+      "expected": 403,
+      "status": 403,
+      "pass": true,
+      "fields": [
+        "detail"
+      ],
+      "unexpected_fields": [],
+      "unexpected_rows": 0
+    },
+    {
+      "role": "staff",
+      "path": "/reports/closing-insights",
+      "expected": 403,
+      "status": 403,
+      "pass": true,
+      "fields": [
+        "detail"
+      ],
+      "unexpected_fields": [],
+      "unexpected_rows": 0
+    },
+    {
+      "role": "staff",
+      "path": "/reports/analytics",
+      "expected": 403,
+      "status": 403,
+      "pass": true,
+      "fields": [
+        "detail"
+      ],
+      "unexpected_fields": [],
+      "unexpected_rows": 0
+    },
+    {
+      "role": "staff",
+      "path": "/reports/advanced-analytics",
+      "expected": 403,
+      "status": 403,
+      "pass": true,
+      "fields": [
+        "detail"
+      ],
+      "unexpected_fields": [],
+      "unexpected_rows": 0
+    },
+    {
+      "role": "staff",
+      "path": "/reports/session-edits",
+      "expected": 403,
+      "status": 403,
+      "pass": true,
+      "fields": [
+        "detail"
+      ],
+      "unexpected_fields": [],
+      "unexpected_rows": 0
+    },
+    {
+      "role": "staff",
+      "path": "/food/stats",
+      "expected": 403,
+      "status": 403,
+      "pass": true,
+      "fields": [
+        "detail"
+      ],
+      "unexpected_fields": [],
+      "unexpected_rows": 0
+    },
+    {
+      "role": "staff",
+      "path": "/sessions/history/t1",
+      "expected": 403,
+      "status": 403,
+      "pass": true,
+      "fields": [
+        "detail"
+      ],
+      "unexpected_fields": [],
+      "unexpected_rows": 0
+    },
+    {
+      "role": "staff",
+      "path": "/sessions/audit/t1",
+      "expected": 403,
+      "status": 403,
+      "pass": true,
+      "fields": [
+        "detail"
+      ],
+      "unexpected_fields": [],
+      "unexpected_rows": 0
+    },
+    {
+      "role": "staff",
+      "path": "/sessions/events/t1",
+      "expected": 200,
+      "status": 200,
+      "pass": true,
+      "fields": [],
+      "unexpected_fields": [],
+      "unexpected_rows": 0
+    },
+    {
+      "role": "staff",
+      "path": "/members/",
+      "expected": 403,
+      "status": 403,
+      "pass": true,
+      "fields": [
+        "detail"
+      ],
+      "unexpected_fields": [],
+      "unexpected_rows": 0
+    },
+    {
+      "role": "staff",
+      "path": "/members/duplicates",
+      "expected": 403,
+      "status": 403,
+      "pass": true,
+      "fields": [
+        "detail"
+      ],
+      "unexpected_fields": [],
+      "unexpected_rows": 0
+    },
+    {
+      "role": "staff",
+      "path": "/operations/security-controls",
+      "expected": 403,
+      "status": 403,
+      "pass": true,
+      "fields": [
+        "detail"
+      ],
+      "unexpected_fields": [],
+      "unexpected_rows": 0
+    },
+    {
+      "role": "staff",
+      "path": "/operations/audit-logs",
+      "expected": 403,
+      "status": 403,
+      "pass": true,
+      "fields": [
+        "detail"
+      ],
+      "unexpected_fields": [],
+      "unexpected_rows": 0
+    },
+    {
+      "role": "staff",
+      "path": "/staff/roles",
+      "expected": 403,
+      "status": 403,
+      "pass": true,
+      "fields": [
+        "detail"
+      ],
+      "unexpected_fields": [],
+      "unexpected_rows": 0
+    },
+    {
+      "role": "staff",
+      "path": "/product/account",
+      "expected": 403,
+      "status": 403,
+      "pass": true,
+      "fields": [
+        "detail"
+      ],
+      "unexpected_fields": [],
+      "unexpected_rows": 0
+    },
+    {
+      "role": "staff",
+      "path": "/product/setup",
+      "expected": 403,
+      "status": 403,
+      "pass": true,
+      "fields": [
+        "detail"
+      ],
+      "unexpected_fields": [],
+      "unexpected_rows": 0
+    },
+    {
+      "role": "staff",
+      "path": "/sessions/live-floor",
+      "expected": 200,
+      "status": 200,
+      "pass": true,
+      "fields": [
+        "active_sessions",
+        "active_tables",
+        "contract",
+        "floor",
+        "generated_at",
+        "idle_tables",
+        "maintenance",
+        "rates",
+        "status_definitions",
+        "tables"
+      ],
+      "unexpected_fields": [],
+      "unexpected_rows": 0
+    },
+    {
+      "role": "staff",
+      "path": "/sessions/active",
+      "expected": 200,
+      "status": 200,
+      "pass": true,
+      "fields": [],
+      "unexpected_fields": [],
+      "unexpected_rows": 0
+    },
+    {
+      "role": "staff",
+      "path": "/settings/menu",
+      "expected": 200,
+      "status": 200,
+      "pass": true,
+      "fields": [
+        "QA Engine Tea"
+      ],
+      "unexpected_fields": [],
+      "unexpected_rows": 0
+    },
+    {
+      "role": "staff",
+      "path": "/settings/rates",
+      "expected": 200,
+      "status": 200,
+      "pass": true,
+      "fields": [
+        "pr",
+        "sr",
+        "wr"
+      ],
+      "unexpected_fields": [],
+      "unexpected_rows": 0
+    },
+    {
+      "role": "staff",
+      "path": "/bookings",
+      "expected": 200,
+      "status": 200,
+      "pass": true,
+      "fields": [],
+      "unexpected_fields": [],
+      "unexpected_rows": 0
+    },
+    {
+      "role": "staff",
+      "path": "/waitlist",
+      "expected": 200,
+      "status": 200,
+      "pass": true,
+      "fields": [],
+      "unexpected_fields": [],
+      "unexpected_rows": 0
+    },
+    {
+      "role": "staff",
+      "path": "/members/search?q=QA",
+      "expected": 200,
+      "status": 200,
+      "pass": true,
+      "fields": [],
+      "unexpected_fields": [],
+      "unexpected_rows": 0
+    },
+    {
+      "role": "staff",
+      "path": "/members/recent",
+      "expected": 200,
+      "status": 200,
+      "pass": true,
+      "fields": [],
+      "unexpected_fields": [],
+      "unexpected_rows": 0
+    },
+    {
+      "role": "staff",
+      "path": "/product/context",
+      "expected": 200,
+      "status": 200,
+      "pass": true,
+      "fields": [
+        "deployment",
+        "profile",
+        "version"
+      ],
+      "unexpected_fields": [],
+      "unexpected_rows": 0
+    },
+    {
+      "role": "admin",
+      "path": "/reports/summary",
+      "expected": 200,
+      "status": 200,
+      "pass": true,
+      "fields": [
+        "active_tables",
+        "avg_bill",
+        "avg_time",
+        "cust",
+        "food",
+        "food_attach",
+        "idle_tables",
+        "live_floor_value",
+        "occupancy",
+        "recent_average",
+        "sale",
+        "sessions",
+        "tables_used",
+        "top_table",
+        "total_revenue",
+        "total_tables",
+        "trends",
+        "yesterday"
+      ],
+      "unexpected_fields": [],
+      "unexpected_rows": 0
+    },
+    {
+      "role": "admin",
+      "path": "/reports/dashboard",
+      "expected": 200,
+      "status": 200,
+      "pass": true,
+      "fields": [
+        "active_sessions",
+        "attention",
+        "date",
+        "generated_at",
+        "metrics",
+        "period",
+        "period_label",
+        "rates",
+        "tables",
+        "trends",
+        "yesterday"
+      ],
+      "unexpected_fields": [],
+      "unexpected_rows": 0
+    },
+    {
+      "role": "admin",
+      "path": "/reports/history",
+      "expected": 200,
+      "status": 200,
+      "pass": true,
+      "fields": [],
+      "unexpected_fields": [],
+      "unexpected_rows": 0
+    },
+    {
+      "role": "admin",
+      "path": "/reports/export",
+      "expected": 200,
+      "status": 200,
+      "pass": true,
+      "fields": [],
+      "unexpected_fields": [],
+      "unexpected_rows": 0
+    },
+    {
+      "role": "admin",
+      "path": "/reports/top-customers",
+      "expected": 200,
+      "status": 200,
+      "pass": true,
+      "fields": [
+        "customers",
+        "label"
+      ],
+      "unexpected_fields": [],
+      "unexpected_rows": 0
+    },
+    {
+      "role": "admin",
+      "path": "/reports/table-utilization",
+      "expected": 200,
+      "status": 200,
+      "pass": true,
+      "fields": [],
+      "unexpected_fields": [],
+      "unexpected_rows": 0
+    },
+    {
+      "role": "admin",
+      "path": "/reports/reconciliation",
+      "expected": 200,
+      "status": 200,
+      "pass": true,
+      "fields": [
+        "collected_total",
+        "counter_orders_checked",
+        "counter_payment_breakdown",
+        "credit_total",
+        "date",
+        "delta",
+        "errors",
+        "legacy_review_required",
+        "ok",
+        "payment_breakdown",
+        "receipt_total",
+        "transactions_checked",
+        "warnings"
+      ],
+      "unexpected_fields": [],
+      "unexpected_rows": 0
+    },
+    {
+      "role": "admin",
+      "path": "/reports/closing-report",
+      "expected": 200,
+      "status": 200,
+      "pass": true,
+      "fields": [
+        "active_tables",
+        "avg_duration",
+        "business_day_cutoff_hour",
+        "can_close_day",
+        "card_total",
+        "cash_total",
+        "close_block_reason",
+        "combined_revenue",
+        "corrections_today",
+        "credit_total",
+        "date",
+        "day_close",
+        "food_breakdown",
+        "food_only_orders",
+        "food_only_payment_breakdown",
+        "food_only_revenue",
+        "food_revenue",
+        "idle_tables",
+        "open_tables",
+        "payment_breakdown",
+        "peak_hour",
+        "play_revenue",
+        "reconciliation",
+        "table_breakdown",
+        "total_revenue",
+        "total_sessions",
+        "transactions",
+        "upi_total"
+      ],
+      "unexpected_fields": [],
+      "unexpected_rows": 0
+    },
+    {
+      "role": "admin",
+      "path": "/reports/closing-insights",
+      "expected": 200,
+      "status": 200,
+      "pass": true,
+      "fields": [
+        "date",
+        "insights",
+        "metrics"
+      ],
+      "unexpected_fields": [],
+      "unexpected_rows": 0
+    },
+    {
+      "role": "admin",
+      "path": "/reports/analytics",
+      "expected": 200,
+      "status": 200,
+      "pass": true,
+      "fields": [
+        "breakdown",
+        "mom",
+        "peak",
+        "weekly"
+      ],
+      "unexpected_fields": [],
+      "unexpected_rows": 0
+    },
+    {
+      "role": "admin",
+      "path": "/reports/advanced-analytics",
+      "expected": 200,
+      "status": 200,
+      "pass": true,
+      "fields": [
+        "avg_spend_per_customer",
+        "food_attachment_rate",
+        "quiet_hours",
+        "repeat_customers",
+        "retention_rate",
+        "table_profitability",
+        "total_customers"
+      ],
+      "unexpected_fields": [],
+      "unexpected_rows": 0
+    },
+    {
+      "role": "admin",
+      "path": "/reports/session-edits",
+      "expected": 200,
+      "status": 200,
+      "pass": true,
+      "fields": [],
+      "unexpected_fields": [],
+      "unexpected_rows": 0
+    },
+    {
+      "role": "admin",
+      "path": "/food/stats",
+      "expected": 200,
+      "status": 200,
+      "pass": true,
+      "fields": [],
+      "unexpected_fields": [],
+      "unexpected_rows": 0
+    },
+    {
+      "role": "admin",
+      "path": "/sessions/history/t1",
+      "expected": 200,
+      "status": 200,
+      "pass": true,
+      "fields": [],
+      "unexpected_fields": [],
+      "unexpected_rows": 0
+    },
+    {
+      "role": "admin",
+      "path": "/sessions/audit/t1",
+      "expected": 200,
+      "status": 200,
+      "pass": true,
+      "fields": [],
+      "unexpected_fields": [],
+      "unexpected_rows": 0
+    },
+    {
+      "role": "admin",
+      "path": "/sessions/events/t1",
+      "expected": 200,
+      "status": 200,
+      "pass": true,
+      "fields": [],
+      "unexpected_fields": [],
+      "unexpected_rows": 0
+    },
+    {
+      "role": "admin",
+      "path": "/members/",
+      "expected": 200,
+      "status": 200,
+      "pass": true,
+      "fields": [],
+      "unexpected_fields": [],
+      "unexpected_rows": 0
+    },
+    {
+      "role": "admin",
+      "path": "/members/duplicates",
+      "expected": 200,
+      "status": 200,
+      "pass": true,
+      "fields": [],
+      "unexpected_fields": [],
+      "unexpected_rows": 0
+    },
+    {
+      "role": "admin",
+      "path": "/operations/security-controls",
+      "expected": 200,
+      "status": 200,
+      "pass": true,
+      "fields": [
+        "alert_unbilled_minutes",
+        "has_manager_pin",
+        "require_pin_for_resets"
+      ],
+      "unexpected_fields": [],
+      "unexpected_rows": 0
+    },
+    {
+      "role": "admin",
+      "path": "/operations/audit-logs",
+      "expected": 200,
+      "status": 200,
+      "pass": true,
+      "fields": [],
+      "unexpected_fields": [],
+      "unexpected_rows": 0
+    },
+    {
+      "role": "admin",
+      "path": "/staff/roles",
+      "expected": 200,
+      "status": 200,
+      "pass": true,
+      "fields": [],
+      "unexpected_fields": [],
+      "unexpected_rows": 0
+    },
+    {
+      "role": "admin",
+      "path": "/product/account",
+      "expected": 200,
+      "status": 200,
+      "pass": true,
+      "fields": [
+        "deployment",
+        "individual_accounts",
+        "invitations",
+        "members",
+        "quotas",
+        "subscription",
+        "tables",
+        "team"
+      ],
+      "unexpected_fields": [],
+      "unexpected_rows": 0
+    },
+    {
+      "role": "admin",
+      "path": "/product/setup",
+      "expected": 200,
+      "status": 200,
+      "pass": true,
+      "fields": [
+        "profile",
+        "setup",
+        "steps",
+        "version"
+      ],
+      "unexpected_fields": [],
+      "unexpected_rows": 0
+    },
+    {
+      "role": "admin",
+      "path": "/sessions/live-floor",
+      "expected": 200,
+      "status": 200,
+      "pass": true,
+      "fields": [
+        "active_sessions",
+        "active_tables",
+        "contract",
+        "floor",
+        "generated_at",
+        "idle_tables",
+        "maintenance",
+        "rates",
+        "status_definitions",
+        "tables"
+      ],
+      "unexpected_fields": [],
+      "unexpected_rows": 0
+    },
+    {
+      "role": "admin",
+      "path": "/sessions/active",
+      "expected": 200,
+      "status": 200,
+      "pass": true,
+      "fields": [],
+      "unexpected_fields": [],
+      "unexpected_rows": 0
+    },
+    {
+      "role": "admin",
+      "path": "/settings/menu",
+      "expected": 200,
+      "status": 200,
+      "pass": true,
+      "fields": [
+        "QA Engine Tea"
+      ],
+      "unexpected_fields": [],
+      "unexpected_rows": 0
+    },
+    {
+      "role": "admin",
+      "path": "/settings/rates",
+      "expected": 200,
+      "status": 200,
+      "pass": true,
+      "fields": [
+        "pr",
+        "sr",
+        "wr"
+      ],
+      "unexpected_fields": [],
+      "unexpected_rows": 0
+    },
+    {
+      "role": "admin",
+      "path": "/bookings",
+      "expected": 200,
+      "status": 200,
+      "pass": true,
+      "fields": [],
+      "unexpected_fields": [],
+      "unexpected_rows": 0
+    },
+    {
+      "role": "admin",
+      "path": "/waitlist",
+      "expected": 200,
+      "status": 200,
+      "pass": true,
+      "fields": [],
+      "unexpected_fields": [],
+      "unexpected_rows": 0
+    },
+    {
+      "role": "admin",
+      "path": "/members/search?q=QA",
+      "expected": 200,
+      "status": 200,
+      "pass": true,
+      "fields": [],
+      "unexpected_fields": [],
+      "unexpected_rows": 0
+    },
+    {
+      "role": "admin",
+      "path": "/members/recent",
+      "expected": 200,
+      "status": 200,
+      "pass": true,
+      "fields": [],
+      "unexpected_fields": [],
+      "unexpected_rows": 0
+    },
+    {
+      "role": "admin",
+      "path": "/product/context",
+      "expected": 200,
+      "status": 200,
+      "pass": true,
+      "fields": [
+        "deployment",
+        "profile",
+        "version"
+      ],
+      "unexpected_fields": [],
+      "unexpected_rows": 0
+    }
+  ],
+  "failures": [],
+  "passed": true,
+  "cleanup": "Disposable fixture rows removed"
+}

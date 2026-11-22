@@ -58,6 +58,25 @@ backend stage `5e57d8c`, protocol 2. All 35 frontend JS/CSS/font hashes matched.
 See `docs/daily-use-readiness/phase-2/README.md` for evidence and rollback.
 Phase 3 security work stays separate and requires its own approval before merge.
 
+## Phase 3 Security Review (Not Deployed)
+The `codex/security-access-review` checkpoint is documented in
+`docs/daily-use-readiness/phase-3/README.md`. Owner-only closing reports, food
+statistics and historical table data must be enforced by backend dependencies;
+Staff summary contains only operational table counts and Staff events only the
+current active session. Preserve trusted Staff checkout/time correction access.
+The review replaces python-jose with PyJWT for the existing HS256 token protocol;
+never infer allowed algorithms from the token header or drop required expiry.
+Do not alter signing keys/lifetime or invalidate existing sessions casually.
+Production CORS uses explicit origins, never a Vercel-wide preview wildcard.
+Frontend CSP pins the theme-bootstrap hash; update/test that hash whenever the
+inline bootstrap changes. Current CSS/font assets remain unchanged.
+Run `test_security_access.py` in the fresh PostgreSQL merge gate. Body-size limits
+must cover streamed requests without Content-Length, not only declared sizes.
+Supabase RLS/grants/Data API/actual-role/TLS checks are still pending an explicit
+project URL and owner read-only authorization; do not bypass that approval gate.
+JWT refresh, individual employee roles and persistent/distributed rate limiting
+remain separate decisions. Phase 3 is not approved for merge/deployment yet.
+
 ## Design system (established, do not redefine ad hoc)
 CSS custom properties are centralized in `frontend/src/design-tokens.css`.
 The parser-time bootstrap in `frontend/index.html` owns theme resolution before

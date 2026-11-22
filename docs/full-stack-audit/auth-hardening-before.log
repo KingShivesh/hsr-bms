@@ -54,7 +54,7 @@ Traceback (most recent call last):
   File "/tmp/hsr-full-stack-baseline/backend/test_full_stack.py", line 189, in test_production_rejects_seeded_default_credentials
     self.assertEqual(response.status_code, 401, response.text)
     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-AssertionError: 200 != 401 : {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJzdGFmZiIsInJvbGUiOiJzdGFmZiIsImV4cCI6MTc5MTc0NzI3OH0.wAMGddDJ7hv3mw0MsUE4RhstrdRfOJzecGjVM5m4mtM","role":"staff","username":"staff"}
+AssertionError: 200 != 401 : {"token":"[REDACTED_EXPIRED_QA_JWT]","role":"staff","username":"staff"}
 
 ----------------------------------------------------------------------
 Ran 2 tests in 8.243s

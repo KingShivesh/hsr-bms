@@ -12,7 +12,7 @@ def main():
     parser.add_argument("--output", required=True)
     args = parser.parse_args()
     routes = {
-        "/reports/summary": "owner",
+        "/reports/summary": "operational-summary",
         "/reports/dashboard": "owner",
         "/reports/history": "owner",
         "/reports/export": "owner",
@@ -24,6 +24,10 @@ def main():
         "/reports/analytics": "owner",
         "/reports/advanced-analytics": "owner",
         "/reports/session-edits": "owner",
+        "/food/stats": "owner",
+        "/sessions/history/t1": "owner",
+        "/sessions/audit/t1": "owner",
+        "/sessions/events/t1": "current-session",
         "/members/": "owner",
         "/members/duplicates": "owner",
         "/operations/security-controls": "owner",
@@ -43,6 +47,10 @@ def main():
     }
     test = fixture.SessionEngineTests()
     test.setUp()
+    with fixture.SessionLocal() as db:
+        db.add(fixture.models.SessionEvent(table_id="t1", session_key="qa-closed-session", event_type="session_closed",
+            date="01/01/2026, 12:00:00", ts=1, detail="QA historical event", payload_json="{}"))
+        db.commit()
     result = {"scope": "Disposable local database only; no production business requests", "cases": []}
     try:
         for role, name in [("anonymous", ""), ("staff", "qa-staff"), ("admin", "qa-engine")]:
@@ -58,8 +66,11 @@ def main():
                 except ValueError:
                     body = None
                 fields = sorted(body) if isinstance(body, dict) else []
+                unexpected_fields = sorted(set(fields) - {"active_tables", "total_tables", "idle_tables", "occupancy"}) if role == "staff" and audience == "operational-summary" else []
+                unexpected_rows = len(body) if role == "staff" and audience == "current-session" and isinstance(body, list) else 0
                 result["cases"].append({"role": role, "path": path, "expected": expected,
-                    "status": response.status_code, "pass": response.status_code == expected, "fields": fields})
+                    "status": response.status_code, "pass": response.status_code == expected and not unexpected_fields and not unexpected_rows,
+                    "fields": fields, "unexpected_fields": unexpected_fields, "unexpected_rows": unexpected_rows})
         result["failures"] = [row for row in result["cases"] if not row["pass"]]
         result["passed"] = not result["failures"]
     finally:

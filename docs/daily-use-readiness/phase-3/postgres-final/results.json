@@ -1,0 +1,81 @@
+{
+  "python": "3.11.9",
+  "database": "disposable loopback PostgreSQL",
+  "steps": [
+    {
+      "name": "installer",
+      "status": 0,
+      "seconds": 3.736
+    },
+    {
+      "name": "requirements",
+      "status": 0,
+      "seconds": 6.555
+    },
+    {
+      "name": "production-import",
+      "status": 0,
+      "seconds": 1.334
+    },
+    {
+      "name": "database_reliability",
+      "status": 0,
+      "seconds": 36.893,
+      "tests": 10
+    },
+    {
+      "name": "session_engine",
+      "status": 0,
+      "seconds": 4.218,
+      "tests": 34
+    },
+    {
+      "name": "full_stack",
+      "status": 0,
+      "seconds": 31.71,
+      "tests": 16
+    },
+    {
+      "name": "session_controls",
+      "status": 0,
+      "seconds": 3.933,
+      "tests": 16
+    },
+    {
+      "name": "session_food_credit",
+      "status": 0,
+      "seconds": 4.83,
+      "tests": 28
+    },
+    {
+      "name": "identity_migrations",
+      "status": 0,
+      "seconds": 0.798,
+      "tests": 1
+    },
+    {
+      "name": "product_shell",
+      "status": 0,
+      "seconds": 1.922,
+      "tests": 10
+    },
+    {
+      "name": "money_integrity",
+      "status": 0,
+      "seconds": 2.811,
+      "tests": 26
+    },
+    {
+      "name": "security_access",
+      "status": 0,
+      "seconds": 2.686,
+      "tests": 18
+    },
+    {
+      "name": "soak",
+      "status": 0,
+      "seconds": 4.775
+    }
+  ],
+  "passed": true
+}

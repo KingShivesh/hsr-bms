@@ -1,0 +1,18 @@
+test_development_retains_disposable_sqlite (__main__.ConfigurationTests.test_development_retains_disposable_sqlite) ... ok
+test_production_never_falls_back_to_sqlite (__main__.ConfigurationTests.test_production_never_falls_back_to_sqlite) ... ok
+test_supported_url_dialects_and_pooler_safe_settings (__main__.ConfigurationTests.test_supported_url_dialects_and_pooler_safe_settings) ... ok
+test_url_normalization_preserves_password (__main__.ConfigurationTests.test_url_normalization_preserves_password) ... ok
+test_dead_idle_connection_is_replaced (__main__.PostgresTests.test_dead_idle_connection_is_replaced) ... ok
+test_exhausted_pool_fails_in_five_seconds (__main__.PostgresTests.test_exhausted_pool_fails_in_five_seconds) ... ok
+test_idle_transaction_disconnect_recovers (__main__.PostgresTests.test_idle_transaction_disconnect_recovers) ... ok
+test_lock_wait_times_out_then_recovers (__main__.PostgresTests.test_lock_wait_times_out_then_recovers) ... ok
+test_slow_query_fails_then_next_transaction_recovers (__main__.PostgresTests.test_slow_query_fails_then_next_transaction_recovers) ... ok
+test_transaction_timeouts_reset_without_session_leak (__main__.PostgresTests.test_transaction_timeouts_reset_without_session_leak) ... ok
+
+----------------------------------------------------------------------
+Ran 10 tests in 36.233s
+
+OK
+pool_timeout: 5.003s; checked_out=0
+lock_timeout: 5.012s; next transaction recovered
+statement_timeout: 10.009s; next transaction recovered

@@ -1,0 +1,41 @@
+{
+  "scope": "Expired QA token strings only; no history rewrite or production credential changes",
+  "changes": [
+    {
+      "file": "docs/daily-use-readiness/phase-2/postgres/full_stack.log",
+      "replacements": 5,
+      "beforeSha256": "724918e9e136c378476061e7c4916e3d8390ed5ac837f3ef840c1948969e3532",
+      "afterSha256": "f89e8bcc77be190f4f6396062c0a2745a802118b2ce5a5b4fbb3b1cfdfa72c14"
+    },
+    {
+      "file": "docs/daily-use-readiness/phase-2/fresh-python311/full_stack.log",
+      "replacements": 5,
+      "beforeSha256": "a60a9f879527557e0f775548f6f04d0f07394cf6a5ca8f526eb726ddce93f5f2",
+      "afterSha256": "e7fb3e9fa6a8e5d81ceeaf1cbd83f299c29fceb50053ddb666252619c90a2017"
+    },
+    {
+      "file": "docs/daily-use-readiness/phase-1/backend/full_stack.log",
+      "replacements": 5,
+      "beforeSha256": "70c63d29a0f53040be18781cf027e1b7e38b6981d816945c9fbabb8b71820fcc",
+      "afterSha256": "9c3f3fdea3fb24f6324e9c44b86409b397eedbea4701ef240b75ace249e24579"
+    },
+    {
+      "file": "docs/full-stack-audit/auth-hardening-before.log",
+      "replacements": 1,
+      "beforeSha256": "8ab529098b610228b67dc2ea96cef4f048b969a3baac53c78fcb35a975c0228a",
+      "afterSha256": "db79cce04f97d7d6fd0e251b826e380083767207fd8c51204d1c6fd585a96a45"
+    },
+    {
+      "file": "docs/full-stack-audit/postgres-security-after.log",
+      "replacements": 5,
+      "beforeSha256": "e7b30046671c4a5b6acd98d3ad8242b5d5e76dc40fbae109306bf93dbf26bcf5",
+      "afterSha256": "fe1d5b89dba11cd3a31ebd09202950d671def26516e3d907acd4bccd67429a31"
+    },
+    {
+      "file": "docs/full-stack-audit/sqlite-security-after.log",
+      "replacements": 5,
+      "beforeSha256": "37068c0a2cc26dbde76b892e66119f46af188a7963e44e5be4563bd5b20a23f5",
+      "afterSha256": "a2aa0fd0cce81abcb559db79833d900f4460470160cf7a737816e196c7a10e2a"
+    }
+  ]
+}

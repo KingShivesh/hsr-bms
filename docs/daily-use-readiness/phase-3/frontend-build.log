@@ -1,0 +1,47 @@
+
+> frontend@0.1.0 build
+> node ./node_modules/vite/bin/vite.js build
+
+vite v8.3.8 building client environment for production...
+transforming...
+✓ 2573 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                                            2.64 kB │ gzip:   1.00 kB
+dist/assets/dm-mono-latin-ext-500-normal-Dw3M13d8.woff     7.48 kB
+dist/assets/dm-mono-latin-ext-400-normal-1aZr6b2b.woff     7.50 kB
+dist/assets/dm-mono-latin-ext-400-normal-C2zvOubV.woff2    9.55 kB
+dist/assets/dm-mono-latin-ext-500-normal-BtRyHRi6.woff2    9.61 kB
+dist/assets/syne-greek-wght-normal-5tOOQDeJ.woff2         11.20 kB
+dist/assets/dm-mono-latin-400-normal--0xN8mdc.woff        11.21 kB
+dist/assets/dm-mono-latin-500-normal-CN8Miw6E.woff        11.24 kB
+dist/assets/syne-latin-ext-wght-normal-JjI8ZrW1.woff2     14.72 kB
+dist/assets/dm-mono-latin-400-normal-4GdczIuU.woff2       14.82 kB
+dist/assets/dm-mono-latin-500-normal-DRMDZjhP.woff2       14.98 kB
+dist/assets/syne-latin-wght-normal-BVsvWWA4.woff2         34.60 kB
+dist/assets/LiveFloor-wlGi4y7t.css                         2.11 kB │ gzip:   0.69 kB
+dist/assets/index-jpD6dF0X.css                           715.51 kB │ gzip: 101.17 kB
+dist/assets/tariffs-B1h1B4KP.js                            0.21 kB │ gzip:   0.16 kB
+dist/assets/ContextHelp-DJPEzof2.js                        0.30 kB │ gzip:   0.22 kB
+dist/assets/floorData-C1MFzQCY.js                          0.50 kB │ gzip:   0.29 kB
+dist/assets/Pagination-C-dsk20l.js                         0.68 kB │ gzip:   0.41 kB
+dist/assets/useCachedState-_3OCh4av.js                     0.83 kB │ gzip:   0.42 kB
+dist/assets/TableStateUI-j8untzFH.js                       0.99 kB │ gzip:   0.44 kB
+dist/assets/tableStatus-BXmwxmnR.js                        2.25 kB │ gzip:   0.87 kB
+dist/assets/FrameControls-6pCzbdp6.js                      2.57 kB │ gzip:   1.22 kB
+dist/assets/SalesPage-D4j-p-PY.js                          8.77 kB │ gzip:   2.93 kB
+dist/assets/OperationsTab-CQiunhD-.js                     10.34 kB │ gzip:   3.30 kB
+dist/assets/CustomersPage-DVGZgTFR.js                     11.49 kB │ gzip:   3.87 kB
+dist/assets/BookingsPage-BbuUDTPk.js                      14.02 kB │ gzip:   4.75 kB
+dist/assets/TournamentTab-CaFTiGit.js                     14.19 kB │ gzip:   4.66 kB
+dist/assets/Dashboard-BRsKRXIU.js                         14.28 kB │ gzip:   4.96 kB
+dist/assets/ClosingTab-BvY507wd.js                        14.87 kB │ gzip:   4.36 kB
+dist/assets/SettingsTab-BhM3tKl8.js                       18.07 kB │ gzip:   5.06 kB
+dist/assets/FoodTab-D67bybU2.js                           24.14 kB │ gzip:   7.00 kB
+dist/assets/ReportsTab-uzXy5aS0.js                        32.68 kB │ gzip:   7.91 kB
+dist/assets/ClubSuiteTab-1vOApTid.js                      35.16 kB │ gzip:   9.65 kB
+dist/assets/TablesTab-Kyb4a3w2.js                         42.90 kB │ gzip:  12.17 kB
+dist/assets/LiveFloor-S6n6GYBk.js                         54.28 kB │ gzip:  15.96 kB
+dist/assets/index-DVH25MeY.js                            470.71 kB │ gzip: 151.23 kB
+
+✓ built in 894ms

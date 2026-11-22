@@ -89,6 +89,7 @@ const PAGE_TITLES = {
 
 const ADMIN_ONLY_PAGES = new Set([
   "reports",
+  "closing",
   "settings",
   "operations",
   "members",
@@ -461,6 +462,7 @@ function AppInner() {
               )}
               {page === "tables" && (
                 <TablesTab
+                  role={role}
                   onNavigate={goToPage}
                   onSessionEnd={fetchMetrics}
                   newSessionRequest={newSessionRequest}

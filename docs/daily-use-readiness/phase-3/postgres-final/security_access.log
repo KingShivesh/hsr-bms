@@ -1,0 +1,143 @@
+/usr/local/lib/python3.11/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+  from starlette.testclient import TestClient as TestClient  # noqa
+test_body_limit_covers_content_length_and_chunked_input (__main__.SecurityAccessTests.test_body_limit_covers_content_length_and_chunked_input) ... INFO:hsr-bms:request_id=5add0abc-a6f6-4b90-a363-926cf7414bd0 method=POST path=/sessions/start status=200 duration_ms=43
+INFO:httpx:HTTP Request: POST http://testserver/sessions/start "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=56c7793c-494c-4b69-bfec-fc1cd4ca986f method=POST path=/sessions/t1/notes status=413 duration_ms=0
+INFO:httpx:HTTP Request: POST http://testserver/sessions/t1/notes "HTTP/1.1 413 Request Entity Too Large"
+INFO:hsr-bms:request_id=a54615e6-92b6-4d81-8dc4-de72289d9cc1 method=POST path=/sessions/t1/notes status=413 duration_ms=2
+INFO:httpx:HTTP Request: POST http://testserver/sessions/t1/notes "HTTP/1.1 413 Request Entity Too Large"
+INFO:hsr-bms:request_id=4b14ef59-7379-48c9-99d1-3c466046bacc method=POST path=/sessions/t1/notes status=200 duration_ms=7
+INFO:httpx:HTTP Request: POST http://testserver/sessions/t1/notes "HTTP/1.1 200 OK"
+ok
+test_client_role_header_cannot_override_signed_staff_role (__main__.SecurityAccessTests.test_client_role_header_cannot_override_signed_staff_role) ... INFO:hsr-bms:request_id=5e07bf17-c7af-4393-98d2-e28a1a5b6031 method=GET path=/reports/closing-report status=403 duration_ms=18
+INFO:httpx:HTTP Request: GET http://testserver/reports/closing-report "HTTP/1.1 403 Forbidden"
+ok
+test_fixture_rejects_nonlocal_database_before_importing_application (__main__.SecurityAccessTests.test_fixture_rejects_nonlocal_database_before_importing_application) ... ok
+test_legacy_checkout_quote_remains_valid_and_idempotent (__main__.SecurityAccessTests.test_legacy_checkout_quote_remains_valid_and_idempotent) ... INFO:hsr-bms:request_id=48a348f1-0ed6-4bf8-9839-7361bfc1a6ed method=POST path=/sessions/start status=200 duration_ms=9
+INFO:httpx:HTTP Request: POST http://testserver/sessions/start "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=04f50561-a963-435e-9214-743023c73f81 method=GET path=/sessions/quote/t1 status=200 duration_ms=11
+INFO:httpx:HTTP Request: GET http://testserver/sessions/quote/t1 "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=9c2afa1b-2123-430c-9e0d-7dd52eb0d5eb method=POST path=/sessions/stop/t1 status=200 duration_ms=25
+INFO:httpx:HTTP Request: POST http://testserver/sessions/stop/t1 "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=c4983254-ac76-468e-a073-d8878d910771 method=POST path=/sessions/stop/t1 status=200 duration_ms=8
+INFO:httpx:HTTP Request: POST http://testserver/sessions/stop/t1 "HTTP/1.1 200 OK"
+ok
+test_legacy_hs256_login_token_and_logout_remain_compatible (__main__.SecurityAccessTests.test_legacy_hs256_login_token_and_logout_remain_compatible) ... INFO:hsr-bms:request_id=b0aaed0f-dada-4d6b-863d-1f0d80988fee method=GET path=/auth/me status=200 duration_ms=3
+INFO:httpx:HTTP Request: GET http://testserver/auth/me "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=5ea7689d-ece5-46b1-912a-ddc16ce32036 method=POST path=/auth/logout status=200 duration_ms=6
+INFO:httpx:HTTP Request: POST http://testserver/auth/logout "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=525d59e2-d188-4acf-a49a-7b74e526d005 method=GET path=/auth/me status=401 duration_ms=2
+INFO:httpx:HTTP Request: GET http://testserver/auth/me "HTTP/1.1 401 Unauthorized"
+ok
+test_owner_closing_and_summary_remain_available (__main__.SecurityAccessTests.test_owner_closing_and_summary_remain_available) ... INFO:hsr-bms:request_id=2f624a6a-4c5b-4296-a43c-2f899282a4da method=GET path=/reports/summary status=200 duration_ms=26
+INFO:httpx:HTTP Request: GET http://testserver/reports/summary "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=7abb9705-02f7-4bb9-99f8-20e4c4ca584e method=GET path=/reports/closing-report status=200 duration_ms=21
+INFO:httpx:HTTP Request: GET http://testserver/reports/closing-report "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=6330b20d-caf5-4ea1-be75-b8adad3d6c23 method=GET path=/reports/closing-insights status=200 duration_ms=9
+INFO:httpx:HTTP Request: GET http://testserver/reports/closing-insights "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=2bf825fe-c430-48a6-a527-a9ca862b29d0 method=GET path=/food/stats status=200 duration_ms=19
+INFO:httpx:HTTP Request: GET http://testserver/food/stats "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=42dcdd98-78a3-42e9-8076-78ace066e2d1 method=GET path=/sessions/history/t1 status=200 duration_ms=6
+INFO:httpx:HTTP Request: GET http://testserver/sessions/history/t1 "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=b24dd7fa-382c-4048-b940-5e2985ae70f5 method=GET path=/sessions/audit/t1 status=200 duration_ms=5
+INFO:httpx:HTTP Request: GET http://testserver/sessions/audit/t1 "HTTP/1.1 200 OK"
+ok
+test_production_cors_has_no_other_wildcard_fallback (__main__.SecurityAccessTests.test_production_cors_has_no_other_wildcard_fallback) ... ok
+test_production_cors_rejects_unrelated_previews_but_allows_live_app (__main__.SecurityAccessTests.test_production_cors_rejects_unrelated_previews_but_allows_live_app) ... INFO:httpx:HTTP Request: OPTIONS http://testserver/ "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: OPTIONS http://testserver/ "HTTP/1.1 400 Bad Request"
+ok
+test_qa_request_logs_redact_tokens (__main__.SecurityAccessTests.test_qa_request_logs_redact_tokens) ... ok
+test_sensitive_staff_writes_are_rejected_before_any_mutation (__main__.SecurityAccessTests.test_sensitive_staff_writes_are_rejected_before_any_mutation) ... INFO:hsr-bms:request_id=8f63d417-cd2a-4857-b40c-84a3d8f7b09f method=POST path=/reports/day-close status=403 duration_ms=5
+INFO:httpx:HTTP Request: POST http://testserver/reports/day-close "HTTP/1.1 403 Forbidden"
+INFO:hsr-bms:request_id=a4952248-415b-42a0-a2a6-27d43ad2899a method=POST path=/auth/change status=403 duration_ms=3
+INFO:httpx:HTTP Request: POST http://testserver/auth/change "HTTP/1.1 403 Forbidden"
+INFO:hsr-bms:request_id=961062b8-cffb-4e11-9ebc-faf0bcc20792 method=POST path=/auth/change-staff status=403 duration_ms=3
+INFO:httpx:HTTP Request: POST http://testserver/auth/change-staff "HTTP/1.1 403 Forbidden"
+INFO:hsr-bms:request_id=3efe9d5d-628c-4390-aeaa-885fd1136757 method=POST path=/settings/rates status=403 duration_ms=4
+INFO:httpx:HTTP Request: POST http://testserver/settings/rates "HTTP/1.1 403 Forbidden"
+INFO:hsr-bms:request_id=6083c580-9770-48ad-b1af-3f33f24d371e method=POST path=/settings/reset-daily status=403 duration_ms=5
+INFO:httpx:HTTP Request: POST http://testserver/settings/reset-daily "HTTP/1.1 403 Forbidden"
+INFO:hsr-bms:request_id=77f0f6a3-b4ba-4668-80f2-419d5f5565ef method=POST path=/settings/clear-all status=403 duration_ms=5
+INFO:httpx:HTTP Request: POST http://testserver/settings/clear-all "HTTP/1.1 403 Forbidden"
+INFO:hsr-bms:request_id=33585a5f-cf56-4942-bab0-9cb4f162c842 method=POST path=/sessions/reset/t1 status=403 duration_ms=5
+INFO:httpx:HTTP Request: POST http://testserver/sessions/reset/t1 "HTTP/1.1 403 Forbidden"
+INFO:hsr-bms:request_id=0c0a58b1-2f1d-40a9-ba88-f9894cea320a method=POST path=/members/ status=403 duration_ms=4
+INFO:httpx:HTTP Request: POST http://testserver/members/ "HTTP/1.1 403 Forbidden"
+INFO:hsr-bms:request_id=11ddb67e-2aec-47ad-af89-750abbda4ec6 method=POST path=/staff/roles status=403 duration_ms=14
+INFO:httpx:HTTP Request: POST http://testserver/staff/roles "HTTP/1.1 403 Forbidden"
+INFO:hsr-bms:request_id=5ff66be5-d798-4f5b-be8c-69ae9ced0cd2 method=POST path=/operations/security-controls status=403 duration_ms=4
+INFO:httpx:HTTP Request: POST http://testserver/operations/security-controls "HTTP/1.1 403 Forbidden"
+ok
+test_signed_token_without_expiry_is_rejected (__main__.SecurityAccessTests.test_signed_token_without_expiry_is_rejected) ... INFO:hsr-bms:request_id=21931fcc-e64d-49d2-8597-4c43771e8eaa method=GET path=/auth/me status=401 duration_ms=1
+INFO:httpx:HTTP Request: GET http://testserver/auth/me "HTTP/1.1 401 Unauthorized"
+ok
+test_staff_cannot_read_owner_reports (__main__.SecurityAccessTests.test_staff_cannot_read_owner_reports) ... INFO:hsr-bms:request_id=6eefa414-d759-47e6-960c-a1fec5054159 method=GET path=/reports/closing-report status=403 duration_ms=4
+INFO:httpx:HTTP Request: GET http://testserver/reports/closing-report "HTTP/1.1 403 Forbidden"
+INFO:hsr-bms:request_id=b48172a9-b259-4c3b-9a02-a27dd70bb140 method=GET path=/reports/closing-insights status=403 duration_ms=3
+INFO:httpx:HTTP Request: GET http://testserver/reports/closing-insights "HTTP/1.1 403 Forbidden"
+INFO:hsr-bms:request_id=d9ad899a-03c9-4fe4-a672-e8f4a105c35b method=GET path=/reports/reconciliation status=403 duration_ms=5
+INFO:httpx:HTTP Request: GET http://testserver/reports/reconciliation "HTTP/1.1 403 Forbidden"
+INFO:hsr-bms:request_id=d78d4824-201c-4026-9a4f-6d04337ebfbb method=GET path=/reports/dashboard status=403 duration_ms=3
+INFO:httpx:HTTP Request: GET http://testserver/reports/dashboard "HTTP/1.1 403 Forbidden"
+INFO:hsr-bms:request_id=2d53fd94-bba9-4c41-aafe-3c0934d9aa93 method=GET path=/reports/history status=403 duration_ms=3
+INFO:httpx:HTTP Request: GET http://testserver/reports/history "HTTP/1.1 403 Forbidden"
+INFO:hsr-bms:request_id=193db2b2-a067-477b-b276-c8b9a74b77b9 method=GET path=/reports/analytics status=403 duration_ms=4
+INFO:httpx:HTTP Request: GET http://testserver/reports/analytics "HTTP/1.1 403 Forbidden"
+INFO:hsr-bms:request_id=b80dbb1b-33d1-455b-bacb-7169d969eb77 method=GET path=/reports/advanced-analytics status=403 duration_ms=5
+INFO:httpx:HTTP Request: GET http://testserver/reports/advanced-analytics "HTTP/1.1 403 Forbidden"
+INFO:hsr-bms:request_id=71995bfc-2f25-4c8c-ba32-34a3f3b0fbdf method=GET path=/reports/session-edits status=403 duration_ms=4
+INFO:httpx:HTTP Request: GET http://testserver/reports/session-edits "HTTP/1.1 403 Forbidden"
+INFO:hsr-bms:request_id=77555377-93a3-414f-9dc4-c7046141d363 method=GET path=/members/ status=403 duration_ms=39
+INFO:httpx:HTTP Request: GET http://testserver/members/ "HTTP/1.1 403 Forbidden"
+INFO:hsr-bms:request_id=2297b596-7708-4833-b399-9175f6535c52 method=GET path=/operations/audit-logs status=403 duration_ms=4
+INFO:httpx:HTTP Request: GET http://testserver/operations/audit-logs "HTTP/1.1 403 Forbidden"
+INFO:hsr-bms:request_id=ccf6e741-0e66-4b0d-866d-f1857fdbc795 method=GET path=/staff/roles status=403 duration_ms=4
+INFO:httpx:HTTP Request: GET http://testserver/staff/roles "HTTP/1.1 403 Forbidden"
+INFO:hsr-bms:request_id=4ed518ad-2e13-4378-970e-53c7e9de88d1 method=GET path=/product/account status=403 duration_ms=4
+INFO:httpx:HTTP Request: GET http://testserver/product/account "HTTP/1.1 403 Forbidden"
+INFO:hsr-bms:request_id=8f47e9b0-0864-477f-ba7a-fd35419bfc14 method=GET path=/food/stats status=403 duration_ms=3
+INFO:httpx:HTTP Request: GET http://testserver/food/stats "HTTP/1.1 403 Forbidden"
+INFO:hsr-bms:request_id=9c65ce14-5d5b-4795-afb5-c1de58751e4f method=GET path=/sessions/history/t1 status=403 duration_ms=3
+INFO:httpx:HTTP Request: GET http://testserver/sessions/history/t1 "HTTP/1.1 403 Forbidden"
+INFO:hsr-bms:request_id=17e9b589-6d3b-41cd-9a3f-60b187be34dc method=GET path=/sessions/audit/t1 status=403 duration_ms=3
+INFO:httpx:HTTP Request: GET http://testserver/sessions/audit/t1 "HTTP/1.1 403 Forbidden"
+ok
+test_staff_events_are_scoped_to_current_session_and_disappear_after_close (__main__.SecurityAccessTests.test_staff_events_are_scoped_to_current_session_and_disappear_after_close) ... INFO:hsr-bms:request_id=afc67c3c-3db0-4932-8744-216a87cbe8a7 method=POST path=/sessions/start status=200 duration_ms=9
+INFO:httpx:HTTP Request: POST http://testserver/sessions/start "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=3143a8de-968c-4762-872b-90abe218bb11 method=GET path=/sessions/events/t1 status=200 duration_ms=6
+INFO:httpx:HTTP Request: GET http://testserver/sessions/events/t1 "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=3fb53df7-aeae-4675-82a1-a24006169973 method=POST path=/sessions/stop/t1 status=200 duration_ms=13
+INFO:httpx:HTTP Request: POST http://testserver/sessions/stop/t1 "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=079a01ae-f905-47e4-aa8c-bee9ec9efd5b method=GET path=/sessions/events/t1 status=200 duration_ms=4
+INFO:httpx:HTTP Request: GET http://testserver/sessions/events/t1 "HTTP/1.1 200 OK"
+ok
+test_staff_member_lookup_never_returns_member_financials (__main__.SecurityAccessTests.test_staff_member_lookup_never_returns_member_financials) ... INFO:hsr-bms:request_id=5eca28b2-c084-4968-8879-eca2aaf10df7 method=GET path=/members/search status=200 duration_ms=5
+INFO:httpx:HTTP Request: GET http://testserver/members/search?q=Security "HTTP/1.1 200 OK"
+ok
+test_staff_summary_is_only_operational_counts (__main__.SecurityAccessTests.test_staff_summary_is_only_operational_counts) ... INFO:hsr-bms:request_id=8ec0d043-5a84-43bd-87ba-c71055fd3a8b method=POST path=/sessions/start status=200 duration_ms=8
+INFO:httpx:HTTP Request: POST http://testserver/sessions/start "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=10565af9-3e3a-4e4f-a055-992b53bd1ca2 method=GET path=/reports/summary status=200 duration_ms=7
+INFO:httpx:HTTP Request: GET http://testserver/reports/summary "HTTP/1.1 200 OK"
+ok
+test_token_algorithm_is_not_selected_from_untrusted_header (__main__.SecurityAccessTests.test_token_algorithm_is_not_selected_from_untrusted_header) ... INFO:hsr-bms:request_id=87d5f76d-f5c9-4045-814b-c865ca228913 method=GET path=/auth/me status=401 duration_ms=1
+INFO:httpx:HTTP Request: GET http://testserver/auth/me "HTTP/1.1 401 Unauthorized"
+ok
+test_trusted_staff_time_edit_preview_still_works (__main__.SecurityAccessTests.test_trusted_staff_time_edit_preview_still_works) ... INFO:hsr-bms:request_id=e8efbf39-7381-44ed-9750-ea2cd0c7ad8e method=POST path=/sessions/start status=200 duration_ms=8
+INFO:httpx:HTTP Request: POST http://testserver/sessions/start "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=8e77fc43-16d4-4b02-9b78-13b0db0fbad9 method=GET path=/sessions/quote/t1 status=200 duration_ms=6
+INFO:httpx:HTTP Request: GET http://testserver/sessions/quote/t1 "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=7f73c439-e8fa-45f3-b769-a9388e2ac1d5 method=POST path=/sessions/checkout-preview/t1 status=200 duration_ms=7
+INFO:httpx:HTTP Request: POST http://testserver/sessions/checkout-preview/t1 "HTTP/1.1 200 OK"
+ok
+test_unauthenticated_requests_have_no_report_access (__main__.SecurityAccessTests.test_unauthenticated_requests_have_no_report_access) ... INFO:hsr-bms:request_id=7d8f929d-adb5-4bbd-82a9-45e1e4af7dc3 method=GET path=/reports/summary status=401 duration_ms=1
+INFO:httpx:HTTP Request: GET http://testserver/reports/summary "HTTP/1.1 401 Unauthorized"
+INFO:hsr-bms:request_id=c0e2add5-5594-49fd-af4b-6ac9ca0f28ce method=GET path=/reports/closing-report status=401 duration_ms=1
+INFO:httpx:HTTP Request: GET http://testserver/reports/closing-report "HTTP/1.1 401 Unauthorized"
+INFO:hsr-bms:request_id=c2fc6bee-9bc3-464b-923e-9d38d6d393a5 method=GET path=/reports/closing-insights status=401 duration_ms=1
+INFO:httpx:HTTP Request: GET http://testserver/reports/closing-insights "HTTP/1.1 401 Unauthorized"
+ok
+
+----------------------------------------------------------------------
+Ran 18 tests in 1.283s
+
+OK

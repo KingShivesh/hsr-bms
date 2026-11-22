@@ -325,17 +325,17 @@ INFO:httpx:HTTP Request: POST http://testserver/sessions/start "HTTP/1.1 200 OK"
 INFO:hsr-bms:request_id=ed7b3abf-30ce-4d94-9e79-69528d755631 method=GET path=/sessions/quote/t1 status=200 duration_ms=13
 INFO:httpx:HTTP Request: GET http://testserver/sessions/quote/t1 "HTTP/1.1 200 OK"
 INFO:hsr-bms:request_id=dced7e20-b8bb-4fa6-898d-170e2160a4d8 method=POST path=/sessions/stop/t1 status=409 duration_ms=11
-INFO:httpx:HTTP Request: POST http://testserver/sessions/stop/t1?closed_at_ms=1791661403610.22&checkout_token_value=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwdXJwb3NlIjoiY2hlY2tvdXQiLCJzZXNzaW9uX2tleSI6InQxOjgzZTYwYTAwZTkxZjQwYzNiN2ZjOTRiNzA0ODM3YmE3IiwiY2xvc2VkX2F0X21zIjoxNzkxNjYxNDAzNjExLjIyLCJleHAiOjE3OTE2NjIwMDN9.z7hF3K5JzPbplCPIvP1YvfrgSk84OF4xBYrgk_bvh1E&session_key=t1%3A83e60a00e91f40c3b7fc94b704837ba7 "HTTP/1.1 409 Conflict"
+INFO:httpx:HTTP Request: POST http://testserver/sessions/stop/t1?closed_at_ms=1791661403610.22&checkout_token_value=[REDACTED_EXPIRED_QA_JWT]&session_key=t1%3A83e60a00e91f40c3b7fc94b704837ba7 "HTTP/1.1 409 Conflict"
 INFO:hsr-bms:request_id=dc2be52b-c566-416e-b1a2-e96c87c9ace9 method=POST path=/sessions/start status=200 duration_ms=15
 INFO:httpx:HTTP Request: POST http://testserver/sessions/start "HTTP/1.1 200 OK"
 INFO:hsr-bms:request_id=99e05843-117a-4048-8869-6c64e5986b63 method=POST path=/sessions/stop/t2 status=409 duration_ms=9
-INFO:httpx:HTTP Request: POST http://testserver/sessions/stop/t2?closed_at_ms=1791661403611.22&checkout_token_value=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwdXJwb3NlIjoiY2hlY2tvdXQiLCJzZXNzaW9uX2tleSI6InQxOjgzZTYwYTAwZTkxZjQwYzNiN2ZjOTRiNzA0ODM3YmE3IiwiY2xvc2VkX2F0X21zIjoxNzkxNjYxNDAzNjExLjIyLCJleHAiOjE3OTE2NjIwMDN9.z7hF3K5JzPbplCPIvP1YvfrgSk84OF4xBYrgk_bvh1E "HTTP/1.1 409 Conflict"
+INFO:httpx:HTTP Request: POST http://testserver/sessions/stop/t2?closed_at_ms=1791661403611.22&checkout_token_value=[REDACTED_EXPIRED_QA_JWT] "HTTP/1.1 409 Conflict"
 INFO:hsr-bms:request_id=8a2239e5-388e-4e8a-a33b-ed3166290e98 method=POST path=/sessions/stop/t1 status=409 duration_ms=9
-INFO:httpx:HTTP Request: POST http://testserver/sessions/stop/t1?closed_at_ms=1791661403611.22&checkout_token_value=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwdXJwb3NlIjoiY2hlY2tvdXQiLCJzZXNzaW9uX2tleSI6InQxOjgzZTYwYTAwZTkxZjQwYzNiN2ZjOTRiNzA0ODM3YmE3IiwiY2xvc2VkX2F0X21zIjoxNzkxNjYxNDAzNjExLjIyLCJleHAiOjE3OTE2NjIwMDN9.z7hF3K5JzPbplCPIvP1YvfrgSk84OF4xBYrgk_bvh1E&session_key=t1%3A83e60a00e91f40c3b7fc94b704837ba7 "HTTP/1.1 409 Conflict"
+INFO:httpx:HTTP Request: POST http://testserver/sessions/stop/t1?closed_at_ms=1791661403611.22&checkout_token_value=[REDACTED_EXPIRED_QA_JWT]&session_key=t1%3A83e60a00e91f40c3b7fc94b704837ba7 "HTTP/1.1 409 Conflict"
 INFO:hsr-bms:request_id=1bb0abb5-e4d2-4a5b-b7e1-9f66d8fefbd9 method=POST path=/sessions/stop/t1 status=200 duration_ms=27
-INFO:httpx:HTTP Request: POST http://testserver/sessions/stop/t1?closed_at_ms=1791661403611.22&checkout_token_value=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwdXJwb3NlIjoiY2hlY2tvdXQiLCJzZXNzaW9uX2tleSI6InQxOjgzZTYwYTAwZTkxZjQwYzNiN2ZjOTRiNzA0ODM3YmE3IiwiY2xvc2VkX2F0X21zIjoxNzkxNjYxNDAzNjExLjIyLCJleHAiOjE3OTE2NjIwMDN9.z7hF3K5JzPbplCPIvP1YvfrgSk84OF4xBYrgk_bvh1E&session_key=t1%3A83e60a00e91f40c3b7fc94b704837ba7 "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://testserver/sessions/stop/t1?closed_at_ms=1791661403611.22&checkout_token_value=[REDACTED_EXPIRED_QA_JWT]&session_key=t1%3A83e60a00e91f40c3b7fc94b704837ba7 "HTTP/1.1 200 OK"
 INFO:hsr-bms:request_id=72b0ac0e-b531-4cc6-a3cf-edf5c058d2b7 method=POST path=/sessions/stop/t1 status=200 duration_ms=10
-INFO:httpx:HTTP Request: POST http://testserver/sessions/stop/t1?closed_at_ms=1791661403611.22&checkout_token_value=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwdXJwb3NlIjoiY2hlY2tvdXQiLCJzZXNzaW9uX2tleSI6InQxOjgzZTYwYTAwZTkxZjQwYzNiN2ZjOTRiNzA0ODM3YmE3IiwiY2xvc2VkX2F0X21zIjoxNzkxNjYxNDAzNjExLjIyLCJleHAiOjE3OTE2NjIwMDN9.z7hF3K5JzPbplCPIvP1YvfrgSk84OF4xBYrgk_bvh1E&session_key=t1%3A83e60a00e91f40c3b7fc94b704837ba7 "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://testserver/sessions/stop/t1?closed_at_ms=1791661403611.22&checkout_token_value=[REDACTED_EXPIRED_QA_JWT]&session_key=t1%3A83e60a00e91f40c3b7fc94b704837ba7 "HTTP/1.1 200 OK"
 ok
 test_staff_rotation_revokes_only_staff (__main__.FullStackTests.test_staff_rotation_revokes_only_staff) ... INFO:hsr-bms:request_id=5ed857c5-c560-4f6a-8b07-05c0ecfcf2e9 method=POST path=/auth/login status=200 duration_ms=385
 INFO:httpx:HTTP Request: POST http://testserver/auth/login "HTTP/1.1 200 OK"

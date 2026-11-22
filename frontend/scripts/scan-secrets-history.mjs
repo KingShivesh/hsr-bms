@@ -17,7 +17,8 @@ const temporary = await fs.mkdtemp(path.join(os.tmpdir(), "hsr-redacted-secrets-
 try {
   const reportPath = path.join(temporary, "report.json");
   const result = spawnSync(process.env.GITLEAKS_PATH || "gitleaks", ["git", root,
-    "--log-opts", tips.join(" "), "--redact=100", "--no-banner", "--no-color", "--timeout", "120", "--report-path", reportPath,
+    "--log-opts", tips.join(" "), "--redact=100", "--no-banner", "--no-color", "--timeout", "120",
+    "--gitleaks-ignore-path", path.join(root, ".gitleaksignore"), "--report-path", reportPath,
   ], { encoding: "utf8", maxBuffer: 4 * 1024 * 1024 });
   if (result.error || ![0, 1].includes(result.status)) throw new Error("Secret scan failed; install the official Gitleaks release or set GITLEAKS_PATH.");
   const raw = JSON.parse(await fs.readFile(reportPath, "utf8"));

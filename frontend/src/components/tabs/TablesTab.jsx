@@ -867,6 +867,7 @@ function TableCard({
   gstPercent,
   busyActions = {},
   compact = false,
+  canViewHistory = false,
 }) {
   const [reserveOpen, setReserveOpen] = useState(false);
   const [notesOpen, setNotesOpen] = useState(false);
@@ -956,7 +957,7 @@ function TableCard({
 
   return (
     <>
-      {showHistory && (
+      {canViewHistory && showHistory && (
         <HistoryModal
           tableId={table.id}
           tableNum={table.num}
@@ -1004,7 +1005,7 @@ function TableCard({
               {polishCurrency(rate)}/hr · {getTableLabel(table)}
             </span>
             <div className="table-utility-cluster">
-              <HsrButton native
+              {canViewHistory && <HsrButton native
                 type="button"
                 onClick={() => setShowHistory(true)}
                 title="History"
@@ -1012,7 +1013,7 @@ function TableCard({
                 className="table-utility-btn"
               >
                 <HsrIcon className="ti ti-clock" aria-hidden="true" />
-              </HsrButton>
+              </HsrButton>}
               <HsrButton native
                 type="button"
                 onClick={() => setMaintOpen((p) => !p)}
@@ -1248,7 +1249,7 @@ function TableCard({
   );
 }
 
-export default function TablesTab({ onSessionEnd, newSessionRequest = 0, onOpenFoodOrder, onNavigate }) {
+export default function TablesTab({ onSessionEnd, newSessionRequest = 0, onOpenFoodOrder, onNavigate, role = "staff" }) {
   const { showToast } = useToast();
   const [initialLoading, setInitialLoading] = useState(true);
   const [floorReady, setFloorReady] = useState(false);
@@ -1934,6 +1935,7 @@ export default function TablesTab({ onSessionEnd, newSessionRequest = 0, onOpenF
               />
 
               <TableCard
+                canViewHistory={role === "admin"}
                 onReviewBooking={() => onNavigate?.("reservations")}
                 key={selectedTable.id}
                 table={selectedTable}

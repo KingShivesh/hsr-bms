@@ -1,0 +1,71 @@
+{
+  "comparedTo": "Verified Phase 2 production assets",
+  "files": [
+    {
+      "path": "/assets/LiveFloor-wlGi4y7t.css",
+      "sha256": "319e3474d28ddddf0d6f66f5a366f77fa46e85599e7e75a76195329b63df1856",
+      "matches": true
+    },
+    {
+      "path": "/assets/dm-mono-latin-400-normal--0xN8mdc.woff",
+      "sha256": "1736dbec4c2da8403e7cf80523dbe77b00bff5fe9b3c0f2a953032ad5d84869a",
+      "matches": true
+    },
+    {
+      "path": "/assets/dm-mono-latin-400-normal-4GdczIuU.woff2",
+      "sha256": "e1896b13b2b1bb112fac2f9571bd6c40e118746e77a4511edbf43fbb41bf3e1e",
+      "matches": true
+    },
+    {
+      "path": "/assets/dm-mono-latin-500-normal-CN8Miw6E.woff",
+      "sha256": "f9fbeef336ab52ff50c455d34ba361b686d4dc5f32b17e4ac5181606ff132e6b",
+      "matches": true
+    },
+    {
+      "path": "/assets/dm-mono-latin-500-normal-DRMDZjhP.woff2",
+      "sha256": "9964608a849396bd00c4bfd7034afe03486469dcf20b4f6b8cbdfdd310369951",
+      "matches": true
+    },
+    {
+      "path": "/assets/dm-mono-latin-ext-400-normal-1aZr6b2b.woff",
+      "sha256": "5357dcba4e325c781acf79d15fd21f740f4abb7ca3f0fad88af774bd94a74e78",
+      "matches": true
+    },
+    {
+      "path": "/assets/dm-mono-latin-ext-400-normal-C2zvOubV.woff2",
+      "sha256": "a52e19ebe0398c9c0f8fa28a0c5e9a6bc324f35d9f0881c9aa407d10af447175",
+      "matches": true
+    },
+    {
+      "path": "/assets/dm-mono-latin-ext-500-normal-BtRyHRi6.woff2",
+      "sha256": "8711f938c3f04f91e35ae64ebc7f2eecd800d2ae1c3542f6c837c758a50422f5",
+      "matches": true
+    },
+    {
+      "path": "/assets/dm-mono-latin-ext-500-normal-Dw3M13d8.woff",
+      "sha256": "244d27dd594826258c14fcfcc786e72af979448594887ff2c3f9553ab2f282a1",
+      "matches": true
+    },
+    {
+      "path": "/assets/index-jpD6dF0X.css",
+      "sha256": "d74780c926b62146ff06923053df44d4413284583f03c373448615ed33c8366c",
+      "matches": true
+    },
+    {
+      "path": "/assets/syne-greek-wght-normal-5tOOQDeJ.woff2",
+      "sha256": "b9ade823e28b34c3a9c038ae698e659f64b66dabeed6c979e0bc347bfcc891a7",
+      "matches": true
+    },
+    {
+      "path": "/assets/syne-latin-ext-wght-normal-JjI8ZrW1.woff2",
+      "sha256": "83885b130cf2a67bc2fd6175d6f3c2875833552c1762b5943b51335038ae01f2",
+      "matches": true
+    },
+    {
+      "path": "/assets/syne-latin-wght-normal-BVsvWWA4.woff2",
+      "sha256": "68b623f0e45b905041b2edb9b2e4f563a505f13db1cd06b5f1946eb2e1f47048",
+      "matches": true
+    }
+  ],
+  "allMatch": true
+}

@@ -173,6 +173,7 @@ export default function CommandBar({ page, setPage, onNewSession, role = "admin"
         aliases: "close day eod shift end closing cash tally",
         icon: "ti-clipboard-check",
         action: () => setPage("closing"),
+        adminOnly: true,
       },
       {
         id: "settings",

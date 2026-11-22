@@ -8,7 +8,7 @@ from collections import Counter, defaultdict
 from hsr_config import format_ist_now
 from realtime import queue_realtime_event
 from audit import log_action
-from deps import get_current_claims
+from deps import get_current_claims, require_admin
 from money import MoneyRequest, assert_day_open
 
 router = APIRouter()
@@ -147,7 +147,7 @@ def restore_food_order(
     return _food_order_payload(order)
 
 @router.get("/stats")
-def get_food_stats(db: Session = Depends(get_db)):
+def get_food_stats(db: Session = Depends(get_db), _: dict = Depends(require_admin)):
     # Count item sales from both session transactions and food-only orders
     counter = Counter()
     revenue_counter = defaultdict(int)

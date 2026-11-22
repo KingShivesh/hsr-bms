@@ -7,7 +7,8 @@ from datetime import datetime, timedelta, timezone
 import bcrypt
 from fastapi import Depends, HTTPException, status
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
-from jose import JWTError, jwt
+import jwt
+from jwt import InvalidTokenError as JWTError
 from sqlalchemy.orm import Session
 
 import models
@@ -66,7 +67,7 @@ def get_current_claims(
             headers={"WWW-Authenticate": "Bearer"},
         )
     try:
-        payload = jwt.decode(credentials.credentials, SECRET_KEY, algorithms=[ALGORITHM], options={"require_exp": True})
+        payload = jwt.decode(credentials.credentials, SECRET_KEY, algorithms=[ALGORITHM], options={"require": ["exp"]})
         username = payload.get("sub")
         role = payload.get("role") or "admin"
         if "version" not in payload or not payload.get("jti"):

@@ -131,7 +131,7 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
       const labels = ["menu items", "food stats", "order history", "active tables"];
       const requests = [
         getMenu().then(response => { setMenu(response.data || {}); return response; }),
-        getFoodStats().then(response => { setStats(Array.isArray(response.data) ? response.data.filter(row => row && typeof row === "object") : []); return response; }).finally(() => setStatsLoading(false)),
+        (role === "admin" ? getFoodStats() : Promise.resolve({ data: [] })).then(response => { setStats(Array.isArray(response.data) ? response.data.filter(row => row && typeof row === "object") : []); return response; }).finally(() => setStatsLoading(false)),
         getFoodOrders().then(response => { setOrders(Array.isArray(response.data) ? response.data.filter(row => row && typeof row === "object") : []); return response; }).finally(() => setOrdersLoading(false)),
         getLiveFloor().then(response => {
           const sessions = response.data?.floor?.sessions || response.data?.active_sessions || [];
@@ -163,7 +163,7 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
     } finally {
       if (showLoading) setLoading(false);
     }
-  }, [showToast, setActiveSessions, setMenu, setOrders, setStats]);
+  }, [role, showToast, setActiveSessions, setMenu, setOrders, setStats]);
 
   useEffect(() => {
     fetchAll({ showLoading: true });
@@ -180,13 +180,13 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
 
   const refreshOrders = useCallback(async () => {
     try {
-      const [ordersRes, statsRes] = await Promise.all([getFoodOrders(), getFoodStats()]);
+      const [ordersRes, statsRes] = await Promise.all([getFoodOrders(), role === "admin" ? getFoodStats() : Promise.resolve({ data: [] })]);
       setOrders(Array.isArray(ordersRes.data) ? ordersRes.data.filter(row => row && typeof row === "object") : []);
       setStats(Array.isArray(statsRes.data) ? statsRes.data.filter(row => row && typeof row === "object") : []);
     } catch {
       // The realtime hook keeps polling while disconnected; the global API banner handles failures.
     }
-  }, [setOrders, setStats]);
+  }, [role, setOrders, setStats]);
 
   const scheduleMenuRefresh = useCallback(() => {
     window.clearTimeout(menuRefreshTimerRef.current);
@@ -515,7 +515,7 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
           ["order", "New Order"],
           ["stats", "Food Stats"],
           ["history", "Order History"],
-        ].map(([id, label]) => (
+        ].filter(([id]) => id !== "stats" || role === "admin").map(([id, label]) => (
           <HsrButton native
             key={id}
             onClick={() => setActiveTab(id)}
@@ -885,7 +885,7 @@ export default function FoodTab({ onNavigate, role = "admin", orderContext, onOr
       ))}
 
       {/* ── Food Stats ── */}
-      {activeTab === "stats" && (
+      {role === "admin" && activeTab === "stats" && (
         <div>
           <div
               className="section-heading"

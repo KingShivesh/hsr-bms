@@ -36,7 +36,7 @@ export default function Sidebar({ page, setPage, onLogout, activeTables, role = 
       items: [
         { id: "billing", icon: "ti-receipt", label: "Sales", staffHidden: true },
         { id: "reports", icon: "ti-chart-bar", label: "Analytics & Reports", adminOnly: true },
-        { id: "closing", icon: "ti-lock-check", label: "Daily Closing" },
+        { id: "closing", icon: "ti-lock-check", label: "Daily Closing", adminOnly: true },
         { id: "dashboard", icon: "ti-layout-dashboard", label: "Executive Overview", adminOnly: true },
       ],
     },

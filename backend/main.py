@@ -15,6 +15,7 @@ import models
 from database import Base, engine, ensure_runtime_columns
 from deps import get_current_user
 from hsr_config import APP_NAME, is_production_env, validate_runtime_config
+from request_limits import BodySizeLimit
 from routers import auth, bookings, challenges, events, food, members, operations, product, reports, sessions, settings, staff, tournaments, waitlist
 
 validate_runtime_config()
@@ -48,7 +49,7 @@ def cors_settings():
         origin.strip()
         for origin in os.getenv(
             "ALLOWED_ORIGINS",
-            "http://localhost:5173,http://127.0.0.1:5173,https://*.vercel.app",
+            "http://localhost:5173,http://127.0.0.1:5173,https://hsr-bms.vercel.app",
         ).split(",")
         if origin.strip()
     ]
@@ -56,19 +57,25 @@ def cors_settings():
     wildcard_patterns = []
     for origin in configured:
         if "*" in origin:
+            if is_production_env():
+                # Replace the old broad hosted-preview default without losing the live app.
+                if origin == "https://*.vercel.app":
+                    exact_origins.append("https://hsr-bms.vercel.app")
+                continue
             wildcard_patterns.append("^" + re.escape(origin).replace("\\*", ".*") + "$")
         else:
             exact_origins.append(origin)
-    return exact_origins, "|".join(wildcard_patterns) or None
+    return list(dict.fromkeys(exact_origins)), "|".join(wildcard_patterns) or None
 
 
 allowed_origins, allowed_origin_regex = cors_settings()
 
+app.add_middleware(BodySizeLimit, max_bytes=MAX_REQUEST_BYTES)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=allowed_origins,
     allow_origin_regex=allowed_origin_regex,
-    allow_credentials=True,
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -77,18 +84,6 @@ app.add_middleware(
 async def add_security_headers(request: Request, call_next):
     request_id = request.headers.get("x-client-request-id") or str(uuid.uuid4())
     started_at = time.perf_counter()
-    content_length = request.headers.get("content-length")
-    try:
-        request_bytes = int(content_length or "0")
-    except ValueError:
-        request_bytes = 0
-    if request_bytes > MAX_REQUEST_BYTES:
-        response = JSONResponse(
-            status_code=413,
-            content={"detail": "Request body too large"},
-        )
-        response.headers["X-Request-Id"] = request_id
-        return response
     try:
         response = await call_next(request)
     except Exception:

@@ -1,103 +1,135 @@
 # Phase 3: Security and Access Review
 
-Status: initial read-only review, **not a completed security-hardening release**.
-Branch `codex/security-access-review` is based on approved Phase 2 `2307dac`.
-There are no application, schema, palette, font, credential or permission changes
-in this checkpoint. Production financial records were not read or changed.
+Status on 23 November 2026: local hardening verified on
+`codex/security-access-review`; **not merged or deployed**. Supabase project
+inspection still needs the owner's specific project URL and read-only approval.
+This is a review checkpoint, not a claim that every production security boundary
+has been verified. No production business records or credentials were changed.
 
-The owner approved Phase 2 merge/deployment on 21 November 2026. The deployment
-preflight occurred at about 10:47 PM IST, during the 11 AM-2 AM business shift.
-The approved rollout plan calls for a quiet 3-11 AM window, no open tables and a
-backup. The owner subsequently confirmed the club is idle, a backup is ready,
-and explicitly approved deploying now. At this review checkpoint main is still
-`6471be2`; the staged Phase 2 cutover is next. No scheduled deployment was created.
+## Phase 2 Is Already Live
 
-Production `/health` and `/ready` initially exceeded 15-second requests. A later
-read-only check using the documented longer wake budget returned 200 for both,
-database OK, revision `5f23897`. The cold-start limitation still applies; a short
-timeout alone is not evidence of a permanent outage.
+The owner explicitly confirmed the club was idle, a backup was ready, and immediate
+deployment was approved. Backend stage `5e57d8c` was healthy with database readiness
+and financial protocol 2 before publishing frontend merge `248390b`. All 35 served
+JS/CSS/font hashes matched the tested build. Ten production login-screen checks
+passed across both themes and five widths without submitting credentials or
+mutating business records. Main's documentation receipt is `efd98b3`.
+Evidence: [deployment](../phase-2/deployment.json),
+[timeline](../phase-2/deployment-timeline.json), and
+[production login checks](../phase-2/production-login/).
 
-## Confirmed Findings
+## Changes and Evidence
 
-| Severity | Finding | Evidence | Next Action |
+| Area | Released Baseline | Review Branch | Evidence |
 | --- | --- | --- | --- |
-| High | Staff receives full business summary, including revenue, averages and yesterday/trends. | `access-before.json`: Staff `/reports/summary` returns 200; Owner policy probe expects 403. | Preserve the Staff shell's operational table count through a narrow schema/endpoint; keep business totals Owner-only. Do not simply break the Staff header's existing summary request. |
-| High | Staff can retrieve detailed closing report and closing insights. | Staff `/reports/closing-report` and `/reports/closing-insights` return 200. Response fields include tender totals, receipts and reconciliation. | Enforce Owner checks on the backend and align the Staff navigation/route guard. Per-table checkout and trusted Staff time editing must remain available. |
-| Medium | Production CORS accepts an unrelated Vercel origin with credentials allowed. | `public-surface.json`: preflight 200, matching unrelated origin echoed, credentials true. | Restrict to explicitly approved production/local origins; define how preview origins are approved. This is not an unauthenticated bypass of bearer-token checks. |
-| Medium | Frontend login response lacks CSP, frame restriction, nosniff and Referrer-Policy headers. | `public-surface.json`; HSTS is present. Backend has separate security headers. | Add tested frontend headers and a staged CSP without breaking existing fonts/assets. |
-| High advisory ratings; exploitability not established | Current npm audit flags `follow-redirects`, `vite` and `zod`. | `npm-audit.json`, 3 High packages, 0 Critical. | Review current upstream fixes, update in an isolated install, rebuild and regress. Several listed paths are Node/development tooling, not demonstrated browser-production exploits. Do not equate package counts with three successful attacks. |
-| Low / log hygiene | Six JWT strings are present in historical QA logs. | Gitleaks 8.30.1 scanned 372 commits reachable from 51 valid local ref tips. All six tokens are expired. Four signatures match known QA keys; two occur in test request logs with checkout-only claims. No token values are stored in this report. | Redact future test diagnostics and current log copies; retain narrow, reviewed historical fingerprints rather than blanket ignoring logs. No live production key leak or need for key rotation is established by these findings alone. |
+| Owner/Staff data boundaries | Seven failed comparisons among 96 probes. Staff saw business summary fields, closing reports/insights, food statistics, table history/audit and closed-session events. | 96/96 pass. Staff summary contains only four operational counts; historical reports require Owner; table events are scoped to the current active session for Staff. | `access-before.json`, `access-after.json` |
+| Staff interface | Daily Closing navigation/command/route, Food Stats and historical table controls were exposed. | Hidden and guarded, with no Staff food-statistics request. Owner controls retained. | `browser/before.json`, `browser/after.json` |
+| Trusted Staff operations | Staff can run and close tables and correct session times. | Preserved, including checkout preview and normal floor/menu/booking/member lookup. | `postgres-final/security_access.log`, `access-after.json` |
+| Body-size validation | Declared oversized body rejected, but a chunked body above the same limit returned 200 and reached the handler. | Both return 413; no note saved. A small chunked request still works. Stream responses are not buffered. | `body-limit-before.log`, `postgres-final/security_access.log` |
+| Production CORS | Unrelated Vercel origins accepted; credentials enabled. | Exact configured origins only. Legacy `https://*.vercel.app` maps only to the canonical HSR site; other production wildcards are discarded. Bearer auth does not need cookie credentials. | Production-mode tests in `security_access.log` |
+| Frontend headers | CSP/frame/referrer/nosniff restrictions absent in captured production response. | Enforcing CSP, exact bootstrap-script hash, self-hosted scripts/fonts, no framing, nosniff, no referrer and disabled unused device permissions. | `frontend-tests.log`, `browser/after.json`, `public-surface.json` |
+| JavaScript dependencies | Three High-rated packages in the saved audit. | Zero known advisories: Vite 8.3.8, follow-redirects 1.16.3, zod 4.6.7. | `npm-audit.json`, `npm-audit-after.json` |
+| Python dependencies | Eleven advisory records across four packages, including duplicate advisory IDs. No patched python-jose/ecdsa releases in that snapshot. | Replace the unused asymmetric-JWT dependency chain with PyJWT 2.15.1 for the existing HS256 protocol; update build tools. Zero known advisories across 34 installed packages and 12 separately inventoried bundled build-tool packages. | `python-audit-before.json`, `python-audit.json`, `python-bundled-audit.json`, corresponding package inventories |
+| QA log hygiene | Six historical JWT findings, all expired/test-context tokens; 26 token-shaped strings in current copies of six logs. | Current copies redacted; future httpx test diagnostics filtered. Six exact historical fingerprints reviewed, not a blanket logs/JWT exclusion. History is not rewritten. | `secrets-history.json`, `qa-log-redaction.json`, `.gitleaksignore`, `secrets-history-after.json` |
+| Design preservation | Approved SNOOK colors and Syne + DM Mono. | All 13 built CSS/font files byte-identical to the verified Phase 2 release. | `appearance-assets.json` |
+
+Before is the archived released source `248390b`, run with disposable local data;
+after is the built review source with the proposed CSP enforced. It is not a
+production mutation test. Browser contexts block all non-read API requests after
+local QA login. Checks cover Owner/Staff, light/dark, 375/1440px: eight contexts,
+three pages each, 24 screenshots per stage. No horizontal overflow, page errors,
+CSP violations or attempted business writes in the final run.
+
+Comparison images are original pixels: **before left, after right; light above,
+dark below**. Permission removal changes Staff navigation, not the brand/layout.
+
+![Staff closing boundary](browser/comparison-closing-1440.png)
+![Staff Cafe POS, mobile](browser/comparison-cafe-375.png)
+![Staff table history boundary](browser/comparison-tables-1440.png)
+
+All six mobile/desktop comparisons and input image hashes are listed in
+[`browser/comparisons.json`](browser/comparisons.json). Screenshots wait for loaded
+content and fonts, rather than comparing a skeleton with a settled screen.
 
 ## Verification
 
-`access-before.json` records 84 local HTTP comparisons: 81 pass, 3 fail. The three
-failures above are deliberately retained as **baseline failures**, not a green
-security gate. Anonymous requests to all 28 probed protected endpoints return 401.
-The audit uses disposable SQLite fixtures and removes all fixture rows afterward.
-Only response shapes/field names and HTTP statuses are retained, not receipt or
-member values. GET `/staff/roles` can seed its configuration even though it is a
-GET; this happened only in the disposable fixture, not production.
+- Fresh Python 3.11.9 install, production-shaped configuration, disposable
+  PostgreSQL 16: **159 test executions passed**, production app import passed,
+  short soak cycle passed. This is a regression cycle, not a long-duration soak.
+  Exact commands, timings and logs: [`postgres-final/results.json`](postgres-final/results.json).
+- Eighteen security-specific tests also pass on disposable SQLite. Existing
+  credential rotation, token revocation, default-password rejection, validation,
+  spoofed-forwarded-header login limiting and anonymous-route tests reran inside
+  the full PostgreSQL suite.
+- JWT compatibility explicitly covers independently encoded legacy HS256 login
+  tokens, logout revocation, legacy checkout quotes and idempotent repeat checkout;
+  unexpected HS512 headers and signed tokens without expiry are rejected. No
+  signing secret, 24-hour lifetime or token-version contract was changed.
+- Frontend lint/build, eight financial-intent tests, sixteen request-recovery
+  tests and four browser-policy tests pass. CSP allows required inline **styles**
+  for the existing UI, not arbitrary inline scripts or eval. The local preview
+  changes only the allowed backend origin from Render to loopback.
+- Full strict contrast scan: **21 routes, both themes, zero violations and zero
+  errors**, including large text and disabled controls at the 4.5:1 minimum.
+  The actual arrays are retained in `contrast.json`.
+- Official checksum-verified Gitleaks 8.30.1 scans all history reachable from valid
+  local refs. Only location metadata is saved. Existing malformed refs are skipped
+  and left untouched; unreachable/reflog-only objects and absent remote refs are
+  outside that scope. A scan is not proof that credentials were never exposed.
+- `secret-scan.yml` adds the same history guard to pull requests and main/codex
+  pushes. Backend parity adds the security tests and fresh build-tool installation;
+  frontend parity checks CSP hashes against both source and built HTML.
 
-Anonymous access, Owner/Staff separation, financial reports, member financial
-listing, account/setup, audit/security controls, and essential floor/menu/booking
-lookup routes are included. This is not yet an exhaustive mutation permission or
-cross-session revocation test. Existing auth regression coverage is retained but
-has not been represented as a fresh complete Phase 3 pass.
-
-Run the baseline locally (nonzero exit currently expected):
+Repeat locally with disposable data only:
 
 ```sh
 cd backend
-python audit_access_boundaries.py --output ../docs/daily-use-readiness/phase-3/access-before.json
+python test_security_access.py
+python audit_access_boundaries.py --output ../docs/daily-use-readiness/phase-3/access-after.json
 ```
 
-The fixture refuses non-loopback PostgreSQL URLs; with no test URL it creates a
-disposable SQLite database. Never aim a destructive fixture at production.
+The test fixture rejects non-loopback database URLs before importing the app.
+With no explicit test URL it creates disposable SQLite, not the application DB.
 
-Secret scanning uses the official Gitleaks 8.30.1 release, verified against the
-published SHA-256 checksum before execution. Only location metadata is retained.
-Malformed existing Git refs were skipped by Git enumeration and left untouched.
-Unreachable/reflog-only objects and remote refs not present locally were not
-scanned. A secret scan is not proof that credentials were never exposed elsewhere.
+## Remaining Risks and Decisions
 
-```sh
-cd frontend
-GITLEAKS_PATH=/path/to/verified/gitleaks node scripts/scan-secrets-history.mjs
-```
+1. **Supabase not verified:** actual RLS/policies, exposed schemas, grants, Data API
+   settings, database-role privileges/BYPASSRLS, pooler TLS and production secret
+   strength/rotation history. The browser approval gate denied private-dashboard
+   access without explicit project authorization. No alternate access path was
+   attempted. Supply the project dashboard URL and read-only authorization before
+   completing this part. Available local configuration is SQLite, not proof of
+   production settings. No secret values were printed.
+2. Authenticated identities remain shared Owner (`admin`) and Staff. Manager,
+   Cashier and Waiter settings rows do not implement real permissions or individual
+   employee identities. That requires a separate design, not misleading UI claims.
+3. Tokens still expire after 24 hours without silent refresh. Counter tablets need
+   a new login then; no token extension or refresh scheme is hidden in this change.
+4. Login protection is account-wide, in-process: five failures within a 15-minute
+   window, then 429. `Retry-After` says ten minutes, while actual eligibility follows
+   the rolling failure window. Restart/workers reset or split this state; many
+   distinct guessed usernames are not bounded by one global limit. Other sensitive
+   writes rely on role checks/validation but have no independent rate limit or
+   password reauthentication. Persistent/global throttling and step-up confirmation
+   need an explicit policy, especially with shared accounts. The existing spoofed
+   IP-header bypass regression passes; it does not prove distributed protection.
+5. Dependency scans are time-bound advisory checks, not penetration tests. No
+   demonstrated production exploit is inferred merely from a package rating.
+   Exact installed versions are inventoried; requirements still use the project's
+   compatible version ranges rather than a fully locked Python environment.
+6. CSP currently permits only the canonical Render backend. New approved backend
+   or image hosts need an explicit policy update and regression, not a wildcard.
+7. New RLS, schema, roles, production credentials and rate-limit architecture have
+   not been deployed. Render free-tier cold starts and the single-worker SSE broker
+   limitation remain as documented; no SSE expansion occurred.
 
-## Access and Environment Gaps
+Supabase's server-side API guidance:
+[API exposure/grants](https://supabase.com/docs/guides/api/securing-your-api),
+[RLS and bypass roles](https://supabase.com/docs/guides/database/postgres/row-level-security).
+PyJWT's [verification API](https://pyjwt.readthedocs.io/en/stable/api.html)
+documents fixed allowed algorithms and required claims used here.
 
-- The application currently authenticates only `admin` (Owner) and `staff`.
-  Manager/Cashier/Waiter rows in the roles-settings screen do not create actual
-  authenticated identities or enforce those roles. Do not claim otherwise or
-  silently invent a new employee/tenant model.
-- JWT lifetime remains 24 hours, with no silent refresh. Credential-version and
-  per-token revocation checks exist; streams recheck authority. Long-lived counter
-  tablets still face a fresh login when a token expires. This remains a separate
-  design decision, not permission to silently lengthen tokens.
-- Login limits are account-wide but in-process. Restart/multiple-worker behavior,
-  unknown-username spraying, and limits on other sensitive writes need explicit
-  tests before calling Phase 3 complete. The single-worker deployment assumption
-  must not be treated as persistent/distributed rate limiting.
-- Supabase RLS, exposed schemas, grants, Data API settings and actual database-role
-  privileges have **not** been inspected. The available local backend `.env` uses
-  SQLite and contains no Supabase connection URL. No secret values were printed.
-  Owner-assisted dashboard/catalog access is required for production verification.
-- Source uses server-side SQLAlchemy/Postgres, not a Supabase browser client.
-  [Supabase's guidance](https://supabase.com/docs/guides/api/securing-your-api)
-  recommends disabling the Data API when unused, or enforcing explicit exposure,
-  grants and RLS. No production setting was changed. RLS alone cannot protect data
-  from a privileged role with BYPASSRLS; see [RLS documentation](https://supabase.com/docs/guides/database/postgres/row-level-security).
-- Current production secret strength, rotation history, pooler TLS enforcement,
-  all sensitive input paths, Python dependency advisories and frontend security
-  regression tests remain unverified in this checkpoint. The earlier audit's
-  residual Python advisory notes are not a current clean scan.
-
-## Next Checkpoint
-
-Confirm the safe Phase 2 deployment window/backup, then merge and verify the real
-runtime revision, readiness version 2, bundle hashes and commit ancestry. After
-that, implement and test the Phase 3 findings in small reviewed changes. Do not
-merge this partial review branch as though the security work were complete.
-No SSE expansion, production account creation, key rotation, history rewrite,
-RLS change or backup operation has been performed.
+**Next approval:** authorize the specific Supabase project read-only inspection,
+then review this checkpoint and decide whether to merge/deploy Phase 3. Phase 4
+backup/monitoring does not begin automatically. No destructive migration, account
+creation, key rotation or production business mutation was performed.

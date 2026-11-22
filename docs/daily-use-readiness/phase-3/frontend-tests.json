@@ -1,0 +1,22 @@
+{
+  "generatedAt": "2026-11-22T23:15:33.202Z",
+  "steps": [
+    {
+      "name": "lint",
+      "status": 0
+    },
+    {
+      "name": "financial-intents",
+      "status": 0
+    },
+    {
+      "name": "request-recovery",
+      "status": 0
+    },
+    {
+      "name": "browser-policy",
+      "status": 0
+    }
+  ],
+  "build": "/private/tmp/hsr-phase3-build-final.log; Vite 8.3.8; built CSP checked in browser"
+}

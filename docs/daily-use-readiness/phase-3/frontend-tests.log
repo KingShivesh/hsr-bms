@@ -1,0 +1,69 @@
+
+=== lint: exit 0 ===
+
+> frontend@0.1.0 lint
+> node ./node_modules/eslint/bin/eslint.js .
+
+
+=== financial-intents: exit 0 ===
+
+> frontend@0.1.0 test:financial-intents
+> node --test ./scripts/test-financial-intents.mjs
+
+✔ uncertain request survives a full client recreation/reload (4.744417ms)
+✔ a confirmed order permits a new identical but distinct sale (0.585416ms)
+✔ payload changes and account changes do not share identities (0.582208ms)
+✔ conflicts and server errors retain the original intent (0.845875ms)
+✔ definitive validation rejection releases the intent (0.442208ms)
+✔ concurrent preparations collapse to the same pending intent (0.362042ms)
+✔ unavailable persistence fails before a financial POST (0.535541ms)
+✔ only financial writes get the safety contract (0.327375ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 72.599084
+
+=== request-recovery: exit 0 ===
+
+> frontend@0.1.0 test:request-recovery
+> node --test ./scripts/test-request-recovery.mjs
+
+✔ read timeouts share a 30s deadline, not three fresh timeouts (3.559458ms)
+✔ readiness has a bounded 75s wake budget (1.7385ms)
+✔ fast 503 reads retry twice then fail, and healthy retry returns data (1.99325ms)
+✔ post is never replayed (0.402292ms)
+✔ put is never replayed (0.289208ms)
+✔ patch is never replayed (0.236125ms)
+✔ delete is never replayed (0.206625ms)
+✔ 400 is not retried (0.238667ms)
+✔ 401 is not retried (0.253042ms)
+✔ 403 is not retried (0.289167ms)
+✔ 404 is not retried (0.204625ms)
+✔ 409 is not retried (0.215875ms)
+✔ 422 is not retried (0.232083ms)
+✔ 429 is not retried (0.202792ms)
+✔ cancellation and explicit noRetry never retry (0.586625ms)
+✔ abort while backing off cancels without another request (13.252125ms)
+ℹ tests 16
+ℹ suites 0
+ℹ pass 16
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 183.251625
+
+=== browser-policy: exit 0 ===
+test_basic_browser_headers (__main__.BrowserSecurityPolicyTests.test_basic_browser_headers) ... ok
+test_policy_preserves_only_required_resource_origins (__main__.BrowserSecurityPolicyTests.test_policy_preserves_only_required_resource_origins) ... ok
+test_script_policy_does_not_allow_inline_or_eval (__main__.BrowserSecurityPolicyTests.test_script_policy_does_not_allow_inline_or_eval) ... ok
+test_source_and_built_theme_bootstraps_have_exact_script_hashes (__main__.BrowserSecurityPolicyTests.test_source_and_built_theme_bootstraps_have_exact_script_hashes) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.002s
+
+OK

@@ -1,0 +1,8 @@
+# Reviewed expired QA tokens only; do not ignore whole log paths or JWT rules.
+# Triage and expiry evidence: docs/daily-use-readiness/phase-3/README.md
+e1c6a8f50c1452923084c6550f26b14f2fdd0ae6:docs/daily-use-readiness/phase-2/postgres/full_stack.log:jwt:368
+e1c6a8f50c1452923084c6550f26b14f2fdd0ae6:docs/daily-use-readiness/phase-2/fresh-python311/full_stack.log:jwt:368
+05dc04df8f09b2d79464f438017062fbe4d4ba04:docs/daily-use-readiness/phase-1/backend/full_stack.log:jwt:364
+7d3dc790614a51f065dc26ca541135a07310b29c:docs/full-stack-audit/auth-hardening-before.log:jwt:57
+7d3dc790614a51f065dc26ca541135a07310b29c:docs/full-stack-audit/postgres-security-after.log:jwt:332
+7d3dc790614a51f065dc26ca541135a07310b29c:docs/full-stack-audit/sqlite-security-after.log:jwt:320

@@ -1,0 +1,227 @@
+/usr/local/lib/python3.11/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+  from starlette.testclient import TestClient as TestClient  # noqa
+Settings seeded!
+HSR menu items seeded!
+Default rates: T1/T2 Wiraka ₹320/hr, T3/T4 English ₹270/hr, T5 Pool ₹170/hr.
+Cigarettes: admin enters manual price at order time.
+Seed complete.
+SOAK_TEST_DATABASE=postgres
+INFO:hsr-bms:request_id=756f6d41-2974-434b-8f24-35a3dd807af8 method=POST path=/auth/login status=200 duration_ms=393
+INFO:httpx:HTTP Request: POST http://testserver/auth/login "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=82a98430-255b-47f7-8ea2-dbee8dd9fcc5 method=POST path=/members status=307 duration_ms=46
+INFO:httpx:HTTP Request: POST http://testserver/members "HTTP/1.1 307 Temporary Redirect"
+INFO:hsr-bms:request_id=e1fa376c-abb2-4c2f-9df0-b19394912b86 method=POST path=/members/ status=200 duration_ms=13
+INFO:httpx:HTTP Request: POST http://testserver/members/ "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=9e130210-8795-4f9c-86a4-bb96f6959433 method=POST path=/members status=307 duration_ms=1
+INFO:httpx:HTTP Request: POST http://testserver/members "HTTP/1.1 307 Temporary Redirect"
+INFO:hsr-bms:request_id=29e496da-c96d-41e0-8c29-273f2c89b3fc method=POST path=/members/ status=200 duration_ms=7
+INFO:httpx:HTTP Request: POST http://testserver/members/ "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=5878dd2d-bcb1-41f9-a5fd-0b86f6490260 method=POST path=/members status=307 duration_ms=1
+INFO:httpx:HTTP Request: POST http://testserver/members "HTTP/1.1 307 Temporary Redirect"
+INFO:hsr-bms:request_id=01393de4-8dbd-4a85-8cf4-f642d25f371a method=POST path=/members/ status=200 duration_ms=6
+INFO:httpx:HTTP Request: POST http://testserver/members/ "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=6289791f-6c9f-46ea-a7f9-818d01bc1921 method=POST path=/members status=307 duration_ms=0
+INFO:httpx:HTTP Request: POST http://testserver/members "HTTP/1.1 307 Temporary Redirect"
+INFO:hsr-bms:request_id=89cb05dd-e090-4441-a1db-77179a4661bb method=POST path=/members/ status=200 duration_ms=5
+INFO:httpx:HTTP Request: POST http://testserver/members/ "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=5035760a-5fc2-4994-8f26-adf9f3fd8561 method=POST path=/members status=307 duration_ms=0
+INFO:httpx:HTTP Request: POST http://testserver/members "HTTP/1.1 307 Temporary Redirect"
+INFO:hsr-bms:request_id=3bb80397-92db-4ccb-b79d-1b3c09b02a92 method=POST path=/members/ status=200 duration_ms=5
+INFO:httpx:HTTP Request: POST http://testserver/members/ "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=76695be0-1431-4a26-928f-4e4156248427 method=POST path=/members status=307 duration_ms=0
+INFO:httpx:HTTP Request: POST http://testserver/members "HTTP/1.1 307 Temporary Redirect"
+INFO:hsr-bms:request_id=bbcfdf7b-4256-4448-978d-9d8d61c33c14 method=POST path=/members/ status=200 duration_ms=5
+INFO:httpx:HTTP Request: POST http://testserver/members/ "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=fd6fcfa7-2b6d-4d55-a88e-94831c4caa4a method=POST path=/members status=307 duration_ms=0
+INFO:httpx:HTTP Request: POST http://testserver/members "HTTP/1.1 307 Temporary Redirect"
+INFO:hsr-bms:request_id=1ff77594-b5b0-4298-9819-05fe08c13fa5 method=POST path=/members/ status=200 duration_ms=6
+INFO:httpx:HTTP Request: POST http://testserver/members/ "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=3fdd56a2-a9f9-4c2b-b162-7f837dc7c548 method=POST path=/members status=307 duration_ms=0
+INFO:httpx:HTTP Request: POST http://testserver/members "HTTP/1.1 307 Temporary Redirect"
+INFO:hsr-bms:request_id=0013c3c2-f9ab-4590-90f0-007c45228bf2 method=POST path=/members/ status=200 duration_ms=5
+INFO:httpx:HTTP Request: POST http://testserver/members/ "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=48c49578-aafe-4ed8-a1cd-a51ea5b57f79 method=POST path=/members status=307 duration_ms=1
+INFO:httpx:HTTP Request: POST http://testserver/members "HTTP/1.1 307 Temporary Redirect"
+INFO:hsr-bms:request_id=6f23fe75-bc8f-49ab-8db6-60709c33300d method=POST path=/members/ status=200 duration_ms=5
+INFO:httpx:HTTP Request: POST http://testserver/members/ "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=6a55a33d-7b68-49f2-8ee2-c92be6840eac method=POST path=/members status=307 duration_ms=0
+INFO:httpx:HTTP Request: POST http://testserver/members "HTTP/1.1 307 Temporary Redirect"
+INFO:hsr-bms:request_id=908d4d0a-9c6b-46ed-a52b-e976726ae571 method=POST path=/members/ status=200 duration_ms=5
+INFO:httpx:HTTP Request: POST http://testserver/members/ "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=be2f9dac-081f-440a-b67a-b104ade5382e method=POST path=/members status=307 duration_ms=0
+INFO:httpx:HTTP Request: POST http://testserver/members "HTTP/1.1 307 Temporary Redirect"
+INFO:hsr-bms:request_id=3384c30a-c9eb-421a-a698-9da8e416bd4b method=POST path=/members/ status=200 duration_ms=5
+INFO:httpx:HTTP Request: POST http://testserver/members/ "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=1fa5a128-8474-421b-b792-8224d55616a2 method=POST path=/members status=307 duration_ms=1
+INFO:httpx:HTTP Request: POST http://testserver/members "HTTP/1.1 307 Temporary Redirect"
+INFO:hsr-bms:request_id=eaa6b355-1bb0-4659-a0b4-0de3f7e14cd2 method=POST path=/members/ status=200 duration_ms=6
+INFO:httpx:HTTP Request: POST http://testserver/members/ "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=c764346b-05cf-4fc1-a5d2-6377b85002ab method=GET path=/sessions/active status=200 duration_ms=7
+INFO:httpx:HTTP Request: GET http://testserver/sessions/active "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=c8a8dc4d-ac28-4d61-959f-04bd4cbe94f3 method=POST path=/sessions/start status=200 duration_ms=20
+INFO:httpx:HTTP Request: POST http://testserver/sessions/start "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=ca2babc4-2326-49c9-9e97-0ccb9aabe362 method=GET path=/sessions/quote/t2 status=200 duration_ms=12
+INFO:httpx:HTTP Request: GET http://testserver/sessions/quote/t2 "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=7fe3da01-72e0-4b79-a11b-f4796ab5d26c method=POST path=/sessions/stop/t2 status=200 duration_ms=25
+INFO:httpx:HTTP Request: POST http://testserver/sessions/stop/t2?payment_method=Cash&session_key=t2%3A69a03c66711147c3ae5dc8d27a78bd75 "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=b0479160-e6ef-43ed-a36b-7192fe1a72b1 method=POST path=/sessions/stop/t2 status=200 duration_ms=8
+INFO:httpx:HTTP Request: POST http://testserver/sessions/stop/t2?payment_method=Cash&session_key=t2%3A69a03c66711147c3ae5dc8d27a78bd75 "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=a2976767-4d47-4fed-8f05-8f5e7ef807a7 method=GET path=/reports/history status=200 duration_ms=7
+INFO:httpx:HTTP Request: GET http://testserver/reports/history "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=5ae28300-9744-4236-b991-fcc8ed27bd26 method=POST path=/auth/login status=200 duration_ms=389
+INFO:httpx:HTTP Request: POST http://testserver/auth/login "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=9d45835b-a078-4546-b242-8ce2dc229226 method=POST path=/sessions/start status=200 duration_ms=20
+INFO:httpx:HTTP Request: POST http://testserver/sessions/start "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=e5375c8a-4857-413e-903f-b83a84b60200 method=GET path=/sessions/quote/t4 status=403 duration_ms=9
+INFO:httpx:HTTP Request: GET http://testserver/sessions/quote/t4?discount_type=percent_5 "HTTP/1.1 403 Forbidden"
+INFO:hsr-bms:request_id=a8107c30-607a-41ab-9282-78438fae6fd3 method=POST path=/sessions/stop/t4 status=200 duration_ms=18
+INFO:httpx:HTTP Request: POST http://testserver/sessions/stop/t4?payment_method=Cash "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=c26b5598-891b-485f-ad71-0bb5dc2ce7a6 method=POST path=/sessions/start status=200 duration_ms=11
+INFO:httpx:HTTP Request: POST http://testserver/sessions/start "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=66f90f58-ef06-49f6-ad9f-b3385404175d method=GET path=/sessions/quote/t2 status=200 duration_ms=11
+INFO:httpx:HTTP Request: GET http://testserver/sessions/quote/t2 "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=20f0cd81-f61a-445c-82ce-848f1bd77cba method=POST path=/sessions/transfer/t2 status=200 duration_ms=17
+INFO:httpx:HTTP Request: POST http://testserver/sessions/transfer/t2 "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=9f11bec4-9fff-4550-829f-53bb8286dc61 method=GET path=/sessions/active status=200 duration_ms=13
+INFO:httpx:HTTP Request: GET http://testserver/sessions/active "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=644906fd-d3b5-4dbc-9b52-293835aaa35b method=GET path=/sessions/quote/t4 status=200 duration_ms=8
+INFO:httpx:HTTP Request: GET http://testserver/sessions/quote/t4 "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=9a0fe11e-884c-49d4-a37d-0b6c1e2eedfe method=POST path=/sessions/t4/food status=200 duration_ms=12
+INFO:httpx:HTTP Request: POST http://testserver/sessions/t4/food "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=4f3c5b13-88a3-4b4b-84c8-0d549797f08f method=POST path=/sessions/t4/food status=200 duration_ms=10
+INFO:httpx:HTTP Request: POST http://testserver/sessions/t4/food "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=10f8b4eb-468e-4bbd-ac11-c1010f160dd1 method=POST path=/sessions/stop/t4 status=200 duration_ms=13
+INFO:httpx:HTTP Request: POST http://testserver/sessions/stop/t4?payment_method=Cash&session_key=t2%3A492cc49475fc49098dea14a56530195f "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=bad1b5cc-8beb-4355-a946-6184150a640c method=POST path=/sessions/stop/t4 status=200 duration_ms=6
+INFO:httpx:HTTP Request: POST http://testserver/sessions/stop/t4?payment_method=Cash&session_key=t2%3A492cc49475fc49098dea14a56530195f "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=0eb64090-9849-40b0-a1e4-4b5c66c7f738 method=POST path=/sessions/start status=200 duration_ms=9
+INFO:httpx:HTTP Request: POST http://testserver/sessions/start "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=ff9c481c-e21f-4f1a-831f-4450b5236ef3 method=POST path=/sessions/t1/food status=200 duration_ms=8
+INFO:httpx:HTTP Request: POST http://testserver/sessions/t1/food "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=128c235d-4563-42df-a826-e7137c4fe762 method=POST path=/sessions/t1/food status=200 duration_ms=8
+INFO:httpx:HTTP Request: POST http://testserver/sessions/t1/food "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=5af3facd-0ca2-4309-b40c-50d1151f82c6 method=POST path=/sessions/t1/notes status=200 duration_ms=6
+INFO:httpx:HTTP Request: POST http://testserver/sessions/t1/notes "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=f7148773-6d09-4b8b-ab3c-cdcd3e39be27 method=POST path=/sessions/stop/t1 status=200 duration_ms=12
+INFO:httpx:HTTP Request: POST http://testserver/sessions/stop/t1?payment_method=Cash "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=ffd63c34-f2f8-4d1d-8d11-7c2f15f639a5 method=POST path=/sessions/start status=200 duration_ms=9
+INFO:httpx:HTTP Request: POST http://testserver/sessions/start "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=d6a087c3-9513-4bdd-b234-2972156f618c method=POST path=/sessions/t3/food status=200 duration_ms=46
+INFO:httpx:HTTP Request: POST http://testserver/sessions/t3/food "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=5bb0c7a6-54c8-4ea5-9835-def9fab32576 method=POST path=/sessions/t3/food status=200 duration_ms=8
+INFO:httpx:HTTP Request: POST http://testserver/sessions/t3/food "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=725c8972-ea9a-43f7-b490-6f72833371d1 method=POST path=/sessions/stop/t3 status=200 duration_ms=12
+INFO:httpx:HTTP Request: POST http://testserver/sessions/stop/t3?payment_method=Cash "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=d9bdffd9-8153-4be9-b34b-72824b262ef2 method=POST path=/sessions/start status=200 duration_ms=9
+INFO:httpx:HTTP Request: POST http://testserver/sessions/start "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=9effe744-fc56-4bb8-953a-eacf6607f151 method=POST path=/sessions/pause/t5 status=200 duration_ms=9
+INFO:httpx:HTTP Request: POST http://testserver/sessions/pause/t5 "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=11cd26be-5523-4617-9b2e-ea03cabb67e7 method=POST path=/sessions/pause/t5 status=200 duration_ms=8
+INFO:httpx:HTTP Request: POST http://testserver/sessions/pause/t5 "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=bf7eb8cb-29ae-48f6-90a7-2f26f80dceb7 method=POST path=/sessions/t5/food status=200 duration_ms=7
+INFO:httpx:HTTP Request: POST http://testserver/sessions/t5/food "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=65491ce9-dc7d-4e92-9f4c-df2812f1a3a5 method=POST path=/sessions/t5/food status=200 duration_ms=7
+INFO:httpx:HTTP Request: POST http://testserver/sessions/t5/food "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=bc781a6c-de91-456c-bd9f-d61f8c13d331 method=GET path=/sessions/quote/t5 status=200 duration_ms=7
+INFO:httpx:HTTP Request: GET http://testserver/sessions/quote/t5?payment_method=Cash "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=a787cc67-b548-4531-aaee-35a36ec8b101 method=POST path=/sessions/stop/t5 status=200 duration_ms=13
+INFO:httpx:HTTP Request: POST http://testserver/sessions/stop/t5?payment_method=Cash&payer_name=Reyansh+Sethi "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=7492cc85-79fa-4016-a20f-e9204d47fca3 method=GET path=/reports/history status=200 duration_ms=5
+INFO:httpx:HTTP Request: GET http://testserver/reports/history "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=89d6dd5d-044e-4289-b9a3-c4e437c2ca83 method=GET path=/sessions/events/t5 status=200 duration_ms=7
+INFO:httpx:HTTP Request: GET http://testserver/sessions/events/t5 "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=d7826bf5-d1f8-4021-98d9-aa2fe892565c method=POST path=/food/order status=200 duration_ms=10
+INFO:httpx:HTTP Request: POST http://testserver/food/order "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=cabfbecf-a3a1-4ba2-b247-8969f74bfdcf method=POST path=/waitlist status=200 duration_ms=11
+INFO:httpx:HTTP Request: POST http://testserver/waitlist "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=001b5455-19b4-4a11-924e-b9b104985d0b method=POST path=/waitlist/4/seat status=200 duration_ms=7
+INFO:httpx:HTTP Request: POST http://testserver/waitlist/4/seat "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=cd903367-9cea-40c7-a221-edcbbd998f7e method=POST path=/bookings status=200 duration_ms=14
+INFO:httpx:HTTP Request: POST http://testserver/bookings "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=d013e314-e630-44f1-8be9-2de5f38a790b method=DELETE path=/bookings/16 status=200 duration_ms=7
+INFO:httpx:HTTP Request: DELETE http://testserver/bookings/16 "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=06bfa55a-6216-4b1b-8850-2fcede390adb method=POST path=/sessions/start status=400 duration_ms=7
+INFO:httpx:HTTP Request: POST http://testserver/sessions/start "HTTP/1.1 400 Bad Request"
+INFO:hsr-bms:request_id=b5c0cf10-ec21-4046-a8ef-15f764b255a0 method=POST path=/food/order status=400 duration_ms=6
+INFO:httpx:HTTP Request: POST http://testserver/food/order "HTTP/1.1 400 Bad Request"
+INFO:hsr-bms:request_id=ea95abb6-01a8-4f73-9b5e-1b68a2ba6f9b method=POST path=/sessions/start status=400 duration_ms=5
+INFO:httpx:HTTP Request: POST http://testserver/sessions/start "HTTP/1.1 400 Bad Request"
+INFO:hsr-bms:request_id=5907c5c9-10fd-47a0-b5f5-8f79d6bac97c method=POST path=/food/order status=422 duration_ms=4
+INFO:httpx:HTTP Request: POST http://testserver/food/order "HTTP/1.1 422 Unprocessable Entity"
+INFO:hsr-bms:request_id=07265a09-8b67-4275-a132-fa2ac79f9f06 method=POST path=/sessions/maintenance/t5 status=200 duration_ms=7
+INFO:httpx:HTTP Request: POST http://testserver/sessions/maintenance/t5 "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=7a7515f0-6e70-4e63-b315-9ba5dc35d47c method=POST path=/sessions/start status=400 duration_ms=6
+INFO:httpx:HTTP Request: POST http://testserver/sessions/start "HTTP/1.1 400 Bad Request"
+INFO:hsr-bms:request_id=9ab9c1b8-9121-4f00-bdcd-9be26824a7ee method=DELETE path=/sessions/maintenance/t5 status=200 duration_ms=6
+INFO:httpx:HTTP Request: DELETE http://testserver/sessions/maintenance/t5 "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=0c75b51a-0786-4b89-af0c-8a5b72558937 method=GET path=/reports/summary status=200 duration_ms=23
+INFO:httpx:HTTP Request: GET http://testserver/reports/summary "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=a5c2ecec-fb4a-4f39-93b1-646b8c6ea51a method=GET path=/reports/history status=200 duration_ms=6
+INFO:httpx:HTTP Request: GET http://testserver/reports/history "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=80bd58c6-b35f-4db3-b0a7-7ccaa919ede6 method=GET path=/reports/analytics status=200 duration_ms=10
+INFO:httpx:HTTP Request: GET http://testserver/reports/analytics "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=a23ebfbe-ac55-4347-af0f-64a09c2f5a20 method=GET path=/reports/top-customers status=200 duration_ms=6
+INFO:httpx:HTTP Request: GET http://testserver/reports/top-customers?period=all "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=f4f0f543-8bd1-4130-b7a8-b7166a1e0eba method=GET path=/reports/table-utilization status=200 duration_ms=6
+INFO:httpx:HTTP Request: GET http://testserver/reports/table-utilization "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=029b700c-db6d-4cbb-9fcd-fe92acd661dc method=GET path=/reports/closing-report status=200 duration_ms=27
+INFO:httpx:HTTP Request: GET http://testserver/reports/closing-report "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=8e669abe-65ef-4c3f-b533-7cb0c00024d2 method=GET path=/reports/closing-insights status=200 duration_ms=10
+INFO:httpx:HTTP Request: GET http://testserver/reports/closing-insights "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=9666c257-eb96-4d54-8731-6e66ce05f6fb method=GET path=/food/orders status=200 duration_ms=5
+INFO:httpx:HTTP Request: GET http://testserver/food/orders "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=701c4a9b-55c2-4c68-9a54-1e98b4611d4b method=GET path=/food/stats status=200 duration_ms=7
+INFO:httpx:HTTP Request: GET http://testserver/food/stats "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=697d18ea-d046-4601-b605-b02903769c0a method=GET path=/members status=307 duration_ms=1
+INFO:httpx:HTTP Request: GET http://testserver/members "HTTP/1.1 307 Temporary Redirect"
+INFO:hsr-bms:request_id=bc804237-c334-4085-a3e9-b169393c87b8 method=GET path=/members/ status=200 duration_ms=5
+INFO:httpx:HTTP Request: GET http://testserver/members/ "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=bd1f2cf5-8360-4867-8dc2-93626c96ad52 method=GET path=/members/duplicates status=200 duration_ms=5
+INFO:httpx:HTTP Request: GET http://testserver/members/duplicates "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=5cc64c6c-b526-4801-a7f0-84b6577dfed8 method=GET path=/settings/rates status=200 duration_ms=5
+INFO:httpx:HTTP Request: GET http://testserver/settings/rates "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=754d0e00-0e9d-43b4-83e3-8ff028c760ce method=GET path=/settings/menu status=200 duration_ms=5
+INFO:httpx:HTTP Request: GET http://testserver/settings/menu "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=9f90e949-1588-4417-a737-cc51e125369e method=GET path=/sessions/active status=200 duration_ms=4
+INFO:httpx:HTTP Request: GET http://testserver/sessions/active "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=68479bf0-4476-45db-8a46-f135721d61ec method=GET path=/bookings status=200 duration_ms=9
+INFO:httpx:HTTP Request: GET http://testserver/bookings "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=c8ba4665-ab9c-4928-bf30-e60986663a4c method=GET path=/waitlist status=200 duration_ms=6
+INFO:httpx:HTTP Request: GET http://testserver/waitlist "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=faf3d718-b6f6-4476-951d-ef4b7b7ad543 method=GET path=/reports/export status=200 duration_ms=6
+INFO:httpx:HTTP Request: GET http://testserver/reports/export?period=all "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=7a533af9-a1e2-435d-b242-728eaeac1cbf method=GET path=/sessions/active status=200 duration_ms=4
+INFO:httpx:HTTP Request: GET http://testserver/sessions/active "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=27733cba-b4a6-4d6e-9a79-0606fc347ea8 method=GET path=/sessions/active status=200 duration_ms=4
+INFO:httpx:HTTP Request: GET http://testserver/sessions/active "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=97e1d094-f92f-49fc-9338-8a497ceb4047 method=GET path=/reports/closing-report status=200 duration_ms=16
+INFO:httpx:HTTP Request: GET http://testserver/reports/closing-report "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=6e3a6acc-2cec-4513-a174-8105fbe58acf method=POST path=/reports/day-close status=200 duration_ms=22
+INFO:httpx:HTTP Request: POST http://testserver/reports/day-close "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=29c73e97-4ff2-49ce-9cbe-bfcdbd0d1f57 method=POST path=/reports/day-close status=409 duration_ms=9
+INFO:httpx:HTTP Request: POST http://testserver/reports/day-close "HTTP/1.1 409 Conflict"
+INFO:hsr-bms:request_id=b797d821-c924-4afd-b042-438e5ca36437 method=GET path=/sessions/active status=200 duration_ms=5
+INFO:httpx:HTTP Request: GET http://testserver/sessions/active "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=fe003b1c-83ed-4d6c-99d1-c39c4779f7cb method=GET path=/reports/history status=200 duration_ms=6
+INFO:httpx:HTTP Request: GET http://testserver/reports/history "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=4fd9fe0f-7cb9-4346-963e-931f539507dd method=GET path=/reports/summary status=200 duration_ms=12
+INFO:httpx:HTTP Request: GET http://testserver/reports/summary "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=cf96d609-9a8c-42da-ac3f-6f3bbd10a11b method=GET path=/members status=307 duration_ms=1
+INFO:httpx:HTTP Request: GET http://testserver/members "HTTP/1.1 307 Temporary Redirect"
+INFO:hsr-bms:request_id=4609931f-673d-46e8-ab15-d73da1be9c7b method=GET path=/members/ status=200 duration_ms=5
+INFO:httpx:HTTP Request: GET http://testserver/members/ "HTTP/1.1 200 OK"
+INFO:hsr-bms:request_id=0f2a298f-215a-4528-8dc1-bd9fd76b205d method=GET path=/food/orders status=200 duration_ms=4
+INFO:httpx:HTTP Request: GET http://testserver/food/orders "HTTP/1.1 200 OK"
+SOAK_TEST_RESULT=PASS
+elapsed_seconds=1.8
+cycles=1
+requests=87
+sessions_closed=3
+ledger_checks=3
+transactions=6
+food_orders=1
+members=12
+active_sessions_left=0
+summary_sale=603
+avg_latency_ms=13.2
+p95_latency_ms=26.0
