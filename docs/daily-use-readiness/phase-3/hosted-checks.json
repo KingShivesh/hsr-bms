@@ -1,0 +1,36 @@
+{
+  "date": "2026-11-23",
+  "testedCommit": "c4fb2d1ace7907d7147e5d71c87f8e4dffdda53f",
+  "github": [
+    {
+      "name": "Backend production parity",
+      "runId": 45082469798,
+      "conclusion": "success",
+      "jobs": ["postgres-parity", "financial-client"],
+      "url": "https://github.com/KingShivesh/hsr-bms/actions/runs/45082469798"
+    },
+    {
+      "name": "Secret history guard",
+      "runId": 45082469948,
+      "conclusion": "success",
+      "jobs": ["history"],
+      "url": "https://github.com/KingShivesh/hsr-bms/actions/runs/45082469948"
+    }
+  ],
+  "productionReadOnly": {
+    "loginStatus": 200,
+    "entry": "/assets/index-CP9GdrbS.js",
+    "entryMatchesVerifiedPhase2": true,
+    "healthAttempts": [
+      {"client": "Node fetch", "result": "Timeout without HTTP response"},
+      {"client": "curl", "exitCode": 28, "httpStatus": "000", "receivedBytes": 0, "result": "Timeout without HTTP response"}
+    ],
+    "freshBackendReadinessConfirmed": false,
+    "readyRequestedAfterHealthFailure": false,
+    "cause": "Not established; no application HTTP error response was received",
+    "authenticatedRequests": 0,
+    "businessMutations": 0
+  },
+  "phase3Merged": false,
+  "phase3Deployed": false
+}

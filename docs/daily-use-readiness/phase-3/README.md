@@ -6,6 +6,9 @@ inspection still needs the owner's specific project URL and read-only approval.
 This is a review checkpoint, not a claim that every production security boundary
 has been verified. No production business records or credentials were changed.
 Verified hardening source: `1de9ca6`.
+Hosted checks on `c4fb2d1`: [backend/frontend parity](https://github.com/KingShivesh/hsr-bms/actions/runs/45082469798)
+and [secret-history guard](https://github.com/KingShivesh/hsr-bms/actions/runs/45082469948)
+both completed successfully. Metadata is saved in `hosted-checks.json`.
 
 ## Phase 2 Is Already Live
 
@@ -18,6 +21,14 @@ mutating business records. Main's documentation receipt is `efd98b3`.
 Evidence: [deployment](../phase-2/deployment.json),
 [timeline](../phase-2/deployment-timeline.json), and
 [production login checks](../phase-2/production-login/).
+
+Fresh 23 November public checks: login still returns 200 with the same Phase 2
+entry bundle. Backend `/health` timed out without an HTTP response through both
+Node fetch and curl; `/ready` was not reached after the health failure. Current
+backend reachability therefore remains **unconfirmed**, despite the successful
+21 November deployment evidence. No cause is established: do not silently label
+this a cold start, an application 500, or a successful readiness check. No
+authenticated production requests or business mutations were made.
 
 ## Changes and Evidence
 
